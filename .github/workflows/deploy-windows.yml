@@ -1,0 +1,262 @@
+name: Deploy to Windows Server 2016
+
+on:
+  push:
+    branches: [ main ]
+  pull_request:
+    branches: [ main ]
+  workflow_dispatch:
+
+env:
+  NODE_VERSION: '18.x'
+  APP_NAME: 'BankDataQualityMonitor'
+
+jobs:
+  build:
+    runs-on: ubuntu-latest
+    
+    steps:
+    - name: Checkout code
+      uses: actions/checkout@v4
+      
+    - name: Setup Node.js
+      uses: actions/setup-node@v4
+      with:
+        node-version: ${{ env.NODE_VERSION }}
+        cache: 'npm'
+        
+    - name: Install dependencies
+      run: npm ci
+      
+    - name: Rebuild native modules
+      run: npm rebuild bcrypt --build-from-source
+      
+    - name: Run tests
+      run: npm test --if-present
+      
+    - name: Build application
+      run: npm run build
+      
+    - name: Create deployment package
+      run: |
+        mkdir -p deployment-package
+        cp -r dist deployment-package/
+        cp -r server deployment-package/
+        cp package*.json deployment-package/
+        cp -r deployment deployment-package/
+        
+    - name: Upload build artifacts
+      uses: actions/upload-artifact@v4
+      with:
+        name: deployment-package
+        path: deployment-package/
+        retention-days: 30
+
+  deploy:
+    needs: build
+    runs-on: windows-latest
+    if: github.ref == 'refs/heads/main'
+    
+    steps:
+    - name: Download build artifacts
+      uses: actions/download-artifact@v4
+      with:
+        name: deployment-package
+        path: ./deployment-package
+        
+    - name: Setup PowerShell modules
+      shell: powershell
+      run: |
+        Install-Module -Name WebAdministration -Force -AllowClobber
+        Import-Module WebAdministration
+        
+    - name: Stop IIS Application
+      shell: powershell
+      run: |
+        try {
+          Stop-Website -Name "${{ env.APP_NAME }}" -ErrorAction SilentlyContinue
+          Stop-WebAppPool -Name "${{ env.APP_NAME }}Pool" -ErrorAction SilentlyContinue
+          Write-Host "✅ Application stopped"
+        } catch {
+          Write-Host "⚠️ Application was not running"
+        }
+        
+    - name: Backup current deployment
+      shell: powershell
+      run: |
+        $BackupPath = "C:\Backups\${{ env.APP_NAME }}"
+        $BackupFolder = "$BackupPath\$(Get-Date -Format 'yyyyMMdd-HHmmss')"
+        
+        if (Test-Path "C:\inetpub\${{ env.APP_NAME }}") {
+          New-Item -ItemType Directory -Path $BackupFolder -Force
+          Copy-Item -Path "C:\inetpub\${{ env.APP_NAME }}\*" -Destination $BackupFolder -Recurse -Force
+          Write-Host "✅ Backup created: $BackupFolder"
+        }
+        
+    - name: Deploy application files
+      shell: powershell
+      run: |
+        $AppPath = "C:\inetpub\${{ env.APP_NAME }}"
+        
+        # Create application directory
+        New-Item -ItemType Directory -Path $AppPath -Force
+        
+        # Copy deployment files
+        Copy-Item -Path ".\deployment-package\*" -Destination $AppPath -Recurse -Force
+        
+        Write-Host "✅ Application files deployed"
+        
+    - name: Install Node.js dependencies
+      shell: powershell
+      working-directory: C:\inetpub\${{ env.APP_NAME }}
+      run: |
+        npm ci --production --silent
+        Write-Host "✅ Dependencies installed"
+        
+    - name: Rebuild native modules for Windows
+      shell: powershell
+      working-directory: C:\inetpub\${{ env.APP_NAME }}
+      run: |
+        npm rebuild bcrypt --build-from-source
+        Write-Host "✅ Native modules rebuilt"
+        
+    - name: Configure environment variables
+      shell: powershell
+      working-directory: C:\inetpub\${{ env.APP_NAME }}
+      run: |
+        $EnvContent = @"
+NODE_ENV=production
+PORT=3001
+DB_HOST=localhost
+DB_PORT=3306
+DB_NAME=bankdb
+DB_USER=bankapp
+DB_PASSWORD=${{ secrets.DB_PASSWORD }}
+JWT_SECRET=${{ secrets.JWT_SECRET }}
+API_PORT=3001
+LOG_LEVEL=info
+"@
+        $EnvContent | Out-File -FilePath ".env" -Encoding UTF8
+        Write-Host "✅ Environment configured"
+        
+    - name: Setup IIS Site
+      shell: powershell
+      run: |
+        Import-Module WebAdministration
+        
+        $SiteName = "${{ env.APP_NAME }}"
+        $AppPath = "C:\inetpub\${{ env.APP_NAME }}"
+        $PoolName = "${{ env.APP_NAME }}Pool"
+        
+        # Create Application Pool
+        if (Get-WebAppPool -Name $PoolName -ErrorAction SilentlyContinue) {
+          Remove-WebAppPool -Name $PoolName
+        }
+        
+        New-WebAppPool -Name $PoolName
+        Set-ItemProperty -Path "IIS:\AppPools\$PoolName" -Name "processModel.identityType" -Value "ApplicationPoolIdentity"
+        Set-ItemProperty -Path "IIS:\AppPools\$PoolName" -Name "processModel.idleTimeout" -Value "00:00:00"
+        Set-ItemProperty -Path "IIS:\AppPools\$PoolName" -Name "recycling.periodicRestart.time" -Value "00:00:00"
+        
+        # Create Website
+        if (Get-Website -Name $SiteName -ErrorAction SilentlyContinue) {
+          Remove-Website -Name $SiteName
+        }
+        
+        New-Website -Name $SiteName -Port 80 -PhysicalPath $AppPath -ApplicationPool $PoolName
+        
+        Write-Host "✅ IIS Site configured"
+        
+    - name: Set file permissions
+      shell: powershell
+      run: |
+        $AppPath = "C:\inetpub\${{ env.APP_NAME }}"
+        
+        # Set permissions for IIS_IUSRS
+        $Acl = Get-Acl $AppPath
+        $AccessRule = New-Object System.Security.AccessControl.FileSystemAccessRule("IIS_IUSRS","ReadAndExecute","ContainerInherit,ObjectInherit","None","Allow")
+        $Acl.SetAccessRule($AccessRule)
+        
+        # Set permissions for Application Pool
+        $AppPoolRule = New-Object System.Security.AccessControl.FileSystemAccessRule("IIS AppPool\${{ env.APP_NAME }}Pool","ReadAndExecute","ContainerInherit,ObjectInherit","None","Allow")
+        $Acl.SetAccessRule($AppPoolRule)
+        
+        Set-Acl $AppPath $Acl
+        
+        Write-Host "✅ Permissions configured"
+        
+    - name: Start IIS Application
+      shell: powershell
+      run: |
+        Start-WebAppPool -Name "${{ env.APP_NAME }}Pool"
+        Start-Website -Name "${{ env.APP_NAME }}"
+        
+        # Wait for application to start
+        Start-Sleep -Seconds 15
+        
+        Write-Host "✅ Application started"
+        
+    - name: Test deployment
+      shell: powershell
+      run: |
+        $TestsPassed = 0
+        $TotalTests = 3
+        
+        # Test 1: Website responds
+        try {
+          $Response = Invoke-WebRequest -Uri "http://localhost" -TimeoutSec 30
+          if ($Response.StatusCode -eq 200) {
+            Write-Host "✅ Test 1/3: Website accessible"
+            $TestsPassed++
+          }
+        } catch {
+          Write-Host "❌ Test 1/3: Website not accessible - $($_.Exception.Message)"
+        }
+        
+        # Test 2: API responds
+        try {
+          $Response = Invoke-WebRequest -Uri "http://localhost/api/health" -TimeoutSec 30
+          if ($Response.StatusCode -eq 200) {
+            Write-Host "✅ Test 2/3: API functional"
+            $TestsPassed++
+          }
+        } catch {
+          Write-Host "❌ Test 2/3: API not functional - $($_.Exception.Message)"
+        }
+        
+        # Test 3: Static files served
+        try {
+          $Response = Invoke-WebRequest -Uri "http://localhost/assets/index.css" -TimeoutSec 10
+          if ($Response.StatusCode -eq 200) {
+            Write-Host "✅ Test 3/3: Static files served"
+            $TestsPassed++
+          }
+        } catch {
+          Write-Host "❌ Test 3/3: Static files not served - $($_.Exception.Message)"
+        }
+        
+        Write-Host "📊 Tests passed: $TestsPassed/$TotalTests"
+        
+        if ($TestsPassed -eq $TotalTests) {
+          Write-Host "🎉 Deployment successful!"
+        } else {
+          Write-Host "⚠️ Deployment partially successful"
+          exit 1
+        }
+
+  notify:
+    needs: [build, deploy]
+    runs-on: ubuntu-latest
+    if: always()
+    
+    steps:
+    - name: Notify deployment status
+      run: |
+        if [ "${{ needs.deploy.result }}" == "success" ]; then
+          echo "🎉 Deployment to Windows Server completed successfully!"
+          echo "🌐 Application available at: http://your-server-ip"
+          echo "📊 API available at: http://your-server-ip/api"
+        else
+          echo "❌ Deployment failed. Check the logs for details."
+          exit 1
+        fi

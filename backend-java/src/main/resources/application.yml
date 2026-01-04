@@ -1,0 +1,144 @@
+server:
+  port: 8080
+  ssl:
+    enabled: false
+  compression:
+    enabled: true
+  http2:
+    enabled: true
+
+spring:
+  application:
+    name: bsic-data-quality-backend
+
+  datasource:
+    primary:
+      jdbc-url: jdbc:mysql://${DB_HOST:localhost}:${DB_PORT:3306}/${DB_NAME:bank_data_quality}?useSSL=false&allowPublicKeyRetrieval=true&serverTimezone=UTC
+      username: ${DB_USER:root}
+      password: ${DB_PASSWORD:}
+      driver-class-name: com.mysql.cj.jdbc.Driver
+      hikari:
+        maximum-pool-size: 20
+        minimum-idle: 5
+        connection-timeout: 30000
+        idle-timeout: 600000
+        max-lifetime: 1800000
+        pool-name: MySQLPool
+
+    informix:
+      jdbc-url: jdbc:informix-sqli://${INFORMIX_HOST:10.3.0.66}:${INFORMIX_PORT:1526}/${INFORMIX_DATABASE:bdmsa}:INFORMIXSERVER=${INFORMIX_SERVER:ol_bdmsa};DELIMIDENT=Y;DB_LOCALE=en_US.utf8;CLIENT_LOCALE=en_US.utf8
+      username: ${INFORMIX_USER:bank}
+      password: ${INFORMIX_PASSWORD:bank}
+      driver-class-name: com.informix.jdbc.IfxDriver
+      hikari:
+        maximum-pool-size: 10
+        minimum-idle: 2
+        connection-timeout: 30000
+        idle-timeout: 300000
+        max-lifetime: 1800000
+        pool-name: InformixPool
+        connection-test-query: SELECT FIRST 1 1 FROM systables
+
+  jpa:
+    database-platform: org.hibernate.dialect.PostgreSQLDialect
+    hibernate:
+      ddl-auto: validate
+    show-sql: false
+    properties:
+      hibernate:
+        format_sql: true
+        use_sql_comments: true
+        jdbc:
+          batch_size: 20
+        order_inserts: true
+        order_updates: true
+
+  ldap:
+    urls: ${LDAP_URL:ldap://localhost:389}
+    base: ${LDAP_BASE:dc=bsic,dc=local}
+    username: ${LDAP_USER:cn=admin,dc=bsic,dc=local}
+    password: ${LDAP_PASSWORD:admin}
+    base-environment:
+      java.naming.security.authentication: simple
+
+  security:
+    oauth2:
+      resourceserver:
+        jwt:
+          issuer-uri: ${JWT_ISSUER_URI:http://localhost:8080}
+          jwk-set-uri: ${JWT_JWK_SET_URI:http://localhost:8080/.well-known/jwks.json}
+
+camunda:
+  bpm:
+    admin-user:
+      id: admin
+      password: ${CAMUNDA_ADMIN_PASSWORD:admin}
+      firstName: Admin
+    filter:
+      create: All tasks
+    webapp:
+      index-redirect-enabled: true
+    database:
+      schema-update: true
+
+management:
+  endpoints:
+    web:
+      exposure:
+        include: health,info,metrics,prometheus
+  endpoint:
+    health:
+      show-details: always
+  metrics:
+    export:
+      prometheus:
+        enabled: true
+
+logging:
+  level:
+    root: INFO
+    com.bsic: DEBUG
+    org.springframework.security: DEBUG
+    org.springframework.web: DEBUG
+    org.hibernate.SQL: DEBUG
+    org.hibernate.type.descriptor.sql.BasicBinder: TRACE
+  pattern:
+    console: "%d{yyyy-MM-dd HH:mm:ss} - %msg%n"
+    file: "%d{yyyy-MM-dd HH:mm:ss} [%thread] %-5level %logger{36} - %msg%n"
+  file:
+    name: logs/application.log
+    max-size: 10MB
+    max-history: 30
+
+app:
+  jwt:
+    secret: ${JWT_SECRET:bsic-data-quality-secret-key-change-in-production-minimum-256-bits}
+    expiration: 86400000
+  cors:
+    allowed-origins: ${CORS_ORIGINS:http://localhost:5173,http://localhost:3000}
+    allowed-methods: GET,POST,PUT,DELETE,OPTIONS,PATCH
+    allowed-headers: "*"
+    allow-credentials: true
+  security:
+    tls:
+      version: TLSv1.3
+    encryption:
+      algorithm: AES-256
+  rpa:
+    uipath:
+      url: ${UIPATH_URL:https://cloud.uipath.com/bsic}
+      api-key: ${UIPATH_API_KEY:change-this-in-production}
+      tenant: ${UIPATH_TENANT:bsic}
+      organization: ${UIPATH_ORG:bsic-org}
+    webhook-url: ${RPA_WEBHOOK_URL:http://localhost:8080/api/rpa/callback}
+    timeout-minutes: 30
+    max-retries: 3
+  scheduling:
+    kpi-calculation-cron: "0 0 1 * * ?"
+    sla-check-cron: "0 */15 * * * ?"
+    rpa-cleanup-cron: "0 0 * * * ?"
+  features:
+    workflow-automation: ${FEATURE_WORKFLOW:true}
+    rpa-integration: ${FEATURE_RPA:true}
+    ldap-authentication: ${FEATURE_LDAP:false}
+    kpi-tracking: ${FEATURE_KPI:true}
