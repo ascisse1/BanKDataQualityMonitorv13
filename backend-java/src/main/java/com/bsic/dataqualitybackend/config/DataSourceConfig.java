@@ -3,7 +3,8 @@ package com.bsic.dataqualitybackend.config;
 import com.zaxxer.hikari.HikariConfig;
 import com.zaxxer.hikari.HikariDataSource;
 import org.springframework.beans.factory.annotation.Qualifier;
-import org.springframework.boot.context.properties.ConfigurationProperties;
+import org.springframework.beans.factory.annotation.Value;
+import org.springframework.boot.autoconfigure.condition.ConditionalOnProperty;
 import org.springframework.context.annotation.Bean;
 import org.springframework.context.annotation.Configuration;
 import org.springframework.context.annotation.Primary;
@@ -14,15 +15,22 @@ import javax.sql.DataSource;
 @Configuration
 public class DataSourceConfig {
 
+    @Value("${spring.datasource.primary.jdbc-url}")
+    private String primaryJdbcUrl;
+
+    @Value("${spring.datasource.primary.username}")
+    private String primaryUsername;
+
+    @Value("${spring.datasource.primary.password}")
+    private String primaryPassword;
+
     @Primary
     @Bean(name = "primaryDataSource")
-    @ConfigurationProperties("spring.datasource.primary.hikari")
     public DataSource primaryDataSource() {
         HikariConfig config = new HikariConfig();
-        config.setJdbcUrl(System.getenv().getOrDefault("DB_URL",
-            "jdbc:mysql://localhost:3306/bank_data_quality?useSSL=false&allowPublicKeyRetrieval=true&serverTimezone=UTC"));
-        config.setUsername(System.getenv().getOrDefault("DB_USER", "root"));
-        config.setPassword(System.getenv().getOrDefault("DB_PASSWORD", ""));
+        config.setJdbcUrl(System.getenv().getOrDefault("DB_URL", primaryJdbcUrl));
+        config.setUsername(System.getenv().getOrDefault("DB_USER", primaryUsername));
+        config.setPassword(System.getenv().getOrDefault("DB_PASSWORD", primaryPassword));
         config.setDriverClassName("com.mysql.cj.jdbc.Driver");
         config.setPoolName("MySQLPool");
         config.setMaximumPoolSize(20);
@@ -35,7 +43,7 @@ public class DataSourceConfig {
     }
 
     @Bean(name = "informixDataSource")
-    @ConfigurationProperties("spring.datasource.informix.hikari")
+    @ConditionalOnProperty(name = "app.features.informix-integration", havingValue = "true", matchIfMissing = false)
     public DataSource informixDataSource() {
         HikariConfig config = new HikariConfig();
 
@@ -47,8 +55,8 @@ public class DataSourceConfig {
         String password = System.getenv().getOrDefault("INFORMIX_PASSWORD", "bank");
 
         String jdbcUrl = String.format(
-            "jdbc:informix-sqli://%s:%s/%s:INFORMIXSERVER=%s;DELIMIDENT=Y;DB_LOCALE=en_US.utf8;CLIENT_LOCALE=en_US.utf8",
-            host, port, database, server
+                "jdbc:informix-sqli://%s:%s/%s:INFORMIXSERVER=%s;DELIMIDENT=Y;DB_LOCALE=en_US.utf8;CLIENT_LOCALE=en_US.utf8",
+                host, port, database, server
         );
 
         config.setJdbcUrl(jdbcUrl);
@@ -73,6 +81,7 @@ public class DataSourceConfig {
     }
 
     @Bean(name = "informixJdbcTemplate")
+    @ConditionalOnProperty(name = "app.features.informix-integration", havingValue = "true", matchIfMissing = false)
     public JdbcTemplate informixJdbcTemplate(@Qualifier("informixDataSource") DataSource dataSource) {
         return new JdbcTemplate(dataSource);
     }

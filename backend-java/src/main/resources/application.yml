@@ -40,9 +40,9 @@ spring:
         connection-test-query: SELECT FIRST 1 1 FROM systables
 
   jpa:
-    database-platform: org.hibernate.dialect.PostgreSQLDialect
+    database-platform: org.hibernate.dialect.MySQLDialect
     hibernate:
-      ddl-auto: validate
+      ddl-auto: none
     show-sql: false
     properties:
       hibernate:
@@ -52,6 +52,12 @@ spring:
           batch_size: 20
         order_inserts: true
         order_updates: true
+        globally_quoted_identifiers: false
+        hbm2ddl:
+          auto: none
+        validator:
+          apply_to_ddl: false
+        check_nullability: false
 
   redis:
     host: ${REDIS_HOST:localhost}
@@ -160,3 +166,4 @@ app:
     rpa-integration: ${FEATURE_RPA:true}
     ldap-authentication: ${FEATURE_LDAP:false}
     kpi-tracking: ${FEATURE_KPI:true}
+    informix-integration: ${FEATURE_INFORMIX:false}

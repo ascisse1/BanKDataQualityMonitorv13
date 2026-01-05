@@ -7,42 +7,19 @@ spring:
       driver-class-name: com.mysql.cj.jdbc.Driver
 
     informix:
-      # JDBC Direct (recommandé pour Java 17+)
-      # Configuration avec locale française ISO 8859-1 (standard Informix)
-      jdbc-url: jdbc:informix-sqli://10.3.0.66:1526/bdmsa:INFORMIXSERVER=ol_bdmsa;DELIMIDENT=Y;DB_LOCALE=fr_FR.819;CLIENT_LOCALE=fr_FR.819
+      jdbc-url: jdbc:odbc:lcb
       username: bank
       password: bank
-      driver-class-name: com.informix.jdbc.IfxDriver
-      hikari:
-        connection-timeout: 10000
-        maximum-pool-size: 5
-        minimum-idle: 1
-        initialization-fail-timeout: -1  # Ne pas échouer au démarrage si Informix indisponible
+      driver-class-name: sun.jdbc.odbc.JdbcOdbcDriver
 
   jpa:
     hibernate:
       ddl-auto: none
     show-sql: true
 
-  ldap:
-    enabled: false
-    url: ldap://localhost:389
-    base: dc=example,dc=com
-    username: cn=admin,dc=example,dc=com
-    password: admin
-
 app:
   jwt:
-    secret: YmFua19kYXRhX3F1YWxpdHlfc2VjcmV0X2tleV8yMDI0X2NoYW5nZV9pbl9wcm9kdWN0aW9uX3NlY3VyZV9rZXlfZm9yX2p3dF90b2tlbnM=
+    secret: bank_data_quality_secret_key_2024_change_in_production
     expiration: 86400000
-  cors:
-    allowed-origins: http://localhost:5175,http://localhost:3000,http://localhost:5173,http://192.168.1.120:5175,http://172.30.0.1:5175
-    allowed-methods: GET,POST,PUT,DELETE,OPTIONS,PATCH
-    allowed-headers: "*"
-    allow-credentials: true
   features:
     ldap-authentication: false
-    informix-integration: true  # Activer Informix si disponible
-    workflow-automation: true
-    rpa-integration: false  # UiPath non configuré localement
-    kpi-tracking: true

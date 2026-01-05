@@ -3,6 +3,7 @@ package com.bsic.dataqualitybackend.controller;
 import com.bsic.dataqualitybackend.service.ReconciliationService;
 import lombok.RequiredArgsConstructor;
 import lombok.extern.slf4j.Slf4j;
+import org.springframework.boot.autoconfigure.condition.ConditionalOnProperty;
 import org.springframework.format.annotation.DateTimeFormat;
 import org.springframework.http.ResponseEntity;
 import org.springframework.security.access.prepost.PreAuthorize;
@@ -17,6 +18,7 @@ import java.util.Map;
 @RequiredArgsConstructor
 @Slf4j
 @CrossOrigin(origins = {"http://localhost:5173", "http://localhost:3000"})
+@ConditionalOnProperty(name = "app.features.informix-integration", havingValue = "true", matchIfMissing = false)
 public class ReconciliationController {
 
     private final ReconciliationService reconciliationService;
@@ -47,7 +49,7 @@ public class ReconciliationController {
 
         try {
             List<Map<String, Object>> tasks = reconciliationService.getReconciliationHistory(
-                ticketId, clientId, status, startDate, endDate
+                    ticketId, clientId, status, startDate, endDate
             );
             return ResponseEntity.ok(tasks);
         } catch (Exception e) {
@@ -79,8 +81,8 @@ public class ReconciliationController {
         } catch (Exception e) {
             log.error("Error reconciling task {}: {}", id, e.getMessage(), e);
             return ResponseEntity.status(500).body(Map.of(
-                "error", e.getMessage(),
-                "task_id", id
+                    "error", e.getMessage(),
+                    "task_id", id
             ));
         }
     }
@@ -94,8 +96,8 @@ public class ReconciliationController {
         } catch (Exception e) {
             log.error("Error retrying reconciliation for task {}: {}", id, e.getMessage(), e);
             return ResponseEntity.status(500).body(Map.of(
-                "error", e.getMessage(),
-                "task_id", id
+                    "error", e.getMessage(),
+                    "task_id", id
             ));
         }
     }
@@ -108,8 +110,8 @@ public class ReconciliationController {
         try {
             String agencyCode = (String) request.get("agency_code");
             Integer maxTasks = request.containsKey("max_tasks")
-                ? (Integer) request.get("max_tasks")
-                : 50;
+                    ? (Integer) request.get("max_tasks")
+                    : 50;
 
             Map<String, Object> result = reconciliationService.reconcileAll(agencyCode, maxTasks);
             return ResponseEntity.ok(result);
@@ -122,9 +124,9 @@ public class ReconciliationController {
     @GetMapping("/health")
     public ResponseEntity<Map<String, String>> health() {
         return ResponseEntity.ok(Map.of(
-            "status", "UP",
-            "service", "Reconciliation Service",
-            "timestamp", LocalDateTime.now().toString()
+                "status", "UP",
+                "service", "Reconciliation Service",
+                "timestamp", LocalDateTime.now().toString()
         ));
     }
 }

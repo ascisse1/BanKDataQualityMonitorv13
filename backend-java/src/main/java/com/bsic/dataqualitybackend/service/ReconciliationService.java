@@ -4,6 +4,7 @@ import com.bsic.dataqualitybackend.repository.InformixRepository;
 import lombok.RequiredArgsConstructor;
 import lombok.extern.slf4j.Slf4j;
 import org.springframework.beans.factory.annotation.Qualifier;
+import org.springframework.boot.autoconfigure.condition.ConditionalOnProperty;
 import org.springframework.jdbc.core.JdbcTemplate;
 import org.springframework.stereotype.Service;
 import org.springframework.transaction.annotation.Transactional;
@@ -15,6 +16,7 @@ import java.util.stream.Collectors;
 @Service
 @RequiredArgsConstructor
 @Slf4j
+@ConditionalOnProperty(name = "app.features.informix-integration", havingValue = "true", matchIfMissing = false)
 public class ReconciliationService {
 
     private final InformixRepository informixRepository;
@@ -68,8 +70,8 @@ public class ReconciliationService {
 
         int totalFields = corrections.size();
         String status = matchedFields == totalFields ? "reconciled"
-                      : matchedFields > 0 ? "partial"
-                      : "failed";
+                : matchedFields > 0 ? "partial"
+                : "failed";
 
         updateTaskStatus(taskId, status);
 
@@ -114,8 +116,8 @@ public class ReconciliationService {
         sql.append(" ORDER BY t.created_at DESC LIMIT 100");
 
         List<Map<String, Object>> tasks = mysqlJdbcTemplate.queryForList(
-            sql.toString(),
-            params.toArray()
+                sql.toString(),
+                params.toArray()
         );
 
         for (Map<String, Object> task : tasks) {
@@ -172,8 +174,8 @@ public class ReconciliationService {
         sql.append(" ORDER BY t.created_at DESC LIMIT 500");
 
         List<Map<String, Object>> tasks = mysqlJdbcTemplate.queryForList(
-            sql.toString(),
-            params.toArray()
+                sql.toString(),
+                params.toArray()
         );
 
         for (Map<String, Object> task : tasks) {
@@ -187,8 +189,8 @@ public class ReconciliationService {
 
     public Map<String, Object> getStats(String agencyCode) {
         String whereClause = agencyCode != null && !agencyCode.isEmpty()
-            ? "WHERE a.agency_code = ?"
-            : "WHERE 1=1";
+                ? "WHERE a.agency_code = ?"
+                : "WHERE 1=1";
 
         String sql = String.format("""
             SELECT
@@ -207,8 +209,8 @@ public class ReconciliationService {
         """, whereClause);
 
         Map<String, Object> stats = agencyCode != null && !agencyCode.isEmpty()
-            ? mysqlJdbcTemplate.queryForMap(sql, agencyCode)
-            : mysqlJdbcTemplate.queryForMap(sql);
+                ? mysqlJdbcTemplate.queryForMap(sql, agencyCode)
+                : mysqlJdbcTemplate.queryForMap(sql);
 
         String statusSql = String.format("""
             SELECT t.status, COUNT(*) as count
@@ -220,8 +222,8 @@ public class ReconciliationService {
         """, whereClause);
 
         List<Map<String, Object>> byStatus = agencyCode != null && !agencyCode.isEmpty()
-            ? mysqlJdbcTemplate.queryForList(statusSql, agencyCode)
-            : mysqlJdbcTemplate.queryForList(statusSql);
+                ? mysqlJdbcTemplate.queryForList(statusSql, agencyCode)
+                : mysqlJdbcTemplate.queryForList(statusSql);
 
         stats.put("by_status", byStatus);
         return stats;
@@ -230,9 +232,9 @@ public class ReconciliationService {
     public Map<String, Object> reconcileAll(String agencyCode, Integer maxTasks) {
         int limit = maxTasks != null ? maxTasks : 50;
         List<Map<String, Object>> tasks = getPendingTasks(agencyCode, null)
-            .stream()
-            .limit(limit)
-            .collect(Collectors.toList());
+                .stream()
+                .limit(limit)
+                .collect(Collectors.toList());
 
         int success = 0;
         int failed = 0;
@@ -311,17 +313,17 @@ public class ReconciliationService {
 
     private String mapFieldToCBSColumn(String field) {
         Map<String, String> fieldMapping = Map.ofEntries(
-            Map.entry("name", "name"),
-            Map.entry("firstname", "firstname"),
-            Map.entry("address", "address"),
-            Map.entry("city", "city"),
-            Map.entry("postal_code", "postal_code"),
-            Map.entry("phone", "phone"),
-            Map.entry("email", "email"),
-            Map.entry("birth_date", "birth_date"),
-            Map.entry("nationality", "nationality"),
-            Map.entry("client_type", "client_type"),
-            Map.entry("fatca_status", "fatca_status")
+                Map.entry("name", "name"),
+                Map.entry("firstname", "firstname"),
+                Map.entry("address", "address"),
+                Map.entry("city", "city"),
+                Map.entry("postal_code", "postal_code"),
+                Map.entry("phone", "phone"),
+                Map.entry("email", "email"),
+                Map.entry("birth_date", "birth_date"),
+                Map.entry("nationality", "nationality"),
+                Map.entry("client_type", "client_type"),
+                Map.entry("fatca_status", "fatca_status")
         );
 
         return fieldMapping.getOrDefault(field, field);

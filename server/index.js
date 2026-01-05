@@ -697,7 +697,7 @@ app.use('/api/reconciliation', authenticateToken, reconciliationRoutes);
 if (process.env.NODE_ENV === 'production') {
   app.use(express.static(path.join(__dirname, '../dist')));
 }
-  
+
 // Always serve the SPA for any route not explicitly handled
 app.get('*', (req, res) => {
   if (process.env.NODE_ENV === 'production') {

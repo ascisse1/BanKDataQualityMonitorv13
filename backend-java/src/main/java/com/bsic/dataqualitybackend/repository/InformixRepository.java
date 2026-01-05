@@ -2,6 +2,7 @@ package com.bsic.dataqualitybackend.repository;
 
 import lombok.extern.slf4j.Slf4j;
 import org.springframework.beans.factory.annotation.Qualifier;
+import org.springframework.boot.autoconfigure.condition.ConditionalOnProperty;
 import org.springframework.jdbc.core.JdbcTemplate;
 import org.springframework.stereotype.Repository;
 
@@ -10,6 +11,7 @@ import java.util.Map;
 
 @Repository
 @Slf4j
+@ConditionalOnProperty(name = "app.features.informix-integration", havingValue = "true", matchIfMissing = false)
 public class InformixRepository {
 
     private final JdbcTemplate informixJdbcTemplate;
@@ -21,8 +23,8 @@ public class InformixRepository {
     public boolean testConnection() {
         try {
             Integer result = informixJdbcTemplate.queryForObject(
-                "SELECT FIRST 1 1 FROM systables",
-                Integer.class
+                    "SELECT FIRST 1 1 FROM systables",
+                    Integer.class
             );
             log.info("Informix connection test successful");
             return result != null;
@@ -94,10 +96,10 @@ public class InformixRepository {
 
         List<Map<String, Object>> results = informixJdbcTemplate.queryForList(sql);
         return results.stream()
-            .collect(java.util.stream.Collectors.toMap(
-                row -> String.valueOf(row.get("client_type")),
-                row -> ((Number) row.get("count")).longValue()
-            ));
+                .collect(java.util.stream.Collectors.toMap(
+                        row -> String.valueOf(row.get("client_type")),
+                        row -> ((Number) row.get("count")).longValue()
+                ));
     }
 
     public List<Map<String, Object>> getAnomalousClients(int limit) {
