@@ -13,10 +13,10 @@ const __dirname = dirname(__filename);
 export const createDemoDataProvider = () => {
   console.log('🎭 Using demo data provider with sample data');
   let demoData;
-  
+
   // Load demo data from JSON file
   const demoDataPath = path.join(__dirname, 'demo-data.json');
-  
+
   try {
     if (fs.existsSync(demoDataPath)) {
       const rawData = fs.readFileSync(demoDataPath, 'utf8');
@@ -25,7 +25,7 @@ export const createDemoDataProvider = () => {
     } else {
       console.log('⚠️ Demo data file not found, creating default data');
       demoData = createDefaultDemoData();
-      
+
       try {
         // Save the generated data for future use
         fs.writeFileSync(demoDataPath, JSON.stringify(demoData, null, 2));
@@ -40,9 +40,9 @@ export const createDemoDataProvider = () => {
     demoData = createDefaultDemoData();
     console.log('✅ Created default demo data in memory');
   }
-  
+
   console.log('🎭 Demo data provider created successfully');
-  
+
   return {
     getDemoData: () => demoData,
     getClientStats: () => demoData.clientStats,
@@ -89,6 +89,18 @@ export const createDemoDataProvider = () => {
         limit
       };
     },
+    getCorporateFatcaClients: (page = 1, limit = 10) => {
+      const start = (page - 1) * limit;
+      const end = start + limit;
+      // Filter for corporate clients (tcli = '2')
+      const corporateFatca = demoData.fatcaClients.filter(client => client.cli.startsWith('ENT'));
+      return {
+        data: corporateFatca.slice(start, end),
+        total: corporateFatca.length,
+        page,
+        limit
+      };
+    },
     getFatcaIndicators: () => demoData.fatcaIndicators,
     getAgencyCorrectionStats: () => demoData.agencyCorrectionStats,
     getWeeklyCorrectionStats: () => demoData.weeklyCorrectionStats,
@@ -109,7 +121,7 @@ function createDefaultDemoData() {
     anomalies: 55000,
     fatca: 12470
   };
-  
+
   // Generate validation metrics
   const validationMetrics = [
     {
@@ -131,7 +143,7 @@ function createDefaultDemoData() {
       quality_score: 92.65
     }
   ];
-  
+
   // Generate individual anomalies
   const individualAnomalies = [];
   for (let i = 1; i <= 1000; i++) {
@@ -152,7 +164,7 @@ function createDefaultDemoData() {
     };
     individualAnomalies.push(anomaly);
   }
-  
+
   // Generate corporate anomalies
   const corporateAnomalies = [];
   for (let i = 1; i <= 500; i++) {
@@ -172,7 +184,7 @@ function createDefaultDemoData() {
     };
     corporateAnomalies.push(anomaly);
   }
-  
+
   // Generate institutional anomalies
   const institutionalAnomalies = [];
   for (let i = 1; i <= 200; i++) {
@@ -191,11 +203,11 @@ function createDefaultDemoData() {
     };
     institutionalAnomalies.push(anomaly);
   }
-  
+
   // Generate branch anomalies
   const branchAnomalies = [];
   const agencies = getAllAgencies();
-  
+
   agencies.slice(0, 20).forEach((agency, index) => {
     branchAnomalies.push({
       code_agence: agency.code_agence,
@@ -203,10 +215,10 @@ function createDefaultDemoData() {
       nombre_anomalies: Math.floor(Math.random() * 5000) + 500
     });
   });
-  
+
   // Sort by number of anomalies
   branchAnomalies.sort((a, b) => b.nombre_anomalies - a.nombre_anomalies);
-  
+
   // Generate FATCA stats
   const fatcaStats = {
     total: 1250,
@@ -218,7 +230,7 @@ function createDefaultDemoData() {
     pending: 0,
     currentMonth: 125
   };
-  
+
   // Generate FATCA clients
   const fatcaClients = [];
   for (let i = 1; i <= 200; i++) {
@@ -241,7 +253,7 @@ function createDefaultDemoData() {
     };
     fatcaClients.push(client);
   }
-  
+
   // Generate FATCA indicators
   const fatcaIndicators = {
     nationality: 425,
@@ -250,7 +262,7 @@ function createDefaultDemoData() {
     phone: 180,
     proxy: 60
   };
-  
+
   // Generate agency correction stats
   const agencyCorrectionStats = [];
   agencies.slice(0, 20).forEach((agency, index) => {
@@ -258,7 +270,7 @@ function createDefaultDemoData() {
     const fixedAnomalies = Math.floor(Math.random() * totalAnomalies);
     const inReviewAnomalies = Math.floor(Math.random() * (totalAnomalies - fixedAnomalies));
     const rejectedAnomalies = Math.floor(Math.random() * (totalAnomalies - fixedAnomalies - inReviewAnomalies));
-    
+
     agencyCorrectionStats.push({
       agency_code: agency.code_agence,
       agency_name: agency.lib_agence,
@@ -270,21 +282,21 @@ function createDefaultDemoData() {
       last_updated: new Date().toISOString()
     });
   });
-  
+
   // Sort by correction rate
   agencyCorrectionStats.sort((a, b) => b.correction_rate - a.correction_rate);
-  
+
   // Generate weekly correction stats
   const weeklyCorrectionStats = [];
   const statuses = ['detected', 'in_review', 'fixed', 'rejected'];
-  
+
   for (let i = 0; i < 12; i++) {
     const date = new Date();
     date.setDate(date.getDate() - (12 - i) * 7);
-    
+
     const yearWeek = `${date.getFullYear()}${Math.floor(i / 4) + 1}`;
     const weekLabel = `${date.getFullYear()}-W${String(Math.floor(i / 4) + 1).padStart(2, '0')}`;
-    
+
     statuses.forEach(status => {
       let count;
       switch (status) {
@@ -303,7 +315,7 @@ function createDefaultDemoData() {
         default:
           count = 0;
       }
-      
+
       weeklyCorrectionStats.push({
         year_week: yearWeek,
         week_label: weekLabel,
@@ -312,21 +324,21 @@ function createDefaultDemoData() {
       });
     });
   }
-  
+
   // Generate data load history
   const dataLoadHistory = [];
   const tables = ['bkcli', 'bkcom', 'bkadcli', 'bktelcli', 'bkemacli', 'bkcoj', 'bkpscm'];
   const users = ['admin', 'system', 'batch_process'];
-  
+
   for (let i = 0; i < 20; i++) {
     const date = new Date();
     date.setDate(date.getDate() - i);
-    
+
     const table = tables[Math.floor(Math.random() * tables.length)];
     const status = Math.random() > 0.2 ? 'success' : (Math.random() > 0.5 ? 'warning' : 'error');
     const recordsCount = Math.floor(Math.random() * 10000) + 1000;
     const executionTime = Math.floor(Math.random() * 60000) + 1000;
-    
+
     dataLoadHistory.push({
       id: i + 1,
       table_name: table,
@@ -338,36 +350,36 @@ function createDefaultDemoData() {
       execution_time_ms: executionTime
     });
   }
-  
+
   // Generate users by agency
   const usersByAgency = [];
-  
+
   for (let i = 1; i <= 10; i++) {
     const date = new Date();
     date.setDate(date.getDate() - Math.floor(Math.random() * 30));
-    
+
     usersByAgency.push({
       agency_code: `0${1200 + i}`,
       user_count: Math.floor(Math.random() * 5) + 1,
       last_activity: Math.random() > 0.2 ? date.toISOString() : null
     });
   }
-  
+
   // Generate global tracking data
   const globalTrackingData = [];
-  
+
   agencies.slice(0, 20).forEach((agency, index) => {
     const fluxTotal = Math.floor(Math.random() * 1000) + 100;
     const fluxAnomalies = Math.floor(fluxTotal * (Math.random() * 0.3 + 0.1));
     const fluxFiabilises = Math.floor(fluxAnomalies * (Math.random() * 0.8 + 0.1));
-    
+
     const stockActifs = Math.floor(Math.random() * 10000) + 1000;
     const stockAnomalies = Math.floor(stockActifs * (Math.random() * 0.3 + 0.1));
     const stockFiabilises = Math.floor(stockAnomalies * (Math.random() * 0.8 + 0.1));
-    
+
     const tauxAnomalies = parseFloat(((stockAnomalies / stockActifs) * 100).toFixed(1));
     const tauxFiabilisation = parseFloat(((stockFiabilises / stockAnomalies) * 100).toFixed(1));
-    
+
     globalTrackingData.push({
       agencyCode: agency.code_agence,
       agencyName: agency.lib_agence,
@@ -392,7 +404,7 @@ function createDefaultDemoData() {
       }
     });
   });
-  
+
   return {
     clientStats,
     validationMetrics,
@@ -437,13 +449,13 @@ export const createPool = (options = {}) => {
     const pool = mysql.createPool(poolConfig);
 
     pool.getConnection()
-      .then(connection => {
-        console.log('✅ MySQL connection test successful');
-        connection.release();
-      })
-      .catch(error => {
-        console.error('❌ MySQL connection test failed:', error.message);
-      });
+        .then(connection => {
+          console.log('✅ MySQL connection test successful');
+          connection.release();
+        })
+        .catch(error => {
+          console.error('❌ MySQL connection test failed:', error.message);
+        });
 
     return pool;
   } catch (error) {

@@ -1,0 +1,25 @@
+spring:
+  datasource:
+    primary:
+      jdbc-url: jdbc:mysql://localhost:3306/bank_data_quality?useSSL=false&allowPublicKeyRetrieval=true&serverTimezone=UTC
+      username: root
+      password: Bamako@2209
+      driver-class-name: com.mysql.cj.jdbc.Driver
+
+    informix:
+      jdbc-url: jdbc:odbc:lcb
+      username: bank
+      password: bank
+      driver-class-name: sun.jdbc.odbc.JdbcOdbcDriver
+
+  jpa:
+    hibernate:
+      ddl-auto: none
+    show-sql: true
+
+app:
+  jwt:
+    secret: bank_data_quality_secret_key_2024_change_in_production
+    expiration: 86400000
+  features:
+    ldap-authentication: false
