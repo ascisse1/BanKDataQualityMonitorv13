@@ -1,6 +1,7 @@
 package com.bsic.dataqualitybackend.controller;
 
 import com.bsic.dataqualitybackend.dto.AnomalyDto;
+import com.bsic.dataqualitybackend.model.enums.AnomalyStatus;
 import com.bsic.dataqualitybackend.model.enums.ClientType;
 import com.fasterxml.jackson.databind.ObjectMapper;
 import org.junit.jupiter.api.Test;
@@ -77,12 +78,12 @@ class AnomalyControllerIntegrationTest {
         AnomalyDto anomalyDto = AnomalyDto.builder()
                 .clientNumber("TEST001")
                 .clientName("Test Client")
-                .clientType("INDIVIDUAL")
+                .clientType(ClientType.valueOf("INDIVIDUAL"))
                 .fieldName("email")
                 .currentValue("invalid-email")
                 .expectedValue("valid@email.com")
                 .errorMessage("Invalid email format")
-                .status("PENDING")
+                .status(AnomalyStatus.valueOf("PENDING"))
                 .severity("HIGH")
                 .agencyCode("AG001")
                 .build();
@@ -100,12 +101,12 @@ class AnomalyControllerIntegrationTest {
         AnomalyDto createDto = AnomalyDto.builder()
                 .clientNumber("TEST002")
                 .clientName("Test Client 2")
-                .clientType("INDIVIDUAL")
+                .clientType(ClientType.valueOf("INDIVIDUAL"))
                 .fieldName("phone")
                 .currentValue("123")
                 .expectedValue("1234567890")
                 .errorMessage("Invalid phone")
-                .status("PENDING")
+                .status(AnomalyStatus.valueOf("PENDING"))
                 .severity("MEDIUM")
                 .agencyCode("AG001")
                 .build();
@@ -119,7 +120,7 @@ class AnomalyControllerIntegrationTest {
                 .getContentAsString();
 
         AnomalyDto updateDto = AnomalyDto.builder()
-                .status("CORRECTED")
+                .status(AnomalyStatus.valueOf("CORRECTED"))
                 .correctionValue("1234567890")
                 .build();
 
@@ -134,12 +135,12 @@ class AnomalyControllerIntegrationTest {
         AnomalyDto createDto = AnomalyDto.builder()
                 .clientNumber("TEST003")
                 .clientName("Test Client 3")
-                .clientType("INDIVIDUAL")
+                .clientType(ClientType.valueOf("INDIVIDUAL"))
                 .fieldName("address")
                 .currentValue("invalid")
                 .expectedValue("valid address")
                 .errorMessage("Invalid address")
-                .status("PENDING")
+                .status(AnomalyStatus.valueOf("PENDING"))
                 .severity("LOW")
                 .agencyCode("AG001")
                 .build();

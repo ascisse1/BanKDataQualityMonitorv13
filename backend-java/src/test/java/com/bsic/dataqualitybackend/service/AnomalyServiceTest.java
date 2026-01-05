@@ -51,18 +51,17 @@ class AnomalyServiceTest {
         testAnomaly.setStatus(AnomalyStatus.PENDING);
         testAnomaly.setSeverity("HIGH");
         testAnomaly.setAgencyCode("AG001");
-        testAnomaly.setDetectedAt(LocalDateTime.now());
 
         testAnomalyDto = AnomalyDto.builder()
                 .id(1L)
                 .clientNumber("C001")
                 .clientName("Test Client")
-                .clientType("INDIVIDUAL")
+                .clientType(ClientType.valueOf("INDIVIDUAL"))
                 .fieldName("email")
                 .currentValue("invalid-email")
                 .expectedValue("valid@email.com")
                 .errorMessage("Invalid email format")
-                .status("PENDING")
+                .status(AnomalyStatus.valueOf("PENDING"))
                 .severity("HIGH")
                 .agencyCode("AG001")
                 .build();
@@ -113,7 +112,7 @@ class AnomalyServiceTest {
         when(anomalyRepository.findById(1L)).thenReturn(Optional.of(testAnomaly));
         when(anomalyRepository.save(any(Anomaly.class))).thenReturn(testAnomaly);
 
-        testAnomalyDto.setStatus("CORRECTED");
+        testAnomalyDto.setStatus(AnomalyStatus.valueOf("CORRECTED"));
         AnomalyDto result = anomalyService.updateAnomaly(1L, testAnomalyDto);
 
         assertThat(result).isNotNull();
