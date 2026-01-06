@@ -1,0 +1,18 @@
+name: bdqm
+services:
+  mysql:
+    image: mysql:8.0
+    # volumes:
+    #   - ~/volumes/bdqm/mysql/:/var/lib/mysql/
+    environment:
+      - MYSQL_USER=bdqm
+      - MYSQL_PASSWORD=bdqm
+      - MYSQL_ROOT_PASSWORD=bdqm
+      - MYSQL_DATABASE=bdqm
+    healthcheck:
+      test: ['CMD', 'mysqladmin', 'ping', '-h', 'localhost', '-u', 'root', '-pbdqm']
+      interval: 5s
+      timeout: 5s
+      retries: 10
+    ports:
+      - '3306:3306'

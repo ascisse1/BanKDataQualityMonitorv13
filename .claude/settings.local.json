@@ -1,7 +1,13 @@
 {
   "permissions": {
     "allow": [
-      "Bash(npm run lint)"
+      "Bash(npm run lint)",
+      "Skill(frontend-design:frontend-design)",
+      "Bash(npm install:*)",
+      "Bash(mvn compile:*)",
+      "Bash(timeout 15 npm run dev:*)",
+      "Bash(printf '#!/bin/bash\nexec 3<>/dev/tcp/localhost/9990\n\necho -e \"\"GET /health/ready HTTP/1.1\\\\\\\\nhost: localhost:9990\\\\\\\\n\"\" >&3\n\ntimeout --signal=SIGTERM 5 cat <&3 | grep -m 1 status | grep -m 1 UP\nERROR=$?\n\nexec 3<&-\nexec 3>&-\n\nexit $ERROR\n')",
+      "Bash(ls -la \"E:\\\\Repos\\\\Autres\\\\adakal-group\\\\BanKDataQualityMonitorv13\\\\backend-java\\\\src\\\\main\\\\docker\"\" 2>/dev/null || dir \"E:ReposAutresadakal-groupBanKDataQualityMonitorv13backend-javasrcmaindocker\"\")"
     ]
   }
 }

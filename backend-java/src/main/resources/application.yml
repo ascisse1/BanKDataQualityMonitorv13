@@ -6,16 +6,21 @@ server:
     enabled: true
   http2:
     enabled: true
-
+  forward-headers-strategy: framework
 spring:
   application:
     name: bsic-data-quality-backend
+  docker:
+    compose:
+      enabled: true
+      lifecycle-management: start-only
+      file: backend-java/src/main/docker/services.yml
 
   datasource:
     primary:
-      jdbc-url: jdbc:mysql://${DB_HOST:localhost}:${DB_PORT:3306}/${DB_NAME:bank_data_quality}?useSSL=false&allowPublicKeyRetrieval=true&serverTimezone=UTC
+      jdbc-url: jdbc:mysql://${DB_HOST:localhost}:${DB_PORT:3306}/${DB_NAME:bdqm}?useSSL=false&allowPublicKeyRetrieval=true&serverTimezone=UTC
       username: ${DB_USER:root}
-      password: ${DB_PASSWORD:}
+      password: ${DB_PASSWORD:bdqm}
       driver-class-name: com.mysql.cj.jdbc.Driver
       hikari:
         maximum-pool-size: 20
@@ -87,10 +92,20 @@ spring:
 
   security:
     oauth2:
-      resourceserver:
-        jwt:
-          issuer-uri: ${JWT_ISSUER_URI:http://localhost:8080}
-          jwk-set-uri: ${JWT_JWK_SET_URI:http://localhost:8080/.well-known/jwks.json}
+      # OAuth2 Client - handles login flow and stores tokens server-side (most secure)
+      client:
+        provider:
+          keycloak:
+            issuer-uri: ${KEYCLOAK_ISSUER_URI:http://localhost:9083/realms/bsic-bank}
+            user-name-attribute: preferred_username
+        registration:
+          keycloak:
+            client-id: bdqm-backend
+            client-secret: cKoQK7xrgImqpHBMHqeCtZ4RyCS7Psxq
+            scope: openid,profile,email
+            authorization-grant-type: authorization_code
+            client-authentication-method: client_secret_post
+            redirect-uri: "{baseUrl}/login/oauth2/code/{registrationId}"
 
 camunda:
   bpm:
@@ -123,7 +138,9 @@ logging:
     root: INFO
     com.bsic: DEBUG
     org.springframework.security: DEBUG
+    org.springframework.security.oauth2: TRACE
     org.springframework.web: DEBUG
+    org.springframework.web.client.RestTemplate: TRACE
     org.hibernate.SQL: DEBUG
     org.hibernate.type.descriptor.sql.BasicBinder: TRACE
   pattern:
@@ -134,14 +151,24 @@ logging:
     max-size: 10MB
     max-history: 30
 
+keycloak:
+  realm: ${KEYCLOAK_REALM:bsic-bank}
+  auth-server-url: ${KEYCLOAK_AUTH_SERVER_URL:http://localhost:9083}
+  resource: ${KEYCLOAK_CLIENT_ID:bdqm-backend}
+  agency-code-claim: agency_code
+  # Admin client for user management (requires service account with realm-management roles)
+  admin-client-id: ${KEYCLOAK_ADMIN_CLIENT_ID:bdqm-backend}
+  admin-client-secret: ${KEYCLOAK_ADMIN_CLIENT_SECRET:bdqm-secret-change-in-production}
+
 app:
   jwt:
     secret: ${JWT_SECRET:bsic-data-quality-secret-key-change-in-production-minimum-256-bits}
     expiration: 86400000
   cors:
-    allowed-origins: ${CORS_ORIGINS:http://localhost:5173,http://localhost:3000}
+    allowed-origins: ${CORS_ORIGINS:http://localhost:5173,http://localhost:5174,http://localhost:3000,http://localhost:9083}
     allowed-methods: GET,POST,PUT,DELETE,OPTIONS,PATCH
-    allowed-headers: "*"
+    # Explicit headers required when allow-credentials is true (wildcard "*" not allowed per CORS spec)
+    allowed-headers: Authorization,Content-Type,X-XSRF-TOKEN,X-Requested-With,Accept,Origin,Cache-Control,Pragma
     allow-credentials: true
   security:
     tls:

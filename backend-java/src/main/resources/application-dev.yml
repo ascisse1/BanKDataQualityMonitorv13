@@ -1,16 +1,14 @@
 spring:
   datasource:
     primary:
-      jdbc-url: jdbc:mysql://localhost:3306/bank_data_quality?useSSL=false&allowPublicKeyRetrieval=true&serverTimezone=UTC
-      username: root
-      password: Bamako@2209
-      driver-class-name: com.mysql.cj.jdbc.Driver
+      jdbc-url: jdbc:mysql://localhost:3306/bdqm?useSSL=false&allowPublicKeyRetrieval=true&serverTimezone=UTC
+      username: bdqm
+      password: bdqm
 
     informix:
       jdbc-url: jdbc:odbc:lcb
       username: bank
       password: bank
-      driver-class-name: sun.jdbc.odbc.JdbcOdbcDriver
 
   jpa:
     hibernate:

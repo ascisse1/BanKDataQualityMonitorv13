@@ -41,6 +41,14 @@ public class CorsConfig {
         configuration.setAllowCredentials(allowCredentials);
         configuration.setMaxAge(3600L);
 
+        // Expose headers that frontend needs to read (e.g., for authentication status)
+        configuration.setExposedHeaders(Arrays.asList(
+                "X-XSRF-TOKEN",
+                "Authorization",
+                "Location",
+                "Content-Disposition"
+        ));
+
         UrlBasedCorsConfigurationSource source = new UrlBasedCorsConfigurationSource();
         source.registerCorsConfiguration("/**", configuration);
 

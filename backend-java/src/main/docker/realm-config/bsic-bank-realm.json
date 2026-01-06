@@ -1,0 +1,208 @@
+{
+  "id": "bsic-bank",
+  "realm": "bsic-bank",
+  "displayName": "BSIC Bank",
+  "displayNameHtml": "<div class=\"kc-logo-text\"><span>BSIC Bank Data Quality</span></div>",
+  "enabled": true,
+  "sslRequired": "external",
+  "registrationAllowed": false,
+  "loginWithEmailAllowed": true,
+  "duplicateEmailsAllowed": false,
+  "resetPasswordAllowed": true,
+  "editUsernameAllowed": false,
+  "bruteForceProtected": true,
+  "permanentLockout": false,
+  "maxFailureWaitSeconds": 900,
+  "minimumQuickLoginWaitSeconds": 60,
+  "waitIncrementSeconds": 60,
+  "quickLoginCheckMilliSeconds": 1000,
+  "maxDeltaTimeSeconds": 43200,
+  "failureFactor": 5,
+  "defaultSignatureAlgorithm": "RS256",
+  "accessTokenLifespan": 300,
+  "accessTokenLifespanForImplicitFlow": 900,
+  "ssoSessionIdleTimeout": 1800,
+  "ssoSessionMaxLifespan": 36000,
+  "offlineSessionIdleTimeout": 2592000,
+  "accessCodeLifespan": 60,
+  "accessCodeLifespanUserAction": 300,
+  "accessCodeLifespanLogin": 1800,
+  "roles": {
+    "realm": [
+      {
+        "name": "ADMIN",
+        "description": "Administrator with full access",
+        "composite": false,
+        "clientRole": false,
+        "containerId": "bsic-bank",
+        "attributes": {}
+      },
+      {
+        "name": "AUDITOR",
+        "description": "Auditor with read access and ticket validation",
+        "composite": false,
+        "clientRole": false,
+        "containerId": "bsic-bank",
+        "attributes": {}
+      },
+      {
+        "name": "AGENCY_USER",
+        "description": "Agency user with CRUD for their agency anomalies",
+        "composite": false,
+        "clientRole": false,
+        "containerId": "bsic-bank",
+        "attributes": {}
+      },
+      {
+        "name": "USER",
+        "description": "Basic user with read access",
+        "composite": false,
+        "clientRole": false,
+        "containerId": "bsic-bank",
+        "attributes": {}
+      }
+    ]
+  },
+  "users": [
+    {
+      "username": "admin",
+      "enabled": true,
+      "emailVerified": true,
+      "firstName": "Admin",
+      "lastName": "BSIC",
+      "email": "admin@bsic.ci",
+      "attributes": {
+        "agency_code": ["HQ"]
+      },
+      "credentials": [
+        {
+          "type": "password",
+          "value": "admin123",
+          "temporary": false
+        }
+      ],
+      "realmRoles": ["ADMIN"]
+    },
+    {
+      "username": "auditor",
+      "enabled": true,
+      "emailVerified": true,
+      "firstName": "Auditor",
+      "lastName": "BSIC",
+      "email": "auditor@bsic.ci",
+      "attributes": {
+        "agency_code": ["HQ"]
+      },
+      "credentials": [
+        {
+          "type": "password",
+          "value": "auditor123",
+          "temporary": false
+        }
+      ],
+      "realmRoles": ["AUDITOR"]
+    },
+    {
+      "username": "agency1",
+      "enabled": true,
+      "emailVerified": true,
+      "firstName": "Agent",
+      "lastName": "Abidjan",
+      "email": "agency1@bsic.ci",
+      "attributes": {
+        "agency_code": ["ABJ001"]
+      },
+      "credentials": [
+        {
+          "type": "password",
+          "value": "agency123",
+          "temporary": false
+        }
+      ],
+      "realmRoles": ["AGENCY_USER"]
+    }
+  ],
+  "clients": [
+    {
+      "clientId": "bdqm-backend",
+      "name": "BDQM Backend",
+      "description": "Bank Data Quality Monitor Backend (BFF)",
+      "enabled": true,
+      "clientAuthenticatorType": "client-secret",
+      "secret": "bdqm-secret-change-in-production",
+      "redirectUris": [
+        "http://localhost:8080/*",
+        "http://localhost:5174/*"
+      ],
+      "webOrigins": [
+        "http://localhost:8080",
+        "http://localhost:5174"
+      ],
+      "standardFlowEnabled": true,
+      "implicitFlowEnabled": false,
+      "directAccessGrantsEnabled": true,
+      "serviceAccountsEnabled": true,
+      "authorizationServicesEnabled": false,
+      "publicClient": false,
+      "frontchannelLogout": true,
+      "protocol": "openid-connect",
+      "attributes": {
+        "oidc.ciba.grant.enabled": "false",
+        "oauth2.device.authorization.grant.enabled": "false",
+        "backchannel.logout.session.required": "true",
+        "backchannel.logout.revoke.offline.tokens": "false",
+        "post.logout.redirect.uris": "http://localhost:5174/*##http://localhost:8080/*"
+      },
+      "fullScopeAllowed": true,
+      "protocolMappers": [
+        {
+          "name": "agency_code",
+          "protocol": "openid-connect",
+          "protocolMapper": "oidc-usermodel-attribute-mapper",
+          "consentRequired": false,
+          "config": {
+            "userinfo.token.claim": "true",
+            "user.attribute": "agency_code",
+            "id.token.claim": "true",
+            "access.token.claim": "true",
+            "claim.name": "agency_code",
+            "jsonType.label": "String"
+          }
+        },
+        {
+          "name": "realm roles",
+          "protocol": "openid-connect",
+          "protocolMapper": "oidc-usermodel-realm-role-mapper",
+          "consentRequired": false,
+          "config": {
+            "user.attribute": "foo",
+            "access.token.claim": "true",
+            "id.token.claim": "true",
+            "claim.name": "realm_access.roles",
+            "jsonType.label": "String",
+            "multivalued": "true"
+          }
+        }
+      ]
+    }
+  ],
+  "browserSecurityHeaders": {
+    "contentSecurityPolicyReportOnly": "",
+    "xContentTypeOptions": "nosniff",
+    "referrerPolicy": "no-referrer",
+    "xRobotsTag": "none",
+    "xFrameOptions": "SAMEORIGIN",
+    "contentSecurityPolicy": "frame-src 'self'; frame-ancestors 'self'; object-src 'none';",
+    "xXSSProtection": "1; mode=block",
+    "strictTransportSecurity": "max-age=31536000; includeSubDomains"
+  },
+  "smtpServer": {},
+  "eventsEnabled": false,
+  "eventsListeners": ["jboss-logging"],
+  "enabledEventTypes": [],
+  "adminEventsEnabled": false,
+  "adminEventsDetailsEnabled": false,
+  "internationalizationEnabled": true,
+  "supportedLocales": ["en", "fr"],
+  "defaultLocale": "fr"
+}
