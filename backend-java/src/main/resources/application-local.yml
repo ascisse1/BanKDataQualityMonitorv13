@@ -7,10 +7,11 @@ spring:
       driver-class-name: com.mysql.cj.jdbc.Driver
 
     informix:
-      jdbc-url: jdbc:odbc:lcb
+      # JDBC Direct (recommandé pour Java 17+)
+      jdbc-url: jdbc:informix-sqli://10.3.0.66:1526/bdmsa:INFORMIXSERVER=ol_bdmsa;DELIMIDENT=Y;DB_LOCALE=en_US.utf8;CLIENT_LOCALE=en_US.utf8
       username: bank
       password: bank
-      driver-class-name: sun.jdbc.odbc.JdbcOdbcDriver
+      driver-class-name: com.informix.jdbc.IfxDriver
 
   jpa:
     hibernate:
@@ -23,3 +24,7 @@ app:
     expiration: 86400000
   features:
     ldap-authentication: false
+    informix-integration: true  # Activer Informix si disponible
+    workflow-automation: true
+    rpa-integration: false  # UiPath non configuré localement
+    kpi-tracking: true
