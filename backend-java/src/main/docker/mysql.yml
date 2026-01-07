@@ -10,7 +10,7 @@ services:
       - MYSQL_ROOT_PASSWORD=bdqm
       - MYSQL_DATABASE=bdqm
     healthcheck:
-      test: ['CMD', 'mysqladmin', 'ping', '-h', 'localhost', '-u', 'root', '-pbdqm']
+      test: ['CMD', 'mysqladmin', 'ping', '-h', 'localhost', '-u', 'bdqm', '-pbdqm']
       interval: 5s
       timeout: 5s
       retries: 10

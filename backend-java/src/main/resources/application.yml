@@ -19,7 +19,7 @@ spring:
   datasource:
     primary:
       jdbc-url: jdbc:mysql://${DB_HOST:localhost}:${DB_PORT:3306}/${DB_NAME:bdqm}?useSSL=false&allowPublicKeyRetrieval=true&serverTimezone=UTC
-      username: ${DB_USER:root}
+      username: ${DB_USER:bdqm}
       password: ${DB_PASSWORD:bdqm}
       driver-class-name: com.mysql.cj.jdbc.Driver
       hikari:
@@ -101,7 +101,7 @@ spring:
         registration:
           keycloak:
             client-id: bdqm-backend
-            client-secret: cKoQK7xrgImqpHBMHqeCtZ4RyCS7Psxq
+            client-secret: mM84Od4Uy10A0HImckJq4ARj29SLOPvp
             scope: openid,profile,email
             authorization-grant-type: authorization_code
             client-authentication-method: client_secret_post
