@@ -1,7 +1,10 @@
 package com.bsic.dataqualitybackend.controller;
 
 import com.bsic.dataqualitybackend.dto.AnomalyDto;
+<<<<<<< HEAD
 import com.bsic.dataqualitybackend.model.enums.AnomalyStatus;
+=======
+>>>>>>> 745e2a7 (Initial commit after re-initializing repository)
 import com.bsic.dataqualitybackend.model.enums.ClientType;
 import com.fasterxml.jackson.databind.ObjectMapper;
 import org.junit.jupiter.api.Test;
@@ -78,12 +81,20 @@ class AnomalyControllerIntegrationTest {
         AnomalyDto anomalyDto = AnomalyDto.builder()
                 .clientNumber("TEST001")
                 .clientName("Test Client")
+<<<<<<< HEAD
                 .clientType(ClientType.valueOf("INDIVIDUAL"))
+=======
+                .clientType("INDIVIDUAL")
+>>>>>>> 745e2a7 (Initial commit after re-initializing repository)
                 .fieldName("email")
                 .currentValue("invalid-email")
                 .expectedValue("valid@email.com")
                 .errorMessage("Invalid email format")
+<<<<<<< HEAD
                 .status(AnomalyStatus.valueOf("PENDING"))
+=======
+                .status("PENDING")
+>>>>>>> 745e2a7 (Initial commit after re-initializing repository)
                 .severity("HIGH")
                 .agencyCode("AG001")
                 .build();
@@ -101,12 +112,20 @@ class AnomalyControllerIntegrationTest {
         AnomalyDto createDto = AnomalyDto.builder()
                 .clientNumber("TEST002")
                 .clientName("Test Client 2")
+<<<<<<< HEAD
                 .clientType(ClientType.valueOf("INDIVIDUAL"))
+=======
+                .clientType("INDIVIDUAL")
+>>>>>>> 745e2a7 (Initial commit after re-initializing repository)
                 .fieldName("phone")
                 .currentValue("123")
                 .expectedValue("1234567890")
                 .errorMessage("Invalid phone")
+<<<<<<< HEAD
                 .status(AnomalyStatus.valueOf("PENDING"))
+=======
+                .status("PENDING")
+>>>>>>> 745e2a7 (Initial commit after re-initializing repository)
                 .severity("MEDIUM")
                 .agencyCode("AG001")
                 .build();
@@ -120,7 +139,11 @@ class AnomalyControllerIntegrationTest {
                 .getContentAsString();
 
         AnomalyDto updateDto = AnomalyDto.builder()
+<<<<<<< HEAD
                 .status(AnomalyStatus.valueOf("CORRECTED"))
+=======
+                .status("CORRECTED")
+>>>>>>> 745e2a7 (Initial commit after re-initializing repository)
                 .correctionValue("1234567890")
                 .build();
 
@@ -135,12 +158,20 @@ class AnomalyControllerIntegrationTest {
         AnomalyDto createDto = AnomalyDto.builder()
                 .clientNumber("TEST003")
                 .clientName("Test Client 3")
+<<<<<<< HEAD
                 .clientType(ClientType.valueOf("INDIVIDUAL"))
+=======
+                .clientType("INDIVIDUAL")
+>>>>>>> 745e2a7 (Initial commit after re-initializing repository)
                 .fieldName("address")
                 .currentValue("invalid")
                 .expectedValue("valid address")
                 .errorMessage("Invalid address")
+<<<<<<< HEAD
                 .status(AnomalyStatus.valueOf("PENDING"))
+=======
+                .status("PENDING")
+>>>>>>> 745e2a7 (Initial commit after re-initializing repository)
                 .severity("LOW")
                 .agencyCode("AG001")
                 .build();

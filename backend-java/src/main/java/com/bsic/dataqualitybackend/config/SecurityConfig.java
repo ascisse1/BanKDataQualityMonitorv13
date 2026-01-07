@@ -1,7 +1,13 @@
 package com.bsic.dataqualitybackend.config;
 
+<<<<<<< HEAD
 import lombok.RequiredArgsConstructor;
 import org.springframework.beans.factory.annotation.Value;
+=======
+import com.bsic.dataqualitybackend.security.JwtAuthenticationEntryPoint;
+import com.bsic.dataqualitybackend.security.JwtAuthenticationFilter;
+import lombok.RequiredArgsConstructor;
+>>>>>>> 745e2a7 (Initial commit after re-initializing repository)
 import org.springframework.context.annotation.Bean;
 import org.springframework.context.annotation.Configuration;
 import org.springframework.security.authentication.AuthenticationManager;
@@ -11,6 +17,7 @@ import org.springframework.security.config.annotation.authentication.configurati
 import org.springframework.security.config.annotation.method.configuration.EnableMethodSecurity;
 import org.springframework.security.config.annotation.web.builders.HttpSecurity;
 import org.springframework.security.config.annotation.web.configuration.EnableWebSecurity;
+<<<<<<< HEAD
 import org.springframework.security.core.GrantedAuthority;
 import org.springframework.security.core.authority.SimpleGrantedAuthority;
 import org.springframework.security.core.authority.mapping.GrantedAuthoritiesMapper;
@@ -40,12 +47,23 @@ import java.util.Set;
  * - No tokens exposed to JavaScript (XSS-safe)
  * - CSRF protection enabled
  */
+=======
+import org.springframework.security.config.annotation.web.configurers.AbstractHttpConfigurer;
+import org.springframework.security.config.http.SessionCreationPolicy;
+import org.springframework.security.core.userdetails.UserDetailsService;
+import org.springframework.security.crypto.bcrypt.BCryptPasswordEncoder;
+import org.springframework.security.crypto.password.PasswordEncoder;
+import org.springframework.security.web.SecurityFilterChain;
+import org.springframework.security.web.authentication.UsernamePasswordAuthenticationFilter;
+
+>>>>>>> 745e2a7 (Initial commit after re-initializing repository)
 @Configuration
 @EnableWebSecurity
 @EnableMethodSecurity
 @RequiredArgsConstructor
 public class SecurityConfig {
 
+<<<<<<< HEAD
     private final CorsConfigurationSource corsConfigurationSource;
     private final PasswordEncoder passwordEncoder;
     private final UserDetailsService userDetailsService;
@@ -58,10 +76,16 @@ public class SecurityConfig {
     private String realm;
 
     private static final String ROLE_PREFIX = "ROLE_";
+=======
+    private final JwtAuthenticationFilter jwtAuthFilter;
+    private final JwtAuthenticationEntryPoint jwtAuthEntryPoint;
+    private final UserDetailsService userDetailsService;
+>>>>>>> 745e2a7 (Initial commit after re-initializing repository)
 
     @Bean
     public SecurityFilterChain securityFilterChain(HttpSecurity http) throws Exception {
         http
+<<<<<<< HEAD
                 // CSRF protection for session-based auth
                 .csrf(csrf -> csrf
                         .csrfTokenRepository(CookieCsrfTokenRepository.withHttpOnlyFalse())
@@ -113,10 +137,37 @@ public class SecurityConfig {
                         .clearAuthentication(true)
                         .deleteCookies("JSESSIONID")
                 );
+=======
+            .csrf(AbstractHttpConfigurer::disable)
+            .cors(cors -> cors.configure(http))
+            .authorizeHttpRequests(auth -> auth
+                .requestMatchers(
+                    "/api/auth/**",
+                    "/api/public/**",
+                    "/actuator/**",
+                    "/camunda/**",
+                    "/swagger-ui/**",
+                    "/v3/api-docs/**"
+                ).permitAll()
+                .requestMatchers("/api/admin/**").hasRole("ADMIN")
+                .requestMatchers("/api/auditor/**").hasAnyRole("ADMIN", "AUDITOR")
+                .requestMatchers("/api/agency/**").hasAnyRole("ADMIN", "AGENCY_USER")
+                .anyRequest().authenticated()
+            )
+            .sessionManagement(session -> session
+                .sessionCreationPolicy(SessionCreationPolicy.STATELESS)
+            )
+            .exceptionHandling(exception -> exception
+                .authenticationEntryPoint(jwtAuthEntryPoint)
+            )
+            .authenticationProvider(authenticationProvider())
+            .addFilterBefore(jwtAuthFilter, UsernamePasswordAuthenticationFilter.class);
+>>>>>>> 745e2a7 (Initial commit after re-initializing repository)
 
         return http.build();
     }
 
+<<<<<<< HEAD
     /**
      * OIDC logout handler - redirects to Keycloak end_session_endpoint.
      */
@@ -189,11 +240,17 @@ public class SecurityConfig {
     /**
      * Authentication provider for legacy services (backward compatibility).
      */
+=======
+>>>>>>> 745e2a7 (Initial commit after re-initializing repository)
     @Bean
     public AuthenticationProvider authenticationProvider() {
         DaoAuthenticationProvider authProvider = new DaoAuthenticationProvider();
         authProvider.setUserDetailsService(userDetailsService);
+<<<<<<< HEAD
         authProvider.setPasswordEncoder(passwordEncoder);
+=======
+        authProvider.setPasswordEncoder(passwordEncoder());
+>>>>>>> 745e2a7 (Initial commit after re-initializing repository)
         return authProvider;
     }
 
@@ -201,4 +258,12 @@ public class SecurityConfig {
     public AuthenticationManager authenticationManager(AuthenticationConfiguration config) throws Exception {
         return config.getAuthenticationManager();
     }
+<<<<<<< HEAD
+=======
+
+    @Bean
+    public PasswordEncoder passwordEncoder() {
+        return new BCryptPasswordEncoder(12);
+    }
+>>>>>>> 745e2a7 (Initial commit after re-initializing repository)
 }

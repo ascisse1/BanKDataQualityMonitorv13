@@ -51,17 +51,29 @@ class AnomalyServiceTest {
         testAnomaly.setStatus(AnomalyStatus.PENDING);
         testAnomaly.setSeverity("HIGH");
         testAnomaly.setAgencyCode("AG001");
+<<<<<<< HEAD
+=======
+        testAnomaly.setDetectedAt(LocalDateTime.now());
+>>>>>>> 745e2a7 (Initial commit after re-initializing repository)
 
         testAnomalyDto = AnomalyDto.builder()
                 .id(1L)
                 .clientNumber("C001")
                 .clientName("Test Client")
+<<<<<<< HEAD
                 .clientType(ClientType.valueOf("INDIVIDUAL"))
+=======
+                .clientType("INDIVIDUAL")
+>>>>>>> 745e2a7 (Initial commit after re-initializing repository)
                 .fieldName("email")
                 .currentValue("invalid-email")
                 .expectedValue("valid@email.com")
                 .errorMessage("Invalid email format")
+<<<<<<< HEAD
                 .status(AnomalyStatus.valueOf("PENDING"))
+=======
+                .status("PENDING")
+>>>>>>> 745e2a7 (Initial commit after re-initializing repository)
                 .severity("HIGH")
                 .agencyCode("AG001")
                 .build();
@@ -112,7 +124,11 @@ class AnomalyServiceTest {
         when(anomalyRepository.findById(1L)).thenReturn(Optional.of(testAnomaly));
         when(anomalyRepository.save(any(Anomaly.class))).thenReturn(testAnomaly);
 
+<<<<<<< HEAD
         testAnomalyDto.setStatus(AnomalyStatus.valueOf("CORRECTED"));
+=======
+        testAnomalyDto.setStatus("CORRECTED");
+>>>>>>> 745e2a7 (Initial commit after re-initializing repository)
         AnomalyDto result = anomalyService.updateAnomaly(1L, testAnomalyDto);
 
         assertThat(result).isNotNull();

@@ -1,6 +1,7 @@
 /** @type {import('tailwindcss').Config} */
 export default {
   content: ['./index.html', './src/**/*.{js,ts,jsx,tsx}'],
+<<<<<<< HEAD
   darkMode: 'class',
   theme: {
     extend: {
@@ -385,8 +386,124 @@ export default {
         'grid-sm': '16px 16px',
         'grid-md': '24px 24px',
         'grid-lg': '32px 32px',
+=======
+  theme: {
+    extend: {
+      colors: {
+        primary: {
+          50: '#EEF2F7',
+          100: '#D0DCEB',
+          200: '#A1B8D7',
+          300: '#7295C3',
+          400: '#4371AF',
+          500: '#1A365D',
+          600: '#152D4D',
+          700: '#11243D',
+          800: '#0C1A2E',
+          900: '#07101E',
+        },
+        secondary: {
+          50: '#F9F7F2',
+          100: '#FCF3D9',
+          200: '#F9E7B3',
+          300: '#F5DA8C',
+          400: '#F2CE66',
+          500: '#F0B429',
+          600: '#C18F21',
+          700: '#936B19',
+          800: '#644810',
+          900: '#362408',
+        },
+        success: {
+          50: '#E6F7EF',
+          100: '#C1EBDA',
+          200: '#7BD3AD',
+          300: '#34BB80',
+          400: '#299764',
+          500: '#1E7349',
+          600: '#185D3B',
+          700: '#12472D',
+          800: '#0C311E',
+          900: '#061A10',
+        },
+        warning: {
+          50: '#FEF8EE',
+          100: '#FDEBCC',
+          200: '#FAD699',
+          300: '#F8C266',
+          400: '#F7AD33',
+          500: '#E08E00',
+          600: '#B37200',
+          700: '#865500',
+          800: '#593900',
+          900: '#2D1C00',
+        },
+        error: {
+          50: '#FDEEEE',
+          100: '#FBCDCC',
+          200: '#F69B9A',
+          300: '#F26967',
+          400: '#EF4744',
+          500: '#D92C29',
+          600: '#AE2321',
+          700: '#821A19',
+          800: '#571110',
+          900: '#2B0908',
+        },
+        gray: {
+          50: '#F9FAFB',
+          100: '#F3F4F6',
+          200: '#E5E7EB',
+          300: '#D1D5DB',
+          400: '#9CA3AF',
+          500: '#6B7280',
+          600: '#4B5563',
+          700: '#374151',
+          800: '#1F2937',
+          900: '#111827',
+        },
+      },
+      fontFamily: {
+        sans: ['Inter', 'system-ui', 'sans-serif'],
+      },
+      boxShadow: {
+        card: '0 2px 8px rgba(0, 0, 0, 0.08)',
+        dropdown: '0 4px 16px rgba(0, 0, 0, 0.1)',
+        'card-hover': '0 4px 12px rgba(0, 0, 0, 0.12)',
+      },
+      borderRadius: {
+        'card': '0.5rem',
+      },
+      animation: {
+        'fade-in': 'fadeIn 0.5s ease-in-out',
+        'slide-up': 'slideUp 0.4s ease-out',
+        'slide-right': 'slideRight 0.4s ease-out',
+        'scale-up': 'scaleUp 0.3s ease-out',
+      },
+      keyframes: {
+        fadeIn: {
+          '0%': { opacity: 0 },
+          '100%': { opacity: 1 },
+        },
+        slideUp: {
+          '0%': { transform: 'translateY(20px)', opacity: 0 },
+          '100%': { transform: 'translateY(0)', opacity: 1 },
+        },
+        slideRight: {
+          '0%': { transform: 'translateX(-20px)', opacity: 0 },
+          '100%': { transform: 'translateX(0)', opacity: 1 },
+        },
+        scaleUp: {
+          '0%': { transform: 'scale(0.95)', opacity: 0 },
+          '100%': { transform: 'scale(1)', opacity: 1 },
+        },
+>>>>>>> 745e2a7 (Initial commit after re-initializing repository)
       },
     },
   },
   plugins: [],
+<<<<<<< HEAD
 };
+=======
+};
+>>>>>>> 745e2a7 (Initial commit after re-initializing repository)
