@@ -40,9 +40,9 @@ spring:
         connection-test-query: SELECT FIRST 1 1 FROM systables
 
   jpa:
-    database-platform: org.hibernate.dialect.MySQLDialect
+    database-platform: org.hibernate.dialect.PostgreSQLDialect
     hibernate:
-      ddl-auto: none
+      ddl-auto: validate
     show-sql: false
     properties:
       hibernate:
@@ -130,7 +130,7 @@ logging:
 
 app:
   jwt:
-    secret: ${JWT_SECRET:YmFua19kYXRhX3F1YWxpdHlfc2VjcmV0X2tleV8yMDI0X2NoYW5nZV9pbl9wcm9kdWN0aW9uX3NlY3VyZV9rZXlfZm9yX2p3dF90b2tlbnM=}
+    secret: ${JWT_SECRET:bsic-data-quality-secret-key-change-in-production-minimum-256-bits}
     expiration: 86400000
   cors:
     allowed-origins: ${CORS_ORIGINS:http://localhost:5173,http://localhost:3000}

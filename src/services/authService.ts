@@ -43,9 +43,9 @@ class AuthService {
 
   async login(credentials: LoginRequest): Promise<LoginResponse> {
     const response = await apiRequest<LoginResponse>(
-        '/api/auth/login',
-        'POST',
-        credentials
+      '/api/auth/login',
+      'POST',
+      credentials
     );
 
     if (response.success && response.data) {
@@ -58,9 +58,9 @@ class AuthService {
 
   async changePassword(request: ChangePasswordRequest): Promise<{ success: boolean; message: string }> {
     const response = await apiRequest<{ success: boolean; message: string }>(
-        '/api/auth/change-password',
-        'POST',
-        request
+      '/api/auth/change-password',
+      'POST',
+      request
     );
     return response;
   }

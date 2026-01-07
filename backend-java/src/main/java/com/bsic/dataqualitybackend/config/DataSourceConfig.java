@@ -2,11 +2,8 @@ package com.bsic.dataqualitybackend.config;
 
 import com.zaxxer.hikari.HikariConfig;
 import com.zaxxer.hikari.HikariDataSource;
-import org.slf4j.Logger;
-import org.slf4j.LoggerFactory;
 import org.springframework.beans.factory.annotation.Qualifier;
-import org.springframework.beans.factory.annotation.Value;
-import org.springframework.boot.autoconfigure.condition.ConditionalOnProperty;
+import org.springframework.boot.context.properties.ConfigurationProperties;
 import org.springframework.context.annotation.Bean;
 import org.springframework.context.annotation.Configuration;
 import org.springframework.context.annotation.Primary;
@@ -17,24 +14,15 @@ import javax.sql.DataSource;
 @Configuration
 public class DataSourceConfig {
 
-    private static final Logger log = LoggerFactory.getLogger(DataSourceConfig.class);
-
-    @Value("${spring.datasource.primary.jdbc-url}")
-    private String primaryJdbcUrl;
-
-    @Value("${spring.datasource.primary.username}")
-    private String primaryUsername;
-
-    @Value("${spring.datasource.primary.password}")
-    private String primaryPassword;
-
     @Primary
     @Bean(name = "primaryDataSource")
+    @ConfigurationProperties("spring.datasource.primary.hikari")
     public DataSource primaryDataSource() {
         HikariConfig config = new HikariConfig();
-        config.setJdbcUrl(System.getenv().getOrDefault("DB_URL", primaryJdbcUrl));
-        config.setUsername(System.getenv().getOrDefault("DB_USER", primaryUsername));
-        config.setPassword(System.getenv().getOrDefault("DB_PASSWORD", primaryPassword));
+        config.setJdbcUrl(System.getenv().getOrDefault("DB_URL",
+            "jdbc:mysql://localhost:3306/bank_data_quality?useSSL=false&allowPublicKeyRetrieval=true&serverTimezone=UTC"));
+        config.setUsername(System.getenv().getOrDefault("DB_USER", "root"));
+        config.setPassword(System.getenv().getOrDefault("DB_PASSWORD", ""));
         config.setDriverClassName("com.mysql.cj.jdbc.Driver");
         config.setPoolName("MySQLPool");
         config.setMaximumPoolSize(20);
@@ -47,50 +35,35 @@ public class DataSourceConfig {
     }
 
     @Bean(name = "informixDataSource")
-    @ConditionalOnProperty(name = "app.features.informix-integration", havingValue = "true", matchIfMissing = false)
+    @ConfigurationProperties("spring.datasource.informix.hikari")
     public DataSource informixDataSource() {
-        log.info("🔗 Initializing Informix DataSource (JDBC)...");
+        HikariConfig config = new HikariConfig();
 
-        try {
-            HikariConfig config = new HikariConfig();
+        String host = System.getenv().getOrDefault("INFORMIX_HOST", "10.3.0.66");
+        String port = System.getenv().getOrDefault("INFORMIX_PORT", "1526");
+        String database = System.getenv().getOrDefault("INFORMIX_DATABASE", "bdmsa");
+        String server = System.getenv().getOrDefault("INFORMIX_SERVER", "ol_bdmsa");
+        String user = System.getenv().getOrDefault("INFORMIX_USER", "bank");
+        String password = System.getenv().getOrDefault("INFORMIX_PASSWORD", "bank");
 
-            String host = System.getenv().getOrDefault("INFORMIX_HOST", "10.3.0.66");
-            String port = System.getenv().getOrDefault("INFORMIX_PORT", "1526");
-            String database = System.getenv().getOrDefault("INFORMIX_DATABASE", "bdmsa");
-            String server = System.getenv().getOrDefault("INFORMIX_SERVER", "ol_bdmsa");
-            String user = System.getenv().getOrDefault("INFORMIX_USER", "bank");
-            String password = System.getenv().getOrDefault("INFORMIX_PASSWORD", "bank");
+        String jdbcUrl = String.format(
+            "jdbc:informix-sqli://%s:%s/%s:INFORMIXSERVER=%s;DELIMIDENT=Y;DB_LOCALE=en_US.utf8;CLIENT_LOCALE=en_US.utf8",
+            host, port, database, server
+        );
 
-            // Configuration avec locale française ISO 8859-1 (standard Informix)
-            String jdbcUrl = String.format(
-                "jdbc:informix-sqli://%s:%s/%s:INFORMIXSERVER=%s;DELIMIDENT=Y;DB_LOCALE=fr_FR.819;CLIENT_LOCALE=fr_FR.819",
-                host, port, database, server
-            );
+        config.setJdbcUrl(jdbcUrl);
+        config.setUsername(user);
+        config.setPassword(password);
+        config.setDriverClassName("com.informix.jdbc.IfxDriver");
+        config.setPoolName("InformixPool");
+        config.setMaximumPoolSize(10);
+        config.setMinimumIdle(2);
+        config.setConnectionTimeout(30000);
+        config.setIdleTimeout(300000);
+        config.setMaxLifetime(1800000);
+        config.setConnectionTestQuery("SELECT FIRST 1 1 FROM systables");
 
-            log.info("   JDBC URL: {}", jdbcUrl.replaceAll(":[^:]+@", ":****@"));
-
-            config.setJdbcUrl(jdbcUrl);
-            config.setUsername(user);
-            config.setPassword(password);
-            config.setDriverClassName("com.informix.jdbc.IfxDriver");
-            config.setPoolName("InformixPool");
-            config.setMaximumPoolSize(10);
-            config.setMinimumIdle(1);
-            config.setConnectionTimeout(10000);
-            config.setIdleTimeout(300000);
-            config.setMaxLifetime(1800000);
-            config.setConnectionTestQuery("SELECT FIRST 1 1 FROM systables");
-            config.setInitializationFailTimeout(-1); // Ne pas échouer au démarrage
-
-            HikariDataSource dataSource = new HikariDataSource(config);
-            log.info("✅ Informix DataSource initialized successfully");
-            return dataSource;
-
-        } catch (Exception e) {
-            log.error("❌ Failed to initialize Informix DataSource: {}", e.getMessage());
-            log.warn("⚠️  Application will start in DEGRADED MODE without Informix");
-            throw e;
-        }
+        return new HikariDataSource(config);
     }
 
     @Primary
@@ -100,9 +73,7 @@ public class DataSourceConfig {
     }
 
     @Bean(name = "informixJdbcTemplate")
-    @ConditionalOnProperty(name = "app.features.informix-integration", havingValue = "true", matchIfMissing = false)
     public JdbcTemplate informixJdbcTemplate(@Qualifier("informixDataSource") DataSource dataSource) {
-        log.info("✅ Informix JdbcTemplate configured");
         return new JdbcTemplate(dataSource);
     }
 }

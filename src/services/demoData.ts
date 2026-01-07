@@ -4,7 +4,7 @@
 // Create a demo data provider for the presentation
 export const createDemoDataProvider = () => {
   console.log('🎭 Using demo data provider with sample data');
-
+  
   return {
     getDemoData: () => demoData,
     getClientStats: () => demoData.clientStats,
@@ -54,28 +54,28 @@ export const createDemoDataProvider = () => {
     getCorporateFatcaClients: (page = 1, limit = 10) => {
       // Create corporate FATCA clients from regular FATCA clients
       const corporateFatcaClients = demoData.fatcaClients
-          .filter((_, index) => index % 3 === 0)
-          .map(client => ({
-            cli: client.cli.replace('CLI', 'ENT'),
-            nom: client.nom.replace('CLIENT', 'ENTREPRISE'),
-            raisonSociale: `ENTREPRISE FATCA ${client.cli.substring(3)}`,
-            dateEntreeRelation: client.date_entree_relation,
-            statusClient: client.status_client,
-            paysImmatriculation: client.pays_naissance,
-            paysResidenceFiscale: client.nationalite,
-            adresse: client.adresse,
-            paysAdresse: client.pays_adresse,
-            telephone: client.telephone,
-            agence: client.cli.substring(3, 5),
-            fatcaStatus: client.fatca_status,
-            fatcaDate: client.fatca_date,
-            fatcaUti: client.fatca_uti,
-            notes: client.notes
-          }));
-
+        .filter((_, index) => index % 3 === 0)
+        .map(client => ({
+          cli: client.cli.replace('CLI', 'ENT'),
+          nom: client.nom.replace('CLIENT', 'ENTREPRISE'),
+          raisonSociale: `ENTREPRISE FATCA ${client.cli.substring(3)}`,
+          dateEntreeRelation: client.date_entree_relation,
+          statusClient: client.status_client,
+          paysImmatriculation: client.pays_naissance,
+          paysResidenceFiscale: client.nationalite,
+          adresse: client.adresse,
+          paysAdresse: client.pays_adresse,
+          telephone: client.telephone,
+          agence: client.cli.substring(3, 5),
+          fatcaStatus: client.fatca_status,
+          fatcaDate: client.fatca_date,
+          fatcaUti: client.fatca_uti,
+          notes: client.notes
+        }));
+      
       const startIndex = (page - 1) * limit;
       const endIndex = startIndex + limit;
-
+      
       return {
         data: corporateFatcaClients.slice(startIndex, endIndex),
         total: corporateFatcaClients.length,
@@ -105,7 +105,7 @@ export const demoData = {
     anomalies: 55000,
     fatca: 12470
   },
-
+  
   // Métriques de validation
   validationMetrics: [
     {
@@ -127,7 +127,7 @@ export const demoData = {
       quality_score: 92.65
     }
   ],
-
+  
   // Anomalies clients particuliers
   individualAnomalies: [
     {
@@ -281,7 +281,7 @@ export const demoData = {
       tid: "PSP"
     }
   ],
-
+  
   // Anomalies clients entreprises
   corporateAnomalies: [
     {
@@ -424,7 +424,7 @@ export const demoData = {
       lienbq: "Client"
     }
   ],
-
+  
   // Anomalies par agence
   branchAnomalies: [
     {
@@ -478,7 +478,7 @@ export const demoData = {
       nombre_anomalies: 2765
     }
   ],
-
+  
   // Statistiques FATCA
   fatcaStats: {
     total: 1250,
@@ -490,7 +490,7 @@ export const demoData = {
     pending: 0,
     currentMonth: 125
   },
-
+  
   // Clients FATCA
   fatcaClients: [
     {
@@ -579,7 +579,7 @@ export const demoData = {
       notes: "Client non soumis à FATCA après vérification"
     }
   ],
-
+  
   // Indicateurs FATCA
   fatcaIndicators: {
     nationality: 425,
@@ -588,7 +588,7 @@ export const demoData = {
     phone: 180,
     proxy: 60
   },
-
+  
   // Statistiques de correction par agence
   agencyCorrectionStats: [
     {
@@ -642,7 +642,7 @@ export const demoData = {
       last_updated: "2025-06-29T02:24:58.940Z"
     }
   ],
-
+  
   // Statistiques de correction hebdomadaires
   weeklyCorrectionStats: [
     {
@@ -718,7 +718,7 @@ export const demoData = {
       count: 18
     }
   ],
-
+  
   // Historique des chargements de données
   dataLoadHistory: [
     {
@@ -772,7 +772,7 @@ export const demoData = {
       execution_time_ms: 23456
     }
   ],
-
+  
   // Utilisateurs par agence
   usersByAgency: [
     {
@@ -801,7 +801,7 @@ export const demoData = {
       last_activity: "2025-06-24T11:55:15.000Z"
     }
   ],
-
+  
   // Données de suivi global
   globalTrackingData: [
     {
@@ -926,7 +926,7 @@ export const demoData = {
 export function getPaginatedData<T>(data: T[], page: number, limit: number) {
   const startIndex = (page - 1) * limit;
   const endIndex = startIndex + limit;
-
+  
   return {
     data: data.slice(startIndex, endIndex),
     page,

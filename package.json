@@ -5,15 +5,23 @@
   "type": "module",
   "scripts": {
     "dev": "vite",
+    "dev:full": "concurrently \"npm run server\" \"npm run dev -- --host\"",
+    "dev:server": "node server/index.js",
     "build": "vite build",
     "build:check": "tsc -b && vite build",
+    "postbuild": "mkdir -p functions && cp -r server functions/ && node -e \"const fs=require('fs'); const pkg=JSON.parse(fs.readFileSync('package.json')); delete pkg.type; fs.writeFileSync('functions/package.json', JSON.stringify(pkg, null, 2));\"",
     "lint": "eslint .",
     "preview": "vite preview",
+    "server": "node server/index.js",
     "presentation": "node presentation.js",
     "setup:mysql": "node scripts/setup-mysql.js",
     "seed:mysql": "node scripts/seed-mysql.js",
     "db:init": "npm run setup:mysql && npm run seed:mysql",
-    "db:reconciliation": "node scripts/setup-reconciliation.js"
+    "db:reconciliation": "node scripts/setup-reconciliation.js",
+    "test:informix": "node scripts/test-informix-connection.js",
+    "test:dsn": "node scripts/test-dsn-connection.js",
+    "test:manual": "node scripts/test-manual-connection.js",
+    "diagnose:informix": "node scripts/diagnose-informix.js"
   },
   "dependencies": {
     "@supabase/supabase-js": "^2.50.3",

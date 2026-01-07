@@ -101,7 +101,7 @@ class DatabaseService {
   private retryCount: Map<string, number> = new Map();
   private abortControllers: Map<string, AbortController> = new Map();
   private activeRequests: Set<string> = new Set();
-
+  
   // Constants
   private readonly CACHE_TTL = 5 * 60 * 1000; // 5 minutes
   private readonly MAX_RETRIES = 2;
@@ -111,15 +111,15 @@ class DatabaseService {
   private readonly EXPORT_TIMEOUT = 15000; // 15 seconds timeout for exports
   private readonly PREFETCH_TIMEOUT = 5000; // 5 seconds timeout for prefetch requests
 
-  private constructor() {
+  private constructor() {    
     // Initialize service
     this.cleanCache();
     tracer.info('database', `Database service initialized (${isDemoMode ? 'Demo Mode' : 'Production Mode'})`);
-
+    
     // Set up periodic cache cleaning
     setInterval(() => this.cleanCache(), 60 * 1000); // Clean every minute
     setInterval(() => this.cleanRequestQueue(), 30 * 1000); // Clean request queue every 30 seconds
-
+    
     // Clean up aborted controllers
     window.addEventListener('beforeunload', () => {
       this.abortAllRequests();
@@ -171,11 +171,11 @@ class DatabaseService {
   }
 
   private getCacheKey(endpoint: string, params?: Record<string, any>): string {
-    const sortedParams = params ?
-        Object.keys(params).sort().reduce((result, key) => {
-          result[key] = params[key];
-          return result;
-        }, {} as Record<string, any>) : {};
+    const sortedParams = params ? 
+      Object.keys(params).sort().reduce((result, key) => {
+        result[key] = params[key];
+        return result;
+      }, {} as Record<string, any>) : {};
     return `${endpoint}${JSON.stringify(sortedParams)}`;
   }
 
@@ -203,8 +203,8 @@ class DatabaseService {
   }
 
   private async fetchWithDeduplication<T>(
-      key: string,
-      fetchFn: () => Promise<T>
+    key: string,
+    fetchFn: () => Promise<T>
   ): Promise<T> {
     // Check if request is already in progress
     let promise = this.loadingPromises.get(key);
@@ -226,17 +226,17 @@ class DatabaseService {
         this.abortControllers.delete(key);
       }
     });
-
+    
     this.loadingPromises.set(key, promise);
     return promise;
   }
 
   private async fetchApi<T>(
-      endpoint: string,
-      options: RequestInit = {},
-      params?: Record<string, any>,
-      isPrefetch: boolean = false,
-      useFallback: boolean = true
+    endpoint: string,
+    options: RequestInit = {},
+    params?: Record<string, any>,
+    isPrefetch: boolean = false,
+    useFallback: boolean = true
   ): Promise<T> {
     const cacheKey = this.getCacheKey(endpoint, params);
     const cached = this.getFromCache<T>(cacheKey);
@@ -304,7 +304,7 @@ class DatabaseService {
       clearTimeout(timeoutId);
 
       if (error instanceof Error && error.name === 'AbortError') {
-        tracer.warning('database', `Request timeout for ${endpoint}`, { timeout });
+        tracer.warn('database', `Request timeout for ${endpoint}`, { timeout });
         logger.warn('database', `Request timeout for ${endpoint}`, { timeout });
       } else {
         tracer.error('database', `API request failed for ${endpoint}`, { error });
@@ -323,62 +323,62 @@ class DatabaseService {
 
   private getFallbackData<T>(endpoint: string, params?: Record<string, any>): T {
     tracer.info('database', `Using fallback data for ${endpoint}`, { params });
-
+    
     // Return structured demo data based on endpoint
     if (endpoint.includes('/stats/clients')) {
       return demoDataProvider.getClientStats() as unknown as T;
     }
-
+    
     if (endpoint.includes('/validation-metrics')) {
       return demoDataProvider.getValidationMetrics() as unknown as T;
     }
-
+    
     if (endpoint.includes('/fatca/stats')) {
       return demoDataProvider.getFatcaStats() as unknown as T;
     }
-
+    
     if (endpoint.includes('/fatca/indicators')) {
       return demoDataProvider.getFatcaIndicators() as unknown as T;
     }
-
+    
     if (endpoint.includes('/anomalies/by-branch')) {
       return demoDataProvider.getAnomaliesByBranch() as unknown as T;
     }
-
+    
     if (endpoint.includes('/tracking/global')) {
       return demoDataProvider.getGlobalTrackingData() as unknown as T;
     }
-
+    
     if (endpoint.includes('/anomalies/individual')) {
       const page = params?.page || 1;
       const limit = params?.limit || 10;
       return demoDataProvider.getIndividualAnomalies(page, limit) as unknown as T;
     }
-
+    
     if (endpoint.includes('/anomalies/corporate')) {
       const page = params?.page || 1;
       const limit = params?.limit || 10;
       return demoDataProvider.getCorporateAnomalies(page, limit) as unknown as T;
     }
-
+    
     if (endpoint.includes('/anomalies/institutional')) {
       const page = params?.page || 1;
       const limit = params?.limit || 10;
       return demoDataProvider.getInstitutionalAnomalies(page, limit) as unknown as T;
     }
-
+    
     if (endpoint.includes('/fatca/clients')) {
       const page = params?.page || 1;
       const limit = params?.limit || 10;
       return demoDataProvider.getFatcaClients(page, limit) as unknown as T;
     }
-
+    
     if (endpoint.includes('/fatca/corporate')) {
       const page = params?.page || 1;
       const limit = params?.limit || 10;
       return demoDataProvider.getCorporateFatcaClients(page, limit) as unknown as T;
     }
-
+    
     // For other paginated endpoints, return empty paginated response
     if (endpoint.includes('/anomalies/') || endpoint.includes('/fatca/') || endpoint.includes('/clients')) {
       return {
@@ -388,7 +388,7 @@ class DatabaseService {
         total: 0
       } as unknown as T;
     }
-
+    
     // Default fallback with safe structure
     return {
       data: [],
@@ -413,7 +413,7 @@ class DatabaseService {
   public async testConnection(): Promise<{ success: boolean; message: string }> {
     try {
       tracer.info('database', 'Testing database connection');
-
+      
       if (!isDemoMode) {
         // Try Supabase connection first
         try {
@@ -426,7 +426,7 @@ class DatabaseService {
           tracer.warning('database', 'Supabase connection test failed, falling back to API', { error: supabaseError });
         }
       }
-
+      
       // Fall back to API connection
       try {
         const result = await this.fetchApi<{ message: string; totalRecords: number }>('/health', {}, {}, false, false);
@@ -533,28 +533,28 @@ class DatabaseService {
   public async getCorporateFatcaClients(page = 1, limit = this.DEFAULT_LIMIT, forExport = false, status: string | null = null): Promise<PaginatedResponse<any>> {
     try {
       tracer.info('database', 'Getting corporate FATCA clients', { page, limit, forExport, status });
-
+      
       // Try to get data from Supabase first
       try {
         const supabaseData = await supabaseService.getCorporateFatcaClients(page, limit, forExport, status);
         return supabaseData;
       } catch (supabaseError) {
         tracer.warning('database', 'Failed to get corporate FATCA clients from Supabase, falling back to API', { error: supabaseError });
-
+        
         // Fall back to API
         const queryLimit = forExport ? 5000 : Math.min(limit, this.MAX_LIMIT);
-        const params: Record<string, any> = {
-          page,
+        const params: Record<string, any> = { 
+          page, 
           limit: queryLimit,
-          forExport
+          forExport 
         };
-
+        
         if (status) {
           params.status = status;
         }
-
+        
         const result = await this.fetchApi<PaginatedResponse<any>>('/fatca/corporate', {}, params);
-        tracer.info('database', 'Corporate FATCA clients retrieved successfully', {
+        tracer.info('database', 'Corporate FATCA clients retrieved successfully', { 
           count: result.data?.length || 0,
           total: result.total || 0
         });
@@ -570,25 +570,25 @@ class DatabaseService {
   public async getIndividualAnomalies(page = 1, limit = this.DEFAULT_LIMIT, forExport = false, params: Record<string, any> = {}): Promise<PaginatedResponse<any>> {
     try {
       tracer.info('database', 'Getting individual anomalies', { page, limit, forExport, ...params });
-
+      
       // Try to get data from Supabase first
       try {
         const supabaseData = await supabaseService.getIndividualAnomalies(page, limit, forExport, params);
         return supabaseData;
       } catch (supabaseError) {
         tracer.warning('database', 'Failed to get individual anomalies from Supabase, falling back to API', { error: supabaseError });
-
+        
         // Fall back to API
         const queryLimit = forExport ? 5000 : Math.min(limit, this.MAX_LIMIT);
-        const queryParams = {
-          page,
+        const queryParams = { 
+          page, 
           limit: queryLimit,
           forExport,
           ...params
         };
-
+        
         const result = await this.fetchApi<PaginatedResponse<any>>('/anomalies/individual', {}, queryParams);
-        tracer.info('database', 'Individual anomalies retrieved successfully', {
+        tracer.info('database', 'Individual anomalies retrieved successfully', { 
           count: result.data?.length || 0,
           total: result.total || 0
         });
@@ -604,25 +604,25 @@ class DatabaseService {
   public async getCorporateAnomalies(page = 1, limit = this.DEFAULT_LIMIT, forExport = false, params: Record<string, any> = {}): Promise<PaginatedResponse<any>> {
     try {
       tracer.info('database', 'Getting corporate anomalies', { page, limit, forExport, ...params });
-
+      
       // Try to get data from Supabase first
       try {
         const supabaseData = await supabaseService.getCorporateAnomalies(page, limit, forExport, params);
         return supabaseData;
       } catch (supabaseError) {
         tracer.warning('database', 'Failed to get corporate anomalies from Supabase, falling back to API', { error: supabaseError });
-
+        
         // Fall back to API
         const queryLimit = forExport ? 5000 : Math.min(limit, this.MAX_LIMIT);
-        const queryParams = {
-          page,
+        const queryParams = { 
+          page, 
           limit: queryLimit,
           forExport,
           ...params
         };
-
+        
         const result = await this.fetchApi<PaginatedResponse<any>>('/anomalies/corporate', {}, queryParams);
-        tracer.info('database', 'Corporate anomalies retrieved successfully', {
+        tracer.info('database', 'Corporate anomalies retrieved successfully', { 
           count: result.data?.length || 0,
           total: result.total || 0
         });
@@ -638,25 +638,25 @@ class DatabaseService {
   public async getInstitutionalAnomalies(page = 1, limit = this.DEFAULT_LIMIT, forExport = false, params: Record<string, any> = {}): Promise<PaginatedResponse<any>> {
     try {
       tracer.info('database', 'Getting institutional anomalies', { page, limit, forExport, ...params });
-
+      
       // Try to get data from Supabase first
       try {
         const supabaseData = await supabaseService.getInstitutionalAnomalies(page, limit, forExport, params);
         return supabaseData;
       } catch (supabaseError) {
         tracer.warning('database', 'Failed to get institutional anomalies from Supabase, falling back to API', { error: supabaseError });
-
+        
         // Fall back to API
         const queryLimit = forExport ? 5000 : Math.min(limit, this.MAX_LIMIT);
-        const queryParams = {
-          page,
+        const queryParams = { 
+          page, 
           limit: queryLimit,
           forExport,
           ...params
         };
-
+        
         const result = await this.fetchApi<PaginatedResponse<any>>('/anomalies/institutional', {}, queryParams);
-        tracer.info('database', 'Institutional anomalies retrieved successfully', {
+        tracer.info('database', 'Institutional anomalies retrieved successfully', { 
           count: result.data?.length || 0,
           total: result.total || 0
         });
@@ -672,14 +672,14 @@ class DatabaseService {
   public async getAnomaliesByBranch(): Promise<BranchAnomaly[]> {
     try {
       tracer.info('database', 'Getting anomalies by branch');
-
+      
       // Try to get data from Supabase first
       try {
         const supabaseData = await supabaseService.getAnomaliesByBranch();
         return supabaseData;
       } catch (supabaseError) {
         tracer.warning('database', 'Failed to get anomalies by branch from Supabase, falling back to API', { error: supabaseError });
-
+        
         // Fall back to API
         const data = await this.fetchApi<BranchAnomaly[]>('/anomalies/by-branch');
         tracer.info('database', 'Anomalies by branch retrieved successfully', { count: data?.length || 0 });
@@ -702,34 +702,34 @@ class DatabaseService {
         tracer.info('database', 'Using demo data for global tracking data (Netlify or demo mode)');
         return demoDataProvider.getGlobalTrackingData();
       }
-
+      
       const params: Record<string, any> = {};
-
+      
       if (startDate) {
         params.startDate = startDate;
       }
-
+      
       // Try to get data from Supabase first
       try {
         const supabaseData = await supabaseService.getGlobalTrackingData(startDate || '', endDate || '', clientTypes || [], agencyCode);
         return supabaseData;
       } catch (supabaseError) {
         tracer.warning('database', 'Failed to get global tracking data from Supabase, falling back to API', { error: supabaseError });
-
+        
         // Fall back to API
         const params: Record<string, any> = {
           startDate,
           endDate
         };
-
+        
         if (clientTypes && clientTypes.length > 0 && clientTypes.length < 3) {
           params.clientTypes = clientTypes.join(',');
         }
-
+        
         if (agencyCode) {
           params.agencyCode = agencyCode;
         }
-
+        
         const result = await this.fetchApi<TrackingData[]>('/tracking/global', {}, params);
         tracer.info('database', 'Global tracking data retrieved successfully', { count: result?.length || 0 });
         return result;
@@ -744,14 +744,14 @@ class DatabaseService {
   public async executeQuery(query: string) {
     try {
       tracer.info('database', 'Executing custom query', { queryLength: query.length });
-
+      
       // Try to execute query in Supabase first
       try {
         const supabaseResult = await supabaseService.executeQuery(query);
         return supabaseResult;
       } catch (supabaseError) {
         tracer.warning('database', 'Failed to execute query in Supabase, falling back to API', { error: supabaseError });
-
+        
         // Fall back to API
         const result = await this.fetchApi('/query/execute', {
           method: 'POST',
@@ -770,21 +770,21 @@ class DatabaseService {
   public async clearCache(): Promise<void> {
     try {
       tracer.info('database', 'Clearing cache');
-
+      
       // Clear Supabase cache
       try {
         await supabaseService.clearCache();
       } catch (supabaseError) {
         tracer.warning('database', 'Failed to clear Supabase cache', { error: supabaseError });
       }
-
+      
       // Clear API cache
       try {
         await this.fetchApi('/cache/clear', { method: 'POST' }, {}, false, false);
       } catch (apiError) {
         tracer.warning('database', 'Failed to clear API cache', { error: apiError });
       }
-
+      
       this.cache.clear();
       this.loadingPromises.clear();
       this.retryCount.clear();
@@ -799,78 +799,78 @@ class DatabaseService {
   public async prefetchCommonData(): Promise<void> {
     try {
       tracer.info('database', 'Starting data prefetch');
-
+      
       // Prefetch in parallel with error handling and shorter timeouts
       const prefetchPromises = [
         this.fetchApi<ClientStats>('/stats/clients', {}, {}, true)
-            .catch(e => {
-              tracer.error('database', 'Prefetch client stats failed', { error: e });
-              logger.error('api', 'Prefetch client stats failed', { error: e });
-              return null;
-            }),
+          .catch(e => {
+            tracer.error('database', 'Prefetch client stats failed', { error: e });
+            logger.error('api', 'Prefetch client stats failed', { error: e });
+            return null;
+          }),
         this.fetchApi<BranchAnomaly[]>('/anomalies/by-branch', {}, {}, true)
-            .catch(e => {
-              tracer.error('database', 'Prefetch branch anomalies failed', { error: e });
-              logger.error('api', 'Prefetch branch anomalies failed', { error: e });
-              return null;
-            }),
+          .catch(e => {
+            tracer.error('database', 'Prefetch branch anomalies failed', { error: e });
+            logger.error('api', 'Prefetch branch anomalies failed', { error: e });
+            return null;
+          }),
         this.fetchApi<ValidationMetric[]>('/validation-metrics', {}, {}, true)
-            .catch(e => {
-              tracer.error('database', 'Prefetch validation metrics failed', { error: e });
-              logger.error('api', 'Prefetch validation metrics failed', { error: e });
-              return null;
-            }),
+          .catch(e => {
+            tracer.error('database', 'Prefetch validation metrics failed', { error: e });
+            logger.error('api', 'Prefetch validation metrics failed', { error: e });
+            return null;
+          }),
         this.fetchApi<PaginatedResponse<any>>('/anomalies/individual', {}, { page: 1, limit: 10 }, true)
-            .catch(e => {
-              tracer.error('database', 'Prefetch individual anomalies failed', { error: e });
-              logger.error('api', 'Prefetch individual anomalies failed', { error: e });
-              return null;
-            }),
+          .catch(e => {
+            tracer.error('database', 'Prefetch individual anomalies failed', { error: e });
+            logger.error('api', 'Prefetch individual anomalies failed', { error: e });
+            return null;
+          }),
         this.fetchApi<PaginatedResponse<any>>('/anomalies/corporate', {}, { page: 1, limit: 10 }, true)
-            .catch(e => {
-              tracer.error('database', 'Prefetch corporate anomalies failed', { error: e });
-              logger.error('api', 'Prefetch corporate anomalies failed', { error: e });
-              return null;
-            }),
+          .catch(e => {
+            tracer.error('database', 'Prefetch corporate anomalies failed', { error: e });
+            logger.error('api', 'Prefetch corporate anomalies failed', { error: e });
+            return null;
+          }),
         this.fetchApi<FatcaStats>('/fatca/stats', {}, { clientType: 'all' }, true)
-            .catch(e => {
-              tracer.error('database', 'Prefetch FATCA stats failed', { error: e });
-              logger.error('api', 'Prefetch FATCA stats failed', { error: e });
-              return null;
-            }),
+          .catch(e => {
+            tracer.error('database', 'Prefetch FATCA stats failed', { error: e });
+            logger.error('api', 'Prefetch FATCA stats failed', { error: e });
+            return null;
+          }),
         this.fetchApi<PaginatedResponse<any>>('/fatca/clients', {}, { page: 1, limit: 10, clientType: '1' }, true)
-            .catch(e => {
-              tracer.error('database', 'Prefetch FATCA clients failed', { error: e });
-              logger.error('api', 'Prefetch FATCA clients failed', { error: e });
-              return null;
-            }),
+          .catch(e => {
+            tracer.error('database', 'Prefetch FATCA clients failed', { error: e });
+            logger.error('api', 'Prefetch FATCA clients failed', { error: e });
+            return null;
+          }),
         this.fetchApi<PaginatedResponse<any>>('/fatca/corporate', {}, { page: 1, limit: 10 }, true)
-            .catch(e => {
-              tracer.error('database', 'Prefetch corporate FATCA clients failed', { error: e });
-              logger.error('api', 'Prefetch corporate FATCA clients failed', { error: e });
-              return null;
-            }),
+          .catch(e => {
+            tracer.error('database', 'Prefetch corporate FATCA clients failed', { error: e });
+            logger.error('api', 'Prefetch corporate FATCA clients failed', { error: e });
+            return null;
+          }),
         this.fetchApi<FatcaIndicators>('/fatca/indicators', {}, {}, true)
-            .catch(e => {
-              tracer.error('database', 'Prefetch FATCA indicators failed', { error: e });
-              logger.error('api', 'Prefetch FATCA indicators failed', { error: e });
-              return null;
-            })
+          .catch(e => {
+            tracer.error('database', 'Prefetch FATCA indicators failed', { error: e });
+            logger.error('api', 'Prefetch FATCA indicators failed', { error: e });
+            return null;
+          })
       ];
 
       // Use Promise.allSettled to handle all promises regardless of success/failure
       const results = await Promise.allSettled(prefetchPromises);
-
+      
       // Log prefetch results
       const successCount = results.filter(r => r.status === 'fulfilled' && r.value !== null).length;
       const failureCount = results.filter(r => r.status === 'rejected' || r.value === null).length;
-
-      tracer.info('database', 'Data prefetch completed', {
+      
+      tracer.info('database', 'Data prefetch completed', { 
         total: results.length,
         success: successCount,
         failure: failureCount
       });
-
+      
       logger.info('system', 'Data prefetch completed');
     } catch (error) {
       tracer.error('database', 'Failed to prefetch common data', { error });
@@ -887,9 +887,9 @@ class DatabaseService {
       abortControllers: this.abortControllers.size,
       loadingPromises: this.loadingPromises.size
     };
-
+    
     tracer.debug('database', 'Cache stats retrieved', stats);
-
+    
     return stats;
   }
 }

@@ -51,17 +51,18 @@ class AnomalyServiceTest {
         testAnomaly.setStatus(AnomalyStatus.PENDING);
         testAnomaly.setSeverity("HIGH");
         testAnomaly.setAgencyCode("AG001");
+        testAnomaly.setDetectedAt(LocalDateTime.now());
 
         testAnomalyDto = AnomalyDto.builder()
                 .id(1L)
                 .clientNumber("C001")
                 .clientName("Test Client")
-                .clientType(ClientType.INDIVIDUAL)
+                .clientType("INDIVIDUAL")
                 .fieldName("email")
                 .currentValue("invalid-email")
                 .expectedValue("valid@email.com")
                 .errorMessage("Invalid email format")
-                .status(AnomalyStatus.PENDING)
+                .status("PENDING")
                 .severity("HIGH")
                 .agencyCode("AG001")
                 .build();
@@ -103,7 +104,7 @@ class AnomalyServiceTest {
 
         assertThat(result).isNotNull();
         assertThat(result.getContent()).hasSize(1);
-        assertThat(result.getContent().get(0).getClientType()).isEqualTo(ClientType.INDIVIDUAL);
+        assertThat(result.getContent().get(0).getClientType()).isEqualTo("INDIVIDUAL");
         verify(anomalyRepository, times(1)).findByClientType(ClientType.INDIVIDUAL, pageable);
     }
 
@@ -112,11 +113,11 @@ class AnomalyServiceTest {
         when(anomalyRepository.findById(1L)).thenReturn(Optional.of(testAnomaly));
         when(anomalyRepository.save(any(Anomaly.class))).thenReturn(testAnomaly);
 
-        testAnomalyDto.setStatus(AnomalyStatus.CORRECTED);
+        testAnomalyDto.setStatus("CORRECTED");
         AnomalyDto result = anomalyService.updateAnomaly(1L, testAnomalyDto);
 
         assertThat(result).isNotNull();
-        assertThat(result.getStatus()).isEqualTo(AnomalyStatus.CORRECTED);
+        assertThat(result.getStatus()).isEqualTo("CORRECTED");
         verify(anomalyRepository, times(1)).findById(1L);
         verify(anomalyRepository, times(1)).save(any(Anomaly.class));
     }
@@ -157,7 +158,7 @@ class AnomalyServiceTest {
 
         assertThat(result).isNotNull();
         assertThat(result.getContent()).hasSize(1);
-        assertThat(result.getContent().get(0).getStatus()).isEqualTo(AnomalyStatus.PENDING);
+        assertThat(result.getContent().get(0).getStatus()).isEqualTo("PENDING");
         verify(anomalyRepository, times(1)).findByStatus(AnomalyStatus.PENDING, pageable);
     }
 

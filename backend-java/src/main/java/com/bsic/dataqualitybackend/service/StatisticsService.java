@@ -39,8 +39,8 @@ public class StatisticsService {
         long validatedAnomalies = anomalyRepository.countByStatus(AnomalyStatus.VALIDATED);
 
         double correctionRate = totalAnomalies > 0
-                ? (double) (correctedAnomalies + validatedAnomalies) / totalAnomalies * 100
-                : 0.0;
+            ? (double) (correctedAnomalies + validatedAnomalies) / totalAnomalies * 100
+            : 0.0;
 
         Map<String, Long> anomaliesByType = new HashMap<>();
         anomaliesByType.put("INDIVIDUAL", anomalyRepository.countByClientType(ClientType.INDIVIDUAL));
@@ -53,18 +53,18 @@ public class StatisticsService {
         }
 
         return StatsDto.builder()
-                .totalClients(totalClients)
-                .totalIndividual(totalIndividual)
-                .totalCorporate(totalCorporate)
-                .totalInstitutional(totalInstitutional)
-                .totalAnomalies(totalAnomalies)
-                .pendingAnomalies(pendingAnomalies)
-                .correctedAnomalies(correctedAnomalies)
-                .validatedAnomalies(validatedAnomalies)
-                .correctionRate(correctionRate)
-                .anomaliesByType(anomaliesByType)
-                .anomaliesByStatus(anomaliesByStatus)
-                .build();
+            .totalClients(totalClients)
+            .totalIndividual(totalIndividual)
+            .totalCorporate(totalCorporate)
+            .totalInstitutional(totalInstitutional)
+            .totalAnomalies(totalAnomalies)
+            .pendingAnomalies(pendingAnomalies)
+            .correctedAnomalies(correctedAnomalies)
+            .validatedAnomalies(validatedAnomalies)
+            .correctionRate(correctionRate)
+            .anomaliesByType(anomaliesByType)
+            .anomaliesByStatus(anomaliesByStatus)
+            .build();
     }
 
     public List<CorrectionStatsDto> getAgencyCorrectionStats() {
@@ -72,22 +72,22 @@ public class StatisticsService {
         List<Object[]> results = correctionStatsRepository.getAgencyStatsSummary(startDate);
 
         return results.stream()
-                .map(row -> CorrectionStatsDto.builder()
-                        .agencyCode((String) row[0])
-                        .agencyName((String) row[1])
-                        .totalAnomalies(((Number) row[2]).intValue())
-                        .correctedAnomalies(((Number) row[3]).intValue())
-                        .validatedAnomalies(((Number) row[4]).intValue())
-                        .correctionRate((Double) row[5])
-                        .build())
-                .collect(Collectors.toList());
+            .map(row -> CorrectionStatsDto.builder()
+                .agencyCode((String) row[0])
+                .agencyName((String) row[1])
+                .totalAnomalies(((Number) row[2]).intValue())
+                .correctedAnomalies(((Number) row[3]).intValue())
+                .validatedAnomalies(((Number) row[4]).intValue())
+                .correctionRate((Double) row[5])
+                .build())
+            .collect(Collectors.toList());
     }
 
     public List<CorrectionStatsDto> getWeeklyCorrectionTrend(int weekNumber, int yearNumber) {
         return correctionStatsRepository.findByWeekAndYearOrderByRate(weekNumber, yearNumber)
-                .stream()
-                .map(this::mapCorrectionStatsToDto)
-                .collect(Collectors.toList());
+            .stream()
+            .map(this::mapCorrectionStatsToDto)
+            .collect(Collectors.toList());
     }
 
     public Map<String, Object> getValidationMetrics() {
@@ -108,8 +108,8 @@ public class StatisticsService {
         metrics.put("rejected", rejected);
 
         double completionRate = totalAnomalies > 0
-                ? (double) (validated) / totalAnomalies * 100
-                : 0.0;
+            ? (double) (validated) / totalAnomalies * 100
+            : 0.0;
         metrics.put("completionRate", completionRate);
 
         return metrics;
@@ -117,20 +117,20 @@ public class StatisticsService {
 
     private CorrectionStatsDto mapCorrectionStatsToDto(CorrectionStats stats) {
         return CorrectionStatsDto.builder()
-                .id(stats.getId())
-                .agencyCode(stats.getAgencyCode())
-                .agencyName(stats.getAgencyName())
-                .statsDate(stats.getStatsDate())
-                .weekNumber(stats.getWeekNumber())
-                .monthNumber(stats.getMonthNumber())
-                .yearNumber(stats.getYearNumber())
-                .totalAnomalies(stats.getTotalAnomalies())
-                .correctedAnomalies(stats.getCorrectedAnomalies())
-                .validatedAnomalies(stats.getValidatedAnomalies())
-                .pendingAnomalies(stats.getPendingAnomalies())
-                .correctionRate(stats.getCorrectionRate())
-                .avgCorrectionTimeHours(stats.getAvgCorrectionTimeHours())
-                .createdAt(stats.getCreatedAt())
-                .build();
+            .id(stats.getId())
+            .agencyCode(stats.getAgencyCode())
+            .agencyName(stats.getAgencyName())
+            .statsDate(stats.getStatsDate())
+            .weekNumber(stats.getWeekNumber())
+            .monthNumber(stats.getMonthNumber())
+            .yearNumber(stats.getYearNumber())
+            .totalAnomalies(stats.getTotalAnomalies())
+            .correctedAnomalies(stats.getCorrectedAnomalies())
+            .validatedAnomalies(stats.getValidatedAnomalies())
+            .pendingAnomalies(stats.getPendingAnomalies())
+            .correctionRate(stats.getCorrectionRate())
+            .avgCorrectionTimeHours(stats.getAvgCorrectionTimeHours())
+            .createdAt(stats.getCreatedAt())
+            .build();
     }
 }
