@@ -2,8 +2,9 @@ name: bdqm
 services:
   mysql:
     image: mysql:8.0
-    # volumes:
-    #   - ~/volumes/bdqm/mysql/:/var/lib/mysql/
+    volumes:
+      # - ~/volumes/bdqm/mysql/:/var/lib/mysql/
+      - ./mysql-init:/docker-entrypoint-initdb.d
     environment:
       - MYSQL_USER=bdqm
       - MYSQL_PASSWORD=bdqm

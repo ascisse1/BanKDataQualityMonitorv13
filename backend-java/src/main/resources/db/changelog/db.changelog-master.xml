@@ -1,0 +1,28 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<databaseChangeLog
+    xmlns="http://www.liquibase.org/xml/ns/dbchangelog"
+    xmlns:xsi="http://www.w3.org/2001/XMLSchema-instance"
+    xsi:schemaLocation="http://www.liquibase.org/xml/ns/dbchangelog
+        http://www.liquibase.org/xml/ns/dbchangelog/dbchangelog-latest.xsd">
+
+    <!-- BSIC Data Quality Monitor - Database Migrations -->
+
+    <!-- V1: Initial Schema - Core banking tables, users, FATCA -->
+    <include file="db/changelog/changes/001-initial-schema.xml"/>
+
+    <!-- V2: Ticket System - 4 Eyes validation workflow -->
+    <include file="db/changelog/changes/002-ticket-system.xml"/>
+
+    <!-- V3: RPA Jobs - UiPath integration tracking -->
+    <include file="db/changelog/changes/003-rpa-jobs.xml"/>
+
+    <!-- V4: KPIs - Performance metrics tracking -->
+    <include file="db/changelog/changes/004-kpis.xml"/>
+
+    <!-- V5: Data Quality Tables - Anomalies, agencies, validation rules -->
+    <include file="db/changelog/changes/005-data-quality-tables.xml"/>
+
+    <!-- V6: Seed Data - Demo users, clients, and stats (dev/local only) -->
+    <include file="db/changelog/changes/006-seed-data.xml"/>
+
+</databaseChangeLog>

@@ -1,0 +1,24 @@
+name: bdqm
+services:
+  informix:
+    image: icr.io/informix/informix-developer-database:14.10.FC9W1DE
+    privileged: true
+    environment:
+      - LICENSE=accept
+      - SIZE=small
+      - STORAGE=local
+    volumes:
+      - informix-data:/opt/ibm/data
+    healthcheck:
+      test: ['CMD', '/opt/ibm/informix/bin/onstat', '-']
+      interval: 10s
+      timeout: 10s
+      retries: 20
+      start_period: 60s
+    ports:
+      - '9088:9088'
+      - '9092:9089'
+      - '27017:27017'
+      - '27018:27018'
+volumes:
+  informix-data:

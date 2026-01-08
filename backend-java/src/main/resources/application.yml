@@ -12,7 +12,7 @@ spring:
     name: bsic-data-quality-backend
   docker:
     compose:
-      enabled: true
+      enabled: false
       lifecycle-management: start-only
       file: backend-java/src/main/docker/services.yml
 
@@ -43,6 +43,14 @@ spring:
         max-lifetime: 1800000
         pool-name: InformixPool
         connection-test-query: SELECT FIRST 1 1 FROM systables
+
+  liquibase:
+    enabled: true
+    change-log: classpath:db/changelog/db.changelog-master.xml
+    default-schema: ${DB_NAME:bdqm}
+    liquibase-schema: ${DB_NAME:bdqm}
+    database-change-log-table: DATABASECHANGELOG
+    database-change-log-lock-table: DATABASECHANGELOGLOCK
 
   jpa:
     database-platform: org.hibernate.dialect.MySQLDialect

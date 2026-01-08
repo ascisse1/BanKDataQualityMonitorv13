@@ -1,0 +1,426 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<databaseChangeLog
+    xmlns="http://www.liquibase.org/xml/ns/dbchangelog"
+    xmlns:xsi="http://www.w3.org/2001/XMLSchema-instance"
+    xsi:schemaLocation="http://www.liquibase.org/xml/ns/dbchangelog
+        http://www.liquibase.org/xml/ns/dbchangelog/dbchangelog-latest.xsd">
+
+    <!-- =====================================================
+         Initial Schema for BSIC Data Quality Monitor
+         Based on actual MySQL schema from bank_data_quality_full.sql
+         ===================================================== -->
+
+    <!-- =====================================================
+         1. USERS TABLE (must be created first for FK references)
+         ===================================================== -->
+
+    <changeSet id="001-01-create-users" author="bsic">
+        <comment>Create users table</comment>
+        <createTable tableName="users">
+            <column name="id" type="INT" autoIncrement="true">
+                <constraints primaryKey="true" nullable="false"/>
+            </column>
+            <column name="username" type="VARCHAR(50)">
+                <constraints unique="true" uniqueConstraintName="username" nullable="false"/>
+            </column>
+            <column name="email" type="VARCHAR(100)">
+                <constraints unique="true" uniqueConstraintName="email" nullable="false"/>
+            </column>
+            <column name="password_hash" type="VARCHAR(255)">
+                <constraints nullable="false"/>
+            </column>
+            <column name="full_name" type="VARCHAR(100)"/>
+            <column name="role" type="VARCHAR(50)">
+                <constraints nullable="false"/>
+            </column>
+            <column name="department" type="VARCHAR(50)"/>
+            <column name="agency_code" type="VARCHAR(5)"/>
+            <column name="status" type="VARCHAR(50)">
+                <constraints nullable="false"/>
+            </column>
+            <column name="last_login" type="TIMESTAMP"/>
+            <column name="failed_login_attempts" type="INT" defaultValueNumeric="0"/>
+            <column name="created_at" type="TIMESTAMP" defaultValueComputed="CURRENT_TIMESTAMP"/>
+            <column name="updated_at" type="TIMESTAMP" defaultValueComputed="CURRENT_TIMESTAMP ON UPDATE CURRENT_TIMESTAMP"/>
+            <column name="ldap_dn" type="VARCHAR(255)"/>
+        </createTable>
+        <createIndex tableName="users" indexName="idx_users_username">
+            <column name="username"/>
+        </createIndex>
+        <createIndex tableName="users" indexName="idx_users_email">
+            <column name="email"/>
+        </createIndex>
+        <createIndex tableName="users" indexName="idx_users_agency_code">
+            <column name="agency_code"/>
+        </createIndex>
+        <createIndex tableName="users" indexName="idx_users_role">
+            <column name="role"/>
+        </createIndex>
+    </changeSet>
+
+    <!-- =====================================================
+         2. MAIN BANKING TABLES
+         ===================================================== -->
+
+    <changeSet id="001-02-create-bkcli" author="bsic">
+        <comment>Create main clients table (bkcli)</comment>
+        <createTable tableName="bkcli">
+            <column name="cli" type="VARCHAR(15)">
+                <constraints primaryKey="true" nullable="false"/>
+            </column>
+            <column name="nom" type="VARCHAR(100)"/>
+            <column name="tcli" type="VARCHAR(1)"/>
+            <column name="pre" type="VARCHAR(100)"/>
+            <column name="nid" type="VARCHAR(30)"/>
+            <column name="nmer" type="VARCHAR(100)"/>
+            <column name="dna" type="DATE"/>
+            <column name="nat" type="VARCHAR(3)"/>
+            <column name="age" type="VARCHAR(5)"/>
+            <column name="sext" type="VARCHAR(1)"/>
+            <column name="viln" type="VARCHAR(50)"/>
+            <column name="payn" type="VARCHAR(3)"/>
+            <column name="tid" type="VARCHAR(3)"/>
+            <column name="vid" type="DATE"/>
+            <column name="nrc" type="VARCHAR(30)"/>
+            <column name="datc" type="DATE"/>
+            <column name="rso" type="VARCHAR(100)"/>
+            <column name="sig" type="VARCHAR(30)"/>
+            <column name="sec" type="VARCHAR(50)"/>
+            <column name="fju" type="VARCHAR(50)"/>
+            <column name="catn" type="VARCHAR(50)"/>
+            <column name="lienbq" type="VARCHAR(50)"/>
+            <column name="dou" type="DATE"/>
+            <column name="clifam" type="VARCHAR(15)"/>
+            <column name="created_at" type="TIMESTAMP" defaultValueComputed="CURRENT_TIMESTAMP"/>
+            <column name="updated_at" type="TIMESTAMP" defaultValueComputed="CURRENT_TIMESTAMP ON UPDATE CURRENT_TIMESTAMP"/>
+        </createTable>
+        <createIndex tableName="bkcli" indexName="idx_bkcli_tcli">
+            <column name="tcli"/>
+        </createIndex>
+        <createIndex tableName="bkcli" indexName="idx_bkcli_age">
+            <column name="age"/>
+        </createIndex>
+        <createIndex tableName="bkcli" indexName="idx_bkcli_nat">
+            <column name="nat"/>
+        </createIndex>
+        <createIndex tableName="bkcli" indexName="idx_bkcli_payn">
+            <column name="payn"/>
+        </createIndex>
+    </changeSet>
+
+    <changeSet id="001-03-create-bkcom" author="bsic">
+        <comment>Create accounts table (bkcom)</comment>
+        <createTable tableName="bkcom">
+            <column name="cli" type="CHAR(15)">
+                <constraints nullable="false"/>
+            </column>
+            <column name="cha" type="CHAR(6)">
+                <constraints nullable="false"/>
+            </column>
+            <column name="dev" type="CHAR(3)">
+                <constraints nullable="false"/>
+            </column>
+            <column name="age" type="CHAR(5)">
+                <constraints nullable="false"/>
+            </column>
+            <column name="ncp" type="CHAR(11)">
+                <constraints nullable="false"/>
+            </column>
+            <column name="cfe" type="CHAR(1)"/>
+        </createTable>
+        <addPrimaryKey tableName="bkcom" columnNames="cli,cha,dev,age,ncp" constraintName="pk_bkcom"/>
+        <addForeignKeyConstraint baseTableName="bkcom" baseColumnNames="cli"
+                                 referencedTableName="bkcli" referencedColumnNames="cli"
+                                 constraintName="bkcom_ibfk_1"/>
+        <createIndex tableName="bkcom" indexName="idx_bkcom_cli">
+            <column name="cli"/>
+        </createIndex>
+        <createIndex tableName="bkcom" indexName="idx_bkcom_cha">
+            <column name="cha"/>
+        </createIndex>
+    </changeSet>
+
+    <changeSet id="001-04-create-bkadcli" author="bsic">
+        <comment>Create client addresses table (bkadcli)</comment>
+        <createTable tableName="bkadcli">
+            <column name="cli" type="CHAR(15)">
+                <constraints nullable="false"/>
+            </column>
+            <column name="typ" type="CHAR(2)">
+                <constraints nullable="false"/>
+            </column>
+            <column name="adr1" type="VARCHAR(100)"/>
+            <column name="adr2" type="VARCHAR(100)"/>
+            <column name="adr3" type="VARCHAR(100)"/>
+            <column name="ville" type="VARCHAR(50)"/>
+            <column name="cpay" type="CHAR(3)"/>
+        </createTable>
+        <addPrimaryKey tableName="bkadcli" columnNames="cli,typ" constraintName="pk_bkadcli"/>
+        <addForeignKeyConstraint baseTableName="bkadcli" baseColumnNames="cli"
+                                 referencedTableName="bkcli" referencedColumnNames="cli"
+                                 constraintName="bkadcli_ibfk_1"/>
+        <createIndex tableName="bkadcli" indexName="idx_bkadcli_cli">
+            <column name="cli"/>
+        </createIndex>
+        <createIndex tableName="bkadcli" indexName="idx_bkadcli_cpay">
+            <column name="cpay"/>
+        </createIndex>
+    </changeSet>
+
+    <changeSet id="001-05-create-bktelcli" author="bsic">
+        <comment>Create client phones table (bktelcli)</comment>
+        <createTable tableName="bktelcli">
+            <column name="cli" type="CHAR(15)">
+                <constraints nullable="false"/>
+            </column>
+            <column name="typ" type="CHAR(3)">
+                <constraints nullable="false"/>
+            </column>
+            <column name="num" type="VARCHAR(30)"/>
+        </createTable>
+        <addPrimaryKey tableName="bktelcli" columnNames="cli,typ" constraintName="pk_bktelcli"/>
+        <addForeignKeyConstraint baseTableName="bktelcli" baseColumnNames="cli"
+                                 referencedTableName="bkcli" referencedColumnNames="cli"
+                                 constraintName="bktelcli_ibfk_1"/>
+        <createIndex tableName="bktelcli" indexName="idx_bktelcli_cli">
+            <column name="cli"/>
+        </createIndex>
+        <createIndex tableName="bktelcli" indexName="idx_bktelcli_num">
+            <column name="num"/>
+        </createIndex>
+    </changeSet>
+
+    <changeSet id="001-06-create-bkemacli" author="bsic">
+        <comment>Create client emails table (bkemacli)</comment>
+        <createTable tableName="bkemacli">
+            <column name="cli" type="CHAR(15)">
+                <constraints nullable="false"/>
+            </column>
+            <column name="email" type="VARCHAR(100)">
+                <constraints nullable="false"/>
+            </column>
+        </createTable>
+        <addPrimaryKey tableName="bkemacli" columnNames="cli,email" constraintName="pk_bkemacli"/>
+        <addForeignKeyConstraint baseTableName="bkemacli" baseColumnNames="cli"
+                                 referencedTableName="bkcli" referencedColumnNames="cli"
+                                 constraintName="bkemacli_ibfk_1"/>
+        <createIndex tableName="bkemacli" indexName="idx_bkemacli_cli">
+            <column name="cli"/>
+        </createIndex>
+    </changeSet>
+
+    <changeSet id="001-07-create-bkcoj" author="bsic">
+        <comment>Create joint account holders table (bkcoj)</comment>
+        <createTable tableName="bkcoj">
+            <column name="clip" type="CHAR(15)">
+                <constraints nullable="false"/>
+            </column>
+            <column name="ord" type="INT">
+                <constraints nullable="false"/>
+            </column>
+            <column name="cli" type="CHAR(15)"/>
+            <column name="nom" type="VARCHAR(100)"/>
+            <column name="pre" type="VARCHAR(100)"/>
+        </createTable>
+        <addPrimaryKey tableName="bkcoj" columnNames="clip,ord" constraintName="pk_bkcoj"/>
+        <addForeignKeyConstraint baseTableName="bkcoj" baseColumnNames="clip"
+                                 referencedTableName="bkcli" referencedColumnNames="cli"
+                                 constraintName="bkcoj_ibfk_1"/>
+        <createIndex tableName="bkcoj" indexName="idx_bkcoj_clip">
+            <column name="clip"/>
+        </createIndex>
+        <createIndex tableName="bkcoj" indexName="idx_bkcoj_cli">
+            <column name="cli"/>
+        </createIndex>
+    </changeSet>
+
+    <changeSet id="001-08-create-bkpscm" author="bsic">
+        <comment>Create proxy holders table (bkpscm)</comment>
+        <createTable tableName="bkpscm">
+            <column name="cli" type="CHAR(15)">
+                <constraints nullable="false"/>
+            </column>
+            <column name="ord" type="INT">
+                <constraints nullable="false"/>
+            </column>
+            <column name="clim" type="CHAR(15)"/>
+            <column name="nom" type="VARCHAR(100)"/>
+            <column name="pre" type="VARCHAR(100)"/>
+        </createTable>
+        <addPrimaryKey tableName="bkpscm" columnNames="cli,ord" constraintName="pk_bkpscm"/>
+        <addForeignKeyConstraint baseTableName="bkpscm" baseColumnNames="cli"
+                                 referencedTableName="bkcli" referencedColumnNames="cli"
+                                 constraintName="bkpscm_ibfk_1"/>
+        <createIndex tableName="bkpscm" indexName="idx_bkpscm_cli">
+            <column name="cli"/>
+        </createIndex>
+        <createIndex tableName="bkpscm" indexName="idx_bkpscm_clim">
+            <column name="clim"/>
+        </createIndex>
+    </changeSet>
+
+    <!-- =====================================================
+         3. AGENCIES TABLE
+         ===================================================== -->
+
+    <changeSet id="001-09-create-agencies" author="bsic">
+        <comment>Create agencies table</comment>
+        <createTable tableName="agencies">
+            <column name="id" type="BIGINT" autoIncrement="true">
+                <constraints primaryKey="true" nullable="false"/>
+            </column>
+            <column name="code" type="VARCHAR(255)">
+                <constraints nullable="false"/>
+            </column>
+            <column name="name" type="VARCHAR(255)">
+                <constraints nullable="false"/>
+            </column>
+            <column name="region" type="VARCHAR(255)"/>
+            <column name="city" type="VARCHAR(255)"/>
+            <column name="address" type="TEXT"/>
+            <column name="phone" type="VARCHAR(255)"/>
+            <column name="email" type="VARCHAR(255)"/>
+            <column name="manager_name" type="VARCHAR(255)"/>
+            <column name="active" type="BIT(1)"/>
+            <column name="created_at" type="DATETIME(6)">
+                <constraints nullable="false"/>
+            </column>
+            <column name="updated_at" type="DATETIME(6)"/>
+        </createTable>
+        <addUniqueConstraint tableName="agencies" columnNames="code" constraintName="idx_agency_code"/>
+        <createIndex tableName="agencies" indexName="idx_agency_region">
+            <column name="region"/>
+        </createIndex>
+    </changeSet>
+
+    <!-- =====================================================
+         4. USER AUDIT LOG
+         ===================================================== -->
+
+    <changeSet id="001-10-create-user-audit-log" author="bsic">
+        <comment>Create user audit log table</comment>
+        <createTable tableName="user_audit_log">
+            <column name="id" type="INT" autoIncrement="true">
+                <constraints primaryKey="true" nullable="false"/>
+            </column>
+            <column name="user_id" type="INT">
+                <constraints nullable="false"/>
+            </column>
+            <column name="action" type="VARCHAR(100)">
+                <constraints nullable="false"/>
+            </column>
+            <column name="details" type="TEXT"/>
+            <column name="ip_address" type="VARCHAR(45)"/>
+            <column name="user_agent" type="TEXT"/>
+            <column name="created_at" type="TIMESTAMP" defaultValueComputed="CURRENT_TIMESTAMP"/>
+        </createTable>
+        <addForeignKeyConstraint baseTableName="user_audit_log" baseColumnNames="user_id"
+                                 referencedTableName="users" referencedColumnNames="id"
+                                 constraintName="user_audit_log_ibfk_1" onDelete="CASCADE"/>
+        <createIndex tableName="user_audit_log" indexName="idx_user_audit_user_id">
+            <column name="user_id"/>
+        </createIndex>
+        <createIndex tableName="user_audit_log" indexName="idx_user_audit_created_at">
+            <column name="created_at"/>
+        </createIndex>
+    </changeSet>
+
+    <!-- =====================================================
+         5. AGENCY CORRECTION STATS
+         ===================================================== -->
+
+    <changeSet id="001-11-create-agency-correction-stats" author="bsic">
+        <comment>Create agency correction stats table</comment>
+        <createTable tableName="agency_correction_stats">
+            <column name="agency_code" type="CHAR(5)">
+                <constraints primaryKey="true" nullable="false"/>
+            </column>
+            <column name="agency_name" type="VARCHAR(100)"/>
+            <column name="total_anomalies" type="INT" defaultValueNumeric="0"/>
+            <column name="fixed_anomalies" type="INT" defaultValueNumeric="0"/>
+            <column name="in_review_anomalies" type="INT" defaultValueNumeric="0"/>
+            <column name="rejected_anomalies" type="INT" defaultValueNumeric="0"/>
+            <column name="correction_rate" type="DECIMAL(5,2)" defaultValueNumeric="0.00"/>
+            <column name="last_updated" type="TIMESTAMP" defaultValueComputed="CURRENT_TIMESTAMP ON UPDATE CURRENT_TIMESTAMP"/>
+        </createTable>
+        <createIndex tableName="agency_correction_stats" indexName="idx_agency_stats_code">
+            <column name="agency_code"/>
+        </createIndex>
+        <createIndex tableName="agency_correction_stats" indexName="idx_agency_stats_rate">
+            <column name="correction_rate"/>
+        </createIndex>
+    </changeSet>
+
+    <!-- =====================================================
+         6. ANOMALY HISTORY
+         ===================================================== -->
+
+    <changeSet id="001-12-create-anomaly-history" author="bsic">
+        <comment>Create anomaly history table</comment>
+        <createTable tableName="anomaly_history">
+            <column name="id" type="INT" autoIncrement="true">
+                <constraints primaryKey="true" nullable="false"/>
+            </column>
+            <column name="cli" type="CHAR(15)">
+                <constraints nullable="false"/>
+            </column>
+            <column name="field" type="VARCHAR(50)">
+                <constraints nullable="false"/>
+            </column>
+            <column name="old_value" type="TEXT"/>
+            <column name="new_value" type="TEXT"/>
+            <column name="status" type="VARCHAR(20)" defaultValue="detected"/>
+            <column name="agency_code" type="CHAR(5)"/>
+            <column name="user_id" type="INT"/>
+            <column name="notes" type="TEXT"/>
+            <column name="created_at" type="TIMESTAMP" defaultValueComputed="CURRENT_TIMESTAMP"/>
+            <column name="updated_at" type="TIMESTAMP" defaultValueComputed="CURRENT_TIMESTAMP ON UPDATE CURRENT_TIMESTAMP"/>
+        </createTable>
+        <addForeignKeyConstraint baseTableName="anomaly_history" baseColumnNames="user_id"
+                                 referencedTableName="users" referencedColumnNames="id"
+                                 constraintName="anomaly_history_ibfk_1" onDelete="SET NULL"/>
+        <createIndex tableName="anomaly_history" indexName="idx_anomaly_history_cli">
+            <column name="cli"/>
+        </createIndex>
+        <createIndex tableName="anomaly_history" indexName="idx_anomaly_history_status">
+            <column name="status"/>
+        </createIndex>
+        <createIndex tableName="anomaly_history" indexName="idx_anomaly_history_agency_code">
+            <column name="agency_code"/>
+        </createIndex>
+        <createIndex tableName="anomaly_history" indexName="idx_anomaly_history_created_at">
+            <column name="created_at"/>
+        </createIndex>
+    </changeSet>
+
+    <!-- =====================================================
+         7. FATCA TABLES
+         ===================================================== -->
+
+    <changeSet id="001-13-create-fatca-audit-log" author="bsic">
+        <comment>Create FATCA audit log table</comment>
+        <createTable tableName="fatca_audit_log">
+            <column name="id" type="INT" autoIncrement="true">
+                <constraints primaryKey="true" nullable="false"/>
+            </column>
+            <column name="cli" type="CHAR(15)">
+                <constraints nullable="false"/>
+            </column>
+            <column name="action" type="VARCHAR(50)">
+                <constraints nullable="false"/>
+            </column>
+            <column name="previous_status" type="VARCHAR(20)"/>
+            <column name="new_status" type="VARCHAR(20)"/>
+            <column name="performed_by" type="VARCHAR(50)"/>
+            <column name="notes" type="TEXT"/>
+            <column name="created_at" type="TIMESTAMP" defaultValueComputed="CURRENT_TIMESTAMP"/>
+        </createTable>
+        <createIndex tableName="fatca_audit_log" indexName="idx_fatca_audit_log_cli">
+            <column name="cli"/>
+        </createIndex>
+        <createIndex tableName="fatca_audit_log" indexName="idx_fatca_audit_log_created_at">
+            <column name="created_at"/>
+        </createIndex>
+    </changeSet>
+
+</databaseChangeLog>

@@ -1,0 +1,276 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<databaseChangeLog
+    xmlns="http://www.liquibase.org/xml/ns/dbchangelog"
+    xmlns:xsi="http://www.w3.org/2001/XMLSchema-instance"
+    xsi:schemaLocation="http://www.liquibase.org/xml/ns/dbchangelog
+        http://www.liquibase.org/xml/ns/dbchangelog/dbchangelog-latest.xsd">
+
+    <!-- =====================================================
+         Data Quality Tables
+         Based on actual MySQL schema from bank_data_quality_full.sql
+         ===================================================== -->
+
+    <changeSet id="005-01-create-anomalies" author="bsic">
+        <comment>Create anomalies table</comment>
+        <createTable tableName="anomalies">
+            <column name="id" type="BIGINT" autoIncrement="true">
+                <constraints primaryKey="true" nullable="false"/>
+            </column>
+            <column name="client_number" type="VARCHAR(255)">
+                <constraints nullable="false"/>
+            </column>
+            <column name="client_name" type="VARCHAR(255)">
+                <constraints nullable="false"/>
+            </column>
+            <column name="client_type" type="VARCHAR(50)">
+                <constraints nullable="false"/>
+            </column>
+            <column name="agency_code" type="VARCHAR(255)">
+                <constraints nullable="false"/>
+            </column>
+            <column name="agency_name" type="VARCHAR(255)"/>
+            <column name="field_name" type="VARCHAR(255)">
+                <constraints nullable="false"/>
+            </column>
+            <column name="field_label" type="VARCHAR(255)"/>
+            <column name="current_value" type="TEXT"/>
+            <column name="expected_value" type="TEXT"/>
+            <column name="error_type" type="VARCHAR(255)"/>
+            <column name="error_message" type="TEXT"/>
+            <column name="status" type="VARCHAR(50)">
+                <constraints nullable="false"/>
+            </column>
+            <column name="correction_value" type="TEXT"/>
+            <column name="corrected_by" type="VARCHAR(255)"/>
+            <column name="corrected_at" type="DATETIME(6)"/>
+            <column name="validation_comment" type="TEXT"/>
+            <column name="validated_by" type="VARCHAR(255)"/>
+            <column name="validated_at" type="DATETIME(6)"/>
+            <column name="ticket_id" type="BIGINT"/>
+            <column name="severity" type="VARCHAR(255)"/>
+            <column name="data_source" type="VARCHAR(255)"/>
+            <column name="created_at" type="DATETIME(6)">
+                <constraints nullable="false"/>
+            </column>
+            <column name="updated_at" type="DATETIME(6)"/>
+        </createTable>
+        <createIndex tableName="anomalies" indexName="idx_anomaly_client_type">
+            <column name="client_type"/>
+        </createIndex>
+        <createIndex tableName="anomalies" indexName="idx_anomaly_status">
+            <column name="status"/>
+        </createIndex>
+        <createIndex tableName="anomalies" indexName="idx_anomaly_agency">
+            <column name="agency_code"/>
+        </createIndex>
+        <createIndex tableName="anomalies" indexName="idx_anomaly_created">
+            <column name="created_at"/>
+        </createIndex>
+    </changeSet>
+
+    <changeSet id="005-02-create-fatca-clients" author="bsic">
+        <comment>Create FATCA clients table</comment>
+        <createTable tableName="fatca_clients">
+            <column name="id" type="BIGINT" autoIncrement="true">
+                <constraints primaryKey="true" nullable="false"/>
+            </column>
+            <column name="cli" type="CHAR(15)">
+                <constraints unique="true" uniqueConstraintName="cli" nullable="false"/>
+            </column>
+            <column name="nom" type="VARCHAR(100)"/>
+            <column name="date_entree_relation" type="DATE"/>
+            <column name="status_client" type="VARCHAR(20)"/>
+            <column name="pays_naissance" type="CHAR(3)"/>
+            <column name="nationalite" type="CHAR(3)"/>
+            <column name="adresse" type="TEXT"/>
+            <column name="pays_adresse" type="CHAR(3)"/>
+            <column name="telephone" type="VARCHAR(30)"/>
+            <column name="relation_client" type="CHAR(15)"/>
+            <column name="type_relation" type="VARCHAR(20)"/>
+            <column name="fatca_status" type="VARCHAR(50)">
+                <constraints nullable="false"/>
+            </column>
+            <column name="fatca_date" type="DATE"/>
+            <column name="fatca_uti" type="VARCHAR(50)"/>
+            <column name="notes" type="TEXT"/>
+            <column name="created_at" type="TIMESTAMP" defaultValueComputed="CURRENT_TIMESTAMP"/>
+            <column name="updated_at" type="TIMESTAMP" defaultValueComputed="CURRENT_TIMESTAMP ON UPDATE CURRENT_TIMESTAMP"/>
+            <column name="client_number" type="VARCHAR(255)">
+                <constraints nullable="false"/>
+            </column>
+            <column name="client_name" type="VARCHAR(255)">
+                <constraints nullable="false"/>
+            </column>
+            <column name="client_type" type="VARCHAR(50)">
+                <constraints nullable="false"/>
+            </column>
+            <column name="agency_code" type="VARCHAR(255)">
+                <constraints nullable="false"/>
+            </column>
+            <column name="agency_name" type="VARCHAR(255)"/>
+            <column name="birth_place" type="VARCHAR(255)"/>
+            <column name="birth_country" type="VARCHAR(255)"/>
+            <column name="tax_residence_country" type="VARCHAR(255)"/>
+            <column name="us_person" type="BIT(1)"/>
+            <column name="us_tin" type="VARCHAR(255)"/>
+            <column name="w9_form_received" type="BIT(1)"/>
+            <column name="w8_form_received" type="BIT(1)"/>
+            <column name="us_address" type="BIT(1)"/>
+            <column name="us_phone" type="BIT(1)"/>
+            <column name="risk_level" type="VARCHAR(255)"/>
+            <column name="last_review_date" type="DATE"/>
+            <column name="next_review_date" type="DATE"/>
+            <column name="declaration_date" type="DATE"/>
+            <column name="reporting_required" type="BIT(1)"/>
+        </createTable>
+        <createIndex tableName="fatca_clients" indexName="idx_fatca_clients_cli">
+            <column name="cli"/>
+        </createIndex>
+        <createIndex tableName="fatca_clients" indexName="idx_fatca_clients_status">
+            <column name="fatca_status"/>
+        </createIndex>
+        <createIndex tableName="fatca_clients" indexName="idx_fatca_clients_pays_naissance">
+            <column name="pays_naissance"/>
+        </createIndex>
+        <createIndex tableName="fatca_clients" indexName="idx_fatca_clients_nationalite">
+            <column name="nationalite"/>
+        </createIndex>
+        <createIndex tableName="fatca_clients" indexName="idx_fatca_clients_pays_adresse">
+            <column name="pays_adresse"/>
+        </createIndex>
+        <createIndex tableName="fatca_clients" indexName="idx_fatca_client_type">
+            <column name="client_type"/>
+        </createIndex>
+        <createIndex tableName="fatca_clients" indexName="idx_fatca_status">
+            <column name="fatca_status"/>
+        </createIndex>
+        <createIndex tableName="fatca_clients" indexName="idx_fatca_agency">
+            <column name="agency_code"/>
+        </createIndex>
+        <createIndex tableName="fatca_clients" indexName="idx_fatca_risk_level">
+            <column name="risk_level"/>
+        </createIndex>
+    </changeSet>
+
+    <changeSet id="005-03-create-validation-rules" author="bsic">
+        <comment>Create validation rules table</comment>
+        <createTable tableName="validation_rules">
+            <column name="id" type="BIGINT" autoIncrement="true">
+                <constraints primaryKey="true" nullable="false"/>
+            </column>
+            <column name="rule_name" type="VARCHAR(255)">
+                <constraints nullable="false"/>
+            </column>
+            <column name="description" type="TEXT"/>
+            <column name="rule_type" type="VARCHAR(50)">
+                <constraints nullable="false"/>
+            </column>
+            <column name="client_type" type="VARCHAR(50)"/>
+            <column name="field_name" type="VARCHAR(255)">
+                <constraints nullable="false"/>
+            </column>
+            <column name="validation_expression" type="TEXT"/>
+            <column name="error_message" type="TEXT"/>
+            <column name="severity" type="VARCHAR(255)"/>
+            <column name="active" type="BIT(1)"/>
+            <column name="priority" type="INT"/>
+            <column name="created_by" type="VARCHAR(255)"/>
+            <column name="created_at" type="DATETIME(6)">
+                <constraints nullable="false"/>
+            </column>
+            <column name="updated_at" type="DATETIME(6)"/>
+        </createTable>
+        <createIndex tableName="validation_rules" indexName="idx_rule_type">
+            <column name="rule_type"/>
+        </createIndex>
+        <createIndex tableName="validation_rules" indexName="idx_rule_client_type">
+            <column name="client_type"/>
+        </createIndex>
+        <createIndex tableName="validation_rules" indexName="idx_rule_active">
+            <column name="active"/>
+        </createIndex>
+    </changeSet>
+
+    <changeSet id="005-04-create-data-load-history" author="bsic">
+        <comment>Create data load history table</comment>
+        <createTable tableName="data_load_history">
+            <column name="id" type="BIGINT" autoIncrement="true">
+                <constraints primaryKey="true" nullable="false"/>
+            </column>
+            <column name="file_name" type="VARCHAR(255)">
+                <constraints nullable="false"/>
+            </column>
+            <column name="table_name" type="VARCHAR(50)">
+                <constraints nullable="false"/>
+            </column>
+            <column name="file_type" type="VARCHAR(255)"/>
+            <column name="file_size" type="BIGINT"/>
+            <column name="records_total" type="INT"/>
+            <column name="records_processed" type="INT"/>
+            <column name="records_success" type="INT"/>
+            <column name="records_failed" type="INT"/>
+            <column name="records_count" type="INT" defaultValueNumeric="0"/>
+            <column name="anomalies_detected" type="INT"/>
+            <column name="status" type="VARCHAR(50)">
+                <constraints nullable="false"/>
+            </column>
+            <column name="load_status" type="VARCHAR(20)" defaultValue="success"/>
+            <column name="error_message" type="TEXT"/>
+            <column name="uploaded_by" type="VARCHAR(255)"/>
+            <column name="loaded_by" type="VARCHAR(50)"/>
+            <column name="processing_time_ms" type="BIGINT"/>
+            <column name="execution_time_ms" type="INT"/>
+            <column name="load_date" type="TIMESTAMP" defaultValueComputed="CURRENT_TIMESTAMP"/>
+        </createTable>
+        <createIndex tableName="data_load_history" indexName="idx_data_load_table">
+            <column name="table_name"/>
+        </createIndex>
+        <createIndex tableName="data_load_history" indexName="idx_data_load_date">
+            <column name="load_date"/>
+        </createIndex>
+        <createIndex tableName="data_load_history" indexName="idx_data_load_status">
+            <column name="load_status"/>
+        </createIndex>
+        <createIndex tableName="data_load_history" indexName="idx_load_status">
+            <column name="status"/>
+        </createIndex>
+        <createIndex tableName="data_load_history" indexName="idx_load_date">
+            <column name="load_date"/>
+        </createIndex>
+    </changeSet>
+
+    <changeSet id="005-05-create-correction-stats" author="bsic">
+        <comment>Create correction stats table</comment>
+        <createTable tableName="correction_stats">
+            <column name="id" type="BIGINT" autoIncrement="true">
+                <constraints primaryKey="true" nullable="false"/>
+            </column>
+            <column name="agency_code" type="VARCHAR(255)">
+                <constraints nullable="false"/>
+            </column>
+            <column name="agency_name" type="VARCHAR(255)"/>
+            <column name="stats_date" type="DATE">
+                <constraints nullable="false"/>
+            </column>
+            <column name="week_number" type="INT"/>
+            <column name="month_number" type="INT"/>
+            <column name="year_number" type="INT"/>
+            <column name="total_anomalies" type="INT"/>
+            <column name="corrected_anomalies" type="INT"/>
+            <column name="validated_anomalies" type="INT"/>
+            <column name="pending_anomalies" type="INT"/>
+            <column name="correction_rate" type="DOUBLE"/>
+            <column name="avg_correction_time_hours" type="DOUBLE"/>
+            <column name="created_at" type="DATETIME(6)">
+                <constraints nullable="false"/>
+            </column>
+        </createTable>
+        <createIndex tableName="correction_stats" indexName="idx_stats_agency">
+            <column name="agency_code"/>
+        </createIndex>
+        <createIndex tableName="correction_stats" indexName="idx_stats_date">
+            <column name="stats_date"/>
+        </createIndex>
+    </changeSet>
+
+</databaseChangeLog>

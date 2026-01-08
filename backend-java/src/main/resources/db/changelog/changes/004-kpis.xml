@@ -1,0 +1,40 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<databaseChangeLog
+    xmlns="http://www.liquibase.org/xml/ns/dbchangelog"
+    xmlns:xsi="http://www.w3.org/2001/XMLSchema-instance"
+    xsi:schemaLocation="http://www.liquibase.org/xml/ns/dbchangelog
+        http://www.liquibase.org/xml/ns/dbchangelog/dbchangelog-latest.xsd">
+
+    <!-- =====================================================
+         KPI Tracking System
+         Based on actual MySQL schema from bank_data_quality_full.sql
+         ===================================================== -->
+
+    <changeSet id="004-01-create-kpis" author="bsic">
+        <comment>Create KPIs tracking table</comment>
+        <createTable tableName="kpis">
+            <column name="id" type="BIGINT" autoIncrement="true">
+                <constraints primaryKey="true" nullable="false"/>
+            </column>
+            <column name="period_date" type="DATE">
+                <constraints nullable="false"/>
+            </column>
+            <column name="agency_code" type="VARCHAR(255)"/>
+            <column name="kpi_type" type="VARCHAR(255)">
+                <constraints nullable="false"/>
+            </column>
+            <column name="kpi_value" type="DOUBLE">
+                <constraints nullable="false"/>
+            </column>
+            <column name="target_value" type="DOUBLE"/>
+            <column name="tickets_total" type="INT"/>
+            <column name="tickets_closed" type="INT"/>
+            <column name="tickets_sla_respected" type="INT"/>
+            <column name="tickets_sla_breached" type="INT"/>
+            <column name="avg_resolution_time_hours" type="DOUBLE"/>
+            <column name="created_at" type="DATETIME(6)"/>
+            <column name="updated_at" type="DATETIME(6)"/>
+        </createTable>
+    </changeSet>
+
+</databaseChangeLog>

@@ -1,0 +1,221 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<databaseChangeLog
+    xmlns="http://www.liquibase.org/xml/ns/dbchangelog"
+    xmlns:xsi="http://www.w3.org/2001/XMLSchema-instance"
+    xsi:schemaLocation="http://www.liquibase.org/xml/ns/dbchangelog
+        http://www.liquibase.org/xml/ns/dbchangelog/dbchangelog-latest.xsd">
+
+    <!-- =====================================================
+         Seed Data for BSIC Data Quality Monitor
+         Demo users, clients, and agency stats
+         ===================================================== -->
+
+    <changeSet id="006-01-seed-users" author="bsic" context="dev,local">
+        <comment>Insert demo users</comment>
+        <insert tableName="users">
+            <column name="username" value="admin"/>
+            <column name="email" value="admin@bdm-sa.com"/>
+            <column name="password_hash" value="$2y$10$CPjBEjqTeYlnlBSsJ7i/GeCenUcgKE3PdehOngg2uw57Db4dfsVc."/>
+            <column name="full_name" value="Administrateur Systeme"/>
+            <column name="role" value="ADMIN"/>
+            <column name="department" value="Administration"/>
+            <column name="status" value="ACTIVE"/>
+            <column name="failed_login_attempts" valueNumeric="0"/>
+        </insert>
+        <insert tableName="users">
+            <column name="username" value="auditor"/>
+            <column name="email" value="auditor@bdm-sa.com"/>
+            <column name="password_hash" value="$2a$10$44HY22l7WAnUUpLGddS5ZujBtaBD4bYg33qCccCmwDavuEO9xiJzi"/>
+            <column name="full_name" value="Auditeur Principal"/>
+            <column name="role" value="auditor"/>
+            <column name="department" value="Audit"/>
+            <column name="status" value="ACTIVE"/>
+            <column name="failed_login_attempts" valueNumeric="0"/>
+        </insert>
+        <insert tableName="users">
+            <column name="username" value="user"/>
+            <column name="email" value="user@bdm-sa.com"/>
+            <column name="password_hash" value="$2a$10$44HY22l7WAnUUpLGddS5ZujBtaBD4bYg33qCccCmwDavuEO9xiJzi"/>
+            <column name="full_name" value="Utilisateur Standard"/>
+            <column name="role" value="user"/>
+            <column name="department" value="Operations"/>
+            <column name="status" value="ACTIVE"/>
+            <column name="failed_login_attempts" valueNumeric="0"/>
+        </insert>
+        <insert tableName="users">
+            <column name="username" value="agency_01001"/>
+            <column name="email" value="agence.01001@bdm-sa.com"/>
+            <column name="password_hash" value="$2a$10$IJ3Jtnky3Oh9bgJZuIG81uxuM5Vc69Lzd7f9fOGKHM6KI6lPZOTEG"/>
+            <column name="full_name" value="Utilisateur Agence Ganhi"/>
+            <column name="role" value="agency_user"/>
+            <column name="department" value="Agence"/>
+            <column name="agency_code" value="01001"/>
+            <column name="status" value="ACTIVE"/>
+            <column name="failed_login_attempts" valueNumeric="0"/>
+        </insert>
+        <insert tableName="users">
+            <column name="username" value="agency_01002"/>
+            <column name="email" value="agence.01002@bdm-sa.com"/>
+            <column name="password_hash" value="$2a$10$Db2TPk1Py6FlCYoYDCkNruqw.Aa9EZVY9WNoMCIAj0TzG1gGIapKS"/>
+            <column name="full_name" value="Utilisateur Agence Haie Vive"/>
+            <column name="role" value="agency_user"/>
+            <column name="department" value="Agence"/>
+            <column name="agency_code" value="01002"/>
+            <column name="status" value="ACTIVE"/>
+            <column name="failed_login_attempts" valueNumeric="0"/>
+        </insert>
+        <insert tableName="users">
+            <column name="username" value="agency_01003"/>
+            <column name="email" value="agence.01003@bdm-sa.com"/>
+            <column name="password_hash" value="$2a$10$3d13S7HqaqOdGjgoHOJh/uORofNjMwa0PtCqTUPyk4ElzJn16lhx2"/>
+            <column name="full_name" value="Utilisateur Agence Cadjehoun"/>
+            <column name="role" value="agency_user"/>
+            <column name="department" value="Agence"/>
+            <column name="agency_code" value="01003"/>
+            <column name="status" value="ACTIVE"/>
+            <column name="failed_login_attempts" valueNumeric="0"/>
+        </insert>
+    </changeSet>
+
+    <changeSet id="006-02-seed-bkcli" author="bsic" context="dev,local">
+        <comment>Insert demo clients</comment>
+        <!-- Individual clients -->
+        <insert tableName="bkcli">
+            <column name="cli" value="CLI000001"/>
+            <column name="nom" value="TRAORE"/>
+            <column name="tcli" value="1"/>
+            <column name="pre" value="Mamadou"/>
+            <column name="nid" value="ML12345"/>
+            <column name="nmer" value="DIALLO Fatoumata"/>
+            <column name="dna" valueDate="1985-03-15"/>
+            <column name="nat" value="ML"/>
+            <column name="age" value="01001"/>
+            <column name="sext" value="M"/>
+            <column name="viln" value="Bamako"/>
+            <column name="payn" value="ML"/>
+            <column name="tid" value="CNI"/>
+        </insert>
+        <insert tableName="bkcli">
+            <column name="cli" value="CLI000002"/>
+            <column name="nom" value="DIALLO"/>
+            <column name="tcli" value="1"/>
+            <column name="pre" value="Aissata"/>
+            <column name="nid" value="ML23456"/>
+            <column name="nmer" value="TOURE Mariam"/>
+            <column name="dna" valueDate="1990-07-22"/>
+            <column name="nat" value="ML"/>
+            <column name="age" value="01002"/>
+            <column name="sext" value="F"/>
+            <column name="viln" value="Sikasso"/>
+            <column name="payn" value="ML"/>
+            <column name="tid" value="CNI"/>
+        </insert>
+        <insert tableName="bkcli">
+            <column name="cli" value="CLI000003"/>
+            <column name="nom" value="COULIBALY"/>
+            <column name="tcli" value="1"/>
+            <column name="pre" value="Ibrahim"/>
+            <column name="nid" value="ML34567"/>
+            <column name="nmer" value="KEITA Kadiatou"/>
+            <column name="dna" valueDate="1978-11-30"/>
+            <column name="nat" value="ML"/>
+            <column name="age" value="01003"/>
+            <column name="sext" value="M"/>
+            <column name="viln" value="Segou"/>
+            <column name="payn" value="ML"/>
+            <column name="tid" value="CNI"/>
+        </insert>
+        <!-- US Person clients for FATCA testing -->
+        <insert tableName="bkcli">
+            <column name="cli" value="CLI000006"/>
+            <column name="nom" value="SMITH"/>
+            <column name="tcli" value="1"/>
+            <column name="pre" value="John"/>
+            <column name="nid" value="US12345"/>
+            <column name="nmer" value="SMITH Mary"/>
+            <column name="dna" valueDate="1980-12-01"/>
+            <column name="nat" value="US"/>
+            <column name="age" value="01001"/>
+            <column name="sext" value="M"/>
+            <column name="viln" value="New York"/>
+            <column name="payn" value="US"/>
+            <column name="tid" value="PSP"/>
+        </insert>
+        <insert tableName="bkcli">
+            <column name="cli" value="CLI000007"/>
+            <column name="nom" value="JOHNSON"/>
+            <column name="tcli" value="1"/>
+            <column name="pre" value="Sarah"/>
+            <column name="nid" value="US23456"/>
+            <column name="nmer" value="JOHNSON Emma"/>
+            <column name="dna" valueDate="1992-03-25"/>
+            <column name="nat" value="US"/>
+            <column name="age" value="01002"/>
+            <column name="sext" value="F"/>
+            <column name="viln" value="Chicago"/>
+            <column name="payn" value="US"/>
+            <column name="tid" value="PSP"/>
+        </insert>
+        <!-- Corporate clients -->
+        <insert tableName="bkcli">
+            <column name="cli" value="ENT000001"/>
+            <column name="nom" value="SOCIETE A"/>
+            <column name="tcli" value="2"/>
+            <column name="age" value="01001"/>
+            <column name="nrc" value="MA12345"/>
+            <column name="datc" valueDate="2010-01-15"/>
+            <column name="rso" value="SOCIETE ANONYME A"/>
+            <column name="sig" value="SA"/>
+            <column name="sec" value="Commerce"/>
+            <column name="fju" value="SA"/>
+            <column name="catn" value="GE"/>
+            <column name="lienbq" value="Client"/>
+        </insert>
+        <insert tableName="bkcli">
+            <column name="cli" value="ENT000002"/>
+            <column name="nom" value="SOCIETE B"/>
+            <column name="tcli" value="2"/>
+            <column name="age" value="01002"/>
+            <column name="nrc" value="MA23456"/>
+            <column name="datc" valueDate="2015-06-20"/>
+            <column name="rso" value="SOCIETE ANONYME B"/>
+            <column name="sig" value="SB"/>
+            <column name="sec" value="Service"/>
+            <column name="fju" value="SARL"/>
+            <column name="catn" value="PME"/>
+            <column name="lienbq" value="Client"/>
+        </insert>
+    </changeSet>
+
+    <changeSet id="006-03-seed-agency-stats" author="bsic" context="dev,local">
+        <comment>Insert demo agency correction stats</comment>
+        <insert tableName="agency_correction_stats">
+            <column name="agency_code" value="01001"/>
+            <column name="agency_name" value="Agence Ganhi"/>
+            <column name="total_anomalies" valueNumeric="1500"/>
+            <column name="fixed_anomalies" valueNumeric="800"/>
+            <column name="in_review_anomalies" valueNumeric="400"/>
+            <column name="rejected_anomalies" valueNumeric="300"/>
+            <column name="correction_rate" valueNumeric="53.33"/>
+        </insert>
+        <insert tableName="agency_correction_stats">
+            <column name="agency_code" value="01002"/>
+            <column name="agency_name" value="Agence Haie Vive"/>
+            <column name="total_anomalies" valueNumeric="1200"/>
+            <column name="fixed_anomalies" valueNumeric="650"/>
+            <column name="in_review_anomalies" valueNumeric="350"/>
+            <column name="rejected_anomalies" valueNumeric="200"/>
+            <column name="correction_rate" valueNumeric="54.17"/>
+        </insert>
+        <insert tableName="agency_correction_stats">
+            <column name="agency_code" value="01003"/>
+            <column name="agency_name" value="Agence Cadjehoun"/>
+            <column name="total_anomalies" valueNumeric="1800"/>
+            <column name="fixed_anomalies" valueNumeric="900"/>
+            <column name="in_review_anomalies" valueNumeric="500"/>
+            <column name="rejected_anomalies" valueNumeric="400"/>
+            <column name="correction_rate" valueNumeric="50.00"/>
+        </insert>
+    </changeSet>
+
+</databaseChangeLog>

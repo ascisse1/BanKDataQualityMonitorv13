@@ -5,6 +5,10 @@ services:
     extends:
       file: mysql.yml
       service: mysql
+  informix:
+    extends:
+      file: ./informix.yml
+      service: informix
   keycloak:
     extends:
       file: ./keycloak.yml
@@ -15,3 +19,4 @@ services:
       service: redis
 volumes:
   redis-data-bqdm:
+  informix-data:

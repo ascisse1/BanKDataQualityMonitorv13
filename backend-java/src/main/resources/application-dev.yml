@@ -14,6 +14,10 @@ spring:
     hibernate:
       ddl-auto: none
     show-sql: true
+  liquibase:
+    enabled: true
+    drop-first: true
+    contexts: dev
 
 app:
   jwt:

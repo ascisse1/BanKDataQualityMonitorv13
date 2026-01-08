@@ -1,0 +1,197 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<databaseChangeLog
+    xmlns="http://www.liquibase.org/xml/ns/dbchangelog"
+    xmlns:xsi="http://www.w3.org/2001/XMLSchema-instance"
+    xsi:schemaLocation="http://www.liquibase.org/xml/ns/dbchangelog
+        http://www.liquibase.org/xml/ns/dbchangelog/dbchangelog-latest.xsd">
+
+    <!-- =====================================================
+         BSIC Ticket System Schema
+         Based on actual MySQL schema from bank_data_quality_full.sql
+         ===================================================== -->
+
+    <changeSet id="002-01-create-tickets" author="bsic">
+        <comment>Create main tickets table</comment>
+        <createTable tableName="tickets">
+            <column name="id" type="BIGINT" autoIncrement="true">
+                <constraints primaryKey="true" nullable="false"/>
+            </column>
+            <column name="ticket_number" type="VARCHAR(50)">
+                <constraints unique="true" uniqueConstraintName="UK_4ks48wgrew48dpkh0wd1rbe2b" nullable="false"/>
+            </column>
+            <column name="cli" type="VARCHAR(15)">
+                <constraints nullable="false"/>
+            </column>
+            <column name="client_name" type="VARCHAR(200)"/>
+            <column name="client_type" type="VARCHAR(1)"/>
+            <column name="agency_code" type="VARCHAR(5)">
+                <constraints nullable="false"/>
+            </column>
+            <column name="status" type="VARCHAR(30)">
+                <constraints nullable="false"/>
+            </column>
+            <column name="priority" type="VARCHAR(20)">
+                <constraints nullable="false"/>
+            </column>
+            <column name="assigned_to" type="INT"/>
+            <column name="assigned_by" type="INT"/>
+            <column name="assigned_at" type="DATETIME(6)"/>
+            <column name="validated_by" type="INT"/>
+            <column name="validated_at" type="DATETIME(6)"/>
+            <column name="closed_by" type="INT"/>
+            <column name="closed_at" type="DATETIME(6)"/>
+            <column name="sla_deadline" type="DATETIME(6)"/>
+            <column name="sla_breached" type="BIT(1)"/>
+            <column name="total_incidents" type="INT"/>
+            <column name="resolved_incidents" type="INT"/>
+            <column name="created_at" type="DATETIME(6)">
+                <constraints nullable="false"/>
+            </column>
+            <column name="updated_at" type="DATETIME(6)"/>
+        </createTable>
+        <addForeignKeyConstraint baseTableName="tickets" baseColumnNames="assigned_to"
+                                 referencedTableName="users" referencedColumnNames="id"
+                                 constraintName="FKmwsov8q6vll6krbx1co2ifp6t"/>
+        <addForeignKeyConstraint baseTableName="tickets" baseColumnNames="assigned_by"
+                                 referencedTableName="users" referencedColumnNames="id"
+                                 constraintName="FKe8sjfncw99u9isfyab3xlk499"/>
+        <addForeignKeyConstraint baseTableName="tickets" baseColumnNames="validated_by"
+                                 referencedTableName="users" referencedColumnNames="id"
+                                 constraintName="FK66yo3vj7xegxqxa9l31ucfyta"/>
+        <addForeignKeyConstraint baseTableName="tickets" baseColumnNames="closed_by"
+                                 referencedTableName="users" referencedColumnNames="id"
+                                 constraintName="FKb5og2vu5sundwphri47gb6qcd"/>
+    </changeSet>
+
+    <changeSet id="002-02-create-ticket-incidents" author="bsic">
+        <comment>Create ticket incidents table</comment>
+        <createTable tableName="ticket_incidents">
+            <column name="id" type="BIGINT" autoIncrement="true">
+                <constraints primaryKey="true" nullable="false"/>
+            </column>
+            <column name="ticket_id" type="BIGINT">
+                <constraints nullable="false"/>
+            </column>
+            <column name="incident_type" type="VARCHAR(50)">
+                <constraints nullable="false"/>
+            </column>
+            <column name="category" type="VARCHAR(50)">
+                <constraints nullable="false"/>
+            </column>
+            <column name="field_name" type="VARCHAR(50)">
+                <constraints nullable="false"/>
+            </column>
+            <column name="field_label" type="VARCHAR(100)"/>
+            <column name="old_value" type="TEXT"/>
+            <column name="new_value" type="TEXT"/>
+            <column name="status" type="VARCHAR(20)"/>
+            <column name="resolved" type="BIT(1)">
+                <constraints nullable="false"/>
+            </column>
+            <column name="resolved_at" type="DATETIME(6)"/>
+            <column name="notes" type="TEXT"/>
+            <column name="created_at" type="DATETIME(6)">
+                <constraints nullable="false"/>
+            </column>
+            <column name="updated_at" type="DATETIME(6)"/>
+        </createTable>
+        <addForeignKeyConstraint baseTableName="ticket_incidents" baseColumnNames="ticket_id"
+                                 referencedTableName="tickets" referencedColumnNames="id"
+                                 constraintName="FKe4pown0wlaj02039c9lvsbejw"/>
+    </changeSet>
+
+    <changeSet id="002-03-create-ticket-comments" author="bsic">
+        <comment>Create ticket comments table</comment>
+        <createTable tableName="ticket_comments">
+            <column name="id" type="BIGINT" autoIncrement="true">
+                <constraints primaryKey="true" nullable="false"/>
+            </column>
+            <column name="ticket_id" type="BIGINT">
+                <constraints nullable="false"/>
+            </column>
+            <column name="user_id" type="INT">
+                <constraints nullable="false"/>
+            </column>
+            <column name="comment" type="TEXT">
+                <constraints nullable="false"/>
+            </column>
+            <column name="comment_type" type="VARCHAR(20)"/>
+            <column name="is_internal" type="BIT(1)"/>
+            <column name="created_at" type="DATETIME(6)">
+                <constraints nullable="false"/>
+            </column>
+        </createTable>
+        <addForeignKeyConstraint baseTableName="ticket_comments" baseColumnNames="ticket_id"
+                                 referencedTableName="tickets" referencedColumnNames="id"
+                                 constraintName="FKdoce3fj1osdn71h25dhfs160v"/>
+        <addForeignKeyConstraint baseTableName="ticket_comments" baseColumnNames="user_id"
+                                 referencedTableName="users" referencedColumnNames="id"
+                                 constraintName="FKqstmdduoeqr1bm2lj8r5tmhl2"/>
+    </changeSet>
+
+    <changeSet id="002-04-create-ticket-documents" author="bsic">
+        <comment>Create ticket documents table</comment>
+        <createTable tableName="ticket_documents">
+            <column name="id" type="BIGINT" autoIncrement="true">
+                <constraints primaryKey="true" nullable="false"/>
+            </column>
+            <column name="ticket_id" type="BIGINT">
+                <constraints nullable="false"/>
+            </column>
+            <column name="document_name" type="VARCHAR(255)">
+                <constraints nullable="false"/>
+            </column>
+            <column name="document_path" type="VARCHAR(500)">
+                <constraints nullable="false"/>
+            </column>
+            <column name="document_type" type="VARCHAR(50)"/>
+            <column name="file_size" type="INT"/>
+            <column name="mime_type" type="VARCHAR(100)"/>
+            <column name="uploaded_by" type="INT">
+                <constraints nullable="false"/>
+            </column>
+            <column name="uploaded_at" type="DATETIME(6)">
+                <constraints nullable="false"/>
+            </column>
+        </createTable>
+        <addForeignKeyConstraint baseTableName="ticket_documents" baseColumnNames="ticket_id"
+                                 referencedTableName="tickets" referencedColumnNames="id"
+                                 constraintName="FKfyeobg7t725e0dqgyht1ghujs"/>
+        <addForeignKeyConstraint baseTableName="ticket_documents" baseColumnNames="uploaded_by"
+                                 referencedTableName="users" referencedColumnNames="id"
+                                 constraintName="FK5vahcw98gtjdhm4l2xlaon12b"/>
+    </changeSet>
+
+    <changeSet id="002-05-create-ticket-history" author="bsic">
+        <comment>Create ticket history table</comment>
+        <createTable tableName="ticket_history">
+            <column name="id" type="BIGINT" autoIncrement="true">
+                <constraints primaryKey="true" nullable="false"/>
+            </column>
+            <column name="ticket_id" type="BIGINT">
+                <constraints nullable="false"/>
+            </column>
+            <column name="action" type="VARCHAR(100)">
+                <constraints nullable="false"/>
+            </column>
+            <column name="previous_status" type="VARCHAR(30)"/>
+            <column name="new_status" type="VARCHAR(30)"/>
+            <column name="previous_value" type="TEXT"/>
+            <column name="new_value" type="TEXT"/>
+            <column name="performed_by" type="INT">
+                <constraints nullable="false"/>
+            </column>
+            <column name="notes" type="TEXT"/>
+            <column name="timestamp" type="DATETIME(6)">
+                <constraints nullable="false"/>
+            </column>
+        </createTable>
+        <addForeignKeyConstraint baseTableName="ticket_history" baseColumnNames="ticket_id"
+                                 referencedTableName="tickets" referencedColumnNames="id"
+                                 constraintName="FKkkhg6aquudxfcbofalx8rtc6v"/>
+        <addForeignKeyConstraint baseTableName="ticket_history" baseColumnNames="performed_by"
+                                 referencedTableName="users" referencedColumnNames="id"
+                                 constraintName="FKfiow7btiippxhu969xdwmfuou"/>
+    </changeSet>
+
+</databaseChangeLog>
