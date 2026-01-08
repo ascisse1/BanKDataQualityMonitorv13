@@ -1,9 +1,5 @@
-<<<<<<< HEAD
 import axios, { AxiosInstance, InternalAxiosRequestConfig } from 'axios';
 import { logger } from './logger';
-=======
-import axios from 'axios';
->>>>>>> 745e2a7 (Initial commit after re-initializing repository)
 
 const SPRING_BOOT_URL = import.meta.env.VITE_SPRING_BOOT_URL || 'http://localhost:8080';
 
@@ -58,7 +54,6 @@ export interface ReconciliationStats {
   by_status: Array<{ status: string; count: number }>;
 }
 
-<<<<<<< HEAD
 /**
  * Extracts CSRF token from cookie (set by Spring Security).
  */
@@ -139,21 +134,6 @@ class ReconciliationApiService {
   async getPendingTasks(agencyCode?: string, clientId?: string): Promise<ReconciliationTask[]> {
     const response = await this.axiosInstance.get('/api/reconciliation/pending', {
       params: { agencyCode, clientId }
-=======
-class ReconciliationApiService {
-  private getAuthHeaders() {
-    const token = localStorage.getItem('token');
-    return {
-      Authorization: `Bearer ${token}`,
-      'Content-Type': 'application/json'
-    };
-  }
-
-  async getPendingTasks(agencyCode?: string, clientId?: string): Promise<ReconciliationTask[]> {
-    const response = await axios.get(`${SPRING_BOOT_URL}/api/reconciliation/pending`, {
-      params: { agencyCode, clientId },
-      headers: this.getAuthHeaders()
->>>>>>> 745e2a7 (Initial commit after re-initializing repository)
     });
     return response.data;
   }
@@ -165,44 +145,24 @@ class ReconciliationApiService {
     startDate?: string;
     endDate?: string;
   }): Promise<ReconciliationTask[]> {
-<<<<<<< HEAD
     const response = await this.axiosInstance.get('/api/reconciliation/history', {
       params
-=======
-    const response = await axios.get(`${SPRING_BOOT_URL}/api/reconciliation/history`, {
-      params,
-      headers: this.getAuthHeaders()
->>>>>>> 745e2a7 (Initial commit after re-initializing repository)
     });
     return response.data;
   }
 
   async reconcileTask(taskId: string): Promise<ReconciliationResult> {
-<<<<<<< HEAD
     const response = await this.axiosInstance.post(
       `/api/reconciliation/${taskId}/reconcile`,
       {}
-=======
-    const response = await axios.post(
-      `${SPRING_BOOT_URL}/api/reconciliation/${taskId}/reconcile`,
-      {},
-      { headers: this.getAuthHeaders() }
->>>>>>> 745e2a7 (Initial commit after re-initializing repository)
     );
     return response.data;
   }
 
   async retryReconciliation(taskId: string): Promise<ReconciliationResult> {
-<<<<<<< HEAD
     const response = await this.axiosInstance.post(
       `/api/reconciliation/${taskId}/retry`,
       {}
-=======
-    const response = await axios.post(
-      `${SPRING_BOOT_URL}/api/reconciliation/${taskId}/retry`,
-      {},
-      { headers: this.getAuthHeaders() }
->>>>>>> 745e2a7 (Initial commit after re-initializing repository)
     );
     return response.data;
   }
@@ -212,39 +172,23 @@ class ReconciliationApiService {
     failed: number;
     total: number;
   }> {
-<<<<<<< HEAD
     const response = await this.axiosInstance.post(
       '/api/reconciliation/reconcile-all',
       { agency_code: agencyCode, max_tasks: maxTasks }
-=======
-    const response = await axios.post(
-      `${SPRING_BOOT_URL}/api/reconciliation/reconcile-all`,
-      { agency_code: agencyCode, max_tasks: maxTasks },
-      { headers: this.getAuthHeaders() }
->>>>>>> 745e2a7 (Initial commit after re-initializing repository)
     );
     return response.data;
   }
 
   async getStats(agencyCode?: string): Promise<ReconciliationStats> {
-<<<<<<< HEAD
     const response = await this.axiosInstance.get('/api/reconciliation/stats', {
       params: { agencyCode }
-=======
-    const response = await axios.get(`${SPRING_BOOT_URL}/api/reconciliation/stats`, {
-      params: { agencyCode },
-      headers: this.getAuthHeaders()
->>>>>>> 745e2a7 (Initial commit after re-initializing repository)
     });
     return response.data;
   }
 
   async checkHealth(): Promise<{ status: string; service: string; timestamp: string }> {
-<<<<<<< HEAD
+
     const response = await this.axiosInstance.get('/api/reconciliation/health');
-=======
-    const response = await axios.get(`${SPRING_BOOT_URL}/api/reconciliation/health`);
->>>>>>> 745e2a7 (Initial commit after re-initializing repository)
     return response.data;
   }
 }

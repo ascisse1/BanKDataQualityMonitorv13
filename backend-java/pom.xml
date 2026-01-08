@@ -23,11 +23,7 @@
         <maven.compiler.source>17</maven.compiler.source>
         <maven.compiler.target>17</maven.compiler.target>
         <project.build.sourceEncoding>UTF-8</project.build.sourceEncoding>
-<<<<<<< HEAD
         <camunda.version>7.21.0</camunda.version>
-=======
-        <camunda.version>7.20.0</camunda.version>
->>>>>>> 745e2a7 (Initial commit after re-initializing repository)
     </properties>
 
     <dependencies>
@@ -47,16 +43,11 @@
             <artifactId>spring-boot-starter-security</artifactId>
         </dependency>
 
-<<<<<<< HEAD
+
         <!-- OAuth2 Client for BFF pattern (session-based login) -->
         <dependency>
             <groupId>org.springframework.boot</groupId>
             <artifactId>spring-boot-starter-oauth2-client</artifactId>
-=======
-        <dependency>
-            <groupId>org.springframework.boot</groupId>
-            <artifactId>spring-boot-starter-oauth2-resource-server</artifactId>
->>>>>>> 745e2a7 (Initial commit after re-initializing repository)
         </dependency>
 
         <dependency>
@@ -105,7 +96,6 @@
             <scope>runtime</scope>
         </dependency>
 
-<<<<<<< HEAD
         <!-- H2 Database for Testing -->
         <dependency>
             <groupId>com.h2database</groupId>
@@ -113,8 +103,6 @@
             <scope>test</scope>
         </dependency>
 
-=======
->>>>>>> 745e2a7 (Initial commit after re-initializing repository)
         <!-- Informix JDBC Driver -->
         <dependency>
             <groupId>com.ibm.informix</groupId>
@@ -142,8 +130,6 @@
             <version>${camunda.version}</version>
         </dependency>
 
-<<<<<<< HEAD
-        <!-- Keycloak Admin Client for user management -->
         <dependency>
             <groupId>org.keycloak</groupId>
             <artifactId>keycloak-admin-client</artifactId>
@@ -156,8 +142,7 @@
             <artifactId>caffeine</artifactId>
         </dependency>
 
-=======
->>>>>>> 745e2a7 (Initial commit after re-initializing repository)
+
         <!-- JWT -->
         <dependency>
             <groupId>io.jsonwebtoken</groupId>
@@ -237,15 +222,11 @@
             <artifactId>spring-security-test</artifactId>
             <scope>test</scope>
         </dependency>
-<<<<<<< HEAD
-=======
-
         <dependency>
             <groupId>com.h2database</groupId>
             <artifactId>h2</artifactId>
             <scope>test</scope>
         </dependency>
->>>>>>> 745e2a7 (Initial commit after re-initializing repository)
     </dependencies>
 
     <build>
@@ -286,7 +267,6 @@
             </plugin>
         </plugins>
     </build>
-<<<<<<< HEAD
     <profiles>
         <profile>
             <id>docker-compose</id>
@@ -302,6 +282,4 @@
             </dependencies>
         </profile>
     </profiles>
-=======
->>>>>>> 745e2a7 (Initial commit after re-initializing repository)
 </project>

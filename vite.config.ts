@@ -11,7 +11,6 @@ export default defineConfig({
     port: 5174,
     strictPort: false,
     proxy: {
-<<<<<<< HEAD
       // OAuth2 endpoints - Spring Boot BFF
       '/oauth2': {
         target: 'http://localhost:8080',
@@ -35,10 +34,6 @@ export default defineConfig({
       // API endpoints - Spring Boot
       '/api': {
         target: 'http://localhost:8080',
-=======
-      '/api': {
-        target: 'http://localhost:3001',
->>>>>>> 745e2a7 (Initial commit after re-initializing repository)
         changeOrigin: true,
         secure: false,
       }
@@ -95,8 +90,4 @@ export default defineConfig({
   },
   cacheDir: './.vite-cache',
   logLevel: 'info'
-<<<<<<< HEAD
 });
-=======
-});
->>>>>>> 745e2a7 (Initial commit after re-initializing repository)

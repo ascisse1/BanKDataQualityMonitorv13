@@ -2,10 +2,7 @@ package com.bsic.dataqualitybackend.repository;
 
 import lombok.extern.slf4j.Slf4j;
 import org.springframework.beans.factory.annotation.Qualifier;
-<<<<<<< HEAD
 import org.springframework.boot.autoconfigure.condition.ConditionalOnProperty;
-=======
->>>>>>> 745e2a7 (Initial commit after re-initializing repository)
 import org.springframework.jdbc.core.JdbcTemplate;
 import org.springframework.stereotype.Repository;
 
@@ -14,10 +11,7 @@ import java.util.Map;
 
 @Repository
 @Slf4j
-<<<<<<< HEAD
 @ConditionalOnProperty(name = "app.features.informix-integration", havingValue = "true", matchIfMissing = false)
-=======
->>>>>>> 745e2a7 (Initial commit after re-initializing repository)
 public class InformixRepository {
 
     private final JdbcTemplate informixJdbcTemplate;
@@ -29,13 +23,8 @@ public class InformixRepository {
     public boolean testConnection() {
         try {
             Integer result = informixJdbcTemplate.queryForObject(
-<<<<<<< HEAD
                     "SELECT FIRST 1 1 FROM systables",
                     Integer.class
-=======
-                "SELECT FIRST 1 1 FROM systables",
-                Integer.class
->>>>>>> 745e2a7 (Initial commit after re-initializing repository)
             );
             log.info("Informix connection test successful");
             return result != null;
@@ -107,17 +96,10 @@ public class InformixRepository {
 
         List<Map<String, Object>> results = informixJdbcTemplate.queryForList(sql);
         return results.stream()
-<<<<<<< HEAD
                 .collect(java.util.stream.Collectors.toMap(
                         row -> String.valueOf(row.get("client_type")),
                         row -> ((Number) row.get("count")).longValue()
                 ));
-=======
-            .collect(java.util.stream.Collectors.toMap(
-                row -> String.valueOf(row.get("client_type")),
-                row -> ((Number) row.get("count")).longValue()
-            ));
->>>>>>> 745e2a7 (Initial commit after re-initializing repository)
     }
 
     public List<Map<String, Object>> getAnomalousClients(int limit) {
