@@ -5,22 +5,19 @@ import Button from './Button';
 import Input from './Input';
 import { useToast } from './Toaster';
 import { useNotification } from '../../context/NotificationContext';
+import { db } from '../../services/db';
 
 interface DatabaseConfigPanelProps {
   onConfigChange?: (changed: boolean) => void;
 }
 
 const DatabaseConfigPanel: React.FC<DatabaseConfigPanelProps> = ({ onConfigChange }) => {
-  const [dbType, setDbType] = useState<string>('demo');
   const [config, setConfig] = useState({
     host: 'localhost',
     port: '3306',
     database: 'bankdb',
     username: 'bankapp',
-    password: 'password123',
-    url: 'https://example.supabase.co',
-    apiKey: 'demo-key',
-    serviceRoleKey: ''
+    password: 'password123'
   });
   const [isTestingConnection, setIsTestingConnection] = useState(false);
   const [connectionStatus, setConnectionStatus] = useState<{
@@ -35,7 +32,7 @@ const DatabaseConfigPanel: React.FC<DatabaseConfigPanelProps> = ({ onConfigChang
 
   // Charger la configuration actuelle
   useEffect(() => {
-    // Simuler le chargement de la configuration
+    // Test connection on mount
     setTimeout(() => {
       testConnection();
     }, 500);
@@ -44,31 +41,33 @@ const DatabaseConfigPanel: React.FC<DatabaseConfigPanelProps> = ({ onConfigChang
   const testConnection = async () => {
     setIsTestingConnection(true);
     setConnectionStatus(null);
-    
+
     try {
-      // En mode démo, on simule un test de connexion
-      await new Promise(resolve => setTimeout(resolve, 1000));
-      
-      const result = {
-        success: true,
-        message: 'Mode démo actif - Utilisation des données fictives',
-        data: {
-          mode: 'demo',
-          recordCount: '325,037',
+      const result = await db.testConnection();
+
+      setConnectionStatus({
+        success: result.success,
+        message: result.message,
+        data: result.success ? {
+          mode: 'Backend API',
           timestamp: new Date().toISOString()
-        }
-      };
-      
-      setConnectionStatus(result);
-      addToast('Mode démo actif - Utilisation des données fictives', 'success');
+        } : undefined
+      });
+
+      if (result.success) {
+        addToast('Connection to backend successful', 'success');
+      } else {
+        addToast(result.message, 'error');
+      }
+
       onConfigChange?.(false);
     } catch (error) {
       setConnectionStatus({
         success: false,
-        message: 'Erreur lors du test de connexion',
+        message: 'Connection test failed',
         error: error instanceof Error ? error.message : String(error)
       });
-      addToast('Erreur lors du test de connexion', 'error');
+      addToast('Connection test failed', 'error');
       onConfigChange?.(false);
     } finally {
       setIsTestingConnection(false);
@@ -77,17 +76,17 @@ const DatabaseConfigPanel: React.FC<DatabaseConfigPanelProps> = ({ onConfigChang
 
   const handleSaveConfig = async () => {
     setIsSaving(true);
-    
+
     try {
-      // En mode démo, on simule la sauvegarde
-      await new Promise(resolve => setTimeout(resolve, 1000));
-      
-      showNotification('En mode démo, la configuration ne peut pas être modifiée', 'info');
-      addToast('En mode démo, la configuration ne peut pas être modifiée', 'info');
-      
+      // In production, config changes should be done via environment variables
+      await new Promise(resolve => setTimeout(resolve, 500));
+
+      showNotification('Database configuration is managed via environment variables', 'info');
+      addToast('Configuration is managed via environment variables', 'info');
+
       onConfigChange?.(true);
     } catch (error) {
-      addToast('Erreur lors de la sauvegarde de la configuration', 'error');
+      addToast('Failed to save configuration', 'error');
     } finally {
       setIsSaving(false);
     }
@@ -99,7 +98,7 @@ const DatabaseConfigPanel: React.FC<DatabaseConfigPanelProps> = ({ onConfigChang
         <div className="flex items-center justify-between mb-4">
           <h2 className="text-xl font-semibold flex items-center">
             <Database className="mr-2 h-5 w-5 text-primary-600" />
-            Configuration de la Base de Données
+            Database Configuration
           </h2>
           <div className="flex space-x-2">
             <Button
@@ -109,7 +108,7 @@ const DatabaseConfigPanel: React.FC<DatabaseConfigPanelProps> = ({ onConfigChang
               onClick={testConnection}
               disabled={isTestingConnection}
             >
-              {isTestingConnection ? 'Test en cours...' : 'Tester la connexion'}
+              {isTestingConnection ? 'Testing...' : 'Test Connection'}
             </Button>
             <Button
               variant="primary"
@@ -118,7 +117,7 @@ const DatabaseConfigPanel: React.FC<DatabaseConfigPanelProps> = ({ onConfigChang
               onClick={handleSaveConfig}
               disabled={isSaving || isTestingConnection}
             >
-              {isSaving ? 'Sauvegarde...' : 'Sauvegarder'}
+              {isSaving ? 'Saving...' : 'Save'}
             </Button>
           </div>
         </div>
@@ -126,110 +125,76 @@ const DatabaseConfigPanel: React.FC<DatabaseConfigPanelProps> = ({ onConfigChang
         <div className="space-y-4">
           <div>
             <label className="block text-sm font-medium text-gray-700 mb-1">
-              Type de base de données
+              Database Type
             </label>
             <select
               className="w-full rounded-md border-gray-300 shadow-sm focus:border-primary-500 focus:ring-primary-500"
-              value={dbType}
-              onChange={(e) => setDbType(e.target.value)}
+              value="mysql"
               disabled={true}
             >
-              <option value="demo">Mode Démo (données fictives)</option>
-              <option value="supabase">Supabase</option>
-              <option value="mysql">MySQL</option>
+              <option value="mysql">MySQL (via Backend API)</option>
             </select>
-            <p className="mt-1 text-xs text-warning-600">
-              Le mode démo est activé. Pour changer de mode, modifiez le fichier .env
+            <p className="mt-1 text-xs text-gray-600">
+              All database operations are handled by the backend API
             </p>
           </div>
 
-          {dbType === 'mysql' && (
-            <div className="space-y-4 opacity-50">
-              <div className="grid grid-cols-2 gap-4">
-                <Input
-                  label="Hôte"
-                  value={config.host}
-                  onChange={(e) => setConfig({ ...config, host: e.target.value })}
-                  disabled={true}
-                />
-                <Input
-                  label="Port"
-                  value={config.port}
-                  onChange={(e) => setConfig({ ...config, port: e.target.value })}
-                  disabled={true}
-                />
-              </div>
+          <div className="space-y-4 opacity-50">
+            <div className="grid grid-cols-2 gap-4">
               <Input
-                label="Base de données"
-                value={config.database}
-                onChange={(e) => setConfig({ ...config, database: e.target.value })}
+                label="Host"
+                value={config.host}
+                onChange={(e) => setConfig({ ...config, host: e.target.value })}
                 disabled={true}
               />
-              <div className="grid grid-cols-2 gap-4">
-                <Input
-                  label="Utilisateur"
-                  value={config.username}
-                  onChange={(e) => setConfig({ ...config, username: e.target.value })}
-                  disabled={true}
-                />
-                <Input
-                  label="Mot de passe"
-                  type="password"
-                  value={config.password}
-                  onChange={(e) => setConfig({ ...config, password: e.target.value })}
-                  disabled={true}
-                />
-              </div>
+              <Input
+                label="Port"
+                value={config.port}
+                onChange={(e) => setConfig({ ...config, port: e.target.value })}
+                disabled={true}
+              />
             </div>
-          )}
+            <Input
+              label="Database"
+              value={config.database}
+              onChange={(e) => setConfig({ ...config, database: e.target.value })}
+              disabled={true}
+            />
+            <div className="grid grid-cols-2 gap-4">
+              <Input
+                label="Username"
+                value={config.username}
+                onChange={(e) => setConfig({ ...config, username: e.target.value })}
+                disabled={true}
+              />
+              <Input
+                label="Password"
+                type="password"
+                value={config.password}
+                onChange={(e) => setConfig({ ...config, password: e.target.value })}
+                disabled={true}
+              />
+            </div>
+          </div>
 
-          {dbType === 'supabase' && (
-            <div className="space-y-4 opacity-50">
-              <Input
-                label="URL Supabase"
-                value={config.url}
-                onChange={(e) => setConfig({ ...config, url: e.target.value })}
-                placeholder="https://your-project-id.supabase.co"
-                disabled={true}
-              />
-              <Input
-                label="Clé Anonyme"
-                value={config.apiKey}
-                onChange={(e) => setConfig({ ...config, apiKey: e.target.value })}
-                placeholder="eyJhbGciOiJIUzI1NiIsInR5cCI6IkpXVCJ9..."
-                disabled={true}
-              />
-              <Input
-                label="Clé Service Role (optionnelle)"
-                value={config.serviceRoleKey}
-                onChange={(e) => setConfig({ ...config, serviceRoleKey: e.target.value })}
-                placeholder="eyJhbGciOiJIUzI1NiIsInR5cCI6IkpXVCJ9..."
-                disabled={true}
-              />
-            </div>
-          )}
-
-          {dbType === 'demo' && (
-            <div className="bg-primary-50 border border-primary-200 rounded-md p-4">
-              <div className="flex items-start">
-                <Server className="h-5 w-5 text-primary-600 mt-0.5 mr-2 flex-shrink-0" />
-                <div>
-                  <p className="text-primary-800 font-medium">
-                    Mode démo actif - Utilisation des données fictives
-                  </p>
-                  <ul className="mt-2 text-sm text-primary-700 space-y-1">
-                    <li>• Données générées automatiquement pour 325,037 clients</li>
-                    <li>• Pas de connexion à une base de données réelle</li>
-                    <li>• Idéal pour les démonstrations et les tests</li>
-                    <li>• Toutes les fonctionnalités sont disponibles</li>
-                  </ul>
-                  <p className="mt-2 text-sm text-primary-700">
-                    Pour passer en mode production, modifiez <code>DEMO_MODE=false</code> dans le fichier <code>.env</code> et configurez les paramètres de connexion.
-                  </p>
-                </div>
+          <div className="bg-primary-50 border border-primary-200 rounded-md p-4">
+            <div className="flex items-start">
+              <Server className="h-5 w-5 text-primary-600 mt-0.5 mr-2 flex-shrink-0" />
+              <div>
+                <p className="text-primary-800 font-medium">
+                  Backend API Mode
+                </p>
+                <ul className="mt-2 text-sm text-primary-700 space-y-1">
+                  <li>All data operations are handled by the backend API</li>
+                  <li>Database configuration is managed via environment variables</li>
+                  <li>The backend supports MySQL/MariaDB and Informix CBS</li>
+                </ul>
+                <p className="mt-2 text-sm text-primary-700">
+                  To modify configuration, update the <code>.env</code> file and restart the backend server.
+                </p>
               </div>
             </div>
-          )}
+          </div>
 
           {connectionStatus && (
             <div className={`mt-4 p-4 rounded-md ${connectionStatus.success ? 'bg-success-50 border border-success-200' : 'bg-error-50 border border-error-200'}`}>
@@ -246,7 +211,6 @@ const DatabaseConfigPanel: React.FC<DatabaseConfigPanelProps> = ({ onConfigChang
                   {connectionStatus.data && (
                     <div className="mt-2 text-sm">
                       <p className="text-gray-600">Mode: <span className="font-medium">{connectionStatus.data.mode}</span></p>
-                      <p className="text-gray-600">Enregistrements: <span className="font-medium">{connectionStatus.data.recordCount}</span></p>
                     </div>
                   )}
                   {connectionStatus.error && (

@@ -3,9 +3,12 @@ name: bdqm
 services:
   redis:
     image: redis:7-alpine
-    container_name: ankataa-redis
+    container_name: bqdm-redis
     ports:
       - '6379:6379'
     command: redis-server --appendonly yes
     volumes:
       - redis-data-bqdm:/data
+volumes:
+  redis-data-bqdm:
+    external: true

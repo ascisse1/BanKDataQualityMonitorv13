@@ -987,41 +987,41 @@ const GlobalTrackingPage: React.FC = () => {
                       </div>
                     </td>
                     <td className="px-3 py-4 whitespace-nowrap text-sm text-gray-900">
-                      {item.flux.total.toLocaleString('fr-FR')}
+                      {(item.flux?.total ?? 0).toLocaleString('fr-FR')}
                     </td>
                     <td className="px-3 py-4 whitespace-nowrap text-sm text-gray-900">
-                      {item.flux.anomalies.toLocaleString('fr-FR')}
+                      {(item.flux?.anomalies ?? 0).toLocaleString('fr-FR')}
                     </td>
                     <td className="px-3 py-4 whitespace-nowrap text-sm text-gray-900">
-                      {item.flux.fiabilises.toLocaleString('fr-FR')}
+                      {(item.flux?.fiabilises ?? 0).toLocaleString('fr-FR')}
                     </td>
                     <td className="px-3 py-4 whitespace-nowrap text-sm text-gray-900">
-                      {item.stock.actifs.toLocaleString('fr-FR')}
+                      {(item.stock?.actifs ?? 0).toLocaleString('fr-FR')}
                     </td>
                     <td className="px-3 py-4 whitespace-nowrap text-sm text-gray-900">
-                      {item.stock.anomalies.toLocaleString('fr-FR')}
+                      {(item.stock?.anomalies ?? 0).toLocaleString('fr-FR')}
                     </td>
                     <td className="px-3 py-4 whitespace-nowrap text-sm text-gray-900">
-                      {item.stock.fiabilises.toLocaleString('fr-FR')}
+                      {(item.stock?.fiabilises ?? 0).toLocaleString('fr-FR')}
                     </td>
                     <td className="px-3 py-4 whitespace-nowrap">
                       <div className="flex items-center">
-                        <span className="text-sm font-medium text-gray-900">{item.indicators.tauxAnomalies.toFixed(1)}%</span>
+                        <span className="text-sm font-medium text-gray-900">{(item.indicators?.tauxAnomalies ?? 0).toFixed(1)}%</span>
                         <div className="ml-2 w-16 bg-gray-200 rounded-full h-2">
-                          <div 
-                            className="bg-primary-500 rounded-full h-2" 
-                            style={{ width: `${Math.min(100, item.indicators.tauxAnomalies)}%` }}
+                          <div
+                            className="bg-primary-500 rounded-full h-2"
+                            style={{ width: `${Math.min(100, item.indicators?.tauxAnomalies ?? 0)}%` }}
                           />
                         </div>
                       </div>
                     </td>
                     <td className="px-3 py-4 whitespace-nowrap">
                       <div className="flex items-center">
-                        <span className="text-sm font-medium text-gray-900">{item.indicators.tauxFiabilisation.toFixed(1)}%</span>
+                        <span className="text-sm font-medium text-gray-900">{(item.indicators?.tauxFiabilisation ?? 0).toFixed(1)}%</span>
                         <div className="ml-2 w-16 bg-gray-200 rounded-full h-2">
-                          <div 
-                            className="bg-success-500 rounded-full h-2" 
-                            style={{ width: `${Math.min(100, item.indicators.tauxFiabilisation)}%` }}
+                          <div
+                            className="bg-success-500 rounded-full h-2"
+                            style={{ width: `${Math.min(100, item.indicators?.tauxFiabilisation ?? 0)}%` }}
                           />
                         </div>
                       </div>

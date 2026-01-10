@@ -1,0 +1,14 @@
+{
+  "permissions": {
+    "allow": [
+      "Bash(python generate_amplitude_data.py:*)",
+      "Bash(dir:*)",
+      "Bash(powershell -Command \"\\(Get-Item amplitude_seed_data_100k_informix.sql\\).Length / 1MB\")",
+      "Bash(powershell -Command \"Get-ChildItem *.sql | Select-Object Name, @{Name=''Size\\(MB\\)'';Expression={[math]::Round\\($_Length/1MB,2\\)}} | Format-Table -AutoSize\")",
+      "Bash(docker exec:*)",
+      "Bash(mvn test:*)",
+      "Bash(python:*)",
+      "Bash(docker cp:*)"
+    ]
+  }
+}

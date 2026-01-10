@@ -374,64 +374,62 @@ const AnomaliesTable: React.FC<AnomaliesTableProps> = ({
     }
   ];
 
-  const fetchAnomalies = async () => {
+  const fetchAnomaliesFromBackend = async () => {
     try {
       setPageLoading(true);
       setError(null);
 
-      let query = db.collection('anomalies');
+      // Build params for API call
+      const params: Record<string, any> = {};
 
       // Filtrage par agence
       if (selectedAgency) {
-        query = query.where('agencyCode', '==', selectedAgency);
+        params.agencyCode = selectedAgency;
       } else if (isAgencyUser && userAgencyCode) {
-        query = query.where('agencyCode', '==', userAgencyCode);
+        params.agencyCode = userAgencyCode;
       }
 
       // Filtrage par statut
       if (selectedStatus && selectedStatus !== 'all') {
-        query = query.where('status', '==', selectedStatus);
+        params.status = selectedStatus;
       }
 
-      // Filtrage par type
-      if (selectedClientType && selectedClientType !== 'all') {
-        query = query.where('type', '==', selectedClientType);
+      // Get data based on client type
+      let result;
+      if (selectedClientType === '2') {
+        result = await db.getCorporateAnomalies(currentPage, itemsPerPage, false, params);
+      } else if (selectedClientType === '3') {
+        result = await db.getInstitutionalAnomalies(currentPage, itemsPerPage, false, params);
+      } else {
+        result = await db.getIndividualAnomalies(currentPage, itemsPerPage, false, params);
       }
 
-      const snapshot = await query.get();
-      let anomaliesData = snapshot.docs.map(doc => ({
-        id: doc.id,
-        ...doc.data()
-      }));
+      let anomaliesData = result.data || [];
 
       // Filtrage par terme de recherche (côté client)
       if (searchTerm) {
         const searchLower = searchTerm.toLowerCase().trim();
-        anomaliesData = anomaliesData.filter(anomaly => {
+        anomaliesData = anomaliesData.filter((anomaly: any) => {
           return (
             (anomaly.cli && anomaly.cli.toLowerCase().includes(searchLower)) ||
             (anomaly.nom && anomaly.nom.toLowerCase().includes(searchLower)) ||
             (anomaly.pre && anomaly.pre.toLowerCase().includes(searchLower)) ||
-            (anomaly.email && anomaly.email.toLowerCase().includes(searchLower)) ||
-            (anomaly.telephone && anomaly.telephone.toLowerCase().includes(searchLower))
+            (anomaly.email && anomaly.email?.toLowerCase().includes(searchLower)) ||
+            (anomaly.telephone && anomaly.telephone?.toLowerCase().includes(searchLower))
           );
         });
       }
 
-      // Pagination
-      const totalRecords = anomaliesData.length;
-      const totalPages = Math.ceil(totalRecords / itemsPerPage);
-      const startIndex = (currentPage - 1) * itemsPerPage;
-      const endIndex = startIndex + itemsPerPage;
-      const paginatedData = anomaliesData.slice(startIndex, endIndex);
-
-      setAnomalies(paginatedData);
-      setTotalRecords(totalRecords);
-      setTotalPages(totalPages);
+      setAnomalies(anomaliesData);
+      setTotalRecords(result.total || anomaliesData.length);
+      setTotalPages(Math.ceil((result.total || anomaliesData.length) / itemsPerPage));
     } catch (error) {
       console.error('Erreur lors du chargement des anomalies:', error);
       setError('Erreur lors du chargement des anomalies');
-      addToast('Erreur lors du chargement des anomalies', 'error');
+      // Use hardcoded data as fallback
+      setAnomalies(hardcodedAnomalies.slice(0, itemsPerPage));
+      setTotalRecords(hardcodedAnomalies.length);
+      setTotalPages(Math.ceil(hardcodedAnomalies.length / itemsPerPage));
     } finally {
       setLoading(false);
       setPageLoading(false);
@@ -446,48 +444,9 @@ const AnomaliesTable: React.FC<AnomaliesTableProps> = ({
     // Reset expanded row when page changes
     setExpandedRow(null);
     setEditingAnomaly(null);
-    
-    // Use hardcoded data instead of fetching
-    let filteredAnomalies = [...hardcodedAnomalies];
-    
-    // Apply search filter
-    if (searchTerm) {
-      const searchLower = searchTerm.toLowerCase().trim();
-      filteredAnomalies = filteredAnomalies.filter(anomaly => {
-        return (
-          (anomaly.cli && anomaly.cli.toLowerCase().includes(searchLower)) ||
-          (anomaly.nom && anomaly.nom.toLowerCase().includes(searchLower)) ||
-          (anomaly.pre && anomaly.pre.toLowerCase().includes(searchLower))
-        );
-      });
-    }
-    
-    // Apply agency filter
-    if (selectedAgency) {
-      // Convert both to strings and trim to ensure proper comparison
-      const agencyCode = String(selectedAgency).trim();
-      filteredAnomalies = filteredAnomalies.filter(anomaly => 
-        String(anomaly.age).trim() === agencyCode
-      );
-    }
-    
-    // Apply status filter
-    if (selectedStatus && selectedStatus !== 'all') {
-      filteredAnomalies = filteredAnomalies.filter(anomaly => anomaly.status === selectedStatus);
-    }
-    
-    // Apply client type filter
-    if (selectedClientType && selectedClientType !== 'all') {
-      filteredAnomalies = filteredAnomalies.filter(anomaly => anomaly.tcli === selectedClientType);
-    }
 
-    // Apply pagination
-    const startIndex = (currentPage - 1) * itemsPerPage;
-    const endIndex = startIndex + itemsPerPage;
-    filteredAnomalies = filteredAnomalies.slice(startIndex, endIndex);
-    
-    setAnomalies(filteredAnomalies);
-    setLoading(false);
+    // Fetch anomalies from backend API
+    fetchAnomaliesFromBackend();
   }, [selectedAgency, searchTerm, selectedStatus, selectedClientType, currentPage, userAgencyCode, paginationKey]);
 
   const toggleExpandRow = (cli: string) => {
@@ -610,8 +569,8 @@ const AnomaliesTable: React.FC<AnomaliesTableProps> = ({
   const renderPagination = () => {
     if (totalPages <= 1) return null;
 
-    // Calculate total pages based on hardcoded data
-    const calculatedTotalPages = Math.ceil(hardcodedAnomalies.length / itemsPerPage);
+    // Calculate total pages based on actual data
+    const calculatedTotalPages = Math.ceil(totalRecords / itemsPerPage);
     
     const pages = [];
     const maxVisiblePages = 5;
@@ -699,7 +658,7 @@ const AnomaliesTable: React.FC<AnomaliesTableProps> = ({
       <div className="text-center py-12">
         <AlertTriangle className="h-12 w-12 text-red-500 mx-auto mb-4" />
         <p className="text-gray-600 mb-4">{error}</p>
-        <Button onClick={fetchAnomalies} leftIcon={<RefreshCw className="h-4 w-4" />}>
+        <Button onClick={fetchAnomaliesFromBackend} leftIcon={<RefreshCw className="h-4 w-4" />}>
           Réessayer
         </Button>
       </div>
@@ -717,7 +676,7 @@ const AnomaliesTable: React.FC<AnomaliesTableProps> = ({
               anomaly={editingAnomaly}
               onCorrectionComplete={() => {
                 setEditingAnomaly(null);
-                fetchAnomalies();
+                fetchAnomaliesFromBackend();
               }}
             />
             <div className="mt-4 flex justify-end">
@@ -863,7 +822,7 @@ const AnomaliesTable: React.FC<AnomaliesTableProps> = ({
                                   anomaly={editingAnomaly}
                                   onCorrectionComplete={() => {
                                     setEditingAnomaly(null);
-                                    fetchAnomalies();
+                                    fetchAnomaliesFromBackend();
                                   }}
                                 />
                               ) : (
@@ -986,8 +945,8 @@ const AnomaliesTable: React.FC<AnomaliesTableProps> = ({
         <div className="mt-4 flex items-center justify-between">
           <div className="text-sm text-gray-700">
             Affichage de <span className="font-medium">
-              {(currentPage - 1) * itemsPerPage + 1} - {Math.min(currentPage * itemsPerPage, hardcodedAnomalies.length)}
-            </span> sur <span className="font-medium">{hardcodedAnomalies.length.toLocaleString('fr-FR')}</span> clients avec anomalies
+              {(currentPage - 1) * itemsPerPage + 1} - {Math.min(currentPage * itemsPerPage, totalRecords)}
+            </span> sur <span className="font-medium">{totalRecords.toLocaleString('fr-FR')}</span> clients avec anomalies
             {selectedAgency && <span className="ml-1 text-primary-600 font-medium">pour l'agence {selectedAgency}</span>}
             {isAgencyUser && userAgencyCode && <span className="ml-1 text-primary-600 font-medium">pour votre agence {userAgencyCode}</span>}
           </div>

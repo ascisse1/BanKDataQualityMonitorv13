@@ -1,0 +1,68 @@
+# =============================================================================
+# Spring Boot Configuration - Docker Development Environment
+# Uses Dockerized Informix for CBS data
+# =============================================================================
+
+spring:
+  datasource:
+    # Primary MySQL database (application data)
+    primary:
+      jdbc-url: jdbc:mysql://localhost:3306/bdqm?useSSL=false&allowPublicKeyRetrieval=true&serverTimezone=UTC
+      username: bdqm
+      password: bdqm
+      driver-class-name: com.mysql.cj.jdbc.Driver
+      hikari:
+        pool-name: MySQL-Primary
+        maximum-pool-size: 10
+        minimum-idle: 5
+
+    # Informix CBS database (Docker container)
+    informix:
+      jdbc-url: jdbc:informix-sqli://localhost:9088/amplitude:INFORMIXSERVER=informix
+      username: informix
+      password: in4mix
+      driver-class-name: com.informix.jdbc.IfxDriver
+      hikari:
+        pool-name: Informix-CBS
+        maximum-pool-size: 5
+        minimum-idle: 2
+        connection-timeout: 30000
+        # Informix-specific properties
+        data-source-properties:
+          NEWCODESET: UTF8,8859-1,819
+          IFX_LOCK_MODE_WAIT: 5
+
+  jpa:
+    hibernate:
+      ddl-auto: none
+    show-sql: true
+    properties:
+      hibernate:
+        format_sql: true
+
+  liquibase:
+    enabled: true
+    drop-first: false
+    contexts: dev
+
+# Application settings
+app:
+  jwt:
+    secret: ${JWT_SECRET:bank_data_quality_secret_key_2024_dev}
+    expiration: 86400000
+
+  features:
+    ldap-authentication: false
+    cbs-reconciliation: true
+
+  cbs:
+    # CBS connection uses the informix datasource
+    datasource: informix
+    read-only: true
+
+# Logging
+logging:
+  level:
+    com.bsic.dataqualitybackend: DEBUG
+    org.hibernate.SQL: DEBUG
+    com.informix: INFO

@@ -10,11 +10,11 @@ services:
     volumes:
       - informix-data:/opt/ibm/data
     healthcheck:
-      test: ['CMD', '/opt/ibm/informix/bin/onstat', '-']
-      interval: 10s
-      timeout: 10s
-      retries: 20
-      start_period: 60s
+      test: ['CMD-SHELL', 'su - informix -c "/opt/ibm/informix/bin/onstat -" | grep -q "On-Line"']
+      interval: 30s
+      timeout: 30s
+      retries: 10
+      start_period: 120s
     ports:
       - '9088:9088'
       - '9092:9089'

@@ -5,7 +5,6 @@ import { Database, RefreshCw, CheckCircle, AlertTriangle, Settings, Server, Shie
 import { useNotification } from '../../context/NotificationContext';
 import { useAuth } from '../../context/AuthContext';
 import DatabaseConfigPanel from '../../components/ui/DatabaseConfigPanel';
-import { isDemoMode } from '../../services/databaseConfig';
 import Input from '../../components/ui/Input';
 
 function ConfigPage() {
@@ -353,7 +352,7 @@ function ConfigPage() {
                 <div className="grid grid-cols-2 gap-4">
                   <div className="bg-gray-50 p-3 rounded-md">
                     <p className="text-sm text-gray-500">Environnement</p>
-                    <p className="font-medium">{import.meta.env.MODE || 'development'}{isDemoMode ? ' (Mode Démo)' : ''}</p>
+                    <p className="font-medium">{import.meta.env.MODE || 'development'}</p>
                   </div>
                   <div className="bg-gray-50 p-3 rounded-md">
                     <p className="text-sm text-gray-500">Version Node.js</p>
@@ -371,7 +370,7 @@ function ConfigPage() {
 
                 <div className="bg-gray-50 p-3 rounded-md">
                   <p className="text-sm text-gray-500">Stratégie de base de données</p>
-                  <p className="font-medium">{isDemoMode ? 'Mode Démo (données fictives)' : 'Supabase avec fallback API'}</p>
+                  <p className="font-medium">Backend API (MySQL/Informix)</p>
                 </div>
               </div>
             </div>
@@ -884,7 +883,7 @@ function ConfigPage() {
               </div>
               <div className="bg-gray-50 p-3 rounded-md">
                 <p className="text-sm text-gray-500">Mode de connexion</p>
-                <p className="font-medium">{isDemoMode ? 'Démo (comptes prédéfinis)' : 'Production (base de données)'}</p>
+                <p className="font-medium">Production (base de données)</p>
               </div>
               <div className="bg-gray-50 p-3 rounded-md">
                 <p className="text-sm text-gray-500">Hachage des mots de passe</p>
@@ -908,11 +907,6 @@ function ConfigPage() {
                 <div className="bg-gray-100 text-gray-800 px-2 py-1 rounded text-xs font-medium">
                   Utilisateur
                 </div>
-                {isDemoMode && (
-                  <div className="bg-secondary-100 text-secondary-800 px-2 py-1 rounded text-xs font-medium">
-                    Mode Démo
-                  </div>
-                )}
               </div>
             </div>
           </div>

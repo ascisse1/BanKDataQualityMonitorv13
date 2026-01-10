@@ -22,12 +22,16 @@ interface FatcaIndicator {
   color: string;
 }
 
-const FatcaSummary: React.FC<FatcaSummaryProps> = ({ 
-  isLoading = false, 
-  fatcaCount,
-  totalClients
+const FatcaSummary: React.FC<FatcaSummaryProps> = ({
+  isLoading = false,
+  fatcaCount: rawFatcaCount,
+  totalClients: rawTotalClients
 }) => {
   const navigate = useNavigate();
+
+  // Ensure values are always valid numbers
+  const fatcaCount = rawFatcaCount ?? 0;
+  const totalClients = rawTotalClients ?? 0;
   const [chartData, setChartData] = useState<{
     series: number[];
     options: ApexOptions;
@@ -435,9 +439,9 @@ const FatcaSummary: React.FC<FatcaSummaryProps> = ({
                   </div>
                   
                   <div className="flex items-end justify-between">
-                    <span className="text-2xl font-semibold text-gray-900">{indicator.count.toLocaleString('fr-FR')}</span>
+                    <span className="text-2xl font-semibold text-gray-900">{(indicator.count ?? 0).toLocaleString('fr-FR')}</span>
                     <span className={`px-2 py-1 rounded-full text-xs font-medium ${indicator.color}`}>
-                      {((indicator.count / fatcaCount) * 100).toFixed(1)}%
+                      {fatcaCount > 0 ? (((indicator.count ?? 0) / fatcaCount) * 100).toFixed(1) : '0.0'}%
                     </span>
                   </div>
                 </div>

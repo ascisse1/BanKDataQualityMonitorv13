@@ -157,33 +157,33 @@ const DashboardPage = () => {
   };
 
   const renderStatCards = () => {
-    if (!stats) return null;
-    
+    if (!stats) return [];
+
     return [
       {
         title: 'Total Clients',
-        value: stats.total.toLocaleString('fr-FR'),
+        value: (stats.total ?? 0).toLocaleString('fr-FR'),
         change: '+2.5%',
         trend: 'up',
         icon: <Users className="h-6 w-6 text-primary-600" />,
       },
       {
         title: 'Clients Particuliers',
-        value: stats.individual.toLocaleString('fr-FR'),
+        value: (stats.individual ?? 0).toLocaleString('fr-FR'),
         change: '+1.8%',
         trend: 'up',
         icon: <UserCheck className="h-6 w-6 text-success-600" />,
       },
       {
         title: 'Clients Entreprises',
-        value: stats.corporate.toLocaleString('fr-FR'),
+        value: (stats.corporate ?? 0).toLocaleString('fr-FR'),
         change: '+3.2%',
         trend: 'up',
         icon: <Building className="h-6 w-6 text-secondary-600" />,
       },
       {
         title: 'Anomalies Détectées',
-        value: stats.anomalies.toLocaleString('fr-FR'),
+        value: (stats.anomalies ?? 0).toLocaleString('fr-FR'),
         change: '-5.1%',
         trend: 'down',
         icon: <AlertTriangle className="h-6 w-6 text-warning-600" />,
@@ -229,7 +229,7 @@ const DashboardPage = () => {
         <div>
           <h1 className="text-2xl font-semibold text-gray-900">Tableau de bord</h1>
           <p className="mt-1 text-sm text-gray-500">
-            Aperçu de la base de données clients ({stats?.total.toLocaleString('fr-FR') || '...'} enregistrements)
+            Aperçu de la base de données clients ({(stats?.total ?? 0).toLocaleString('fr-FR')} enregistrements)
             {lastUpdate && (
               <span className="ml-2 text-xs text-gray-400">
                 • Dernière mise à jour: {lastUpdate.toLocaleTimeString('fr-FR')}
