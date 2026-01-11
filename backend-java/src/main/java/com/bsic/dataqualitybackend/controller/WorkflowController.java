@@ -21,6 +21,25 @@ public class WorkflowController {
 
     private final WorkflowService workflowService;
 
+    /**
+     * Debug endpoint - Get all tasks without filtering (for debugging)
+     */
+    @GetMapping("/debug/tasks")
+    public ResponseEntity<ApiResponse<List<Task>>> getAllTasks() {
+        List<Task> tasks = workflowService.getAllTasks();
+        log.info("Debug: Found {} total tasks", tasks.size());
+        return ResponseEntity.ok(ApiResponse.success(tasks));
+    }
+
+    /**
+     * Debug endpoint - Check deployment status
+     */
+    @GetMapping("/debug/status")
+    public ResponseEntity<ApiResponse<Map<String, Object>>> getDeploymentStatus() {
+        Map<String, Object> status = workflowService.getDeploymentStatus();
+        return ResponseEntity.ok(ApiResponse.success(status));
+    }
+
     @PostMapping("/start")
     @PreAuthorize("hasAnyRole('ADMIN', 'AUDITOR')")
     public ResponseEntity<ApiResponse<String>> startWorkflow(@RequestBody Map<String, Object> request) {
@@ -38,7 +57,8 @@ public class WorkflowController {
     }
 
     @GetMapping("/tasks/user/{userId}")
-    public ResponseEntity<ApiResponse<List<Task>>> getUserTasks(@PathVariable Integer userId) {
+    public ResponseEntity<ApiResponse<List<Task>>> getUserTasks(@PathVariable String userId) {
+        // userId can be numeric ID or username string (Camunda assignee)
         List<Task> tasks = workflowService.getTasksForUser(userId);
         return ResponseEntity.ok(ApiResponse.success(tasks));
     }
@@ -63,8 +83,8 @@ public class WorkflowController {
     @PostMapping("/tasks/{taskId}/claim")
     public ResponseEntity<ApiResponse<Void>> claimTask(
             @PathVariable String taskId,
-            @RequestBody Map<String, Integer> request) {
-        Integer userId = request.get("userId");
+            @RequestBody Map<String, Object> request) {
+        String userId = String.valueOf(request.get("userId"));
         workflowService.claimTask(taskId, userId);
 
         return ResponseEntity.ok(ApiResponse.success("Task claimed successfully", null));
@@ -74,7 +94,7 @@ public class WorkflowController {
     public ResponseEntity<ApiResponse<Void>> completeTask(
             @PathVariable String taskId,
             @RequestBody Map<String, Object> request) {
-        Integer userId = (Integer) request.get("userId");
+        String userId = String.valueOf(request.get("userId"));
         Map<String, Object> variables = (Map<String, Object>) request.get("variables");
 
         workflowService.completeUserTask(taskId, userId, variables);
@@ -86,7 +106,7 @@ public class WorkflowController {
     public ResponseEntity<ApiResponse<Void>> validateTask(
             @PathVariable String taskId,
             @RequestBody Map<String, Object> request) {
-        Integer validatorId = (Integer) request.get("validatorId");
+        String validatorId = String.valueOf(request.get("validatorId"));
         Boolean approved = (Boolean) request.get("approved");
         String reason = (String) request.get("reason");
 

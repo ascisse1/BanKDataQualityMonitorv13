@@ -3,8 +3,12 @@ package com.bsic.dataqualitybackend.service;
 import com.bsic.dataqualitybackend.model.Anomaly;
 import lombok.RequiredArgsConstructor;
 import lombok.extern.slf4j.Slf4j;
+import org.camunda.bpm.engine.RepositoryService;
 import org.camunda.bpm.engine.RuntimeService;
+import org.camunda.bpm.engine.repository.ProcessDefinition;
 import org.camunda.bpm.engine.runtime.ProcessInstance;
+import org.springframework.boot.context.event.ApplicationReadyEvent;
+import org.springframework.context.event.EventListener;
 import org.springframework.stereotype.Service;
 
 import java.util.HashMap;
@@ -22,6 +26,16 @@ public class AnomalyWorkflowService {
     private static final String WORKFLOW_PROCESS_KEY = "ticket-correction-process";
 
     private final RuntimeService runtimeService;
+    private final RepositoryService repositoryService;
+
+    @EventListener(ApplicationReadyEvent.class)
+    public void onApplicationReady() {
+        log.info("=== AnomalyWorkflowService - Checking BPMN Deployment ===");
+        log.info(getProcessDeploymentInfo());
+        if (!isProcessDeployed()) {
+            log.error("WARNING: BPMN process '{}' is NOT deployed! Tickets will NOT be created automatically.", WORKFLOW_PROCESS_KEY);
+        }
+    }
 
     /**
      * Start the ticket correction workflow for a detected anomaly.
@@ -55,9 +69,25 @@ public class AnomalyWorkflowService {
         variables.put("expectedValue", anomaly.getExpectedValue());
         variables.put("errorMessage", anomaly.getErrorMessage());
         variables.put("errorType", anomaly.getErrorType());
+        // assignedUserId will be set by AssignTicketDelegate based on agency users
+        // Using initiator as fallback if no agency users are found
+        variables.put("assignedUserId", initiatorUsername != null ? initiatorUsername : "admin");
         variables.put("clientName", anomaly.getClientName());
         variables.put("clientType", anomaly.getClientType() != null ? anomaly.getClientType().name() : null);
         variables.put("severity", anomaly.getSeverity() != null ? anomaly.getSeverity() : "medium");
+
+        // Check if process definition is deployed
+        ProcessDefinition processDefinition = repositoryService.createProcessDefinitionQuery()
+                .processDefinitionKey(WORKFLOW_PROCESS_KEY)
+                .latestVersion()
+                .singleResult();
+
+        if (processDefinition == null) {
+            log.error("Process definition '{}' not found! Make sure the BPMN file is deployed.", WORKFLOW_PROCESS_KEY);
+            throw new RuntimeException("Process definition not found: " + WORKFLOW_PROCESS_KEY);
+        }
+
+        log.debug("Found process definition: {} (version {})", processDefinition.getId(), processDefinition.getVersion());
 
         try {
             ProcessInstance processInstance = runtimeService.startProcessInstanceByKey(
@@ -67,12 +97,12 @@ public class AnomalyWorkflowService {
             );
 
             String processInstanceId = processInstance.getProcessInstanceId();
-            log.info("Workflow started successfully - processInstanceId: {}, anomalyId: {}",
+            log.info("Workflow started successfully - processInstanceId: {}, anomalyId: {}, ticketWillBeCreated: true",
                     processInstanceId, anomaly.getId());
 
             return processInstanceId;
         } catch (Exception e) {
-            log.error("Failed to start workflow for anomaly {}: {}", anomaly.getId(), e.getMessage());
+            log.error("Failed to start workflow for anomaly {}: {}", anomaly.getId(), e.getMessage(), e);
             throw new RuntimeException("Failed to start anomaly workflow: " + e.getMessage(), e);
         }
     }
@@ -99,6 +129,37 @@ public class AnomalyWorkflowService {
         }
 
         return results;
+    }
+
+    /**
+     * Check if the workflow process is deployed.
+     */
+    public boolean isProcessDeployed() {
+        ProcessDefinition processDefinition = repositoryService.createProcessDefinitionQuery()
+                .processDefinitionKey(WORKFLOW_PROCESS_KEY)
+                .latestVersion()
+                .singleResult();
+        return processDefinition != null;
+    }
+
+    /**
+     * Get deployment info for logging/debugging.
+     */
+    public String getProcessDeploymentInfo() {
+        ProcessDefinition processDefinition = repositoryService.createProcessDefinitionQuery()
+                .processDefinitionKey(WORKFLOW_PROCESS_KEY)
+                .latestVersion()
+                .singleResult();
+
+        if (processDefinition == null) {
+            return "Process '" + WORKFLOW_PROCESS_KEY + "' NOT DEPLOYED";
+        }
+
+        return String.format("Process '%s' deployed: id=%s, version=%d, deploymentId=%s",
+                WORKFLOW_PROCESS_KEY,
+                processDefinition.getId(),
+                processDefinition.getVersion(),
+                processDefinition.getDeploymentId());
     }
 
     /**

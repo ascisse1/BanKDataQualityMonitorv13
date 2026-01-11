@@ -1,4 +1,5 @@
-import React, { useState, useCallback } from 'react';
+import React, { useState, useCallback, useEffect } from 'react';
+import { createPortal } from 'react-dom';
 import { Plus, Edit, Trash2, Save, X, AlertTriangle, AlertCircle, CheckCircle, RefreshCw, Loader2 } from 'lucide-react';
 import Card from '../../../components/ui/Card';
 import Button from '../../../components/ui/Button';
@@ -525,7 +526,7 @@ const RuleEditor: React.FC<RuleEditorProps> = ({ isOpen, rule, onSave, onClose }
 
   if (!isOpen) return null;
 
-  return (
+  return createPortal(
     <div className="fixed inset-0 bg-black bg-opacity-50 flex items-center justify-center z-50">
       <div className="bg-white rounded-lg shadow-xl w-full max-w-2xl mx-4 max-h-[90vh] flex flex-col">
         {/* Header */}
@@ -774,7 +775,8 @@ const RuleEditor: React.FC<RuleEditorProps> = ({ isOpen, rule, onSave, onClose }
           </div>
         </form>
       </div>
-    </div>
+    </div>,
+    document.body
   );
 };
 

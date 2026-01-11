@@ -30,8 +30,12 @@ public class AssignTicketDelegate implements JavaDelegate {
         List<User> agencyUsers = userRepository.findActiveAgencyUsers(agencyCode);
 
         if (agencyUsers.isEmpty()) {
-            log.warn("No active users found for agency: {}", agencyCode);
+            log.warn("No active users found for agency: {} - keeping current assignee", agencyCode);
+            // Keep the current assignedUserId (set by AnomalyWorkflowService as fallback)
+            String currentAssignee = (String) execution.getVariable("assignedUserId");
+            log.info("Ticket {} will remain assigned to: {}", ticketId, currentAssignee);
             execution.setVariable("assignmentFailed", true);
+            execution.setVariable("assignedUserName", "Unassigned - No Agency Users");
             return;
         }
 
@@ -40,11 +44,13 @@ public class AssignTicketDelegate implements JavaDelegate {
         Integer systemUserId = 1;
         Ticket assignedTicket = ticketService.assignTicket(ticketId, selectedUser.getId(), systemUserId);
 
-        execution.setVariable("assignedUserId", selectedUser.getId());
+        // Set assignedUserId as string (username) for Camunda task assignee
+        execution.setVariable("assignedUserId", selectedUser.getUsername());
+        execution.setVariable("assignedUserIdNum", selectedUser.getId());
         execution.setVariable("assignedUserName", selectedUser.getFullName());
         execution.setVariable("assignmentFailed", false);
 
-        log.info("Ticket {} assigned to user: {}", ticketId, selectedUser.getUsername());
+        log.info("Ticket {} assigned to user: {} (ID: {})", ticketId, selectedUser.getUsername(), selectedUser.getId());
     }
 
     private User selectUserWithLeastTickets(List<User> users) {

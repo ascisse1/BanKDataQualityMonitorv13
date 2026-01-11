@@ -22,12 +22,12 @@ export interface StartWorkflowRequest {
 }
 
 export interface CompleteTaskRequest {
-  userId: number;
+  userId: string | number;
   variables?: ProcessVariable;
 }
 
 export interface ValidateTaskRequest {
-  validatorId: number;
+  validatorId: string | number;
   approved: boolean;
   reason?: string;
 }
@@ -43,7 +43,7 @@ class WorkflowService {
     return response.data;
   }
 
-  async getUserTasks(userId: number): Promise<WorkflowTask[]> {
+  async getUserTasks(userId: string | number): Promise<WorkflowTask[]> {
     const response = await apiService.get<{ data: WorkflowTask[] }>(
       `${this.baseUrl}/tasks/user/${userId}`
     );
@@ -64,7 +64,7 @@ class WorkflowService {
     return response.data;
   }
 
-  async claimTask(taskId: string, userId: number): Promise<void> {
+  async claimTask(taskId: string, userId: string | number): Promise<void> {
     await apiService.post(`${this.baseUrl}/tasks/${taskId}/claim`, {
       userId
     });

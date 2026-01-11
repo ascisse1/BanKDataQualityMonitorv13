@@ -294,6 +294,7 @@ public class InformixRepository {
                 dvrrc,
                 uti_vrrc
         from bkcli 
+         limit 10
         """;
 
         try {

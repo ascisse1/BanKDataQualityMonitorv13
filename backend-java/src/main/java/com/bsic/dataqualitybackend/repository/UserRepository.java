@@ -28,8 +28,11 @@ public interface UserRepository extends JpaRepository<User, Integer> {
 
     List<User> findByRoleAndAgencyCode(UserRole role, String agencyCode);
 
-    @Query("SELECT u FROM User u WHERE u.agencyCode = :agencyCode AND u.status = 'ACTIVE' AND u.role = 'AGENCY_USER'")
-    List<User> findActiveAgencyUsers(@Param("agencyCode") String agencyCode);
+    List<User> findByAgencyCodeAndStatusAndRole(String agencyCode, UserStatus status, UserRole role);
+
+    default List<User> findActiveAgencyUsers(String agencyCode) {
+        return findByAgencyCodeAndStatusAndRole(agencyCode, UserStatus.ACTIVE, UserRole.AGENCY_USER);
+    }
 
     @Query("SELECT u FROM User u WHERE u.department = :department AND u.status = 'ACTIVE'")
     List<User> findActiveUsersByDepartment(@Param("department") String department);

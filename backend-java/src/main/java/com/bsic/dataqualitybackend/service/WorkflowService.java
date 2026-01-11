@@ -19,6 +19,7 @@ public class WorkflowService {
 
     private final RuntimeService runtimeService;
     private final TaskService taskService;
+    private final org.camunda.bpm.engine.RepositoryService repositoryService;
 
     public String startTicketWorkflow(Long ticketId, String clientId, String agencyCode, String priority, String initiator) {
         log.info("Starting ticket workflow for ticket: {} by user: {}", ticketId, initiator);
@@ -40,8 +41,8 @@ public class WorkflowService {
         return processInstance.getProcessInstanceId();
     }
 
-    public void completeUserTask(String taskId, Integer userId, Map<String, Object> variables) {
-        log.info("Completing user task: {}", taskId);
+    public void completeUserTask(String taskId, String userId, Map<String, Object> variables) {
+        log.info("Completing user task: {} by user: {}", taskId, userId);
 
         Task task = taskService.createTaskQuery().taskId(taskId).singleResult();
 
@@ -57,7 +58,7 @@ public class WorkflowService {
         log.info("Task completed: {}", taskId);
     }
 
-    public void completeValidationTask(String taskId, Integer validatorId, boolean approved, String reason) {
+    public void completeValidationTask(String taskId, String validatorId, boolean approved, String reason) {
         log.info("Completing validation task: {} - Approved: {}", taskId, approved);
 
         Map<String, Object> variables = new HashMap<>();
@@ -91,9 +92,10 @@ public class WorkflowService {
         log.info("RPA completion message sent to process: {}", processInstanceId);
     }
 
-    public List<Task> getTasksForUser(Integer userId) {
+    public List<Task> getTasksForUser(String userId) {
+        // userId can be either numeric ID or username string
         return taskService.createTaskQuery()
-            .taskAssignee(userId.toString())
+            .taskAssignee(userId)
             .list();
     }
 
@@ -109,8 +111,8 @@ public class WorkflowService {
             .singleResult();
     }
 
-    public void claimTask(String taskId, Integer userId) {
-        taskService.claim(taskId, userId.toString());
+    public void claimTask(String taskId, String userId) {
+        taskService.claim(taskId, userId);
         log.info("Task {} claimed by user {}", taskId, userId);
     }
 

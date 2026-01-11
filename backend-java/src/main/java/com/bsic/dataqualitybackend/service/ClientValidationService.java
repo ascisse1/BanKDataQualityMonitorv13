@@ -32,6 +32,7 @@ public class ClientValidationService {
     private final AnomalyRepository anomalyRepository;
     private final AgencyRepository agencyRepository;
     private final NaturalLanguageRuleParser naturalLanguageRuleParser;
+    private final AnomalyWorkflowService anomalyWorkflowService;
 
     // Field label mappings for user-friendly display
     private static final Map<String, String> FIELD_LABELS = Map.ofEntries(
@@ -112,8 +113,17 @@ public class ClientValidationService {
 
                             // Create anomaly
                             Anomaly anomaly = createAnomaly(client, rule, failure, clientType, agencyName);
-                            anomalyRepository.save(anomaly);
+                            Anomaly savedAnomaly = anomalyRepository.save(anomaly);
                             totalAnomalies++;
+
+                            // Start BPMN workflow to create ticket
+                            try {
+                                anomalyWorkflowService.startWorkflowForAnomaly(savedAnomaly, "SYSTEM");
+                                log.debug("Workflow started for anomaly {}", savedAnomaly.getId());
+                            } catch (Exception we) {
+                                log.warn("Failed to start workflow for anomaly {}: {}",
+                                        savedAnomaly.getId(), we.getMessage());
+                            }
                         }
                     } catch (Exception e) {
                         log.error("Error validating rule {} for client {}: {}",

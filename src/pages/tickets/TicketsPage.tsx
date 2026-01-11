@@ -26,10 +26,22 @@ export const TicketsPage: React.FC = () => {
     try {
       setLoading(true);
       if (user?.role === 'ADMIN' || user?.role === 'AUDITOR') {
-        const allTasks = await workflowService.getGroupTasks('supervisors');
+        // Fetch both user-assigned tasks (by username) and group tasks for supervisors
+        const [userTasks, groupTasks] = await Promise.all([
+          user?.username ? workflowService.getUserTasks(user.username) : Promise.resolve([]),
+          workflowService.getGroupTasks('supervisors')
+        ]);
+        // Combine and deduplicate by task ID
+        const allTasks = [...userTasks];
+        groupTasks.forEach(task => {
+          if (!allTasks.find(t => t.id === task.id)) {
+            allTasks.push(task);
+          }
+        });
         setTasks(allTasks);
-      } else if (user?.id) {
-        const userTasks = await workflowService.getUserTasks(user.id);
+      } else if (user?.username) {
+        // Use username for Camunda task assignee query
+        const userTasks = await workflowService.getUserTasks(user.username);
         setTasks(userTasks);
       }
     } catch (error) {
@@ -41,8 +53,8 @@ export const TicketsPage: React.FC = () => {
 
   const handleClaimTask = async (taskId: string) => {
     try {
-      if (user?.id) {
-        await workflowService.claimTask(taskId, user.id);
+      if (user?.username) {
+        await workflowService.claimTask(taskId, user.username);
         await loadTasks();
       }
     } catch (error) {
@@ -52,9 +64,9 @@ export const TicketsPage: React.FC = () => {
 
   const handleCompleteTask = async (taskId: string) => {
     try {
-      if (user?.id) {
+      if (user?.username) {
         await workflowService.completeTask(taskId, {
-          userId: user.id,
+          userId: user.username,
           variables: {}
         });
         await loadTasks();
@@ -190,7 +202,7 @@ export const TicketsPage: React.FC = () => {
                     </div>
                   </div>
                   <div className="flex items-center gap-2 ml-4">
-                    {!task.assignee && user?.id && (
+                    {!task.assignee && user?.username && (
                       <Button
                         size="sm"
                         variant="outline"
@@ -199,7 +211,7 @@ export const TicketsPage: React.FC = () => {
                         Prendre en charge
                       </Button>
                     )}
-                    {task.assignee === user?.id?.toString() && (
+                    {task.assignee === user?.username && (
                       <Button
                         size="sm"
                         onClick={() => handleCompleteTask(task.id)}

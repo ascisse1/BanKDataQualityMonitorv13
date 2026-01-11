@@ -1,4 +1,5 @@
 import React, { useEffect, useState } from 'react';
+import { createPortal } from 'react-dom';
 import { useForm, Controller } from 'react-hook-form';
 import { zodResolver } from '@hookform/resolvers/zod';
 import { X, Save, Loader2, AlertCircle, ChevronDown } from 'lucide-react';
@@ -169,7 +170,7 @@ export const RuleEditor: React.FC<RuleEditorProps> = ({
     );
   };
 
-  return (
+  return createPortal(
     <div className="fixed inset-0 bg-gray-600 bg-opacity-50 backdrop-blur-sm flex items-center justify-center z-50 p-4">
       <div className="bg-white rounded-xl shadow-2xl max-w-3xl w-full max-h-[90vh] overflow-hidden flex flex-col">
         {/* Header */}
@@ -429,7 +430,8 @@ export const RuleEditor: React.FC<RuleEditorProps> = ({
           </div>
         </div>
       </div>
-    </div>
+    </div>,
+    document.body
   );
 };
 
