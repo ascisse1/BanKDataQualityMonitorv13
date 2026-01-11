@@ -1,6 +1,5 @@
-import React, { useState, useEffect, useCallback } from 'react';
-import { createPortal } from 'react-dom';
-import { Plus, Edit, Trash2, Save, X, AlertTriangle, CheckCircle, RefreshCw, Loader2 } from 'lucide-react';
+import React, { useState, useCallback } from 'react';
+import { Plus, Edit, Trash2, Save, X, AlertTriangle, AlertCircle, CheckCircle, RefreshCw, Loader2 } from 'lucide-react';
 import Card from '../../../components/ui/Card';
 import Button from '../../../components/ui/Button';
 import Input from '../../../components/ui/Input';
@@ -339,24 +338,24 @@ const ValidationRulesManager: React.FC = () => {
       </Card>
 
       {/* Modal d'édition/création */}
-      {(editingRule || isCreating) && (
-        <RuleEditor
-          rule={editingRule}
-          onSave={handleSaveRule}
-          onCancel={() => {
-            setEditingRule(null);
-            setIsCreating(false);
-          }}
-        />
-      )}
+      <RuleEditor
+        isOpen={editingRule !== null || isCreating}
+        rule={editingRule}
+        onSave={handleSaveRule}
+        onClose={() => {
+          setEditingRule(null);
+          setIsCreating(false);
+        }}
+      />
     </div>
   );
 };
 
 interface RuleEditorProps {
+  isOpen: boolean;
   rule: ValidationRule | null;
   onSave: (rule: ValidationRule) => void;
-  onCancel: () => void;
+  onClose: () => void;
 }
 
 // Available field names for selection
@@ -375,187 +374,203 @@ const RULE_TYPE_CATEGORIES: Record<string, NaturalRuleType[]> = {
   'Custom': ['customRegex']
 };
 
-const RuleEditor: React.FC<RuleEditorProps> = ({ rule, onSave, onCancel }) => {
-  const [formData, setFormData] = useState<Partial<ValidationRule>>(
-    rule || {
-      id: `RULE_${Date.now()}`,
-      name: '',
-      description: '',
-      field: 'nom',
-      fieldLabel: '',
-      clientType: null,
-      ruleType: 'required',
-      ruleDefinition: [],
-      errorMessage: '',
-      severity: 'medium',
-      isActive: true,
-      category: 'Identification'
-    }
-  );
+const RuleEditor: React.FC<RuleEditorProps> = ({ isOpen, rule, onSave, onClose }) => {
+  const [formData, setFormData] = useState<Partial<ValidationRule>>({
+    id: '',
+    name: '',
+    description: '',
+    field: '',
+    fieldLabel: '',
+    clientType: null,
+    ruleType: 'required',
+    ruleDefinition: [],
+    errorMessage: '',
+    severity: 'medium',
+    isActive: true,
+    category: 'Identification'
+  });
+  const [conditions, setConditions] = useState<RuleCondition[]>([]);
+  const [error, setError] = useState<string | null>(null);
 
-  const [conditions, setConditions] = useState<RuleCondition[]>(
-    rule?.ruleDefinition || []
-  );
-
-  // Update fieldLabel when field changes
-  useEffect(() => {
-    if (formData.field && !formData.fieldLabel) {
-      setFormData(prev => ({
-        ...prev,
-        fieldLabel: FIELD_LABELS[formData.field as string] || formData.field
-      }));
+  // Reset form when modal opens/closes or rule changes
+  React.useEffect(() => {
+    if (isOpen) {
+      if (rule) {
+        setFormData({ ...rule });
+        setConditions(rule.ruleDefinition || []);
+      } else {
+        setFormData({
+          id: `RULE_${Date.now()}`,
+          name: '',
+          description: '',
+          field: '',
+          fieldLabel: '',
+          clientType: null,
+          ruleType: 'required',
+          ruleDefinition: [],
+          errorMessage: '',
+          severity: 'medium',
+          isActive: true,
+          category: 'Identification'
+        });
+        setConditions([]);
+      }
+      setError(null);
     }
-  }, [formData.field]);
+  }, [isOpen, rule]);
+
+  const handleFieldChange = (field: string) => {
+    setFormData(prev => ({
+      ...prev,
+      field,
+      fieldLabel: FIELD_LABELS[field] || field
+    }));
+  };
 
   const handleSubmit = (e: React.FormEvent) => {
     e.preventDefault();
-    if (formData.name && formData.field && formData.errorMessage) {
-      onSave({
-        ...formData,
-        ruleDefinition: conditions
-      } as ValidationRule);
+    setError(null);
+
+    if (!formData.name || !formData.field || !formData.errorMessage) {
+      setError('Veuillez remplir tous les champs obligatoires');
+      return;
     }
+
+    onSave({
+      ...formData,
+      ruleDefinition: conditions
+    } as ValidationRule);
   };
 
   const addCondition = () => {
-    setConditions([...conditions, { type: 'required' }]);
+    setConditions(prev => [...prev, { type: 'required' }]);
   };
 
   const removeCondition = (index: number) => {
-    setConditions(conditions.filter((_, i) => i !== index));
+    setConditions(prev => prev.filter((_, i) => i !== index));
   };
 
   const updateCondition = (index: number, updates: Partial<RuleCondition>) => {
-    setConditions(conditions.map((cond, i) =>
+    setConditions(prev => prev.map((cond, i) =>
       i === index ? { ...cond, ...updates } : cond
     ));
   };
 
-  const renderConditionFields = (condition: RuleCondition, index: number) => {
-    const type = condition.type;
+  const renderConditionInput = (condition: RuleCondition, index: number) => {
+    const { type } = condition;
 
-    // Single value types
     if (['minLength', 'maxLength', 'exactLength', 'minValue', 'maxValue'].includes(type)) {
       return (
-        <Input
+        <input
           type="number"
           placeholder="Valeur"
           value={condition.value?.toString() || ''}
           onChange={(e) => updateCondition(index, { value: parseInt(e.target.value) || 0 })}
-          className="w-32"
+          className="w-20 px-2 py-1.5 border border-gray-300 rounded-lg text-sm focus:ring-2 focus:ring-blue-500 focus:border-transparent"
         />
       );
     }
 
-    // String value types
     if (['startsWith', 'endsWith', 'contains', 'dateAfter', 'dateBefore', 'customRegex'].includes(type)) {
       return (
-        <Input
+        <input
           type={type.startsWith('date') ? 'date' : 'text'}
-          placeholder={type === 'customRegex' ? 'Regex pattern' : 'Valeur'}
+          placeholder={type === 'customRegex' ? 'Regex' : 'Valeur'}
           value={condition.value?.toString() || ''}
           onChange={(e) => updateCondition(index, { value: e.target.value })}
-          className="flex-1"
+          className="flex-1 min-w-[120px] px-2 py-1.5 border border-gray-300 rounded-lg text-sm focus:ring-2 focus:ring-blue-500 focus:border-transparent"
         />
       );
     }
 
-    // Range types
     if (['dateRange', 'valueRange'].includes(type)) {
       const isDate = type === 'dateRange';
       return (
-        <div className="flex items-center space-x-2">
-          <Input
+        <div className="flex items-center gap-1">
+          <input
             type={isDate ? 'date' : 'number'}
             placeholder="Min"
             value={condition.min?.toString() || ''}
             onChange={(e) => updateCondition(index, { min: isDate ? e.target.value : parseFloat(e.target.value) })}
-            className="w-32"
+            className="w-20 px-2 py-1.5 border border-gray-300 rounded-lg text-sm focus:ring-2 focus:ring-blue-500 focus:border-transparent"
           />
-          <span className="text-gray-500">-</span>
-          <Input
+          <span className="text-gray-400">-</span>
+          <input
             type={isDate ? 'date' : 'number'}
             placeholder="Max"
             value={condition.max?.toString() || ''}
             onChange={(e) => updateCondition(index, { max: isDate ? e.target.value : parseFloat(e.target.value) })}
-            className="w-32"
+            className="w-20 px-2 py-1.5 border border-gray-300 rounded-lg text-sm focus:ring-2 focus:ring-blue-500 focus:border-transparent"
           />
         </div>
       );
     }
 
-    // List types (comma-separated values)
     if (['forbiddenPatterns', 'forbiddenValues', 'inList', 'notInList'].includes(type)) {
       return (
-        <Input
-          placeholder="Valeurs (separees par virgule)"
+        <input
+          type="text"
+          placeholder="val1, val2, val3"
           value={condition.values?.join(', ') || ''}
           onChange={(e) => updateCondition(index, {
-            values: e.target.value.split(',').map(v => v.trim()).filter(v => v)
+            values: e.target.value.split(',').map(v => v.trim()).filter(Boolean)
           })}
-          className="flex-1"
+          className="flex-1 min-w-[150px] px-2 py-1.5 border border-gray-300 rounded-lg text-sm focus:ring-2 focus:ring-blue-500 focus:border-transparent"
         />
       );
     }
 
-    // No extra fields for: required, optional, alphanumeric, alphaOnly, numericOnly, uppercase, email, phone, dateNotFuture, dateNotExpired, notPlaceholder
     return null;
   };
 
-  return createPortal(
-    <>
-      {/* Backdrop overlay */}
-      <div
-        className="fixed inset-0 bg-gray-900 bg-opacity-75"
-        style={{ zIndex: 9998 }}
-        onClick={onCancel}
-        aria-hidden="true"
-      />
+  if (!isOpen) return null;
 
-      {/* Modal container */}
-      <div
-        className="fixed inset-0 flex items-center justify-center p-4"
-        style={{ zIndex: 9999 }}
-        aria-labelledby="modal-title"
-        role="dialog"
-        aria-modal="true"
-        onClick={onCancel}
-      >
-        <div
-          className="relative bg-white rounded-lg shadow-2xl max-w-3xl w-full max-h-[85vh] overflow-y-auto"
-          onClick={(e) => e.stopPropagation()}
-        >
-          <div className="sticky top-0 bg-white px-6 py-4 border-b border-gray-200 flex items-center justify-between">
-            <h3 id="modal-title" className="text-lg font-medium text-gray-900">
-              {rule ? 'Modifier la Regle' : 'Nouvelle Regle'}
-            </h3>
-            <button
-              type="button"
-              className="text-gray-400 hover:text-gray-600 transition-colors"
-              onClick={onCancel}
-            >
-              <X className="h-5 w-5" />
-            </button>
-          </div>
+  return (
+    <div className="fixed inset-0 bg-black bg-opacity-50 flex items-center justify-center z-50">
+      <div className="bg-white rounded-lg shadow-xl w-full max-w-2xl mx-4 max-h-[90vh] flex flex-col">
+        {/* Header */}
+        <div className="flex items-center justify-between p-6 border-b border-gray-200">
+          <h2 className="text-xl font-semibold text-gray-900">
+            {rule ? 'Modifier la Regle' : 'Nouvelle Regle de Validation'}
+          </h2>
+          <button
+            onClick={onClose}
+            className="text-gray-400 hover:text-gray-600 transition-colors"
+          >
+            <X className="w-5 h-5" />
+          </button>
+        </div>
 
-          <form onSubmit={handleSubmit} className="px-6 py-4 space-y-4">
-          {/* Basic Info */}
-          <div className="grid grid-cols-1 md:grid-cols-2 gap-4">
-            <Input
-              label="Nom de la regle"
-              value={formData.name || ''}
-              onChange={(e) => setFormData({ ...formData, name: e.target.value })}
-              required
-            />
+        {/* Form */}
+        <form onSubmit={handleSubmit} className="p-6 space-y-4 overflow-y-auto flex-1">
+          {error && (
+            <div className="bg-red-50 border border-red-200 rounded-lg p-4 flex items-start gap-3">
+              <AlertCircle className="w-5 h-5 text-red-600 flex-shrink-0 mt-0.5" />
+              <p className="text-sm text-red-800">{error}</p>
+            </div>
+          )}
 
+          {/* Name + Client Type */}
+          <div className="grid grid-cols-1 sm:grid-cols-2 gap-4">
+            <div>
+              <label className="block text-sm font-medium text-gray-700 mb-1">
+                Nom de la regle <span className="text-red-500">*</span>
+              </label>
+              <Input
+                value={formData.name || ''}
+                onChange={(e) => setFormData({ ...formData, name: e.target.value })}
+                placeholder="Ex: Validation NID"
+                required
+              />
+            </div>
             <div>
               <label className="block text-sm font-medium text-gray-700 mb-1">
                 Type de client
               </label>
               <select
-                className="w-full rounded-md border-gray-300 shadow-sm focus:border-primary-500 focus:ring-primary-500"
                 value={formData.clientType || ''}
                 onChange={(e) => setFormData({ ...formData, clientType: e.target.value ? e.target.value as '1' | '2' | '3' : null })}
+                className="w-full px-3 py-2 border border-gray-300 rounded-lg focus:ring-2 focus:ring-blue-500 focus:border-transparent"
               >
                 <option value="">Tous les types</option>
                 <option value="1">Particuliers</option>
@@ -565,29 +580,33 @@ const RuleEditor: React.FC<RuleEditorProps> = ({ rule, onSave, onCancel }) => {
             </div>
           </div>
 
-          <Input
-            label="Description"
-            value={formData.description || ''}
-            onChange={(e) => setFormData({ ...formData, description: e.target.value })}
-          />
+          {/* Description */}
+          <div>
+            <label className="block text-sm font-medium text-gray-700 mb-1">
+              Description
+            </label>
+            <textarea
+              value={formData.description || ''}
+              onChange={(e) => setFormData({ ...formData, description: e.target.value })}
+              placeholder="Description de la regle..."
+              rows={2}
+              className="w-full px-3 py-2 border border-gray-300 rounded-lg focus:ring-2 focus:ring-blue-500 focus:border-transparent resize-none"
+            />
+          </div>
 
-          {/* Field Selection */}
-          <div className="grid grid-cols-1 md:grid-cols-2 gap-4">
+          {/* Field + Rule Type */}
+          <div className="grid grid-cols-1 sm:grid-cols-2 gap-4">
             <div>
               <label className="block text-sm font-medium text-gray-700 mb-1">
-                Champ a controler
+                Champ a controler <span className="text-red-500">*</span>
               </label>
               <select
-                className="w-full rounded-md border-gray-300 shadow-sm focus:border-primary-500 focus:ring-primary-500"
                 value={formData.field || ''}
-                onChange={(e) => setFormData({
-                  ...formData,
-                  field: e.target.value,
-                  fieldLabel: FIELD_LABELS[e.target.value] || e.target.value
-                })}
+                onChange={(e) => handleFieldChange(e.target.value)}
+                className="w-full px-3 py-2 border border-gray-300 rounded-lg focus:ring-2 focus:ring-blue-500 focus:border-transparent"
                 required
               >
-                <option value="">Selectionner un champ</option>
+                <option value="">-- Selectionner --</option>
                 {AVAILABLE_FIELDS.map(field => (
                   <option key={field} value={field}>
                     {field} - {FIELD_LABELS[field]}
@@ -595,15 +614,14 @@ const RuleEditor: React.FC<RuleEditorProps> = ({ rule, onSave, onCancel }) => {
                 ))}
               </select>
             </div>
-
             <div>
               <label className="block text-sm font-medium text-gray-700 mb-1">
                 Type de regle
               </label>
               <select
-                className="w-full rounded-md border-gray-300 shadow-sm focus:border-primary-500 focus:ring-primary-500"
                 value={formData.ruleType || 'required'}
                 onChange={(e) => setFormData({ ...formData, ruleType: e.target.value as 'required' | 'format' | 'date' | 'custom' })}
+                className="w-full px-3 py-2 border border-gray-300 rounded-lg focus:ring-2 focus:ring-blue-500 focus:border-transparent"
               >
                 <option value="required">Obligatoire</option>
                 <option value="format">Format</option>
@@ -613,16 +631,16 @@ const RuleEditor: React.FC<RuleEditorProps> = ({ rule, onSave, onCancel }) => {
             </div>
           </div>
 
-          {/* Severity and Category */}
-          <div className="grid grid-cols-1 md:grid-cols-2 gap-4">
+          {/* Severity + Category */}
+          <div className="grid grid-cols-1 sm:grid-cols-2 gap-4">
             <div>
               <label className="block text-sm font-medium text-gray-700 mb-1">
                 Severite
               </label>
               <select
-                className="w-full rounded-md border-gray-300 shadow-sm focus:border-primary-500 focus:ring-primary-500"
                 value={formData.severity || 'medium'}
                 onChange={(e) => setFormData({ ...formData, severity: e.target.value as 'low' | 'medium' | 'high' | 'critical' })}
+                className="w-full px-3 py-2 border border-gray-300 rounded-lg focus:ring-2 focus:ring-blue-500 focus:border-transparent"
               >
                 <option value="low">Faible</option>
                 <option value="medium">Moyenne</option>
@@ -630,26 +648,36 @@ const RuleEditor: React.FC<RuleEditorProps> = ({ rule, onSave, onCancel }) => {
                 <option value="critical">Critique</option>
               </select>
             </div>
+            <div>
+              <label className="block text-sm font-medium text-gray-700 mb-1">
+                Categorie
+              </label>
+              <Input
+                value={formData.category || ''}
+                onChange={(e) => setFormData({ ...formData, category: e.target.value })}
+                placeholder="Ex: Identification"
+              />
+            </div>
+          </div>
 
+          {/* Error Message */}
+          <div>
+            <label className="block text-sm font-medium text-gray-700 mb-1">
+              Message d'erreur <span className="text-red-500">*</span>
+            </label>
             <Input
-              label="Categorie"
-              value={formData.category || ''}
-              onChange={(e) => setFormData({ ...formData, category: e.target.value })}
+              value={formData.errorMessage || ''}
+              onChange={(e) => setFormData({ ...formData, errorMessage: e.target.value })}
+              placeholder="Message affiche en cas d'erreur"
+              required
             />
           </div>
 
-          <Input
-            label="Message d'erreur"
-            value={formData.errorMessage || ''}
-            onChange={(e) => setFormData({ ...formData, errorMessage: e.target.value })}
-            required
-          />
-
-          {/* Rule Conditions Section */}
-          <div className="border-t pt-4">
+          {/* Conditions Section */}
+          <div className="border-t border-gray-200 pt-4">
             <div className="flex items-center justify-between mb-3">
               <label className="block text-sm font-medium text-gray-700">
-                Conditions de validation
+                Conditions de validation ({conditions.length})
               </label>
               <Button
                 type="button"
@@ -662,21 +690,20 @@ const RuleEditor: React.FC<RuleEditorProps> = ({ rule, onSave, onCancel }) => {
               </Button>
             </div>
 
-            {conditions.length === 0 && (
-              <div className="text-center py-4 text-gray-500 bg-gray-50 rounded-lg">
-                Aucune condition. Cliquez sur "Ajouter" pour creer une condition.
+            {conditions.length === 0 ? (
+              <div className="text-center py-6 bg-gray-50 rounded-lg border-2 border-dashed border-gray-200">
+                <p className="text-gray-500 text-sm">Aucune condition</p>
+                <p className="text-gray-400 text-xs mt-1">Cliquez sur "Ajouter" pour definir des conditions</p>
               </div>
-            )}
-
-            <div className="space-y-3">
-              {conditions.map((condition, index) => (
-                <div key={index} className="flex items-start space-x-2 p-3 bg-gray-50 rounded-lg">
-                  <div className="flex-1 space-y-2">
-                    <div className="flex items-center space-x-2">
+            ) : (
+              <div className="space-y-2">
+                {conditions.map((condition, index) => (
+                  <div key={index} className="p-3 bg-gray-50 rounded-lg border border-gray-200">
+                    <div className="flex items-center gap-2 flex-wrap">
                       <select
-                        className="rounded-md border-gray-300 shadow-sm focus:border-primary-500 focus:ring-primary-500 text-sm"
                         value={condition.type}
                         onChange={(e) => updateCondition(index, { type: e.target.value as NaturalRuleType })}
+                        className="px-2 py-1.5 border border-gray-300 rounded-lg text-sm focus:ring-2 focus:ring-blue-500 focus:border-transparent"
                       >
                         {Object.entries(RULE_TYPE_CATEGORIES).map(([category, types]) => (
                           <optgroup key={category} label={category}>
@@ -688,60 +715,66 @@ const RuleEditor: React.FC<RuleEditorProps> = ({ rule, onSave, onCancel }) => {
                           </optgroup>
                         ))}
                       </select>
-                      {renderConditionFields(condition, index)}
+
+                      {renderConditionInput(condition, index)}
+
+                      <button
+                        type="button"
+                        onClick={() => removeCondition(index)}
+                        className="p-1.5 text-red-500 hover:text-red-700 hover:bg-red-50 rounded transition-colors ml-auto"
+                      >
+                        <Trash2 className="h-4 w-4" />
+                      </button>
                     </div>
-                    {/* Custom message field */}
-                    <Input
+
+                    <input
+                      type="text"
                       placeholder="Message personnalise (optionnel)"
                       value={condition.message || ''}
                       onChange={(e) => updateCondition(index, { message: e.target.value || undefined })}
-                      className="text-sm"
+                      className="w-full mt-2 px-2 py-1 border border-gray-200 rounded text-xs focus:ring-2 focus:ring-blue-500 focus:border-transparent"
                     />
                   </div>
-                  <Button
-                    type="button"
-                    variant="ghost"
-                    size="sm"
-                    onClick={() => removeCondition(index)}
-                    className="text-error-600 hover:text-error-700"
-                  >
-                    <Trash2 className="h-4 w-4" />
-                  </Button>
-                </div>
-              ))}
-            </div>
+                ))}
+              </div>
+            )}
           </div>
 
-          <div className="flex items-center">
+          {/* Active checkbox */}
+          <div className="flex items-center gap-2">
             <input
               type="checkbox"
               id="isActive"
-              checked={formData.isActive || false}
+              checked={formData.isActive ?? true}
               onChange={(e) => setFormData({ ...formData, isActive: e.target.checked })}
-              className="h-4 w-4 text-primary-600 focus:ring-primary-500 border-gray-300 rounded"
+              className="h-4 w-4 text-blue-600 border-gray-300 rounded focus:ring-blue-500"
             />
-            <label htmlFor="isActive" className="ml-2 text-sm text-gray-700">
+            <label htmlFor="isActive" className="text-sm text-gray-700">
               Regle active
             </label>
           </div>
 
-          <div className="flex justify-end space-x-2 pt-4">
-            <Button variant="outline" type="button" onClick={onCancel}>
+          {/* Footer buttons */}
+          <div className="flex gap-3 pt-4">
+            <Button
+              type="button"
+              variant="outline"
+              onClick={onClose}
+              fullWidth
+            >
               Annuler
             </Button>
             <Button
-              variant="primary"
               type="submit"
+              fullWidth
               leftIcon={<Save className="h-4 w-4" />}
             >
-              Sauvegarder
+              {rule ? 'Modifier' : 'Creer'}
             </Button>
           </div>
-          </form>
-        </div>
+        </form>
       </div>
-    </>,
-    document.body
+    </div>
   );
 };
 

@@ -29,6 +29,7 @@ public class AnomalyService {
 
     private final AnomalyRepository anomalyRepository;
     private final BusinessMetricsConfig metricsConfig;
+    private final AnomalyWorkflowService anomalyWorkflowService;
 
     // Note: @Cacheable removed - Page objects don't serialize properly with Spring Cache
     // and cause ClassCastException (LinkedHashMap cannot be cast to Page)
@@ -144,10 +145,29 @@ public class AnomalyService {
     @Transactional
     @CacheEvict(value = "anomalies", allEntries = true)
     public AnomalyDto createAnomaly(AnomalyDto anomalyDto) {
+        return createAnomaly(anomalyDto, "SYSTEM", true);
+    }
+
+    @Transactional
+    @CacheEvict(value = "anomalies", allEntries = true)
+    public AnomalyDto createAnomaly(AnomalyDto anomalyDto, String initiatorUsername, boolean startWorkflow) {
         Anomaly anomaly = mapToEntity(anomalyDto);
         Anomaly saved = anomalyRepository.save(anomaly);
         log.info("Created anomaly with ID: {}", saved.getId());
         metricsConfig.recordAnomalyCreated();
+
+        // Start BPMN workflow to create ticket and process anomaly
+        if (startWorkflow) {
+            try {
+                String processInstanceId = anomalyWorkflowService.startWorkflowForAnomaly(saved, initiatorUsername);
+                log.info("Workflow started for anomaly {} - processInstanceId: {}", saved.getId(), processInstanceId);
+            } catch (Exception e) {
+                log.warn("Failed to start workflow for anomaly {} (Camunda may not be configured): {}",
+                        saved.getId(), e.getMessage());
+                // Continue without workflow - anomaly is still created
+            }
+        }
+
         return mapToDto(saved);
     }
 
