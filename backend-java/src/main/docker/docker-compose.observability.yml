@@ -1,0 +1,169 @@
+version: '3.8'
+
+# BSIC Data Quality Monitor - Full Observability Stack
+# Includes: Redis, Prometheus, Grafana, Loki, Promtail, Tempo
+
+services:
+  # ===========================================
+  # Cache Layer
+  # ===========================================
+  redis:
+    image: redis:7-alpine
+    container_name: bsic-redis
+    ports:
+      - "6379:6379"
+    volumes:
+      - redis-data:/data
+    command: redis-server --appendonly yes
+    restart: unless-stopped
+    networks:
+      - bsic-network
+    healthcheck:
+      test: ["CMD", "redis-cli", "ping"]
+      interval: 10s
+      timeout: 5s
+      retries: 5
+
+  # ===========================================
+  # Metrics - Prometheus
+  # ===========================================
+  prometheus:
+    image: prom/prometheus:v2.48.0
+    container_name: bsic-prometheus
+    ports:
+      - "9090:9090"
+    volumes:
+      - ../../../monitoring/prometheus.yml:/etc/prometheus/prometheus.yml:ro
+      - ../../../monitoring/alerts.yml:/etc/prometheus/alerts.yml:ro
+      - prometheus-data:/prometheus
+    command:
+      - '--config.file=/etc/prometheus/prometheus.yml'
+      - '--storage.tsdb.path=/prometheus'
+      - '--web.console.libraries=/usr/share/prometheus/console_libraries'
+      - '--web.console.templates=/usr/share/prometheus/consoles'
+      - '--web.enable-remote-write-receiver'
+      - '--enable-feature=exemplar-storage'
+    restart: unless-stopped
+    networks:
+      - bsic-network
+    healthcheck:
+      test: ["CMD", "wget", "-q", "--spider", "http://localhost:9090/-/healthy"]
+      interval: 10s
+      timeout: 5s
+      retries: 5
+
+  # ===========================================
+  # Logs - Loki
+  # ===========================================
+  loki:
+    image: grafana/loki:2.9.2
+    container_name: bsic-loki
+    ports:
+      - "3100:3100"
+    volumes:
+      - ../../../monitoring/loki/loki-config.yml:/etc/loki/local-config.yaml:ro
+      - loki-data:/loki
+    command: -config.file=/etc/loki/local-config.yaml
+    restart: unless-stopped
+    networks:
+      - bsic-network
+    healthcheck:
+      test: ["CMD", "wget", "-q", "--spider", "http://localhost:3100/ready"]
+      interval: 10s
+      timeout: 5s
+      retries: 5
+
+  # ===========================================
+  # Log Shipper - Promtail
+  # ===========================================
+  promtail:
+    image: grafana/promtail:2.9.2
+    container_name: bsic-promtail
+    volumes:
+      - ../../../monitoring/promtail/promtail-config.yml:/etc/promtail/config.yml:ro
+      - ../../../logs:/var/log/bsic:ro
+      - /var/run/docker.sock:/var/run/docker.sock:ro
+    command: -config.file=/etc/promtail/config.yml
+    restart: unless-stopped
+    networks:
+      - bsic-network
+    depends_on:
+      - loki
+
+  # ===========================================
+  # Traces - Tempo
+  # ===========================================
+  tempo:
+    image: grafana/tempo:2.3.1
+    container_name: bsic-tempo
+    ports:
+      - "3200:3200"   # Tempo HTTP
+      - "4317:4317"   # OTLP gRPC
+      - "4318:4318"   # OTLP HTTP
+      - "9411:9411"   # Zipkin
+      - "14268:14268" # Jaeger HTTP
+    volumes:
+      - ../../../monitoring/tempo/tempo-config.yml:/etc/tempo/config.yaml:ro
+      - tempo-data:/tmp/tempo
+    command: ["-config.file=/etc/tempo/config.yaml"]
+    restart: unless-stopped
+    networks:
+      - bsic-network
+    healthcheck:
+      test: ["CMD", "wget", "-q", "--spider", "http://localhost:3200/ready"]
+      interval: 10s
+      timeout: 5s
+      retries: 5
+
+  # ===========================================
+  # Visualization - Grafana
+  # ===========================================
+  grafana:
+    image: grafana/grafana:10.2.2
+    container_name: bsic-grafana
+    ports:
+      - "3000:3000"
+    volumes:
+      - grafana-data:/var/lib/grafana
+      - ../../../monitoring/grafana/dashboards:/etc/grafana/provisioning/dashboards:ro
+      - ../../../monitoring/grafana/datasources:/etc/grafana/provisioning/datasources:ro
+    environment:
+      - GF_SECURITY_ADMIN_USER=admin
+      - GF_SECURITY_ADMIN_PASSWORD=admin
+      - GF_USERS_ALLOW_SIGN_UP=false
+      - GF_FEATURE_TOGGLES_ENABLE=traceqlEditor
+      - GF_AUTH_ANONYMOUS_ENABLED=false
+    restart: unless-stopped
+    networks:
+      - bsic-network
+    depends_on:
+      - prometheus
+      - loki
+      - tempo
+    healthcheck:
+      test: ["CMD", "wget", "-q", "--spider", "http://localhost:3000/api/health"]
+      interval: 10s
+      timeout: 5s
+      retries: 5
+
+# ===========================================
+# Volumes
+# ===========================================
+volumes:
+  redis-data:
+    driver: local
+  prometheus-data:
+    driver: local
+  loki-data:
+    driver: local
+  tempo-data:
+    driver: local
+  grafana-data:
+    driver: local
+
+# ===========================================
+# Networks
+# ===========================================
+networks:
+  bsic-network:
+    driver: bridge

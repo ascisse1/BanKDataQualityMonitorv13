@@ -1,4 +1,6 @@
 import { BrowserRouter as Router } from 'react-router-dom';
+import { QueryClient, QueryClientProvider } from '@tanstack/react-query';
+import { ReactQueryDevtools } from '@tanstack/react-query-devtools';
 import { SessionAuthProvider } from './context/SessionAuthProvider';
 import { AuthProvider } from './context/AuthContext';
 import { ThemeProvider } from './context/ThemeContext';
@@ -10,6 +12,22 @@ import { NotificationProvider, NotificationDisplay } from './context/Notificatio
 import LoadingOverlay from './components/ui/LoadingOverlay';
 import TracerButton from './components/ui/TracerButton';
 
+// Create a client with optimized defaults
+const queryClient = new QueryClient({
+  defaultOptions: {
+    queries: {
+      staleTime: 1000 * 60 * 5, // 5 minutes
+      gcTime: 1000 * 60 * 30, // 30 minutes (formerly cacheTime)
+      retry: 3,
+      retryDelay: (attemptIndex) => Math.min(1000 * 2 ** attemptIndex, 30000),
+      refetchOnWindowFocus: false,
+    },
+    mutations: {
+      retry: 1,
+    },
+  },
+});
+
 /**
  * Main Application Component
  *
@@ -20,25 +38,28 @@ import TracerButton from './components/ui/TracerButton';
  */
 function App() {
   return (
-    <ThemeProvider>
-      <NotificationProvider>
-        <ToastProvider>
-          <Router>
-            <SessionAuthProvider>
-              <AuthProvider>
-                <CommandPaletteProvider>
-                  <AppRoutes />
-                  <Toaster />
-                  <NotificationDisplay />
-                  <LoadingOverlay />
-                  <TracerButton />
-                </CommandPaletteProvider>
-              </AuthProvider>
-            </SessionAuthProvider>
-          </Router>
-        </ToastProvider>
-      </NotificationProvider>
-    </ThemeProvider>
+    <QueryClientProvider client={queryClient}>
+      <ThemeProvider>
+        <NotificationProvider>
+          <ToastProvider>
+            <Router>
+              <SessionAuthProvider>
+                <AuthProvider>
+                  <CommandPaletteProvider>
+                    <AppRoutes />
+                    <Toaster />
+                    <NotificationDisplay />
+                    <LoadingOverlay />
+                    <TracerButton />
+                  </CommandPaletteProvider>
+                </AuthProvider>
+              </SessionAuthProvider>
+            </Router>
+          </ToastProvider>
+        </NotificationProvider>
+      </ThemeProvider>
+      {import.meta.env.DEV && <ReactQueryDevtools initialIsOpen={false} />}
+    </QueryClientProvider>
   );
 }
 

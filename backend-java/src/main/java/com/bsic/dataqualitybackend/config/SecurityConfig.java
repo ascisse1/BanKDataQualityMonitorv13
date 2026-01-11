@@ -94,7 +94,8 @@ public class SecurityConfig {
                                 "/api/agencies/**",
                                 "/api/validation/**",
                                 "/api/fatca/**",
-                                "/api/tracking/**"
+                                "/api/tracking/**",
+                                "/api/monitoring/**"      // Frontend monitoring logs
                         ).permitAll()
                         // Role-based access
                         .requestMatchers("/api/admin/**").hasRole("ADMIN")

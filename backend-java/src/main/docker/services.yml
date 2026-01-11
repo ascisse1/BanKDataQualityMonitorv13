@@ -17,6 +17,16 @@ services:
     extends:
       file: ./redis.yml
       service: redis
+  prometheus:
+    extends:
+      file: ./monitoring.yml
+      service: prometheus
+  grafana:
+    extends:
+      file: ./monitoring.yml
+      service: grafana
 volumes:
   redis-data-bqdm:
   informix-data:
+  prometheus-data:
+  grafana-data:

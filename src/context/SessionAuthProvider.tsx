@@ -1,5 +1,6 @@
 import { ReactNode, useEffect, useState, createContext, useContext, useCallback } from 'react';
 import { logger } from '../services/logger';
+import { monitoring } from '../services/monitoring';
 
 /**
  * User info returned from /api/me endpoint.
@@ -68,7 +69,7 @@ export const SessionAuthProvider = ({ children }: SessionAuthProviderProps) => {
       if (response.ok) {
         const data = await response.json();
         if (data.authenticated) {
-          setUser({
+          const userInfo = {
             id: data.id,
             username: data.username,
             email: data.email,
@@ -78,19 +79,33 @@ export const SessionAuthProvider = ({ children }: SessionAuthProviderProps) => {
             agencyCode: data.agencyCode,
             role: data.role,
             roles: data.roles || [],
-          });
+          };
+          setUser(userInfo);
           setAuthenticated(true);
+
+          // Set user context in monitoring
+          monitoring.setUser({
+            id: userInfo.id,
+            username: userInfo.username,
+            email: userInfo.email,
+            role: userInfo.role,
+            agencyCode: userInfo.agencyCode || undefined
+          });
+
           return true;
         }
       }
 
       setUser(null);
       setAuthenticated(false);
+      monitoring.clearUser();
       return false;
     } catch (error) {
       logger.error('security', 'Failed to check authentication status', { error });
+      monitoring.captureException(error, { context: 'checkAuth' });
       setUser(null);
       setAuthenticated(false);
+      monitoring.clearUser();
       return false;
     }
   }, []);
@@ -150,18 +165,22 @@ export const SessionAuthProvider = ({ children }: SessionAuthProviderProps) => {
 
       if (response.redirected) {
         // Follow the redirect to Keycloak logout
+        monitoring.clearUser();
         window.location.href = response.url;
       } else if (response.ok) {
         // Logout successful, redirect to login page
         setUser(null);
         setAuthenticated(false);
+        monitoring.clearUser();
         window.location.href = '/login';
       }
     } catch (error) {
       logger.error('security', 'Logout failed', { error });
+      monitoring.captureException(error, { context: 'logout' });
       // Force redirect to login on error
       setUser(null);
       setAuthenticated(false);
+      monitoring.clearUser();
       window.location.href = '/login';
     }
   }, [user?.username]);

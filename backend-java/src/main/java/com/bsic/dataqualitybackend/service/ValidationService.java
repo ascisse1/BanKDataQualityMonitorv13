@@ -93,6 +93,36 @@ public class ValidationService {
         log.info("Toggled validation rule {} to {}", id, active);
     }
 
+    @Transactional
+    public void bulkToggle(List<Long> ids, boolean active) {
+        List<ValidationRule> rules = validationRuleRepository.findAllById(ids);
+        rules.forEach(rule -> rule.setActive(active));
+        validationRuleRepository.saveAll(rules);
+        log.info("Bulk toggled {} validation rules to {}", ids.size(), active);
+    }
+
+    @Transactional
+    public void bulkDelete(List<Long> ids) {
+        validationRuleRepository.deleteAllById(ids);
+        log.info("Bulk deleted {} validation rules", ids.size());
+    }
+
+    @Transactional
+    public void updatePriorities(List<PriorityUpdate> priorities) {
+        for (PriorityUpdate update : priorities) {
+            validationRuleRepository.findById(update.getId()).ifPresent(rule -> {
+                rule.setPriority(update.getPriority());
+                validationRuleRepository.save(rule);
+            });
+        }
+        log.info("Updated priorities for {} validation rules", priorities.size());
+    }
+
+    public record PriorityUpdate(Long id, Integer priority) {
+        public Long getId() { return id; }
+        public Integer getPriority() { return priority; }
+    }
+
     private ValidationRuleDto mapToDto(ValidationRule rule) {
         return ValidationRuleDto.builder()
             .id(rule.getId())

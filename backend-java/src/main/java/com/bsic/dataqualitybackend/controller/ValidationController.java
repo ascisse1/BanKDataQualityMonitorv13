@@ -82,4 +82,35 @@ public class ValidationController {
         validationService.toggleRule(id, active);
         return ResponseEntity.ok(ApiResponse.success("Règle de validation modifiée avec succès", null));
     }
+
+    @PostMapping("/rules/bulk-toggle")
+    @PreAuthorize("hasRole('ADMIN')")
+    public ResponseEntity<ApiResponse<Void>> bulkToggle(@RequestBody BulkToggleRequest request) {
+        validationService.bulkToggle(request.ids(), request.active());
+        return ResponseEntity.ok(ApiResponse.success(
+            String.format("%d règle(s) %s avec succès",
+                request.ids().size(),
+                request.active() ? "activée(s)" : "désactivée(s)"),
+            null));
+    }
+
+    @PostMapping("/rules/bulk-delete")
+    @PreAuthorize("hasRole('ADMIN')")
+    public ResponseEntity<ApiResponse<Void>> bulkDelete(@RequestBody BulkDeleteRequest request) {
+        validationService.bulkDelete(request.ids());
+        return ResponseEntity.ok(ApiResponse.success(
+            String.format("%d règle(s) supprimée(s) avec succès", request.ids().size()),
+            null));
+    }
+
+    @PutMapping("/rules/priorities")
+    @PreAuthorize("hasRole('ADMIN')")
+    public ResponseEntity<ApiResponse<Void>> updatePriorities(
+            @RequestBody List<ValidationService.PriorityUpdate> priorities) {
+        validationService.updatePriorities(priorities);
+        return ResponseEntity.ok(ApiResponse.success("Priorités mises à jour avec succès", null));
+    }
+
+    public record BulkToggleRequest(List<Long> ids, boolean active) {}
+    public record BulkDeleteRequest(List<Long> ids) {}
 }
