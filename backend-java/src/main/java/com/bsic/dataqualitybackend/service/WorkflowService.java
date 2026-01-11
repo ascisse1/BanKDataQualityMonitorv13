@@ -20,14 +20,15 @@ public class WorkflowService {
     private final RuntimeService runtimeService;
     private final TaskService taskService;
 
-    public String startTicketWorkflow(Long ticketId, String clientId, String agencyCode, String priority) {
-        log.info("Starting ticket workflow for ticket: {}", ticketId);
+    public String startTicketWorkflow(Long ticketId, String clientId, String agencyCode, String priority, String initiator) {
+        log.info("Starting ticket workflow for ticket: {} by user: {}", ticketId, initiator);
 
         Map<String, Object> variables = new HashMap<>();
         variables.put("ticketId", ticketId);
         variables.put("clientId", clientId);
         variables.put("agencyCode", agencyCode);
         variables.put("priority", priority);
+        variables.put("initiator", initiator);
 
         ProcessInstance processInstance = runtimeService.startProcessInstanceByKey(
             "ticket-correction-process",

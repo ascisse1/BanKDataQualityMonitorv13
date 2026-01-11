@@ -1,11 +1,49 @@
-import React from 'react';
+import React, { useMemo } from 'react';
 import { useState, useEffect } from 'react';
-import { AlertTriangle, Eye, ChevronDown, ChevronUp, ChevronLeft, ChevronRight, RefreshCw, User, Building, Edit, Users } from 'lucide-react';
+import { AlertTriangle, Eye, ChevronDown, ChevronUp, ChevronLeft, ChevronRight, RefreshCw, User, Building, Edit, Users, FileWarning } from 'lucide-react';
 import Button from '../../../components/ui/Button';
 import AnomalyCorrection from './AnomalyCorrection';
 import { db } from '../../../services/db';
 import { useToast } from '../../../components/ui/Toaster';
 import { useAuth } from '../../../context/AuthContext';
+
+interface Anomaly {
+  cli: string;
+  nom: string;
+  pre?: string;
+  prenom?: string;
+  tcli: string;
+  age?: string;
+  status: string;
+  severity?: string;
+  field?: string;
+  fieldCode?: string;
+  errorType?: string;
+  errorMessage?: string;
+  nmer?: string;
+  dna?: string;
+  nid?: string;
+  nat?: string;
+  nrc?: string;
+  datc?: string;
+  rso?: string;
+  email?: string;
+  telephone?: string;
+  [key: string]: any;
+}
+
+interface GroupedClient {
+  cli: string;
+  nom: string;
+  pre?: string;
+  prenom?: string;
+  tcli: string;
+  age?: string;
+  anomalies: Anomaly[];
+  anomalyCount: number;
+  highestSeverity: string;
+  statuses: string[];
+}
 
 interface AnomaliesTableProps {
   isLoading?: boolean;
@@ -23,11 +61,12 @@ const AnomaliesTable: React.FC<AnomaliesTableProps> = ({
   selectedStatus = 'all',
   totalAnomalies
 }) => {
-  const [anomalies, setAnomalies] = useState<any[]>([]);
+  const [anomalies, setAnomalies] = useState<Anomaly[]>([]);
   const [loading, setLoading] = useState(true);
   const [pageLoading, setPageLoading] = useState(false);
   const [paginationKey, setPaginationKey] = useState(0);
   const [expandedRow, setExpandedRow] = useState<string | null>(null);
+  const [expandedAnomaly, setExpandedAnomaly] = useState<string | null>(null);
   const [itemsPerPage] = useState(10);
   const [currentPage, setCurrentPage] = useState(1);
   const [totalPages, setTotalPages] = useState(Math.ceil(totalAnomalies / 10));
@@ -38,6 +77,48 @@ const AnomaliesTable: React.FC<AnomaliesTableProps> = ({
 
   const isAgencyUser = user?.role === 'AGENCY_USER';
   const userAgencyCode = user?.agencyCode;
+
+  // Group anomalies by client
+  const groupedClients = useMemo((): GroupedClient[] => {
+    const clientMap = new Map<string, GroupedClient>();
+
+    anomalies.forEach((anomaly) => {
+      const cli = anomaly.cli;
+      if (!clientMap.has(cli)) {
+        clientMap.set(cli, {
+          cli,
+          nom: anomaly.nom,
+          pre: anomaly.pre || anomaly.prenom,
+          prenom: anomaly.prenom,
+          tcli: anomaly.tcli,
+          age: anomaly.age,
+          anomalies: [],
+          anomalyCount: 0,
+          highestSeverity: 'Faible',
+          statuses: [],
+        });
+      }
+
+      const client = clientMap.get(cli)!;
+      client.anomalies.push(anomaly);
+      client.anomalyCount++;
+
+      // Track highest severity
+      const severityOrder = { 'Critique': 4, 'Haute': 3, 'Moyenne': 2, 'Faible': 1 };
+      const currentSeverity = anomaly.severity || 'Haute';
+      if ((severityOrder[currentSeverity as keyof typeof severityOrder] || 0) >
+          (severityOrder[client.highestSeverity as keyof typeof severityOrder] || 0)) {
+        client.highestSeverity = currentSeverity;
+      }
+
+      // Track unique statuses
+      if (anomaly.status && !client.statuses.includes(anomaly.status)) {
+        client.statuses.push(anomaly.status);
+      }
+    });
+
+    return Array.from(clientMap.values());
+  }, [anomalies]);
 
   const fetchAnomaliesFromBackend = async () => {
     try {
@@ -114,7 +195,14 @@ const AnomaliesTable: React.FC<AnomaliesTableProps> = ({
 
   const toggleExpandRow = (cli: string) => {
     setExpandedRow(expandedRow === cli ? null : cli);
+    setExpandedAnomaly(null); // Reset anomaly detail when collapsing client
   };
+
+  const toggleExpandAnomaly = (anomalyKey: string) => {
+    setExpandedAnomaly(expandedAnomaly === anomalyKey ? null : anomalyKey);
+  };
+
+  const getAnomalyKey = (cli: string, index: number) => `${cli}-${index}`;
 
   const getStatusColor = (status: string) => {
     switch (status) {
@@ -371,13 +459,13 @@ const AnomaliesTable: React.FC<AnomaliesTableProps> = ({
                 Client
               </th>
               <th className="px-6 py-3 text-left text-xs font-medium text-gray-500 uppercase tracking-wider">
-                Type d'anomalie
+                Anomalies
               </th>
               <th className="px-6 py-3 text-left text-xs font-medium text-gray-500 uppercase tracking-wider">
-                Statut
+                Sévérité max
               </th>
               <th className="px-6 py-3 text-left text-xs font-medium text-gray-500 uppercase tracking-wider">
-                Date de détection
+                Statuts
               </th>
               <th className="px-6 py-3 text-right text-xs font-medium text-gray-500 uppercase tracking-wider">
                 Actions
@@ -385,7 +473,7 @@ const AnomaliesTable: React.FC<AnomaliesTableProps> = ({
             </tr>
           </thead>
           <tbody className="bg-white divide-y divide-gray-200">
-            {anomalies.length === 0 ? (
+            {groupedClients.length === 0 ? (
               <tr>
                 <td colSpan={5} className="px-6 py-12 text-center">
                   <AlertTriangle className="h-12 w-12 text-gray-400 mx-auto mb-4" />
@@ -398,201 +486,239 @@ const AnomaliesTable: React.FC<AnomaliesTableProps> = ({
                 </td>
               </tr>
             ) : (
-              anomalies.map((anomaly) => (
-                <React.Fragment key={anomaly.cli}>
-                  <tr className="hover:bg-gray-50">
+              groupedClients.map((client) => (
+                <React.Fragment key={client.cli}>
+                  {/* Client row */}
+                  <tr className={`hover:bg-gray-50 ${expandedRow === client.cli ? 'bg-primary-50' : ''}`}>
                     <td className="px-6 py-4 whitespace-nowrap">
                       <div className="flex items-center">
                         <div className="flex-shrink-0 h-10 w-10">
-                          <div className={`h-10 w-10 rounded-full ${anomaly.tcli === '1' ? 'bg-primary-100' : 'bg-secondary-100'} flex items-center justify-center`}>
-                            {anomaly.tcli === '1' ? (
+                          <div className={`h-10 w-10 rounded-full ${client.tcli === '1' ? 'bg-primary-100' : client.tcli === '2' ? 'bg-secondary-100' : 'bg-gray-100'} flex items-center justify-center`}>
+                            {client.tcli === '1' ? (
                               <User className="h-5 w-5 text-primary-600" />
-                            ) : (
+                            ) : client.tcli === '2' ? (
                               <Building className="h-5 w-5 text-secondary-600" />
+                            ) : (
+                              <Users className="h-5 w-5 text-gray-600" />
                             )}
                           </div>
                         </div>
                         <div className="ml-4">
                           <div className="text-sm font-medium text-gray-900">
-                            {anomaly.nom} {anomaly.prenom}
+                            {client.nom} {client.pre || client.prenom || ''}
                           </div>
                           <div className="text-sm text-gray-500">
-                            CLI: {anomaly.cli}
+                            CLI: {client.cli} {client.age && `| Agence: ${client.age}`}
                           </div>
                         </div>
                       </div>
                     </td>
                     <td className="px-6 py-4 whitespace-nowrap">
                       <div className="flex items-center">
-                        <AlertTriangle className="h-4 w-4 text-warning-500 mr-1" />
-                        <span className="ml-2 text-sm text-gray-900">{anomaly.errorType || 'Valeur manquante'}</span>
+                        <div className={`flex items-center justify-center h-8 w-8 rounded-full ${
+                          client.anomalyCount >= 3 ? 'bg-error-100 text-error-700' :
+                          client.anomalyCount === 2 ? 'bg-warning-100 text-warning-700' :
+                          'bg-gray-100 text-gray-700'
+                        } font-semibold text-sm`}>
+                          {client.anomalyCount}
+                        </div>
+                        <span className="ml-2 text-sm text-gray-600">
+                          anomalie{client.anomalyCount > 1 ? 's' : ''}
+                        </span>
                       </div>
                     </td>
                     <td className="px-6 py-4 whitespace-nowrap">
-                      <span className={`inline-flex px-2 py-1 text-xs font-semibold rounded-full ${getStatusColor(anomaly.status)}`}>
-                        {anomaly.status}
+                      <span className={`inline-flex px-2 py-1 text-xs font-semibold rounded-full ${getSeverityColor(client.highestSeverity)}`}>
+                        {client.highestSeverity}
                       </span>
                     </td>
-                    <td className="px-6 py-4 whitespace-nowrap text-sm text-gray-500">
-                      {new Date().toLocaleDateString('fr-FR', {day: '2-digit', month: '2-digit', year: 'numeric'})}
+                    <td className="px-6 py-4 whitespace-nowrap">
+                      <div className="flex flex-wrap gap-1">
+                        {client.statuses.slice(0, 2).map((status, idx) => (
+                          <span key={idx} className={`inline-flex px-2 py-0.5 text-xs font-medium rounded-full ${getStatusColor(status)}`}>
+                            {status}
+                          </span>
+                        ))}
+                        {client.statuses.length > 2 && (
+                          <span className="inline-flex px-2 py-0.5 text-xs font-medium rounded-full bg-gray-100 text-gray-600">
+                            +{client.statuses.length - 2}
+                          </span>
+                        )}
+                      </div>
                     </td>
                     <td className="px-6 py-4 whitespace-nowrap text-right text-sm font-medium">
                       <div className="flex items-center justify-end space-x-2">
                         <Button
-                          variant="ghost"
-                          size="sm" 
-                          leftIcon={<Eye className="h-4 w-4" />}
-                          onClick={() => toggleExpandRow(anomaly.cli)}
-                        >
-                          Voir
-                        </Button>
-                        <Button
-                          variant="outline"
+                          variant={expandedRow === client.cli ? 'primary' : 'ghost'}
                           size="sm"
-                          leftIcon={<Edit className="h-4 w-4" />}
-                          onClick={() => setEditingAnomaly({
-                            cli: anomaly.cli,
-                            field: getFieldName(anomaly),
-                            fieldCode: getFieldCode(anomaly),
-                            currentValue: getFieldValue(anomaly),
-                            errorMessage: getErrorMessage(anomaly)
-                          })}
+                          leftIcon={<Eye className="h-4 w-4" />}
+                          onClick={() => toggleExpandRow(client.cli)}
                         >
-                          Corriger
+                          {expandedRow === client.cli ? 'Masquer' : 'Détails'}
                         </Button>
                         <button
                           type="button"
                           className="text-gray-500 hover:text-gray-700"
-                          onClick={() => toggleExpandRow(anomaly.cli)}
+                          onClick={() => toggleExpandRow(client.cli)}
                         >
-                          {expandedRow === anomaly.cli ? (
-                            <ChevronUp className="h-4 w-4" />
+                          {expandedRow === client.cli ? (
+                            <ChevronUp className="h-5 w-5" />
                           ) : (
-                            <ChevronDown className="h-4 w-4" />
+                            <ChevronDown className="h-5 w-5" />
                           )}
                         </button>
                       </div>
                     </td>
                   </tr>
-                  {expandedRow === anomaly.cli && (
+
+                  {/* Expanded client anomalies */}
+                  {expandedRow === client.cli && (
                     <tr>
-                      <td colSpan={5} className="px-6 py-4 bg-gray-50">
-                        <div className="border-l-4 border-primary-500 pl-4 py-2">
-                          <div className="space-y-3">
-                            <div className="grid grid-cols-1 md:grid-cols-2 gap-4">
-                              {editingAnomaly && editingAnomaly.cli === anomaly.cli ? (
-                                <AnomalyCorrection 
-                                  anomaly={editingAnomaly}
-                                  onCorrectionComplete={() => {
-                                    setEditingAnomaly(null);
-                                    fetchAnomaliesFromBackend();
-                                  }}
-                                />
-                              ) : (
+                      <td colSpan={5} className="px-0 py-0">
+                        <div className="bg-gray-50 border-l-4 border-primary-500">
+                          {/* Client summary header */}
+                          <div className="px-6 py-4 border-b border-gray-200 bg-white">
+                            <div className="flex items-center justify-between">
                               <div>
-                                <h3 className="text-sm font-medium text-gray-900">Informations client</h3>
-                                <div className="mt-2 space-y-2">
-                                  <div className="flex justify-between">
-                                    <span className="text-sm text-gray-500">Type d'anomalie:</span>
-                                    <span className="text-sm font-medium">{anomaly.errorType || 'Valeur manquante'}</span>
-                                  </div>
-                                  <div className="flex justify-between">
-                                    <span className="text-sm text-gray-500">Code client:</span>
-                                    <span className="text-sm font-medium">{anomaly.cli}</span>
-                                  </div>
-                                  <div className="flex justify-between">
-                                    <span className="text-sm text-gray-500">Nom:</span>
-                                    <span className="text-sm font-medium">{anomaly.nom}</span>
-                                  </div>
-                                  <div className="flex justify-between">
-                                    <span className="text-sm text-gray-500">Prénom:</span>
-                                    <span className="text-sm font-medium">{anomaly.pre || '-'}</span>
-                                  </div>
-                                  <div className="flex justify-between">
-                                    <span className="text-sm text-gray-500">Type de client:</span>
-                                    <span className="text-sm font-medium flex items-center">
-                                      {anomaly.tcli === '1' ? (
-                                        <>
-                                          <User className="h-4 w-4 text-primary-600 mr-1" />
-                                          Particulier
-                                        </>
-                                      ) : anomaly.tcli === '2' ? (
-                                        <>
-                                          <Building className="h-4 w-4 text-secondary-600 mr-1" />
-                                          Entreprise
-                                        </>
-                                      ) : (
-                                        <>
-                                          <Users className="h-4 w-4 text-gray-600 mr-1" />
-                                          Institutionnel
-                                        </>
-                                      )}
-                                    </span>
-                                  </div>
-                                  <div className="flex justify-between">
-                                    <span className="text-sm text-gray-500">Champ en anomalie:</span>
-                                    <span className="text-sm font-medium text-red-600">{getFieldName(anomaly)}</span>
-                                  </div>
-                                  <div className="flex justify-between">
-                                    <span className="text-sm text-gray-500">Agence:</span>
-                                    <span className="text-sm font-medium">{anomaly.age || '-'}</span>
-                                  </div>
-                                  <div className="flex justify-between">
-                                    <span className="text-sm text-gray-500">Sévérité:</span>
-                                    <span className={`text-sm font-medium px-2 py-0.5 rounded-full ${getSeverityColor(anomaly.severity || 'Haute')}`}>
-                                      {anomaly.severity || 'Haute'}
-                                    </span>
-                                  </div>
+                                <h3 className="text-lg font-medium text-gray-900 flex items-center gap-2">
+                                  <FileWarning className="h-5 w-5 text-warning-500" />
+                                  {client.anomalyCount} anomalie{client.anomalyCount > 1 ? 's' : ''} détectée{client.anomalyCount > 1 ? 's' : ''}
+                                </h3>
+                                <p className="text-sm text-gray-500 mt-1">
+                                  Client: {client.nom} {client.pre || ''} (CLI: {client.cli})
+                                  {client.tcli === '1' && ' - Particulier'}
+                                  {client.tcli === '2' && ' - Entreprise'}
+                                  {client.tcli === '3' && ' - Institutionnel'}
+                                </p>
+                              </div>
+                              <div className="text-right">
+                                <div className="text-sm text-gray-500">Type de client</div>
+                                <div className="flex items-center gap-1 text-sm font-medium mt-1">
+                                  {client.tcli === '1' ? (
+                                    <>
+                                      <User className="h-4 w-4 text-primary-600" />
+                                      <span>Particulier</span>
+                                    </>
+                                  ) : client.tcli === '2' ? (
+                                    <>
+                                      <Building className="h-4 w-4 text-secondary-600" />
+                                      <span>Entreprise</span>
+                                    </>
+                                  ) : (
+                                    <>
+                                      <Users className="h-4 w-4 text-gray-600" />
+                                      <span>Institutionnel</span>
+                                    </>
+                                  )}
                                 </div>
                               </div>
-                              )}
-                            </div>
-                            
-                            <div className="border-t border-gray-200 pt-3">
-                              <h3 className="text-sm font-medium text-gray-900">Détails de l'anomalie</h3>
-                              <div className="mt-2 space-y-2">
-                                <div className="flex justify-between">
-                                  <span className="text-sm text-gray-500">Champ concerné:</span>
-                                    <span className="text-sm font-medium">{getFieldName(anomaly)} ({getFieldCode(anomaly)})</span>
-                                </div>
-                                <div className="flex justify-between">
-                                  <span className="text-sm text-gray-500">Valeur actuelle:</span>
-                                    <span className="text-sm font-medium text-red-600">{getFieldValue(anomaly) || '<vide>'}</span>
-                                </div>
-                                <div className="flex justify-between">
-                                  <span className="text-sm text-gray-500">Message d'erreur:</span>
-                                    <span className="text-sm font-medium text-red-600">{anomaly.errorMessage || getErrorMessage(anomaly)}</span>
-                                </div>
-                              </div>
-                            </div>
-                            
-                            <div className="border-t border-gray-200 pt-3">
-                              <div className="flex items-center justify-between">
-                                <div>
-                                  <div className="flex justify-between">
-                                    <span className="text-sm text-gray-500">Taux de fiabilisation:</span>
-                                    <span className="text-sm font-medium text-success-600">
-                                      {Math.floor(Math.random() * 30 + 60)}%
-                                    </span>
-                                  </div>
-                                  <div>
-                                    <div className="w-full bg-gray-200 rounded-full h-2 mt-1">
-                                      <div 
-                                        className="bg-success-500 h-2 rounded-full" 
-                                        style={{ width: `${Math.floor(Math.random() * 30 + 60)}%` }}
-                                      />
-                                    </div>
-                                </div>
-                              </div>
-                              
-                              {(anomaly.status === 'Résolu' || anomaly.status === 'Rejeté') && (
-                                <div className="text-sm text-gray-500">
-                                  Cette anomalie a été {anomaly.status === 'Résolu' ? 'résolue' : 'rejetée'}.
-                                </div>
-                              )}
                             </div>
                           </div>
-                        </div>
+
+                          {/* List of anomalies for this client */}
+                          <div className="divide-y divide-gray-200">
+                            {client.anomalies.map((anomaly, index) => {
+                              const anomalyKey = getAnomalyKey(client.cli, index);
+                              const isAnomalyExpanded = expandedAnomaly === anomalyKey;
+
+                              return (
+                                <div key={anomalyKey} className="bg-white hover:bg-gray-50">
+                                  {/* Anomaly row */}
+                                  <div className="px-6 py-3 flex items-center justify-between">
+                                    <div className="flex items-center gap-4">
+                                      <div className="flex items-center gap-2">
+                                        <AlertTriangle className={`h-4 w-4 ${
+                                          anomaly.severity === 'Critique' || anomaly.severity === 'Haute'
+                                            ? 'text-error-500'
+                                            : 'text-warning-500'
+                                        }`} />
+                                        <span className="text-sm font-medium text-gray-900">
+                                          {getFieldName(anomaly)}
+                                        </span>
+                                        <code className="text-xs bg-gray-100 px-1.5 py-0.5 rounded text-gray-600">
+                                          {getFieldCode(anomaly)}
+                                        </code>
+                                      </div>
+                                      <span className={`inline-flex px-2 py-0.5 text-xs font-medium rounded-full ${getSeverityColor(anomaly.severity || 'Haute')}`}>
+                                        {anomaly.severity || 'Haute'}
+                                      </span>
+                                      <span className={`inline-flex px-2 py-0.5 text-xs font-medium rounded-full ${getStatusColor(anomaly.status)}`}>
+                                        {anomaly.status}
+                                      </span>
+                                    </div>
+                                    <div className="flex items-center gap-2">
+                                      <Button
+                                        variant="outline"
+                                        size="sm"
+                                        leftIcon={<Edit className="h-3 w-3" />}
+                                        onClick={() => setEditingAnomaly({
+                                          cli: anomaly.cli,
+                                          field: getFieldName(anomaly),
+                                          fieldCode: getFieldCode(anomaly),
+                                          currentValue: getFieldValue(anomaly),
+                                          errorMessage: getErrorMessage(anomaly)
+                                        })}
+                                      >
+                                        Corriger
+                                      </Button>
+                                      <button
+                                        type="button"
+                                        className="text-gray-400 hover:text-gray-600 p-1"
+                                        onClick={() => toggleExpandAnomaly(anomalyKey)}
+                                      >
+                                        {isAnomalyExpanded ? (
+                                          <ChevronUp className="h-4 w-4" />
+                                        ) : (
+                                          <ChevronDown className="h-4 w-4" />
+                                        )}
+                                      </button>
+                                    </div>
+                                  </div>
+
+                                  {/* Expanded anomaly details */}
+                                  {isAnomalyExpanded && (
+                                    <div className="px-6 py-4 bg-gray-50 border-t border-gray-100">
+                                      {editingAnomaly && editingAnomaly.cli === anomaly.cli && editingAnomaly.fieldCode === getFieldCode(anomaly) ? (
+                                        <AnomalyCorrection
+                                          anomaly={editingAnomaly}
+                                          onCorrectionComplete={() => {
+                                            setEditingAnomaly(null);
+                                            fetchAnomaliesFromBackend();
+                                          }}
+                                        />
+                                      ) : (
+                                        <div className="grid grid-cols-1 md:grid-cols-2 gap-6">
+                                          <div className="space-y-3">
+                                            <h4 className="text-sm font-medium text-gray-700">Détails de l'anomalie</h4>
+                                            <div className="space-y-2">
+                                              <div className="flex justify-between">
+                                                <span className="text-sm text-gray-500">Champ concerné:</span>
+                                                <span className="text-sm font-medium">{getFieldName(anomaly)} ({getFieldCode(anomaly)})</span>
+                                              </div>
+                                              <div className="flex justify-between">
+                                                <span className="text-sm text-gray-500">Valeur actuelle:</span>
+                                                <span className="text-sm font-medium text-error-600">{getFieldValue(anomaly) || '<vide>'}</span>
+                                              </div>
+                                              <div className="flex justify-between">
+                                                <span className="text-sm text-gray-500">Type d'erreur:</span>
+                                                <span className="text-sm font-medium">{anomaly.errorType || 'Valeur manquante'}</span>
+                                              </div>
+                                            </div>
+                                          </div>
+                                          <div className="space-y-3">
+                                            <h4 className="text-sm font-medium text-gray-700">Message d'erreur</h4>
+                                            <p className="text-sm text-error-600 bg-error-50 p-3 rounded-lg border border-error-100">
+                                              {anomaly.errorMessage || getErrorMessage(anomaly)}
+                                            </p>
+                                          </div>
+                                        </div>
+                                      )}
+                                    </div>
+                                  )}
+                                </div>
+                              );
+                            })}
+                          </div>
                         </div>
                       </td>
                     </tr>
@@ -607,13 +733,12 @@ const AnomaliesTable: React.FC<AnomaliesTableProps> = ({
       {totalRecords > 0 && (
         <div className="mt-4 flex items-center justify-between">
           <div className="text-sm text-gray-700">
-            Affichage de <span className="font-medium">
-              {(currentPage - 1) * itemsPerPage + 1} - {Math.min(currentPage * itemsPerPage, totalRecords)}
-            </span> sur <span className="font-medium">{totalRecords.toLocaleString('fr-FR')}</span> clients avec anomalies
+            <span className="font-medium">{groupedClients.length}</span> client{groupedClients.length > 1 ? 's' : ''} avec{' '}
+            <span className="font-medium">{anomalies.length}</span> anomalie{anomalies.length > 1 ? 's' : ''} au total
             {selectedAgency && <span className="ml-1 text-primary-600 font-medium">pour l'agence {selectedAgency}</span>}
             {isAgencyUser && userAgencyCode && <span className="ml-1 text-primary-600 font-medium">pour votre agence {userAgencyCode}</span>}
           </div>
-          
+
           {renderPagination()}
         </div>
       )}

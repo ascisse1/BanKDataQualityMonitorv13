@@ -5,9 +5,12 @@ import com.bsic.dataqualitybackend.model.Ticket;
 import com.bsic.dataqualitybackend.model.TicketComment;
 import com.bsic.dataqualitybackend.model.TicketHistory;
 import com.bsic.dataqualitybackend.model.User;
+import com.bsic.dataqualitybackend.model.enums.TicketPriority;
 import com.bsic.dataqualitybackend.model.enums.TicketStatus;
+import com.bsic.dataqualitybackend.security.SecurityUtils;
 import com.bsic.dataqualitybackend.service.AuthenticationService;
 import com.bsic.dataqualitybackend.service.TicketService;
+import com.bsic.dataqualitybackend.service.UserService;
 import jakarta.validation.Valid;
 import lombok.RequiredArgsConstructor;
 import lombok.extern.slf4j.Slf4j;
@@ -33,18 +36,25 @@ public class TicketController {
 
     private final TicketService ticketService;
     private final AuthenticationService authenticationService;
+    private final UserService userService;
 
     @PostMapping
     public ResponseEntity<ApiResponse<TicketDto>> createTicket(@Valid @RequestBody CreateTicketRequest request) {
-        log.info("Creating ticket for client: {}", request.getCli());
+        String currentUsername = SecurityUtils.getCurrentUserLogin()
+                .orElseThrow(() -> new IllegalStateException("User not authenticated"));
+        User currentUser = userService.getUserByUsername(currentUsername)
+                .orElseThrow(() -> new IllegalArgumentException("User not found: " + currentUsername));
+
+        log.info("Creating ticket for client: {} by user: {}", request.getCli(), currentUsername);
 
         Ticket ticket = Ticket.builder()
                 .cli(request.getCli())
                 .agencyCode(request.getAgencyCode())
-                .priority(request.getPriority())
+                .priority(request.getPriority() != null ? request.getPriority() : TicketPriority.MEDIUM)
+                .status(TicketStatus.DETECTED)
                 .build();
 
-        Ticket createdTicket = ticketService.createTicket(ticket);
+        Ticket createdTicket = ticketService.createTicket(ticket, currentUser);
         TicketDto ticketDto = mapToTicketDto(createdTicket);
 
         return ResponseEntity.status(HttpStatus.CREATED)

@@ -45,10 +45,12 @@ public class Ticket {
 
     @Enumerated(EnumType.STRING)
     @Column(nullable = false)
+    @Builder.Default
     private TicketStatus status = TicketStatus.DETECTED;
 
     @Enumerated(EnumType.STRING)
     @Column(nullable = false)
+    @Builder.Default
     private TicketPriority priority = TicketPriority.MEDIUM;
 
     @ManyToOne(fetch = FetchType.LAZY)
@@ -80,12 +82,15 @@ public class Ticket {
     private LocalDateTime slaDeadline;
 
     @Column(name = "sla_breached")
+    @Builder.Default
     private Boolean slaBreached = false;
 
     @Column(name = "total_incidents")
+    @Builder.Default
     private Integer totalIncidents = 0;
 
     @Column(name = "resolved_incidents")
+    @Builder.Default
     private Integer resolvedIncidents = 0;
 
     @CreatedDate
@@ -97,14 +102,18 @@ public class Ticket {
     private LocalDateTime updatedAt;
 
     @OneToMany(mappedBy = "ticket", cascade = CascadeType.ALL, orphanRemoval = true)
+    @Builder.Default
     private List<TicketIncident> incidents = new ArrayList<>();
 
     @OneToMany(mappedBy = "ticket", cascade = CascadeType.ALL, orphanRemoval = true)
+    @Builder.Default
     private List<TicketComment> comments = new ArrayList<>();
 
     @OneToMany(mappedBy = "ticket", cascade = CascadeType.ALL, orphanRemoval = true)
+    @Builder.Default
     private List<TicketDocument> documents = new ArrayList<>();
 
     @OneToMany(mappedBy = "ticket", cascade = CascadeType.ALL, orphanRemoval = true)
+    @Builder.Default
     private List<TicketHistory> history = new ArrayList<>();
 }

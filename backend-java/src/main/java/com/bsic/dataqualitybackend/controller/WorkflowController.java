@@ -1,6 +1,7 @@
 package com.bsic.dataqualitybackend.controller;
 
 import com.bsic.dataqualitybackend.dto.ApiResponse;
+import com.bsic.dataqualitybackend.security.SecurityUtils;
 import com.bsic.dataqualitybackend.service.WorkflowService;
 import lombok.RequiredArgsConstructor;
 import lombok.extern.slf4j.Slf4j;
@@ -23,12 +24,15 @@ public class WorkflowController {
     @PostMapping("/start")
     @PreAuthorize("hasAnyRole('ADMIN', 'AUDITOR')")
     public ResponseEntity<ApiResponse<String>> startWorkflow(@RequestBody Map<String, Object> request) {
+        String currentUsername = SecurityUtils.getCurrentUserLogin()
+                .orElseThrow(() -> new IllegalStateException("User not authenticated"));
+
         Long ticketId = ((Number) request.get("ticketId")).longValue();
         String clientId = (String) request.get("clientId");
         String agencyCode = (String) request.get("agencyCode");
         String priority = (String) request.get("priority");
 
-        String processInstanceId = workflowService.startTicketWorkflow(ticketId, clientId, agencyCode, priority);
+        String processInstanceId = workflowService.startTicketWorkflow(ticketId, clientId, agencyCode, priority, currentUsername);
 
         return ResponseEntity.ok(ApiResponse.success("Workflow started", processInstanceId));
     }

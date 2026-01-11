@@ -30,7 +30,7 @@ public class TicketService {
     private final BusinessMetricsConfig metricsConfig;
 
     @Transactional
-    public Ticket createTicket(Ticket ticket) {
+    public Ticket createTicket(Ticket ticket, User createdBy) {
         log.info("Creating new ticket for client: {}", ticket.getCli());
 
         String ticketNumber = generateTicketNumber();
@@ -47,7 +47,7 @@ public class TicketService {
 
         Ticket savedTicket = ticketRepository.save(ticket);
 
-        addHistory(savedTicket, "TICKET_CREATED", null, TicketStatus.DETECTED, null, null, null);
+        addHistory(savedTicket, "TICKET_CREATED", null, TicketStatus.DETECTED, null, null, createdBy);
 
         metricsConfig.recordTicketCreated();
         log.info("Ticket created: {}", ticketNumber);

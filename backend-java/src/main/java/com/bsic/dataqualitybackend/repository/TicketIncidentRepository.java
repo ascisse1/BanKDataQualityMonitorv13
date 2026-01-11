@@ -1,5 +1,6 @@
 package com.bsic.dataqualitybackend.repository;
 
+import com.bsic.dataqualitybackend.model.Ticket;
 import com.bsic.dataqualitybackend.model.TicketIncident;
 import org.springframework.data.jpa.repository.JpaRepository;
 import org.springframework.data.jpa.repository.Query;
@@ -10,6 +11,8 @@ import java.util.List;
 
 @Repository
 public interface TicketIncidentRepository extends JpaRepository<TicketIncident, Long> {
+
+    List<TicketIncident> findByTicket(Ticket ticket);
 
     List<TicketIncident> findByTicketId(Long ticketId);
 

@@ -25,6 +25,8 @@ public interface TicketRepository extends JpaRepository<Ticket, Long> {
 
     Page<Ticket> findByStatus(TicketStatus status, Pageable pageable);
 
+    List<Ticket> findByStatus(TicketStatus status);
+
     Page<Ticket> findByPriority(TicketPriority priority, Pageable pageable);
 
     Page<Ticket> findByAgencyCodeAndStatus(String agencyCode, TicketStatus status, Pageable pageable);
