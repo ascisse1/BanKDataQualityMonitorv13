@@ -25,7 +25,6 @@ public class AnomalyController {
     private final AnomalyService anomalyService;
 
     @GetMapping("/individual")
-    @PreAuthorize("hasAnyRole('ADMIN', 'AUDITOR', 'AGENCY_USER')")
     public ResponseEntity<ApiResponse<Page<AnomalyDto>>> getIndividualAnomalies(
             @RequestParam(defaultValue = "0") int page,
             @RequestParam(defaultValue = "100") int size) {
@@ -37,7 +36,6 @@ public class AnomalyController {
     }
 
     @GetMapping("/corporate")
-    @PreAuthorize("hasAnyRole('ADMIN', 'AUDITOR', 'AGENCY_USER')")
     public ResponseEntity<ApiResponse<Page<AnomalyDto>>> getCorporateAnomalies(
             @RequestParam(defaultValue = "0") int page,
             @RequestParam(defaultValue = "100") int size) {
@@ -49,7 +47,6 @@ public class AnomalyController {
     }
 
     @GetMapping("/institutional")
-    @PreAuthorize("hasAnyRole('ADMIN', 'AUDITOR', 'AGENCY_USER')")
     public ResponseEntity<ApiResponse<Page<AnomalyDto>>> getInstitutionalAnomalies(
             @RequestParam(defaultValue = "0") int page,
             @RequestParam(defaultValue = "100") int size) {
@@ -61,7 +58,6 @@ public class AnomalyController {
     }
 
     @GetMapping("/by-branch")
-    @PreAuthorize("hasAnyRole('ADMIN', 'AUDITOR')")
     public ResponseEntity<ApiResponse<List<Map<String, Object>>>> getAnomaliesByBranch(
             @RequestParam(defaultValue = "INDIVIDUAL") ClientType clientType) {
 
@@ -71,7 +67,6 @@ public class AnomalyController {
     }
 
     @GetMapping("/by-agency/{agencyCode}")
-    @PreAuthorize("hasAnyRole('ADMIN', 'AUDITOR', 'AGENCY_USER')")
     public ResponseEntity<ApiResponse<Page<AnomalyDto>>> getAnomaliesByAgency(
             @PathVariable String agencyCode,
             @RequestParam(defaultValue = "0") int page,
@@ -83,7 +78,6 @@ public class AnomalyController {
     }
 
     @GetMapping("/by-status/{status}")
-    @PreAuthorize("hasAnyRole('ADMIN', 'AUDITOR')")
     public ResponseEntity<ApiResponse<Page<AnomalyDto>>> getAnomaliesByStatus(
             @PathVariable AnomalyStatus status,
             @RequestParam(defaultValue = "0") int page,
@@ -95,7 +89,6 @@ public class AnomalyController {
     }
 
     @GetMapping("/recent")
-    @PreAuthorize("hasAnyRole('ADMIN', 'AUDITOR')")
     public ResponseEntity<ApiResponse<List<AnomalyDto>>> getRecentAnomalies(
             @RequestParam(defaultValue = "10") int limit) {
 
@@ -105,21 +98,18 @@ public class AnomalyController {
     }
 
     @GetMapping("/counts/by-type")
-    @PreAuthorize("hasAnyRole('ADMIN', 'AUDITOR')")
     public ResponseEntity<ApiResponse<Map<String, Long>>> getAnomalyCountsByType() {
         Map<String, Long> counts = anomalyService.getAnomalyCountsByClientType();
         return ResponseEntity.ok(ApiResponse.success(counts));
     }
 
     @GetMapping("/counts/by-status")
-    @PreAuthorize("hasAnyRole('ADMIN', 'AUDITOR')")
     public ResponseEntity<ApiResponse<Map<String, Long>>> getAnomalyCountsByStatus() {
         Map<String, Long> counts = anomalyService.getAnomalyCountsByStatus();
         return ResponseEntity.ok(ApiResponse.success(counts));
     }
 
     @GetMapping("/top-fields/{clientType}")
-    @PreAuthorize("hasAnyRole('ADMIN', 'AUDITOR')")
     public ResponseEntity<ApiResponse<List<Map<String, Object>>>> getTopAnomalyFields(
             @PathVariable ClientType clientType,
             @RequestParam(defaultValue = "10") int limit) {
@@ -130,7 +120,6 @@ public class AnomalyController {
     }
 
     @GetMapping("/trends")
-    @PreAuthorize("hasAnyRole('ADMIN', 'AUDITOR')")
     public ResponseEntity<ApiResponse<List<Map<String, Object>>>> getAnomalyTrends(
             @RequestParam(defaultValue = "30") int days) {
 

@@ -5,6 +5,7 @@ import com.bsic.dataqualitybackend.model.Anomaly;
 import com.bsic.dataqualitybackend.model.enums.AnomalyStatus;
 import com.bsic.dataqualitybackend.model.enums.ClientType;
 import com.bsic.dataqualitybackend.repository.AnomalyRepository;
+import com.bsic.dataqualitybackend.config.metrics.BusinessMetricsConfig;
 import lombok.RequiredArgsConstructor;
 import lombok.extern.slf4j.Slf4j;
 import org.springframework.cache.annotation.CacheEvict;
@@ -27,6 +28,7 @@ import java.util.stream.Collectors;
 public class AnomalyService {
 
     private final AnomalyRepository anomalyRepository;
+    private final BusinessMetricsConfig metricsConfig;
 
     // Note: @Cacheable removed - Page objects don't serialize properly with Spring Cache
     // and cause ClassCastException (LinkedHashMap cannot be cast to Page)
@@ -145,6 +147,7 @@ public class AnomalyService {
         Anomaly anomaly = mapToEntity(anomalyDto);
         Anomaly saved = anomalyRepository.save(anomaly);
         log.info("Created anomaly with ID: {}", saved.getId());
+        metricsConfig.recordAnomalyCreated();
         return mapToDto(saved);
     }
 
@@ -154,12 +157,20 @@ public class AnomalyService {
         Anomaly anomaly = anomalyRepository.findById(id)
             .orElseThrow(() -> new RuntimeException("Anomaly not found with id: " + id));
 
+        AnomalyStatus previousStatus = anomaly.getStatus();
         anomaly.setCorrectionValue(anomalyDto.getCorrectionValue());
         anomaly.setStatus(anomalyDto.getStatus());
         anomaly.setValidationComment(anomalyDto.getValidationComment());
 
         Anomaly updated = anomalyRepository.save(anomaly);
         log.info("Updated anomaly with ID: {}", updated.getId());
+
+        // Record metric if anomaly was resolved
+        if (anomalyDto.getStatus() != null &&
+            (anomalyDto.getStatus() == AnomalyStatus.VALIDATED || anomalyDto.getStatus() == AnomalyStatus.CLOSED) &&
+            previousStatus != AnomalyStatus.VALIDATED && previousStatus != AnomalyStatus.CLOSED) {
+            metricsConfig.recordAnomalyResolved();
+        }
         return mapToDto(updated);
     }
 

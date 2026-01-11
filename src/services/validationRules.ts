@@ -1,5 +1,5 @@
 import axios, { AxiosInstance, InternalAxiosRequestConfig } from 'axios';
-import { ValidationRule, ValidationResult, ValidationError, ValidationWarning, ClientRecord } from '../types/ValidationRules';
+import { ValidationRule, ValidationResult, ValidationError, ValidationWarning, ClientRecord, RuleCondition } from '../types/ValidationRules';
 import { logger } from './logger';
 
 // API configuration
@@ -11,9 +11,11 @@ interface ValidationRuleDto {
   ruleName: string;
   description: string;
   ruleType: string;
-  clientType: string;
+  clientType: string | null;
   fieldName: string;
-  validationExpression: string;
+  fieldLabel?: string;
+  /** Natural language rule definition in JSON format */
+  ruleDefinition: string | null;
   errorMessage: string;
   severity: string;
   active: boolean;
@@ -116,20 +118,50 @@ export class ValidationRulesService {
       name: dto.ruleName,
       description: dto.description,
       field: dto.fieldName,
+      fieldLabel: dto.fieldLabel,
       clientType: this.mapClientType(dto.clientType),
-      ruleType: dto.ruleType.toLowerCase() as 'required' | 'format' | 'length' | 'date' | 'custom',
-      condition: dto.validationExpression,
+      ruleType: dto.ruleType.toLowerCase() as 'required' | 'format' | 'date' | 'custom',
+      ruleDefinition: this.parseRuleDefinition(dto.ruleDefinition),
       errorMessage: dto.errorMessage,
       severity: dto.severity.toLowerCase() as 'low' | 'medium' | 'high' | 'critical',
       isActive: dto.active,
-      category: this.inferCategory(dto.fieldName, dto.ruleType)
+      category: this.inferCategory(dto.fieldName, dto.ruleType),
+      priority: dto.priority
     };
+  }
+
+  /**
+   * Parses the JSON rule definition string into RuleCondition array
+   */
+  private parseRuleDefinition(ruleDefinition: string | null): RuleCondition[] {
+    if (!ruleDefinition) {
+      return [];
+    }
+    try {
+      return JSON.parse(ruleDefinition) as RuleCondition[];
+    } catch (error) {
+      logger.warning('validation', 'Failed to parse rule definition', { error, ruleDefinition });
+      return [];
+    }
+  }
+
+  /**
+   * Serializes RuleCondition array to JSON string
+   */
+  private serializeRuleDefinition(conditions: RuleCondition[]): string | null {
+    if (!conditions || conditions.length === 0) {
+      return null;
+    }
+    return JSON.stringify(conditions);
   }
 
   /**
    * Maps backend ClientType enum to frontend code
    */
-  private mapClientType(backendType: string): '1' | '2' | '3' {
+  private mapClientType(backendType: string | null): '1' | '2' | '3' | null {
+    if (!backendType) {
+      return null; // Applies to all client types
+    }
     const typeMap: Record<string, '1' | '2' | '3'> = {
       'INDIVIDUAL': '1',
       'CORPORATE': '2',
@@ -138,7 +170,7 @@ export class ValidationRulesService {
       '2': '2',
       '3': '3'
     };
-    return typeMap[backendType] || '1';
+    return typeMap[backendType] || null;
   }
 
   /**
@@ -240,13 +272,14 @@ export class ValidationRulesService {
         ruleName: rule.name,
         description: rule.description,
         fieldName: rule.field,
-        clientType: rule.clientType,
+        fieldLabel: rule.fieldLabel,
+        clientType: this.mapClientTypeToBackend(rule.clientType),
         ruleType: rule.ruleType.toUpperCase(),
-        validationExpression: rule.condition,
+        ruleDefinition: this.serializeRuleDefinition(rule.ruleDefinition),
         errorMessage: rule.errorMessage,
         severity: rule.severity.toUpperCase(),
         active: rule.isActive,
-        priority: this.getSeverityPriority(rule.severity)
+        priority: rule.priority ?? this.getSeverityPriority(rule.severity)
       };
 
       const response = await this.axiosInstance.post<ApiResponse<ValidationRuleDto>>('/api/validation/rules', dto);
@@ -264,6 +297,21 @@ export class ValidationRulesService {
   }
 
   /**
+   * Maps frontend client type code to backend enum
+   */
+  private mapClientTypeToBackend(clientType: '1' | '2' | '3' | null): string | null {
+    if (!clientType) {
+      return null;
+    }
+    const typeMap: Record<string, string> = {
+      '1': 'INDIVIDUAL',
+      '2': 'CORPORATE',
+      '3': 'INSTITUTIONAL'
+    };
+    return typeMap[clientType] || null;
+  }
+
+  /**
    * Updates an existing validation rule via the backend API
    */
   public async updateRuleOnBackend(ruleId: string, updates: Partial<ValidationRule>): Promise<boolean> {
@@ -274,13 +322,14 @@ export class ValidationRulesService {
       if (updates.name) dto.ruleName = updates.name;
       if (updates.description) dto.description = updates.description;
       if (updates.field) dto.fieldName = updates.field;
-      if (updates.clientType) dto.clientType = updates.clientType;
+      if (updates.fieldLabel) dto.fieldLabel = updates.fieldLabel;
+      if (updates.clientType !== undefined) dto.clientType = this.mapClientTypeToBackend(updates.clientType);
       if (updates.ruleType) dto.ruleType = updates.ruleType.toUpperCase();
-      if (updates.condition) dto.validationExpression = updates.condition;
+      if (updates.ruleDefinition) dto.ruleDefinition = this.serializeRuleDefinition(updates.ruleDefinition);
       if (updates.errorMessage) dto.errorMessage = updates.errorMessage;
       if (updates.severity) {
         dto.severity = updates.severity.toUpperCase();
-        dto.priority = this.getSeverityPriority(updates.severity);
+        dto.priority = updates.priority ?? this.getSeverityPriority(updates.severity);
       }
       if (updates.isActive !== undefined) dto.active = updates.isActive;
 
@@ -374,20 +423,20 @@ export class ValidationRulesService {
     const errors: ValidationError[] = [];
     const warnings: ValidationWarning[] = [];
 
-    // Filter applicable rules for the client type
+    // Filter applicable rules for the client type (null clientType applies to all)
     const applicableRules = this.rules.filter(rule =>
-      rule.isActive && rule.clientType === record.tcli
+      rule.isActive && (rule.clientType === null || rule.clientType === record.tcli)
     );
 
     for (const rule of applicableRules) {
-      const validationResult = this.validateField(record, rule);
+      const validationResult = this.validateFieldAgainstConditions(record, rule);
 
       if (!validationResult.isValid) {
         if (rule.severity === 'critical' || rule.severity === 'high') {
           errors.push({
             ruleId: rule.id,
             field: rule.field,
-            message: rule.errorMessage,
+            message: validationResult.message || rule.errorMessage,
             severity: rule.severity,
             value: record[rule.field as keyof ClientRecord]
           });
@@ -395,7 +444,7 @@ export class ValidationRulesService {
           warnings.push({
             ruleId: rule.id,
             field: rule.field,
-            message: rule.errorMessage,
+            message: validationResult.message || rule.errorMessage,
             value: record[rule.field as keyof ClientRecord]
           });
         }
@@ -417,144 +466,332 @@ export class ValidationRulesService {
     return this.validateRecord(record);
   }
 
-  private validateField(record: ClientRecord, rule: ValidationRule): { isValid: boolean } {
+  /**
+   * Validates a field value against rule conditions from ruleDefinition.
+   */
+  private validateFieldAgainstConditions(record: ClientRecord, rule: ValidationRule): { isValid: boolean; message?: string } {
     const fieldValue = record[rule.field as keyof ClientRecord];
+    const strValue = fieldValue != null ? String(fieldValue).trim() : '';
+    const conditions = rule.ruleDefinition;
 
-    switch (rule.ruleType) {
+    // If no conditions, pass validation
+    if (!conditions || conditions.length === 0) {
+      return { isValid: true };
+    }
+
+    // Validate against each condition
+    for (const condition of conditions) {
+      const result = this.validateCondition(strValue, fieldValue, condition);
+      if (!result.isValid) {
+        return { isValid: false, message: condition.message || result.message };
+      }
+    }
+
+    return { isValid: true };
+  }
+
+  /**
+   * Validates a single condition against a value.
+   */
+  private validateCondition(strValue: string, rawValue: unknown, condition: RuleCondition): { isValid: boolean; message?: string } {
+    const isEmpty = strValue === '' || rawValue == null;
+
+    switch (condition.type) {
+      // ===== PRESENCE =====
       case 'required':
         return {
-          isValid: fieldValue != null && 
-                   fieldValue !== undefined && 
-                   String(fieldValue).trim() !== ''
+          isValid: !isEmpty,
+          message: 'Ce champ est obligatoire'
         };
 
-      case 'format':
-        if (!fieldValue) return { isValid: true }; // Si le champ est vide, on ne valide pas le format
-        return this.validateFormat(String(fieldValue), rule, record);
+      case 'optional':
+        // Optional fields always pass if empty
+        if (isEmpty) return { isValid: true };
+        break;
 
-      case 'length':
-        if (!fieldValue) return { isValid: true };
-        return this.validateLength(String(fieldValue), rule);
-
-      case 'date':
-        if (!fieldValue) return { isValid: true };
-        return this.validateDate(String(fieldValue), rule);
-
-      case 'custom':
-        return this.validateCustom(record, rule);
-
-      default:
-        return { isValid: true };
-    }
-  }
-
-  private validateFormat(value: string, rule: ValidationRule, record: ClientRecord): { isValid: boolean } {
-    switch (rule.field) {
-      case 'sext':
-        return { isValid: ['M', 'F'].includes(value) };
-      
-      case 'nid':
-        // Validation sans caractères spéciaux et sans séquences interdites
-        return { 
-          isValid: value.length >= 8 && 
-                  /^[0-9A-Za-z]+$/.test(value) && 
-                  !value.includes('123') && 
-                  !value.includes('XXX') &&
-                  !value.includes('000')
+      // ===== LENGTH =====
+      case 'minLength': {
+        if (isEmpty && condition.optional) return { isValid: true };
+        const minLen = Number(condition.value) || 0;
+        return {
+          isValid: isEmpty || strValue.length >= minLen,
+          message: `Longueur minimale: ${minLen} caracteres`
         };
-      
-      case 'nrc':
-        if (record.tcli === '2') {
-          // Pour les entreprises, le numéro doit commencer par MA
-          return { 
-            isValid: value.startsWith('MA') && 
-                    !value.includes('123') && 
-                    !value.includes('XXX') &&
-                    !value.includes('000')
-          };
-        } else if (record.tcli === '3') {
-          // Pour les institutionnels, vérifier juste les séquences interdites
-          return { 
-            isValid: !value.includes('123') && 
-                    !value.includes('XXX') &&
-                    !value.includes('000')
-          };
+      }
+
+      case 'maxLength': {
+        if (isEmpty) return { isValid: true };
+        const maxLen = Number(condition.value) || Infinity;
+        return {
+          isValid: strValue.length <= maxLen,
+          message: `Longueur maximale: ${maxLen} caracteres`
+        };
+      }
+
+      case 'exactLength': {
+        if (isEmpty && condition.optional) return { isValid: true };
+        const exactLen = Number(condition.value) || 0;
+        return {
+          isValid: isEmpty || strValue.length === exactLen,
+          message: `Longueur exacte requise: ${exactLen} caracteres`
+        };
+      }
+
+      // ===== PATTERNS =====
+      case 'alphanumeric':
+        if (isEmpty) return { isValid: true };
+        return {
+          isValid: /^[A-Za-z0-9]+$/.test(strValue),
+          message: 'Seuls les caracteres alphanumeriques sont autorises'
+        };
+
+      case 'alphaOnly':
+        if (isEmpty) return { isValid: true };
+        return {
+          isValid: /^[A-Za-zÀ-ÿ\s\-']+$/.test(strValue),
+          message: 'Seuls les lettres sont autorisees'
+        };
+
+      case 'numericOnly':
+        if (isEmpty) return { isValid: true };
+        return {
+          isValid: /^[0-9]+$/.test(strValue),
+          message: 'Seuls les chiffres sont autorises'
+        };
+
+      case 'uppercase':
+        if (isEmpty) return { isValid: true };
+        return {
+          isValid: strValue === strValue.toUpperCase(),
+          message: 'Doit etre en majuscules'
+        };
+
+      case 'email':
+        if (isEmpty) return { isValid: true };
+        return {
+          isValid: /^[^\s@]+@[^\s@]+\.[^\s@]+$/.test(strValue),
+          message: 'Format email invalide'
+        };
+
+      case 'phone':
+        if (isEmpty) return { isValid: true };
+        return {
+          isValid: /^[\d\s\-\+\(\)]{8,20}$/.test(strValue),
+          message: 'Format telephone invalide'
+        };
+
+      // ===== FORBIDDEN =====
+      case 'forbiddenPatterns': {
+        if (isEmpty) return { isValid: true };
+        const patterns = condition.values || [];
+        for (const pattern of patterns) {
+          if (strValue.includes(pattern)) {
+            return { isValid: false, message: `Motif interdit: ${pattern}` };
+          }
         }
         return { isValid: true };
-      
-      case 'sig':
-        return { 
-          isValid: value.length <= 20 && /^[A-Z0-9\-\.\s]+$/.test(value) 
+      }
+
+      case 'forbiddenValues': {
+        if (isEmpty) return { isValid: true };
+        const forbidden = condition.values || [];
+        const normalizedValue = strValue.toUpperCase();
+        for (const val of forbidden) {
+          if (normalizedValue === val.toUpperCase()) {
+            return { isValid: false, message: `Valeur interdite: ${val}` };
+          }
+        }
+        return { isValid: true };
+      }
+
+      case 'notPlaceholder': {
+        if (isEmpty) return { isValid: true };
+        const placeholders = ['XXX', 'XXXX', 'XXXXX', '000', '0000', '123', '1234', 'TEST', 'TEMP', 'NA', 'N/A'];
+        const upperValue = strValue.toUpperCase();
+        for (const placeholder of placeholders) {
+          if (upperValue === placeholder || upperValue.includes(placeholder)) {
+            return { isValid: false, message: 'Donnees fictives detectees' };
+          }
+        }
+        return { isValid: true };
+      }
+
+      // ===== DATE =====
+      case 'dateNotFuture': {
+        if (isEmpty) return { isValid: true };
+        const date = this.parseDate(strValue);
+        if (!date) return { isValid: false, message: 'Format de date invalide' };
+        return {
+          isValid: date <= new Date(),
+          message: 'La date ne peut pas etre dans le futur'
         };
-      
-      case 'tcli':
-        return { isValid: ['1', '2', '3'].includes(value) };
-      
-      case 'nom':
-      case 'pre':
-      case 'rso':
-        // Vérifier que le champ n'est pas composé uniquement de X et ne contient pas de séquences interdites
-        return { 
-          isValid: !/^[Xx]+$/.test(value) && 
-                  !value.includes('123') && 
-                  !value.includes('XXX')
+      }
+
+      case 'dateNotExpired': {
+        if (isEmpty) return { isValid: true };
+        const date = this.parseDate(strValue);
+        if (!date) return { isValid: false, message: 'Format de date invalide' };
+        return {
+          isValid: date >= new Date(),
+          message: 'La date est expiree'
         };
-      
+      }
+
+      case 'dateAfter': {
+        if (isEmpty) return { isValid: true };
+        const date = this.parseDate(strValue);
+        const minDate = this.parseDate(String(condition.value));
+        if (!date || !minDate) return { isValid: false, message: 'Format de date invalide' };
+        return {
+          isValid: date >= minDate,
+          message: `La date doit etre apres ${condition.value}`
+        };
+      }
+
+      case 'dateBefore': {
+        if (isEmpty) return { isValid: true };
+        const date = this.parseDate(strValue);
+        const maxDate = this.parseDate(String(condition.value));
+        if (!date || !maxDate) return { isValid: false, message: 'Format de date invalide' };
+        return {
+          isValid: date <= maxDate,
+          message: `La date doit etre avant ${condition.value}`
+        };
+      }
+
+      case 'dateRange': {
+        if (isEmpty) return { isValid: true };
+        const date = this.parseDate(strValue);
+        const minDate = condition.min ? this.parseDate(String(condition.min)) : null;
+        const maxDate = condition.max ? this.parseDate(String(condition.max)) : null;
+        if (!date) return { isValid: false, message: 'Format de date invalide' };
+        if (minDate && date < minDate) return { isValid: false, message: `La date doit etre apres ${condition.min}` };
+        if (maxDate && date > maxDate) return { isValid: false, message: `La date doit etre avant ${condition.max}` };
+        return { isValid: true };
+      }
+
+      // ===== PREFIX/SUFFIX =====
+      case 'startsWith': {
+        if (isEmpty) return { isValid: true };
+        const prefix = String(condition.value || '');
+        return {
+          isValid: strValue.startsWith(prefix),
+          message: `Doit commencer par: ${prefix}`
+        };
+      }
+
+      case 'endsWith': {
+        if (isEmpty) return { isValid: true };
+        const suffix = String(condition.value || '');
+        return {
+          isValid: strValue.endsWith(suffix),
+          message: `Doit se terminer par: ${suffix}`
+        };
+      }
+
+      case 'contains': {
+        if (isEmpty) return { isValid: true };
+        const substr = String(condition.value || '');
+        return {
+          isValid: strValue.includes(substr),
+          message: `Doit contenir: ${substr}`
+        };
+      }
+
+      // ===== LIST =====
+      case 'inList': {
+        if (isEmpty && condition.optional) return { isValid: true };
+        const allowed = condition.values || [];
+        const normalizedValue = strValue.toUpperCase();
+        return {
+          isValid: allowed.some(v => v.toUpperCase() === normalizedValue),
+          message: `Valeur doit etre parmi: ${allowed.join(', ')}`
+        };
+      }
+
+      case 'notInList': {
+        if (isEmpty) return { isValid: true };
+        const forbidden = condition.values || [];
+        const normalizedValue = strValue.toUpperCase();
+        return {
+          isValid: !forbidden.some(v => v.toUpperCase() === normalizedValue),
+          message: `Valeur interdite: ${strValue}`
+        };
+      }
+
+      // ===== NUMERIC =====
+      case 'minValue': {
+        if (isEmpty) return { isValid: true };
+        const numVal = parseFloat(strValue);
+        const minVal = Number(condition.value) || 0;
+        if (isNaN(numVal)) return { isValid: false, message: 'Valeur numerique attendue' };
+        return {
+          isValid: numVal >= minVal,
+          message: `Valeur minimale: ${minVal}`
+        };
+      }
+
+      case 'maxValue': {
+        if (isEmpty) return { isValid: true };
+        const numVal = parseFloat(strValue);
+        const maxVal = Number(condition.value) || Infinity;
+        if (isNaN(numVal)) return { isValid: false, message: 'Valeur numerique attendue' };
+        return {
+          isValid: numVal <= maxVal,
+          message: `Valeur maximale: ${maxVal}`
+        };
+      }
+
+      case 'valueRange': {
+        if (isEmpty) return { isValid: true };
+        const numVal = parseFloat(strValue);
+        const minVal = Number(condition.min) || -Infinity;
+        const maxVal = Number(condition.max) || Infinity;
+        if (isNaN(numVal)) return { isValid: false, message: 'Valeur numerique attendue' };
+        return {
+          isValid: numVal >= minVal && numVal <= maxVal,
+          message: `Valeur doit etre entre ${minVal} et ${maxVal}`
+        };
+      }
+
+      // ===== CUSTOM =====
+      case 'customRegex': {
+        if (isEmpty) return { isValid: true };
+        try {
+          const regex = new RegExp(String(condition.value));
+          return {
+            isValid: regex.test(strValue),
+            message: 'Format invalide'
+          };
+        } catch {
+          return { isValid: false, message: 'Expression reguliere invalide' };
+        }
+      }
+
       default:
+        // Unknown condition type - pass validation
         return { isValid: true };
     }
-  }
 
-  private validateLength(_value: string, _rule: ValidationRule): { isValid: boolean } {
-    // Implémentation des validations de longueur selon les règles métier
     return { isValid: true };
   }
 
-  private validateDate(value: string, rule: ValidationRule): { isValid: boolean } {
-    try {
-      const date = new Date(value);
-      const now = new Date();
-      
-      // Vérifier si la date est valide
-      if (isNaN(date.getTime())) {
-        return { isValid: false };
-      }
-      
-      // Vérifier le format YYYY-MM-DD
-      if (!/^\d{4}-\d{2}-\d{2}$/.test(value)) {
-        return { isValid: false };
-      }
-      
-      switch (rule.field) {
-        case 'dna':
-          const minDate = new Date('1915-01-01');
-          return { 
-            isValid: date >= minDate && date <= now 
-          };
-        
-        case 'vid':
-          // Date d'expiration doit être dans le futur ou nulle
-          return { 
-            isValid: !value || date >= now 
-          };
-        
-        case 'datc':
-          const minCreationDate = new Date('1915-01-01');
-          return { 
-            isValid: date >= minCreationDate && date <= now 
-          };
-        
-        default:
-          return { isValid: true };
-      }
-    } catch (error) {
-      return { isValid: false };
+  /**
+   * Parses a date string into a Date object.
+   */
+  private parseDate(value: string): Date | null {
+    if (!value) return null;
+
+    // Try ISO format first (YYYY-MM-DD)
+    const isoMatch = /^(\d{4})-(\d{2})-(\d{2})$/.exec(value);
+    if (isoMatch) {
+      const date = new Date(parseInt(isoMatch[1]), parseInt(isoMatch[2]) - 1, parseInt(isoMatch[3]));
+      return isNaN(date.getTime()) ? null : date;
     }
-  }
 
-  private validateCustom(_record: ClientRecord, _rule: ValidationRule): { isValid: boolean } {
-    // Implémentation des validations personnalisées
-    return { isValid: true };
+    // Try standard Date parsing
+    const date = new Date(value);
+    return isNaN(date.getTime()) ? null : date;
   }
 
   /**

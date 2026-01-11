@@ -55,4 +55,7 @@ public interface TicketRepository extends JpaRepository<Ticket, Long> {
 
     @Query("SELECT t FROM Ticket t WHERE t.createdAt BETWEEN :startDate AND :endDate")
     List<Ticket> findTicketsCreatedBetween(@Param("startDate") LocalDateTime startDate, @Param("endDate") LocalDateTime endDate);
+
+    @Query("SELECT COUNT(t) FROM Ticket t WHERE t.status = :status ")
+    long countByStatus(@Param("status") TicketStatus status);
 }

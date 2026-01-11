@@ -22,21 +22,18 @@ public class ValidationController {
     private final ValidationService validationService;
 
     @GetMapping("/rules")
-    @PreAuthorize("hasAnyRole('ADMIN', 'AUDITOR')")
     public ResponseEntity<ApiResponse<List<ValidationRuleDto>>> getAllRules() {
         List<ValidationRuleDto> rules = validationService.getAllRules();
         return ResponseEntity.ok(ApiResponse.success(rules));
     }
 
     @GetMapping("/rules/active")
-    @PreAuthorize("hasAnyRole('ADMIN', 'AUDITOR', 'AGENCY_USER')")
     public ResponseEntity<ApiResponse<List<ValidationRuleDto>>> getActiveRules() {
         List<ValidationRuleDto> rules = validationService.getActiveRules();
         return ResponseEntity.ok(ApiResponse.success(rules));
     }
 
     @GetMapping("/rules/by-type/{clientType}")
-    @PreAuthorize("hasAnyRole('ADMIN', 'AUDITOR', 'AGENCY_USER')")
     public ResponseEntity<ApiResponse<List<ValidationRuleDto>>> getRulesByClientType(
             @PathVariable ClientType clientType) {
 
@@ -45,7 +42,6 @@ public class ValidationController {
     }
 
     @GetMapping("/rules/by-field/{fieldName}")
-    @PreAuthorize("hasAnyRole('ADMIN', 'AUDITOR', 'AGENCY_USER')")
     public ResponseEntity<ApiResponse<List<ValidationRuleDto>>> getRulesByField(
             @PathVariable String fieldName) {
 

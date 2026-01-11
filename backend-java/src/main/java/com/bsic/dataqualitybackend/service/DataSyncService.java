@@ -1,5 +1,6 @@
 package com.bsic.dataqualitybackend.service;
 
+import com.bsic.dataqualitybackend.config.metrics.BusinessMetricsConfig;
 import com.bsic.dataqualitybackend.model.Agency;
 import com.bsic.dataqualitybackend.model.Client;
 import com.bsic.dataqualitybackend.repository.AgencyRepository;
@@ -15,6 +16,7 @@ import java.math.BigDecimal;
 import java.sql.Date;
 import java.time.LocalDate;
 import java.time.LocalDateTime;
+import java.util.ArrayList;
 import java.util.List;
 import java.util.Map;
 import java.util.Optional;
@@ -22,6 +24,7 @@ import java.util.Optional;
 /**
  * Service for synchronizing data from Informix CBS to MySQL.
  * Handles BKCLI (clients) and BKAGE (agencies) sync operations.
+ * After sync, validates clients and creates anomalies for validation failures.
  */
 @Service
 @Slf4j
@@ -32,12 +35,15 @@ public class DataSyncService {
     private final InformixRepository informixRepository;
     private final ClientRepository clientRepository;
     private final AgencyRepository agencyRepository;
+    private final ClientValidationService clientValidationService;
+    private final BusinessMetricsConfig metricsConfig;
 
     private static final int BATCH_SIZE = 1000;
 
     /**
      * Synchronize all clients from Informix BKCLI to MySQL bkcli table.
      * Uses upsert logic: insert new records, update existing ones.
+     * After sync, validates clients and creates anomalies.
      *
      * @return SyncResult containing statistics
      */
@@ -49,6 +55,7 @@ public class DataSyncService {
         int inserted = 0;
         int updated = 0;
         int errors = 0;
+        List<Client> syncedClients = new ArrayList<>();
 
         try {
             List<Map<String, Object>> informixClients = informixRepository.getAllClients();
@@ -77,7 +84,8 @@ public class DataSyncService {
                     }
                     client.setUpdatedAt(LocalDateTime.now());
 
-                    clientRepository.save(client);
+                    Client savedClient = clientRepository.save(client);
+                    syncedClients.add(savedClient);
 
                 } catch (Exception e) {
                     log.error("Error syncing client: {}", e.getMessage());
@@ -86,10 +94,28 @@ public class DataSyncService {
             }
 
             log.info("BKCLI sync completed. Inserted: {}, Updated: {}, Errors: {}", inserted, updated, errors);
+
+            // Run validation on synced clients and create anomalies
+            if (!syncedClients.isEmpty()) {
+                log.info("Starting validation for {} synced clients...", syncedClients.size());
+                try {
+                    ClientValidationService.ValidationResult validationResult =
+                            clientValidationService.validateClientsAndCreateAnomalies(syncedClients);
+                    log.info("Validation completed. Anomalies created: {}, Duplicates skipped: {}, Errors: {}",
+                            validationResult.anomaliesCreated(),
+                            validationResult.duplicatesSkipped(),
+                            validationResult.errors());
+                } catch (Exception e) {
+                    log.error("Error during client validation: {}", e.getMessage(), e);
+                }
+            }
+
+            metricsConfig.recordDataSyncSuccess();
             return new SyncResult("BKCLI", inserted, updated, errors, startTime, LocalDateTime.now());
 
         } catch (Exception e) {
             log.error("Failed to sync BKCLI: {}", e.getMessage(), e);
+            metricsConfig.recordDataSyncFailure();
             throw new RuntimeException("BKCLI sync failed", e);
         }
     }

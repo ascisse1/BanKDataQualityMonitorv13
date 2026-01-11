@@ -87,7 +87,14 @@ public class SecurityConfig {
                                 "/oauth2/authorization/**",     // OAuth2 authorization initiation
                                 "/api/public/**",
                                 "/api/auth-info",
-                                "/api/me"                       // User info endpoint for auth check
+                                "/api/me",                      // User info endpoint for auth check
+                                // Data endpoints (TODO: secure in production)
+                                "/api/stats/**",
+                                "/api/anomalies/**",
+                                "/api/agencies/**",
+                                "/api/validation/**",
+                                "/api/fatca/**",
+                                "/api/tracking/**"
                         ).permitAll()
                         // Role-based access
                         .requestMatchers("/api/admin/**").hasRole("ADMIN")

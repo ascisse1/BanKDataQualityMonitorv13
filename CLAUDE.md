@@ -12,29 +12,26 @@ Bank Data Quality Monitor for BSIC Bank - a banking data quality surveillance sy
 # Frontend development (Vite dev server on port 5174)
 npm run dev
 
-# Backend Node.js Express (port 3001)
-npm run server
-
-# Run both frontend and backend concurrently
-npm run dev:full
-
 # Build production frontend
 npm run build
 
 # Lint (ESLint)
 npm run lint
 
-# Database setup
-npm run setup:mysql      # Create MySQL schema
-npm run seed:mysql       # Load demo data
-npm run db:init          # Setup + seed combined
-npm run db:reconciliation # Create reconciliation tables
-
-# Spring Boot backend (port 8080) - for CBS reconciliation
+# Spring Boot backend (port 8080)
 cd backend-java && mvn spring-boot:run
+
+# Spring Boot with dev profile (uses Docker Informix)
+cd backend-java && mvn spring-boot:run -Dspring-boot.run.profiles=dev
 
 # Build Spring Boot backend
 cd backend-java && mvn clean install
+
+# Run Spring Boot tests
+cd backend-java && mvn test
+
+# Start monitoring stack (Redis, Prometheus, Grafana)
+docker-compose up -d
 
 # Test Informix connection
 npm run test:informix
@@ -43,19 +40,24 @@ npm run diagnose:informix
 
 ## Architecture
 
-### Dual Backend Architecture
+### Stack Overview
 
-**Node.js Express (port 3001)** - Primary API server
-- Authentication (JWT)
-- Anomaly detection and management
-- Ticket system (4 Eyes validation workflow)
-- File uploads (CSV/Excel)
-- MySQL database operations
+**Frontend (React + Vite)** - Port 5174
+- React 18 + TypeScript
+- TailwindCSS styling
+- Zustand for global state, React Query for server state
+- @tanstack/react-table + @tanstack/react-virtual for large datasets (120k+ records)
+- ApexCharts and Recharts for visualizations
+- react-hook-form for forms
+- Vite proxy forwards `/api` and `/oauth2` to Spring Boot
 
-**Spring Boot (port 8080)** - CBS Reconciliation server
-- JDBC connection to Informix CBS (read-only)
-- Reconciliation of applied corrections vs CBS data
-- Camunda BPM workflow orchestration
+**Backend (Spring Boot)** - Port 8080
+- Spring Boot 3.2 with Java 17
+- Keycloak OAuth2 for authentication (BFF pattern)
+- Multi-datasource: MySQL (primary) + Informix CBS (read-only)
+- Liquibase for database migrations
+- Camunda BPM for workflow orchestration
+- Redis caching
 - Prometheus metrics via Actuator
 
 ### Data Flow
@@ -67,7 +69,7 @@ npm run diagnose:informix
 
 ### Database Architecture
 - **MySQL**: Application data (anomalies, tickets, corrections, users, audit)
-- **Informix CBS**: Core banking data (read-only via JDBC from Spring Boot)
+- **Informix CBS**: Core banking data (read-only via JDBC)
 
 ## Key Directory Structure
 
@@ -79,60 +81,49 @@ src/                    # React frontend (TypeScript)
   hooks/                # Custom React hooks
   types/                # TypeScript type definitions
 
-server/                 # Node.js Express backend
-  index.js              # Entry point
-  database.js           # MySQL connection
-  mysqlDatabase.js      # MySQL operations
-  userRoutes.js         # User/auth routes
-  reconciliationEndpoints.js  # Reconciliation API
-  validationEndpoints.js      # Validation API
-
 backend-java/           # Spring Boot backend
   src/main/java/com/bsic/dataqualitybackend/
     controller/         # REST controllers
     service/            # Business logic
-    repository/         # Data access (JPA + JDBC)
-    config/             # Configuration classes
+    repository/         # Data access (JPA + JDBC for Informix)
+    config/             # Configuration (DataSourceConfig, SecurityConfig)
+    dto/                # Data transfer objects
+    model/              # JPA entities
+  src/main/resources/
+    application.yml            # Base config
+    application-dev.yml        # Dev profile (Docker Informix)
+    application-docker.yml     # Docker deployment
+    application-local.yml      # Local development
+    db/changelog/              # Liquibase migrations
+    bpmn/                      # Camunda workflow definitions
 
-database/               # SQL schemas
+database/               # SQL schemas and seed data
 scripts/                # Setup and utility scripts
+docker/                 # Docker configurations
+monitoring/             # Prometheus/Grafana config
 ```
 
-## Frontend Patterns
+## Spring Boot Profiles
 
-- **State**: Zustand for global state, React Query for server state
-- **Tables**: @tanstack/react-table with @tanstack/react-virtual for large datasets (120k+ records)
-- **Charts**: ApexCharts and Recharts
-- **Forms**: react-hook-form
-- **Styling**: TailwindCSS
-
-## Backend Patterns
-
-**Node.js Express:**
-- All routes in `server/*.js` files
-- MySQL via mysql2 with connection pooling
-- JWT authentication middleware
-- Express rate limiting and Helmet security
-
-**Spring Boot:**
-- Multi-datasource config (MySQL primary + Informix secondary read-only)
-- HikariCP connection pooling for Informix
-- Camunda BPM for workflow
-- Lombok for DTOs
-- MapStruct for entity mapping
+- **default**: Production-ready config
+- **dev**: Development with Docker Informix on port 9088, Liquibase drop-first
+- **docker**: Docker deployment with containerized services
+- **local**: Local development without Informix
 
 ## Environment Configuration
 
-Copy `.env.example` to `.env` and configure:
-- MySQL connection (DB_HOST, DB_PORT, DB_USER, DB_PASSWORD, DB_NAME)
-- Informix CBS connection (INFORMIX_HOST, INFORMIX_PORT, INFORMIX_DATABASE, etc.)
-- JWT_SECRET for authentication
-- VITE_API_URL (Node.js backend URL)
-- VITE_SPRING_BOOT_URL (Spring Boot backend URL)
+Spring Boot uses environment variables or application-{profile}.yml:
+- `DB_HOST`, `DB_PORT`, `DB_USER`, `DB_PASSWORD`, `DB_NAME` - MySQL
+- `INFORMIX_HOST`, `INFORMIX_PORT`, `INFORMIX_DATABASE`, `INFORMIX_USER`, `INFORMIX_PASSWORD` - CBS
+- `KEYCLOAK_ISSUER_URI`, `KEYCLOAK_REALM` - OAuth2
+- `REDIS_HOST`, `REDIS_PORT` - Caching
 
 ## API Proxy
 
-Vite dev server proxies `/api` requests to the Node.js backend (port 3001). Spring Boot endpoints are called directly at their configured URL.
+Vite dev server proxies to Spring Boot (port 8080):
+- `/api/*` - REST API endpoints
+- `/oauth2/*` - OAuth2 authentication
+- `/login`, `/logout` - Session management
 
 ## User Roles
 
@@ -140,4 +131,4 @@ Vite dev server proxies `/api` requests to the Node.js backend (port 3001). Spri
 - **auditor**: Read access + ticket validation
 - **agency**: CRUD for their agency's anomalies only
 
-Demo users: admin@bsic.ci / admin123, auditor@bsic.ci / auditor123
+Roles are managed via Keycloak realm configuration.

@@ -1,5 +1,6 @@
 package com.bsic.dataqualitybackend.service;
 
+import com.bsic.dataqualitybackend.config.metrics.BusinessMetricsConfig;
 import com.bsic.dataqualitybackend.model.*;
 import com.bsic.dataqualitybackend.model.enums.TicketPriority;
 import com.bsic.dataqualitybackend.model.enums.TicketStatus;
@@ -26,6 +27,7 @@ public class TicketService {
     private final TicketHistoryRepository historyRepository;
     private final ClientRepository clientRepository;
     private final UserRepository userRepository;
+    private final BusinessMetricsConfig metricsConfig;
 
     @Transactional
     public Ticket createTicket(Ticket ticket) {
@@ -47,6 +49,7 @@ public class TicketService {
 
         addHistory(savedTicket, "TICKET_CREATED", null, TicketStatus.DETECTED, null, null, null);
 
+        metricsConfig.recordTicketCreated();
         log.info("Ticket created: {}", ticketNumber);
         return savedTicket;
     }
@@ -125,6 +128,13 @@ public class TicketService {
         Ticket updatedTicket = ticketRepository.save(ticket);
 
         addHistory(updatedTicket, "STATUS_CHANGED", previousStatus, newStatus, null, notes, user);
+
+        // Record metrics for status changes
+        if (newStatus == TicketStatus.VALIDATED) {
+            metricsConfig.recordTicketValidated();
+        } else if (newStatus == TicketStatus.REJECTED) {
+            metricsConfig.recordTicketRejected();
+        }
 
         log.info("Ticket {} status changed from {} to {}", ticket.getTicketNumber(), previousStatus, newStatus);
         return updatedTicket;

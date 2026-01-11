@@ -2,92 +2,412 @@
   "dashboard": {
     "id": null,
     "uid": "bsic-app-overview",
-    "title": "BSIC Application Overview",
-    "tags": ["bsic", "spring-boot"],
+    "title": "BSIC Data Quality Monitor - Overview",
+    "tags": ["bsic", "spring-boot", "data-quality"],
     "timezone": "browser",
     "schemaVersion": 16,
-    "version": 0,
-    "refresh": "5s",
+    "version": 1,
+    "refresh": "10s",
     "panels": [
       {
-        "id": 1,
-        "title": "Requests per Second",
-        "type": "graph",
-        "gridPos": {"h": 8, "w": 12, "x": 0, "y": 0},
+        "id": 100,
+        "title": "Service Health",
+        "type": "stat",
+        "gridPos": {"h": 4, "w": 6, "x": 0, "y": 0},
         "targets": [
           {
-            "expr": "rate(http_server_requests_seconds_count[1m])",
-            "legendFormat": "{{method}} {{uri}}"
+            "expr": "up{job=\"spring-boot-backend\"}",
+            "legendFormat": "Backend Status"
           }
-        ]
+        ],
+        "options": {
+          "colorMode": "background",
+          "graphMode": "none",
+          "justifyMode": "auto"
+        },
+        "fieldConfig": {
+          "defaults": {
+            "mappings": [
+              {"type": "value", "options": {"0": {"text": "DOWN", "color": "red"}}},
+              {"type": "value", "options": {"1": {"text": "UP", "color": "green"}}}
+            ],
+            "thresholds": {
+              "mode": "absolute",
+              "steps": [
+                {"color": "red", "value": null},
+                {"color": "green", "value": 1}
+              ]
+            }
+          }
+        }
+      },
+      {
+        "id": 101,
+        "title": "Pending Anomalies",
+        "type": "stat",
+        "gridPos": {"h": 4, "w": 6, "x": 6, "y": 0},
+        "targets": [
+          {
+            "expr": "bsic_anomalies_pending",
+            "legendFormat": "Pending"
+          }
+        ],
+        "options": {
+          "colorMode": "value",
+          "graphMode": "area"
+        },
+        "fieldConfig": {
+          "defaults": {
+            "thresholds": {
+              "mode": "absolute",
+              "steps": [
+                {"color": "green", "value": null},
+                {"color": "yellow", "value": 50},
+                {"color": "red", "value": 100}
+              ]
+            }
+          }
+        }
+      },
+      {
+        "id": 102,
+        "title": "Pending Tickets",
+        "type": "stat",
+        "gridPos": {"h": 4, "w": 6, "x": 12, "y": 0},
+        "targets": [
+          {
+            "expr": "bsic_tickets_pending_validation",
+            "legendFormat": "Awaiting Validation"
+          }
+        ],
+        "options": {
+          "colorMode": "value",
+          "graphMode": "area"
+        },
+        "fieldConfig": {
+          "defaults": {
+            "thresholds": {
+              "mode": "absolute",
+              "steps": [
+                {"color": "green", "value": null},
+                {"color": "yellow", "value": 20},
+                {"color": "red", "value": 50}
+              ]
+            }
+          }
+        }
+      },
+      {
+        "id": 103,
+        "title": "Active RPA Jobs",
+        "type": "stat",
+        "gridPos": {"h": 4, "w": 6, "x": 18, "y": 0},
+        "targets": [
+          {
+            "expr": "bsic_rpa_jobs_active",
+            "legendFormat": "Active Jobs"
+          }
+        ],
+        "options": {
+          "colorMode": "value",
+          "graphMode": "none"
+        },
+        "fieldConfig": {
+          "defaults": {
+            "thresholds": {
+              "mode": "absolute",
+              "steps": [
+                {"color": "green", "value": null},
+                {"color": "yellow", "value": 5},
+                {"color": "red", "value": 10}
+              ]
+            }
+          }
+        }
+      },
+      {
+        "id": 1,
+        "title": "HTTP Requests per Second",
+        "type": "timeseries",
+        "gridPos": {"h": 8, "w": 12, "x": 0, "y": 4},
+        "targets": [
+          {
+            "expr": "sum(rate(http_server_requests_seconds_count[1m])) by (method)",
+            "legendFormat": "{{method}}"
+          }
+        ],
+        "fieldConfig": {
+          "defaults": {
+            "unit": "reqps"
+          }
+        }
       },
       {
         "id": 2,
         "title": "Response Time (p95)",
-        "type": "graph",
-        "gridPos": {"h": 8, "w": 12, "x": 12, "y": 0},
+        "type": "timeseries",
+        "gridPos": {"h": 8, "w": 12, "x": 12, "y": 4},
         "targets": [
           {
-            "expr": "histogram_quantile(0.95, rate(http_server_requests_seconds_bucket[1m]))",
-            "legendFormat": "{{method}} {{uri}}"
+            "expr": "histogram_quantile(0.95, sum(rate(http_server_requests_seconds_bucket[1m])) by (le))",
+            "legendFormat": "p95"
+          },
+          {
+            "expr": "histogram_quantile(0.50, sum(rate(http_server_requests_seconds_bucket[1m])) by (le))",
+            "legendFormat": "p50"
           }
-        ]
+        ],
+        "fieldConfig": {
+          "defaults": {
+            "unit": "s"
+          }
+        }
+      },
+      {
+        "id": 10,
+        "title": "Anomalies Created",
+        "type": "timeseries",
+        "gridPos": {"h": 8, "w": 8, "x": 0, "y": 12},
+        "targets": [
+          {
+            "expr": "rate(bsic_anomalies_created_total[5m]) * 60",
+            "legendFormat": "Created/min"
+          },
+          {
+            "expr": "rate(bsic_anomalies_resolved_total[5m]) * 60",
+            "legendFormat": "Resolved/min"
+          }
+        ],
+        "fieldConfig": {
+          "defaults": {
+            "unit": "short"
+          }
+        }
+      },
+      {
+        "id": 11,
+        "title": "Ticket Processing",
+        "type": "timeseries",
+        "gridPos": {"h": 8, "w": 8, "x": 8, "y": 12},
+        "targets": [
+          {
+            "expr": "rate(bsic_tickets_created_total[5m]) * 60",
+            "legendFormat": "Created/min"
+          },
+          {
+            "expr": "rate(bsic_tickets_validated_total[5m]) * 60",
+            "legendFormat": "Validated/min"
+          },
+          {
+            "expr": "rate(bsic_tickets_rejected_total[5m]) * 60",
+            "legendFormat": "Rejected/min"
+          }
+        ],
+        "fieldConfig": {
+          "defaults": {
+            "unit": "short"
+          }
+        }
+      },
+      {
+        "id": 12,
+        "title": "RPA Job Status",
+        "type": "timeseries",
+        "gridPos": {"h": 8, "w": 8, "x": 16, "y": 12},
+        "targets": [
+          {
+            "expr": "rate(bsic_rpa_jobs_completed_total[5m]) * 60",
+            "legendFormat": "Completed/min"
+          },
+          {
+            "expr": "rate(bsic_rpa_jobs_failed_total[5m]) * 60",
+            "legendFormat": "Failed/min"
+          }
+        ],
+        "fieldConfig": {
+          "defaults": {
+            "unit": "short"
+          }
+        }
       },
       {
         "id": 3,
-        "title": "Error Rate",
-        "type": "graph",
-        "gridPos": {"h": 8, "w": 12, "x": 0, "y": 8},
+        "title": "HTTP Error Rate",
+        "type": "timeseries",
+        "gridPos": {"h": 8, "w": 12, "x": 0, "y": 20},
         "targets": [
           {
-            "expr": "rate(http_server_requests_seconds_count{status=~\"5..\"}[1m])",
-            "legendFormat": "5xx Errors"
+            "expr": "sum(rate(http_server_requests_seconds_count{status=~\"5..\"}[5m])) / sum(rate(http_server_requests_seconds_count[5m])) * 100",
+            "legendFormat": "Error Rate %"
           }
-        ]
+        ],
+        "fieldConfig": {
+          "defaults": {
+            "unit": "percent",
+            "thresholds": {
+              "mode": "absolute",
+              "steps": [
+                {"color": "green", "value": null},
+                {"color": "yellow", "value": 1},
+                {"color": "red", "value": 5}
+              ]
+            }
+          }
+        }
       },
       {
         "id": 4,
         "title": "JVM Memory Usage",
-        "type": "graph",
-        "gridPos": {"h": 8, "w": 12, "x": 12, "y": 8},
+        "type": "timeseries",
+        "gridPos": {"h": 8, "w": 12, "x": 12, "y": 20},
         "targets": [
           {
-            "expr": "jvm_memory_used_bytes{area=\"heap\"}",
-            "legendFormat": "Heap Used"
+            "expr": "jvm_memory_used_bytes{area=\"heap\"} / 1024 / 1024",
+            "legendFormat": "Heap Used (MB)"
           },
           {
-            "expr": "jvm_memory_max_bytes{area=\"heap\"}",
-            "legendFormat": "Heap Max"
+            "expr": "jvm_memory_max_bytes{area=\"heap\"} / 1024 / 1024",
+            "legendFormat": "Heap Max (MB)"
           }
-        ]
+        ],
+        "fieldConfig": {
+          "defaults": {
+            "unit": "decmbytes"
+          }
+        }
       },
       {
         "id": 5,
-        "title": "Database Connections",
-        "type": "graph",
-        "gridPos": {"h": 8, "w": 12, "x": 0, "y": 16},
+        "title": "Database Connection Pool",
+        "type": "timeseries",
+        "gridPos": {"h": 8, "w": 12, "x": 0, "y": 28},
         "targets": [
           {
-            "expr": "hikaricp_connections_active",
-            "legendFormat": "Active"
+            "expr": "hikaricp_connections_active{pool=\"MySQLPool\"}",
+            "legendFormat": "MySQL Active"
           },
           {
-            "expr": "hikaricp_connections_idle",
-            "legendFormat": "Idle"
+            "expr": "hikaricp_connections_idle{pool=\"MySQLPool\"}",
+            "legendFormat": "MySQL Idle"
+          },
+          {
+            "expr": "hikaricp_connections_active{pool=\"InformixPool\"}",
+            "legendFormat": "Informix Active"
+          },
+          {
+            "expr": "hikaricp_connections_idle{pool=\"InformixPool\"}",
+            "legendFormat": "Informix Idle"
           }
         ]
       },
       {
         "id": 6,
-        "title": "Cache Hit Rate",
-        "type": "graph",
-        "gridPos": {"h": 8, "w": 12, "x": 12, "y": 16},
+        "title": "Cache Performance",
+        "type": "timeseries",
+        "gridPos": {"h": 8, "w": 12, "x": 12, "y": 28},
         "targets": [
           {
-            "expr": "rate(cache_gets_total{result=\"hit\"}[1m]) / rate(cache_gets_total[1m])",
-            "legendFormat": "{{cache}}"
+            "expr": "rate(spring_cache_gets_total{result=\"hit\"}[5m])",
+            "legendFormat": "{{cache}} Hits"
+          },
+          {
+            "expr": "rate(spring_cache_gets_total{result=\"miss\"}[5m])",
+            "legendFormat": "{{cache}} Misses"
           }
         ]
+      },
+      {
+        "id": 20,
+        "title": "Data Sync Status",
+        "type": "stat",
+        "gridPos": {"h": 4, "w": 8, "x": 0, "y": 36},
+        "targets": [
+          {
+            "expr": "time() - bsic_data_sync_last_success_timestamp",
+            "legendFormat": "Since Last Sync"
+          }
+        ],
+        "options": {
+          "colorMode": "value"
+        },
+        "fieldConfig": {
+          "defaults": {
+            "unit": "s",
+            "thresholds": {
+              "mode": "absolute",
+              "steps": [
+                {"color": "green", "value": null},
+                {"color": "yellow", "value": 3600},
+                {"color": "red", "value": 7200}
+              ]
+            }
+          }
+        }
+      },
+      {
+        "id": 21,
+        "title": "CBS Reconciliations",
+        "type": "stat",
+        "gridPos": {"h": 4, "w": 8, "x": 8, "y": 36},
+        "targets": [
+          {
+            "expr": "increase(bsic_cbs_reconciliation_total[1h])",
+            "legendFormat": "Last Hour"
+          }
+        ],
+        "options": {
+          "colorMode": "value",
+          "graphMode": "area"
+        }
+      },
+      {
+        "id": 22,
+        "title": "Validation Rules Triggered",
+        "type": "stat",
+        "gridPos": {"h": 4, "w": 8, "x": 16, "y": 36},
+        "targets": [
+          {
+            "expr": "increase(bsic_validation_rules_triggered_total[1h])",
+            "legendFormat": "Last Hour"
+          }
+        ],
+        "options": {
+          "colorMode": "value",
+          "graphMode": "area"
+        }
+      },
+      {
+        "id": 30,
+        "title": "JVM Threads",
+        "type": "timeseries",
+        "gridPos": {"h": 6, "w": 12, "x": 0, "y": 40},
+        "targets": [
+          {
+            "expr": "jvm_threads_live_threads",
+            "legendFormat": "Live Threads"
+          },
+          {
+            "expr": "jvm_threads_daemon_threads",
+            "legendFormat": "Daemon Threads"
+          }
+        ]
+      },
+      {
+        "id": 31,
+        "title": "GC Pause Time",
+        "type": "timeseries",
+        "gridPos": {"h": 6, "w": 12, "x": 12, "y": 40},
+        "targets": [
+          {
+            "expr": "rate(jvm_gc_pause_seconds_sum[1m])",
+            "legendFormat": "{{gc}} Pause Time/sec"
+          }
+        ],
+        "fieldConfig": {
+          "defaults": {
+            "unit": "s"
+          }
+        }
       }
     ]
   }

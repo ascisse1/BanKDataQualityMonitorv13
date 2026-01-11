@@ -20,7 +20,10 @@ public class ValidationRuleDto {
     private RuleType ruleType;
     private ClientType clientType;
     private String fieldName;
-    private String validationExpression;
+    /** User-friendly label for the field (e.g., "Numero d'identite") */
+    private String fieldLabel;
+    /** Natural language rule definition in JSON format */
+    private String ruleDefinition;
     private String errorMessage;
     private String severity;
     private Boolean active;

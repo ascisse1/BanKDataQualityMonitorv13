@@ -1,0 +1,248 @@
+groups:
+  - name: bsic-application-alerts
+    rules:
+      # ===========================================
+      # Service Availability Alerts
+      # ===========================================
+      - alert: ServiceDown
+        expr: up{job="spring-boot-backend"} == 0
+        for: 1m
+        labels:
+          severity: critical
+        annotations:
+          summary: "BSIC Backend Service is down"
+          description: "The Spring Boot backend has been down for more than 1 minute."
+
+      - alert: HighErrorRate
+        expr: |
+          sum(rate(http_server_requests_seconds_count{status=~"5.."}[5m]))
+          / sum(rate(http_server_requests_seconds_count[5m])) * 100 > 5
+        for: 2m
+        labels:
+          severity: warning
+        annotations:
+          summary: "High HTTP error rate detected"
+          description: "More than 5% of HTTP requests are returning 5xx errors (current: {{ $value | printf \"%.2f\" }}%)."
+
+      - alert: CriticalErrorRate
+        expr: |
+          sum(rate(http_server_requests_seconds_count{status=~"5.."}[5m]))
+          / sum(rate(http_server_requests_seconds_count[5m])) * 100 > 10
+        for: 1m
+        labels:
+          severity: critical
+        annotations:
+          summary: "Critical HTTP error rate"
+          description: "More than 10% of HTTP requests are failing (current: {{ $value | printf \"%.2f\" }}%)."
+
+      # ===========================================
+      # Response Time Alerts
+      # ===========================================
+      - alert: SlowResponseTime
+        expr: |
+          histogram_quantile(0.95, sum(rate(http_server_requests_seconds_bucket[5m])) by (le)) > 2
+        for: 5m
+        labels:
+          severity: warning
+        annotations:
+          summary: "Slow API response times"
+          description: "95th percentile response time is above 2 seconds (current: {{ $value | printf \"%.2f\" }}s)."
+
+      - alert: VerySlowResponseTime
+        expr: |
+          histogram_quantile(0.95, sum(rate(http_server_requests_seconds_bucket[5m])) by (le)) > 5
+        for: 2m
+        labels:
+          severity: critical
+        annotations:
+          summary: "Very slow API response times"
+          description: "95th percentile response time is above 5 seconds (current: {{ $value | printf \"%.2f\" }}s)."
+
+      # ===========================================
+      # JVM Memory Alerts
+      # ===========================================
+      - alert: HighJvmMemoryUsage
+        expr: |
+          jvm_memory_used_bytes{area="heap"} / jvm_memory_max_bytes{area="heap"} * 100 > 80
+        for: 5m
+        labels:
+          severity: warning
+        annotations:
+          summary: "High JVM heap memory usage"
+          description: "JVM heap memory usage is above 80% (current: {{ $value | printf \"%.2f\" }}%)."
+
+      - alert: CriticalJvmMemoryUsage
+        expr: |
+          jvm_memory_used_bytes{area="heap"} / jvm_memory_max_bytes{area="heap"} * 100 > 95
+        for: 2m
+        labels:
+          severity: critical
+        annotations:
+          summary: "Critical JVM heap memory usage"
+          description: "JVM heap memory usage is above 95% (current: {{ $value | printf \"%.2f\" }}%). Application may crash."
+
+      - alert: FrequentGarbageCollection
+        expr: |
+          rate(jvm_gc_pause_seconds_sum[5m]) > 0.5
+        for: 5m
+        labels:
+          severity: warning
+        annotations:
+          summary: "Frequent garbage collection"
+          description: "JVM is spending more than 50% of time in garbage collection."
+
+      # ===========================================
+      # Database Connection Pool Alerts
+      # ===========================================
+      - alert: HighDatabaseConnectionUsage
+        expr: |
+          hikaricp_connections_active / hikaricp_connections_max * 100 > 80
+        for: 5m
+        labels:
+          severity: warning
+        annotations:
+          summary: "High database connection pool usage"
+          description: "Database connection pool '{{ $labels.pool }}' is above 80% capacity (current: {{ $value | printf \"%.2f\" }}%)."
+
+      - alert: DatabaseConnectionPoolExhausted
+        expr: |
+          hikaricp_connections_active / hikaricp_connections_max * 100 > 95
+        for: 1m
+        labels:
+          severity: critical
+        annotations:
+          summary: "Database connection pool nearly exhausted"
+          description: "Database connection pool '{{ $labels.pool }}' is at 95% capacity. New connections may timeout."
+
+      - alert: DatabaseConnectionTimeout
+        expr: |
+          rate(hikaricp_connections_timeout_total[5m]) > 0
+        for: 1m
+        labels:
+          severity: critical
+        annotations:
+          summary: "Database connection timeouts occurring"
+          description: "Connection timeouts detected in pool '{{ $labels.pool }}'. Increase pool size or investigate slow queries."
+
+      - alert: PendingDatabaseConnections
+        expr: |
+          hikaricp_connections_pending > 5
+        for: 2m
+        labels:
+          severity: warning
+        annotations:
+          summary: "High pending database connections"
+          description: "{{ $value }} threads waiting for database connection in pool '{{ $labels.pool }}'."
+
+      # ===========================================
+      # Redis Cache Alerts
+      # ===========================================
+      - alert: RedisDown
+        expr: |
+          redis_up == 0
+        for: 1m
+        labels:
+          severity: critical
+        annotations:
+          summary: "Redis cache is down"
+          description: "Redis server is not responding. Cache operations will fail."
+
+      - alert: HighRedisCacheMissRate
+        expr: |
+          rate(spring_cache_gets_total{result="miss"}[5m])
+          / (rate(spring_cache_gets_total{result="hit"}[5m]) + rate(spring_cache_gets_total{result="miss"}[5m])) * 100 > 50
+        for: 10m
+        labels:
+          severity: warning
+        annotations:
+          summary: "High cache miss rate"
+          description: "Cache '{{ $labels.cache }}' has a miss rate above 50% (current: {{ $value | printf \"%.2f\" }}%)."
+
+      # ===========================================
+      # Business Metrics Alerts
+      # ===========================================
+      - alert: HighAnomalyCreationRate
+        expr: |
+          rate(bsic_anomalies_created_total[5m]) > 100
+        for: 5m
+        labels:
+          severity: warning
+        annotations:
+          summary: "High anomaly creation rate"
+          description: "Anomalies are being created at an unusually high rate ({{ $value | printf \"%.2f\" }}/sec). Check data quality source."
+
+      - alert: TicketValidationBacklog
+        expr: |
+          bsic_tickets_pending_validation > 50
+        for: 15m
+        labels:
+          severity: warning
+        annotations:
+          summary: "Ticket validation backlog growing"
+          description: "{{ $value }} tickets pending validation. May need additional supervisor attention."
+
+      - alert: RpaJobFailures
+        expr: |
+          rate(bsic_rpa_jobs_failed_total[1h]) > 5
+        for: 5m
+        labels:
+          severity: warning
+        annotations:
+          summary: "RPA job failures increasing"
+          description: "{{ $value | printf \"%.2f\" }} RPA job failures per hour. Check UiPath integration."
+
+      - alert: DataSyncFailure
+        expr: |
+          bsic_data_sync_last_success_timestamp < (time() - 7200)
+        for: 5m
+        labels:
+          severity: critical
+        annotations:
+          summary: "Data synchronization not running"
+          description: "No successful data sync in the last 2 hours. CBS data may be stale."
+
+      # ===========================================
+      # Thread Pool Alerts
+      # ===========================================
+      - alert: HighThreadCount
+        expr: |
+          jvm_threads_live_threads > 300
+        for: 5m
+        labels:
+          severity: warning
+        annotations:
+          summary: "High thread count"
+          description: "JVM has {{ $value }} live threads. May indicate thread leak or high load."
+
+      - alert: DeadlockedThreads
+        expr: |
+          jvm_threads_deadlocked_threads > 0
+        for: 1m
+        labels:
+          severity: critical
+        annotations:
+          summary: "Deadlocked threads detected"
+          description: "{{ $value }} deadlocked threads detected. Application may hang."
+
+      # ===========================================
+      # Disk Space Alerts
+      # ===========================================
+      - alert: LowDiskSpace
+        expr: |
+          disk_free_bytes / disk_total_bytes * 100 < 20
+        for: 5m
+        labels:
+          severity: warning
+        annotations:
+          summary: "Low disk space"
+          description: "Less than 20% disk space remaining on {{ $labels.path }}."
+
+      - alert: CriticalDiskSpace
+        expr: |
+          disk_free_bytes / disk_total_bytes * 100 < 10
+        for: 2m
+        labels:
+          severity: critical
+        annotations:
+          summary: "Critical disk space"
+          description: "Less than 10% disk space remaining on {{ $labels.path }}. Immediate action required."

@@ -26,21 +26,18 @@ public class StatisticsController {
     private final StatisticsService statisticsService;
 
     @GetMapping("/clients")
-    @PreAuthorize("hasAnyRole('ADMIN', 'AUDITOR')")
     public ResponseEntity<ApiResponse<StatsDto>> getGlobalStats() {
         StatsDto stats = statisticsService.getGlobalStats();
         return ResponseEntity.ok(ApiResponse.success(stats));
     }
 
     @GetMapping("/agency-correction-stats")
-    @PreAuthorize("hasAnyRole('ADMIN', 'AUDITOR')")
     public ResponseEntity<ApiResponse<List<CorrectionStatsDto>>> getAgencyCorrectionStats() {
         List<CorrectionStatsDto> stats = statisticsService.getAgencyCorrectionStats();
         return ResponseEntity.ok(ApiResponse.success(stats));
     }
 
     @GetMapping("/correction-stats/weekly")
-    @PreAuthorize("hasAnyRole('ADMIN', 'AUDITOR')")
     public ResponseEntity<ApiResponse<List<CorrectionStatsDto>>> getWeeklyCorrectionTrend(
             @RequestParam(required = false) Integer weekNumber,
             @RequestParam(required = false) Integer yearNumber) {
@@ -54,7 +51,6 @@ public class StatisticsController {
     }
 
     @GetMapping("/validation-metrics")
-    @PreAuthorize("hasAnyRole('ADMIN', 'AUDITOR')")
     public ResponseEntity<ApiResponse<Map<String, Object>>> getValidationMetrics() {
         Map<String, Object> metrics = statisticsService.getValidationMetrics();
         return ResponseEntity.ok(ApiResponse.success(metrics));

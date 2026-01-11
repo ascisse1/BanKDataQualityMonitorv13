@@ -1,0 +1,575 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<databaseChangeLog
+    xmlns="http://www.liquibase.org/xml/ns/dbchangelog"
+    xmlns:xsi="http://www.w3.org/2001/XMLSchema-instance"
+    xsi:schemaLocation="http://www.liquibase.org/xml/ns/dbchangelog
+        http://www.liquibase.org/xml/ns/dbchangelog/dbchangelog-latest.xsd">
+
+    <!-- =====================================================
+         1. PARTICULIERS (tcli = '1') - Individual Clients
+         ===================================================== -->
+
+    <changeSet id="010-01-particuliers-nom" author="bsic">
+        <comment>Nom obligatoire - Particuliers</comment>
+        <insert tableName="validation_rules">
+            <column name="rule_name" value="Nom obligatoire"/>
+            <column name="description" value="Le nom est obligatoire pour les clients particuliers"/>
+            <column name="field_name" value="nom"/>
+            <column name="field_label" value="Nom"/>
+            <column name="client_type" value="1"/>
+            <column name="rule_type" value="required"/>
+            <column name="rule_definition" value='[{"type": "required", "message": "Le nom est obligatoire"}, {"type": "notPlaceholder", "message": "Le nom ne peut pas etre compose uniquement de X"}]'/>
+            <column name="error_message" value="Le nom est obligatoire et ne peut pas etre compose uniquement de X"/>
+            <column name="severity" value="CRITICAL"/>
+            <column name="active" valueBoolean="true"/>
+            <column name="priority" valueNumeric="1"/>
+            <column name="created_by" value="system"/>
+            <column name="created_at" valueComputed="NOW()"/>
+        </insert>
+    </changeSet>
+
+    <changeSet id="010-02-particuliers-prenom" author="bsic">
+        <comment>Prenom obligatoire - Particuliers</comment>
+        <insert tableName="validation_rules">
+            <column name="rule_name" value="Prenom obligatoire"/>
+            <column name="description" value="Le prenom est obligatoire pour les clients particuliers"/>
+            <column name="field_name" value="pre"/>
+            <column name="field_label" value="Prenom"/>
+            <column name="client_type" value="1"/>
+            <column name="rule_type" value="required"/>
+            <column name="rule_definition" value='[{"type": "required", "message": "Le prenom est obligatoire"}, {"type": "notPlaceholder", "message": "Le prenom ne peut pas etre compose uniquement de X"}]'/>
+            <column name="error_message" value="Le prenom est obligatoire"/>
+            <column name="severity" value="CRITICAL"/>
+            <column name="active" valueBoolean="true"/>
+            <column name="priority" valueNumeric="1"/>
+            <column name="created_by" value="system"/>
+            <column name="created_at" valueComputed="NOW()"/>
+        </insert>
+    </changeSet>
+
+    <changeSet id="010-03-particuliers-sexe" author="bsic">
+        <comment>Sexe obligatoire - Particuliers</comment>
+        <insert tableName="validation_rules">
+            <column name="rule_name" value="Sexe obligatoire"/>
+            <column name="description" value="Le sexe doit etre renseigne (M ou F)"/>
+            <column name="field_name" value="sext"/>
+            <column name="field_label" value="Sexe"/>
+            <column name="client_type" value="1"/>
+            <column name="rule_type" value="format"/>
+            <column name="rule_definition" value='[{"type": "required", "message": "Le sexe est obligatoire"}, {"type": "inList", "values": ["M", "F"], "message": "Le sexe doit etre M (Masculin) ou F (Feminin)"}]'/>
+            <column name="error_message" value="Le sexe doit etre M (Masculin) ou F (Feminin)"/>
+            <column name="severity" value="HIGH"/>
+            <column name="active" valueBoolean="true"/>
+            <column name="priority" valueNumeric="5"/>
+            <column name="created_by" value="system"/>
+            <column name="created_at" valueComputed="NOW()"/>
+        </insert>
+    </changeSet>
+
+    <changeSet id="010-04-particuliers-dna" author="bsic">
+        <comment>Date de naissance obligatoire - Particuliers</comment>
+        <insert tableName="validation_rules">
+            <column name="rule_name" value="Date de naissance obligatoire"/>
+            <column name="description" value="La date de naissance est obligatoire et doit etre valide"/>
+            <column name="field_name" value="dna"/>
+            <column name="field_label" value="Date de naissance"/>
+            <column name="client_type" value="1"/>
+            <column name="rule_type" value="date"/>
+            <column name="rule_definition" value='[{"type": "required", "message": "La date de naissance est obligatoire"}, {"type": "dateAfter", "value": "1915-01-01", "message": "La date de naissance doit etre apres 1915"}, {"type": "dateNotFuture", "message": "La date de naissance ne peut pas etre dans le futur"}]'/>
+            <column name="error_message" value="La date de naissance est obligatoire et doit etre entre 1915 et aujourd'hui"/>
+            <column name="severity" value="CRITICAL"/>
+            <column name="active" valueBoolean="true"/>
+            <column name="priority" valueNumeric="1"/>
+            <column name="created_by" value="system"/>
+            <column name="created_at" valueComputed="NOW()"/>
+        </insert>
+    </changeSet>
+
+    <changeSet id="010-05-particuliers-nat" author="bsic">
+        <comment>Nationalite obligatoire - Particuliers</comment>
+        <insert tableName="validation_rules">
+            <column name="rule_name" value="Nationalite obligatoire"/>
+            <column name="description" value="La nationalite doit etre renseignee"/>
+            <column name="field_name" value="nat"/>
+            <column name="field_label" value="Nationalite"/>
+            <column name="client_type" value="1"/>
+            <column name="rule_type" value="required"/>
+            <column name="rule_definition" value='[{"type": "required", "message": "La nationalite est obligatoire"}]'/>
+            <column name="error_message" value="La nationalite est obligatoire"/>
+            <column name="severity" value="MEDIUM"/>
+            <column name="active" valueBoolean="true"/>
+            <column name="priority" valueNumeric="20"/>
+            <column name="created_by" value="system"/>
+            <column name="created_at" valueComputed="NOW()"/>
+        </insert>
+    </changeSet>
+
+    <changeSet id="010-06-particuliers-nid" author="bsic">
+        <comment>Numero piece identite - Particuliers</comment>
+        <insert tableName="validation_rules">
+            <column name="rule_name" value="Format numero piece identite"/>
+            <column name="description" value="Le numero de piece d'identite doit respecter le format requis"/>
+            <column name="field_name" value="nid"/>
+            <column name="field_label" value="Numero d'identite"/>
+            <column name="client_type" value="1"/>
+            <column name="rule_type" value="format"/>
+            <column name="rule_definition" value='[{"type": "required", "message": "Le numero de piece d identite est obligatoire"}, {"type": "minLength", "value": 8, "message": "Doit contenir au moins 8 caracteres"}, {"type": "alphanumeric", "message": "Doit contenir uniquement des lettres et chiffres"}, {"type": "forbiddenPatterns", "values": ["123", "XXX", "000", "AAA"], "message": "Ne peut pas contenir de sequences invalides (123, XXX, 000)"}]'/>
+            <column name="error_message" value="Le numero de piece d'identite doit contenir au moins 8 caracteres alphanumeriques"/>
+            <column name="severity" value="HIGH"/>
+            <column name="active" valueBoolean="true"/>
+            <column name="priority" valueNumeric="5"/>
+            <column name="created_by" value="system"/>
+            <column name="created_at" valueComputed="NOW()"/>
+        </insert>
+    </changeSet>
+
+    <changeSet id="010-07-particuliers-vid" author="bsic">
+        <comment>Date validite piece - Particuliers</comment>
+        <insert tableName="validation_rules">
+            <column name="rule_name" value="Date validite piece d'identite"/>
+            <column name="description" value="La date de validite de la piece d'identite doit etre en cours"/>
+            <column name="field_name" value="vid"/>
+            <column name="field_label" value="Date validite piece"/>
+            <column name="client_type" value="1"/>
+            <column name="rule_type" value="date"/>
+            <column name="rule_definition" value='[{"type": "dateNotExpired", "optional": true, "message": "La piece d identite est expiree"}]'/>
+            <column name="error_message" value="La piece d'identite est expiree"/>
+            <column name="severity" value="CRITICAL"/>
+            <column name="active" valueBoolean="true"/>
+            <column name="priority" valueNumeric="1"/>
+            <column name="created_by" value="system"/>
+            <column name="created_at" valueComputed="NOW()"/>
+        </insert>
+    </changeSet>
+
+    <changeSet id="010-08-particuliers-tid" author="bsic">
+        <comment>Type piece identite - Particuliers</comment>
+        <insert tableName="validation_rules">
+            <column name="rule_name" value="Type piece identite obligatoire"/>
+            <column name="description" value="Le type de piece d'identite est obligatoire"/>
+            <column name="field_name" value="tid"/>
+            <column name="field_label" value="Type de piece"/>
+            <column name="client_type" value="1"/>
+            <column name="rule_type" value="required"/>
+            <column name="rule_definition" value='[{"type": "required", "message": "Le type de piece d identite est obligatoire"}]'/>
+            <column name="error_message" value="Le type de piece d'identite est obligatoire"/>
+            <column name="severity" value="HIGH"/>
+            <column name="active" valueBoolean="true"/>
+            <column name="priority" valueNumeric="5"/>
+            <column name="created_by" value="system"/>
+            <column name="created_at" valueComputed="NOW()"/>
+        </insert>
+    </changeSet>
+
+    <changeSet id="010-09-particuliers-viln" author="bsic">
+        <comment>Ville de naissance - Particuliers</comment>
+        <insert tableName="validation_rules">
+            <column name="rule_name" value="Ville de naissance obligatoire"/>
+            <column name="description" value="La ville de naissance est obligatoire"/>
+            <column name="field_name" value="viln"/>
+            <column name="field_label" value="Ville de naissance"/>
+            <column name="client_type" value="1"/>
+            <column name="rule_type" value="required"/>
+            <column name="rule_definition" value='[{"type": "required", "message": "La ville de naissance est obligatoire"}]'/>
+            <column name="error_message" value="La ville de naissance est obligatoire"/>
+            <column name="severity" value="MEDIUM"/>
+            <column name="active" valueBoolean="true"/>
+            <column name="priority" valueNumeric="20"/>
+            <column name="created_by" value="system"/>
+            <column name="created_at" valueComputed="NOW()"/>
+        </insert>
+    </changeSet>
+
+    <changeSet id="010-10-particuliers-payn" author="bsic">
+        <comment>Pays de naissance - Particuliers</comment>
+        <insert tableName="validation_rules">
+            <column name="rule_name" value="Pays de naissance obligatoire"/>
+            <column name="description" value="Le pays de naissance est obligatoire"/>
+            <column name="field_name" value="payn"/>
+            <column name="field_label" value="Pays de naissance"/>
+            <column name="client_type" value="1"/>
+            <column name="rule_type" value="required"/>
+            <column name="rule_definition" value='[{"type": "required", "message": "Le pays de naissance est obligatoire"}]'/>
+            <column name="error_message" value="Le pays de naissance est obligatoire"/>
+            <column name="severity" value="MEDIUM"/>
+            <column name="active" valueBoolean="true"/>
+            <column name="priority" valueNumeric="20"/>
+            <column name="created_by" value="system"/>
+            <column name="created_at" valueComputed="NOW()"/>
+        </insert>
+    </changeSet>
+
+    <changeSet id="010-11-particuliers-nmer" author="bsic">
+        <comment>Nom de la mere - Particuliers</comment>
+        <insert tableName="validation_rules">
+            <column name="rule_name" value="Nom de la mere obligatoire"/>
+            <column name="description" value="Le nom de la mere est obligatoire"/>
+            <column name="field_name" value="nmer"/>
+            <column name="field_label" value="Nom de la mere"/>
+            <column name="client_type" value="1"/>
+            <column name="rule_type" value="required"/>
+            <column name="rule_definition" value='[{"type": "required", "message": "Le nom de la mere est obligatoire"}]'/>
+            <column name="error_message" value="Le nom de la mere est obligatoire"/>
+            <column name="severity" value="CRITICAL"/>
+            <column name="active" valueBoolean="true"/>
+            <column name="priority" valueNumeric="1"/>
+            <column name="created_by" value="system"/>
+            <column name="created_at" valueComputed="NOW()"/>
+        </insert>
+    </changeSet>
+
+    <!-- =====================================================
+         2. ENTREPRISES (tcli = '2') - Corporate Clients
+         ===================================================== -->
+
+    <changeSet id="010-20-entreprises-rso" author="bsic">
+        <comment>Raison sociale - Entreprises</comment>
+        <insert tableName="validation_rules">
+            <column name="rule_name" value="Raison sociale obligatoire"/>
+            <column name="description" value="La raison sociale est obligatoire pour les entreprises"/>
+            <column name="field_name" value="rso"/>
+            <column name="field_label" value="Raison sociale"/>
+            <column name="client_type" value="2"/>
+            <column name="rule_type" value="required"/>
+            <column name="rule_definition" value='[{"type": "required", "message": "La raison sociale est obligatoire"}, {"type": "forbiddenPatterns", "values": ["123", "XXX", "000"], "message": "La raison sociale ne peut pas contenir de sequences invalides"}]'/>
+            <column name="error_message" value="La raison sociale est obligatoire"/>
+            <column name="severity" value="CRITICAL"/>
+            <column name="active" valueBoolean="true"/>
+            <column name="priority" valueNumeric="1"/>
+            <column name="created_by" value="system"/>
+            <column name="created_at" valueComputed="NOW()"/>
+        </insert>
+    </changeSet>
+
+    <changeSet id="010-21-entreprises-sig" author="bsic">
+        <comment>Sigle - Entreprises</comment>
+        <insert tableName="validation_rules">
+            <column name="rule_name" value="Format sigle"/>
+            <column name="description" value="Le sigle doit respecter un format approprie"/>
+            <column name="field_name" value="sig"/>
+            <column name="field_label" value="Sigle"/>
+            <column name="client_type" value="2"/>
+            <column name="rule_type" value="format"/>
+            <column name="rule_definition" value='[{"type": "maxLength", "value": 20, "optional": true, "message": "Le sigle doit contenir au maximum 20 caracteres"}, {"type": "uppercase", "optional": true, "message": "Le sigle doit etre en majuscules"}]'/>
+            <column name="error_message" value="Le sigle doit etre en majuscules (max 20 caracteres)"/>
+            <column name="severity" value="MEDIUM"/>
+            <column name="active" valueBoolean="true"/>
+            <column name="priority" valueNumeric="20"/>
+            <column name="created_by" value="system"/>
+            <column name="created_at" valueComputed="NOW()"/>
+        </insert>
+    </changeSet>
+
+    <changeSet id="010-22-entreprises-nrc" author="bsic">
+        <comment>Numero registre commerce - Entreprises</comment>
+        <insert tableName="validation_rules">
+            <column name="rule_name" value="Numero registre commerce obligatoire"/>
+            <column name="description" value="Le numero de registre de commerce est obligatoire"/>
+            <column name="field_name" value="nrc"/>
+            <column name="field_label" value="Numero Registre Commerce"/>
+            <column name="client_type" value="2"/>
+            <column name="rule_type" value="required"/>
+            <column name="rule_definition" value='[{"type": "required", "message": "Le numero de registre de commerce est obligatoire"}, {"type": "startsWith", "value": "MA", "message": "Le RCCM doit commencer par MA"}, {"type": "forbiddenPatterns", "values": ["123", "XXX", "000"], "message": "Le RCCM ne peut pas contenir de sequences invalides"}]'/>
+            <column name="error_message" value="Le numero de registre de commerce est obligatoire et doit commencer par MA"/>
+            <column name="severity" value="CRITICAL"/>
+            <column name="active" valueBoolean="true"/>
+            <column name="priority" valueNumeric="1"/>
+            <column name="created_by" value="system"/>
+            <column name="created_at" valueComputed="NOW()"/>
+        </insert>
+    </changeSet>
+
+    <changeSet id="010-23-entreprises-datc" author="bsic">
+        <comment>Date de creation - Entreprises</comment>
+        <insert tableName="validation_rules">
+            <column name="rule_name" value="Date de creation obligatoire"/>
+            <column name="description" value="La date de creation de l'entreprise est obligatoire"/>
+            <column name="field_name" value="datc"/>
+            <column name="field_label" value="Date de creation"/>
+            <column name="client_type" value="2"/>
+            <column name="rule_type" value="date"/>
+            <column name="rule_definition" value='[{"type": "required", "message": "La date de creation est obligatoire"}, {"type": "dateAfter", "value": "1915-01-01", "message": "La date de creation doit etre apres 1915"}, {"type": "dateNotFuture", "message": "La date de creation ne peut pas etre dans le futur"}]'/>
+            <column name="error_message" value="La date de creation est obligatoire"/>
+            <column name="severity" value="CRITICAL"/>
+            <column name="active" valueBoolean="true"/>
+            <column name="priority" valueNumeric="1"/>
+            <column name="created_by" value="system"/>
+            <column name="created_at" valueComputed="NOW()"/>
+        </insert>
+    </changeSet>
+
+    <changeSet id="010-24-entreprises-fju" author="bsic">
+        <comment>Forme juridique - Entreprises</comment>
+        <insert tableName="validation_rules">
+            <column name="rule_name" value="Forme juridique obligatoire"/>
+            <column name="description" value="La forme juridique est obligatoire"/>
+            <column name="field_name" value="fju"/>
+            <column name="field_label" value="Forme juridique"/>
+            <column name="client_type" value="2"/>
+            <column name="rule_type" value="required"/>
+            <column name="rule_definition" value='[{"type": "required", "message": "La forme juridique est obligatoire"}]'/>
+            <column name="error_message" value="La forme juridique est obligatoire"/>
+            <column name="severity" value="HIGH"/>
+            <column name="active" valueBoolean="true"/>
+            <column name="priority" valueNumeric="5"/>
+            <column name="created_by" value="system"/>
+            <column name="created_at" valueComputed="NOW()"/>
+        </insert>
+    </changeSet>
+
+    <changeSet id="010-25-entreprises-sec" author="bsic">
+        <comment>Secteur d'activite - Entreprises</comment>
+        <insert tableName="validation_rules">
+            <column name="rule_name" value="Secteur activite obligatoire"/>
+            <column name="description" value="Le secteur d'activite est obligatoire"/>
+            <column name="field_name" value="sec"/>
+            <column name="field_label" value="Secteur d'activite"/>
+            <column name="client_type" value="2"/>
+            <column name="rule_type" value="required"/>
+            <column name="rule_definition" value='[{"type": "required", "message": "Le secteur d activite est obligatoire"}]'/>
+            <column name="error_message" value="Le secteur d'activite est obligatoire"/>
+            <column name="severity" value="HIGH"/>
+            <column name="active" valueBoolean="true"/>
+            <column name="priority" valueNumeric="5"/>
+            <column name="created_by" value="system"/>
+            <column name="created_at" valueComputed="NOW()"/>
+        </insert>
+    </changeSet>
+
+    <changeSet id="010-26-entreprises-catn" author="bsic">
+        <comment>Categorie Banque Centrale - Entreprises</comment>
+        <insert tableName="validation_rules">
+            <column name="rule_name" value="Categorie Banque Centrale obligatoire"/>
+            <column name="description" value="La categorie de la Banque Centrale est obligatoire"/>
+            <column name="field_name" value="catn"/>
+            <column name="field_label" value="Categorie Banque Centrale"/>
+            <column name="client_type" value="2"/>
+            <column name="rule_type" value="required"/>
+            <column name="rule_definition" value='[{"type": "required", "message": "La categorie Banque Centrale est obligatoire"}]'/>
+            <column name="error_message" value="La categorie Banque Centrale est obligatoire"/>
+            <column name="severity" value="HIGH"/>
+            <column name="active" valueBoolean="true"/>
+            <column name="priority" valueNumeric="5"/>
+            <column name="created_by" value="system"/>
+            <column name="created_at" valueComputed="NOW()"/>
+        </insert>
+    </changeSet>
+
+    <changeSet id="010-27-entreprises-lienbq" author="bsic">
+        <comment>Lien avec la banque - Entreprises</comment>
+        <insert tableName="validation_rules">
+            <column name="rule_name" value="Lien avec la banque obligatoire"/>
+            <column name="description" value="Le lien d'apparente avec la banque est obligatoire"/>
+            <column name="field_name" value="lienbq"/>
+            <column name="field_label" value="Lien avec la banque"/>
+            <column name="client_type" value="2"/>
+            <column name="rule_type" value="required"/>
+            <column name="rule_definition" value='[{"type": "required", "message": "Le lien avec la banque est obligatoire"}]'/>
+            <column name="error_message" value="Le lien avec la banque est obligatoire"/>
+            <column name="severity" value="MEDIUM"/>
+            <column name="active" valueBoolean="true"/>
+            <column name="priority" valueNumeric="20"/>
+            <column name="created_by" value="system"/>
+            <column name="created_at" valueComputed="NOW()"/>
+        </insert>
+    </changeSet>
+
+    <!-- =====================================================
+         3. INSTITUTIONNELS (tcli = '3') - Institutional Clients
+         ===================================================== -->
+
+    <changeSet id="010-30-institutionnels-rso" author="bsic">
+        <comment>Raison sociale - Institutionnels</comment>
+        <insert tableName="validation_rules">
+            <column name="rule_name" value="Raison sociale obligatoire"/>
+            <column name="description" value="La raison sociale est obligatoire pour les institutionnels"/>
+            <column name="field_name" value="rso"/>
+            <column name="field_label" value="Raison sociale"/>
+            <column name="client_type" value="3"/>
+            <column name="rule_type" value="required"/>
+            <column name="rule_definition" value='[{"type": "required", "message": "La raison sociale est obligatoire"}, {"type": "forbiddenPatterns", "values": ["123", "XXX", "000"], "message": "La raison sociale ne peut pas contenir de sequences invalides"}]'/>
+            <column name="error_message" value="La raison sociale est obligatoire"/>
+            <column name="severity" value="CRITICAL"/>
+            <column name="active" valueBoolean="true"/>
+            <column name="priority" valueNumeric="1"/>
+            <column name="created_by" value="system"/>
+            <column name="created_at" valueComputed="NOW()"/>
+        </insert>
+    </changeSet>
+
+    <changeSet id="010-31-institutionnels-nrc" author="bsic">
+        <comment>Numero registre - Institutionnels</comment>
+        <insert tableName="validation_rules">
+            <column name="rule_name" value="Numero registre obligatoire"/>
+            <column name="description" value="Le numero de registre est obligatoire pour les institutionnels"/>
+            <column name="field_name" value="nrc"/>
+            <column name="field_label" value="Numero de registre"/>
+            <column name="client_type" value="3"/>
+            <column name="rule_type" value="required"/>
+            <column name="rule_definition" value='[{"type": "required", "message": "Le numero de registre est obligatoire"}, {"type": "forbiddenPatterns", "values": ["123", "XXX", "000"], "message": "Le numero de registre ne peut pas contenir de sequences invalides"}]'/>
+            <column name="error_message" value="Le numero de registre est obligatoire"/>
+            <column name="severity" value="CRITICAL"/>
+            <column name="active" valueBoolean="true"/>
+            <column name="priority" valueNumeric="1"/>
+            <column name="created_by" value="system"/>
+            <column name="created_at" valueComputed="NOW()"/>
+        </insert>
+    </changeSet>
+
+    <changeSet id="010-32-institutionnels-datc" author="bsic">
+        <comment>Date de creation - Institutionnels</comment>
+        <insert tableName="validation_rules">
+            <column name="rule_name" value="Date de creation obligatoire"/>
+            <column name="description" value="La date de creation est obligatoire pour les institutionnels"/>
+            <column name="field_name" value="datc"/>
+            <column name="field_label" value="Date de creation"/>
+            <column name="client_type" value="3"/>
+            <column name="rule_type" value="date"/>
+            <column name="rule_definition" value='[{"type": "required", "message": "La date de creation est obligatoire"}, {"type": "dateAfter", "value": "1915-01-01", "message": "La date de creation doit etre apres 1915"}, {"type": "dateNotFuture", "message": "La date de creation ne peut pas etre dans le futur"}]'/>
+            <column name="error_message" value="La date de creation est obligatoire"/>
+            <column name="severity" value="CRITICAL"/>
+            <column name="active" valueBoolean="true"/>
+            <column name="priority" valueNumeric="1"/>
+            <column name="created_by" value="system"/>
+            <column name="created_at" valueComputed="NOW()"/>
+        </insert>
+    </changeSet>
+
+    <changeSet id="010-33-institutionnels-fju" author="bsic">
+        <comment>Forme juridique - Institutionnels</comment>
+        <insert tableName="validation_rules">
+            <column name="rule_name" value="Forme juridique obligatoire"/>
+            <column name="description" value="La forme juridique est obligatoire"/>
+            <column name="field_name" value="fju"/>
+            <column name="field_label" value="Forme juridique"/>
+            <column name="client_type" value="3"/>
+            <column name="rule_type" value="required"/>
+            <column name="rule_definition" value='[{"type": "required", "message": "La forme juridique est obligatoire"}]'/>
+            <column name="error_message" value="La forme juridique est obligatoire"/>
+            <column name="severity" value="HIGH"/>
+            <column name="active" valueBoolean="true"/>
+            <column name="priority" valueNumeric="5"/>
+            <column name="created_by" value="system"/>
+            <column name="created_at" valueComputed="NOW()"/>
+        </insert>
+    </changeSet>
+
+    <changeSet id="010-34-institutionnels-sec" author="bsic">
+        <comment>Secteur d'activite - Institutionnels</comment>
+        <insert tableName="validation_rules">
+            <column name="rule_name" value="Secteur activite obligatoire"/>
+            <column name="description" value="Le secteur d'activite est obligatoire"/>
+            <column name="field_name" value="sec"/>
+            <column name="field_label" value="Secteur d'activite"/>
+            <column name="client_type" value="3"/>
+            <column name="rule_type" value="required"/>
+            <column name="rule_definition" value='[{"type": "required", "message": "Le secteur d activite est obligatoire"}]'/>
+            <column name="error_message" value="Le secteur d'activite est obligatoire"/>
+            <column name="severity" value="HIGH"/>
+            <column name="active" valueBoolean="true"/>
+            <column name="priority" valueNumeric="5"/>
+            <column name="created_by" value="system"/>
+            <column name="created_at" valueComputed="NOW()"/>
+        </insert>
+    </changeSet>
+
+    <changeSet id="010-35-institutionnels-catn" author="bsic">
+        <comment>Categorie Banque Centrale - Institutionnels</comment>
+        <insert tableName="validation_rules">
+            <column name="rule_name" value="Categorie Banque Centrale obligatoire"/>
+            <column name="description" value="La categorie de la Banque Centrale est obligatoire"/>
+            <column name="field_name" value="catn"/>
+            <column name="field_label" value="Categorie Banque Centrale"/>
+            <column name="client_type" value="3"/>
+            <column name="rule_type" value="required"/>
+            <column name="rule_definition" value='[{"type": "required", "message": "La categorie Banque Centrale est obligatoire"}]'/>
+            <column name="error_message" value="La categorie Banque Centrale est obligatoire"/>
+            <column name="severity" value="HIGH"/>
+            <column name="active" valueBoolean="true"/>
+            <column name="priority" valueNumeric="5"/>
+            <column name="created_by" value="system"/>
+            <column name="created_at" valueComputed="NOW()"/>
+        </insert>
+    </changeSet>
+
+    <changeSet id="010-36-institutionnels-lienbq" author="bsic">
+        <comment>Lien avec la banque - Institutionnels</comment>
+        <insert tableName="validation_rules">
+            <column name="rule_name" value="Lien avec la banque obligatoire"/>
+            <column name="description" value="Le lien d'apparente avec la banque est obligatoire"/>
+            <column name="field_name" value="lienbq"/>
+            <column name="field_label" value="Lien avec la banque"/>
+            <column name="client_type" value="3"/>
+            <column name="rule_type" value="required"/>
+            <column name="rule_definition" value='[{"type": "required", "message": "Le lien avec la banque est obligatoire"}]'/>
+            <column name="error_message" value="Le lien avec la banque est obligatoire"/>
+            <column name="severity" value="MEDIUM"/>
+            <column name="active" valueBoolean="true"/>
+            <column name="priority" valueNumeric="20"/>
+            <column name="created_by" value="system"/>
+            <column name="created_at" valueComputed="NOW()"/>
+        </insert>
+    </changeSet>
+
+    <!-- =====================================================
+         4. COMMON RULES (All client types)
+         ===================================================== -->
+
+    <changeSet id="010-40-common-cli" author="bsic">
+        <comment>Code client obligatoire - Tous types</comment>
+        <insert tableName="validation_rules">
+            <column name="rule_name" value="Code client obligatoire"/>
+            <column name="description" value="Le code client est obligatoire pour tous les types"/>
+            <column name="field_name" value="cli"/>
+            <column name="field_label" value="Code client"/>
+            <column name="client_type" valueComputed="NULL"/>
+            <column name="rule_type" value="required"/>
+            <column name="rule_definition" value='[{"type": "required", "message": "Le code client est obligatoire"}]'/>
+            <column name="error_message" value="Le code client est obligatoire"/>
+            <column name="severity" value="CRITICAL"/>
+            <column name="active" valueBoolean="true"/>
+            <column name="priority" valueNumeric="1"/>
+            <column name="created_by" value="system"/>
+            <column name="created_at" valueComputed="NOW()"/>
+        </insert>
+    </changeSet>
+
+    <changeSet id="010-41-common-age" author="bsic">
+        <comment>Code agence obligatoire - Tous types</comment>
+        <insert tableName="validation_rules">
+            <column name="rule_name" value="Code agence obligatoire"/>
+            <column name="description" value="Le code agence est obligatoire pour tous les types"/>
+            <column name="field_name" value="age"/>
+            <column name="field_label" value="Code agence"/>
+            <column name="client_type" valueComputed="NULL"/>
+            <column name="rule_type" value="required"/>
+            <column name="rule_definition" value='[{"type": "required", "message": "Le code agence est obligatoire"}]'/>
+            <column name="error_message" value="Le code agence est obligatoire"/>
+            <column name="severity" value="HIGH"/>
+            <column name="active" valueBoolean="true"/>
+            <column name="priority" valueNumeric="5"/>
+            <column name="created_by" value="system"/>
+            <column name="created_at" valueComputed="NOW()"/>
+        </insert>
+    </changeSet>
+
+    <changeSet id="010-42-common-tcli" author="bsic">
+        <comment>Type client valide - Tous types</comment>
+        <insert tableName="validation_rules">
+            <column name="rule_name" value="Type client valide"/>
+            <column name="description" value="Le type de client doit etre valide (1, 2 ou 3)"/>
+            <column name="field_name" value="tcli"/>
+            <column name="field_label" value="Type client"/>
+            <column name="client_type" valueComputed="NULL"/>
+            <column name="rule_type" value="format"/>
+            <column name="rule_definition" value='[{"type": "required", "message": "Le type client est obligatoire"}, {"type": "inList", "values": ["1", "2", "3"], "message": "Le type client doit etre 1 (Particulier), 2 (Entreprise) ou 3 (Institutionnel)"}]'/>
+            <column name="error_message" value="Le type client doit etre 1 (Particulier), 2 (Entreprise) ou 3 (Institutionnel)"/>
+            <column name="severity" value="CRITICAL"/>
+            <column name="active" valueBoolean="true"/>
+            <column name="priority" valueNumeric="1"/>
+            <column name="created_by" value="system"/>
+            <column name="created_at" valueComputed="NOW()"/>
+        </insert>
+    </changeSet>
+
+</databaseChangeLog>

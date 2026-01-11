@@ -24,4 +24,14 @@ public interface ValidationRuleRepository extends JpaRepository<ValidationRule, 
     List<ValidationRule> findByFieldName(String fieldName);
 
     List<ValidationRule> findByActiveAndFieldName(Boolean active, String fieldName);
+
+    /**
+     * Find active rules for a specific client type OR rules that apply to all client types (null).
+     */
+    List<ValidationRule> findByActiveAndClientTypeInOrderByPriorityDesc(Boolean active, List<ClientType> clientTypes);
+
+    /**
+     * Find active rules where clientType is null (applies to all).
+     */
+    List<ValidationRule> findByActiveAndClientTypeIsNullOrderByPriorityDesc(Boolean active);
 }

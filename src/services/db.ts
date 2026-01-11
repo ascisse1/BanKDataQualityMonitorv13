@@ -103,6 +103,92 @@ function toPagedResponse<T>(data: SpringDataPage<T> | PaginatedResponse<T> | any
   };
 }
 
+// Map backend ClientType enum to frontend tcli code
+function mapClientTypeToCode(clientType: string | undefined): string {
+  switch (clientType) {
+    case 'INDIVIDUAL': return '1';
+    case 'CORPORATE': return '2';
+    case 'INSTITUTIONAL': return '3';
+    default: return '1';
+  }
+}
+
+// Map backend AnomalyStatus enum to French labels
+function mapStatusToFrench(status: string | undefined): string {
+  switch (status) {
+    case 'PENDING': return 'Nouveau';
+    case 'IN_PROGRESS': return 'En cours';
+    case 'CORRECTED': return 'Corrigé';
+    case 'VALIDATED': return 'Résolu';
+    case 'REJECTED': return 'Rejeté';
+    case 'CLOSED': return 'Fermé';
+    default: return status || 'Nouveau';
+  }
+}
+
+// Map severity to French labels
+function mapSeverityToFrench(severity: string | undefined): string {
+  switch (severity?.toUpperCase()) {
+    case 'HIGH': return 'Haute';
+    case 'MEDIUM': return 'Moyenne';
+    case 'LOW': return 'Faible';
+    case 'HAUTE': return 'Haute';
+    case 'MOYENNE': return 'Moyenne';
+    case 'FAIBLE': return 'Faible';
+    default: return severity || 'Moyenne';
+  }
+}
+
+// Map backend AnomalyDto to frontend expected format
+function mapAnomalyToFrontend(anomaly: any): any {
+  // Extract first name from clientName if it contains space (e.g., "TRAORE Mamadou")
+  const clientNameParts = (anomaly.clientName || '').split(' ');
+  const lastName = clientNameParts[0] || '';
+  const firstName = clientNameParts.slice(1).join(' ') || '';
+
+  return {
+    // Map backend fields to frontend expected format
+    cli: anomaly.clientNumber || anomaly.cli || '',
+    nom: lastName || anomaly.nom || '',
+    tcli: mapClientTypeToCode(anomaly.clientType) || anomaly.tcli || '1',
+    pre: firstName || anomaly.pre || '',
+    prenom: firstName || anomaly.prenom || '', // Also add prenom for compatibility
+    age: anomaly.agencyCode || anomaly.age || '',
+
+    // Anomaly-specific fields
+    field: anomaly.fieldLabel || anomaly.field || '',
+    fieldCode: anomaly.fieldName || anomaly.fieldCode || '',
+    errorType: anomaly.errorType || 'Valeur manquante',
+    errorMessage: anomaly.errorMessage || '',
+    severity: mapSeverityToFrench(anomaly.severity),
+    status: mapStatusToFrench(anomaly.status),
+
+    // Additional fields from backend
+    currentValue: anomaly.currentValue || '',
+    expectedValue: anomaly.expectedValue || '',
+    correctionValue: anomaly.correctionValue || '',
+
+    // Keep original fields for potential use
+    id: anomaly.id,
+    agencyName: anomaly.agencyName || '',
+    createdAt: anomaly.createdAt,
+    updatedAt: anomaly.updatedAt,
+
+    // Client data fields that might be empty (not from anomaly DTO)
+    nid: anomaly.nid || '',
+    nmer: anomaly.nmer || '',
+    dna: anomaly.dna || '',
+    nat: anomaly.nat || '',
+    sext: anomaly.sext || '',
+    viln: anomaly.viln || '',
+    payn: anomaly.payn || '',
+    tid: anomaly.tid || '',
+    nrc: anomaly.nrc || '',
+    datc: anomaly.datc || '',
+    rso: anomaly.rso || ''
+  };
+}
+
 interface BranchAnomaly {
   code_agence: string;
   lib_agence: string;
@@ -540,6 +626,10 @@ class DatabaseService {
 
       const result = await this.fetchApi<any>('/anomalies/individual', {}, queryParams);
       const paginatedResult = toPagedResponse<any>(result);
+
+      // Map backend format to frontend expected format
+      paginatedResult.data = paginatedResult.data.map(mapAnomalyToFrontend);
+
       tracer.info('database', 'Individual anomalies retrieved successfully', {
         count: paginatedResult.data?.length || 0,
         total: paginatedResult.total || 0
@@ -566,6 +656,10 @@ class DatabaseService {
 
       const result = await this.fetchApi<any>('/anomalies/corporate', {}, queryParams);
       const paginatedResult = toPagedResponse<any>(result);
+
+      // Map backend format to frontend expected format
+      paginatedResult.data = paginatedResult.data.map(mapAnomalyToFrontend);
+
       tracer.info('database', 'Corporate anomalies retrieved successfully', {
         count: paginatedResult.data?.length || 0,
         total: paginatedResult.total || 0
@@ -592,6 +686,10 @@ class DatabaseService {
 
       const result = await this.fetchApi<any>('/anomalies/institutional', {}, queryParams);
       const paginatedResult = toPagedResponse<any>(result);
+
+      // Map backend format to frontend expected format
+      paginatedResult.data = paginatedResult.data.map(mapAnomalyToFrontend);
+
       tracer.info('database', 'Institutional anomalies retrieved successfully', {
         count: paginatedResult.data?.length || 0,
         total: paginatedResult.total || 0
@@ -800,14 +898,15 @@ class DatabaseService {
     try {
       tracer.info('database', 'Getting agencies');
 
-      const data = await this.fetchApi<any[]>('/agencies/active');
+      // Use /agencies/ordered endpoint for sorted agency list
+      const data = await this.fetchApi<any[]>('/agencies/ordered');
       tracer.info('database', 'Agencies retrieved successfully', { count: data?.length || 0 });
 
       // Map backend AgencyDto format to frontend format
       if (Array.isArray(data)) {
         return data.map((agency: any) => ({
-          code_agence: agency.code || '',
-          lib_agence: agency.name || ''
+          code_agence: agency.code || agency.age || '',
+          lib_agence: agency.name || agency.lib || ''
         }));
       }
 

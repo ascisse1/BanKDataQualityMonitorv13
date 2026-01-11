@@ -21,21 +21,18 @@ public class AgencyController {
     private final AgencyService agencyService;
 
     @GetMapping
-    @PreAuthorize("hasAnyRole('ADMIN', 'AUDITOR', 'AGENCY_USER')")
     public ResponseEntity<ApiResponse<List<AgencyDto>>> getAllAgencies() {
         List<AgencyDto> agencies = agencyService.getAllAgencies();
         return ResponseEntity.ok(ApiResponse.success(agencies));
     }
 
     @GetMapping("/ordered")
-    @PreAuthorize("hasAnyRole('ADMIN', 'AUDITOR', 'AGENCY_USER')")
     public ResponseEntity<ApiResponse<List<AgencyDto>>> getAgenciesOrdered() {
         List<AgencyDto> agencies = agencyService.getAgenciesOrderedByName();
         return ResponseEntity.ok(ApiResponse.success(agencies));
     }
 
     @GetMapping("/{age}")
-    @PreAuthorize("hasAnyRole('ADMIN', 'AUDITOR', 'AGENCY_USER')")
     public ResponseEntity<ApiResponse<AgencyDto>> getAgencyByCode(@PathVariable String age) {
         AgencyDto agency = agencyService.getAgencyByCode(age);
         return ResponseEntity.ok(ApiResponse.success(agency));

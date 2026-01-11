@@ -65,7 +65,8 @@ public class ValidationService {
         rule.setRuleType(dto.getRuleType());
         rule.setClientType(dto.getClientType());
         rule.setFieldName(dto.getFieldName());
-        rule.setValidationExpression(dto.getValidationExpression());
+        rule.setFieldLabel(dto.getFieldLabel());
+        rule.setRuleDefinition(dto.getRuleDefinition());
         rule.setErrorMessage(dto.getErrorMessage());
         rule.setSeverity(dto.getSeverity());
         rule.setActive(dto.getActive());
@@ -100,7 +101,8 @@ public class ValidationService {
             .ruleType(rule.getRuleType())
             .clientType(rule.getClientType())
             .fieldName(rule.getFieldName())
-            .validationExpression(rule.getValidationExpression())
+            .fieldLabel(rule.getFieldLabel())
+            .ruleDefinition(rule.getRuleDefinition())
             .errorMessage(rule.getErrorMessage())
             .severity(rule.getSeverity())
             .active(rule.getActive())
@@ -118,7 +120,8 @@ public class ValidationService {
             .ruleType(dto.getRuleType())
             .clientType(dto.getClientType())
             .fieldName(dto.getFieldName())
-            .validationExpression(dto.getValidationExpression())
+            .fieldLabel(dto.getFieldLabel())
+            .ruleDefinition(dto.getRuleDefinition())
             .errorMessage(dto.getErrorMessage())
             .severity(dto.getSeverity())
             .active(dto.getActive() != null ? dto.getActive() : true)

@@ -56,4 +56,21 @@ public interface AnomalyRepository extends JpaRepository<Anomaly, Long> {
     List<Object[]> countByCreatedAtAfterGroupByDate(@Param("startDate") LocalDateTime startDate);
 
     List<Anomaly> findTop10ByOrderByCreatedAtDesc();
+
+    /**
+     * Check if an open anomaly exists for a client and field.
+     * Used to avoid creating duplicate anomalies during sync validation.
+     */
+    @Query("SELECT COUNT(a) > 0 FROM Anomaly a " +
+           "WHERE a.clientNumber = :clientNumber " +
+           "AND a.fieldName = :fieldName " +
+           "AND a.status NOT IN (com.bsic.dataqualitybackend.model.enums.AnomalyStatus.CLOSED, " +
+           "com.bsic.dataqualitybackend.model.enums.AnomalyStatus.VALIDATED)")
+    boolean existsOpenAnomalyForClientAndField(@Param("clientNumber") String clientNumber,
+                                                @Param("fieldName") String fieldName);
+
+    /**
+     * Find all open anomalies for a client.
+     */
+    List<Anomaly> findByClientNumberAndStatusNotIn(String clientNumber, List<AnomalyStatus> excludedStatuses);
 }
