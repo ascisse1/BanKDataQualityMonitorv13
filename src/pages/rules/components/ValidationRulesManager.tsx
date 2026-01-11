@@ -1,5 +1,5 @@
-import React, { useState, useEffect } from 'react';
-import { Plus, Edit, Trash2, ToggleLeft, ToggleRight, Save, X, AlertTriangle, CheckCircle } from 'lucide-react';
+import React, { useState, useEffect, useCallback } from 'react';
+import { Plus, Edit, Trash2, ToggleLeft, ToggleRight, Save, X, AlertTriangle, CheckCircle, RefreshCw, Loader2 } from 'lucide-react';
 import Card from '../../../components/ui/Card';
 import Button from '../../../components/ui/Button';
 import Input from '../../../components/ui/Input';
@@ -13,49 +13,105 @@ const ValidationRulesManager: React.FC = () => {
   const [editingRule, setEditingRule] = useState<ValidationRule | null>(null);
   const [isCreating, setIsCreating] = useState(false);
   const [searchQuery, setSearchQuery] = useState('');
+  const [isLoading, setIsLoading] = useState(true);
+  const [error, setError] = useState<string | null>(null);
   const { addToast } = useToast();
+
+  const loadRules = useCallback(async () => {
+    setIsLoading(true);
+    setError(null);
+    try {
+      let fetchedRules: ValidationRule[];
+      if (selectedClientType === 'all') {
+        fetchedRules = await validationRulesService.getRulesAsync();
+      } else {
+        fetchedRules = await validationRulesService.getRulesByClientTypeAsync(selectedClientType);
+      }
+      setRules(fetchedRules);
+    } catch (err) {
+      console.error('Failed to load validation rules:', err);
+      setError('Erreur lors du chargement des règles. Vérifiez que le serveur Spring Boot est démarré sur le port 8080.');
+      addToast('Erreur lors du chargement des règles', 'error');
+    } finally {
+      setIsLoading(false);
+    }
+  }, [selectedClientType, addToast]);
 
   useEffect(() => {
     loadRules();
-  }, [selectedClientType]);
+  }, [loadRules]);
 
-  const loadRules = () => {
-    if (selectedClientType === 'all') {
-      setRules(validationRulesService.getRules());
-    } else {
-      setRules(validationRulesService.getRulesByClientType(selectedClientType));
+  const handleRefresh = async () => {
+    setIsLoading(true);
+    try {
+      await validationRulesService.refreshRules();
+      await loadRules();
+      addToast('Règles actualisées avec succès', 'success');
+    } catch (err) {
+      addToast('Erreur lors de l\'actualisation des règles', 'error');
     }
   };
 
-  const handleToggleRule = (ruleId: string) => {
-    if (validationRulesService.toggleRule(ruleId)) {
-      loadRules();
-      addToast('Règle mise à jour avec succès', 'success');
-    }
-  };
+  const handleToggleRule = async (ruleId: string) => {
+    const rule = rules.find(r => r.id === ruleId);
+    if (!rule) return;
 
-  const handleDeleteRule = (ruleId: string) => {
-    if (confirm('Êtes-vous sûr de vouloir supprimer cette règle ?')) {
-      if (validationRulesService.deleteRule(ruleId)) {
-        loadRules();
-        addToast('Règle supprimée avec succès', 'success');
-      }
-    }
-  };
-
-  const handleSaveRule = (rule: ValidationRule) => {
-    if (editingRule) {
-      if (validationRulesService.updateRule(rule.id, rule)) {
+    try {
+      const success = await validationRulesService.toggleRuleOnBackend(ruleId, !rule.isActive);
+      if (success) {
+        setRules(prev => prev.map(r =>
+          r.id === ruleId ? { ...r, isActive: !r.isActive } : r
+        ));
         addToast('Règle mise à jour avec succès', 'success');
+      } else {
+        addToast('Erreur lors de la mise à jour de la règle', 'error');
       }
-    } else {
-      validationRulesService.addRule(rule);
-      addToast('Règle créée avec succès', 'success');
+    } catch (err) {
+      addToast('Erreur lors de la mise à jour de la règle', 'error');
     }
-    
+  };
+
+  const handleDeleteRule = async (ruleId: string) => {
+    if (confirm('Êtes-vous sûr de vouloir supprimer cette règle ?')) {
+      try {
+        const success = await validationRulesService.deleteRuleOnBackend(ruleId);
+        if (success) {
+          setRules(prev => prev.filter(r => r.id !== ruleId));
+          addToast('Règle supprimée avec succès', 'success');
+        } else {
+          addToast('Erreur lors de la suppression de la règle', 'error');
+        }
+      } catch (err) {
+        addToast('Erreur lors de la suppression de la règle', 'error');
+      }
+    }
+  };
+
+  const handleSaveRule = async (rule: ValidationRule) => {
+    try {
+      if (editingRule) {
+        const success = await validationRulesService.updateRuleOnBackend(rule.id, rule);
+        if (success) {
+          setRules(prev => prev.map(r => r.id === rule.id ? rule : r));
+          addToast('Règle mise à jour avec succès', 'success');
+        } else {
+          addToast('Erreur lors de la mise à jour de la règle', 'error');
+        }
+      } else {
+        const newRule = await validationRulesService.createRule(rule);
+        if (newRule) {
+          setRules(prev => [...prev, newRule]);
+          addToast('Règle créée avec succès', 'success');
+        } else {
+          addToast('Erreur lors de la création de la règle', 'error');
+        }
+      }
+    } catch (err) {
+      addToast('Erreur lors de la sauvegarde de la règle', 'error');
+    }
+
     setEditingRule(null);
     setIsCreating(false);
-    loadRules();
   };
 
   const getClientTypeLabel = (type: string) => {
@@ -92,14 +148,25 @@ const ValidationRulesManager: React.FC = () => {
             Configurez les règles de contrôle pour chaque type de client
           </p>
         </div>
-        
-        <Button
-          variant="primary"
-          leftIcon={<Plus className="h-4 w-4" />}
-          onClick={() => setIsCreating(true)}
-        >
-          Nouvelle Règle
-        </Button>
+
+        <div className="flex items-center space-x-2 mt-4 sm:mt-0">
+          <Button
+            variant="outline"
+            leftIcon={isLoading ? <Loader2 className="h-4 w-4 animate-spin" /> : <RefreshCw className="h-4 w-4" />}
+            onClick={handleRefresh}
+            disabled={isLoading}
+          >
+            Actualiser
+          </Button>
+          <Button
+            variant="primary"
+            leftIcon={<Plus className="h-4 w-4" />}
+            onClick={() => setIsCreating(true)}
+            disabled={isLoading}
+          >
+            Nouvelle Règle
+          </Button>
+        </div>
       </div>
 
       {/* Filtres */}
@@ -142,6 +209,7 @@ const ValidationRulesManager: React.FC = () => {
             </div>
           </div>
 
+          {!isLoading && !error && filteredRules.length > 0 && (
           <div className="overflow-x-auto">
             <table className="min-w-full divide-y divide-gray-200">
               <thead className="bg-gray-50">
@@ -232,11 +300,37 @@ const ValidationRulesManager: React.FC = () => {
               </tbody>
             </table>
           </div>
+          )}
 
-          {filteredRules.length === 0 && (
+          {isLoading && (
+            <div className="text-center py-8">
+              <Loader2 className="h-8 w-8 text-primary-500 mx-auto mb-2 animate-spin" />
+              <p className="text-gray-500">Chargement des règles...</p>
+            </div>
+          )}
+
+          {error && !isLoading && (
+            <div className="text-center py-8">
+              <AlertTriangle className="h-8 w-8 text-error-500 mx-auto mb-2" />
+              <p className="text-error-600">{error}</p>
+              <Button
+                variant="outline"
+                size="sm"
+                className="mt-4"
+                onClick={handleRefresh}
+              >
+                Réessayer
+              </Button>
+            </div>
+          )}
+
+          {!isLoading && !error && filteredRules.length === 0 && (
             <div className="text-center py-8">
               <AlertTriangle className="h-8 w-8 text-gray-400 mx-auto mb-2" />
               <p className="text-gray-500">Aucune règle trouvée</p>
+              <p className="text-sm text-gray-400 mt-1">
+                Les règles de validation sont chargées depuis le serveur Spring Boot
+              </p>
             </div>
           )}
         </div>

@@ -12,16 +12,8 @@ import java.time.LocalDateTime;
 @NoArgsConstructor
 @AllArgsConstructor
 public class AgencyDto {
-    private Long id;
-    private String code;
-    private String name;
-    private String region;
-    private String city;
-    private String address;
-    private String phone;
-    private String email;
-    private String managerName;
-    private Boolean active;
+    private String age;
+    private String lib;
     private LocalDateTime createdAt;
     private LocalDateTime updatedAt;
 }

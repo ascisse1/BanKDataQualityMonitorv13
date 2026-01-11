@@ -10,7 +10,7 @@
          Demo users, clients, and agency stats
          ===================================================== -->
 
-    <changeSet id="006-01-seed-users" author="bsic" context="dev,local">
+    <changeSet id="006-01-seed-users" author="bsic" context="demo">
         <comment>Insert demo users</comment>
         <insert tableName="users">
             <column name="username" value="admin"/>
@@ -77,7 +77,7 @@
         </insert>
     </changeSet>
 
-    <changeSet id="006-02-seed-bkcli" author="bsic" context="dev,local">
+    <changeSet id="006-02-seed-bkcli" author="bsic" context="demo">
         <comment>Insert demo clients</comment>
         <!-- Individual clients -->
         <insert tableName="bkcli">
@@ -187,7 +187,61 @@
         </insert>
     </changeSet>
 
-    <changeSet id="006-03-seed-agency-stats" author="bsic" context="dev,local">
+    <changeSet id="006-03-seed-agencies" author="bsic" context="demo">
+        <comment>Insert demo agencies into bkage table</comment>
+        <insert tableName="bkage">
+            <column name="age" value="01001"/>
+            <column name="lib" value="Agence Ganhi"/>
+            <column name="created_at" valueComputed="NOW()"/>
+        </insert>
+        <insert tableName="bkage">
+            <column name="age" value="01002"/>
+            <column name="lib" value="Agence Haie Vive"/>
+            <column name="created_at" valueComputed="NOW()"/>
+        </insert>
+        <insert tableName="bkage">
+            <column name="age" value="01003"/>
+            <column name="lib" value="Agence Cadjehoun"/>
+            <column name="created_at" valueComputed="NOW()"/>
+        </insert>
+        <insert tableName="bkage">
+            <column name="age" value="01004"/>
+            <column name="lib" value="Agence Akpakpa"/>
+            <column name="created_at" valueComputed="NOW()"/>
+        </insert>
+        <insert tableName="bkage">
+            <column name="age" value="01005"/>
+            <column name="lib" value="Agence Dantokpa"/>
+            <column name="created_at" valueComputed="NOW()"/>
+        </insert>
+        <insert tableName="bkage">
+            <column name="age" value="01006"/>
+            <column name="lib" value="Agence Porto-Novo"/>
+            <column name="created_at" valueComputed="NOW()"/>
+        </insert>
+        <insert tableName="bkage">
+            <column name="age" value="01007"/>
+            <column name="lib" value="Agence Parakou"/>
+            <column name="created_at" valueComputed="NOW()"/>
+        </insert>
+        <insert tableName="bkage">
+            <column name="age" value="01008"/>
+            <column name="lib" value="Agence Abomey-Calavi"/>
+            <column name="created_at" valueComputed="NOW()"/>
+        </insert>
+        <insert tableName="bkage">
+            <column name="age" value="01009"/>
+            <column name="lib" value="Agence Bohicon"/>
+            <column name="created_at" valueComputed="NOW()"/>
+        </insert>
+        <insert tableName="bkage">
+            <column name="age" value="01010"/>
+            <column name="lib" value="Agence Lokossa"/>
+            <column name="created_at" valueComputed="NOW()"/>
+        </insert>
+    </changeSet>
+
+    <changeSet id="006-04-seed-agency-stats" author="bsic" context="demo">
         <comment>Insert demo agency correction stats</comment>
         <insert tableName="agency_correction_stats">
             <column name="agency_code" value="01001"/>

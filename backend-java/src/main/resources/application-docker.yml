@@ -35,15 +35,10 @@ spring:
   jpa:
     hibernate:
       ddl-auto: none
-    show-sql: true
+    show-sql: false
     properties:
       hibernate:
-        format_sql: true
-
-  liquibase:
-    enabled: true
-    drop-first: false
-    contexts: dev
+        format_sql: false
 
 # Application settings
 app:
@@ -66,3 +61,4 @@ logging:
     com.bsic.dataqualitybackend: DEBUG
     org.hibernate.SQL: DEBUG
     com.informix: INFO
+    org.camunda: INFO

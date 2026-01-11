@@ -25,68 +25,53 @@ public class AgencyService {
             .collect(Collectors.toList());
     }
 
-    public List<AgencyDto> getActiveAgencies() {
-        return agencyRepository.findByActiveOrderByNameAsc(true)
+    public List<AgencyDto> getAgenciesOrderedByName() {
+        return agencyRepository.findAllByOrderByLibAsc()
             .stream()
             .map(this::mapToDto)
             .collect(Collectors.toList());
     }
 
-    public AgencyDto getAgencyByCode(String code) {
-        return agencyRepository.findByCode(code)
+    public AgencyDto getAgencyByCode(String age) {
+        return agencyRepository.findByAge(age)
             .map(this::mapToDto)
-            .orElseThrow(() -> new RuntimeException("Agency not found with code: " + code));
+            .orElseThrow(() -> new RuntimeException("Agency not found with code: " + age));
     }
 
     @Transactional
     public AgencyDto createAgency(AgencyDto dto) {
-        if (agencyRepository.existsByCode(dto.getCode())) {
-            throw new RuntimeException("Agency with code " + dto.getCode() + " already exists");
+        if (agencyRepository.existsByAge(dto.getAge())) {
+            throw new RuntimeException("Agency with code " + dto.getAge() + " already exists");
         }
 
         Agency agency = mapToEntity(dto);
         Agency saved = agencyRepository.save(agency);
-        log.info("Created agency with code: {}", saved.getCode());
+        log.info("Created agency with code: {}", saved.getAge());
         return mapToDto(saved);
     }
 
     @Transactional
-    public AgencyDto updateAgency(Long id, AgencyDto dto) {
-        Agency agency = agencyRepository.findById(id)
-            .orElseThrow(() -> new RuntimeException("Agency not found with id: " + id));
+    public AgencyDto updateAgency(String age, AgencyDto dto) {
+        Agency agency = agencyRepository.findByAge(age)
+            .orElseThrow(() -> new RuntimeException("Agency not found with code: " + age));
 
-        agency.setName(dto.getName());
-        agency.setRegion(dto.getRegion());
-        agency.setCity(dto.getCity());
-        agency.setAddress(dto.getAddress());
-        agency.setPhone(dto.getPhone());
-        agency.setEmail(dto.getEmail());
-        agency.setManagerName(dto.getManagerName());
-        agency.setActive(dto.getActive());
+        agency.setLib(dto.getLib());
 
         Agency updated = agencyRepository.save(agency);
-        log.info("Updated agency with ID: {}", updated.getId());
+        log.info("Updated agency with code: {}", updated.getAge());
         return mapToDto(updated);
     }
 
     @Transactional
-    public void deleteAgency(Long id) {
-        agencyRepository.deleteById(id);
-        log.info("Deleted agency with ID: {}", id);
+    public void deleteAgency(String age) {
+        agencyRepository.deleteById(age);
+        log.info("Deleted agency with code: {}", age);
     }
 
     private AgencyDto mapToDto(Agency agency) {
         return AgencyDto.builder()
-            .id(agency.getId())
-            .code(agency.getCode())
-            .name(agency.getName())
-            .region(agency.getRegion())
-            .city(agency.getCity())
-            .address(agency.getAddress())
-            .phone(agency.getPhone())
-            .email(agency.getEmail())
-            .managerName(agency.getManagerName())
-            .active(agency.getActive())
+            .age(agency.getAge())
+            .lib(agency.getLib())
             .createdAt(agency.getCreatedAt())
             .updatedAt(agency.getUpdatedAt())
             .build();
@@ -94,15 +79,8 @@ public class AgencyService {
 
     private Agency mapToEntity(AgencyDto dto) {
         return Agency.builder()
-            .code(dto.getCode())
-            .name(dto.getName())
-            .region(dto.getRegion())
-            .city(dto.getCity())
-            .address(dto.getAddress())
-            .phone(dto.getPhone())
-            .email(dto.getEmail())
-            .managerName(dto.getManagerName())
-            .active(dto.getActive() != null ? dto.getActive() : true)
+            .age(dto.getAge())
+            .lib(dto.getLib())
             .build();
     }
 }

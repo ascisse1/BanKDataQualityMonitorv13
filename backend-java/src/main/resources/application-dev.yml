@@ -5,18 +5,30 @@ spring:
       username: bdqm
       password: bdqm
 
+    # Informix CBS database (Docker container)
     informix:
-      jdbc-url: jdbc:odbc:lcb
-      username: bank
-      password: bank
+      jdbc-url: jdbc:informix-sqli://localhost:9088/amplitude:INFORMIXSERVER=informix
+      username: informix
+      password: in4mix
+      driver-class-name: com.informix.jdbc.IfxDriver
+      hikari:
+        pool-name: Informix-CBS
+        maximum-pool-size: 5
+        minimum-idle: 2
+        connection-timeout: 30000
+        # Informix-specific properties
+        data-source-properties:
+          NEWCODESET: UTF8,8859-1,819
+          IFX_LOCK_MODE_WAIT: 5
+
 
   jpa:
     hibernate:
       ddl-auto: none
-    show-sql: true
+    show-sql: false
   liquibase:
     enabled: true
-    drop-first: true
+    drop-first: false
     contexts: dev
 
 app:
@@ -25,3 +37,7 @@ app:
     expiration: 86400000
   features:
     ldap-authentication: false
+    informix-integration: true
+  scheduling:
+    bkcli-sync-cron: "*/30 5 * * * ?"      # Every 30 seconds (dev only)
+    agency-sync-cron: "*/20 5 * * * ?"     # Every 30 seconds (dev only)

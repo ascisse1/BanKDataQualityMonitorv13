@@ -1,0 +1,625 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<databaseChangeLog
+    xmlns="http://www.liquibase.org/xml/ns/dbchangelog"
+    xmlns:xsi="http://www.w3.org/2001/XMLSchema-instance"
+    xsi:schemaLocation="http://www.liquibase.org/xml/ns/dbchangelog
+        http://www.liquibase.org/xml/ns/dbchangelog/dbchangelog-latest.xsd">
+
+    <!-- =====================================================
+         Validation Rules Seed Data
+         Data quality rules for client validation
+         ===================================================== -->
+
+    <!-- =====================================================
+         1. SEED DATA - PARTICULIERS (tcli = '1')
+         ===================================================== -->
+
+    <changeSet id="007-01-seed-validation-rules-particuliers" author="bsic">
+        <comment>Insert validation rules for individual clients (Particuliers)</comment>
+
+        <!-- DNA_MIN_YEAR_1915 -->
+        <insert tableName="validation_rules">
+            <column name="rule_name" value="Date de naissance superieure a 1915"/>
+            <column name="description" value="La date de naissance doit etre superieure a 1915"/>
+            <column name="field_name" value="dna"/>
+            <column name="client_type" value="1"/>
+            <column name="rule_type" value="date"/>
+            <column name="validation_expression" value="dna >= '1915-01-01'"/>
+            <column name="error_message" value="La date de naissance doit etre superieure a 1915"/>
+            <column name="severity" value="high"/>
+            <column name="active" valueBoolean="true"/>
+            <column name="priority" valueNumeric="10"/>
+            <column name="created_by" value="system"/>
+            <column name="created_at" valueComputed="NOW()"/>
+        </insert>
+
+        <!-- VID_VALIDITY_CHECK -->
+        <insert tableName="validation_rules">
+            <column name="rule_name" value="Date d expiration PI en cours de validite"/>
+            <column name="description" value="La date d expiration de la piece d identite doit etre en cours de validite"/>
+            <column name="field_name" value="vid"/>
+            <column name="client_type" value="1"/>
+            <column name="rule_type" value="database"/>
+            <column name="validation_expression" value="vid IS NULL OR vid >= CURDATE()"/>
+            <column name="error_message" value="La date d expiration de la piece d identite doit etre en cours de validite"/>
+            <column name="severity" value="critical"/>
+            <column name="active" valueBoolean="true"/>
+            <column name="priority" valueNumeric="1"/>
+            <column name="created_by" value="system"/>
+            <column name="created_at" valueComputed="NOW()"/>
+        </insert>
+
+        <!-- NID_FORMAT_CHECK -->
+        <insert tableName="validation_rules">
+            <column name="rule_name" value="Format numero PI valide"/>
+            <column name="description" value="Le numero de piece d identite doit respecter le format requis"/>
+            <column name="field_name" value="nid"/>
+            <column name="client_type" value="1"/>
+            <column name="rule_type" value="format"/>
+            <column name="validation_expression" value="LENGTH(nid) >= 8 AND nid REGEXP '^[0-9A-Z]+$' AND nid NOT LIKE '%123%' AND nid NOT LIKE '%XXX%' AND nid NOT LIKE '%000%'"/>
+            <column name="error_message" value="Le numero de piece d identite doit contenir au moins 8 caracteres alphanumeriques, sans 123, XXX ou 000"/>
+            <column name="severity" value="high"/>
+            <column name="active" valueBoolean="true"/>
+            <column name="priority" valueNumeric="5"/>
+            <column name="created_by" value="system"/>
+            <column name="created_at" valueComputed="NOW()"/>
+        </insert>
+
+        <!-- NAT_REQUIRED_ALL -->
+        <insert tableName="validation_rules">
+            <column name="rule_name" value="Nationalite obligatoire"/>
+            <column name="description" value="La nationalite doit etre renseignee pour tous les clients"/>
+            <column name="field_name" value="nat"/>
+            <column name="client_type" value="1"/>
+            <column name="rule_type" value="required"/>
+            <column name="validation_expression" value="nat IS NOT NULL AND TRIM(nat) != ''"/>
+            <column name="error_message" value="La nationalite doit etre renseignee"/>
+            <column name="severity" value="medium"/>
+            <column name="active" valueBoolean="true"/>
+            <column name="priority" valueNumeric="20"/>
+            <column name="created_by" value="system"/>
+            <column name="created_at" valueComputed="NOW()"/>
+        </insert>
+
+        <!-- PP_NOM_REQUIRED -->
+        <insert tableName="validation_rules">
+            <column name="rule_name" value="Nom obligatoire - Particuliers"/>
+            <column name="description" value="Le nom est obligatoire pour tous les clients particuliers"/>
+            <column name="field_name" value="nom"/>
+            <column name="client_type" value="1"/>
+            <column name="rule_type" value="required"/>
+            <column name="validation_expression" value="nom IS NOT NULL AND TRIM(nom) != '' AND nom NOT REGEXP '^[Xx]+$'"/>
+            <column name="error_message" value="Le nom est obligatoire et ne peut pas etre compose uniquement de X"/>
+            <column name="severity" value="critical"/>
+            <column name="active" valueBoolean="true"/>
+            <column name="priority" valueNumeric="1"/>
+            <column name="created_by" value="system"/>
+            <column name="created_at" valueComputed="NOW()"/>
+        </insert>
+
+        <!-- PP_PRENOM_REQUIRED -->
+        <insert tableName="validation_rules">
+            <column name="rule_name" value="Prenom obligatoire - Particuliers"/>
+            <column name="description" value="Le prenom est obligatoire pour tous les clients particuliers"/>
+            <column name="field_name" value="pre"/>
+            <column name="client_type" value="1"/>
+            <column name="rule_type" value="required"/>
+            <column name="validation_expression" value="pre IS NOT NULL AND TRIM(pre) != '' AND pre NOT REGEXP '^[Xx]+$'"/>
+            <column name="error_message" value="Le prenom est obligatoire et ne peut pas etre compose uniquement de X"/>
+            <column name="severity" value="critical"/>
+            <column name="active" valueBoolean="true"/>
+            <column name="priority" valueNumeric="1"/>
+            <column name="created_by" value="system"/>
+            <column name="created_at" valueComputed="NOW()"/>
+        </insert>
+
+        <!-- PP_SEXE_REQUIRED -->
+        <insert tableName="validation_rules">
+            <column name="rule_name" value="Sexe obligatoire - Particuliers"/>
+            <column name="description" value="Le sexe doit etre renseigne (M/F)"/>
+            <column name="field_name" value="sext"/>
+            <column name="client_type" value="1"/>
+            <column name="rule_type" value="format"/>
+            <column name="validation_expression" value="sext IN ('M', 'F')"/>
+            <column name="error_message" value="Le sexe doit etre M (Masculin) ou F (Feminin)"/>
+            <column name="severity" value="high"/>
+            <column name="active" valueBoolean="true"/>
+            <column name="priority" valueNumeric="5"/>
+            <column name="created_by" value="system"/>
+            <column name="created_at" valueComputed="NOW()"/>
+        </insert>
+
+        <!-- PP_DATE_NAISSANCE_REQUIRED -->
+        <insert tableName="validation_rules">
+            <column name="rule_name" value="Date de naissance obligatoire - Particuliers"/>
+            <column name="description" value="La date de naissance est obligatoire"/>
+            <column name="field_name" value="dna"/>
+            <column name="client_type" value="1"/>
+            <column name="rule_type" value="required"/>
+            <column name="validation_expression" value="dna IS NOT NULL AND dna >= '1915-01-01' AND dna &lt;= CURDATE()"/>
+            <column name="error_message" value="La date de naissance est obligatoire et doit etre entre 1915 et aujourd hui"/>
+            <column name="severity" value="critical"/>
+            <column name="active" valueBoolean="true"/>
+            <column name="priority" valueNumeric="1"/>
+            <column name="created_by" value="system"/>
+            <column name="created_at" valueComputed="NOW()"/>
+        </insert>
+
+        <!-- PP_VILLE_NAISSANCE_REQUIRED -->
+        <insert tableName="validation_rules">
+            <column name="rule_name" value="Ville de naissance obligatoire - Particuliers"/>
+            <column name="description" value="La ville de naissance est obligatoire"/>
+            <column name="field_name" value="viln"/>
+            <column name="client_type" value="1"/>
+            <column name="rule_type" value="required"/>
+            <column name="validation_expression" value="viln IS NOT NULL AND TRIM(viln) != ''"/>
+            <column name="error_message" value="La ville de naissance est obligatoire"/>
+            <column name="severity" value="medium"/>
+            <column name="active" valueBoolean="true"/>
+            <column name="priority" valueNumeric="20"/>
+            <column name="created_by" value="system"/>
+            <column name="created_at" valueComputed="NOW()"/>
+        </insert>
+
+        <!-- PP_PAYS_NAISSANCE_REQUIRED -->
+        <insert tableName="validation_rules">
+            <column name="rule_name" value="Pays de naissance obligatoire - Particuliers"/>
+            <column name="description" value="Le pays de naissance est obligatoire"/>
+            <column name="field_name" value="payn"/>
+            <column name="client_type" value="1"/>
+            <column name="rule_type" value="required"/>
+            <column name="validation_expression" value="payn IS NOT NULL AND TRIM(payn) != ''"/>
+            <column name="error_message" value="Le pays de naissance est obligatoire"/>
+            <column name="severity" value="medium"/>
+            <column name="active" valueBoolean="true"/>
+            <column name="priority" valueNumeric="20"/>
+            <column name="created_by" value="system"/>
+            <column name="created_at" valueComputed="NOW()"/>
+        </insert>
+
+        <!-- PP_TYPE_PIECE_IDENTITE_REQUIRED -->
+        <insert tableName="validation_rules">
+            <column name="rule_name" value="Type de piece d identite obligatoire - Particuliers"/>
+            <column name="description" value="Le type de piece d identite est obligatoire"/>
+            <column name="field_name" value="tid"/>
+            <column name="client_type" value="1"/>
+            <column name="rule_type" value="required"/>
+            <column name="validation_expression" value="tid IS NOT NULL AND TRIM(tid) != ''"/>
+            <column name="error_message" value="Le type de piece d identite est obligatoire"/>
+            <column name="severity" value="high"/>
+            <column name="active" valueBoolean="true"/>
+            <column name="priority" valueNumeric="5"/>
+            <column name="created_by" value="system"/>
+            <column name="created_at" valueComputed="NOW()"/>
+        </insert>
+
+        <!-- PP_NOM_MERE_REQUIRED -->
+        <insert tableName="validation_rules">
+            <column name="rule_name" value="Nom de la mere obligatoire - Particuliers"/>
+            <column name="description" value="Le nom de la mere est obligatoire"/>
+            <column name="field_name" value="nmer"/>
+            <column name="client_type" value="1"/>
+            <column name="rule_type" value="required"/>
+            <column name="validation_expression" value="nmer IS NOT NULL AND TRIM(nmer) != ''"/>
+            <column name="error_message" value="Le nom de la mere est obligatoire pour les clients particuliers"/>
+            <column name="severity" value="critical"/>
+            <column name="active" valueBoolean="true"/>
+            <column name="priority" valueNumeric="1"/>
+            <column name="created_by" value="system"/>
+            <column name="created_at" valueComputed="NOW()"/>
+        </insert>
+
+    </changeSet>
+
+    <!-- =====================================================
+         2. SEED DATA - ENTREPRISES (tcli = '2')
+         ===================================================== -->
+
+    <changeSet id="007-02-seed-validation-rules-entreprises" author="bsic">
+        <comment>Insert validation rules for corporate clients (Entreprises)</comment>
+
+        <!-- ENT_RAISON_SOCIALE_REQUIRED -->
+        <insert tableName="validation_rules">
+            <column name="rule_name" value="Raison sociale obligatoire - Entreprises"/>
+            <column name="description" value="La raison sociale est obligatoire pour les entreprises"/>
+            <column name="field_name" value="rso"/>
+            <column name="client_type" value="2"/>
+            <column name="rule_type" value="required"/>
+            <column name="validation_expression" value="rso IS NOT NULL AND TRIM(rso) != '' AND rso NOT LIKE '%123%' AND rso NOT LIKE '%XXX%'"/>
+            <column name="error_message" value="La raison sociale est obligatoire et ne peut pas contenir 123 ou XXX"/>
+            <column name="severity" value="critical"/>
+            <column name="active" valueBoolean="true"/>
+            <column name="priority" valueNumeric="1"/>
+            <column name="created_by" value="system"/>
+            <column name="created_at" valueComputed="NOW()"/>
+        </insert>
+
+        <!-- ENT_SIGLE_FORMAT -->
+        <insert tableName="validation_rules">
+            <column name="rule_name" value="Format sigle - Entreprises"/>
+            <column name="description" value="Le sigle doit respecter un format approprie"/>
+            <column name="field_name" value="sig"/>
+            <column name="client_type" value="2"/>
+            <column name="rule_type" value="format"/>
+            <column name="validation_expression" value="sig IS NULL OR (LENGTH(sig) &lt;= 20 AND sig REGEXP '^[A-Z0-9\\-\\.\\s]+$')"/>
+            <column name="error_message" value="Le sigle doit contenir uniquement des lettres majuscules, chiffres, tirets et points"/>
+            <column name="severity" value="medium"/>
+            <column name="active" valueBoolean="true"/>
+            <column name="priority" valueNumeric="20"/>
+            <column name="created_by" value="system"/>
+            <column name="created_at" valueComputed="NOW()"/>
+        </insert>
+
+        <!-- ENT_NRC_REQUIRED -->
+        <insert tableName="validation_rules">
+            <column name="rule_name" value="Numero registre commerce obligatoire - Entreprises"/>
+            <column name="description" value="Le numero de registre de commerce est obligatoire"/>
+            <column name="field_name" value="nrc"/>
+            <column name="client_type" value="2"/>
+            <column name="rule_type" value="required"/>
+            <column name="validation_expression" value="nrc IS NOT NULL AND TRIM(nrc) != '' AND nrc NOT LIKE '%123%' AND nrc NOT LIKE '%XXX%' AND nrc NOT LIKE '%000%' AND nrc LIKE 'MA%'"/>
+            <column name="error_message" value="Le numero de registre de commerce est obligatoire, doit commencer par MA et ne peut pas contenir 123, XXX ou 000"/>
+            <column name="severity" value="critical"/>
+            <column name="active" valueBoolean="true"/>
+            <column name="priority" valueNumeric="1"/>
+            <column name="created_by" value="system"/>
+            <column name="created_at" valueComputed="NOW()"/>
+        </insert>
+
+        <!-- ENT_DATE_CREATION_REQUIRED -->
+        <insert tableName="validation_rules">
+            <column name="rule_name" value="Date de creation obligatoire - Entreprises"/>
+            <column name="description" value="La date de creation de l entreprise est obligatoire"/>
+            <column name="field_name" value="datc"/>
+            <column name="client_type" value="2"/>
+            <column name="rule_type" value="required"/>
+            <column name="validation_expression" value="datc IS NOT NULL AND datc >= '1915-01-01' AND datc &lt;= CURDATE()"/>
+            <column name="error_message" value="La date de creation est obligatoire et doit etre entre 1915 et aujourd hui"/>
+            <column name="severity" value="critical"/>
+            <column name="active" valueBoolean="true"/>
+            <column name="priority" valueNumeric="1"/>
+            <column name="created_by" value="system"/>
+            <column name="created_at" valueComputed="NOW()"/>
+        </insert>
+
+        <!-- ENT_SECTEUR_ACTIVITE_REQUIRED -->
+        <insert tableName="validation_rules">
+            <column name="rule_name" value="Secteur d activite obligatoire - Entreprises"/>
+            <column name="description" value="Le secteur d activite est obligatoire"/>
+            <column name="field_name" value="sec"/>
+            <column name="client_type" value="2"/>
+            <column name="rule_type" value="required"/>
+            <column name="validation_expression" value="sec IS NOT NULL AND TRIM(sec) != ''"/>
+            <column name="error_message" value="Le secteur d activite est obligatoire"/>
+            <column name="severity" value="high"/>
+            <column name="active" valueBoolean="true"/>
+            <column name="priority" valueNumeric="5"/>
+            <column name="created_by" value="system"/>
+            <column name="created_at" valueComputed="NOW()"/>
+        </insert>
+
+        <!-- ENT_FORME_JURIDIQUE_REQUIRED -->
+        <insert tableName="validation_rules">
+            <column name="rule_name" value="Forme juridique obligatoire - Entreprises"/>
+            <column name="description" value="La forme juridique est obligatoire"/>
+            <column name="field_name" value="fju"/>
+            <column name="client_type" value="2"/>
+            <column name="rule_type" value="required"/>
+            <column name="validation_expression" value="fju IS NOT NULL AND TRIM(fju) != ''"/>
+            <column name="error_message" value="La forme juridique est obligatoire"/>
+            <column name="severity" value="high"/>
+            <column name="active" valueBoolean="true"/>
+            <column name="priority" valueNumeric="5"/>
+            <column name="created_by" value="system"/>
+            <column name="created_at" valueComputed="NOW()"/>
+        </insert>
+
+        <!-- ENT_CATEGORIE_BC_REQUIRED -->
+        <insert tableName="validation_rules">
+            <column name="rule_name" value="Categorie Banque Centrale obligatoire - Entreprises"/>
+            <column name="description" value="La categorie de la Banque Centrale est obligatoire"/>
+            <column name="field_name" value="catn"/>
+            <column name="client_type" value="2"/>
+            <column name="rule_type" value="required"/>
+            <column name="validation_expression" value="catn IS NOT NULL AND TRIM(catn) != ''"/>
+            <column name="error_message" value="La categorie de la Banque Centrale est obligatoire"/>
+            <column name="severity" value="high"/>
+            <column name="active" valueBoolean="true"/>
+            <column name="priority" valueNumeric="5"/>
+            <column name="created_by" value="system"/>
+            <column name="created_at" valueComputed="NOW()"/>
+        </insert>
+
+        <!-- ENT_LIEN_BANQUE_REQUIRED -->
+        <insert tableName="validation_rules">
+            <column name="rule_name" value="Lien avec la banque obligatoire - Entreprises"/>
+            <column name="description" value="Le lien d apparente avec la banque est obligatoire"/>
+            <column name="field_name" value="lienbq"/>
+            <column name="client_type" value="2"/>
+            <column name="rule_type" value="required"/>
+            <column name="validation_expression" value="lienbq IS NOT NULL AND TRIM(lienbq) != ''"/>
+            <column name="error_message" value="Le lien d apparente avec la banque est obligatoire"/>
+            <column name="severity" value="medium"/>
+            <column name="active" valueBoolean="true"/>
+            <column name="priority" valueNumeric="20"/>
+            <column name="created_by" value="system"/>
+            <column name="created_at" valueComputed="NOW()"/>
+        </insert>
+
+    </changeSet>
+
+    <!-- =====================================================
+         3. SEED DATA - INSTITUTIONNELS (tcli = '3')
+         ===================================================== -->
+
+    <changeSet id="007-03-seed-validation-rules-institutionnels" author="bsic">
+        <comment>Insert validation rules for institutional clients (Institutionnels)</comment>
+
+        <!-- INST_RAISON_SOCIALE_REQUIRED -->
+        <insert tableName="validation_rules">
+            <column name="rule_name" value="Raison sociale obligatoire - Institutionnels"/>
+            <column name="description" value="La raison sociale est obligatoire pour les institutionnels"/>
+            <column name="field_name" value="rso"/>
+            <column name="client_type" value="3"/>
+            <column name="rule_type" value="required"/>
+            <column name="validation_expression" value="rso IS NOT NULL AND TRIM(rso) != '' AND rso NOT LIKE '%123%' AND rso NOT LIKE '%XXX%'"/>
+            <column name="error_message" value="La raison sociale est obligatoire et ne peut pas contenir 123 ou XXX"/>
+            <column name="severity" value="critical"/>
+            <column name="active" valueBoolean="true"/>
+            <column name="priority" valueNumeric="1"/>
+            <column name="created_by" value="system"/>
+            <column name="created_at" valueComputed="NOW()"/>
+        </insert>
+
+        <!-- INST_NRC_REQUIRED -->
+        <insert tableName="validation_rules">
+            <column name="rule_name" value="Numero registre obligatoire - Institutionnels"/>
+            <column name="description" value="Le numero de registre est obligatoire pour les institutionnels"/>
+            <column name="field_name" value="nrc"/>
+            <column name="client_type" value="3"/>
+            <column name="rule_type" value="required"/>
+            <column name="validation_expression" value="nrc IS NOT NULL AND TRIM(nrc) != '' AND nrc NOT LIKE '%123%' AND nrc NOT LIKE '%XXX%' AND nrc NOT LIKE '%000%'"/>
+            <column name="error_message" value="Le numero de registre est obligatoire et ne peut pas contenir 123, XXX ou 000"/>
+            <column name="severity" value="critical"/>
+            <column name="active" valueBoolean="true"/>
+            <column name="priority" valueNumeric="1"/>
+            <column name="created_by" value="system"/>
+            <column name="created_at" valueComputed="NOW()"/>
+        </insert>
+
+        <!-- INST_DATE_CREATION_REQUIRED -->
+        <insert tableName="validation_rules">
+            <column name="rule_name" value="Date de creation obligatoire - Institutionnels"/>
+            <column name="description" value="La date de creation est obligatoire pour les institutionnels"/>
+            <column name="field_name" value="datc"/>
+            <column name="client_type" value="3"/>
+            <column name="rule_type" value="required"/>
+            <column name="validation_expression" value="datc IS NOT NULL AND datc >= '1915-01-01' AND datc &lt;= CURDATE()"/>
+            <column name="error_message" value="La date de creation est obligatoire et doit etre entre 1915 et aujourd hui"/>
+            <column name="severity" value="critical"/>
+            <column name="active" valueBoolean="true"/>
+            <column name="priority" valueNumeric="1"/>
+            <column name="created_by" value="system"/>
+            <column name="created_at" valueComputed="NOW()"/>
+        </insert>
+
+        <!-- INST_SECTEUR_ACTIVITE_REQUIRED -->
+        <insert tableName="validation_rules">
+            <column name="rule_name" value="Secteur d activite obligatoire - Institutionnels"/>
+            <column name="description" value="Le secteur d activite est obligatoire"/>
+            <column name="field_name" value="sec"/>
+            <column name="client_type" value="3"/>
+            <column name="rule_type" value="required"/>
+            <column name="validation_expression" value="sec IS NOT NULL AND TRIM(sec) != ''"/>
+            <column name="error_message" value="Le secteur d activite est obligatoire"/>
+            <column name="severity" value="high"/>
+            <column name="active" valueBoolean="true"/>
+            <column name="priority" valueNumeric="5"/>
+            <column name="created_by" value="system"/>
+            <column name="created_at" valueComputed="NOW()"/>
+        </insert>
+
+        <!-- INST_FORME_JURIDIQUE_REQUIRED -->
+        <insert tableName="validation_rules">
+            <column name="rule_name" value="Forme juridique obligatoire - Institutionnels"/>
+            <column name="description" value="La forme juridique est obligatoire"/>
+            <column name="field_name" value="fju"/>
+            <column name="client_type" value="3"/>
+            <column name="rule_type" value="required"/>
+            <column name="validation_expression" value="fju IS NOT NULL AND TRIM(fju) != ''"/>
+            <column name="error_message" value="La forme juridique est obligatoire"/>
+            <column name="severity" value="high"/>
+            <column name="active" valueBoolean="true"/>
+            <column name="priority" valueNumeric="5"/>
+            <column name="created_by" value="system"/>
+            <column name="created_at" valueComputed="NOW()"/>
+        </insert>
+
+        <!-- INST_CATEGORIE_BC_REQUIRED -->
+        <insert tableName="validation_rules">
+            <column name="rule_name" value="Categorie Banque Centrale obligatoire - Institutionnels"/>
+            <column name="description" value="La categorie de la Banque Centrale est obligatoire"/>
+            <column name="field_name" value="catn"/>
+            <column name="client_type" value="3"/>
+            <column name="rule_type" value="required"/>
+            <column name="validation_expression" value="catn IS NOT NULL AND TRIM(catn) != ''"/>
+            <column name="error_message" value="La categorie de la Banque Centrale est obligatoire"/>
+            <column name="severity" value="high"/>
+            <column name="active" valueBoolean="true"/>
+            <column name="priority" valueNumeric="5"/>
+            <column name="created_by" value="system"/>
+            <column name="created_at" valueComputed="NOW()"/>
+        </insert>
+
+        <!-- INST_LIEN_BANQUE_REQUIRED -->
+        <insert tableName="validation_rules">
+            <column name="rule_name" value="Lien avec la banque obligatoire - Institutionnels"/>
+            <column name="description" value="Le lien d apparente avec la banque est obligatoire"/>
+            <column name="field_name" value="lienbq"/>
+            <column name="client_type" value="3"/>
+            <column name="rule_type" value="required"/>
+            <column name="validation_expression" value="lienbq IS NOT NULL AND TRIM(lienbq) != ''"/>
+            <column name="error_message" value="Le lien d apparente avec la banque est obligatoire"/>
+            <column name="severity" value="medium"/>
+            <column name="active" valueBoolean="true"/>
+            <column name="priority" valueNumeric="20"/>
+            <column name="created_by" value="system"/>
+            <column name="created_at" valueComputed="NOW()"/>
+        </insert>
+
+    </changeSet>
+
+    <!-- =====================================================
+         4. SEED DATA - COMMON RULES (All client types)
+         ===================================================== -->
+
+    <changeSet id="007-04-seed-validation-rules-common" author="bsic">
+        <comment>Insert validation rules common to all client types</comment>
+
+        <!-- ALL_CODE_CLIENT_REQUIRED - For type 1 -->
+        <insert tableName="validation_rules">
+            <column name="rule_name" value="Code client obligatoire - Particuliers"/>
+            <column name="description" value="Le code client est obligatoire pour tous les types"/>
+            <column name="field_name" value="cli"/>
+            <column name="client_type" value="1"/>
+            <column name="rule_type" value="required"/>
+            <column name="validation_expression" value="cli IS NOT NULL AND TRIM(cli) != ''"/>
+            <column name="error_message" value="Le code client est obligatoire"/>
+            <column name="severity" value="critical"/>
+            <column name="active" valueBoolean="true"/>
+            <column name="priority" valueNumeric="1"/>
+            <column name="created_by" value="system"/>
+            <column name="created_at" valueComputed="NOW()"/>
+        </insert>
+
+        <!-- ALL_CODE_CLIENT_REQUIRED - For type 2 -->
+        <insert tableName="validation_rules">
+            <column name="rule_name" value="Code client obligatoire - Entreprises"/>
+            <column name="description" value="Le code client est obligatoire pour tous les types"/>
+            <column name="field_name" value="cli"/>
+            <column name="client_type" value="2"/>
+            <column name="rule_type" value="required"/>
+            <column name="validation_expression" value="cli IS NOT NULL AND TRIM(cli) != ''"/>
+            <column name="error_message" value="Le code client est obligatoire"/>
+            <column name="severity" value="critical"/>
+            <column name="active" valueBoolean="true"/>
+            <column name="priority" valueNumeric="1"/>
+            <column name="created_by" value="system"/>
+            <column name="created_at" valueComputed="NOW()"/>
+        </insert>
+
+        <!-- ALL_CODE_CLIENT_REQUIRED - For type 3 -->
+        <insert tableName="validation_rules">
+            <column name="rule_name" value="Code client obligatoire - Institutionnels"/>
+            <column name="description" value="Le code client est obligatoire pour tous les types"/>
+            <column name="field_name" value="cli"/>
+            <column name="client_type" value="3"/>
+            <column name="rule_type" value="required"/>
+            <column name="validation_expression" value="cli IS NOT NULL AND TRIM(cli) != ''"/>
+            <column name="error_message" value="Le code client est obligatoire"/>
+            <column name="severity" value="critical"/>
+            <column name="active" valueBoolean="true"/>
+            <column name="priority" valueNumeric="1"/>
+            <column name="created_by" value="system"/>
+            <column name="created_at" valueComputed="NOW()"/>
+        </insert>
+
+        <!-- ALL_CODE_AGENCE_REQUIRED - For type 1 -->
+        <insert tableName="validation_rules">
+            <column name="rule_name" value="Code agence obligatoire - Particuliers"/>
+            <column name="description" value="Le code agence est obligatoire pour tous les types"/>
+            <column name="field_name" value="age"/>
+            <column name="client_type" value="1"/>
+            <column name="rule_type" value="required"/>
+            <column name="validation_expression" value="age IS NOT NULL AND TRIM(age) != ''"/>
+            <column name="error_message" value="Le code agence est obligatoire"/>
+            <column name="severity" value="high"/>
+            <column name="active" valueBoolean="true"/>
+            <column name="priority" valueNumeric="5"/>
+            <column name="created_by" value="system"/>
+            <column name="created_at" valueComputed="NOW()"/>
+        </insert>
+
+        <!-- ALL_CODE_AGENCE_REQUIRED - For type 2 -->
+        <insert tableName="validation_rules">
+            <column name="rule_name" value="Code agence obligatoire - Entreprises"/>
+            <column name="description" value="Le code agence est obligatoire pour tous les types"/>
+            <column name="field_name" value="age"/>
+            <column name="client_type" value="2"/>
+            <column name="rule_type" value="required"/>
+            <column name="validation_expression" value="age IS NOT NULL AND TRIM(age) != ''"/>
+            <column name="error_message" value="Le code agence est obligatoire"/>
+            <column name="severity" value="high"/>
+            <column name="active" valueBoolean="true"/>
+            <column name="priority" valueNumeric="5"/>
+            <column name="created_by" value="system"/>
+            <column name="created_at" valueComputed="NOW()"/>
+        </insert>
+
+        <!-- ALL_CODE_AGENCE_REQUIRED - For type 3 -->
+        <insert tableName="validation_rules">
+            <column name="rule_name" value="Code agence obligatoire - Institutionnels"/>
+            <column name="description" value="Le code agence est obligatoire pour tous les types"/>
+            <column name="field_name" value="age"/>
+            <column name="client_type" value="3"/>
+            <column name="rule_type" value="required"/>
+            <column name="validation_expression" value="age IS NOT NULL AND TRIM(age) != ''"/>
+            <column name="error_message" value="Le code agence est obligatoire"/>
+            <column name="severity" value="high"/>
+            <column name="active" valueBoolean="true"/>
+            <column name="priority" valueNumeric="5"/>
+            <column name="created_by" value="system"/>
+            <column name="created_at" valueComputed="NOW()"/>
+        </insert>
+
+        <!-- ALL_TYPE_CLIENT_VALID - For type 1 -->
+        <insert tableName="validation_rules">
+            <column name="rule_name" value="Type client valide - Particuliers"/>
+            <column name="description" value="Le type de client doit etre valide (1, 2 ou 3)"/>
+            <column name="field_name" value="tcli"/>
+            <column name="client_type" value="1"/>
+            <column name="rule_type" value="format"/>
+            <column name="validation_expression" value="tcli IN ('1', '2', '3')"/>
+            <column name="error_message" value="Le type de client doit etre 1 (Particulier), 2 (Entreprise) ou 3 (Institutionnel)"/>
+            <column name="severity" value="critical"/>
+            <column name="active" valueBoolean="true"/>
+            <column name="priority" valueNumeric="1"/>
+            <column name="created_by" value="system"/>
+            <column name="created_at" valueComputed="NOW()"/>
+        </insert>
+
+        <!-- ALL_TYPE_CLIENT_VALID - For type 2 -->
+        <insert tableName="validation_rules">
+            <column name="rule_name" value="Type client valide - Entreprises"/>
+            <column name="description" value="Le type de client doit etre valide (1, 2 ou 3)"/>
+            <column name="field_name" value="tcli"/>
+            <column name="client_type" value="2"/>
+            <column name="rule_type" value="format"/>
+            <column name="validation_expression" value="tcli IN ('1', '2', '3')"/>
+            <column name="error_message" value="Le type de client doit etre 1 (Particulier), 2 (Entreprise) ou 3 (Institutionnel)"/>
+            <column name="severity" value="critical"/>
+            <column name="active" valueBoolean="true"/>
+            <column name="priority" valueNumeric="1"/>
+            <column name="created_by" value="system"/>
+            <column name="created_at" valueComputed="NOW()"/>
+        </insert>
+
+        <!-- ALL_TYPE_CLIENT_VALID - For type 3 -->
+        <insert tableName="validation_rules">
+            <column name="rule_name" value="Type client valide - Institutionnels"/>
+            <column name="description" value="Le type de client doit etre valide (1, 2 ou 3)"/>
+            <column name="field_name" value="tcli"/>
+            <column name="client_type" value="3"/>
+            <column name="rule_type" value="format"/>
+            <column name="validation_expression" value="tcli IN ('1', '2', '3')"/>
+            <column name="error_message" value="Le type de client doit etre 1 (Particulier), 2 (Entreprise) ou 3 (Institutionnel)"/>
+            <column name="severity" value="critical"/>
+            <column name="active" valueBoolean="true"/>
+            <column name="priority" valueNumeric="1"/>
+            <column name="created_by" value="system"/>
+            <column name="created_at" valueComputed="NOW()"/>
+        </insert>
+
+    </changeSet>
+
+</databaseChangeLog>

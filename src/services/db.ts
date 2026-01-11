@@ -1,10 +1,9 @@
 import { logger } from './logger';
 import { tracer } from './tracer';
 
-// API base URL - using Spring Boot backend
-const API_BASE_URL = import.meta.env.VITE_SPRING_BOOT_URL
-  ? `${import.meta.env.VITE_SPRING_BOOT_URL}/api`
-  : 'http://localhost:8080/api';
+// API base URL - using Vite proxy to forward to Spring Boot backend
+// Using relative URL so requests go through Vite's proxy which handles CORS and auth
+const API_BASE_URL = '/api';
 
 // Spring Boot API response wrapper
 interface ApiResponseWrapper<T> {
@@ -327,8 +326,8 @@ class DatabaseService {
       clearTimeout(timeoutId);
 
       if (error instanceof Error && error.name === 'AbortError') {
-        tracer.warn('database', `Request timeout for ${endpoint}`, { timeout });
-        logger.warn('database', `Request timeout for ${endpoint}`, { timeout });
+        tracer.warning('database', `Request timeout for ${endpoint}`, { timeout });
+        logger.warning('database', `Request timeout for ${endpoint}`, { timeout });
       } else {
         tracer.error('database', `API request failed for ${endpoint}`, { error });
         logger.error('database', `API request failed for ${endpoint}`, { error });
@@ -794,6 +793,29 @@ class DatabaseService {
     } catch (error) {
       tracer.error('database', 'Failed to prefetch common data', { error });
       logger.error('api', 'Failed to prefetch common data', { error });
+    }
+  }
+
+  public async getAgencies(): Promise<{ code_agence: string; lib_agence: string }[]> {
+    try {
+      tracer.info('database', 'Getting agencies');
+
+      const data = await this.fetchApi<any[]>('/agencies/active');
+      tracer.info('database', 'Agencies retrieved successfully', { count: data?.length || 0 });
+
+      // Map backend AgencyDto format to frontend format
+      if (Array.isArray(data)) {
+        return data.map((agency: any) => ({
+          code_agence: agency.code || '',
+          lib_agence: agency.name || ''
+        }));
+      }
+
+      return [];
+    } catch (error) {
+      tracer.error('database', 'Failed to get agencies', { error });
+      logger.error('api', 'Failed to get agencies', { error });
+      return [];
     }
   }
 

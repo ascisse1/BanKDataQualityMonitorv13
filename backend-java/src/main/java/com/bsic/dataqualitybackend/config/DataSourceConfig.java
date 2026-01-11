@@ -53,7 +53,6 @@ public class DataSourceConfig {
     }
 
     @Bean(name = "informixJdbcTemplate")
-
     @ConditionalOnProperty(name = "app.features.informix-integration", havingValue = "true", matchIfMissing = false)
    public JdbcTemplate informixJdbcTemplate(@Qualifier("informixDataSource") DataSource dataSource) {
         return new JdbcTemplate(dataSource);

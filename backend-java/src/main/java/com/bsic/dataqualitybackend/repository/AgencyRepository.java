@@ -8,15 +8,11 @@ import java.util.List;
 import java.util.Optional;
 
 @Repository
-public interface AgencyRepository extends JpaRepository<Agency, Long> {
+public interface AgencyRepository extends JpaRepository<Agency, String> {
 
-    Optional<Agency> findByCode(String code);
+    Optional<Agency> findByAge(String age);
 
-    List<Agency> findByRegion(String region);
+    List<Agency> findAllByOrderByLibAsc();
 
-    List<Agency> findByActive(Boolean active);
-
-    List<Agency> findByActiveOrderByNameAsc(Boolean active);
-
-    boolean existsByCode(String code);
+    boolean existsByAge(String age);
 }

@@ -1,5 +1,7 @@
 package com.bsic.dataqualitybackend.model;
 
+import com.bsic.dataqualitybackend.model.converter.ClientTypeConverter;
+import com.bsic.dataqualitybackend.model.converter.RuleTypeConverter;
 import com.bsic.dataqualitybackend.model.enums.ClientType;
 import com.bsic.dataqualitybackend.model.enums.RuleType;
 import jakarta.persistence.*;
@@ -34,11 +36,11 @@ public class ValidationRule {
     @Column(name = "description", columnDefinition = "TEXT")
     private String description;
 
-    @Enumerated(EnumType.STRING)
+    @Convert(converter = RuleTypeConverter.class)
     @Column(name = "rule_type", nullable = false)
     private RuleType ruleType;
 
-    @Enumerated(EnumType.STRING)
+    @Convert(converter = ClientTypeConverter.class)
     @Column(name = "client_type")
     private ClientType clientType;
 

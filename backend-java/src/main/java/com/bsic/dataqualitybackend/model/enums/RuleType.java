@@ -7,5 +7,6 @@ public enum RuleType {
     REGEX,
     CUSTOM,
     CROSS_FIELD,
-    DATABASE
+    DATABASE,
+    DATE,
 }

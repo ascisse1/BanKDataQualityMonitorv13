@@ -83,6 +83,7 @@ docker cp amplitude_ddl_informix.sql "${CONTAINER}:/opt/ibm/database/"
 docker cp amplitude_seed_data_1k_informix.sql "${CONTAINER}:/opt/ibm/database/"
 
 # 2. Create database (run as informix user with environment)
+docker exec -u informix $CONTAINER bash -c "source /opt/ibm/scripts/informix_inf.env && echo 'DROP DATABASE amplitude' | dbaccess sysmaster"
 docker exec -u informix $CONTAINER bash -c "source /opt/ibm/scripts/informix_inf.env && echo 'CREATE DATABASE amplitude WITH LOG' | dbaccess sysmaster"
 
 # 3. Load DDL

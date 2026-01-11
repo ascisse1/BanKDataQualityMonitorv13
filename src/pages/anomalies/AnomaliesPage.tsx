@@ -47,10 +47,9 @@ const AnomaliesPage: React.FC = () => {
   const userAgencyCode = user?.agencyCode;
 
   useEffect(() => {
-    // Fetch total anomalies count on component mount
+    // Fetch agencies and anomalies count on component mount
+    fetchAgencies();
     if (useHardcodedData) {
-      // Utiliser directement les données en dur
-      fetchAgencies();
       setTotalAnomalies(55000);
       setIsLoading(false);
     } else {
@@ -77,20 +76,9 @@ const AnomaliesPage: React.FC = () => {
 
   const fetchAgencies = async () => {
     try {
-      // In demo mode, use hardcoded agencies
-      const hardcodedAgencies = [
-        { code_agence: "01001", lib_agence: "AGENCE OUAGADOUGOU PRINCIPALE" },
-        { code_agence: "01002", lib_agence: "AGENCE OUAGADOUGOU CENTRE" },
-        { code_agence: "01003", lib_agence: "AGENCE OUAGADOUGOU NORD" },
-        { code_agence: "01004", lib_agence: "AGENCE OUAGADOUGOU SUD" },
-        { code_agence: "01005", lib_agence: "AGENCE OUAGADOUGOU EST" },
-        { code_agence: "01006", lib_agence: "AGENCE OUAGADOUGOU OUEST" },
-        { code_agence: "01007", lib_agence: "AGENCE OUAGADOUGOU ENTREPRISES" },
-        { code_agence: "01008", lib_agence: "AGENCE OUAGADOUGOU INTERNATIONALE" },
-        { code_agence: "01009", lib_agence: "AGENCE OUAGADOUGOU ZONE INDUSTRIELLE" },
-        { code_agence: "01010", lib_agence: "AGENCE OUAGADOUGOU QUARTIER DU COMMERCE" }
-      ];
-      setAgencies(hardcodedAgencies);
+      // Fetch agencies from backend API
+      const agenciesData = await db.getAgencies();
+      setAgencies(agenciesData);
     } catch (error) {
       console.error('Error fetching agencies:', error);
     }

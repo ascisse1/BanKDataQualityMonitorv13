@@ -8,7 +8,6 @@ import com.bsic.dataqualitybackend.repository.AnomalyRepository;
 import lombok.RequiredArgsConstructor;
 import lombok.extern.slf4j.Slf4j;
 import org.springframework.cache.annotation.CacheEvict;
-import org.springframework.cache.annotation.Cacheable;
 import org.springframework.data.domain.Page;
 import org.springframework.data.domain.PageRequest;
 import org.springframework.data.domain.Pageable;
@@ -29,8 +28,10 @@ public class AnomalyService {
 
     private final AnomalyRepository anomalyRepository;
 
-    @Cacheable(value = "anomalies", key = "#clientType + '_' + #page + '_' + #size")
+    // Note: @Cacheable removed - Page objects don't serialize properly with Spring Cache
+    // and cause ClassCastException (LinkedHashMap cannot be cast to Page)
     public Page<AnomalyDto> getAnomaliesByClientType(ClientType clientType, int page, int size) {
+        log.debug("Fetching anomalies for clientType={}, page={}, size={}", clientType, page, size);
         Pageable pageable = PageRequest.of(page, size, Sort.by("createdAt").descending());
         return anomalyRepository.findByClientType(clientType, pageable)
             .map(this::mapToDto);

@@ -196,6 +196,8 @@ app:
     kpi-calculation-cron: "0 0 1 * * ?"
     sla-check-cron: "0 */15 * * * ?"
     rpa-cleanup-cron: "0 0 * * * ?"
+    bkcli-sync-cron: "0 0 2 * * ?"      # Daily at 2:00 AM
+    agency-sync-cron: "0 30 2 * * ?"    # Daily at 2:30 AM
   features:
     workflow-automation: ${FEATURE_WORKFLOW:true}
     rpa-integration: ${FEATURE_RPA:true}

@@ -27,17 +27,17 @@ public class AgencyController {
         return ResponseEntity.ok(ApiResponse.success(agencies));
     }
 
-    @GetMapping("/active")
+    @GetMapping("/ordered")
     @PreAuthorize("hasAnyRole('ADMIN', 'AUDITOR', 'AGENCY_USER')")
-    public ResponseEntity<ApiResponse<List<AgencyDto>>> getActiveAgencies() {
-        List<AgencyDto> agencies = agencyService.getActiveAgencies();
+    public ResponseEntity<ApiResponse<List<AgencyDto>>> getAgenciesOrdered() {
+        List<AgencyDto> agencies = agencyService.getAgenciesOrderedByName();
         return ResponseEntity.ok(ApiResponse.success(agencies));
     }
 
-    @GetMapping("/{code}")
+    @GetMapping("/{age}")
     @PreAuthorize("hasAnyRole('ADMIN', 'AUDITOR', 'AGENCY_USER')")
-    public ResponseEntity<ApiResponse<AgencyDto>> getAgencyByCode(@PathVariable String code) {
-        AgencyDto agency = agencyService.getAgencyByCode(code);
+    public ResponseEntity<ApiResponse<AgencyDto>> getAgencyByCode(@PathVariable String age) {
+        AgencyDto agency = agencyService.getAgencyByCode(age);
         return ResponseEntity.ok(ApiResponse.success(agency));
     }
 
@@ -48,20 +48,20 @@ public class AgencyController {
         return ResponseEntity.ok(ApiResponse.success("Agence créée avec succès", created));
     }
 
-    @PutMapping("/{id}")
+    @PutMapping("/{age}")
     @PreAuthorize("hasRole('ADMIN')")
     public ResponseEntity<ApiResponse<AgencyDto>> updateAgency(
-            @PathVariable Long id,
+            @PathVariable String age,
             @RequestBody AgencyDto dto) {
 
-        AgencyDto updated = agencyService.updateAgency(id, dto);
+        AgencyDto updated = agencyService.updateAgency(age, dto);
         return ResponseEntity.ok(ApiResponse.success("Agence mise à jour avec succès", updated));
     }
 
-    @DeleteMapping("/{id}")
+    @DeleteMapping("/{age}")
     @PreAuthorize("hasRole('ADMIN')")
-    public ResponseEntity<ApiResponse<Void>> deleteAgency(@PathVariable Long id) {
-        agencyService.deleteAgency(id);
+    public ResponseEntity<ApiResponse<Void>> deleteAgency(@PathVariable String age) {
+        agencyService.deleteAgency(age);
         return ResponseEntity.ok(ApiResponse.success("Agence supprimée avec succès", null));
     }
 }

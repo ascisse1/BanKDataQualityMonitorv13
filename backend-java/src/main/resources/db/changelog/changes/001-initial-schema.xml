@@ -62,38 +62,137 @@
          2. MAIN BANKING TABLES
          ===================================================== -->
 
-    <changeSet id="001-02-create-bkcli" author="bsic">
-        <comment>Create main clients table (bkcli)</comment>
-        <createTable tableName="bkcli">
-            <column name="cli" type="VARCHAR(15)">
+    <changeSet id="001-02-create-bkage" author="bsic">
+        <comment>Create agencies table (bkage) from CBS structure</comment>
+        <createTable tableName="bkage">
+            <column name="age" type="CHAR(5)">
                 <constraints primaryKey="true" nullable="false"/>
             </column>
-            <column name="nom" type="VARCHAR(100)"/>
-            <column name="tcli" type="VARCHAR(1)"/>
-            <column name="pre" type="VARCHAR(100)"/>
-            <column name="nid" type="VARCHAR(30)"/>
-            <column name="nmer" type="VARCHAR(100)"/>
-            <column name="dna" type="DATE"/>
-            <column name="nat" type="VARCHAR(3)"/>
-            <column name="age" type="VARCHAR(5)"/>
-            <column name="sext" type="VARCHAR(1)"/>
-            <column name="viln" type="VARCHAR(50)"/>
-            <column name="payn" type="VARCHAR(3)"/>
-            <column name="tid" type="VARCHAR(3)"/>
-            <column name="vid" type="DATE"/>
-            <column name="nrc" type="VARCHAR(30)"/>
-            <column name="datc" type="DATE"/>
-            <column name="rso" type="VARCHAR(100)"/>
-            <column name="sig" type="VARCHAR(30)"/>
-            <column name="sec" type="VARCHAR(50)"/>
-            <column name="fju" type="VARCHAR(50)"/>
-            <column name="catn" type="VARCHAR(50)"/>
-            <column name="lienbq" type="VARCHAR(50)"/>
-            <column name="dou" type="DATE"/>
-            <column name="clifam" type="VARCHAR(15)"/>
+            <column name="lib" type="VARCHAR(30)"/>
             <column name="created_at" type="TIMESTAMP" defaultValueComputed="CURRENT_TIMESTAMP"/>
             <column name="updated_at" type="TIMESTAMP" defaultValueComputed="CURRENT_TIMESTAMP ON UPDATE CURRENT_TIMESTAMP"/>
         </createTable>
+    </changeSet>
+
+    <changeSet id="001-03-create-bkcli" author="bsic">
+        <comment>Create main clients table (bkcli) - Full CBS Informix structure</comment>
+        <createTable tableName="bkcli">
+            <!-- Primary Key -->
+            <column name="cli" type="CHAR(15)">
+                <constraints primaryKey="true" nullable="false"/>
+            </column>
+            <!-- Client Identity -->
+            <column name="nom" type="CHAR(36)"/>
+            <column name="tcli" type="CHAR(1)"/>
+            <column name="lib" type="CHAR(2)"/>
+            <column name="pre" type="CHAR(30)"/>
+            <column name="sext" type="CHAR(1)"/>
+            <column name="njf" type="CHAR(36)"/>
+            <column name="dna" type="DATE"/>
+            <column name="viln" type="CHAR(30)"/>
+            <column name="depn" type="CHAR(30)"/>
+            <column name="payn" type="CHAR(3)"/>
+            <column name="locn" type="CHAR(6)"/>
+            <!-- Identity Document -->
+            <column name="tid" type="CHAR(5)"/>
+            <column name="nid" type="CHAR(20)"/>
+            <column name="did" type="DATE"/>
+            <column name="lid" type="CHAR(30)"/>
+            <column name="oid" type="CHAR(30)"/>
+            <column name="vid" type="DATE"/>
+            <!-- Family Situation -->
+            <column name="sit" type="CHAR(1)"/>
+            <column name="reg" type="CHAR(1)"/>
+            <column name="capj" type="CHAR(1)"/>
+            <column name="dcapj" type="DATE"/>
+            <column name="sitj" type="CHAR(3)"/>
+            <column name="dsitj" type="DATE"/>
+            <column name="tconj" type="CHAR(1)"/>
+            <column name="conj" type="CHAR(15)"/>
+            <column name="nbenf" type="SMALLINT"/>
+            <column name="clifam" type="CHAR(15)"/>
+            <!-- Company Information -->
+            <column name="rso" type="CHAR(65)"/>
+            <column name="sig" type="CHAR(20)"/>
+            <column name="datc" type="DATE"/>
+            <column name="fju" type="CHAR(2)"/>
+            <column name="nrc" type="CHAR(20)"/>
+            <column name="vrc" type="DATE"/>
+            <column name="nchc" type="CHAR(3)"/>
+            <column name="npa" type="CHAR(20)"/>
+            <column name="vpa" type="DATE"/>
+            <column name="nidn" type="CHAR(20)"/>
+            <column name="nis" type="CHAR(20)"/>
+            <column name="nidf" type="CHAR(20)"/>
+            <!-- Group and Activity -->
+            <column name="grp" type="CHAR(6)"/>
+            <column name="sgrp" type="CHAR(6)"/>
+            <column name="met" type="CHAR(6)"/>
+            <column name="smet" type="CHAR(6)"/>
+            <column name="cmc1" type="CHAR(36)"/>
+            <column name="cmc2" type="CHAR(36)"/>
+            <!-- Agency and Management -->
+            <column name="age" type="CHAR(5)"/>
+            <column name="ges" type="CHAR(3)"/>
+            <column name="qua" type="CHAR(2)"/>
+            <column name="tax" type="CHAR(1)"/>
+            <column name="catl" type="CHAR(1)"/>
+            <column name="seg" type="CHAR(3)"/>
+            <column name="nst" type="CHAR(20)"/>
+            <column name="clipar" type="CHAR(15)"/>
+            <!-- Custom Fields -->
+            <column name="chl1" type="CHAR(10)"/>
+            <column name="chl2" type="CHAR(10)"/>
+            <column name="chl3" type="CHAR(10)"/>
+            <!-- Territoriality -->
+            <column name="lter" type="CHAR(1)"/>
+            <column name="lterc" type="CHAR(1)"/>
+            <column name="resd" type="CHAR(3)"/>
+            <!-- Banking Category -->
+            <column name="catn" type="CHAR(6)"/>
+            <column name="sec" type="CHAR(5)"/>
+            <column name="lienbq" type="CHAR(3)"/>
+            <!-- Classification -->
+            <column name="aclas" type="CHAR(1)"/>
+            <column name="maclas" type="DECIMAL(19,4)"/>
+            <column name="emtit" type="CHAR(1)"/>
+            <column name="nicr" type="CHAR(20)"/>
+            <column name="ced" type="CHAR(1)"/>
+            <column name="clcr" type="CHAR(1)"/>
+            <!-- Additional Info -->
+            <column name="nmer" type="CHAR(36)"/>
+            <column name="lang" type="CHAR(3)"/>
+            <column name="nat" type="CHAR(3)"/>
+            <column name="res" type="CHAR(3)"/>
+            <!-- Interdictions -->
+            <column name="ichq" type="CHAR(1)"/>
+            <column name="dichq" type="DATE"/>
+            <column name="icb" type="CHAR(1)"/>
+            <column name="dicb" type="DATE"/>
+            <!-- Audit Fields -->
+            <column name="epu" type="CHAR(1)"/>
+            <column name="utic" type="CHAR(10)"/>
+            <column name="uti" type="CHAR(10)"/>
+            <column name="dou" type="DATE"/>
+            <column name="dmo" type="DATE"/>
+            <column name="ord" type="DECIMAL(4,0)"/>
+            <!-- Extended Fields -->
+            <column name="catr" type="CHAR(1)"/>
+            <column name="midname" type="CHAR(30)"/>
+            <column name="nomrest" type="CHAR(67)"/>
+            <column name="drc" type="DATE"/>
+            <column name="lrc" type="CHAR(30)"/>
+            <column name="rso2" type="CHAR(65)"/>
+            <column name="regn" type="CHAR(50)"/>
+            <!-- Risk Fields -->
+            <column name="rrc" type="CHAR(1)"/>
+            <column name="dvrrc" type="DATE"/>
+            <column name="uti_vrrc" type="CHAR(10)"/>
+            <!-- Application Audit -->
+            <column name="created_at" type="TIMESTAMP" defaultValueComputed="CURRENT_TIMESTAMP"/>
+            <column name="updated_at" type="TIMESTAMP" defaultValueComputed="CURRENT_TIMESTAMP ON UPDATE CURRENT_TIMESTAMP"/>
+        </createTable>
+        <!-- Indexes -->
         <createIndex tableName="bkcli" indexName="idx_bkcli_tcli">
             <column name="tcli"/>
         </createIndex>
@@ -106,9 +205,24 @@
         <createIndex tableName="bkcli" indexName="idx_bkcli_payn">
             <column name="payn"/>
         </createIndex>
+        <createIndex tableName="bkcli" indexName="idx_bkcli_ges">
+            <column name="ges"/>
+        </createIndex>
+        <createIndex tableName="bkcli" indexName="idx_bkcli_seg">
+            <column name="seg"/>
+        </createIndex>
+        <createIndex tableName="bkcli" indexName="idx_bkcli_grp">
+            <column name="grp"/>
+        </createIndex>
+        <createIndex tableName="bkcli" indexName="idx_bkcli_met">
+            <column name="met"/>
+        </createIndex>
+        <createIndex tableName="bkcli" indexName="idx_bkcli_res">
+            <column name="res"/>
+        </createIndex>
     </changeSet>
 
-    <changeSet id="001-03-create-bkcom" author="bsic">
+    <changeSet id="001-04-create-bkcom" author="bsic">
         <comment>Create accounts table (bkcom)</comment>
         <createTable tableName="bkcom">
             <column name="cli" type="CHAR(15)">
@@ -140,7 +254,7 @@
         </createIndex>
     </changeSet>
 
-    <changeSet id="001-04-create-bkadcli" author="bsic">
+    <changeSet id="001-05-create-bkadcli" author="bsic">
         <comment>Create client addresses table (bkadcli)</comment>
         <createTable tableName="bkadcli">
             <column name="cli" type="CHAR(15)">
@@ -167,7 +281,7 @@
         </createIndex>
     </changeSet>
 
-    <changeSet id="001-05-create-bktelcli" author="bsic">
+    <changeSet id="001-06-create-bktelcli" author="bsic">
         <comment>Create client phones table (bktelcli)</comment>
         <createTable tableName="bktelcli">
             <column name="cli" type="CHAR(15)">
@@ -190,7 +304,7 @@
         </createIndex>
     </changeSet>
 
-    <changeSet id="001-06-create-bkemacli" author="bsic">
+    <changeSet id="001-07-create-bkemacli" author="bsic">
         <comment>Create client emails table (bkemacli)</comment>
         <createTable tableName="bkemacli">
             <column name="cli" type="CHAR(15)">
@@ -209,7 +323,7 @@
         </createIndex>
     </changeSet>
 
-    <changeSet id="001-07-create-bkcoj" author="bsic">
+    <changeSet id="001-08-create-bkcoj" author="bsic">
         <comment>Create joint account holders table (bkcoj)</comment>
         <createTable tableName="bkcoj">
             <column name="clip" type="CHAR(15)">
@@ -234,7 +348,7 @@
         </createIndex>
     </changeSet>
 
-    <changeSet id="001-08-create-bkpscm" author="bsic">
+    <changeSet id="001-09-create-bkpscm" author="bsic">
         <comment>Create proxy holders table (bkpscm)</comment>
         <createTable tableName="bkpscm">
             <column name="cli" type="CHAR(15)">
@@ -259,45 +373,13 @@
         </createIndex>
     </changeSet>
 
-    <!-- =====================================================
-         3. AGENCIES TABLE
-         ===================================================== -->
 
-    <changeSet id="001-09-create-agencies" author="bsic">
-        <comment>Create agencies table</comment>
-        <createTable tableName="agencies">
-            <column name="id" type="BIGINT" autoIncrement="true">
-                <constraints primaryKey="true" nullable="false"/>
-            </column>
-            <column name="code" type="VARCHAR(255)">
-                <constraints nullable="false"/>
-            </column>
-            <column name="name" type="VARCHAR(255)">
-                <constraints nullable="false"/>
-            </column>
-            <column name="region" type="VARCHAR(255)"/>
-            <column name="city" type="VARCHAR(255)"/>
-            <column name="address" type="TEXT"/>
-            <column name="phone" type="VARCHAR(255)"/>
-            <column name="email" type="VARCHAR(255)"/>
-            <column name="manager_name" type="VARCHAR(255)"/>
-            <column name="active" type="BIT(1)"/>
-            <column name="created_at" type="DATETIME(6)">
-                <constraints nullable="false"/>
-            </column>
-            <column name="updated_at" type="DATETIME(6)"/>
-        </createTable>
-        <addUniqueConstraint tableName="agencies" columnNames="code" constraintName="idx_agency_code"/>
-        <createIndex tableName="agencies" indexName="idx_agency_region">
-            <column name="region"/>
-        </createIndex>
-    </changeSet>
 
     <!-- =====================================================
          4. USER AUDIT LOG
          ===================================================== -->
 
-    <changeSet id="001-10-create-user-audit-log" author="bsic">
+    <changeSet id="001-11-create-user-audit-log" author="bsic">
         <comment>Create user audit log table</comment>
         <createTable tableName="user_audit_log">
             <column name="id" type="INT" autoIncrement="true">
@@ -329,7 +411,7 @@
          5. AGENCY CORRECTION STATS
          ===================================================== -->
 
-    <changeSet id="001-11-create-agency-correction-stats" author="bsic">
+    <changeSet id="001-12-create-agency-correction-stats" author="bsic">
         <comment>Create agency correction stats table</comment>
         <createTable tableName="agency_correction_stats">
             <column name="agency_code" type="CHAR(5)">
@@ -355,7 +437,7 @@
          6. ANOMALY HISTORY
          ===================================================== -->
 
-    <changeSet id="001-12-create-anomaly-history" author="bsic">
+    <changeSet id="001-13-create-anomaly-history" author="bsic">
         <comment>Create anomaly history table</comment>
         <createTable tableName="anomaly_history">
             <column name="id" type="INT" autoIncrement="true">
@@ -397,7 +479,7 @@
          7. FATCA TABLES
          ===================================================== -->
 
-    <changeSet id="001-13-create-fatca-audit-log" author="bsic">
+    <changeSet id="001-14-create-fatca-audit-log" author="bsic">
         <comment>Create FATCA audit log table</comment>
         <createTable tableName="fatca_audit_log">
             <column name="id" type="INT" autoIncrement="true">

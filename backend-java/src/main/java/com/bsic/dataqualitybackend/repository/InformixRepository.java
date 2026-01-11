@@ -192,4 +192,253 @@ public class InformixRepository {
             throw new RuntimeException("Query execution failed", e);
         }
     }
+
+    /**
+     * Fetch all clients from Informix BKCLI table for sync to MySQL.
+     * Returns all fields needed for the Client entity.
+     */
+    public List<Map<String, Object>> getAllClients() {
+        String sql = """
+                select
+                cli,
+                nom,
+                tcli,
+                lib,
+                pre,
+                sext,
+                njf,
+                dna,
+                viln,
+                depn,
+                payn,
+                locn,
+                tid,
+                nid,
+                did,
+                lid,
+                oid,
+                vid,
+                sit,
+                reg,
+                capj,
+                dcapj,
+                sitj,
+                dsitj,
+                tconj,
+                conj,
+                nbenf,
+                clifam,
+                rso,
+                sig,
+                datc,
+                fju,
+                nrc,
+                vrc,
+                nchc,
+                npa,
+                vpa,
+                nidn,
+                nis,
+                nidf,
+                grp,
+                sgrp,
+                met,
+                smet,
+                cmc1,
+                cmc2,
+                age,
+                ges,
+                qua,
+                tax,
+                catl,
+                seg,
+                nst,
+                clipar,
+                chl1,
+                chl2,
+                chl3,
+                lter,
+                lterc,
+                resd,
+                catn,
+                sec,
+                lienbq,
+                aclas,
+                maclas,
+                emtit,
+                nicr,
+                ced,
+                clcr,
+                nmer,
+                lang,
+                nat,
+                res,
+                ichq,
+                dichq,
+                icb,
+                dicb,
+                epu,
+                utic,
+                uti,
+                dou,
+                dmo,
+                ord,
+                catr,
+                midname,
+                nomrest,
+                drc,
+                lrc,
+                rso2,
+                regn,
+                rrc,
+                dvrrc,
+                uti_vrrc
+        from bkcli 
+        """;
+
+        try {
+            log.info("Fetching all clients from Informix CBS...");
+            List<Map<String, Object>> clients = informixJdbcTemplate.queryForList(sql);
+            log.info("Fetched {} clients from Informix CBS", clients.size());
+            return clients;
+        } catch (Exception e) {
+            log.error("Error fetching all clients from CBS: {}", e.getMessage());
+            throw new RuntimeException("Failed to fetch clients from CBS", e);
+        }
+    }
+
+    /**
+     * Fetch clients from Informix BKCLI table in batches for large datasets.
+     * @param offset Starting row offset
+     * @param limit Maximum number of rows to fetch
+     */
+    public List<Map<String, Object>> getClientsBatch(int offset, int limit) {
+        String sql = """
+                select
+                cli,
+                nom,
+                tcli,
+                lib,
+                pre,
+                sext,
+                njf,
+                dna,
+                viln,
+                depn,
+                payn,
+                locn,
+                tid,
+                nid,
+                did,
+                lid,
+                oid,
+                vid,
+                sit,
+                reg,
+                capj,
+                dcapj,
+                sitj,
+                dsitj,
+                tconj,
+                conj,
+                nbenf,
+                clifam,
+                rso,
+                sig,
+                datc,
+                fju,
+                nrc,
+                vrc,
+                nchc,
+                npa,
+                vpa,
+                nidn,
+                nis,
+                nidf,
+                grp,
+                sgrp,
+                met,
+                smet,
+                cmc1,
+                cmc2,
+                age,
+                ges,
+                qua,
+                tax,
+                catl,
+                seg,
+                nst,
+                clipar,
+                chl1,
+                chl2,
+                chl3,
+                lter,
+                lterc,
+                resd,
+                catn,
+                sec,
+                lienbq,
+                aclas,
+                maclas,
+                emtit,
+                nicr,
+                ced,
+                clcr,
+                nmer,
+                lang,
+                nat,
+                res,
+                ichq,
+                dichq,
+                icb,
+                dicb,
+                epu,
+                utic,
+                uti,
+                dou,
+                dmo,
+                ord,
+                catr,
+                midname,
+                nomrest,
+                drc,
+                lrc,
+                rso2,
+                regn,
+                rrc,
+                dvrrc,
+                uti_vrrc
+        from bkcli 
+        """;
+
+
+        try {
+            return informixJdbcTemplate.queryForList(sql, offset, limit);
+        } catch (Exception e) {
+            log.error("Error fetching clients batch (offset={}, limit={}): {}", offset, limit, e.getMessage());
+            throw new RuntimeException("Failed to fetch clients batch from CBS", e);
+        }
+    }
+
+    /**
+     * Fetch all agencies from Informix BKAGE table for sync to MySQL.
+     */
+    public List<Map<String, Object>> getAllAgencies() {
+        String sql = """
+            SELECT
+                age as code,
+                lib as name
+            FROM bkage
+        """;
+
+        try {
+            log.info("Fetching all agencies from Informix CBS...");
+            List<Map<String, Object>> agencies = informixJdbcTemplate.queryForList(sql);
+            log.info("Fetched {} agencies from Informix CBS", agencies.size());
+            return agencies;
+        } catch (Exception e) {
+            log.error("Error fetching all agencies from CBS: {}", e.getMessage());
+            throw new RuntimeException("Failed to fetch agencies from CBS", e);
+        }
+    }
 }
