@@ -33,7 +33,8 @@ export interface ValidateTaskRequest {
 }
 
 class WorkflowService {
-  private baseUrl = '/api/workflow';
+  // apiService already adds /api prefix, so just use /workflow
+  private baseUrl = '/workflow';
 
   async startWorkflow(request: StartWorkflowRequest): Promise<string> {
     const response = await apiService.post<{ data: string }>(

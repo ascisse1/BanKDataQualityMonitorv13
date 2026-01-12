@@ -1,5 +1,5 @@
 import React, { useState, useEffect } from 'react';
-import { Search, Plus, Filter, RefreshCw, CheckCircle, Clock, AlertCircle } from 'lucide-react';
+import { Search, Plus, RefreshCw, CheckCircle, Clock, AlertCircle } from 'lucide-react';
 import Card from '../../components/ui/Card';
 import Button from '../../components/ui/Button';
 import Input from '../../components/ui/Input';
@@ -40,7 +40,6 @@ export const TicketsPage: React.FC = () => {
         });
         setTasks(allTasks);
       } else if (user?.username) {
-        // Use username for Camunda task assignee query
         const userTasks = await workflowService.getUserTasks(user.username);
         setTasks(userTasks);
       }

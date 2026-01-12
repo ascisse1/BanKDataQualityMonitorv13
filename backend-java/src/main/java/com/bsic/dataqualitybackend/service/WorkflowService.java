@@ -131,4 +131,57 @@ public class WorkflowService {
         runtimeService.deleteProcessInstance(processInstanceId, reason);
         log.info("Process instance deleted: {} - Reason: {}", processInstanceId, reason);
     }
+
+    /**
+     * Get all tasks without filtering (for debugging)
+     */
+    public List<Task> getAllTasks() {
+        return taskService.createTaskQuery().list();
+    }
+
+    /**
+     * Get deployment status for debugging
+     */
+    public Map<String, Object> getDeploymentStatus() {
+        Map<String, Object> status = new HashMap<>();
+
+        // Check process definitions
+        var processDefinitions = repositoryService.createProcessDefinitionQuery()
+                .processDefinitionKey("ticket-correction-process")
+                .list();
+        status.put("processDefinitionsCount", processDefinitions.size());
+        status.put("processDefinitions", processDefinitions.stream()
+                .map(pd -> Map.of(
+                        "id", pd.getId(),
+                        "key", pd.getKey(),
+                        "name", pd.getName(),
+                        "version", pd.getVersion(),
+                        "deploymentId", pd.getDeploymentId()
+                ))
+                .toList());
+
+        // Check active process instances
+        long activeInstances = runtimeService.createProcessInstanceQuery()
+                .processDefinitionKey("ticket-correction-process")
+                .active()
+                .count();
+        status.put("activeProcessInstances", activeInstances);
+
+        // Check all tasks
+        long totalTasks = taskService.createTaskQuery().count();
+        status.put("totalTasks", totalTasks);
+
+        // Check tasks by assignee
+        var tasks = taskService.createTaskQuery().list();
+        status.put("taskDetails", tasks.stream()
+                .map(t -> Map.of(
+                        "id", t.getId(),
+                        "name", t.getName(),
+                        "assignee", t.getAssignee() != null ? t.getAssignee() : "unassigned",
+                        "taskDefinitionKey", t.getTaskDefinitionKey() != null ? t.getTaskDefinitionKey() : "unknown"
+                ))
+                .toList());
+
+        return status;
+    }
 }

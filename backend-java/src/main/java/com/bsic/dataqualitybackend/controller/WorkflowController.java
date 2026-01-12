@@ -1,6 +1,7 @@
 package com.bsic.dataqualitybackend.controller;
 
 import com.bsic.dataqualitybackend.dto.ApiResponse;
+import com.bsic.dataqualitybackend.dto.WorkflowTaskDto;
 import com.bsic.dataqualitybackend.security.SecurityUtils;
 import com.bsic.dataqualitybackend.service.WorkflowService;
 import lombok.RequiredArgsConstructor;
@@ -25,10 +26,13 @@ public class WorkflowController {
      * Debug endpoint - Get all tasks without filtering (for debugging)
      */
     @GetMapping("/debug/tasks")
-    public ResponseEntity<ApiResponse<List<Task>>> getAllTasks() {
+    public ResponseEntity<ApiResponse<List<WorkflowTaskDto>>> getAllTasks() {
         List<Task> tasks = workflowService.getAllTasks();
         log.info("Debug: Found {} total tasks", tasks.size());
-        return ResponseEntity.ok(ApiResponse.success(tasks));
+        List<WorkflowTaskDto> taskDtos = tasks.stream()
+                .map(WorkflowTaskDto::fromTask)
+                .toList();
+        return ResponseEntity.ok(ApiResponse.success(taskDtos));
     }
 
     /**
@@ -57,27 +61,35 @@ public class WorkflowController {
     }
 
     @GetMapping("/tasks/user/{userId}")
-    public ResponseEntity<ApiResponse<List<Task>>> getUserTasks(@PathVariable String userId) {
+    public ResponseEntity<ApiResponse<List<WorkflowTaskDto>>> getUserTasks(@PathVariable String userId) {
         // userId can be numeric ID or username string (Camunda assignee)
         List<Task> tasks = workflowService.getTasksForUser(userId);
-        return ResponseEntity.ok(ApiResponse.success(tasks));
+        log.info("getUserTasks for {}: found {} tasks", userId, tasks.size());
+        List<WorkflowTaskDto> taskDtos = tasks.stream()
+                .map(WorkflowTaskDto::fromTask)
+                .toList();
+        return ResponseEntity.ok(ApiResponse.success(taskDtos));
     }
 
     @GetMapping("/tasks/group/{groupId}")
-    public ResponseEntity<ApiResponse<List<Task>>> getGroupTasks(@PathVariable String groupId) {
+    public ResponseEntity<ApiResponse<List<WorkflowTaskDto>>> getGroupTasks(@PathVariable String groupId) {
         List<Task> tasks = workflowService.getTasksForGroup(groupId);
-        return ResponseEntity.ok(ApiResponse.success(tasks));
+        log.info("getGroupTasks for {}: found {} tasks", groupId, tasks.size());
+        List<WorkflowTaskDto> taskDtos = tasks.stream()
+                .map(WorkflowTaskDto::fromTask)
+                .toList();
+        return ResponseEntity.ok(ApiResponse.success(taskDtos));
     }
 
     @GetMapping("/tasks/{taskId}")
-    public ResponseEntity<ApiResponse<Task>> getTask(@PathVariable String taskId) {
+    public ResponseEntity<ApiResponse<WorkflowTaskDto>> getTask(@PathVariable String taskId) {
         Task task = workflowService.getTaskById(taskId);
 
         if (task == null) {
             return ResponseEntity.notFound().build();
         }
 
-        return ResponseEntity.ok(ApiResponse.success(task));
+        return ResponseEntity.ok(ApiResponse.success(WorkflowTaskDto.fromTask(task)));
     }
 
     @PostMapping("/tasks/{taskId}/claim")
