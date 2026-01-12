@@ -5,8 +5,8 @@ import React from 'react';
 interface StatsCardProps {
   title: string;
   value: string;
-  change: string;
-  trend: 'up' | 'down' | 'neutral';
+  change?: string;
+  trend?: 'up' | 'down' | 'neutral';
   icon: React.ReactNode;
   isLoading?: boolean;
 }
@@ -47,13 +47,14 @@ const StatsCard = ({ title, value, change, trend, icon, isLoading = false }: Sta
         <div>
           <p className="text-sm font-medium text-gray-500">{title}</p>
           <p className="mt-1 text-2xl font-semibold text-gray-900">{value}</p>
-          <div className="mt-2 flex items-center">
-            <span className={`inline-flex items-center px-2 py-0.5 rounded text-xs font-medium ${trendColor}`}>
-              {trendIcon}
-              <span className="ml-1">{change}</span>
-            </span>
-            <span className="ml-2 text-xs text-gray-500">from last month</span>
-          </div>
+          {change && trend && (
+            <div className="mt-2 flex items-center">
+              <span className={`inline-flex items-center px-2 py-0.5 rounded text-xs font-medium ${trendColor}`}>
+                {trendIcon}
+                <span className="ml-1">{change}</span>
+              </span>
+            </div>
+          )}
         </div>
         <div className="h-12 w-12 bg-gray-100 rounded-full flex items-center justify-center">
           {icon}

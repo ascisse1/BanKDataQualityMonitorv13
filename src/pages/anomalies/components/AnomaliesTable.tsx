@@ -1,4 +1,5 @@
 import React, { useMemo } from 'react';
+import { createPortal } from 'react-dom';
 import { useState, useEffect } from 'react';
 import { AlertTriangle, Eye, ChevronDown, ChevronUp, ChevronLeft, ChevronRight, RefreshCw, User, Building, Edit, Users, FileWarning } from 'lucide-react';
 import Button from '../../../components/ui/Button';
@@ -419,11 +420,12 @@ const AnomaliesTable: React.FC<AnomaliesTableProps> = ({
   return (
     <div className="overflow-x-auto -mx-4 sm:-mx-6">
       {/* Modal pour la correction d'anomalie */}
-      {editingAnomaly && !expandedRow && (
+      {editingAnomaly && !expandedRow && createPortal(
         <div className="fixed inset-0 bg-black bg-opacity-50 flex items-center justify-center z-50">
           <div className="bg-white rounded-lg shadow-xl max-w-2xl w-full mx-4 p-6">
             <h2 className="text-xl font-semibold mb-4">Correction d'anomalie</h2>
-            <AnomalyCorrection 
+            <AnomalyCorrection
+              key={`${editingAnomaly.cli}-${editingAnomaly.fieldCode}`}
               anomaly={editingAnomaly}
               onCorrectionComplete={() => {
                 setEditingAnomaly(null);
@@ -439,7 +441,8 @@ const AnomaliesTable: React.FC<AnomaliesTableProps> = ({
               </Button>
             </div>
           </div>
-        </div>
+        </div>,
+        document.body
       )}
       
       <div className="inline-block min-w-full align-middle">
@@ -680,6 +683,7 @@ const AnomaliesTable: React.FC<AnomaliesTableProps> = ({
                                     <div className="px-6 py-4 bg-gray-50 border-t border-gray-100">
                                       {editingAnomaly && editingAnomaly.cli === anomaly.cli && editingAnomaly.fieldCode === getFieldCode(anomaly) ? (
                                         <AnomalyCorrection
+                                          key={`inline-${editingAnomaly.cli}-${editingAnomaly.fieldCode}`}
                                           anomaly={editingAnomaly}
                                           onCorrectionComplete={() => {
                                             setEditingAnomaly(null);

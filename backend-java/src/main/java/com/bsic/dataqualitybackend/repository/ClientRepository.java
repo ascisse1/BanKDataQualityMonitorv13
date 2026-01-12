@@ -28,4 +28,6 @@ public interface ClientRepository extends JpaRepository<Client, String> {
 
     @Query("SELECT COUNT(c) FROM Client c WHERE c.tcli = :clientType")
     long countByType(@Param("clientType") String clientType);
+
+    long countByTcli(String tcli);
 }

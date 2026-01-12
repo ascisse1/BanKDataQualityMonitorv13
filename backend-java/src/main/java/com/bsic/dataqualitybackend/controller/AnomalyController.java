@@ -59,9 +59,15 @@ public class AnomalyController {
 
     @GetMapping("/by-branch")
     public ResponseEntity<ApiResponse<List<Map<String, Object>>>> getAnomaliesByBranch(
-            @RequestParam(defaultValue = "INDIVIDUAL") ClientType clientType) {
+            @RequestParam(required = false) ClientType clientType) {
 
-        List<Map<String, Object>> anomalies = anomalyService.getAnomaliesByBranch(clientType);
+        List<Map<String, Object>> anomalies;
+        if (clientType != null) {
+            anomalies = anomalyService.getAnomaliesByBranch(clientType);
+        } else {
+            // Return all anomalies by branch when no clientType specified
+            anomalies = anomalyService.getAnomaliesByBranchAll();
+        }
 
         return ResponseEntity.ok(ApiResponse.success(anomalies));
     }

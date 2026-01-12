@@ -19,7 +19,6 @@ public class WorkflowService {
 
     private final RuntimeService runtimeService;
     private final TaskService taskService;
-    private final org.camunda.bpm.engine.RepositoryService repositoryService;
 
     public String startTicketWorkflow(Long ticketId, String clientId, String agencyCode, String priority, String initiator) {
         log.info("Starting ticket workflow for ticket: {} by user: {}", ticketId, initiator);
@@ -127,61 +126,47 @@ public class WorkflowService {
             .count() > 0;
     }
 
+    /**
+     * Find the active user task for a ticket (by business key)
+     */
+    public Task getActiveTaskForTicket(Long ticketId) {
+        List<Task> tasks = taskService.createTaskQuery()
+            .processInstanceBusinessKey(ticketId.toString())
+            .active()
+            .list();
+        return tasks.isEmpty() ? null : tasks.get(0);
+    }
+
+    /**
+     * Complete the agency correction task with correction data
+     */
+    public void completeCorrectionTask(Long ticketId, String userId, String fieldName,
+                                        String oldValue, String newValue, String notes) {
+        Task task = getActiveTaskForTicket(ticketId);
+
+        if (task == null) {
+            log.warn("No active task found for ticket: {}", ticketId);
+            return;
+        }
+
+        if (!"Task_AgencyCorrection".equals(task.getTaskDefinitionKey())) {
+            log.warn("Active task is not AgencyCorrection task: {}", task.getTaskDefinitionKey());
+            return;
+        }
+
+        Map<String, Object> variables = new HashMap<>();
+        variables.put("correctionFieldName", fieldName);
+        variables.put("correctionOldValue", oldValue);
+        variables.put("correctionNewValue", newValue);
+        variables.put("correctionNotes", notes);
+        variables.put("correctedBy", userId);
+
+        completeUserTask(task.getId(), userId, variables);
+        log.info("Correction task completed for ticket {} - moving to 4-Eyes validation", ticketId);
+    }
+
     public void deleteProcessInstance(String processInstanceId, String reason) {
         runtimeService.deleteProcessInstance(processInstanceId, reason);
         log.info("Process instance deleted: {} - Reason: {}", processInstanceId, reason);
-    }
-
-    /**
-     * Get all tasks without filtering (for debugging)
-     */
-    public List<Task> getAllTasks() {
-        return taskService.createTaskQuery().list();
-    }
-
-    /**
-     * Get deployment status for debugging
-     */
-    public Map<String, Object> getDeploymentStatus() {
-        Map<String, Object> status = new HashMap<>();
-
-        // Check process definitions
-        var processDefinitions = repositoryService.createProcessDefinitionQuery()
-                .processDefinitionKey("ticket-correction-process")
-                .list();
-        status.put("processDefinitionsCount", processDefinitions.size());
-        status.put("processDefinitions", processDefinitions.stream()
-                .map(pd -> Map.of(
-                        "id", pd.getId(),
-                        "key", pd.getKey(),
-                        "name", pd.getName(),
-                        "version", pd.getVersion(),
-                        "deploymentId", pd.getDeploymentId()
-                ))
-                .toList());
-
-        // Check active process instances
-        long activeInstances = runtimeService.createProcessInstanceQuery()
-                .processDefinitionKey("ticket-correction-process")
-                .active()
-                .count();
-        status.put("activeProcessInstances", activeInstances);
-
-        // Check all tasks
-        long totalTasks = taskService.createTaskQuery().count();
-        status.put("totalTasks", totalTasks);
-
-        // Check tasks by assignee
-        var tasks = taskService.createTaskQuery().list();
-        status.put("taskDetails", tasks.stream()
-                .map(t -> Map.of(
-                        "id", t.getId(),
-                        "name", t.getName(),
-                        "assignee", t.getAssignee() != null ? t.getAssignee() : "unassigned",
-                        "taskDefinitionKey", t.getTaskDefinitionKey() != null ? t.getTaskDefinitionKey() : "unknown"
-                ))
-                .toList());
-
-        return status;
     }
 }

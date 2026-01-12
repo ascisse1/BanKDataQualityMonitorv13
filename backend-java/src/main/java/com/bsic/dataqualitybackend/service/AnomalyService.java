@@ -103,14 +103,35 @@ public class AnomalyService {
         return counts;
     }
 
+    /**
+     * Get anomalies by branch for a specific client type.
+     */
     public List<Map<String, Object>> getAnomaliesByBranch(ClientType clientType) {
         List<Object[]> results = anomalyRepository.countByAgencyAndClientType(clientType);
         return results.stream()
             .map(row -> {
                 Map<String, Object> map = new HashMap<>();
-                map.put("agencyCode", row[0]);
-                map.put("agencyName", row[1]);
-                map.put("count", row[2]);
+                // Use field names expected by frontend
+                map.put("code_agence", row[0]);
+                map.put("lib_agence", row[1]);
+                map.put("nombre_anomalies", row[2]);
+                return map;
+            })
+            .collect(Collectors.toList());
+    }
+
+    /**
+     * Get anomalies by branch for all client types.
+     */
+    public List<Map<String, Object>> getAnomaliesByBranchAll() {
+        List<Object[]> results = anomalyRepository.countByAgencyGrouped();
+        return results.stream()
+            .map(row -> {
+                Map<String, Object> map = new HashMap<>();
+                // Use field names expected by frontend
+                map.put("code_agence", row[0]);
+                map.put("lib_agence", row[1]);
+                map.put("nombre_anomalies", row[2]);
                 return map;
             })
             .collect(Collectors.toList());

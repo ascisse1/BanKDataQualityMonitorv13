@@ -1,24 +1,38 @@
 import { useState, useEffect } from 'react';
 import Chart from 'react-apexcharts';
 import { ApexOptions } from 'apexcharts';
+import { apiService } from '../../../services/apiService';
+
+interface CountsByType {
+  INDIVIDUAL: number;
+  CORPORATE: number;
+  INSTITUTIONAL: number;
+}
+
+interface ApiResponse<T> {
+  success: boolean;
+  data: T;
+  message: string | null;
+}
 
 interface ClientTypeChartProps {
   isLoading?: boolean;
 }
 
-const ClientTypeChart = ({ isLoading = false }: ClientTypeChartProps) => {
+const ClientTypeChart = ({ isLoading: externalLoading = false }: ClientTypeChartProps) => {
+  const [isLoading, setIsLoading] = useState(true);
   const [chartData, setChartData] = useState<{
     series: number[];
     options: ApexOptions;
   }>({
-    series: [0, 0, 0, 0],
+    series: [0, 0, 0],
     options: {
       chart: {
         type: 'donut',
         fontFamily: 'Inter, system-ui, sans-serif',
       },
-      labels: ['Individual', 'Corporate', 'SME', 'VIP'],
-      colors: ['#4371AF', '#F0B429', '#34BB80', '#EF4744'],
+      labels: ['Particuliers', 'Entreprises', 'Institutionnels'],
+      colors: ['#4371AF', '#F0B429', '#34BB80'],
       plotOptions: {
         pie: {
           donut: {
@@ -42,7 +56,7 @@ const ClientTypeChart = ({ isLoading = false }: ClientTypeChartProps) => {
                 fontWeight: 600,
                 label: 'Total',
                 formatter: (w) => {
-                  return `${w.globals.seriesTotals.reduce((a, b) => a + b, 0)}`;
+                  return `${w.globals.seriesTotals.reduce((a: number, b: number) => a + b, 0)}`;
                 },
               },
             },
@@ -65,7 +79,7 @@ const ClientTypeChart = ({ isLoading = false }: ClientTypeChartProps) => {
       },
       tooltip: {
         y: {
-          formatter: (val) => `${val} clients`,
+          formatter: (val) => `${val} anomalies`,
         },
       },
       responsive: [
@@ -85,24 +99,41 @@ const ClientTypeChart = ({ isLoading = false }: ClientTypeChartProps) => {
   });
 
   useEffect(() => {
-    // Utiliser directement les données en dur
-    if (true) {
-      // Simulate API call for chart data
-      setChartData({
-        ...chartData,
-        series: [19873, 5231, 3348, 682].filter(Boolean),
-      });
-    }
-  }, [isLoading]);
+    const fetchCountsByType = async () => {
+      try {
+        setIsLoading(true);
+        const response = await apiService.get<ApiResponse<CountsByType>>('/anomalies/counts/by-type');
 
-  if (isLoading) {
+        if (response.success && response.data) {
+          const data = response.data;
+          setChartData(prev => ({
+            ...prev,
+            series: [
+              Number(data.INDIVIDUAL) || 0,
+              Number(data.CORPORATE) || 0,
+              Number(data.INSTITUTIONAL) || 0,
+            ],
+          }));
+        }
+      } catch (err) {
+        console.error('Failed to fetch anomaly counts by type:', err);
+      } finally {
+        setIsLoading(false);
+      }
+    };
+
+    if (!externalLoading) {
+      fetchCountsByType();
+    }
+  }, [externalLoading]);
+
+  if (isLoading || externalLoading) {
     return (
       <div className="w-full h-full flex items-center justify-center">
         <div className="w-full max-w-md mx-auto">
           <div className="animate-pulse flex flex-col items-center">
             <div className="rounded-full bg-gray-200 h-64 w-64"></div>
             <div className="mt-5 flex space-x-4 justify-center w-full">
-              <div className="h-4 bg-gray-200 rounded w-20"></div>
               <div className="h-4 bg-gray-200 rounded w-20"></div>
               <div className="h-4 bg-gray-200 rounded w-20"></div>
               <div className="h-4 bg-gray-200 rounded w-20"></div>

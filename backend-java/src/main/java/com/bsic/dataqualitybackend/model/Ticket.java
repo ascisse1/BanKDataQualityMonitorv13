@@ -85,6 +85,9 @@ public class Ticket {
     @Builder.Default
     private Boolean slaBreached = false;
 
+    @Column(name = "process_instance_id", length = 64)
+    private String processInstanceId;
+
     @Column(name = "total_incidents")
     @Builder.Default
     private Integer totalIncidents = 0;

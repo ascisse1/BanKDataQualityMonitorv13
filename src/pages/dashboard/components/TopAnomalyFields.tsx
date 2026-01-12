@@ -1,12 +1,26 @@
 import { useState, useEffect } from 'react';
 import Chart from 'react-apexcharts';
 import { ApexOptions } from 'apexcharts';
+import { apiService } from '../../../services/apiService';
+
+interface FieldData {
+  fieldName: string;
+  count: number;
+}
+
+interface ApiResponse<T> {
+  success: boolean;
+  data: T;
+  message: string | null;
+}
 
 interface TopAnomalyFieldsProps {
   isLoading?: boolean;
+  clientType?: 'INDIVIDUAL' | 'CORPORATE' | 'INSTITUTIONAL';
 }
 
-const TopAnomalyFields = ({ isLoading = false }: TopAnomalyFieldsProps) => {
+const TopAnomalyFields = ({ isLoading: externalLoading = false, clientType = 'INDIVIDUAL' }: TopAnomalyFieldsProps) => {
+  const [isLoading, setIsLoading] = useState(true);
   const [chartData, setChartData] = useState<{
     series: {
       name: string;
@@ -79,29 +93,45 @@ const TopAnomalyFields = ({ isLoading = false }: TopAnomalyFieldsProps) => {
   });
 
   useEffect(() => {
-    // Utiliser directement les données en dur
-    if (true) {
-      // Simulate API call for chart data
-      setChartData({
-        ...chartData,
-        series: [
-          {
-            name: 'Anomalies',
-            data: [342, 215, 127, 95, 63].filter(Boolean),
-          },
-        ],
-        options: {
-          ...chartData.options,
-          xaxis: {
-            ...chartData.options.xaxis,
-            categories: ['Email (bkemacli)', 'NID (nid)', 'Mother\'s Name (nmer)', 'Birth Date (dna)', 'Reg. Number (nrc)'],
-          },
-        },
-      });
-    }
-  }, [isLoading]);
+    const fetchTopFields = async () => {
+      try {
+        setIsLoading(true);
+        const response = await apiService.get<ApiResponse<FieldData[]>>(`/anomalies/top-fields/${clientType}?limit=5`);
 
-  if (isLoading) {
+        if (response.success && response.data && response.data.length > 0) {
+          const fieldNames = response.data.map(item => item.fieldName || 'Inconnu');
+          const counts = response.data.map(item => Number(item.count) || 0);
+
+          setChartData(prev => ({
+            ...prev,
+            series: [
+              {
+                name: 'Anomalies',
+                data: counts,
+              },
+            ],
+            options: {
+              ...prev.options,
+              xaxis: {
+                ...prev.options.xaxis,
+                categories: fieldNames,
+              },
+            },
+          }));
+        }
+      } catch (err) {
+        console.error('Failed to fetch top anomaly fields:', err);
+      } finally {
+        setIsLoading(false);
+      }
+    };
+
+    if (!externalLoading) {
+      fetchTopFields();
+    }
+  }, [externalLoading, clientType]);
+
+  if (isLoading || externalLoading) {
     return (
       <div className="w-full h-full">
         <div className="animate-pulse space-y-4">

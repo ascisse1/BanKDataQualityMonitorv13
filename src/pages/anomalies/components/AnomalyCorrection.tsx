@@ -1,4 +1,4 @@
-import React, { useState } from 'react';
+import React, { useState, useEffect } from 'react';
 import { CheckCircle, XCircle, Clock, Save, Ticket, AlertCircle, Users } from 'lucide-react';
 import Button from '../../../components/ui/Button';
 import Input from '../../../components/ui/Input';
@@ -28,6 +28,13 @@ const AnomalyCorrection: React.FC<AnomalieCorrectionProps> = ({
   } | null>(null);
 
   const { fixAnomaly, isProcessing } = useAnomalyCorrection();
+
+  // Reset state when anomaly changes
+  useEffect(() => {
+    setNewValue(anomaly.currentValue || '');
+    setNotes('');
+    setSubmissionResult(null);
+  }, [anomaly.cli, anomaly.fieldCode]);
 
   const handleFixAnomaly = async () => {
     const result = await fixAnomaly({

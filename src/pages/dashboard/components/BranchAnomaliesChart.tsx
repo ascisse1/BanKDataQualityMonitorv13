@@ -1,13 +1,26 @@
 import { useState, useEffect } from 'react';
 import Chart from 'react-apexcharts';
 import { ApexOptions } from 'apexcharts';
-import { db } from '../../../services/db';
+import { apiService } from '../../../services/apiService';
+
+interface BranchData {
+  code_agence: string;
+  lib_agence: string;
+  nombre_anomalies: number;
+}
+
+interface ApiResponse<T> {
+  success: boolean;
+  data: T;
+  message: string | null;
+}
 
 interface BranchAnomaliesChartProps {
   isLoading?: boolean;
 }
 
-const BranchAnomaliesChart = ({ isLoading = false }: BranchAnomaliesChartProps) => {
+const BranchAnomaliesChart = ({ isLoading: externalLoading = false }: BranchAnomaliesChartProps) => {
+  const [isLoading, setIsLoading] = useState(true);
   const [chartData, setChartData] = useState<{
     series: {
       name: string;
@@ -97,77 +110,44 @@ const BranchAnomaliesChart = ({ isLoading = false }: BranchAnomaliesChartProps) 
   });
 
   useEffect(() => {
-    // Utiliser directement les données en dur
-    if (true) {
-      const hardcodedData = [
-        { code_agence: "01001", lib_agence: "AGENCE OUAGADOUGOU PRINCIPALE", nombre_anomalies: 5243 },
-        { code_agence: "01002", lib_agence: "AGENCE OUAGADOUGOU CENTRE", nombre_anomalies: 4872 },
-        { code_agence: "01003", lib_agence: "AGENCE OUAGADOUGOU NORD", nombre_anomalies: 4521 },
-        { code_agence: "01004", lib_agence: "AGENCE OUAGADOUGOU SUD", nombre_anomalies: 4123 },
-        { code_agence: "01005", lib_agence: "AGENCE OUAGADOUGOU EST", nombre_anomalies: 3987 },
-        { code_agence: "02001", lib_agence: "AGENCE BOBO-DIOULASSO PRINCIPALE", nombre_anomalies: 3654 },
-        { code_agence: "02002", lib_agence: "AGENCE BOBO-DIOULASSO CENTRE", nombre_anomalies: 3421 },
-        { code_agence: "03001", lib_agence: "AGENCE KOUDOUGOU PRINCIPALE", nombre_anomalies: 3210 },
-        { code_agence: "04001", lib_agence: "AGENCE BANFORA PRINCIPALE", nombre_anomalies: 2987 },
-        { code_agence: "05001", lib_agence: "AGENCE OUAHIGOUYA PRINCIPALE", nombre_anomalies: 2765 },
-        { code_agence: "06001", lib_agence: "AGENCE KAYA PRINCIPALE", nombre_anomalies: 2654 },
-        { code_agence: "07001", lib_agence: "AGENCE DÉDOUGOU PRINCIPALE", nombre_anomalies: 2521 },
-        { code_agence: "08001", lib_agence: "AGENCE FADA N'GOURMA PRINCIPALE", nombre_anomalies: 2423 },
-        { code_agence: "16001", lib_agence: "AGENCE THOMAS SANKARA", nombre_anomalies: 2321 },
-        { code_agence: "17001", lib_agence: "AGENCE KWAME NKRUMAH", nombre_anomalies: 2187 }
-      ];
-      
-      // Prendre les 15 premières agences avec le plus d'anomalies
-      const topAgences = hardcodedData.slice(0, 15);
+    const fetchBranchData = async () => {
+      try {
+        setIsLoading(true);
+        const response = await apiService.get<ApiResponse<BranchData[]>>('/anomalies/by-branch');
 
-      setChartData({
-        ...chartData,
-        series: [
-          {
-            name: 'Anomalies',
-            data: topAgences.map(a => a.nombre_anomalies).filter(Boolean),
-          },
-        ],
-        options: {
-          ...chartData.options,
-          xaxis: {
-            ...chartData.options.xaxis,
-            categories: topAgences.map(a => `${a.lib_agence} (${a.code_agence})`),
-          },
-        },
-      });
+        if (response.success && response.data && response.data.length > 0) {
+          const topAgences = response.data.slice(0, 15);
+
+          setChartData(prev => ({
+            ...prev,
+            series: [
+              {
+                name: 'Anomalies',
+                data: topAgences.map(a => Number(a.nombre_anomalies) || 0),
+              },
+            ],
+            options: {
+              ...prev.options,
+              xaxis: {
+                ...prev.options.xaxis,
+                categories: topAgences.map(a => `${a.lib_agence || 'Agence'} (${a.code_agence || ''})`),
+              },
+            },
+          }));
+        }
+      } catch (err) {
+        console.error('Error fetching branch data:', err);
+      } finally {
+        setIsLoading(false);
+      }
+    };
+
+    if (!externalLoading) {
+      fetchBranchData();
     }
-  }, [isLoading]);
+  }, [externalLoading]);
 
-  const fetchBranchData = async () => {
-    try {
-      const data = await db.getAnomaliesByBranch();
-      
-      // Prendre les 15 premières agences avec le plus d'anomalies
-      const topAgences = data.slice(0, 15);
-
-      setChartData({
-        ...chartData,
-        series: [
-          {
-            name: 'Anomalies',
-            data: topAgences.map(a => a.nombre_anomalies),
-          },
-        ],
-        options: {
-          ...chartData.options,
-          xaxis: {
-            ...chartData.options.xaxis,
-            categories: topAgences.map(a => `${a.lib_agence} (${a.code_agence})`),
-          },
-        },
-      });
-    } catch (error) {
-      console.error('Error fetching branch data:', error);
-    }
-  };
-
-  if (isLoading) {
+  if (isLoading || externalLoading) {
     return (
       <div className="w-full h-full">
         <div className="animate-pulse space-y-4">

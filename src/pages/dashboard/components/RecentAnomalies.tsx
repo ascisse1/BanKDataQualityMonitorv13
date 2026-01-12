@@ -1,5 +1,21 @@
 import { useState, useEffect } from 'react';
 import { AlertTriangle } from 'lucide-react';
+import { apiService } from '../../../services/apiService';
+
+interface BackendAnomaly {
+  id: number;
+  clientNumber: string;
+  clientName: string;
+  clientType: string;
+  fieldName: string;
+  fieldLabel: string;
+  errorType: string;
+  errorMessage: string;
+  agencyCode: string;
+  agencyName: string;
+  status: string;
+  createdAt: string;
+}
 
 interface Anomaly {
   id: string;
@@ -13,108 +29,95 @@ interface Anomaly {
   status: 'New' | 'Reviewing' | 'Resolved';
 }
 
+interface ApiResponse<T> {
+  success: boolean;
+  data: T;
+  message: string | null;
+}
+
 interface RecentAnomaliesProps {
   isLoading?: boolean;
 }
 
-const RecentAnomalies = ({ isLoading = false }: RecentAnomaliesProps) => {
+const mapClientType = (type: string): 'Individual' | 'Corporate' => {
+  switch (type) {
+    case 'INDIVIDUAL':
+      return 'Individual';
+    case 'CORPORATE':
+    case 'INSTITUTIONAL':
+      return 'Corporate';
+    default:
+      return 'Individual';
+  }
+};
+
+const mapStatus = (status: string): 'New' | 'Reviewing' | 'Resolved' => {
+  switch (status) {
+    case 'PENDING':
+      return 'New';
+    case 'IN_PROGRESS':
+    case 'CORRECTED':
+      return 'Reviewing';
+    case 'VALIDATED':
+    case 'CLOSED':
+      return 'Resolved';
+    case 'REJECTED':
+      return 'New';
+    default:
+      return 'New';
+  }
+};
+
+const RecentAnomalies = ({ isLoading: externalLoading = false }: RecentAnomaliesProps) => {
   const [anomalies, setAnomalies] = useState<Anomaly[]>([]);
+  const [isLoading, setIsLoading] = useState(true);
+  const [error, setError] = useState<string | null>(null);
 
   useEffect(() => {
-    if (!isLoading) {
-      // Utiliser des données fictives pour la démo
-      const demoAnomalies: Anomaly[] = [
-        {
-          id: '1',
-          clientId: 'CLI000123',
-          clientName: 'OUEDRAOGO Moussa',
-          clientType: 'Individual',
-          field: 'Numéro d\'identité',
-          errorType: 'Valeur manquante',
-          branch: '01001',
-          createdAt: new Date(new Date().getTime() - 30 * 60000).toISOString(),
-          status: 'New'
-        },
-        {
-          id: '2',
-          clientId: 'CLI000456',
-          clientName: 'KABORE Fatimata',
-          clientType: 'Individual',
-          field: 'Date de naissance',
-          errorType: 'Format invalide',
-          branch: '01002',
-          createdAt: new Date(new Date().getTime() - 2 * 60 * 60000).toISOString(),
-          status: 'Reviewing'
-        },
-        {
-          id: '3',
-          clientId: 'ENT000789',
-          clientName: 'SOCIETE GENERALE DE COMMERCE',
-          clientType: 'Corporate',
-          field: 'Numéro de registre',
-          errorType: 'Format invalide',
-          branch: '01003',
-          createdAt: new Date(new Date().getTime() - 4 * 60 * 60000).toISOString(),
-          status: 'New'
-        },
-        {
-          id: '4',
-          clientId: 'CLI000321',
-          clientName: 'TRAORE Oumar',
-          clientType: 'Individual',
-          field: 'Nationalité',
-          errorType: 'Valeur manquante',
-          branch: '01001',
-          createdAt: new Date(new Date().getTime() - 6 * 60 * 60000).toISOString(),
-          status: 'Resolved'
-        },
-        {
-          id: '5',
-          clientId: 'ENT000654',
-          clientName: 'ENTREPRISE DE CONSTRUCTION BURKINA',
-          clientType: 'Corporate',
-          field: 'Date de création',
-          errorType: 'Valeur manquante',
-          branch: '01004',
-          createdAt: new Date(new Date().getTime() - 8 * 60 * 60000).toISOString(),
-          status: 'New'
-        },
-        {
-          id: '6',
-          clientId: 'CLI000987',
-          clientName: 'DIALLO Aminata',
-          clientType: 'Individual',
-          field: 'Nom de la mère',
-          errorType: 'Valeur manquante',
-          branch: '01002',
-          createdAt: new Date(new Date().getTime() - 10 * 60 * 60000).toISOString(),
-          status: 'Reviewing'
-        },
-        {
-          id: '7',
-          clientId: 'ENT000852',
-          clientName: 'COMPAGNIE MINIERE DU FASO',
-          clientType: 'Corporate',
-          field: 'Raison sociale',
-          errorType: 'Format invalide',
-          branch: '01003',
-          createdAt: new Date(new Date().getTime() - 12 * 60 * 60000).toISOString(),
-          status: 'New'
+    const fetchRecentAnomalies = async () => {
+      try {
+        setIsLoading(true);
+        setError(null);
+
+        const response = await apiService.get<ApiResponse<BackendAnomaly[]>>('/stats/recent-anomalies?limit=10');
+
+        console.log('Recent anomalies response:', response);
+
+        if (response.success && response.data && Array.isArray(response.data)) {
+          const mapped: Anomaly[] = response.data.map((a) => ({
+            id: String(a.id),
+            clientId: a.clientNumber || '',
+            clientName: a.clientName || 'Client inconnu',
+            clientType: mapClientType(a.clientType),
+            field: a.fieldLabel || a.fieldName || '',
+            errorType: a.errorMessage || a.errorType || 'Erreur',
+            branch: a.agencyCode || '',
+            createdAt: a.createdAt,
+            status: mapStatus(a.status),
+          }));
+          setAnomalies(mapped);
         }
-      ];
-      
-      setAnomalies(demoAnomalies);
+      } catch (err) {
+        console.error('Failed to fetch recent anomalies:', err);
+        setError('Impossible de charger les anomalies récentes');
+      } finally {
+        setIsLoading(false);
+      }
+    };
+
+    if (!externalLoading) {
+      fetchRecentAnomalies();
     }
-  }, [isLoading]);
+  }, [externalLoading]);
 
   const formatDate = (dateString: string) => {
+    if (!dateString) return '-';
     const date = new Date(dateString);
-    return date.toLocaleString('en-US', {
+    return date.toLocaleString('fr-FR', {
       month: 'short',
       day: '2-digit',
       hour: '2-digit',
       minute: '2-digit',
-      hour12: true,
     });
   };
 
@@ -131,7 +134,7 @@ const RecentAnomalies = ({ isLoading = false }: RecentAnomaliesProps) => {
     }
   };
 
-  if (isLoading) {
+  if (isLoading || externalLoading) {
     return (
       <div className="w-full">
         <div className="animate-pulse">
@@ -142,6 +145,15 @@ const RecentAnomalies = ({ isLoading = false }: RecentAnomaliesProps) => {
             </div>
           ))}
         </div>
+      </div>
+    );
+  }
+
+  if (error) {
+    return (
+      <div className="p-4 text-center text-red-600">
+        <AlertTriangle className="h-8 w-8 mx-auto mb-2" />
+        <p>{error}</p>
       </div>
     );
   }
@@ -161,31 +173,31 @@ const RecentAnomalies = ({ isLoading = false }: RecentAnomaliesProps) => {
               scope="col"
               className="px-3 py-3 text-left text-xs font-medium text-gray-500 uppercase tracking-wider"
             >
-              Field
+              Champ
             </th>
             <th
               scope="col"
               className="px-3 py-3 text-left text-xs font-medium text-gray-500 uppercase tracking-wider"
             >
-              Error Type
+              Type d'erreur
             </th>
             <th
               scope="col"
               className="px-3 py-3 text-left text-xs font-medium text-gray-500 uppercase tracking-wider"
             >
-              Branch
+              Agence
             </th>
             <th
               scope="col"
               className="px-3 py-3 text-left text-xs font-medium text-gray-500 uppercase tracking-wider"
             >
-              Detected At
+              Détecté le
             </th>
             <th
               scope="col"
               className="px-3 py-3 text-left text-xs font-medium text-gray-500 uppercase tracking-wider"
             >
-              Status
+              Statut
             </th>
           </tr>
         </thead>

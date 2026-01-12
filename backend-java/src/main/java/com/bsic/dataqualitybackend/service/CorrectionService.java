@@ -64,20 +64,21 @@ public class CorrectionService {
         ticket.setTotalIncidents(ticket.getTotalIncidents() + 1);
         ticketRepository.save(ticket);
 
-        // Start workflow if new ticket and action is FIX
-        String processInstanceId = null;
-        if (isNewTicket && request.getAction() == CorrectionRequest.CorrectionAction.FIX) {
+        // Complete the current workflow task (move to 4-Eyes validation)
+        if (request.getAction() == CorrectionRequest.CorrectionAction.FIX) {
             try {
-                processInstanceId = workflowService.startTicketWorkflow(
+                // Complete the AgencyCorrection task - this moves to 4-Eyes validation step
+                workflowService.completeCorrectionTask(
                         ticket.getId(),
-                        request.getCli(),
-                        request.getAgencyCode(),
-                        ticket.getPriority().name(),
-                        currentUser.getUsername()
+                        currentUser.getUsername(),
+                        request.getFieldName(),
+                        request.getOldValue(),
+                        request.getNewValue(),
+                        request.getNotes()
                 );
-                log.info("Started workflow {} for ticket {}", processInstanceId, ticket.getTicketNumber());
+                log.info("Correction submitted for ticket {} - moved to 4-Eyes validation", ticket.getTicketNumber());
             } catch (Exception e) {
-                log.warn("Could not start workflow (Camunda may not be configured): {}", e.getMessage());
+                log.warn("Could not complete workflow task (Camunda may not be configured): {}", e.getMessage());
                 // Continue without workflow - manual processing
             }
         }
@@ -85,7 +86,7 @@ public class CorrectionService {
         // Update status based on action
         updateStatusBasedOnAction(ticket, incident, request.getAction(), currentUser);
 
-        return buildCorrectionResponse(ticket, incident, processInstanceId, isNewTicket);
+        return buildCorrectionResponse(ticket, incident, ticket.getProcessInstanceId(), isNewTicket);
     }
 
     /**
@@ -211,13 +212,12 @@ public class CorrectionService {
                                            CorrectionRequest.CorrectionAction action, User user) {
         switch (action) {
             case FIX:
-                // Move to IN_PROGRESS if just detected, or PENDING_VALIDATION if ready
-                if (ticket.getStatus() == TicketStatus.DETECTED) {
-                    ticket.setStatus(TicketStatus.IN_PROGRESS);
-                    ticket.setAssignedTo(user);
-                    ticket.setAssignedAt(LocalDateTime.now());
-                }
+                // Move ticket to PENDING_VALIDATION (4-Eyes step)
+                ticket.setStatus(TicketStatus.PENDING_VALIDATION);
+                ticket.setAssignedTo(user);
+                ticket.setAssignedAt(LocalDateTime.now());
                 incident.setStatus("pending_validation");
+                log.info("Ticket {} moved to 4-Eyes validation (PENDING_VALIDATION)", ticket.getTicketNumber());
                 break;
 
             case REVIEW:

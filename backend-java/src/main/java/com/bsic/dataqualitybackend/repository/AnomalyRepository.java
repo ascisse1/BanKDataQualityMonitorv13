@@ -73,4 +73,14 @@ public interface AnomalyRepository extends JpaRepository<Anomaly, Long> {
      * Find all open anomalies for a client.
      */
     List<Anomaly> findByClientNumberAndStatusNotIn(String clientNumber, List<AnomalyStatus> excludedStatuses);
+
+    /**
+     * Count anomalies grouped by agency for dashboard.
+     * Returns [agencyCode, agencyName, count]
+     */
+    @Query("SELECT a.agencyCode, a.agencyName, COUNT(a) " +
+           "FROM Anomaly a " +
+           "GROUP BY a.agencyCode, a.agencyName " +
+           "ORDER BY COUNT(a) DESC")
+    List<Object[]> countByAgencyGrouped();
 }

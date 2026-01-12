@@ -1,6 +1,6 @@
 import { useState, useEffect } from 'react';
 import { AlertTriangle, CheckCircle, AlertCircle, RefreshCw } from 'lucide-react';
-import { db } from '../../../services/db';
+import { apiService } from '../../../services/apiService';
 import { useToast } from '../../../components/ui/Toaster';
 import Button from '../../../components/ui/Button';
 
@@ -11,148 +11,80 @@ interface ValidationMetric {
   quality_score: number;
 }
 
+interface ApiResponse<T> {
+  success: boolean;
+  data: T;
+  message: string | null;
+}
+
 const ValidationSummary = ({ isLoading = false }) => {
   const [metrics, setMetrics] = useState<ValidationMetric[]>([]);
   const [loading, setLoading] = useState(isLoading);
-  const [useHardcodedData, setUseHardcodedData] = useState(false);
   const [error, setError] = useState<string | null>(null);
   const [lastUpdate, setLastUpdate] = useState<Date | null>(null);
   const { addToast } = useToast();
 
   useEffect(() => {
-    if (useHardcodedData) {
-      // Utiliser directement les données en dur
-      setMetrics([
-        {
-          category: 'Clients Particuliers',
-          total_records: 290000,
-          valid_records: 238120,
-          quality_score: 82.11
-        },
-        {
-          category: 'Clients Entreprises',
-          total_records: 30000,
-          valid_records: 26364,
-          quality_score: 87.88
-        },
-        {
-          category: 'Clients Institutionnels',
-          total_records: 5037,
-          valid_records: 4667,
-          quality_score: 92.65
-        }
-      ]);
-      setLastUpdate(new Date());
-      setLoading(false);
-    } else {
-      fetchMetrics();
-    }
+    fetchMetrics();
   }, []);
 
   const fetchMetrics = async () => {
     try {
       setLoading(true);
-      
-      // Add a small delay to prevent UI blocking
-      await new Promise(resolve => setTimeout(resolve, 100));
-      
       setError(null);
-      
+
       const startTime = performance.now();
-      const data = await db.getValidationMetrics();
+      const response = await apiService.get<ApiResponse<ValidationMetric[]>>('/stats/validation-metrics');
       const endTime = performance.now();
-      
-      // Validation et conversion des données avec gestion d'erreur robuste
-      const validatedMetrics = Array.isArray(data) ? data.map(metric => {
-        // Conversion sécurisée des valeurs numériques
-        const totalRecords = Number(metric.total_records) || 0;
-        const validRecords = Number(metric.valid_records) || 0;
-        let qualityScore = Number(metric.quality_score) || 0;
-        
-        // Recalcul du score de qualité si nécessaire
-        if (totalRecords > 0 && qualityScore === 0) {
-          qualityScore = Math.round((validRecords / totalRecords) * 100 * 100) / 100;
+
+      console.log('Validation metrics response:', response);
+
+      // Handle the response - data could be directly the array or wrapped
+      const metricsData = response.data;
+
+      if (response.success && metricsData) {
+        const dataArray = Array.isArray(metricsData) ? metricsData : [];
+
+        const validatedMetrics = dataArray.map(metric => {
+          const totalRecords = Number(metric.total_records) || 0;
+          const validRecords = Number(metric.valid_records) || 0;
+          let qualityScore = Number(metric.quality_score) || 0;
+
+          if (totalRecords > 0 && qualityScore === 0) {
+            qualityScore = Math.round((validRecords / totalRecords) * 100 * 100) / 100;
+          }
+
+          return {
+            category: metric.category || 'Inconnu',
+            total_records: totalRecords,
+            valid_records: validRecords,
+            quality_score: qualityScore
+          };
+        });
+
+        setMetrics(validatedMetrics);
+        setLastUpdate(new Date());
+
+        const duration = endTime - startTime;
+        if (duration > 1000) {
+          addToast(`Donnees chargees en ${(duration/1000).toFixed(1)}s`, 'warning');
         }
-        
-        return {
-          category: metric.category || 'Inconnu',
-          total_records: totalRecords,
-          valid_records: validRecords,
-          quality_score: qualityScore
-        };
-      }) : [
-        {
-          category: 'Clients Particuliers',
-          total_records: 290000,
-          valid_records: 238120,
-          quality_score: 82.11
-        },
-        {
-          category: 'Clients Entreprises',
-          total_records: 30000,
-          valid_records: 26364,
-          quality_score: 87.88
-        },
-        {
-          category: 'Clients Institutionnels',
-          total_records: 5037,
-          valid_records: 4667,
-          quality_score: 92.65
-        }
-      ];
-      
-      setMetrics(validatedMetrics);
-      setLastUpdate(new Date());
-      
-      // Log des performances
-      const duration = endTime - startTime;
-      if (duration > 1000) {
-        addToast(`Données chargées en ${(duration/1000).toFixed(1)}s`, 'warning');
+      } else {
+        console.warn('No validation metrics data received');
+        setMetrics([]);
       }
-      
-    } catch (error) {
-      const message = error instanceof Error ? error.message : 'Erreur lors du chargement des métriques de validation';
+    } catch (err) {
+      const message = err instanceof Error ? err.message : 'Erreur lors du chargement des metriques de validation';
       setError(message);
-      addToast(message, 'error');
-      
-      // Utiliser des données de secours en cas d'erreur
-      setMetrics([
-        {
-          category: 'Clients Particuliers',
-          total_records: 290000,
-          valid_records: 238120,
-          quality_score: 82.11
-        },
-        {
-          category: 'Clients Entreprises',
-          total_records: 30000,
-          valid_records: 26364,
-          quality_score: 87.88
-        },
-        {
-          category: 'Clients Institutionnels',
-          total_records: 5037,
-          valid_records: 4667,
-          quality_score: 92.65
-        }
-      ]);
+      console.error('Failed to fetch validation metrics:', err);
     } finally {
       setLoading(false);
     }
   };
 
   const handleRefresh = async () => {
-    if (useHardcodedData) {
-      // Simuler un rafraîchissement avec les données en dur
-      setLoading(true);
-      await new Promise(resolve => setTimeout(resolve, 500));
-      setLastUpdate(new Date());
-      setLoading(false);
-      addToast('Données actualisées', 'success');
-    } else {
-      await fetchMetrics();
-      addToast('Données actualisées', 'success');
-    }
+    await fetchMetrics();
+    addToast('Donnees actualisees', 'success');
   };
 
   if (loading || isLoading) {
@@ -188,7 +120,7 @@ const ValidationSummary = ({ isLoading = false }) => {
             size="sm"
             leftIcon={<RefreshCw className="h-4 w-4" />}
           >
-            Réessayer
+            Reessayer
           </Button>
         </div>
       </div>
@@ -201,9 +133,9 @@ const ValidationSummary = ({ isLoading = false }) => {
         <div className="flex flex-col items-center justify-center text-center space-y-4">
           <AlertCircle className="w-12 h-12 text-gray-400" />
           <div className="space-y-2">
-            <h3 className="text-lg font-medium text-gray-900">Aucune donnée disponible</h3>
+            <h3 className="text-lg font-medium text-gray-900">Aucune donnee disponible</h3>
             <p className="text-sm text-gray-500">
-              Les métriques de validation apparaîtront ici une fois les données disponibles.
+              Les metriques de validation apparaitront ici une fois les donnees disponibles.
             </p>
           </div>
           <Button
@@ -212,7 +144,7 @@ const ValidationSummary = ({ isLoading = false }) => {
             size="sm"
             leftIcon={<RefreshCw className="h-4 w-4" />}
           >
-            Charger les données
+            Charger les donnees
           </Button>
         </div>
       </div>
@@ -223,10 +155,10 @@ const ValidationSummary = ({ isLoading = false }) => {
     <div className="space-y-4">
       <div className="flex items-center justify-between">
         <div>
-          <h3 className="text-lg font-medium text-gray-900">Métriques de Validation</h3>
+          <h3 className="text-lg font-medium text-gray-900">Metriques de Validation</h3>
           {lastUpdate && (
             <p className="text-sm text-gray-500">
-              Dernière mise à jour: {lastUpdate.toLocaleTimeString('fr-FR')}
+              Derniere mise a jour: {lastUpdate.toLocaleTimeString('fr-FR')}
             </p>
           )}
         </div>
@@ -242,12 +174,11 @@ const ValidationSummary = ({ isLoading = false }) => {
 
       <div className="grid grid-cols-1 md:grid-cols-3 gap-4">
         {metrics.map((metric) => {
-          // Validation supplémentaire pour s'assurer que quality_score est un nombre
           const qualityScore = typeof metric.quality_score === 'number' ? metric.quality_score : 0;
           const totalRecords = metric.total_records || 0;
           const validRecords = metric.valid_records || 0;
           const invalidRecords = totalRecords - validRecords;
-          
+
           return (
             <div
               key={metric.category}
@@ -261,7 +192,7 @@ const ValidationSummary = ({ isLoading = false }) => {
                       {qualityScore.toFixed(1)}%
                     </span>
                     <span className="ml-2 text-sm text-gray-500">
-                      de qualité
+                      de qualite
                     </span>
                   </div>
                 </div>
@@ -304,16 +235,16 @@ const ValidationSummary = ({ isLoading = false }) => {
                     {validRecords.toLocaleString('fr-FR')}
                   </span>
                 </div>
-                
+
                 {invalidRecords > 0 && (
                   <div className="flex items-center justify-between text-sm">
-                    <span className="text-gray-500">Anomalies détectées</span>
+                    <span className="text-gray-500">Anomalies detectees</span>
                     <span className="font-medium text-error-600">
                       {invalidRecords.toLocaleString('fr-FR')}
                     </span>
                   </div>
                 )}
-                
+
                 <div className="flex items-center justify-between text-sm border-t border-gray-100 pt-2">
                   <span className="text-gray-500">Total</span>
                   <span className="font-medium text-gray-900">
@@ -322,19 +253,18 @@ const ValidationSummary = ({ isLoading = false }) => {
                 </div>
               </div>
 
-              {/* Indicateur de performance */}
               <div className="mt-3 pt-3 border-t border-gray-100">
                 <div className="flex items-center justify-between text-xs">
                   <span className={`px-2 py-1 rounded-full font-medium ${
-                    qualityScore >= 90 
-                      ? 'bg-success-100 text-success-700' 
-                      : qualityScore >= 70 
-                      ? 'bg-warning-100 text-warning-700' 
+                    qualityScore >= 90
+                      ? 'bg-success-100 text-success-700'
+                      : qualityScore >= 70
+                      ? 'bg-warning-100 text-warning-700'
                       : 'bg-error-100 text-error-700'
                   }`}>
-                    {qualityScore >= 90 ? 'Excellent' : qualityScore >= 70 ? 'Bon' : 'À améliorer'}
+                    {qualityScore >= 90 ? 'Excellent' : qualityScore >= 70 ? 'Bon' : 'A ameliorer'}
                   </span>
-                  
+
                   {totalRecords > 10000 && (
                     <span className="text-gray-400">
                       Gros volume
@@ -347,7 +277,6 @@ const ValidationSummary = ({ isLoading = false }) => {
         })}
       </div>
 
-      {/* Résumé global */}
       <div className="bg-gradient-to-r from-primary-50 to-secondary-50 rounded-lg p-4 border border-primary-200">
         <div className="grid grid-cols-1 md:grid-cols-4 gap-4 text-center">
           <div>
@@ -366,13 +295,13 @@ const ValidationSummary = ({ isLoading = false }) => {
             <div className="text-lg font-semibold text-error-700">
               {metrics.reduce((sum, m) => sum + (m.total_records - m.valid_records), 0).toLocaleString('fr-FR')}
             </div>
-            <div className="text-sm text-error-600">Anomalies détectées</div>
+            <div className="text-sm text-error-600">Anomalies detectees</div>
           </div>
           <div>
             <div className="text-lg font-semibold text-secondary-800">
               {(metrics.reduce((sum, m) => sum + m.quality_score, 0) / metrics.length).toFixed(1)}%
             </div>
-            <div className="text-sm text-secondary-600">Qualité moyenne</div>
+            <div className="text-sm text-secondary-600">Qualite moyenne</div>
           </div>
         </div>
       </div>

@@ -1,9 +1,8 @@
 package com.bsic.dataqualitybackend.controller;
 
-import com.bsic.dataqualitybackend.dto.ApiResponse;
-import com.bsic.dataqualitybackend.dto.CorrectionStatsDto;
-import com.bsic.dataqualitybackend.dto.StatsDto;
+import com.bsic.dataqualitybackend.dto.*;
 import com.bsic.dataqualitybackend.service.StatisticsService;
+import com.bsic.dataqualitybackend.service.StatsService;
 import lombok.RequiredArgsConstructor;
 import lombok.extern.slf4j.Slf4j;
 import org.springframework.http.ResponseEntity;
@@ -24,6 +23,7 @@ import java.util.Map;
 public class StatisticsController {
 
     private final StatisticsService statisticsService;
+    private final StatsService statsService;
 
     @GetMapping("/clients")
     public ResponseEntity<ApiResponse<StatsDto>> getGlobalStats() {
@@ -54,5 +54,28 @@ public class StatisticsController {
     public ResponseEntity<ApiResponse<Map<String, Object>>> getValidationMetrics() {
         Map<String, Object> metrics = statisticsService.getValidationMetrics();
         return ResponseEntity.ok(ApiResponse.success(metrics));
+    }
+
+
+    /**
+     * Get anomaly counts grouped by branch/agency.
+     */
+    @GetMapping("/anomalies/by-branch")
+    public ResponseEntity<ApiResponse<List<BranchAnomalyDto>>> getAnomaliesByBranch() {
+        log.info("API: Getting anomalies by branch");
+        List<BranchAnomalyDto> data = statsService.getAnomaliesByBranch();
+        return ResponseEntity.ok(ApiResponse.success(data));
+    }
+
+
+    /**
+     * Get recent anomalies for dashboard widget.
+     */
+    @GetMapping("/recent-anomalies")
+    public ResponseEntity<ApiResponse<List<AnomalyDto>>> getRecentAnomalies(
+            @RequestParam(defaultValue = "10") int limit) {
+        log.info("API: Getting {} recent anomalies", limit);
+        List<AnomalyDto> anomalies = statsService.getRecentAnomalies(limit);
+        return ResponseEntity.ok(ApiResponse.success(anomalies));
     }
 }

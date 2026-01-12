@@ -1,12 +1,25 @@
 import { useState, useEffect } from 'react';
 import Chart from 'react-apexcharts';
 import { ApexOptions } from 'apexcharts';
+import { apiService } from '../../../services/apiService';
+
+interface TrendData {
+  date: string;
+  count: number;
+}
+
+interface ApiResponse<T> {
+  success: boolean;
+  data: T;
+  message: string | null;
+}
 
 interface AnomalyTrendChartProps {
   isLoading?: boolean;
 }
 
-const AnomalyTrendChart = ({ isLoading = false }: AnomalyTrendChartProps) => {
+const AnomalyTrendChart = ({ isLoading: externalLoading = false }: AnomalyTrendChartProps) => {
+  const [isLoading, setIsLoading] = useState(true);
   const [chartData, setChartData] = useState<{
     series: {
       name: string;
@@ -56,7 +69,7 @@ const AnomalyTrendChart = ({ isLoading = false }: AnomalyTrendChartProps) => {
         },
       },
       xaxis: {
-        categories: ['Week 1', 'Week 2', 'Week 3', 'Week 4', 'Week 5', 'Week 6', 'Week 7', 'Week 8'],
+        categories: [],
         labels: {
           style: {
             colors: '#6B7280',
@@ -76,7 +89,7 @@ const AnomalyTrendChart = ({ isLoading = false }: AnomalyTrendChartProps) => {
             colors: '#6B7280',
             fontSize: '12px',
           },
-          formatter: (value) => `${value}`,
+          formatter: (value) => `${Math.round(value)}`,
         },
       },
       tooltip: {
@@ -97,22 +110,53 @@ const AnomalyTrendChart = ({ isLoading = false }: AnomalyTrendChartProps) => {
   });
 
   useEffect(() => {
-    // Utiliser directement les données en dur
-    if (true) {
-      // Simulate API call for chart data
-      setChartData({
-        ...chartData,
-        series: [
-          {
-            name: 'Anomalies',
-            data: [125, 142, 98, 113, 86, 112, 91, 75].filter(Boolean),
-          },
-        ],
-      });
-    }
-  }, [isLoading]);
+    const fetchTrendData = async () => {
+      try {
+        setIsLoading(true);
+        const response = await apiService.get<ApiResponse<TrendData[]>>('/anomalies/trends?days=30');
 
-  if (isLoading) {
+        if (response.success && response.data && response.data.length > 0) {
+          const sortedData = [...response.data].sort((a, b) =>
+            new Date(a.date).getTime() - new Date(b.date).getTime()
+          );
+
+          const dates = sortedData.map(item => {
+            const date = new Date(item.date);
+            return date.toLocaleDateString('fr-FR', { day: '2-digit', month: 'short' });
+          });
+
+          const counts = sortedData.map(item => Number(item.count) || 0);
+
+          setChartData(prev => ({
+            ...prev,
+            series: [
+              {
+                name: 'Anomalies',
+                data: counts,
+              },
+            ],
+            options: {
+              ...prev.options,
+              xaxis: {
+                ...prev.options.xaxis,
+                categories: dates,
+              },
+            },
+          }));
+        }
+      } catch (err) {
+        console.error('Failed to fetch anomaly trends:', err);
+      } finally {
+        setIsLoading(false);
+      }
+    };
+
+    if (!externalLoading) {
+      fetchTrendData();
+    }
+  }, [externalLoading]);
+
+  if (isLoading || externalLoading) {
     return (
       <div className="w-full h-full flex items-center justify-center">
         <div className="w-full h-full">

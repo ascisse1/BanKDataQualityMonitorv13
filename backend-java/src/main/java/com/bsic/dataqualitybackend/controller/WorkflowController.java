@@ -22,28 +22,6 @@ public class WorkflowController {
 
     private final WorkflowService workflowService;
 
-    /**
-     * Debug endpoint - Get all tasks without filtering (for debugging)
-     */
-    @GetMapping("/debug/tasks")
-    public ResponseEntity<ApiResponse<List<WorkflowTaskDto>>> getAllTasks() {
-        List<Task> tasks = workflowService.getAllTasks();
-        log.info("Debug: Found {} total tasks", tasks.size());
-        List<WorkflowTaskDto> taskDtos = tasks.stream()
-                .map(WorkflowTaskDto::fromTask)
-                .toList();
-        return ResponseEntity.ok(ApiResponse.success(taskDtos));
-    }
-
-    /**
-     * Debug endpoint - Check deployment status
-     */
-    @GetMapping("/debug/status")
-    public ResponseEntity<ApiResponse<Map<String, Object>>> getDeploymentStatus() {
-        Map<String, Object> status = workflowService.getDeploymentStatus();
-        return ResponseEntity.ok(ApiResponse.success(status));
-    }
-
     @PostMapping("/start")
     @PreAuthorize("hasAnyRole('ADMIN', 'AUDITOR')")
     public ResponseEntity<ApiResponse<String>> startWorkflow(@RequestBody Map<String, Object> request) {

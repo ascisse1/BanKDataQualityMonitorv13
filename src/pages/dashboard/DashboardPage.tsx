@@ -13,7 +13,7 @@ import PerformanceMonitor from './components/PerformanceMonitor';
 import FatcaSummary from './components/FatcaSummary';
 import LoadingSpinner from '../../components/ui/LoadingSpinner';
 import Button from '../../components/ui/Button';
-import { db } from '../../services/db';
+import { apiService } from '../../services/apiService';
 import { useToast } from '../../components/ui/Toaster';
 import { logger } from '../../services/logger';
 import { useAuth } from '../../context/AuthContext';
@@ -22,16 +22,24 @@ import AgencyCorrectionChart from './components/AgencyCorrectionChart';
 import DataLoadHistoryTable from './components/DataLoadHistoryTable';
 import AgencyUserStats from './components/AgencyUserStats';
 import { useNotification } from '../../context/NotificationContext';
-import { useDataFetching } from '../../hooks/useDataFetching';
 import { tracer } from '../../services/tracer';
 
 interface Stats {
   total: number;
   individual: number;
   corporate: number;
-  institutional?: number;
+  institutional: number;
   anomalies: number;
-  fatca?: number;
+  fatca: number;
+  pendingTickets: number;
+  resolvedTickets: number;
+  correctionRate: number;
+}
+
+interface ApiResponse<T> {
+  success: boolean;
+  data: T;
+  message: string | null;
 }
 
 const DashboardPage = () => {
@@ -43,83 +51,54 @@ const DashboardPage = () => {
   const [activeTab, setActiveTab] = useState<'quality' | 'fatca' | 'tracking'>('quality');
   const { addToast } = useToast();
   const { user } = useAuth();
-  const [useHardcodedData, setUseHardcodedData] = useState(false);
   const { showNotification } = useNotification();
-  const { fetchData } = useDataFetching();
 
   const hasUploadAccess = user?.role === 'admin';
   const hasAccessToBranchData = user?.role === 'admin' || user?.role === 'auditor';
 
   useEffect(() => {
     tracer.info('ui', 'Dashboard page mounted');
-    if (!useHardcodedData) {
-      fetchStats();
-    } else {
-      // Utiliser directement les données en dur
-      setStats({
-        total: 325037,
-        individual: 290000,
-        corporate: 30000,
-        institutional: 5037,
-        anomalies: 55000,
-        fatca: 12470
-      });
-      setIsLoading(false);
-      setLastUpdate(new Date());
-    }
-    
+    fetchStats();
+
     return () => {
       tracer.info('ui', 'Dashboard page unmounted');
     };
-  }, [useHardcodedData]);
+  }, []);
 
   const fetchStats = async () => {
     try {
       setIsLoading(true);
       setError(null);
-      
+
       tracer.info('ui', 'Fetching dashboard statistics');
-      showNotification('Chargement des données en cours...', 'loading');
-      
-      // Fetch real data from API with a shorter timeout
-      const clientStats = await db.getClientStats();
-      
-      if (clientStats) {
-        setStats(clientStats);
+      showNotification('Chargement des donnees en cours...', 'loading');
+
+      const response = await apiService.get<ApiResponse<Stats>>('/stats/clients');
+
+      if (response.success && response.data) {
+        setStats(response.data);
         setLastUpdate(new Date());
-        
+
         logger.info('dashboard', 'Stats loaded successfully', {
-          recordCount: clientStats.total
+          recordCount: response.data.total
         });
-        
+
         tracer.info('ui', 'Dashboard statistics loaded successfully', {
-          total: clientStats.total,
-          anomalies: clientStats.anomalies,
-          fatca: clientStats.fatca
+          total: response.data.total,
+          anomalies: response.data.anomalies,
+          fatca: response.data.fatca
         });
-        
-        showNotification('Données chargées avec succès', 'success');
+
+        showNotification('Donnees chargees avec succes', 'success');
       } else {
         throw new Error('Failed to fetch statistics');
       }
-    } catch (error) {
-      setError('Erreur lors du chargement des statistiques. Veuillez réessayer.');
+    } catch (err) {
+      setError('Erreur lors du chargement des statistiques. Veuillez reessayer.');
       showNotification('Erreur lors du chargement des statistiques', 'error');
-      logger.error('api', 'Failed to fetch statistics', { error });
-      tracer.error('ui', 'Failed to load dashboard statistics', { 
-        error: error instanceof Error ? error.message : String(error),
-        name: error.name,
-        stack: error.stack
-      });
-      
-      // Set fallback data
-      setStats({
-        total: 325037,
-        individual: 290000,
-        corporate: 30000,
-        institutional: 5037,
-        anomalies: 55000,
-        fatca: 12470
+      logger.error('api', 'Failed to fetch statistics', { error: err });
+      tracer.error('ui', 'Failed to load dashboard statistics', {
+        error: err instanceof Error ? err.message : String(err)
       });
     } finally {
       setIsLoading(false);
@@ -129,28 +108,15 @@ const DashboardPage = () => {
   const refreshData = async () => {
     try {
       setIsRefreshing(true);
-      // Si on utilise les données en dur, on simule juste un rafraîchissement
-      if (useHardcodedData) {
-        await new Promise(resolve => setTimeout(resolve, 500));
-        setLastUpdate(new Date());
-      } else {
-        addToast('Actualisation des données en cours...', 'info');
-        
-        // Clear the cache to force fresh data
-        await db.clearCache();
-        
-        // Fetch stats again
-        await fetchStats();
-        
-        // Simulate a delay for the loading animation
-        await new Promise(resolve => setTimeout(resolve, 1000));
-      }
-      
-      showNotification('Données actualisées avec succès', 'success');
+      addToast('Actualisation des donnees en cours...', 'info');
+
+      await fetchStats();
+
+      showNotification('Donnees actualisees avec succes', 'success');
       tracer.info('ui', 'Dashboard data refreshed successfully');
-    } catch (error) {
+    } catch (err) {
       showNotification('Erreur lors de l\'actualisation', 'error');
-      tracer.error('ui', 'Failed to refresh dashboard data', { error });
+      tracer.error('ui', 'Failed to refresh dashboard data', { error: err });
     } finally {
       setIsRefreshing(false);
     }
@@ -163,29 +129,21 @@ const DashboardPage = () => {
       {
         title: 'Total Clients',
         value: (stats.total ?? 0).toLocaleString('fr-FR'),
-        change: '+2.5%',
-        trend: 'up',
         icon: <Users className="h-6 w-6 text-primary-600" />,
       },
       {
         title: 'Clients Particuliers',
         value: (stats.individual ?? 0).toLocaleString('fr-FR'),
-        change: '+1.8%',
-        trend: 'up',
         icon: <UserCheck className="h-6 w-6 text-success-600" />,
       },
       {
         title: 'Clients Entreprises',
         value: (stats.corporate ?? 0).toLocaleString('fr-FR'),
-        change: '+3.2%',
-        trend: 'up',
         icon: <Building className="h-6 w-6 text-secondary-600" />,
       },
       {
-        title: 'Anomalies Détectées',
+        title: 'Anomalies Detectees',
         value: (stats.anomalies ?? 0).toLocaleString('fr-FR'),
-        change: '-5.1%',
-        trend: 'down',
         icon: <AlertTriangle className="h-6 w-6 text-warning-600" />,
       },
     ];
@@ -194,29 +152,29 @@ const DashboardPage = () => {
   if (isLoading && !lastUpdate) {
     return (
       <div className="flex items-center justify-center min-h-screen">
-        <LoadingSpinner 
-          size="lg" 
-          text="Chargement des données..." 
+        <LoadingSpinner
+          size="lg"
+          text="Chargement des donnees..."
         />
       </div>
     );
   }
 
-  if (error && !lastUpdate) {
+  if (error && !stats) {
     return (
       <div className="flex items-center justify-center min-h-screen">
         <div className="bg-error-50 border border-error-200 rounded-lg p-8 max-w-md text-center">
           <AlertTriangle className="h-12 w-12 text-error-500 mx-auto mb-4" />
           <h2 className="text-xl font-semibold text-error-800 mb-2">{error}</h2>
           <p className="text-error-600 mb-6">
-            Impossible de charger les données du tableau de bord. Veuillez vérifier votre connexion à la base de données.
+            Impossible de charger les donnees du tableau de bord. Veuillez verifier votre connexion.
           </p>
           <Button
             variant="primary"
             onClick={fetchStats}
             leftIcon={<RefreshCw className="h-4 w-4" />}
           >
-            Réessayer
+            Reessayer
           </Button>
         </div>
       </div>
@@ -229,10 +187,10 @@ const DashboardPage = () => {
         <div>
           <h1 className="text-2xl font-semibold text-gray-900">Tableau de bord</h1>
           <p className="mt-1 text-sm text-gray-500">
-            Aperçu de la base de données clients ({(stats?.total ?? 0).toLocaleString('fr-FR')} enregistrements)
+            Apercu de la base de donnees clients ({(stats?.total ?? 0).toLocaleString('fr-FR')} enregistrements)
             {lastUpdate && (
               <span className="ml-2 text-xs text-gray-400">
-                • Dernière mise à jour: {lastUpdate.toLocaleTimeString('fr-FR')}
+                • Derniere mise a jour: {lastUpdate.toLocaleTimeString('fr-FR')}
               </span>
             )}
           </p>
@@ -248,15 +206,15 @@ const DashboardPage = () => {
           >
             {isRefreshing ? 'Actualisation...' : 'Actualiser'}
           </Button>
-          
+
           {hasUploadAccess && (
             <Button
               variant="primary"
               leftIcon={<Upload className="h-4 w-4" />}
-              onClick={() => showNotification('Fonctionnalité bientôt disponible', 'info')}
+              onClick={() => showNotification('Fonctionnalite bientot disponible', 'info')}
               disabled={isLoading}
             >
-              Charger des données
+              Charger des donnees
             </Button>
           )}
         </div>
@@ -271,8 +229,6 @@ const DashboardPage = () => {
             key={stat.title}
             title={stat.title}
             value={stat.value}
-            change={stat.change}
-            trend={stat.trend as 'up' | 'down' | 'neutral'}
             icon={stat.icon}
             isLoading={isLoading}
           />
@@ -291,7 +247,7 @@ const DashboardPage = () => {
             } whitespace-nowrap py-4 px-1 border-b-2 font-medium text-sm flex items-center space-x-2`}
           >
             <BarChart className="h-4 w-4" />
-            <span>Qualité des Données</span>
+            <span>Qualite des Donnees</span>
           </button>
           <button
             onClick={() => setActiveTab('fatca')}
@@ -321,8 +277,8 @@ const DashboardPage = () => {
       {activeTab === 'quality' ? (
         <>
           <Card
-            title="Résumé de la Validation"
-            description="Vue d'ensemble de la qualité des données par catégorie"
+            title="Resume de la Validation"
+            description="Vue d'ensemble de la qualite des donnees par categorie"
             isLoading={isLoading}
           >
             <ValidationSummary isLoading={isLoading} />
@@ -330,8 +286,8 @@ const DashboardPage = () => {
 
           <div className="grid grid-cols-1 gap-6 lg:grid-cols-2">
             <Card
-              title="Répartition des Types de Clients"
-              description="Répartition des types de clients dans la base de données"
+              title="Repartition des Types de Clients"
+              description="Repartition des types de clients dans la base de donnees"
               isLoading={isLoading}
             >
               <div className="h-80 flex items-center justify-center">
@@ -341,7 +297,7 @@ const DashboardPage = () => {
 
             <Card
               title="Tendances des Anomalies"
-              description="Tendances hebdomadaires des détections d'anomalies"
+              description="Tendances hebdomadaires des detections d'anomalies"
               isLoading={isLoading}
             >
               <div className="h-80 flex items-center justify-center">
@@ -351,8 +307,8 @@ const DashboardPage = () => {
           </div>
 
           <Card
-            title="Évolution de la Qualité des Données"
-            description="Tendances de la qualité des données sur les 6 derniers mois"
+            title="Evolution de la Qualite des Donnees"
+            description="Tendances de la qualite des donnees sur les 6 derniers mois"
             isLoading={isLoading}
           >
             <DataQualityTrends isLoading={isLoading} />
@@ -362,7 +318,7 @@ const DashboardPage = () => {
             <div className="lg:col-span-1">
               <Card
                 title="Nombre de clients par agence"
-                description="Liste détaillée des clients par agence (optimisé pour gros volumes)"
+                description="Liste detaillee des clients par agence (optimise pour gros volumes)"
                 isLoading={isLoading}
               >
                 <div className="h-96">
@@ -375,7 +331,7 @@ const DashboardPage = () => {
               <div className="lg:col-span-2">
                 <Card
                   title="Nombre d'anomalies par agence"
-                  description="Liste détaillée des anomalies par agence (optimisé pour gros volumes)"
+                  description="Liste detaillee des anomalies par agence (optimise pour gros volumes)"
                   isLoading={isLoading}
                 >
                   <div className="h-96 overflow-auto">
@@ -387,8 +343,8 @@ const DashboardPage = () => {
           </div>
 
           <Card
-            title="Anomalies Récentes"
-            description="Derniers problèmes de données détectés"
+            title="Anomalies Recentes"
+            description="Derniers problemes de donnees detectes"
             isLoading={isLoading}
           >
             <div className="h-96">
@@ -401,7 +357,7 @@ const DashboardPage = () => {
       ) : (
         <>
           <Card
-            title="Évolution des Corrections par Semaine"
+            title="Evolution des Corrections par Semaine"
             description="Tendance hebdomadaire des corrections d'anomalies"
             isLoading={isLoading}
           >
@@ -421,7 +377,7 @@ const DashboardPage = () => {
 
             <Card
               title="Utilisateurs par Agence"
-              description="Répartition des utilisateurs par agence"
+              description="Repartition des utilisateurs par agence"
               isLoading={isLoading}
             >
               <div className="h-96 overflow-auto">
@@ -431,8 +387,8 @@ const DashboardPage = () => {
           </div>
 
           <Card
-            title="Historique des Chargements de Données"
-            description="Suivi des chargements de données par table"
+            title="Historique des Chargements de Donnees"
+            description="Suivi des chargements de donnees par table"
             isLoading={isLoading}
           >
             <div className="h-96 overflow-auto">
@@ -443,32 +399,32 @@ const DashboardPage = () => {
           <Card className="border-primary-200 bg-primary-50">
             <div className="p-6">
               <h3 className="text-lg font-medium text-primary-800 mb-4">Suivi des Corrections</h3>
-              
+
               <div className="grid grid-cols-1 md:grid-cols-3 gap-6">
                 <div className="space-y-2">
                   <h4 className="text-sm font-semibold text-primary-700">Chargement Hebdomadaire</h4>
                   <ul className="text-sm text-primary-600 space-y-1">
                     <li>• Chargement des tables clients chaque semaine</li>
-                    <li>• Détection automatique des anomalies</li>
+                    <li>• Detection automatique des anomalies</li>
                     <li>• Historisation des modifications</li>
                   </ul>
                 </div>
-                
+
                 <div className="space-y-2">
                   <h4 className="text-sm font-semibold text-primary-700">Suivi par Agence</h4>
                   <ul className="text-sm text-primary-600 space-y-1">
-                    <li>• Utilisateurs dédiés par agence</li>
+                    <li>• Utilisateurs dedies par agence</li>
                     <li>• Statistiques de correction par agence</li>
                     <li>• Taux de correction hebdomadaire</li>
                   </ul>
                 </div>
-                
+
                 <div className="space-y-2">
                   <h4 className="text-sm font-semibold text-primary-700">Rapports</h4>
                   <ul className="text-sm text-primary-600 space-y-1">
-                    <li>• Évolution des corrections dans le temps</li>
+                    <li>• Evolution des corrections dans le temps</li>
                     <li>• Classement des agences par performance</li>
-                    <li>• Historique des chargements de données</li>
+                    <li>• Historique des chargements de donnees</li>
                   </ul>
                 </div>
               </div>
