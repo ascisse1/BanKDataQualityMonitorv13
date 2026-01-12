@@ -83,4 +83,16 @@ public interface AnomalyRepository extends JpaRepository<Anomaly, Long> {
            "GROUP BY a.agencyCode, a.agencyName " +
            "ORDER BY COUNT(a) DESC")
     List<Object[]> countByAgencyGrouped();
+
+    /**
+     * Find open anomaly by client number and field name for correction updates.
+     */
+    @Query("SELECT a FROM Anomaly a " +
+           "WHERE a.clientNumber = :clientNumber " +
+           "AND a.fieldName = :fieldName " +
+           "AND a.status NOT IN (com.bsic.dataqualitybackend.model.enums.AnomalyStatus.CLOSED, " +
+           "com.bsic.dataqualitybackend.model.enums.AnomalyStatus.VALIDATED) " +
+           "ORDER BY a.createdAt DESC")
+    List<Anomaly> findOpenAnomalyByClientAndField(@Param("clientNumber") String clientNumber,
+                                                   @Param("fieldName") String fieldName);
 }

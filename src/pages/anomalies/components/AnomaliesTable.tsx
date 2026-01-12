@@ -703,6 +703,12 @@ const AnomaliesTable: React.FC<AnomaliesTableProps> = ({
                                                 <span className="text-sm text-gray-500">Valeur actuelle:</span>
                                                 <span className="text-sm font-medium text-error-600">{getFieldValue(anomaly) || '<vide>'}</span>
                                               </div>
+                                              {anomaly.correctionValue && (
+                                                <div className="flex justify-between">
+                                                  <span className="text-sm text-gray-500">Valeur corrigée:</span>
+                                                  <span className="text-sm font-medium text-success-600">{anomaly.correctionValue}</span>
+                                                </div>
+                                              )}
                                               <div className="flex justify-between">
                                                 <span className="text-sm text-gray-500">Type d'erreur:</span>
                                                 <span className="text-sm font-medium">{anomaly.errorType || 'Valeur manquante'}</span>

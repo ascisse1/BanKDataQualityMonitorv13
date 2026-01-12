@@ -26,6 +26,13 @@ public class StatisticsController {
     private final StatsService statsService;
 
     @GetMapping("/clients")
+    public ResponseEntity<ApiResponse<DashboardStatsDto>> getClientStats() {
+        log.info("API: Getting dashboard client stats");
+        DashboardStatsDto stats = statsService.getClientStats();
+        return ResponseEntity.ok(ApiResponse.success(stats));
+    }
+
+    @GetMapping("/global")
     public ResponseEntity<ApiResponse<StatsDto>> getGlobalStats() {
         StatsDto stats = statisticsService.getGlobalStats();
         return ResponseEntity.ok(ApiResponse.success(stats));
@@ -51,7 +58,14 @@ public class StatisticsController {
     }
 
     @GetMapping("/validation-metrics")
-    public ResponseEntity<ApiResponse<Map<String, Object>>> getValidationMetrics() {
+    public ResponseEntity<ApiResponse<List<ValidationMetricDto>>> getValidationMetrics() {
+        log.info("API: Getting validation metrics by category");
+        List<ValidationMetricDto> metrics = statsService.getValidationMetrics();
+        return ResponseEntity.ok(ApiResponse.success(metrics));
+    }
+
+    @GetMapping("/anomaly-status-counts")
+    public ResponseEntity<ApiResponse<Map<String, Object>>> getAnomalyStatusCounts() {
         Map<String, Object> metrics = statisticsService.getValidationMetrics();
         return ResponseEntity.ok(ApiResponse.success(metrics));
     }

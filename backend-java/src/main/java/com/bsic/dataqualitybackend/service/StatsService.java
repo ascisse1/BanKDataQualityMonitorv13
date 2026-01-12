@@ -35,7 +35,6 @@ public class StatsService {
     /**
      * Get overall client statistics for dashboard.
      */
-    @Cacheable(value = "dashboardStats", key = "'clientStats'")
     public DashboardStatsDto getClientStats() {
         log.info("Calculating client statistics for dashboard");
 

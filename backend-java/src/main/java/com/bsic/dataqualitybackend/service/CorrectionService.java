@@ -2,11 +2,14 @@ package com.bsic.dataqualitybackend.service;
 
 import com.bsic.dataqualitybackend.dto.CorrectionRequest;
 import com.bsic.dataqualitybackend.dto.CorrectionResponse;
+import com.bsic.dataqualitybackend.model.Anomaly;
 import com.bsic.dataqualitybackend.model.Ticket;
 import com.bsic.dataqualitybackend.model.TicketIncident;
 import com.bsic.dataqualitybackend.model.User;
+import com.bsic.dataqualitybackend.model.enums.AnomalyStatus;
 import com.bsic.dataqualitybackend.model.enums.TicketPriority;
 import com.bsic.dataqualitybackend.model.enums.TicketStatus;
+import com.bsic.dataqualitybackend.repository.AnomalyRepository;
 import com.bsic.dataqualitybackend.repository.TicketIncidentRepository;
 import com.bsic.dataqualitybackend.repository.TicketRepository;
 import lombok.RequiredArgsConstructor;
@@ -25,6 +28,7 @@ public class CorrectionService {
 
     private final TicketRepository ticketRepository;
     private final TicketIncidentRepository ticketIncidentRepository;
+    private final AnomalyRepository anomalyRepository;
     private final TicketService ticketService;
     private final WorkflowService workflowService;
     private final UserService userService;
@@ -85,6 +89,12 @@ public class CorrectionService {
 
         // Update status based on action
         updateStatusBasedOnAction(ticket, incident, request.getAction(), currentUser);
+
+        // Update the Anomaly record with the correction value
+        if (request.getAction() == CorrectionRequest.CorrectionAction.FIX && request.getNewValue() != null) {
+            updateAnomalyWithCorrection(request.getCli(), request.getFieldName(),
+                    request.getNewValue(), currentUser.getUsername());
+        }
 
         return buildCorrectionResponse(ticket, incident, ticket.getProcessInstanceId(), isNewTicket);
     }
@@ -235,6 +245,28 @@ public class CorrectionService {
 
         ticketRepository.save(ticket);
         ticketIncidentRepository.save(incident);
+    }
+
+    /**
+     * Update the Anomaly record with the correction value.
+     * This ensures the correctionValue is displayed in the anomalies list.
+     */
+    private void updateAnomalyWithCorrection(String clientNumber, String fieldName,
+                                              String newValue, String correctedBy) {
+        List<Anomaly> anomalies = anomalyRepository.findOpenAnomalyByClientAndField(clientNumber, fieldName);
+
+        if (!anomalies.isEmpty()) {
+            Anomaly anomaly = anomalies.get(0); // Get the most recent one
+            anomaly.setCorrectionValue(newValue);
+            anomaly.setCorrectedBy(correctedBy);
+            anomaly.setCorrectedAt(LocalDateTime.now());
+            anomaly.setStatus(AnomalyStatus.IN_PROGRESS); // Mark as in progress (pending 4-Eyes validation)
+            anomalyRepository.save(anomaly);
+            log.info("Updated anomaly {} with correction value: {}", anomaly.getId(), newValue);
+        } else {
+            log.warn("No open anomaly found for client {} field {} to update with correction",
+                    clientNumber, fieldName);
+        }
     }
 
     private String inferCategory(String fieldName) {
