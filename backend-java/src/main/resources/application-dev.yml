@@ -7,7 +7,7 @@ spring:
 
     # Informix CBS database (Docker container)
     informix:
-      jdbc-url: jdbc:informix-sqli://localhost:9088/amplitude:INFORMIXSERVER=informix
+      jdbc-url: jdbc:informix-sqli://localhost:9088/bank:INFORMIXSERVER=informix
       username: informix
       password: in4mix
       driver-class-name: com.informix.jdbc.IfxDriver
@@ -41,3 +41,5 @@ app:
   scheduling:
     bkcli-sync-cron: "*/30 * * * * ?"      # Every 30 seconds (dev only)
     agency-sync-cron: "*/20 * * * * ?"     # Every 30 seconds (dev only)
+server:
+  port: 8086
