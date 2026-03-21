@@ -1,42 +1,40 @@
-<<<<<<< HEAD
 ####################
 # Logs
 ####################
 logs/
-=======
-# Logs
-logs
->>>>>>> 745e2a7 (Initial commit after re-initializing repository)
 *.log
+*.log.*.gz
 npm-debug.log*
 yarn-debug.log*
 yarn-error.log*
 pnpm-debug.log*
 lerna-debug.log*
 
-<<<<<<< HEAD
 ####################
 # Node / Frontend
 ####################
 node_modules/
 dist/
 dist-ssr/
+.vite/
 .vite-cache/
 coverage/
+*.tsbuildinfo
 
 ####################
 # Environment
 ####################
 .env
-*.local
+.env.local
+.env.*.local
 
 ####################
 # Java / Maven
 ####################
-backend-java/target/
-target/
+**/target/
 *.class
 *.jar
+!.mvn/wrapper/*.jar
 
 ####################
 # Database / Temp
@@ -51,28 +49,18 @@ target/
 .vscode/*
 !.vscode/extensions.json
 .idea/
+*.iml
 .DS_Store
 Thumbs.db
-=======
-node_modules
-dist
-dist-ssr
-*.local
-
-# Editor directories and files
-.vscode/*
-!.vscode/extensions.json
-.idea
-.DS_Store
->>>>>>> 745e2a7 (Initial commit after re-initializing repository)
 *.suo
 *.ntvs*
 *.njsproj
 *.sln
 *.sw?
-<<<<<<< HEAD
-/backend-java/target
-**/node_modules**
-=======
-.env
->>>>>>> 745e2a7 (Initial commit after re-initializing repository)
+
+####################
+# Misc
+####################
+nul
+.bolt/
+.claude/
