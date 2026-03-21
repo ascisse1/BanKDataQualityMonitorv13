@@ -22,25 +22,11 @@ const DataLoadHistoryTable = ({ isLoading = false }: DataLoadHistoryProps) => {
   const [history, setHistory] = useState<DataLoadRecord[]>([]);
   const [loading, setLoading] = useState(isLoading);
   const [error, setError] = useState<string | null>(null);
-  const [useHardcodedData, setUseHardcodedData] = useState(false);
   const { addToast } = useToast();
 
   useEffect(() => {
     if (!isLoading) {
-      if (useHardcodedData) {
-        // Utiliser directement les données en dur
-        const hardcodedData = [
-          { id: 1, table_name: "bkcli", records_count: 8765, load_date: "2025-06-28T00:00:00.000Z", load_status: "success", error_message: null, loaded_by: "admin", execution_time_ms: 45678 },
-          { id: 2, table_name: "bkcom", records_count: 12543, load_date: "2025-06-27T00:00:00.000Z", load_status: "success", error_message: null, loaded_by: "system", execution_time_ms: 32456 },
-          { id: 3, table_name: "bkadcli", records_count: 7654, load_date: "2025-06-26T00:00:00.000Z", load_status: "success", error_message: null, loaded_by: "batch_process", execution_time_ms: 28765 },
-          { id: 4, table_name: "bktelcli", records_count: 0, load_date: "2025-06-25T00:00:00.000Z", load_status: "error", error_message: "Erreur de connexion à la base de données", loaded_by: "system", execution_time_ms: 12345 },
-          { id: 5, table_name: "bkemacli", records_count: 5432, load_date: "2025-06-24T00:00:00.000Z", load_status: "success", error_message: null, loaded_by: "admin", execution_time_ms: 23456 }
-        ];
-        setHistory(hardcodedData);
-        setLoading(false);
-      } else {
-        fetchHistory();
-      }
+      fetchHistory();
     }
   }, [isLoading]);
 
@@ -65,41 +51,9 @@ const DataLoadHistoryTable = ({ isLoading = false }: DataLoadHistoryProps) => {
     } catch (error) {
       console.error('Error fetching data load history:', error);
       setError('Erreur lors du chargement de l\'historique');
-      
-      // Générer des données de test en cas d'erreur
-      setHistory(generateTestData());
     } finally {
       setLoading(false);
     }
-  };
-
-  const generateTestData = (): DataLoadRecord[] => {
-    const tables = ['bkcli', 'bkcom', 'bkadcli', 'bktelcli', 'bkemacli', 'bkcoj', 'bkpscm'];
-    const users = ['admin', 'system', 'batch_process'];
-    const result: DataLoadRecord[] = [];
-    
-    for (let i = 0; i < 20; i++) {
-      const date = new Date();
-      date.setDate(date.getDate() - i);
-      
-      const table = tables[Math.floor(Math.random() * tables.length)];
-      const status = Math.random() > 0.2 ? 'success' : (Math.random() > 0.5 ? 'warning' : 'error');
-      const recordsCount = Math.floor(Math.random() * 10000) + 1000;
-      const executionTime = Math.floor(Math.random() * 60000) + 1000;
-      
-      result.push({
-        id: i + 1,
-        table_name: table,
-        records_count: status === 'success' ? recordsCount : 0,
-        load_date: date.toISOString(),
-        load_status: status,
-        error_message: status === 'error' ? 'Erreur de connexion à la base de données' : null,
-        loaded_by: users[Math.floor(Math.random() * users.length)],
-        execution_time_ms: executionTime
-      });
-    }
-    
-    return result;
   };
 
   const formatDate = (dateString: string) => {

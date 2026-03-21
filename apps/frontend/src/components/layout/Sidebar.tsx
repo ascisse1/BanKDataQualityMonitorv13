@@ -374,7 +374,7 @@ const Sidebar = ({ isMobile, isOpen, onClose }: SidebarProps) => {
                     Système actif
                   </p>
                   <p className="text-xs text-success-600/70 dark:text-success-500">
-                    Mode Démo
+                    Production
                   </p>
                 </motion.div>
               )}

@@ -1,15 +1,13 @@
-import axios, { AxiosInstance, InternalAxiosRequestConfig } from 'axios';
+import { AxiosInstance } from 'axios';
 import { ValidationRule, ValidationResult, ValidationError, ValidationWarning, ClientRecord, RuleCondition } from '../types/ValidationRules';
 import { logger } from './logger';
-
-// API configuration
-const SPRING_BOOT_URL = import.meta.env.VITE_SPRING_BOOT_URL || 'http://localhost:8080';
+import apiClient from '../lib/apiClient';
 
 // Backend DTO interface (matches Spring Boot ValidationRuleDto)
 interface ValidationRuleDto {
   id: number;
   ruleName: string;
-  description: string;
+    description: string;
   ruleType: string;
   clientType: string | null;
   fieldName: string;
@@ -33,62 +31,6 @@ interface ApiResponse<T> {
   timestamp?: string;
 }
 
-/**
- * Extracts CSRF token from cookie (set by Spring Security).
- */
-function getCsrfTokenFromCookie(): string | null {
-  const cookies = document.cookie.split(';');
-  for (const cookie of cookies) {
-    const [name, value] = cookie.trim().split('=');
-    if (name === 'XSRF-TOKEN') {
-      return decodeURIComponent(value);
-    }
-  }
-  return null;
-}
-
-/**
- * Creates an axios instance with session-based authentication.
- */
-const createAxiosInstance = (): AxiosInstance => {
-  const instance = axios.create({
-    baseURL: SPRING_BOOT_URL,
-    headers: {
-      'Content-Type': 'application/json',
-      'Accept': 'application/json',
-    },
-    withCredentials: true,
-  });
-
-  instance.interceptors.request.use(
-    async (config: InternalAxiosRequestConfig) => {
-      const method = config.method?.toUpperCase();
-      if (method && method !== 'GET' && method !== 'HEAD' && method !== 'OPTIONS') {
-        const csrfToken = getCsrfTokenFromCookie();
-        if (csrfToken) {
-          config.headers['X-XSRF-TOKEN'] = csrfToken;
-        }
-      }
-      return config;
-    },
-    (error) => Promise.reject(error)
-  );
-
-  instance.interceptors.response.use(
-    (response) => response,
-    async (error) => {
-      if (error.response?.status === 401) {
-        logger.warning('security', 'Session expired');
-      }
-      if (error.response?.status === 403) {
-        logger.warning('security', 'Access denied', { url: error.config?.url });
-      }
-      return Promise.reject(error);
-    }
-  );
-
-  return instance;
-};
 
 export class ValidationRulesService {
   private static instance: ValidationRulesService;
@@ -99,7 +41,7 @@ export class ValidationRulesService {
   private readonly CACHE_TTL_MS = 5 * 60 * 1000; // 5 minutes cache
 
   private constructor() {
-    this.axiosInstance = createAxiosInstance();
+    this.axiosInstance = apiClient;
   }
 
   public static getInstance(): ValidationRulesService {

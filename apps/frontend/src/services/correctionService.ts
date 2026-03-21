@@ -1,40 +1,5 @@
-import axios from 'axios';
+import apiClient from '../lib/apiClient';
 import { logger } from './logger';
-
-const SPRING_BOOT_URL = import.meta.env.VITE_SPRING_BOOT_URL || 'http://localhost:8080';
-
-// Create axios instance for corrections API
-const correctionApi = axios.create({
-  baseURL: SPRING_BOOT_URL,
-  headers: {
-    'Content-Type': 'application/json',
-  },
-  withCredentials: true,
-});
-
-// Get CSRF token from cookie
-function getCsrfToken(): string | null {
-  const cookies = document.cookie.split(';');
-  for (const cookie of cookies) {
-    const [name, value] = cookie.trim().split('=');
-    if (name === 'XSRF-TOKEN') {
-      return decodeURIComponent(value);
-    }
-  }
-  return null;
-}
-
-// Add CSRF token to requests
-correctionApi.interceptors.request.use((config) => {
-  const method = config.method?.toUpperCase();
-  if (method && method !== 'GET' && method !== 'HEAD' && method !== 'OPTIONS') {
-    const csrfToken = getCsrfToken();
-    if (csrfToken) {
-      config.headers['X-XSRF-TOKEN'] = csrfToken;
-    }
-  }
-  return config;
-});
 
 // Types
 export type CorrectionAction = 'FIX' | 'REVIEW' | 'REJECT';
@@ -95,7 +60,7 @@ export const correctionService = {
     try {
       logger.info('api', 'Submitting correction', { cli: request.cli, field: request.fieldName });
 
-      const response = await correctionApi.post<ApiResponse<CorrectionResponse>>(
+      const response = await apiClient.post<ApiResponse<CorrectionResponse>>(
         '/api/corrections',
         request
       );
@@ -119,7 +84,7 @@ export const correctionService = {
    */
   async getClientCorrections(cli: string): Promise<any[]> {
     try {
-      const response = await correctionApi.get<ApiResponse<any[]>>(
+      const response = await apiClient.get<ApiResponse<any[]>>(
         `/api/corrections/client/${cli}`
       );
       return response.data.success ? response.data.data : [];
@@ -134,7 +99,7 @@ export const correctionService = {
    */
   async getPendingValidation(): Promise<any[]> {
     try {
-      const response = await correctionApi.get<ApiResponse<any[]>>(
+      const response = await apiClient.get<ApiResponse<any[]>>(
         '/api/corrections/pending-validation'
       );
       return response.data.success ? response.data.data : [];
@@ -155,7 +120,7 @@ export const correctionService = {
     try {
       logger.info('api', `${approved ? 'Approving' : 'Rejecting'} correction`, { ticketId });
 
-      const response = await correctionApi.post<ApiResponse<CorrectionResponse>>(
+      const response = await apiClient.post<ApiResponse<CorrectionResponse>>(
         `/api/corrections/${ticketId}/validate`,
         { approved, reason }
       );
@@ -180,7 +145,7 @@ export const correctionService = {
    */
   async requestValidation(ticketId: number, notes?: string): Promise<CorrectionResponse> {
     try {
-      const response = await correctionApi.post<ApiResponse<CorrectionResponse>>(
+      const response = await apiClient.post<ApiResponse<CorrectionResponse>>(
         `/api/corrections/${ticketId}/request-validation`,
         { notes }
       );

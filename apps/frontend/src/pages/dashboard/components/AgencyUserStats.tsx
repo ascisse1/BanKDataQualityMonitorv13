@@ -17,26 +17,12 @@ const AgencyUserStats = ({ isLoading = false }: AgencyUserStatsProps) => {
   const [stats, setStats] = useState<AgencyUserStat[]>([]);
   const [loading, setLoading] = useState(isLoading);
   const [error, setError] = useState<string | null>(null);
-  const [useHardcodedData, setUseHardcodedData] = useState(false);
   const { addToast } = useToast();
   const [retryCount, setRetryCount] = useState(0);
 
   useEffect(() => {
     if (!isLoading) {
-      if (useHardcodedData) {
-        // Utiliser directement les données en dur
-        const hardcodedData = [
-          { agency_code: "01001", user_count: 5, last_activity: "2025-06-28T10:15:30.000Z" },
-          { agency_code: "01002", user_count: 3, last_activity: "2025-06-27T14:25:10.000Z" },
-          { agency_code: "01003", user_count: 4, last_activity: "2025-06-26T09:45:20.000Z" },
-          { agency_code: "01004", user_count: 2, last_activity: "2025-06-25T16:35:40.000Z" },
-          { agency_code: "01005", user_count: 3, last_activity: "2025-06-24T11:55:15.000Z" }
-        ];
-        setStats(hardcodedData);
-        setLoading(false);
-      } else {
-        fetchStats();
-      }
+      fetchStats();
     }
   }, [isLoading, retryCount]);
 
@@ -44,37 +30,16 @@ const AgencyUserStats = ({ isLoading = false }: AgencyUserStatsProps) => {
     try {
       setLoading(true);
       setError(null);
-      
-      // Generate test data
-      const testData = generateTestData();
-      setStats(testData);
-      
+
+      // TODO: Replace with real API call
+      setStats([]);
+
     } catch (error) {
       console.error('Error fetching agency user stats:', error);
       setError('Erreur lors du chargement des statistiques');
-      
-      // Generate test data in case of error
-      setStats(generateTestData());
     } finally {
       setLoading(false);
     }
-  };
-
-  const generateTestData = (): AgencyUserStat[] => {
-    const result: AgencyUserStat[] = [];
-    
-    for (let i = 1; i <= 10; i++) {
-      const date = new Date();
-      date.setDate(date.getDate() - Math.floor(Math.random() * 30));
-      
-      result.push({
-        agency_code: `0${1200 + i}`,
-        user_count: Math.floor(Math.random() * 5) + 1,
-        last_activity: Math.random() > 0.2 ? date.toISOString() : null
-      });
-    }
-    
-    return result;
   };
 
   const formatDate = (dateString: string | null) => {

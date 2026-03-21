@@ -111,58 +111,14 @@ const FatcaSummary: React.FC<FatcaSummaryProps> = ({
   
   const [fatcaIndicators, setFatcaIndicators] = useState<FatcaIndicator[]>([]);
   const [isLoadingIndicators, setIsLoadingIndicators] = useState(false);
-  const [useHardcodedData, setUseHardcodedData] = useState(false);
 
   useEffect(() => {
-    if (useHardcodedData) {
-      // Utiliser directement les données en dur pour le graphique
+    if (!isLoading) {
       setChartData({
         ...chartData,
         series: [fatcaCount, totalClients - fatcaCount],
       });
-      
-      // Utiliser directement les données en dur pour les indicateurs
-      const hardcodedIndicators: FatcaIndicator[] = [
-        { 
-          name: 'Nationalité américaine', 
-          count: Math.round(fatcaCount * 0.35), 
-          icon: <Flag className="h-5 w-5 text-error-600" />,
-          color: 'bg-error-100 text-error-800'
-        },
-        { 
-          name: 'Naissance aux États-Unis', 
-          count: Math.round(fatcaCount * 0.25), 
-          icon: <Users className="h-5 w-5 text-warning-600" />,
-          color: 'bg-warning-100 text-warning-800'
-        },
-        { 
-          name: 'Adresse aux États-Unis', 
-          count: Math.round(fatcaCount * 0.20), 
-          icon: <MapPin className="h-5 w-5 text-primary-600" />,
-          color: 'bg-primary-100 text-primary-800'
-        },
-        { 
-          name: 'Téléphone américain', 
-          count: Math.round(fatcaCount * 0.15), 
-          icon: <Phone className="h-5 w-5 text-secondary-600" />,
-          color: 'bg-secondary-100 text-secondary-800'
-        },
-        { 
-          name: 'Procuration US', 
-          count: Math.round(fatcaCount * 0.05), 
-          icon: <AlertCircle className="h-5 w-5 text-success-600" />,
-          color: 'bg-success-100 text-success-800'
-        }
-      ];
-      
-      setFatcaIndicators(hardcodedIndicators);
-    } else if (!isLoading) {
-      setChartData({
-        ...chartData,
-        series: [fatcaCount, totalClients - fatcaCount],
-      });
-      
-      // Fetch real FATCA indicators data
+
       fetchFatcaIndicators();
     }
   }, [isLoading, fatcaCount, totalClients]);

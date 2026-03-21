@@ -14,26 +14,10 @@ const FatcaStats = ({ isLoading = false, clientType = 'all' }) => {
   const [stats, setStats] = useState<any | null>(null);
   const [loading, setLoading] = useState(isLoading);
   const [error, setError] = useState<string | null>(null);
-  const [useHardcodedData, setUseHardcodedData] = useState(false);
   const { addToast } = useToast();
 
   useEffect(() => {
-    if (useHardcodedData) {
-      // Utiliser directement les données en dur
-      setStats({
-        total: 1250,
-        individual: 850,
-        corporate: 400,
-        toVerify: 850,
-        confirmed: 320,
-        excluded: 80,
-        pending: 0,
-        currentMonth: 125
-      });
-      setLoading(false);
-    } else {
-      fetchStats();
-    }
+    fetchStats();
   }, [clientType]);
 
   const fetchStats = async () => {
@@ -46,18 +30,7 @@ const FatcaStats = ({ isLoading = false, clientType = 'all' }) => {
     } catch (error) {
       setError('Erreur lors du chargement des statistiques FATCA');
       console.error('Error fetching FATCA stats:', error);
-      
-      // Fallback data
-      setStats({
-        total: 1250,
-        individual: 850,
-        corporate: 400,
-        toVerify: 850,
-        confirmed: 320,
-        excluded: 80,
-        pending: 0,
-        currentMonth: 125
-      });
+      setStats(null);
     } finally {
       setLoading(false);
     }

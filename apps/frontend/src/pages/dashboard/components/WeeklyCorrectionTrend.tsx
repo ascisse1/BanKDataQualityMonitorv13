@@ -107,34 +107,12 @@ const WeeklyCorrectionTrend = ({ isLoading = false }: WeeklyCorrectionTrendProps
   const [stats, setStats] = useState<WeeklyCorrectionStat[]>([]);
   const [loading, setLoading] = useState(isLoading);
   const [error, setError] = useState<string | null>(null);
-  const [useHardcodedData, setUseHardcodedData] = useState(false);
   const { addToast } = useToast();
   const [retryCount, setRetryCount] = useState(0);
 
   useEffect(() => {
     if (!isLoading) {
-      if (useHardcodedData) {
-        // Utiliser directement les données en dur
-        const hardcodedData = [
-          { year_week: "20251", week_label: "2025-W1", status: "detected", count: 142 },
-          { year_week: "20251", week_label: "2025-W1", status: "in_review", count: 87 },
-          { year_week: "20251", week_label: "2025-W1", status: "fixed", count: 65 },
-          { year_week: "20251", week_label: "2025-W1", status: "rejected", count: 12 },
-          { year_week: "20252", week_label: "2025-W2", status: "detected", count: 128 },
-          { year_week: "20252", week_label: "2025-W2", status: "in_review", count: 92 },
-          { year_week: "20252", week_label: "2025-W2", status: "fixed", count: 58 },
-          { year_week: "20252", week_label: "2025-W2", status: "rejected", count: 15 },
-          { year_week: "20253", week_label: "2025-W3", status: "detected", count: 135 },
-          { year_week: "20253", week_label: "2025-W3", status: "in_review", count: 78 },
-          { year_week: "20253", week_label: "2025-W3", status: "fixed", count: 62 },
-          { year_week: "20253", week_label: "2025-W3", status: "rejected", count: 18 }
-        ];
-        setStats(hardcodedData);
-        updateChartWithData(hardcodedData);
-        setLoading(false);
-      } else {
-        fetchData();
-      }
+      fetchData();
     }
   }, [isLoading, retryCount]);
 
@@ -142,51 +120,17 @@ const WeeklyCorrectionTrend = ({ isLoading = false }: WeeklyCorrectionTrendProps
     try {
       setLoading(true);
       setError(null);
-      
-      // Generate fallback data
-      const testData = generateTestData();
-      setStats(testData);
-      updateChartWithData(testData);
-      
+
+      // TODO: Replace with real API call
+      setStats([]);
+      updateChartWithData([]);
+
     } catch (error) {
       console.error('Error fetching weekly correction stats:', error);
       setError('Erreur lors du chargement des données');
-      
-      // Use fallback data in case of error
-      const testData = generateTestData();
-      setStats(testData);
-      updateChartWithData(testData);
     } finally {
       setLoading(false);
     }
-  };
-
-  const generateTestData = (): WeeklyCorrectionStat[] => {
-    const weeks = 12;
-    const result: WeeklyCorrectionStat[] = [];
-    
-    for (let i = 0; i < weeks; i++) {
-      const date = new Date();
-      date.setDate(date.getDate() - (weeks - i) * 7);
-      
-      const yearWeek = `${date.getFullYear()}${Math.floor(i / 4) + 1}`;
-      const weekLabel = `${date.getFullYear()}-W${String(Math.floor(i / 4) + 1).padStart(2, '0')}`;
-      
-      // Generate random values for each status
-      const detectedCount = Math.floor(Math.random() * 100) + 50;
-      const inReviewCount = Math.floor(Math.random() * 80) + 20;
-      const fixedCount = Math.floor(Math.random() * 60) + 10;
-      const rejectedCount = Math.floor(Math.random() * 20) + 5;
-      
-      result.push(
-        { year_week: yearWeek, week_label: weekLabel, status: 'detected', count: detectedCount },
-        { year_week: yearWeek, week_label: weekLabel, status: 'in_review', count: inReviewCount },
-        { year_week: yearWeek, week_label: weekLabel, status: 'fixed', count: fixedCount },
-        { year_week: yearWeek, week_label: weekLabel, status: 'rejected', count: rejectedCount }
-      );
-    }
-    
-    return result;
   };
 
   const updateChartWithData = (data: WeeklyCorrectionStat[]) => {

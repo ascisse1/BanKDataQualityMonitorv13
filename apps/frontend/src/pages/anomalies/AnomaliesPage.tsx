@@ -40,8 +40,6 @@ const AnomaliesPage: React.FC = () => {
     const [isRefreshing, setIsRefreshing] = useState(false);
     const [totalAnomalies, setTotalAnomalies] = useState(0);
     const {user} = useAuth();
-    const [useHardcodedData, _setUseHardcodedData] = useState(false);
-
     // Check if user is an agency user
     const isAgencyUser = user?.role === 'AGENCY_USER';
     const userAgencyCode = user?.agencyCode;
@@ -96,21 +94,14 @@ const AnomaliesPage: React.FC = () => {
     const refreshData = async () => {
         try {
             setIsRefreshing(true);
-            if (useHardcodedData) {
-                // Simuler un rafraîchissement avec les données en dur
-                await new Promise(resolve => setTimeout(resolve, 500));
-            } else {
-                addToast('Actualisation des données en cours...', 'info');
+            addToast('Actualisation des données en cours...', 'info');
 
-                // Clear the cache to force fresh data
-                await db.clearCache();
+            // Clear the cache to force fresh data
+            await db.clearCache();
 
-                // Fetch total anomalies count again
-                await fetchTotalAnomaliesCount();
+            // Fetch total anomalies count again
+            await fetchTotalAnomaliesCount();
 
-                // Simulate a delay for the loading animation
-                await new Promise(resolve => setTimeout(resolve, 1000));
-            }
             setIsRefreshing(false);
             addToast('Données actualisées avec succès', 'success');
         } catch (error) {
@@ -347,37 +338,8 @@ const AnomaliesPage: React.FC = () => {
                 };
             });
         } catch (error) {
-            console.error('❌ Error fetching all anomalies:', error);
-
-            // Return sample data on error
-            const effectiveAgencyCode = isAgencyUser && userAgencyCode ? userAgencyCode : selectedAgency;
-            const sampleData = generateSampleData(effectiveAgencyCode);
-            return sampleData.map(client => ({
-                'Code Client': client.cli?.trim() || '',
-                'Nom Client': client.nom?.trim() || '',
-                'Prénom': client.pre?.trim() || '',
-                'Type Client': client.tcli === '1' ? 'Particulier' : client.tcli === '2' ? 'Entreprise' : 'Institutionnel',
-                'Nombre d\'anomalies': 1,
-                'Champs en erreur': 'Données manquantes',
-                'Messages d\'erreur': 'Données obligatoires non renseignées',
-                'Code Agence': client.age?.trim() || '',
-                'Sévérité': 'Haute',
-                'Date de naissance': client.dna || '',
-                'Numéro d\'identité': client.nid?.trim() || '',
-                'Nom de la mère': client.nmer?.trim() || '',
-                'Numéro de registre': client.nrc?.trim() || '',
-                'Date de création': client.datc || '',
-                'Raison sociale': client.rso?.trim() || '',
-                'Nationalité': client.nat?.trim() || '',
-                'Sexe': client.sext?.trim() || '',
-                'Ville de naissance': client.viln?.trim() || '',
-                'Pays de naissance': client.payn?.trim() || '',
-                'Type de pièce d\'identité': client.tid?.trim() || '',
-                'Secteur d\'activité': client.sec?.trim() || '',
-                'Forme juridique': client.fju?.trim() || '',
-                'Catégorie BC': client.catn?.trim() || '',
-                'Lien avec la banque': client.lienbq?.trim() || ''
-            }));
+            console.error('Error fetching all anomalies:', error);
+            return [];
         }
     };
 

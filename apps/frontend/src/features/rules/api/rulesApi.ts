@@ -1,9 +1,6 @@
-import axios, { AxiosInstance, InternalAxiosRequestConfig } from 'axios';
 import { ValidationRule, CreateRuleInput, UpdateRuleInput } from '../schemas/ruleSchema';
 import { logger } from '../../../services/logger';
-
-// API configuration
-const SPRING_BOOT_URL = import.meta.env.VITE_SPRING_BOOT_URL || 'http://localhost:8080';
+import apiClient from '../../../lib/apiClient';
 
 // Backend DTO interface
 interface ValidationRuleDto {
@@ -31,63 +28,6 @@ interface ApiResponse<T> {
   data: T;
   timestamp?: string;
 }
-
-// Get CSRF token from cookie
-function getCsrfTokenFromCookie(): string | null {
-  const cookies = document.cookie.split(';');
-  for (const cookie of cookies) {
-    const [name, value] = cookie.trim().split('=');
-    if (name === 'XSRF-TOKEN') {
-      return decodeURIComponent(value);
-    }
-  }
-  return null;
-}
-
-// Create axios instance with interceptors
-const createApiClient = (): AxiosInstance => {
-  const instance = axios.create({
-    baseURL: SPRING_BOOT_URL,
-    headers: {
-      'Content-Type': 'application/json',
-      'Accept': 'application/json',
-    },
-    withCredentials: true,
-  });
-
-  // Request interceptor for CSRF token
-  instance.interceptors.request.use(
-    async (config: InternalAxiosRequestConfig) => {
-      const method = config.method?.toUpperCase();
-      if (method && method !== 'GET' && method !== 'HEAD' && method !== 'OPTIONS') {
-        const csrfToken = getCsrfTokenFromCookie();
-        if (csrfToken) {
-          config.headers['X-XSRF-TOKEN'] = csrfToken;
-        }
-      }
-      return config;
-    },
-    (error) => Promise.reject(error)
-  );
-
-  // Response interceptor for error handling
-  instance.interceptors.response.use(
-    (response) => response,
-    async (error) => {
-      if (error.response?.status === 401) {
-        logger.warning('security', 'Session expired');
-      }
-      if (error.response?.status === 403) {
-        logger.warning('security', 'Access denied', { url: error.config?.url });
-      }
-      return Promise.reject(error);
-    }
-  );
-
-  return instance;
-};
-
-const apiClient = createApiClient();
 
 // Mapping functions
 const mapClientType = (backendType: string | null): '1' | '2' | '3' | null => {

@@ -119,32 +119,12 @@ const AgencyCorrectionChart = ({ isLoading = false }: AgencyCorrectionChartProps
   const [stats, setStats] = useState<AgencyCorrectionStat[]>([]);
   const [loading, setLoading] = useState(isLoading);
   const [error, setError] = useState<string | null>(null);
-  const [useHardcodedData, setUseHardcodedData] = useState(false);
   const { addToast } = useToast();
   const [retryCount, setRetryCount] = useState(0);
 
   useEffect(() => {
     if (!isLoading) {
-      if (useHardcodedData) {
-        // Utiliser directement les données en dur
-        const hardcodedData = [
-          { agency_code: "01001", agency_name: "AGENCE OUAGADOUGOU PRINCIPALE", total_anomalies: 4801, fixed_anomalies: 3842, in_review_anomalies: 523, rejected_anomalies: 120, correction_rate: 80.0, last_updated: new Date().toISOString() },
-          { agency_code: "01002", agency_name: "AGENCE OUAGADOUGOU CENTRE", total_anomalies: 3631, fixed_anomalies: 2905, in_review_anomalies: 453, rejected_anomalies: 100, correction_rate: 79.9, last_updated: new Date().toISOString() },
-          { agency_code: "01003", agency_name: "AGENCE OUAGADOUGOU NORD", total_anomalies: 4843, fixed_anomalies: 3630, in_review_anomalies: 605, rejected_anomalies: 150, correction_rate: 75.0, last_updated: new Date().toISOString() },
-          { agency_code: "01004", agency_name: "AGENCE OUAGADOUGOU SUD", total_anomalies: 4471, fixed_anomalies: 3130, in_review_anomalies: 670, rejected_anomalies: 200, correction_rate: 70.0, last_updated: new Date().toISOString() },
-          { agency_code: "01005", agency_name: "AGENCE OUAGADOUGOU EST", total_anomalies: 3194, fixed_anomalies: 2235, in_review_anomalies: 479, rejected_anomalies: 160, correction_rate: 70.0, last_updated: new Date().toISOString() },
-          { agency_code: "02001", agency_name: "AGENCE BOBO-DIOULASSO PRINCIPALE", total_anomalies: 3592, fixed_anomalies: 2155, in_review_anomalies: 539, rejected_anomalies: 180, correction_rate: 60.0, last_updated: new Date().toISOString() },
-          { agency_code: "03001", agency_name: "AGENCE KOUDOUGOU PRINCIPALE", total_anomalies: 2584, fixed_anomalies: 1550, in_review_anomalies: 388, rejected_anomalies: 129, correction_rate: 60.0, last_updated: new Date().toISOString() },
-          { agency_code: "04001", agency_name: "AGENCE BANFORA PRINCIPALE", total_anomalies: 1804, fixed_anomalies: 902, in_review_anomalies: 270, rejected_anomalies: 90, correction_rate: 50.0, last_updated: new Date().toISOString() },
-          { agency_code: "05001", agency_name: "AGENCE OUAHIGOUYA PRINCIPALE", total_anomalies: 1716, fixed_anomalies: 686, in_review_anomalies: 257, rejected_anomalies: 86, correction_rate: 40.0, last_updated: new Date().toISOString() },
-          { agency_code: "16001", agency_name: "AGENCE THOMAS SANKARA", total_anomalies: 2716, fixed_anomalies: 2173, in_review_anomalies: 407, rejected_anomalies: 136, correction_rate: 80.0, last_updated: new Date().toISOString() }
-        ];
-        setStats(hardcodedData);
-        updateChartWithData(hardcodedData);
-        setLoading(false);
-      } else {
-        fetchData();
-      }
+      fetchData();
     }
   }, [isLoading, retryCount]);
 
@@ -152,38 +132,17 @@ const AgencyCorrectionChart = ({ isLoading = false }: AgencyCorrectionChartProps
     try {
       setLoading(true);
       setError(null);
-      
-      // Generate test data
-      const testData = generateTestData();
-      setStats(testData);
-      updateChartWithData(testData);
-      
+
+      // TODO: Replace with real API call
+      setStats([]);
+      updateChartWithData([]);
+
     } catch (error) {
       console.error('Error fetching agency correction stats:', error);
       setError('Erreur lors du chargement des données');
-      
-      // Use test data in case of error
-      const testData = generateTestData();
-      setStats(testData);
-      updateChartWithData(testData);
     } finally {
       setLoading(false);
     }
-  };
-
-  const generateTestData = (): AgencyCorrectionStat[] => {
-    return [
-      { agency_code: '01001', agency_name: 'AGENCE OUAGADOUGOU PRINCIPALE', total_anomalies: 4801, fixed_anomalies: 3842, in_review_anomalies: 523, rejected_anomalies: 120, correction_rate: 80.0, last_updated: new Date().toISOString() },
-      { agency_code: '01002', agency_name: 'AGENCE OUAGADOUGOU CENTRE', total_anomalies: 363, fixed_anomalies: 290, in_review_anomalies: 45, rejected_anomalies: 10, correction_rate: 79.9, last_updated: new Date().toISOString() },
-      { agency_code: '01003', agency_name: 'AGENCE OUAGADOUGOU NORD', total_anomalies: 4843, fixed_anomalies: 3630, in_review_anomalies: 605, rejected_anomalies: 150, correction_rate: 75.0, last_updated: new Date().toISOString() },
-      { agency_code: '01004', agency_name: 'AGENCE OUAGADOUGOU SUD', total_anomalies: 4471, fixed_anomalies: 3130, in_review_anomalies: 670, rejected_anomalies: 200, correction_rate: 70.0, last_updated: new Date().toISOString() },
-      { agency_code: '01005', agency_name: 'AGENCE OUAGADOUGOU EST', total_anomalies: 3194, fixed_anomalies: 2235, in_review_anomalies: 479, rejected_anomalies: 160, correction_rate: 70.0, last_updated: new Date().toISOString() },
-      { agency_code: '01006', agency_name: 'AGENCE OUAGADOUGOU OUEST', total_anomalies: 702, fixed_anomalies: 456, in_review_anomalies: 105, rejected_anomalies: 35, correction_rate: 65.0, last_updated: new Date().toISOString() },
-      { agency_code: '01007', agency_name: 'AGENCE OUAGADOUGOU ENTREPRISES', total_anomalies: 3592, fixed_anomalies: 2155, in_review_anomalies: 539, rejected_anomalies: 180, correction_rate: 60.0, last_updated: new Date().toISOString() },
-      { agency_code: '01008', agency_name: 'AGENCE OUAGADOUGOU INTERNATIONALE', total_anomalies: 2584, fixed_anomalies: 1550, in_review_anomalies: 388, rejected_anomalies: 129, correction_rate: 60.0, last_updated: new Date().toISOString() },
-      { agency_code: '01009', agency_name: 'AGENCE OUAGADOUGOU ZONE INDUSTRIELLE', total_anomalies: 804, fixed_anomalies: 402, in_review_anomalies: 120, rejected_anomalies: 40, correction_rate: 50.0, last_updated: new Date().toISOString() },
-      { agency_code: '01010', agency_name: 'AGENCE OUAGADOUGOU QUARTIER DU COMMERCE', total_anomalies: 716, fixed_anomalies: 286, in_review_anomalies: 107, rejected_anomalies: 36, correction_rate: 40.0, last_updated: new Date().toISOString() }
-    ];
   };
 
   const updateChartWithData = (data: AgencyCorrectionStat[]) => {

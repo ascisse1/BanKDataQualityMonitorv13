@@ -56,10 +56,9 @@ const CorporateFatcaTable: React.FC<CorporateFatcaTableProps> = ({
   const [error, setError] = useState<string | null>(null);
   const { addToast } = useToast();
   const { user } = useAuth();
-  const [useHardcodedData, setUseHardcodedData] = useState(false);
   const itemsPerPage = 20;
 
-  const hasEditAccess = user?.role === 'admin' || user?.role === 'auditor';
+  const hasEditAccess = user?.role === 'ADMIN' || user?.role === 'AUDITOR';
 
   // Reset to page 1 when status filter changes
   useEffect(() => {
@@ -68,75 +67,7 @@ const CorporateFatcaTable: React.FC<CorporateFatcaTableProps> = ({
 
   // Fetch clients when page or status changes
   useEffect(() => {
-    if (useHardcodedData) {
-      // Utiliser directement les données en dur
-      const hardcodedData = [
-        {
-          cli: "ENT000008",
-          nom: "US COMPANY",
-          raisonSociale: "US COMPANY INC",
-          dateEntreeRelation: "2000-04-05",
-          statusClient: "Client Actif",
-          paysImmatriculation: "US",
-          paysResidenceFiscale: "US",
-          adresse: "789 Wall Street, Financial District, New York",
-          paysAdresse: "US",
-          telephone: "+12125557890",
-          agence: "01203",
-          fatcaStatus: "À vérifier",
-          fatcaDate: null,
-          fatcaUti: null,
-          notes: "Entreprise avec adresse aux États-Unis"
-        },
-        {
-          cli: "ENT000014",
-          nom: "US CORP A",
-          raisonSociale: "US CORPORATION A",
-          dateEntreeRelation: "2010-03-12",
-          statusClient: "Client Actif",
-          paysImmatriculation: "US",
-          paysResidenceFiscale: "US",
-          adresse: "123 Wall Street, Financial District, New York",
-          paysAdresse: "US",
-          telephone: "+12125551234",
-          agence: "01201",
-          fatcaStatus: "Confirmé",
-          fatcaDate: "2023-04-15",
-          fatcaUti: "admin",
-          notes: "Documentation W-8BEN-E reçue"
-        },
-        {
-          cli: "ENT000015",
-          nom: "US CORP B",
-          raisonSociale: "US CORPORATION B",
-          dateEntreeRelation: "2015-07-22",
-          statusClient: "Client Actif",
-          paysImmatriculation: "US",
-          paysResidenceFiscale: "US",
-          adresse: "456 Silicon Valley Blvd, Tech Park, San Francisco",
-          paysAdresse: "US",
-          telephone: "+14155559876",
-          agence: "01202",
-          fatcaStatus: "À vérifier",
-          fatcaDate: null,
-          fatcaUti: null,
-          notes: "Entreprise avec adresse aux États-Unis"
-        }
-      ];
-      
-      // Filtrer par statut si nécessaire
-      let filteredData = [...hardcodedData];
-      if (selectedStatus) {
-        filteredData = filteredData.filter(item => item.fatcaStatus === selectedStatus);
-      }
-      
-      setClients(filteredData);
-      setTotalRecords(400);
-      setTotalPages(Math.ceil(400 / itemsPerPage));
-      setLoading(false);
-    } else {
-      fetchClients();
-    }
+    fetchClients();
   }, [currentPage, selectedStatus]);
 
   // Apply search filter when search query changes
@@ -278,24 +209,6 @@ const CorporateFatcaTable: React.FC<CorporateFatcaTableProps> = ({
     } catch (error) {
       console.error('Error updating FATCA status:', error);
       addToast('Erreur lors de la mise à jour du statut FATCA', 'error');
-      
-      // Simulate successful update with sample data
-      setClients(prevClients => 
-        prevClients.map(client => 
-          client.cli === editingClient.cli 
-            ? {
-                ...client,
-                fatcaStatus: editingClient.fatcaStatus,
-                fatcaDate: new Date().toISOString().split('T')[0],
-                fatcaUti: user?.username || 'system',
-                notes: editingClient.notes
-              }
-            : client
-        )
-      );
-      
-      // Reset editing state
-      setEditingClient(null);
     } finally {
       setLoading(false);
     }
@@ -378,10 +291,7 @@ const CorporateFatcaTable: React.FC<CorporateFatcaTableProps> = ({
     setExpandedRow(null);
     setEditingClient(null);
     
-    // Simulate a delay for the loading animation
-    setTimeout(() => {
-      setPageLoading(false);
-    }, 500);
+    setPageLoading(false);
   };
 
   const renderPagination = () => {

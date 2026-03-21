@@ -23,7 +23,6 @@ const OptimizedAnomaliesTable: React.FC<OptimizedAnomaliesTableProps> = ({
   const [totalPages, setTotalPages] = useState(1);
   const [totalRecords, setTotalRecords] = useState(0);
   const { addToast } = useToast();
-  const [useHardcodedData, setUseHardcodedData] = useState(false);
   
   // Préchargement des données
   useDataPrefetch();
@@ -31,129 +30,7 @@ const OptimizedAnomaliesTable: React.FC<OptimizedAnomaliesTableProps> = ({
   const itemsPerPage = 50; // Augmenté pour de meilleures performances
 
   useEffect(() => {
-    if (useHardcodedData) {
-      // Utiliser directement les données en dur
-      const hardcodedData = [
-        {
-          cli: "CLI000001",
-          nom: "CLIENT TRAORE 1",
-          tcli: "1",
-          pre: "Fatoumata",
-          nid: "ID00000001",
-          nmer: "MERE DE 1",
-          dna: "1961-02-02",
-          nat: "ML",
-          age: "00001",
-          sext: "F",
-          viln: "BAMAKO",
-          payn: "ML",
-          tid: "CNI",
-          field: "Numéro d'identité",
-          fieldCode: "nid",
-          errorType: "Format invalide",
-          errorMessage: "Le numéro d'identité doit contenir au moins 8 caractères alphanumériques",
-          severity: "Haute",
-          status: "Nouveau"
-        },
-        {
-          cli: "CLI000002",
-          nom: "CLIENT DIALLO 2",
-          tcli: "1",
-          pre: "Mamadou",
-          nid: "ID00000002",
-          nmer: "MERE DE 2",
-          dna: "1962-03-03",
-          nat: "ML",
-          age: "00002",
-          sext: "M",
-          viln: "BAMAKO",
-          payn: "ML",
-          tid: "CNI",
-          field: "Date de naissance",
-          fieldCode: "dna",
-          errorType: "Valeur manquante",
-          errorMessage: "La date de naissance est obligatoire",
-          severity: "Moyenne",
-          status: "Nouveau"
-        },
-        {
-          cli: "CLI000003",
-          nom: "CLIENT TRAORE 3",
-          tcli: "1",
-          pre: "Fatoumata",
-          nid: "ID00000003",
-          nmer: "MERE DE 3",
-          dna: "1963-04-04",
-          nat: "ML",
-          age: "00003",
-          sext: "F",
-          viln: "BAMAKO",
-          payn: "ML",
-          tid: "CNI",
-          field: "Nationalité",
-          fieldCode: "nat",
-          errorType: "Valeur manquante",
-          errorMessage: "La nationalité est obligatoire",
-          severity: "Faible",
-          status: "Nouveau"
-        },
-        {
-          cli: "ENT000001",
-          nom: "ENTREPRISE 1",
-          tcli: "2",
-          pre: "-",
-          nrc: "RC00000001",
-          datc: "1990-01-01",
-          rso: "SOCIETE 1 SARL",
-          age: "00001",
-          sig: "",
-          sec: "SECTEUR 1",
-          fju: "SARL",
-          catn: "PME",
-          lienbq: "CLIENT",
-          field: "Numéro de registre",
-          fieldCode: "nrc",
-          errorType: "Format invalide",
-          errorMessage: "Le numéro de registre doit commencer par MA",
-          severity: "Haute",
-          status: "Nouveau"
-        },
-        {
-          cli: "ENT000002",
-          nom: "ENTREPRISE 2",
-          tcli: "2",
-          pre: "-",
-          nrc: "RC00000002",
-          datc: "1991-02-02",
-          rso: "SOCIETE 2 SARL",
-          age: "00002",
-          sig: "S2",
-          sec: "SECTEUR 2",
-          fju: "SARL",
-          catn: "PME",
-          lienbq: "CLIENT",
-          field: "Date de création",
-          fieldCode: "datc",
-          errorType: "Valeur manquante",
-          errorMessage: "La date de création est obligatoire",
-          severity: "Moyenne",
-          status: "Nouveau"
-        }
-      ];
-      
-      // Filtrer par agence si nécessaire
-      let filteredData = [...hardcodedData];
-      if (selectedAgency) {
-        filteredData = filteredData.filter(item => item.age === selectedAgency);
-      }
-      
-      setAnomalies(filteredData);
-      setTotalRecords(55000);
-      setTotalPages(Math.ceil(55000 / itemsPerPage));
-      setLoading(false);
-    } else {
-      fetchAnomalies();
-    }
+    fetchAnomalies();
   }, [selectedAgency, currentPage]);
 
   const fetchAnomalies = async () => {

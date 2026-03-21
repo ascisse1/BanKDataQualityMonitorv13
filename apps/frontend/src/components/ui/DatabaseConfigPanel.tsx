@@ -17,7 +17,7 @@ const DatabaseConfigPanel: React.FC<DatabaseConfigPanelProps> = ({ onConfigChang
     port: '3306',
     database: 'bankdb',
     username: 'bankapp',
-    password: 'password123'
+    password: ''
   });
   const [isTestingConnection, setIsTestingConnection] = useState(false);
   const [connectionStatus, setConnectionStatus] = useState<{
@@ -32,10 +32,7 @@ const DatabaseConfigPanel: React.FC<DatabaseConfigPanelProps> = ({ onConfigChang
 
   // Charger la configuration actuelle
   useEffect(() => {
-    // Test connection on mount
-    setTimeout(() => {
-      testConnection();
-    }, 500);
+    testConnection();
   }, []);
 
   const testConnection = async () => {
@@ -78,9 +75,6 @@ const DatabaseConfigPanel: React.FC<DatabaseConfigPanelProps> = ({ onConfigChang
     setIsSaving(true);
 
     try {
-      // In production, config changes should be done via environment variables
-      await new Promise(resolve => setTimeout(resolve, 500));
-
       showNotification('Database configuration is managed via environment variables', 'info');
       addToast('Configuration is managed via environment variables', 'info');
 

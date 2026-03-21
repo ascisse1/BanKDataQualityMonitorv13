@@ -48,10 +48,9 @@ const FatcaTable: React.FC<FatcaTableProps> = ({
   const [error, setError] = useState<string | null>(null);
   const { addToast } = useToast();
   const { user } = useAuth();
-  const [useHardcodedData, setUseHardcodedData] = useState(false);
   const itemsPerPage = 20;
 
-  const hasEditAccess = user?.role === 'admin' || user?.role === 'auditor';
+  const hasEditAccess = user?.role === 'ADMIN' || user?.role === 'AUDITOR';
 
   // Reset to page 1 when status filter changes
   useEffect(() => {
@@ -60,109 +59,7 @@ const FatcaTable: React.FC<FatcaTableProps> = ({
 
   // Fetch clients when page or status changes
   useEffect(() => {
-    if (useHardcodedData) {
-      // Utiliser directement les données en dur
-      const hardcodedData = [
-        {
-          cli: "CLI000009",
-          nom: "SMITH John",
-          date_entree_relation: "2020-01-01",
-          status_client: "Client Actif",
-          pays_naissance: "US",
-          nationalite: "US",
-          adresse: "123 Broadway Street, Manhattan, New York",
-          pays_adresse: "US",
-          telephone: "+12125551234",
-          relation_client: "",
-          type_relation: "",
-          fatca_status: "À vérifier",
-          fatca_date: null,
-          fatca_uti: null,
-          notes: "Client avec nationalité américaine"
-        },
-        {
-          cli: "CLI000010",
-          nom: "JOHNSON Sarah",
-          date_entree_relation: "2021-06-15",
-          status_client: "Client Actif",
-          pays_naissance: "US",
-          nationalite: "US",
-          adresse: "456 Michigan Avenue, Downtown, Chicago",
-          pays_adresse: "US",
-          telephone: "+13125559876",
-          relation_client: "",
-          type_relation: "",
-          fatca_status: "À vérifier",
-          fatca_date: null,
-          fatca_uti: null,
-          notes: "Client avec nationalité américaine"
-        },
-        {
-          cli: "CLI000016",
-          nom: "WILLIAMS Michael",
-          date_entree_relation: "2019-05-15",
-          status_client: "Client Actif",
-          pays_naissance: "US",
-          nationalite: "US",
-          adresse: "789 Washington Street, Downtown, Boston",
-          pays_adresse: "US",
-          telephone: "+16175551234",
-          relation_client: "",
-          type_relation: "",
-          fatca_status: "Confirmé",
-          fatca_date: "2023-03-10",
-          fatca_uti: "admin",
-          notes: "Documentation W-9 reçue"
-        },
-        {
-          cli: "CLI000017",
-          nom: "BROWN Emily",
-          date_entree_relation: "2022-07-22",
-          status_client: "Client Actif",
-          pays_naissance: "US",
-          nationalite: "US",
-          adresse: "456 Hollywood Blvd, Beverly Hills, Los Angeles",
-          pays_adresse: "US",
-          telephone: "+13235559876",
-          relation_client: "",
-          type_relation: "",
-          fatca_status: "Confirmé",
-          fatca_date: "2023-05-20",
-          fatca_uti: "admin",
-          notes: "Documentation W-9 reçue"
-        },
-        {
-          cli: "CLI000018",
-          nom: "DAVIS Robert",
-          date_entree_relation: "2018-11-05",
-          status_client: "Client Actif",
-          pays_naissance: "US",
-          nationalite: "US",
-          adresse: "123 Michigan Avenue, Downtown, Chicago",
-          pays_adresse: "US",
-          telephone: "+13125551234",
-          relation_client: "",
-          type_relation: "",
-          fatca_status: "Exclu",
-          fatca_date: "2023-02-15",
-          fatca_uti: "admin",
-          notes: "Client non soumis à FATCA après vérification"
-        }
-      ];
-      
-      // Filtrer par statut si nécessaire
-      let filteredData = [...hardcodedData];
-      if (selectedStatus) {
-        filteredData = filteredData.filter(item => item.fatca_status === selectedStatus);
-      }
-      
-      setClients(filteredData);
-      setTotalRecords(1250);
-      setTotalPages(Math.ceil(1250 / itemsPerPage));
-      setLoading(false);
-    } else {
-      fetchClients();
-    }
+    fetchClients();
   }, [currentPage, selectedStatus]);
 
   // Apply search filter when search query changes
@@ -303,24 +200,6 @@ const FatcaTable: React.FC<FatcaTableProps> = ({
     } catch (error) {
       console.error('Error updating FATCA status:', error);
       addToast('Erreur lors de la mise à jour du statut FATCA', 'error');
-      
-      // Simulate successful update with sample data
-      setClients(prevClients => 
-        prevClients.map(client => 
-          client.cli === editingClient.cli 
-            ? {
-                ...client,
-                fatca_status: editingClient.fatca_status,
-                fatca_date: new Date().toISOString().split('T')[0],
-                fatca_uti: user?.username || 'system',
-                notes: editingClient.notes
-              }
-            : client
-        )
-      );
-      
-      // Reset editing state
-      setEditingClient(null);
     } finally {
       setLoading(false);
     }
@@ -403,10 +282,7 @@ const FatcaTable: React.FC<FatcaTableProps> = ({
     setExpandedRow(null);
     setEditingClient(null);
     
-    // Simulate a delay for the loading animation
-    setTimeout(() => {
-      setPageLoading(false);
-    }, 500);
+    setPageLoading(false);
   };
 
   const renderPagination = () => {

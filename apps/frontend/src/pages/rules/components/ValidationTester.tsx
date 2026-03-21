@@ -30,10 +30,7 @@ const ValidationTester: React.FC = () => {
 
   const handleValidate = async () => {
     setIsValidating(true);
-    
-    // Simulation d'un délai de validation
-    await new Promise(resolve => setTimeout(resolve, 500));
-    
+
     const result = validationRulesService.validateRecord(testRecord as ClientRecord);
     setValidationResult(result);
     setIsValidating(false);

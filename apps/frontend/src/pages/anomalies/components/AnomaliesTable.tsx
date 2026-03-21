@@ -174,7 +174,6 @@ const AnomaliesTable: React.FC<AnomaliesTableProps> = ({
     } catch (error) {
       console.error('Erreur lors du chargement des anomalies:', error);
       setError('Erreur lors du chargement des anomalies');
-      // Use hardcoded data as fallback
     } finally {
       setLoading(false);
       setPageLoading(false);

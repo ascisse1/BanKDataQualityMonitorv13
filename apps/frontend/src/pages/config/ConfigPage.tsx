@@ -8,7 +8,6 @@ import DatabaseConfigPanel from '../../components/ui/DatabaseConfigPanel';
 import Input from '../../components/ui/Input';
 
 function ConfigPage() {
-  const [isTestingDb, setIsTestingDb] = useState(false);
   const [dbStatus, setDbStatus] = useState<{
     success: boolean,
     message: string,
@@ -74,42 +73,9 @@ function ConfigPage() {
   } | null>(null);
 
   // Vérifier si l'utilisateur est un administrateur
-  const isAdmin = user?.role === 'admin';
+  const isAdmin = user?.role === 'ADMIN';
   
   const [dbConfigChanged, setDbConfigChanged] = useState(false);
-
-  const testInformixConnection = async () => {
-    if (!isAdmin) {
-      showNotification('Vous n\'avez pas les permissions nécessaires pour effectuer cette action', 'error');
-      return;
-    }
-
-    setIsTestingDb(true);
-    showNotification('Test de connexion à la base de données Informix en cours...', 'loading');
-
-    try {
-      const response = await fetch('/api/test-informix');
-      const data = await response.json();
-      
-      setDbStatus(data);
-      
-      if (data.success) {
-        showNotification('Connexion à la base de données Informix réussie', 'success');
-      } else {
-        showNotification(`Échec de la connexion à la base de données Informix: ${data.message}`, 'error');
-      }
-    } catch (error) {
-      console.error('Error testing database connection:', error);
-      setDbStatus({
-        success: false,
-        message: 'Erreur lors du test de connexion à la base de données',
-        error: error instanceof Error ? error.message : String(error)
-      });
-      showNotification('Erreur lors du test de connexion à la base de données', 'error');
-    } finally {
-      setIsTestingDb(false);
-    }
-  };
 
   const testLdapConnection = async () => {
     if (!isAdmin) {
@@ -121,21 +87,19 @@ function ConfigPage() {
     showNotification('Test de connexion au serveur LDAP en cours...', 'loading');
 
     try {
-      // In demo mode, simulate a successful test
-      await new Promise(resolve => setTimeout(resolve, 1000));
-      
-      const result = {
-        success: true,
-        message: 'Connexion au serveur LDAP réussie',
-        data: {
-          server: ldapConfig.url,
-          userCount: '1,250',
-          timestamp: new Date().toISOString()
-        }
-      };
-      
+      const response = await fetch('/api/config/test-ldap', {
+        method: 'POST',
+        headers: { 'Content-Type': 'application/json' },
+        body: JSON.stringify(ldapConfig)
+      });
+      const result = await response.json();
+
       setLdapStatus(result);
-      showNotification('Connexion au serveur LDAP réussie', 'success');
+      if (result.success) {
+        showNotification('Connexion au serveur LDAP réussie', 'success');
+      } else {
+        showNotification(result.message || 'Échec du test de connexion LDAP', 'error');
+      }
     } catch (error) {
       setLdapStatus({
         success: false,
@@ -158,27 +122,25 @@ function ConfigPage() {
     showNotification('Test de connexion à l\'API en cours...', 'loading');
 
     try {
-      // En mode démo, simuler un test réussi
-      await new Promise(resolve => setTimeout(resolve, 1000));
-      
-      setApiStatus({
-        success: true,
-        message: 'Connexion à l\'API réussie',
-        data: {
-          baseUrl: apiConfig.baseUrl,
-          status: 'OK',
-          timestamp: new Date().toISOString()
-        }
+      const response = await fetch('/api/config/test-api', {
+        method: 'POST',
+        headers: { 'Content-Type': 'application/json' },
+        body: JSON.stringify(apiConfig)
       });
-      
-      showNotification('Connexion à l\'API réussie', 'success');
+      const result = await response.json();
+
+      setApiStatus(result);
+      if (result.success) {
+        showNotification('Connexion à l\'API réussie', 'success');
+      } else {
+        showNotification(result.message || 'Échec du test de connexion API', 'error');
+      }
     } catch (error) {
       setApiStatus({
         success: false,
         message: 'Erreur lors du test de connexion à l\'API',
         error: error instanceof Error ? error.message : String(error)
       });
-      
       showNotification('Erreur lors du test de connexion à l\'API', 'error');
     } finally {
       setIsTestingApi(false);
@@ -195,27 +157,25 @@ function ConfigPage() {
     showNotification('Test de connexion SFTP en cours...', 'loading');
 
     try {
-      // En mode démo, simuler un test réussi
-      await new Promise(resolve => setTimeout(resolve, 1000));
-      
-      setSftpStatus({
-        success: true,
-        message: 'Connexion SFTP réussie',
-        data: {
-          host: sftpConfig.host,
-          remoteDir: sftpConfig.remoteDir,
-          timestamp: new Date().toISOString()
-        }
+      const response = await fetch('/api/config/test-sftp', {
+        method: 'POST',
+        headers: { 'Content-Type': 'application/json' },
+        body: JSON.stringify(sftpConfig)
       });
-      
-      showNotification('Connexion SFTP réussie', 'success');
+      const result = await response.json();
+
+      setSftpStatus(result);
+      if (result.success) {
+        showNotification('Connexion SFTP réussie', 'success');
+      } else {
+        showNotification(result.message || 'Échec du test de connexion SFTP', 'error');
+      }
     } catch (error) {
       setSftpStatus({
         success: false,
         message: 'Erreur lors du test de connexion SFTP',
         error: error instanceof Error ? error.message : String(error)
       });
-      
       showNotification('Erreur lors du test de connexion SFTP', 'error');
     } finally {
       setIsTestingSftp(false);
@@ -231,9 +191,12 @@ function ConfigPage() {
     showNotification('Sauvegarde de la configuration LDAP en cours...', 'loading');
 
     try {
-      // In demo mode, simulate saving
-      await new Promise(resolve => setTimeout(resolve, 1000));
-      
+      const response = await fetch('/api/config/ldap', {
+        method: 'POST',
+        headers: { 'Content-Type': 'application/json' },
+        body: JSON.stringify({ ...ldapConfig, enabled: ldapEnabled })
+      });
+      if (!response.ok) throw new Error('Failed to save LDAP config');
       showNotification('Configuration LDAP sauvegardée avec succès', 'success');
     } catch (error) {
       showNotification('Erreur lors de la sauvegarde de la configuration LDAP', 'error');
@@ -249,9 +212,12 @@ function ConfigPage() {
     showNotification('Sauvegarde de la configuration API en cours...', 'loading');
 
     try {
-      // En mode démo, simuler une sauvegarde
-      await new Promise(resolve => setTimeout(resolve, 1000));
-      
+      const response = await fetch('/api/config/api', {
+        method: 'POST',
+        headers: { 'Content-Type': 'application/json' },
+        body: JSON.stringify(apiConfig)
+      });
+      if (!response.ok) throw new Error('Failed to save API config');
       showNotification('Configuration API sauvegardée avec succès', 'success');
     } catch (error) {
       showNotification('Erreur lors de la sauvegarde de la configuration API', 'error');
@@ -267,9 +233,12 @@ function ConfigPage() {
     showNotification('Sauvegarde de la configuration SFTP en cours...', 'loading');
 
     try {
-      // En mode démo, simuler une sauvegarde
-      await new Promise(resolve => setTimeout(resolve, 1000));
-      
+      const response = await fetch('/api/config/sftp', {
+        method: 'POST',
+        headers: { 'Content-Type': 'application/json' },
+        body: JSON.stringify(sftpConfig)
+      });
+      if (!response.ok) throw new Error('Failed to save SFTP config');
       showNotification('Configuration SFTP sauvegardée avec succès', 'success');
     } catch (error) {
       showNotification('Erreur lors de la sauvegarde de la configuration SFTP', 'error');

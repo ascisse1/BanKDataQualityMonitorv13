@@ -27,14 +27,7 @@ const FatcaPage: React.FC = () => {
   const { showNotification } = useNotification();
 
   useEffect(() => {
-    // Simulate loading data
-    showNotification('Chargement des données FATCA...', 'loading');
-    const timer = setTimeout(() => {
-      setIsLoading(false);
-      showNotification('Données FATCA chargées avec succès', 'success');
-    }, 1000);
-    
-    return () => clearTimeout(timer);
+    setIsLoading(false);
   }, []);
 
   const handleStatusChange = (status: string | null) => {
@@ -45,13 +38,10 @@ const FatcaPage: React.FC = () => {
     try {
       setIsRefreshing(true);
       showNotification('Actualisation des données en cours...', 'loading');
-      
+
       // Clear the cache to force fresh data
       await db.clearCache();
-      
-      // Simulate a delay for the loading animation
-      await new Promise(resolve => setTimeout(resolve, 1000));
-      
+
       setIsRefreshing(false);
       showNotification('Données actualisées avec succès', 'success');
     } catch (error) {
@@ -65,92 +55,52 @@ const FatcaPage: React.FC = () => {
       setIsExporting(true);
       showNotification('Préparation de l\'export PDF...', 'loading');
 
-      // Simulate API call delay
-      await new Promise(resolve => setTimeout(resolve, 1500));
+      // Fetch real data from API
+      const clientType = activeTab === 'individual' ? '1' : '2';
+      const result = activeTab === 'individual'
+        ? await db.getFatcaClients(1, 1000, false, selectedStatus, clientType)
+        : await db.getCorporateFatcaClients(1, 1000, false, selectedStatus);
 
-      const doc = new jsPDF('l', 'mm', 'a4'); // Format paysage
-      
-      // Titre
+      const clients = result.data || [];
+
+      const doc = new jsPDF('l', 'mm', 'a4');
+
       doc.setFontSize(16);
       doc.text('Rapport des Clients FATCA', 20, 20);
-      
-      // Date
+
       doc.setFontSize(12);
       doc.text(`Date d'extraction: ${new Date().toLocaleDateString('fr-FR')}`, 20, 30);
-      
-      // Filtres appliqués
+
       let filterText = 'Filtres appliqués: ';
       let hasFilters = false;
-      
+
       if (selectedStatus) {
         filterText += `Status: ${selectedStatus}; `;
         hasFilters = true;
       }
-      
+
       if (hasFilters) {
         doc.text(filterText, 20, 40);
       }
 
-      // Préparer les données pour le tableau (données fictives)
-      const tableData = [];
-      for (let i = 1; i <= 50; i++) {
-        const isUS = i % 5 === 0;
-        const hasUSAddress = i % 7 === 0;
-        const hasUSPhone = i % 9 === 0;
-        
-        if (isUS || hasUSAddress || hasUSPhone) {
-          if (activeTab === 'individual') {
-            tableData.push([
-              `CLI${String(i).padStart(6, '0')}`,
-              `CLIENT ${i}${i % 2 === 0 ? ' SMITH' : ' JOHNSON'}`,
-              `2024-${String(i % 12 + 1).padStart(2, '0')}-${String(i % 28 + 1).padStart(2, '0')}`,
-              i % 3 === 0 ? 'Ancien Client' : 'Client Actif',
-              isUS ? 'US' : 'ML',
-              isUS ? 'US' : 'ML',
-              hasUSAddress ? 'US' : 'ML',
-              hasUSPhone ? `+1 555-${String(i).padStart(3, '0')}-${String(i * 4).padStart(4, '0')}`.substring(0, 15) : `+223 ${String(i * 7).padStart(8, '0')}`.substring(0, 15)
-            ]);
-          } else {
-            tableData.push([
-              `ENT${String(i).padStart(6, '0')}`,
-              `ENTREPRISE ${i}`,
-              `RAISON SOCIALE ${i}`,
-              `2024-${String(i % 12 + 1).padStart(2, '0')}-${String(i % 28 + 1).padStart(2, '0')}`,
-              i % 3 === 0 ? 'Ancien Client' : 'Client Actif',
-              isUS ? 'US' : 'ML',
-              isUS ? 'US' : 'ML',
-              hasUSAddress ? 'US' : 'ML',
-              hasUSPhone ? `+1 555-${String(i).padStart(3, '0')}-${String(i * 4).padStart(4, '0')}`.substring(0, 15) : `+223 ${String(i * 7).padStart(8, '0')}`.substring(0, 15)
-            ]);
-          }
-        }
-      }
+      const tableData = clients.map((c: any) => activeTab === 'individual'
+        ? [c.cli, c.nom, c.date_entree_relation, c.status_client, c.pays_naissance, c.nationalite, c.pays_adresse, c.telephone]
+        : [c.cli, c.nom, c.raisonSociale, c.dateEntreeRelation, c.statusClient, c.paysImmatriculation, c.paysResidenceFiscale, c.paysAdresse, c.telephone]
+      );
 
-      // Ajouter le tableau
       (doc as any).autoTable({
-        head: activeTab === 'individual' 
+        head: activeTab === 'individual'
           ? [['Code Client', 'Nom', 'Date Entrée', 'Status', 'Pays Naiss.', 'Nationalité', 'Pays Adresse', 'Téléphone']]
           : [['Code Client', 'Nom', 'Raison Sociale', 'Date Entrée', 'Status', 'Pays Immat.', 'Pays Fiscal', 'Pays Adresse', 'Téléphone']],
         body: tableData,
         startY: hasFilters ? 45 : 35,
         styles: { fontSize: 8 },
         headStyles: { fillColor: [26, 54, 93] },
-        columnStyles: {
-          0: { cellWidth: 25 },
-          1: { cellWidth: 35 },
-          2: { cellWidth: 25 },
-          3: { cellWidth: 25 },
-          4: { cellWidth: 20 },
-          5: { cellWidth: 20 },
-          6: { cellWidth: 20 },
-          7: { cellWidth: 30 }
-        }
       });
 
-      // Sauvegarder le fichier
       const date = new Date().toISOString().split('T')[0];
       const filename = `clients_fatca_${activeTab === 'individual' ? 'particuliers' : 'entreprises'}_${date}.pdf`;
-      
+
       doc.save(filename);
       showNotification(`Export PDF réussi (${tableData.length} clients)`, 'success');
     } catch (error) {
@@ -166,80 +116,43 @@ const FatcaPage: React.FC = () => {
       setIsExporting(true);
       showNotification('Préparation de l\'export Excel...', 'loading');
 
-      // Simulate API call delay
-      await new Promise(resolve => setTimeout(resolve, 1500));
+      // Fetch real data from API
+      const clientType = activeTab === 'individual' ? '1' : '2';
+      const result = activeTab === 'individual'
+        ? await db.getFatcaClients(1, 5000, false, selectedStatus, clientType)
+        : await db.getCorporateFatcaClients(1, 5000, false, selectedStatus);
 
-      // Créer le contenu CSV (compatible Excel)
-      const headers = activeTab === 'individual' 
+      const clients = result.data || [];
+
+      const headers = activeTab === 'individual'
         ? ['Code Client', 'Nom', 'Date Entrée', 'Status', 'Pays Naiss.', 'Nationalité', 'Adresse', 'Pays Adresse', 'Téléphone', 'Relation Client', 'Type Relation']
         : ['Code Client', 'Nom', 'Raison Sociale', 'Date Entrée', 'Status', 'Pays Immat.', 'Pays Fiscal', 'Adresse', 'Pays Adresse', 'Téléphone', 'Secteur', 'Forme Juridique'];
-      
-      // Générer des données fictives
-      const rows = [];
-      for (let i = 1; i <= 100; i++) {
-        const isUS = i % 5 === 0;
-        const hasUSAddress = i % 7 === 0;
-        const hasUSPhone = i % 9 === 0;
-        
-        if (isUS || hasUSAddress || hasUSPhone) {
-          if (activeTab === 'individual') {
-            rows.push([
-              `CLI${String(i).padStart(6, '0')}`,
-              `CLIENT ${i}${i % 2 === 0 ? ' SMITH' : ' JOHNSON'}`,
-              `2024-${String(i % 12 + 1).padStart(2, '0')}-${String(i % 28 + 1).padStart(2, '0')}`,
-              i % 3 === 0 ? 'Ancien Client' : 'Client Actif',
-              isUS ? 'US' : 'ML',
-              isUS ? 'US' : 'ML',
-              `${i} ${i % 2 === 0 ? 'Main Street' : 'Avenue des Fleurs'}, ${i % 2 === 0 ? 'New York' : 'Bamako'}`,
-              hasUSAddress ? 'US' : 'ML',
-              hasUSPhone ? `+1 555-${String(i).padStart(3, '0')}-${String(i * 4).padStart(4, '0')}` : `+223 ${String(i * 7).padStart(8, '0')}`,
-              i % 10 === 0 ? `CLI${String(i+100).padStart(6, '0')}` : '',
-              i % 10 === 0 ? (i % 20 === 0 ? 'Familiale' : 'Joint') : ''
-            ]);
-          } else {
-            rows.push([
-              `ENT${String(i).padStart(6, '0')}`,
-              `ENTREPRISE ${i}`,
-              `RAISON SOCIALE ${i}`,
-              `2024-${String(i % 12 + 1).padStart(2, '0')}-${String(i % 28 + 1).padStart(2, '0')}`,
-              i % 3 === 0 ? 'Ancien Client' : 'Client Actif',
-              isUS ? 'US' : 'ML',
-              isUS ? 'US' : 'ML',
-              `${i} ${i % 2 === 0 ? 'Corporate Street' : 'Avenue des Affaires'}, ${i % 2 === 0 ? 'New York' : 'Bamako'}`,
-              hasUSAddress ? 'US' : 'ML',
-              hasUSPhone ? `+1 555-${String(i).padStart(3, '0')}-${String(i * 4).padStart(4, '0')}` : `+223 ${String(i * 7).padStart(8, '0')}`,
-              `Secteur ${i % 10 + 1}`,
-              `Forme Juridique ${i % 8 + 1}`
-            ]);
-          }
-        }
-      }
-      
+
+      const rows = clients.map((c: any) => activeTab === 'individual'
+        ? [c.cli, c.nom, c.date_entree_relation, c.status_client, c.pays_naissance, c.nationalite, c.adresse, c.pays_adresse, c.telephone, c.relation_client || '', c.type_relation || '']
+        : [c.cli, c.nom, c.raisonSociale, c.dateEntreeRelation, c.statusClient, c.paysImmatriculation, c.paysResidenceFiscale, c.adresse, c.paysAdresse, c.telephone, c.libelleSecteur || '', c.libelleFormeJuridique || '']
+      );
+
       const csvContent = [
         headers.join(','),
-        ...rows.map(row => 
+        ...rows.map((row: any[]) =>
           row.map(cell => {
-            // Échapper les guillemets et entourer de guillemets si nécessaire
-            if (typeof cell === 'string' && (cell.includes(',') || cell.includes('"') || cell.includes('\n'))) {
-              return `"${cell.replace(/"/g, '""')}"`;
+            const cellStr = String(cell || '');
+            if (cellStr.includes(',') || cellStr.includes('"') || cellStr.includes('\n')) {
+              return `"${cellStr.replace(/"/g, '""')}"`;
             }
-            return cell;
+            return cellStr;
           }).join(',')
         )
       ].join('\n');
 
-      // Ajouter le BOM UTF-8 pour Excel
       const BOM = '\uFEFF';
-      const blob = new Blob([BOM + csvContent], {
-        type: 'text/csv;charset=utf-8;'
-      });
+      const blob = new Blob([BOM + csvContent], { type: 'text/csv;charset=utf-8;' });
 
-      // Créer le lien de téléchargement
       const link = document.createElement('a');
       const url = URL.createObjectURL(blob);
       link.setAttribute('href', url);
 
-      // Générer le nom du fichier
       const date = new Date().toISOString().split('T')[0];
       const filename = `clients_fatca_${activeTab === 'individual' ? 'particuliers' : 'entreprises'}_${date}.csv`;
 
@@ -263,9 +176,6 @@ const FatcaPage: React.FC = () => {
     try {
       setIsExporting(true);
       showNotification('Préparation de l\'export XML...', 'loading');
-
-      // Simulate API call delay
-      await new Promise(resolve => setTimeout(resolve, 1500));
 
       // Generate XML content
       const xmlContent = generateFatcaXML(activeTab);
@@ -299,17 +209,9 @@ const FatcaPage: React.FC = () => {
       setIsTransmitting(true);
       showNotification('Préparation de la déclaration IRS...', 'loading');
 
-      // Simulate API call delay
-      await new Promise(resolve => setTimeout(resolve, 2000));
-
       // Generate XML content
       const xmlContent = generateFatcaXML(activeTab);
 
-      // Generate validation report (simulated)
-      showNotification('Validation du fichier XML...', 'loading');
-      await new Promise(resolve => setTimeout(resolve, 1500));
-
-      // Simulate successful preparation
       showNotification('Déclaration IRS prête à être transmise', 'success');
       addToast(`Fichiers XML générés et validés. Vous pouvez maintenant les transmettre via IRS IDES ou l'administration fiscale locale.`, 'success');
     } catch (error) {

@@ -34,10 +34,9 @@ const AnomalyHistoryTable = ({ isLoading = false, cli, field }: AnomalyHistoryPr
   const { addToast } = useToast();
   const { user } = useAuth();
   const itemsPerPage = 20;
-  const [useHardcodedData, setUseHardcodedData] = useState(false);
 
   // Vérifier si l'utilisateur est un utilisateur d'agence
-  const isAgencyUser = user?.role === 'agency_user';
+  const isAgencyUser = user?.role === 'AGENCY_USER';
   const userAgencyCode = user?.agencyCode;
 
   useEffect(() => {
@@ -45,16 +44,6 @@ const AnomalyHistoryTable = ({ isLoading = false, cli, field }: AnomalyHistoryPr
   }, [cli, field, currentPage]);
 
   const fetchHistory = async () => {
-    if (useHardcodedData) {
-      // Use hardcoded data in production/demo mode
-      const testData = generateTestData();
-      setHistory(testData);
-      setTotalRecords(testData.length);
-      setTotalPages(Math.ceil(testData.length / itemsPerPage));
-      setLoading(false);
-      return;
-    }
-    
     try {
       setLoading(true);
       setError(null);
@@ -97,54 +86,12 @@ const AnomalyHistoryTable = ({ isLoading = false, cli, field }: AnomalyHistoryPr
     } catch (error) {
       console.error('Error fetching anomaly history:', error);
       setError('Erreur lors du chargement de l\'historique');
-      
-      // Générer des données de test en cas d'erreur
-      const testData = generateTestData();
-      setHistory(testData);
-      setTotalRecords(testData.length);
-      setTotalPages(Math.ceil(testData.length / itemsPerPage));
+      setHistory([]);
+      setTotalRecords(0);
+      setTotalPages(1);
     } finally {
       setLoading(false);
     }
-  };
-
-  const generateTestData = (): AnomalyHistoryRecord[] => {
-    const statuses: ('detected' | 'in_review' | 'fixed' | 'rejected')[] = ['detected', 'in_review', 'fixed', 'rejected'];
-    const fields = ['nid', 'nmer', 'dna', 'nat', 'nrc', 'datc', 'rso'];
-    const users = [
-      { id: 1, username: 'admin', full_name: 'Administrateur Système' },
-      { id: 2, username: 'auditor', full_name: 'Auditeur Principal' },
-      { id: 3, username: 'agency_01201', full_name: 'Utilisateur Agence Principale 1' }
-    ];
-    
-    const result: AnomalyHistoryRecord[] = [];
-    
-    for (let i = 1; i <= 50; i++) {
-      const date = new Date();
-      date.setDate(date.getDate() - i % 30);
-      
-      const status = statuses[i % statuses.length];
-      const fieldName = fields[i % fields.length];
-      const user = users[i % users.length];
-      const clientId = cli || `CLI${String(i % 20 + 1).padStart(6, '0')}`;
-      const agencyCode = userAgencyCode || `0${1200 + (i % 30)}`;
-      
-      result.push({
-        id: i,
-        cli: clientId,
-        field: field || fieldName,
-        old_value: status === 'fixed' ? '' : null,
-        new_value: status === 'fixed' ? 'Corrigé' : null,
-        status,
-        agency_code: agencyCode,
-        user_id: user.id,
-        created_at: date.toISOString(),
-        username: user.username,
-        full_name: user.full_name
-      });
-    }
-    
-    return result;
   };
 
   const formatDate = (dateString: string) => {

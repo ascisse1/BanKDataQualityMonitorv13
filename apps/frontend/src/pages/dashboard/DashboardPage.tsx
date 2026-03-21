@@ -53,8 +53,8 @@ const DashboardPage = () => {
   const { user } = useAuth();
   const { showNotification } = useNotification();
 
-  const hasUploadAccess = user?.role === 'admin';
-  const hasAccessToBranchData = user?.role === 'admin' || user?.role === 'auditor';
+  const hasUploadAccess = user?.role === 'ADMIN';
+  const hasAccessToBranchData = user?.role === 'ADMIN' || user?.role === 'AUDITOR';
 
   useEffect(() => {
     tracer.info('ui', 'Dashboard page mounted');

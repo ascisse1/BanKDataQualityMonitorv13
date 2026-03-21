@@ -12,7 +12,7 @@ const FatcaStatusChart = ({ isLoading = false }: FatcaStatusChartProps) => {
     series: number[];
     options: ApexOptions;
   }>({
-    series: [850, 320, 80, 0],
+    series: [0, 0, 0, 0],
     options: {
       chart: {
         type: 'donut',
@@ -85,19 +85,9 @@ const FatcaStatusChart = ({ isLoading = false }: FatcaStatusChartProps) => {
     },
   });
 
-  const [useHardcodedData, setUseHardcodedData] = useState(false);
-  
   useEffect(() => {
     if (!isLoading) {
-      if (useHardcodedData) {
-        // Utiliser directement les données en dur
-        setChartData({
-          ...chartData,
-          series: [850, 320, 80, 0],
-        });
-      } else {
-        fetchData();
-      }
+      fetchData();
     }
   }, [isLoading]);
 
@@ -109,26 +99,15 @@ const FatcaStatusChart = ({ isLoading = false }: FatcaStatusChartProps) => {
         setChartData({
           ...chartData,
           series: [
-            stats.toVerify || 850,
-            stats.confirmed || 320,
-            stats.excluded || 80,
+            stats.toVerify || 0,
+            stats.confirmed || 0,
+            stats.excluded || 0,
             stats.pending || 0
           ],
-        });
-      } else {
-        // Fallback data
-        setChartData({
-          ...chartData,
-          series: [850, 320, 80, 0],
         });
       }
     } catch (error) {
       console.error('Error fetching FATCA stats for chart:', error);
-      // Fallback data
-      setChartData({
-        ...chartData,
-        series: [850, 320, 80, 0].filter(Boolean),
-      });
     }
   };
 

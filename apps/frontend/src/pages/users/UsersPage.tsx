@@ -11,7 +11,7 @@ interface User {
   id: string | number;
   username: string;
   email: string;
-  role: 'admin' | 'auditor' | 'user' | 'agency_user';
+  role: 'ADMIN' | 'AUDITOR' | 'USER' | 'AGENCY_USER';
   last_login: string;
   status: 'active' | 'inactive';
   created_at: string;
@@ -50,141 +50,34 @@ const UsersPage = () => {
   const { showNotification } = useNotification();
 
   // Vérifier les permissions
-  const hasAdminAccess = currentUser?.role === 'admin';
+  const hasAdminAccess = currentUser?.role === 'ADMIN';
 
   useEffect(() => {
     if (hasAdminAccess) {
       loadUsers();
-      // Utiliser directement les données en dur
-      setUsers([
-        {
-          id: 1,
-          username: 'admin',
-          email: 'admin@banque.ml',
-          full_name: 'Administrateur Système',
-          role: 'admin',
-          department: 'IT',
-          status: 'active',
-          last_login: new Date().toISOString(),
-          created_at: '2025-01-01T00:00:00.000Z'
-        },
-        {
-          id: 2,
-          username: 'auditor',
-          email: 'audit@banque.ml',
-          full_name: 'Auditeur Principal',
-          role: 'auditor',
-          department: 'Audit',
-          status: 'active',
-          last_login: new Date().toISOString(),
-          created_at: '2025-01-01T00:00:00.000Z'
-        },
-        {
-          id: 3,
-          username: 'user',
-          email: 'user@banque.ml',
-          full_name: 'Utilisateur Standard',
-          role: 'user',
-          department: 'Opérations',
-          status: 'active',
-          last_login: new Date().toISOString(),
-          created_at: '2025-01-01T00:00:00.000Z'
-        },
-        {
-          id: 1001,
-          username: 'agency_01001',
-          email: 'agence.01001@banque.ml',
-          full_name: 'Utilisateur Agence Ouagadougou Principale',
-          role: 'agency_user',
-          department: 'Agence',
-          agency_code: '01001',
-          status: 'active',
-          last_login: new Date().toISOString(),
-          created_at: '2025-01-01T00:00:00.000Z'
-        },
-        {
-          id: 1002,
-          username: 'agency_01002',
-          email: 'agence.01002@banque.ml',
-          full_name: 'Utilisateur Agence Ouagadougou Centre',
-          role: 'agency_user',
-          department: 'Agence',
-          agency_code: '01002',
-          status: 'active',
-          last_login: new Date().toISOString(),
-          created_at: '2025-01-01T00:00:00.000Z'
-        },
-        {
-          id: 1003,
-          username: 'agency_01003',
-          email: 'agence.01003@banque.ml',
-          full_name: 'Utilisateur Agence Ouagadougou Nord',
-          role: 'agency_user',
-          department: 'Agence',
-          agency_code: '01003',
-          status: 'active',
-          last_login: new Date().toISOString(),
-          created_at: '2025-01-01T00:00:00.000Z'
-        },
-        {
-          id: 1004,
-          username: 'agency_01004',
-          email: 'agence.01004@banque.ml',
-          full_name: 'Utilisateur Agence Ouagadougou Sud',
-          role: 'agency_user',
-          department: 'Agence',
-          agency_code: '01004',
-          status: 'active',
-          last_login: new Date().toISOString(),
-          created_at: '2025-01-01T00:00:00.000Z'
-        },
-        {
-          id: 1005,
-          username: 'agency_01005',
-          email: 'agence.01005@banque.ml',
-          full_name: 'Utilisateur Agence Ouagadougou Est',
-          role: 'agency_user',
-          department: 'Agence',
-          agency_code: '01005',
-          status: 'active',
-          last_login: new Date().toISOString(),
-          created_at: '2025-01-01T00:00:00.000Z'
-        }
-      ]);
-      
-      // Définir les statistiques utilisateurs
-      setUserStats({
-        total: 25,
-        active: 23,
-        admins: 1,
-        agency_users: 20,
-        recent_logins: 15,
-        agencies_with_users: 20
-      });
-      
-      // Définir les agences
-      setAgencies([
-        { code_agence: '01001', lib_agence: 'AGENCE OUAGADOUGOU PRINCIPALE' },
-        { code_agence: '01002', lib_agence: 'AGENCE OUAGADOUGOU CENTRE' },
-        { code_agence: '01003', lib_agence: 'AGENCE OUAGADOUGOU NORD' },
-        { code_agence: '01004', lib_agence: 'AGENCE OUAGADOUGOU SUD' },
-        { code_agence: '01005', lib_agence: 'AGENCE OUAGADOUGOU EST' },
-        { code_agence: '01006', lib_agence: 'AGENCE OUAGADOUGOU OUEST' },
-        { code_agence: '01007', lib_agence: 'AGENCE OUAGADOUGOU ENTREPRISES' },
-        { code_agence: '01008', lib_agence: 'AGENCE OUAGADOUGOU INTERNATIONALE' },
-        { code_agence: '01009', lib_agence: 'AGENCE OUAGADOUGOU ZONE INDUSTRIELLE' },
-        { code_agence: '01010', lib_agence: 'AGENCE OUAGADOUGOU QUARTIER DU COMMERCE' }
-      ]);
-      
-      setIsLoading(false);
+      loadUserStats();
+      loadAgencies();
     }
   }, [hasAdminAccess]);
 
   const loadUsers = async () => {
-    // Cette fonction est maintenant vide car nous utilisons des données en dur
     setIsLoading(true);
     showNotification('Chargement des utilisateurs...', 'loading');
-    // Les données sont chargées directement dans useEffect
+    try {
+      const response = await fetch('/api/users', {
+        headers: {
+          'Authorization': `Bearer ${currentUser?.token}`,
+        },
+      });
+      if (response.ok) {
+        const data = await response.json();
+        setUsers(data);
+      }
+    } catch (error) {
+      console.error('Error loading users:', error);
+    } finally {
+      setIsLoading(false);
+    }
   };
 
   const loadUserStats = async () => {
@@ -220,61 +113,28 @@ const UsersPage = () => {
     try {
       showNotification('Création de l\'utilisateur en cours...', 'loading');
 
-      // Check if we're running on Netlify (no backend)
-      const isNetlify = window.location.hostname.includes('netlify.app');
-      
-      if (isNetlify) {
-        // Simulate successful user creation in demo mode
+      const response = await fetch('/api/users', {
+        method: 'POST',
+        headers: {
+          'Content-Type': 'application/json',
+          'Authorization': `Bearer ${currentUser?.token}`,
+        },
+        body: JSON.stringify(userData),
+      });
+
+      const data = await response.json();
+
+      if (response.ok) {
         setIsCreating(false);
-        
-        // Add the new user to the list with a random ID
-        setUsers(prev => [...prev, {
-          ...userData,
-          id: Math.floor(Math.random() * 1000) + 10,
-          status: 'active',
-          last_login: null,
-          created_at: new Date().toISOString()
-        } as User]);
-        
-        showNotification('Utilisateur créé avec succès (mode démo)', 'success');
+        loadUsers();
+        loadUserStats();
+        showNotification('Utilisateur créé avec succès', 'success');
       } else {
-        // Try the actual API call
-        const response = await fetch('/api/users', {
-          method: 'POST',
-          headers: {
-            'Content-Type': 'application/json',
-            'Authorization': `Bearer ${currentUser?.token}`,
-          },
-          body: JSON.stringify(userData),
-        });
-
-        const data = await response.json();
-
-        if (response.ok) {
-          setIsCreating(false);
-          loadUsers();
-          loadUserStats();
-          showNotification('Utilisateur créé avec succès', 'success');
-        } else {
-          showNotification(data.error || 'Erreur lors de la création', 'error');
-        }
+        showNotification(data.error || 'Erreur lors de la création', 'error');
       }
     } catch (error) {
       console.error('Create user error:', error);
-      
-      // In case of network error, simulate success in demo mode
-      setIsCreating(false);
-      
-      // Add the new user to the list with a random ID
-      setUsers(prev => [...prev, {
-        ...userData,
-        id: Math.floor(Math.random() * 1000) + 10,
-        status: 'active',
-        last_login: null,
-        created_at: new Date().toISOString()
-      } as User]);
-      
-      showNotification('Utilisateur créé avec succès (mode démo - fallback)', 'success');
+      showNotification('Erreur lors de la création de l\'utilisateur', 'error');
     }
   };
 
@@ -315,52 +175,27 @@ const UsersPage = () => {
     try {
       showNotification('Mise à jour de l\'utilisateur en cours...', 'loading');
 
-      // Check if we're running on Netlify (no backend)
-      const isNetlify = window.location.hostname.includes('netlify.app');
-      
-      if (isNetlify) {
-        // Simulate successful user update in demo mode
+      const response = await fetch(`/api/users/${userData.id}`, {
+        method: 'PUT',
+        headers: {
+          'Content-Type': 'application/json',
+          'Authorization': `Bearer ${currentUser?.token}`,
+        },
+        body: JSON.stringify(userData),
+      });
+
+      const data = await response.json();
+
+      if (response.ok) {
         setEditingUser(null);
-        
-        // Update the user in the list
-        setUsers(prev => prev.map(user => 
-          user.id === userData.id ? userData : user
-        ));
-        
-        showNotification('Utilisateur mis à jour avec succès (mode démo)', 'success');
+        loadUsers();
+        showNotification('Utilisateur mis à jour avec succès', 'success');
       } else {
-        // Try the actual API call
-        const response = await fetch(`/api/users/${userData.id}`, {
-          method: 'PUT',
-          headers: {
-            'Content-Type': 'application/json',
-            'Authorization': `Bearer ${currentUser?.token}`,
-          },
-          body: JSON.stringify(userData),
-        });
-
-        const data = await response.json();
-
-        if (response.ok) {
-          setEditingUser(null);
-          loadUsers();
-          showNotification('Utilisateur mis à jour avec succès', 'success');
-        } else {
-          showNotification(data.error || 'Erreur lors de la mise à jour', 'error');
-        }
+        showNotification(data.error || 'Erreur lors de la mise à jour', 'error');
       }
     } catch (error) {
       console.error('Update user error:', error);
-      
-      // In case of network error, simulate success in demo mode
-      setEditingUser(null);
-      
-      // Update the user in the list
-      setUsers(prev => prev.map(user => 
-        user.id === userData.id ? userData : user
-      ));
-      
-      showNotification('Utilisateur mis à jour avec succès (mode démo - fallback)', 'success');
+      showNotification('Erreur lors de la mise à jour de l\'utilisateur', 'error');
     }
   };
 
@@ -374,38 +209,25 @@ const UsersPage = () => {
       try {
         showNotification('Suppression de l\'utilisateur en cours...', 'loading');
 
-        // Check if we're running on Netlify (no backend)
-        const isNetlify = window.location.hostname.includes('netlify.app');
-        
-        if (isNetlify) {
-          // Simulate successful user deletion in demo mode
-          setUsers(prev => prev.filter(user => user.id.toString() !== userId));
-          showNotification('Utilisateur supprimé avec succès (mode démo)', 'success');
+        const response = await fetch(`/api/users/${userId}`, {
+          method: 'DELETE',
+          headers: {
+            'Authorization': `Bearer ${currentUser?.token}`,
+          },
+        });
+
+        const data = await response.json();
+
+        if (response.ok) {
+          loadUsers();
+          loadUserStats();
+          showNotification('Utilisateur supprimé avec succès', 'success');
         } else {
-          // Try the actual API call
-          const response = await fetch(`/api/users/${userId}`, {
-            method: 'DELETE',
-            headers: {
-              'Authorization': `Bearer ${currentUser?.token}`,
-            },
-          });
-
-          const data = await response.json();
-
-          if (response.ok) {
-            loadUsers();
-            loadUserStats();
-            showNotification('Utilisateur supprimé avec succès', 'success');
-          } else {
-            showNotification(data.error || 'Erreur lors de la suppression', 'error');
-          }
+          showNotification(data.error || 'Erreur lors de la suppression', 'error');
         }
       } catch (error) {
         console.error('Delete user error:', error);
-        
-        // In case of network error, simulate success in demo mode
-        setUsers(prev => prev.filter(user => user.id.toString() !== userId));
-        showNotification('Utilisateur supprimé avec succès (mode démo - fallback)', 'success');
+        showNotification('Erreur lors de la suppression de l\'utilisateur', 'error');
       }
     }
   };
@@ -478,13 +300,13 @@ const UsersPage = () => {
 
   const getRoleColor = (role: string) => {
     switch (role) {
-      case 'admin':
+      case 'ADMIN':
         return 'bg-primary-100 text-primary-800';
-      case 'auditor':
+      case 'AUDITOR':
         return 'bg-secondary-100 text-secondary-800';
-      case 'agency_user':
+      case 'AGENCY_USER':
         return 'bg-success-100 text-success-800';
-      case 'user':
+      case 'USER':
         return 'bg-gray-100 text-gray-800';
       default:
         return 'bg-gray-100 text-gray-800';
@@ -493,13 +315,13 @@ const UsersPage = () => {
 
   const getRoleLabel = (role: string) => {
     switch (role) {
-      case 'admin':
+      case 'ADMIN':
         return 'Administrateur';
-      case 'auditor':
+      case 'AUDITOR':
         return 'Auditeur';
-      case 'agency_user':
+      case 'AGENCY_USER':
         return 'Utilisateur Agence';
-      case 'user':
+      case 'USER':
         return 'Utilisateur';
       default:
         return role;
@@ -856,7 +678,7 @@ const UserEditor: React.FC<UserEditorProps> = ({ user, agencies, onSave, onCance
       newErrors.password = 'Le mot de passe est requis pour un nouvel utilisateur';
     }
 
-    if (formData.role === 'agency_user' && !formData.agencyCode) {
+    if (formData.role === 'AGENCY_USER' && !formData.agencyCode) {
       newErrors.agencyCode = 'Le code agence est requis pour un utilisateur d\'agence';
     }
 
@@ -933,14 +755,14 @@ const UserEditor: React.FC<UserEditorProps> = ({ user, agencies, onSave, onCance
               value={formData.role}
               onChange={(e) => setFormData({ ...formData, role: e.target.value as any })}
             >
-              <option value="user">Utilisateur</option>
-              <option value="agency_user">Utilisateur Agence</option>
-              <option value="auditor">Auditeur</option>
-              <option value="admin">Administrateur</option>
+              <option value="USER">Utilisateur</option>
+              <option value="AGENCY_USER">Utilisateur Agence</option>
+              <option value="AUDITOR">Auditeur</option>
+              <option value="ADMIN">Administrateur</option>
             </select>
           </div>
 
-          {formData.role === 'agency_user' && (
+          {formData.role === 'AGENCY_USER' && (
             <div>
               <label className="block text-sm font-medium text-gray-700 mb-1">
                 Agence

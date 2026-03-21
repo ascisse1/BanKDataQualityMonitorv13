@@ -28,7 +28,7 @@ const BranchAnomaliesTable = ({ isLoading: externalLoading = false }: BranchAnom
   const { addToast } = useToast();
   const { user } = useAuth();
 
-  const hasAccess = user?.role === 'admin' || user?.role === 'auditor';
+  const hasAccess = user?.role === 'ADMIN' || user?.role === 'AUDITOR';
 
   useEffect(() => {
     if (hasAccess && !externalLoading) {
