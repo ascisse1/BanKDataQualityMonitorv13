@@ -13,27 +13,27 @@ export default defineConfig({
     proxy: {
       // OAuth2 endpoints - Spring Boot BFF
       '/oauth2': {
-        target: 'http://localhost:8080',
+        target: 'http://localhost:8086',
         changeOrigin: true,
         secure: false,
         headers: { host: "localhost:5174" },
 
       },
       '/login': {
-        target: 'http://localhost:8080',
+        target: 'http://localhost:8086',
         changeOrigin: true,
         secure: false,
         headers: { host: "localhost:5174" },
 
       },
       '/logout': {
-        target: 'http://localhost:8080',
+        target: 'http://localhost:8086',
         changeOrigin: true,
         secure: false,
       },
       // API endpoints - Spring Boot
       '/api': {
-        target: 'http://localhost:8080',
+        target: 'http://localhost:8086',
         changeOrigin: true,
         secure: false,
       }
