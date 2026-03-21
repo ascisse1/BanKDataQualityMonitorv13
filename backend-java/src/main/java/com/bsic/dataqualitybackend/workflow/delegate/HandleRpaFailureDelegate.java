@@ -3,8 +3,8 @@ package com.bsic.dataqualitybackend.workflow.delegate;
 import com.bsic.dataqualitybackend.service.TicketService;
 import lombok.RequiredArgsConstructor;
 import lombok.extern.slf4j.Slf4j;
-import org.camunda.bpm.engine.delegate.DelegateExecution;
-import org.camunda.bpm.engine.delegate.JavaDelegate;
+import org.flowable.engine.delegate.DelegateExecution;
+import org.flowable.engine.delegate.JavaDelegate;
 import org.springframework.stereotype.Component;
 
 @Slf4j
@@ -15,7 +15,7 @@ public class HandleRpaFailureDelegate implements JavaDelegate {
     private final TicketService ticketService;
 
     @Override
-    public void execute(DelegateExecution execution) throws Exception {
+    public void execute(DelegateExecution execution) {
         Long ticketId = (Long) execution.getVariable("ticketId");
         String rpaError = (String) execution.getVariable("rpaErrorMessage");
 

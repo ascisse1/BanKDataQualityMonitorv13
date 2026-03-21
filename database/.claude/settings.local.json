@@ -1,7 +1,11 @@
 {
   "permissions": {
     "allow": [
-      "Bash(docker ps -a --filter \"name=informix\" --format \"table {{.Names}}\\\\t{{.Status}}\\\\t{{.Ports}}\")"
+      "Bash(docker ps -a --filter \"name=informix\" --format \"table {{.Names}}\\\\t{{.Status}}\\\\t{{.Ports}}\")",
+      "Bash(grep -r \"import.*camunda\" \"E:\\\\Repos\\\\Autres\\\\adakal-group\\\\BanKDataQualityMonitorv13\\\\backend-java\\\\src\\\\main\\\\java\" 2>/dev/null | head -50)",
+      "Bash(find \"E:\\\\Repos\\\\Autres\\\\adakal-group\\\\BanKDataQualityMonitorv13\\\\backend-java\" -type f \\\\\\( -name \"*.yml\" -o -name \"*.yaml\" -o -name \"docker-compose*\" \\\\\\) 2>/dev/null | head -20)",
+      "Bash(grep -l \"camunda\\\\|Camunda\" \"E:\\\\Repos\\\\Autres\\\\adakal-group\\\\BanKDataQualityMonitorv13\\\\backend-java\\\\src\\\\main\\\\docker\"/*.yml 2>/dev/null)",
+      "Bash(rm -rf \"E:/Repos/Autres/adakal-group/BanKDataQualityMonitorv13/backend-java/src/main/java/com/bsic/dataqualitybackend/workflow\" && rm -f \"E:/Repos/Autres/adakal-group/BanKDataQualityMonitorv13/backend-java/src/main/java/com/bsic/dataqualitybackend/service/WorkflowService.java\" && rm -f \"E:/Repos/Autres/adakal-group/BanKDataQualityMonitorv13/backend-java/src/main/java/com/bsic/dataqualitybackend/service/AnomalyWorkflowService.java\" && rm -f \"E:/Repos/Autres/adakal-group/BanKDataQualityMonitorv13/backend-java/src/main/java/com/bsic/dataqualitybackend/controller/WorkflowController.java\" && rm -f \"E:/Repos/Autres/adakal-group/BanKDataQualityMonitorv13/backend-java/src/main/java/com/bsic/dataqualitybackend/dto/WorkflowTaskDto.java\" && rm -rf \"E:/Repos/Autres/adakal-group/BanKDataQualityMonitorv13/backend-java/src/main/resources/bpmn\")"
     ]
   }
 }

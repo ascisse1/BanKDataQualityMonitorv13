@@ -82,7 +82,7 @@ public class CorrectionService {
                 );
                 log.info("Correction submitted for ticket {} - moved to 4-Eyes validation", ticket.getTicketNumber());
             } catch (Exception e) {
-                log.warn("Could not complete workflow task (Camunda may not be configured): {}", e.getMessage());
+                log.warn("Could not complete workflow task: {}", e.getMessage());
                 // Continue without workflow - manual processing
             }
         }

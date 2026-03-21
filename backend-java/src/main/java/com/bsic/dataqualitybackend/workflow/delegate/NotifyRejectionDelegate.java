@@ -4,8 +4,8 @@ import com.bsic.dataqualitybackend.model.enums.TicketStatus;
 import com.bsic.dataqualitybackend.service.TicketService;
 import lombok.RequiredArgsConstructor;
 import lombok.extern.slf4j.Slf4j;
-import org.camunda.bpm.engine.delegate.DelegateExecution;
-import org.camunda.bpm.engine.delegate.JavaDelegate;
+import org.flowable.engine.delegate.DelegateExecution;
+import org.flowable.engine.delegate.JavaDelegate;
 import org.springframework.stereotype.Component;
 
 @Slf4j
@@ -16,7 +16,7 @@ public class NotifyRejectionDelegate implements JavaDelegate {
     private final TicketService ticketService;
 
     @Override
-    public void execute(DelegateExecution execution) throws Exception {
+    public void execute(DelegateExecution execution) {
         Long ticketId = (Long) execution.getVariable("ticketId");
         String rejectionReason = (String) execution.getVariable("rejectionReason");
         Integer validatorId = (Integer) execution.getVariable("validatorId");
@@ -33,7 +33,6 @@ public class NotifyRejectionDelegate implements JavaDelegate {
             notes
         );
 
-        Integer assignedUserId = (Integer) execution.getVariable("assignedUserId");
         ticketService.addComment(
             ticketId,
             validatorId,

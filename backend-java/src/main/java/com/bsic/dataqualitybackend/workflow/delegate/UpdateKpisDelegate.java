@@ -2,8 +2,8 @@ package com.bsic.dataqualitybackend.workflow.delegate;
 
 import lombok.RequiredArgsConstructor;
 import lombok.extern.slf4j.Slf4j;
-import org.camunda.bpm.engine.delegate.DelegateExecution;
-import org.camunda.bpm.engine.delegate.JavaDelegate;
+import org.flowable.engine.delegate.DelegateExecution;
+import org.flowable.engine.delegate.JavaDelegate;
 import org.springframework.stereotype.Component;
 
 import java.time.Duration;
@@ -15,7 +15,7 @@ import java.time.LocalDateTime;
 public class UpdateKpisDelegate implements JavaDelegate {
 
     @Override
-    public void execute(DelegateExecution execution) throws Exception {
+    public void execute(DelegateExecution execution) {
         Long ticketId = (Long) execution.getVariable("ticketId");
         String agencyCode = (String) execution.getVariable("agencyCode");
         LocalDateTime slaDeadline = (LocalDateTime) execution.getVariable("slaDeadline");

@@ -4,12 +4,12 @@ import lombok.AllArgsConstructor;
 import lombok.Builder;
 import lombok.Data;
 import lombok.NoArgsConstructor;
-import org.camunda.bpm.engine.task.Task;
+import org.flowable.task.api.Task;
 
 import java.util.Date;
 
 /**
- * DTO for Camunda workflow tasks.
+ * DTO for workflow tasks.
  * Used to serialize Task data for frontend consumption.
  */
 @Data
@@ -29,7 +29,7 @@ public class WorkflowTaskDto {
     private int priority;
 
     /**
-     * Create DTO from Camunda Task
+     * Create DTO from Flowable Task
      */
     public static WorkflowTaskDto fromTask(Task task) {
         if (task == null) {

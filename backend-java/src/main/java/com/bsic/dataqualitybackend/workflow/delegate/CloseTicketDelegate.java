@@ -6,8 +6,8 @@ import com.bsic.dataqualitybackend.repository.AnomalyRepository;
 import com.bsic.dataqualitybackend.service.TicketService;
 import lombok.RequiredArgsConstructor;
 import lombok.extern.slf4j.Slf4j;
-import org.camunda.bpm.engine.delegate.DelegateExecution;
-import org.camunda.bpm.engine.delegate.JavaDelegate;
+import org.flowable.engine.delegate.DelegateExecution;
+import org.flowable.engine.delegate.JavaDelegate;
 import org.springframework.stereotype.Component;
 
 import java.time.LocalDateTime;
@@ -21,14 +21,13 @@ public class CloseTicketDelegate implements JavaDelegate {
     private final AnomalyRepository anomalyRepository;
 
     @Override
-    public void execute(DelegateExecution execution) throws Exception {
+    public void execute(DelegateExecution execution) {
         Long ticketId = (Long) execution.getVariable("ticketId");
         String ticketNumber = (String) execution.getVariable("ticketNumber");
         Long anomalyId = (Long) execution.getVariable("anomalyId");
 
         log.info("Closing ticket: {}", ticketNumber);
 
-        // Close the ticket
         Integer systemUserId = 1;
         ticketService.updateTicketStatus(
             ticketId,
@@ -37,7 +36,6 @@ public class CloseTicketDelegate implements JavaDelegate {
             "Ticket closed successfully. Data updated in Amplitude CBS via RPA."
         );
 
-        // Update anomaly status to CLOSED
         if (anomalyId != null) {
             anomalyRepository.findById(anomalyId).ifPresent(anomaly -> {
                 anomaly.setStatus(AnomalyStatus.CLOSED);

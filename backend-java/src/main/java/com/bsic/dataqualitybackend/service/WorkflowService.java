@@ -2,10 +2,10 @@ package com.bsic.dataqualitybackend.service;
 
 import lombok.RequiredArgsConstructor;
 import lombok.extern.slf4j.Slf4j;
-import org.camunda.bpm.engine.RuntimeService;
-import org.camunda.bpm.engine.TaskService;
-import org.camunda.bpm.engine.runtime.ProcessInstance;
-import org.camunda.bpm.engine.task.Task;
+import org.flowable.engine.RuntimeService;
+import org.flowable.engine.runtime.Execution;
+import org.flowable.engine.runtime.ProcessInstance;
+import org.flowable.task.api.Task;
 import org.springframework.stereotype.Service;
 
 import java.util.HashMap;
@@ -18,7 +18,7 @@ import java.util.Map;
 public class WorkflowService {
 
     private final RuntimeService runtimeService;
-    private final TaskService taskService;
+    private final org.flowable.engine.TaskService taskService;
 
     public String startTicketWorkflow(Long ticketId, String clientId, String agencyCode, String priority, String initiator) {
         log.info("Starting ticket workflow for ticket: {} by user: {}", ticketId, initiator);
@@ -50,10 +50,11 @@ public class WorkflowService {
         }
 
         if (variables != null) {
-            taskService.setVariables(taskId, variables);
+            taskService.complete(taskId, variables);
+        } else {
+            taskService.complete(taskId);
         }
 
-        taskService.complete(taskId);
         log.info("Task completed: {}", taskId);
     }
 
@@ -84,15 +85,20 @@ public class WorkflowService {
 
         runtimeService.setVariables(processInstanceId, variables);
 
-        runtimeService.createMessageCorrelation("RPA_COMPLETED")
+        // Trigger the receive task (Flowable uses execution trigger instead of message correlation)
+        Execution execution = runtimeService.createExecutionQuery()
             .processInstanceId(processInstanceId)
-            .correlateWithResult();
+            .activityId("Task_WaitRPACompletion")
+            .singleResult();
 
-        log.info("RPA completion message sent to process: {}", processInstanceId);
+        if (execution != null) {
+            runtimeService.trigger(execution.getId());
+        }
+
+        log.info("RPA completion signal sent to process: {}", processInstanceId);
     }
 
     public List<Task> getTasksForUser(String userId) {
-        // userId can be either numeric ID or username string
         return taskService.createTaskQuery()
             .taskAssignee(userId)
             .list();

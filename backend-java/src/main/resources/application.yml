@@ -115,20 +115,10 @@ spring:
             client-authentication-method: client_secret_post
             redirect-uri: "{baseUrl}/login/oauth2/code/{registrationId}"
 
-camunda:
-  bpm:
-    admin-user:
-      id: admin
-      password: ${CAMUNDA_ADMIN_PASSWORD:admin}
-      firstName: Admin
-    filter:
-      create: All tasks
-    webapp:
-      index-redirect-enabled: true
-    database:
-      schema-update: true
-    auto-deployment-enabled: true
-    deployment-resource-pattern: classpath*:bpmn/*.bpmn
+flowable:
+  database-schema-update: true
+  async-executor-activate: true
+  process-definition-location-prefix: classpath*:processes/
 
 management:
   endpoints:

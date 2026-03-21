@@ -6,8 +6,8 @@ import com.bsic.dataqualitybackend.repository.UserRepository;
 import com.bsic.dataqualitybackend.service.TicketService;
 import lombok.RequiredArgsConstructor;
 import lombok.extern.slf4j.Slf4j;
-import org.camunda.bpm.engine.delegate.DelegateExecution;
-import org.camunda.bpm.engine.delegate.JavaDelegate;
+import org.flowable.engine.delegate.DelegateExecution;
+import org.flowable.engine.delegate.JavaDelegate;
 import org.springframework.stereotype.Component;
 
 import java.util.List;
@@ -21,7 +21,7 @@ public class AssignTicketDelegate implements JavaDelegate {
     private final UserRepository userRepository;
 
     @Override
-    public void execute(DelegateExecution execution) throws Exception {
+    public void execute(DelegateExecution execution) {
         Long ticketId = (Long) execution.getVariable("ticketId");
         String agencyCode = (String) execution.getVariable("agencyCode");
 
@@ -31,7 +31,6 @@ public class AssignTicketDelegate implements JavaDelegate {
 
         if (agencyUsers.isEmpty()) {
             log.warn("No active users found for agency: {} - keeping current assignee", agencyCode);
-            // Keep the current assignedUserId (set by AnomalyWorkflowService as fallback)
             String currentAssignee = (String) execution.getVariable("assignedUserId");
             log.info("Ticket {} will remain assigned to: {}", ticketId, currentAssignee);
             execution.setVariable("assignmentFailed", true);
@@ -44,7 +43,6 @@ public class AssignTicketDelegate implements JavaDelegate {
         Integer systemUserId = 1;
         Ticket assignedTicket = ticketService.assignTicket(ticketId, selectedUser.getId(), systemUserId);
 
-        // Set assignedUserId as string (username) for Camunda task assignee
         execution.setVariable("assignedUserId", selectedUser.getUsername());
         execution.setVariable("assignedUserIdNum", selectedUser.getId());
         execution.setVariable("assignedUserName", selectedUser.getFullName());

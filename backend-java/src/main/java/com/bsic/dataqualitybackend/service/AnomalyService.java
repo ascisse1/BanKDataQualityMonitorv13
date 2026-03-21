@@ -183,7 +183,7 @@ public class AnomalyService {
                 String processInstanceId = anomalyWorkflowService.startWorkflowForAnomaly(saved, initiatorUsername);
                 log.info("Workflow started for anomaly {} - processInstanceId: {}", saved.getId(), processInstanceId);
             } catch (Exception e) {
-                log.warn("Failed to start workflow for anomaly {} (Camunda may not be configured): {}",
+                log.warn("Failed to start workflow for anomaly {}: {}",
                         saved.getId(), e.getMessage());
                 // Continue without workflow - anomaly is still created
             }

@@ -12,8 +12,8 @@ import com.bsic.dataqualitybackend.service.TicketService;
 import com.bsic.dataqualitybackend.service.UserService;
 import lombok.RequiredArgsConstructor;
 import lombok.extern.slf4j.Slf4j;
-import org.camunda.bpm.engine.delegate.DelegateExecution;
-import org.camunda.bpm.engine.delegate.JavaDelegate;
+import org.flowable.engine.delegate.DelegateExecution;
+import org.flowable.engine.delegate.JavaDelegate;
 import org.springframework.stereotype.Component;
 
 @Slf4j
@@ -27,32 +27,27 @@ public class CreateTicketDelegate implements JavaDelegate {
     private final TicketIncidentRepository ticketIncidentRepository;
 
     @Override
-    public void execute(DelegateExecution execution) throws Exception {
+    public void execute(DelegateExecution execution) {
         log.info("Creating ticket from workflow - processInstanceId: {}", execution.getProcessInstanceId());
 
-        // Get workflow variables
         String cli = (String) execution.getVariable("clientId");
         String agencyCode = (String) execution.getVariable("agencyCode");
         String priorityStr = (String) execution.getVariable("priority");
         String initiatorUsername = (String) execution.getVariable("initiator");
         Long anomalyId = (Long) execution.getVariable("anomalyId");
 
-        // Get anomaly details from variables
         String fieldName = (String) execution.getVariable("fieldName");
         String fieldLabel = (String) execution.getVariable("fieldLabel");
         String currentValue = (String) execution.getVariable("currentValue");
         String errorMessage = (String) execution.getVariable("errorMessage");
-        String errorType = (String) execution.getVariable("errorType");
 
         TicketPriority priority = priorityStr != null ?
             TicketPriority.valueOf(priorityStr) : TicketPriority.MEDIUM;
 
-        // Get initiator user (use system user if not found)
         User initiator = userService.getUserByUsername(initiatorUsername)
                 .orElseGet(() -> userService.getUserByUsername("admin")
                         .orElseThrow(() -> new IllegalArgumentException("No valid user found for ticket creation")));
 
-        // Create the ticket
         Ticket ticket = Ticket.builder()
                 .cli(cli)
                 .agencyCode(agencyCode)
@@ -65,7 +60,6 @@ public class CreateTicketDelegate implements JavaDelegate {
         Ticket createdTicket = ticketService.createTicket(ticket, initiator);
         log.info("Ticket created: {} for client: {}", createdTicket.getTicketNumber(), cli);
 
-        // Create ticket incident from anomaly
         TicketIncident incident = TicketIncident.builder()
                 .ticket(createdTicket)
                 .incidentType("ANOMALY_DETECTED")
@@ -80,9 +74,7 @@ public class CreateTicketDelegate implements JavaDelegate {
                 .build();
 
         ticketIncidentRepository.save(incident);
-        log.info("Ticket incident created for field: {}", fieldName);
 
-        // Link anomaly to ticket
         if (anomalyId != null) {
             anomalyRepository.findById(anomalyId).ifPresent(anomaly -> {
                 anomaly.setTicketId(createdTicket.getId());
@@ -91,7 +83,6 @@ public class CreateTicketDelegate implements JavaDelegate {
             });
         }
 
-        // Set workflow variables for next steps
         execution.setVariable("ticketId", createdTicket.getId());
         execution.setVariable("ticketNumber", createdTicket.getTicketNumber());
         execution.setVariable("slaDeadline", createdTicket.getSlaDeadline());

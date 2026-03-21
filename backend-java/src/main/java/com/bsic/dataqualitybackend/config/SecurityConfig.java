@@ -79,7 +79,6 @@ public class SecurityConfig {
                                 "/favicon.ico",
                                 "/logo-*.png",
                                 "/actuator/health/**",
-                                "/camunda/**",
                                 "/swagger-ui/**",
                                 "/v3/api-docs/**",
                                 "/login",

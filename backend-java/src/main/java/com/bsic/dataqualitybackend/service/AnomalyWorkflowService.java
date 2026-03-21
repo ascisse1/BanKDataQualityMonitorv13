@@ -3,10 +3,10 @@ package com.bsic.dataqualitybackend.service;
 import com.bsic.dataqualitybackend.model.Anomaly;
 import lombok.RequiredArgsConstructor;
 import lombok.extern.slf4j.Slf4j;
-import org.camunda.bpm.engine.RepositoryService;
-import org.camunda.bpm.engine.RuntimeService;
-import org.camunda.bpm.engine.repository.ProcessDefinition;
-import org.camunda.bpm.engine.runtime.ProcessInstance;
+import org.flowable.engine.RepositoryService;
+import org.flowable.engine.RuntimeService;
+import org.flowable.engine.repository.ProcessDefinition;
+import org.flowable.engine.runtime.ProcessInstance;
 import org.springframework.boot.context.event.ApplicationReadyEvent;
 import org.springframework.context.event.EventListener;
 import org.springframework.stereotype.Service;
@@ -69,8 +69,6 @@ public class AnomalyWorkflowService {
         variables.put("expectedValue", anomaly.getExpectedValue());
         variables.put("errorMessage", anomaly.getErrorMessage());
         variables.put("errorType", anomaly.getErrorType());
-        // assignedUserId will be set by AssignTicketDelegate based on agency users
-        // Using initiator as fallback if no agency users are found
         variables.put("assignedUserId", initiatorUsername != null ? initiatorUsername : "admin");
         variables.put("clientName", anomaly.getClientName());
         variables.put("clientType", anomaly.getClientType() != null ? anomaly.getClientType().name() : null);
@@ -92,7 +90,7 @@ public class AnomalyWorkflowService {
         try {
             ProcessInstance processInstance = runtimeService.startProcessInstanceByKey(
                     WORKFLOW_PROCESS_KEY,
-                    "ANOMALY-" + anomaly.getId(),  // Business key for correlation
+                    "ANOMALY-" + anomaly.getId(),
                     variables
             );
 
@@ -109,11 +107,6 @@ public class AnomalyWorkflowService {
 
     /**
      * Start workflow for multiple anomalies (batch processing).
-     * Each anomaly gets its own workflow instance.
-     *
-     * @param anomalies List of anomalies to process
-     * @param initiatorUsername The username of the initiator
-     * @return Map of anomaly ID to process instance ID
      */
     public Map<Long, String> startWorkflowForAnomalies(Iterable<Anomaly> anomalies, String initiatorUsername) {
         Map<Long, String> results = new HashMap<>();
@@ -162,9 +155,6 @@ public class AnomalyWorkflowService {
                 processDefinition.getDeploymentId());
     }
 
-    /**
-     * Map anomaly severity (low/medium/high/critical) to ticket priority.
-     */
     private String mapSeverityToPriority(String severity) {
         if (severity == null) {
             return "MEDIUM";
@@ -181,9 +171,6 @@ public class AnomalyWorkflowService {
 
     /**
      * Check if a workflow is already running for an anomaly.
-     *
-     * @param anomalyId The anomaly ID
-     * @return true if workflow is active
      */
     public boolean isWorkflowActiveForAnomaly(Long anomalyId) {
         long count = runtimeService.createProcessInstanceQuery()
@@ -195,15 +182,12 @@ public class AnomalyWorkflowService {
 
     /**
      * Get the process instance ID for an anomaly's workflow.
-     *
-     * @param anomalyId The anomaly ID
-     * @return Process instance ID or null if not found
      */
     public String getProcessInstanceIdForAnomaly(Long anomalyId) {
-        return runtimeService.createProcessInstanceQuery()
+        ProcessInstance instance = runtimeService.createProcessInstanceQuery()
                 .processInstanceBusinessKey("ANOMALY-" + anomalyId)
                 .active()
-                .singleResult()
-                .getProcessInstanceId();
+                .singleResult();
+        return instance != null ? instance.getProcessInstanceId() : null;
     }
 }

@@ -6,7 +6,7 @@ import com.bsic.dataqualitybackend.security.SecurityUtils;
 import com.bsic.dataqualitybackend.service.WorkflowService;
 import lombok.RequiredArgsConstructor;
 import lombok.extern.slf4j.Slf4j;
-import org.camunda.bpm.engine.task.Task;
+import org.flowable.task.api.Task;
 import org.springframework.http.ResponseEntity;
 import org.springframework.security.access.prepost.PreAuthorize;
 import org.springframework.web.bind.annotation.*;
@@ -40,7 +40,6 @@ public class WorkflowController {
 
     @GetMapping("/tasks/user/{userId}")
     public ResponseEntity<ApiResponse<List<WorkflowTaskDto>>> getUserTasks(@PathVariable String userId) {
-        // userId can be numeric ID or username string (Camunda assignee)
         List<Task> tasks = workflowService.getTasksForUser(userId);
         log.info("getUserTasks for {}: found {} tasks", userId, tasks.size());
         List<WorkflowTaskDto> taskDtos = tasks.stream()
