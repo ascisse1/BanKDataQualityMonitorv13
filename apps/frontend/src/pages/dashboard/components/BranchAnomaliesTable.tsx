@@ -34,7 +34,7 @@ const BranchAnomaliesTable = ({ isLoading: externalLoading = false }: BranchAnom
     if (hasAccess && !externalLoading) {
       fetchBranchAnomalies();
     } else if (!hasAccess) {
-      setError('Vous n\'avez pas les permissions necessaires pour voir ces donnees.');
+      setError('Vous n\'avez pas les permissions nécessaires pour voir ces données.');
       setLoading(false);
     }
   }, [hasAccess, externalLoading]);
@@ -53,7 +53,7 @@ const BranchAnomaliesTable = ({ isLoading: externalLoading = false }: BranchAnom
     } catch (err) {
       const errorMessage = err instanceof Error ? err.message : 'Une erreur inattendue est survenue';
       setError(errorMessage);
-      addToast('Erreur lors du chargement des donnees', 'error');
+      addToast('Erreur lors du chargement des données', 'error');
       console.error('Error fetching branch anomalies:', err);
     } finally {
       setLoading(false);
@@ -83,7 +83,7 @@ const BranchAnomaliesTable = ({ isLoading: externalLoading = false }: BranchAnom
           <AlertCircle className="w-12 h-12 text-yellow-500" />
           <div className="space-y-2">
             <h3 className="text-lg font-medium text-yellow-800">Acces Restreint</h3>
-            <p className="text-sm text-yellow-600">Vous n'avez pas les permissions necessaires pour voir ces donnees.</p>
+            <p className="text-sm text-yellow-600">Vous n'avez pas les permissions nécessaires pour voir ces données.</p>
           </div>
         </div>
       </div>
@@ -115,7 +115,7 @@ const BranchAnomaliesTable = ({ isLoading: externalLoading = false }: BranchAnom
             className="flex items-center px-4 py-2 text-sm font-medium text-white bg-red-600 rounded-md hover:bg-red-700 focus:outline-none focus:ring-2 focus:ring-offset-2 focus:ring-red-500"
           >
             <RefreshCw className="w-4 h-4 mr-2" />
-            Reessayer
+            Réessayer
           </button>
         </div>
       </div>

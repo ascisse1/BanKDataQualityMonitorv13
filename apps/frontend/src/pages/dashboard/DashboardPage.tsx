@@ -1,5 +1,6 @@
 import { useState, useEffect } from 'react';
 import Card from '../../components/ui/Card';
+import { Tabs, TabList, Tab, TabPanel } from '../../components/ui/Tabs';
 import { BarChart, PieChart, TrendingUp, Users, AlertTriangle, Building, UserCheck, Upload, RefreshCw, Flag, Database, History } from 'lucide-react';
 import StatsCard from './components/StatsCard';
 import ClientTypeChart from './components/ClientTypeChart';
@@ -12,6 +13,7 @@ import DataQualityTrends from './components/DataQualityTrends';
 import PerformanceMonitor from './components/PerformanceMonitor';
 import FatcaSummary from './components/FatcaSummary';
 import LoadingSpinner from '../../components/ui/LoadingSpinner';
+import Skeleton, { SkeletonText, SkeletonStats, SkeletonChart, SkeletonTable } from '../../components/ui/Skeleton';
 import Button from '../../components/ui/Button';
 import { apiService } from '../../services/apiService';
 import { useToast } from '../../components/ui/Toaster';
@@ -21,7 +23,7 @@ import WeeklyCorrectionTrend from './components/WeeklyCorrectionTrend';
 import AgencyCorrectionChart from './components/AgencyCorrectionChart';
 import DataLoadHistoryTable from './components/DataLoadHistoryTable';
 import AgencyUserStats from './components/AgencyUserStats';
-import { useNotification } from '../../context/NotificationContext';
+
 import { tracer } from '../../services/tracer';
 
 interface Stats {
@@ -51,7 +53,7 @@ const DashboardPage = () => {
   const [activeTab, setActiveTab] = useState<'quality' | 'fatca' | 'tracking'>('quality');
   const { addToast } = useToast();
   const { user } = useAuth();
-  const { showNotification } = useNotification();
+
 
   const hasUploadAccess = user?.role === 'ADMIN';
   const hasAccessToBranchData = user?.role === 'ADMIN' || user?.role === 'AUDITOR';
@@ -71,8 +73,6 @@ const DashboardPage = () => {
       setError(null);
 
       tracer.info('ui', 'Fetching dashboard statistics');
-      showNotification('Chargement des donnees en cours...', 'loading');
-
       const response = await apiService.get<ApiResponse<Stats>>('/stats/clients');
 
       if (response.success && response.data) {
@@ -89,13 +89,13 @@ const DashboardPage = () => {
           fatca: response.data.fatca
         });
 
-        showNotification('Donnees chargees avec succes', 'success');
+        addToast('Données chargées avec succès', 'success');
       } else {
         throw new Error('Failed to fetch statistics');
       }
     } catch (err) {
-      setError('Erreur lors du chargement des statistiques. Veuillez reessayer.');
-      showNotification('Erreur lors du chargement des statistiques', 'error');
+      setError('Erreur lors du chargement des statistiques. Veuillez réessayer.');
+      addToast('Erreur lors du chargement des statistiques', 'error');
       logger.error('api', 'Failed to fetch statistics', { error: err });
       tracer.error('ui', 'Failed to load dashboard statistics', {
         error: err instanceof Error ? err.message : String(err)
@@ -108,14 +108,14 @@ const DashboardPage = () => {
   const refreshData = async () => {
     try {
       setIsRefreshing(true);
-      addToast('Actualisation des donnees en cours...', 'info');
+      addToast('Actualisation des données en cours...', 'info');
 
       await fetchStats();
 
-      showNotification('Donnees actualisees avec succes', 'success');
+      addToast('Données actualisées avec succès', 'success');
       tracer.info('ui', 'Dashboard data refreshed successfully');
     } catch (err) {
-      showNotification('Erreur lors de l\'actualisation', 'error');
+      addToast('Erreur lors de l\'actualisation', 'error');
       tracer.error('ui', 'Failed to refresh dashboard data', { error: err });
     } finally {
       setIsRefreshing(false);
@@ -142,7 +142,7 @@ const DashboardPage = () => {
         icon: <Building className="h-6 w-6 text-secondary-600" />,
       },
       {
-        title: 'Anomalies Detectees',
+        title: 'Anomalies Détectées',
         value: (stats.anomalies ?? 0).toLocaleString('fr-FR'),
         icon: <AlertTriangle className="h-6 w-6 text-warning-600" />,
       },
@@ -151,11 +151,25 @@ const DashboardPage = () => {
 
   if (isLoading && !lastUpdate) {
     return (
-      <div className="flex items-center justify-center min-h-screen">
-        <LoadingSpinner
-          size="lg"
-          text="Chargement des donnees..."
-        />
+      <div className="space-y-6 p-6">
+        <div className="flex items-center justify-between">
+          <div>
+            <SkeletonText lines={1} className="w-48 mb-2" />
+            <SkeletonText lines={1} className="w-72" />
+          </div>
+          <div className="flex space-x-2">
+            <Skeleton variant="rounded" width={120} height={36} />
+            <Skeleton variant="rounded" width={120} height={36} />
+          </div>
+        </div>
+        <div className="grid grid-cols-1 sm:grid-cols-2 lg:grid-cols-4 gap-4">
+          {[...Array(4)].map((_, i) => <SkeletonStats key={i} />)}
+        </div>
+        <div className="grid grid-cols-1 lg:grid-cols-2 gap-6">
+          <SkeletonChart />
+          <SkeletonChart />
+        </div>
+        <SkeletonTable rows={5} columns={5} />
       </div>
     );
   }
@@ -165,16 +179,16 @@ const DashboardPage = () => {
       <div className="flex items-center justify-center min-h-screen">
         <div className="bg-error-50 border border-error-200 rounded-lg p-8 max-w-md text-center">
           <AlertTriangle className="h-12 w-12 text-error-500 mx-auto mb-4" />
-          <h2 className="text-xl font-semibold text-error-800 mb-2">{error}</h2>
-          <p className="text-error-600 mb-6">
-            Impossible de charger les donnees du tableau de bord. Veuillez verifier votre connexion.
+          <h2 className="text-xl font-semibold text-error-800 dark:text-error-200 mb-2">{error}</h2>
+          <p className="text-error-600 dark:text-error-400 mb-6">
+            Impossible de charger les données du tableau de bord. Veuillez vérifier votre connexion.
           </p>
           <Button
             variant="primary"
             onClick={fetchStats}
             leftIcon={<RefreshCw className="h-4 w-4" />}
           >
-            Reessayer
+            Réessayer
           </Button>
         </div>
       </div>
@@ -185,9 +199,9 @@ const DashboardPage = () => {
     <div className="space-y-6 animate-fade-in">
       <div className="flex flex-col sm:flex-row sm:items-center sm:justify-between">
         <div>
-          <h1 className="text-2xl font-semibold text-gray-900">Tableau de bord</h1>
-          <p className="mt-1 text-sm text-gray-500">
-            Apercu de la base de donnees clients ({(stats?.total ?? 0).toLocaleString('fr-FR')} enregistrements)
+          <h1 className="text-2xl font-semibold text-gray-900 dark:text-gray-100">Tableau de bord</h1>
+          <p className="mt-1 text-sm text-gray-500 dark:text-gray-400">
+            Aperçu de la base de données clients ({(stats?.total ?? 0).toLocaleString('fr-FR')} enregistrements)
             {lastUpdate && (
               <span className="ml-2 text-xs text-gray-400">
                 • Derniere mise a jour: {lastUpdate.toLocaleTimeString('fr-FR')}
@@ -211,17 +225,14 @@ const DashboardPage = () => {
             <Button
               variant="primary"
               leftIcon={<Upload className="h-4 w-4" />}
-              onClick={() => showNotification('Fonctionnalite bientot disponible', 'info')}
+              onClick={() => addToast('Fonctionnalite bientot disponible', 'info')}
               disabled={isLoading}
             >
-              Charger des donnees
+              Charger des données
             </Button>
           )}
         </div>
       </div>
-
-      {/* Performance Monitor */}
-      <PerformanceMonitor />
 
       <div className="grid grid-cols-1 gap-6 sm:grid-cols-2 lg:grid-cols-4">
         {stats && renderStatCards().map((stat) => (
@@ -236,202 +247,176 @@ const DashboardPage = () => {
       </div>
 
       {/* Tabs for Quality, FATCA and Tracking */}
-      <div className="border-b border-gray-200">
-        <nav className="-mb-px flex space-x-8">
-          <button
-            onClick={() => setActiveTab('quality')}
-            className={`${
-              activeTab === 'quality'
-                ? 'border-primary-500 text-primary-600'
-                : 'border-transparent text-gray-500 hover:text-gray-700 hover:border-gray-300'
-            } whitespace-nowrap py-4 px-1 border-b-2 font-medium text-sm flex items-center space-x-2`}
-          >
-            <BarChart className="h-4 w-4" />
-            <span>Qualite des Donnees</span>
-          </button>
-          <button
-            onClick={() => setActiveTab('fatca')}
-            className={`${
-              activeTab === 'fatca'
-                ? 'border-primary-500 text-primary-600'
-                : 'border-transparent text-gray-500 hover:text-gray-700 hover:border-gray-300'
-            } whitespace-nowrap py-4 px-1 border-b-2 font-medium text-sm flex items-center space-x-2`}
-          >
-            <Flag className="h-4 w-4" />
-            <span>FATCA</span>
-          </button>
-          <button
-            onClick={() => setActiveTab('tracking')}
-            className={`${
-              activeTab === 'tracking'
-                ? 'border-primary-500 text-primary-600'
-                : 'border-transparent text-gray-500 hover:text-gray-700 hover:border-gray-300'
-            } whitespace-nowrap py-4 px-1 border-b-2 font-medium text-sm flex items-center space-x-2`}
-          >
-            <History className="h-4 w-4" />
-            <span>Suivi des Corrections</span>
-          </button>
-        </nav>
-      </div>
+      <Tabs value={activeTab} onChange={(v) => setActiveTab(v as 'quality' | 'fatca' | 'tracking')}>
+        <TabList label="Sections du tableau de bord">
+          <Tab value="quality" icon={<BarChart className="h-4 w-4" />}>Qualité des Données</Tab>
+          <Tab value="fatca" icon={<Flag className="h-4 w-4" />}>FATCA</Tab>
+          <Tab value="tracking" icon={<History className="h-4 w-4" />}>Suivi des Corrections</Tab>
+        </TabList>
 
-      {activeTab === 'quality' ? (
-        <>
-          <Card
-            title="Resume de la Validation"
-            description="Vue d'ensemble de la qualite des donnees par categorie"
-            isLoading={isLoading}
-          >
-            <ValidationSummary isLoading={isLoading} />
-          </Card>
-
-          <div className="grid grid-cols-1 gap-6 lg:grid-cols-2">
+        <TabPanel value="quality">
+          <div className="space-y-6">
             <Card
-              title="Repartition des Types de Clients"
-              description="Repartition des types de clients dans la base de donnees"
+              title="Resume de la Validation"
+              description="Vue d'ensemble de la qualité des données par catégorie"
               isLoading={isLoading}
             >
-              <div className="h-80 flex items-center justify-center">
-                <ClientTypeChart isLoading={isLoading} />
-              </div>
+              <ValidationSummary isLoading={isLoading} />
             </Card>
 
-            <Card
-              title="Tendances des Anomalies"
-              description="Tendances hebdomadaires des detections d'anomalies"
-              isLoading={isLoading}
-            >
-              <div className="h-80 flex items-center justify-center">
-                <AnomalyTrendChart isLoading={isLoading} />
-              </div>
-            </Card>
-          </div>
-
-          <Card
-            title="Evolution de la Qualite des Donnees"
-            description="Tendances de la qualite des donnees sur les 6 derniers mois"
-            isLoading={isLoading}
-          >
-            <DataQualityTrends isLoading={isLoading} />
-          </Card>
-
-          <div className="grid grid-cols-1 gap-6 lg:grid-cols-3">
-            <div className="lg:col-span-1">
+            <div className="grid grid-cols-1 gap-6 lg:grid-cols-2">
               <Card
-                title="Nombre de clients par agence"
-                description="Liste detaillee des clients par agence (optimise pour gros volumes)"
+                title="Repartition des Types de Clients"
+                description="Repartition des types de clients dans la base de données"
                 isLoading={isLoading}
               >
-                <div className="h-96">
-                  <TopAnomalyFields isLoading={isLoading} />
+                <div className="h-56 sm:h-64 lg:h-80 flex items-center justify-center">
+                  <ClientTypeChart isLoading={isLoading} />
+                </div>
+              </Card>
+
+              <Card
+                title="Tendances des Anomalies"
+                description="Tendances hebdomadaires des detections d'anomalies"
+                isLoading={isLoading}
+              >
+                <div className="h-56 sm:h-64 lg:h-80 flex items-center justify-center">
+                  <AnomalyTrendChart isLoading={isLoading} />
                 </div>
               </Card>
             </div>
 
-            {hasAccessToBranchData && (
-              <div className="lg:col-span-2">
+            <Card
+              title="Évolution de la Qualité des Données"
+              description="Tendances de la qualité des données sur les 6 derniers mois"
+              isLoading={isLoading}
+            >
+              <DataQualityTrends isLoading={isLoading} />
+            </Card>
+
+            <div className="grid grid-cols-1 gap-6 lg:grid-cols-3">
+              <div className="lg:col-span-1">
                 <Card
-                  title="Nombre d'anomalies par agence"
-                  description="Liste detaillee des anomalies par agence (optimise pour gros volumes)"
+                  title="Nombre de clients par agence"
+                  description="Liste detaillee des clients par agence (optimise pour gros volumes)"
                   isLoading={isLoading}
                 >
-                  <div className="h-96 overflow-auto">
-                    <BranchAnomaliesTable isLoading={isLoading} />
+                  <div className="h-96">
+                    <TopAnomalyFields isLoading={isLoading} />
                   </div>
                 </Card>
               </div>
-            )}
-          </div>
 
-          <Card
-            title="Anomalies Recentes"
-            description="Derniers problemes de donnees detectes"
-            isLoading={isLoading}
-          >
-            <div className="h-96">
-              <RecentAnomalies isLoading={isLoading} />
+              {hasAccessToBranchData && (
+                <div className="lg:col-span-2">
+                  <Card
+                    title="Nombre d'anomalies par agence"
+                    description="Liste detaillee des anomalies par agence (optimise pour gros volumes)"
+                    isLoading={isLoading}
+                  >
+                    <div className="h-96 overflow-auto">
+                      <BranchAnomaliesTable isLoading={isLoading} />
+                    </div>
+                  </Card>
+                </div>
+              )}
             </div>
-          </Card>
-        </>
-      ) : activeTab === 'fatca' ? (
-        <FatcaSummary isLoading={isLoading} fatcaCount={stats?.fatca || 0} totalClients={stats?.individual || 0} />
-      ) : (
-        <>
-          <Card
-            title="Evolution des Corrections par Semaine"
-            description="Tendance hebdomadaire des corrections d'anomalies"
-            isLoading={isLoading}
-          >
-            <WeeklyCorrectionTrend isLoading={isLoading} />
-          </Card>
 
-          <div className="grid grid-cols-1 gap-6 lg:grid-cols-2">
             <Card
-              title="Taux de Correction par Agence"
-              description="Classement des agences par taux de correction"
+              title="Anomalies Recentes"
+              description="Derniers problèmes de données détectés"
               isLoading={isLoading}
             >
               <div className="h-96">
-                <AgencyCorrectionChart isLoading={isLoading} />
-              </div>
-            </Card>
-
-            <Card
-              title="Utilisateurs par Agence"
-              description="Repartition des utilisateurs par agence"
-              isLoading={isLoading}
-            >
-              <div className="h-96 overflow-auto">
-                <AgencyUserStats isLoading={isLoading} />
+                <RecentAnomalies isLoading={isLoading} />
               </div>
             </Card>
           </div>
+        </TabPanel>
 
-          <Card
-            title="Historique des Chargements de Donnees"
-            description="Suivi des chargements de donnees par table"
-            isLoading={isLoading}
-          >
-            <div className="h-96 overflow-auto">
-              <DataLoadHistoryTable isLoading={isLoading} />
+        <TabPanel value="fatca">
+          <FatcaSummary isLoading={isLoading} fatcaCount={stats?.fatca || 0} totalClients={stats?.individual || 0} />
+        </TabPanel>
+
+        <TabPanel value="tracking">
+          <div className="space-y-6">
+            <Card
+              title="Evolution des Corrections par Semaine"
+              description="Tendance hebdomadaire des corrections d'anomalies"
+              isLoading={isLoading}
+            >
+              <WeeklyCorrectionTrend isLoading={isLoading} />
+            </Card>
+
+            <div className="grid grid-cols-1 gap-6 lg:grid-cols-2">
+              <Card
+                title="Taux de Correction par Agence"
+                description="Classement des agences par taux de correction"
+                isLoading={isLoading}
+              >
+                <div className="h-96">
+                  <AgencyCorrectionChart isLoading={isLoading} />
+                </div>
+              </Card>
+
+              <Card
+                title="Utilisateurs par Agence"
+                description="Repartition des utilisateurs par agence"
+                isLoading={isLoading}
+              >
+                <div className="h-96 overflow-auto">
+                  <AgencyUserStats isLoading={isLoading} />
+                </div>
+              </Card>
             </div>
-          </Card>
 
-          <Card className="border-primary-200 bg-primary-50">
-            <div className="p-6">
-              <h3 className="text-lg font-medium text-primary-800 mb-4">Suivi des Corrections</h3>
+            <Card
+              title="Historique des Chargements de Données"
+              description="Suivi des chargements de données par table"
+              isLoading={isLoading}
+            >
+              <div className="h-96 overflow-auto">
+                <DataLoadHistoryTable isLoading={isLoading} />
+              </div>
+            </Card>
 
-              <div className="grid grid-cols-1 md:grid-cols-3 gap-6">
-                <div className="space-y-2">
-                  <h4 className="text-sm font-semibold text-primary-700">Chargement Hebdomadaire</h4>
-                  <ul className="text-sm text-primary-600 space-y-1">
-                    <li>• Chargement des tables clients chaque semaine</li>
-                    <li>• Detection automatique des anomalies</li>
-                    <li>• Historisation des modifications</li>
-                  </ul>
-                </div>
+            <Card className="border-primary-200 bg-primary-50">
+              <div className="p-6">
+                <h3 className="text-lg font-medium text-primary-800 mb-4">Suivi des Corrections</h3>
 
-                <div className="space-y-2">
-                  <h4 className="text-sm font-semibold text-primary-700">Suivi par Agence</h4>
-                  <ul className="text-sm text-primary-600 space-y-1">
-                    <li>• Utilisateurs dedies par agence</li>
-                    <li>• Statistiques de correction par agence</li>
-                    <li>• Taux de correction hebdomadaire</li>
-                  </ul>
-                </div>
+                <div className="grid grid-cols-1 md:grid-cols-3 gap-6">
+                  <div className="space-y-2">
+                    <h4 className="text-sm font-semibold text-primary-700">Chargement Hebdomadaire</h4>
+                    <ul className="text-sm text-primary-600 space-y-1">
+                      <li>• Chargement des tables clients chaque semaine</li>
+                      <li>• Detection automatique des anomalies</li>
+                      <li>• Historisation des modifications</li>
+                    </ul>
+                  </div>
 
-                <div className="space-y-2">
-                  <h4 className="text-sm font-semibold text-primary-700">Rapports</h4>
-                  <ul className="text-sm text-primary-600 space-y-1">
-                    <li>• Evolution des corrections dans le temps</li>
-                    <li>• Classement des agences par performance</li>
-                    <li>• Historique des chargements de donnees</li>
-                  </ul>
+                  <div className="space-y-2">
+                    <h4 className="text-sm font-semibold text-primary-700">Suivi par Agence</h4>
+                    <ul className="text-sm text-primary-600 space-y-1">
+                      <li>• Utilisateurs dedies par agence</li>
+                      <li>• Statistiques de correction par agence</li>
+                      <li>• Taux de correction hebdomadaire</li>
+                    </ul>
+                  </div>
+
+                  <div className="space-y-2">
+                    <h4 className="text-sm font-semibold text-primary-700">Rapports</h4>
+                    <ul className="text-sm text-primary-600 space-y-1">
+                      <li>• Evolution des corrections dans le temps</li>
+                      <li>• Classement des agences par performance</li>
+                      <li>• Historique des chargements de données</li>
+                    </ul>
+                  </div>
                 </div>
               </div>
-            </div>
-          </Card>
-        </>
-      )}
+            </Card>
+          </div>
+        </TabPanel>
+      </Tabs>
     </div>
   );
 };

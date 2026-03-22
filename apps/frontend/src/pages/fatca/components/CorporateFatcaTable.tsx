@@ -1,10 +1,12 @@
-import React, { useState, useEffect } from 'react';
-import { AlertTriangle, Eye, ChevronDown, ChevronUp, ChevronLeft, ChevronRight, RefreshCw, Building, CheckSquare, XSquare, Clock, Save } from 'lucide-react';
+import React, { useState, useEffect, useMemo } from 'react';
+import { AlertTriangle, Eye, ChevronDown, ChevronUp, RefreshCw, Building, CheckSquare, XSquare, Clock, Save } from 'lucide-react';
 import Button from '../../../components/ui/Button';
+import Pagination from '../../../components/ui/Pagination';
 import { db } from '../../../services/db';
 import { useToast } from '../../../components/ui/Toaster';
 import { useAuth } from '../../../context/AuthContext';
 import Input from '../../../components/ui/Input';
+import { useDebounce } from '../../../hooks/useDebounce';
 
 interface CorporateFatcaClient {
   id?: number;
@@ -59,6 +61,7 @@ const CorporateFatcaTable: React.FC<CorporateFatcaTableProps> = ({
   const itemsPerPage = 20;
 
   const hasEditAccess = user?.role === 'ADMIN' || user?.role === 'AUDITOR';
+  const debouncedSearch = useDebounce(searchQuery, 300);
 
   // Reset to page 1 when status filter changes
   useEffect(() => {
@@ -69,11 +72,6 @@ const CorporateFatcaTable: React.FC<CorporateFatcaTableProps> = ({
   useEffect(() => {
     fetchClients();
   }, [currentPage, selectedStatus]);
-
-  // Apply search filter when search query changes
-  useEffect(() => {
-    applyFilters();
-  }, [clients, searchQuery]);
 
   const fetchClients = async () => {
     try {
@@ -123,28 +121,24 @@ const CorporateFatcaTable: React.FC<CorporateFatcaTableProps> = ({
     }
   };
 
-  const applyFilters = () => {
-    console.log('🔍 Applying search filter:', searchQuery);
+  // Memoized filtering with debounced search
+  const computedFilteredClients = useMemo(() => {
+    if (!debouncedSearch || !debouncedSearch.trim()) return clients;
+    const query = debouncedSearch.toLowerCase().trim();
+    return clients.filter(client =>
+      client.cli?.toLowerCase().includes(query) ||
+      client.nom?.toLowerCase().includes(query) ||
+      client.raisonSociale?.toLowerCase().includes(query) ||
+      client.paysImmatriculation?.toLowerCase().includes(query) ||
+      client.paysResidenceFiscale?.toLowerCase().includes(query) ||
+      client.paysAdresse?.toLowerCase().includes(query) ||
+      client.telephone?.toLowerCase().includes(query)
+    );
+  }, [clients, debouncedSearch]);
 
-    let filtered = [...clients];
-
-    // Apply search filter
-    if (searchQuery && searchQuery.trim()) {
-      const query = searchQuery.toLowerCase().trim();
-      filtered = filtered.filter(client => 
-        client.cli?.toLowerCase().includes(query) ||
-        client.nom?.toLowerCase().includes(query) ||
-        client.raisonSociale?.toLowerCase().includes(query) ||
-        client.paysImmatriculation?.toLowerCase().includes(query) ||
-        client.paysResidenceFiscale?.toLowerCase().includes(query) ||
-        client.paysAdresse?.toLowerCase().includes(query) ||
-        client.telephone?.toLowerCase().includes(query)
-      );
-      console.log(`🔎 Filtered by search "${searchQuery}":`, filtered.length);
-    }
-
-    setFilteredClients(filtered);
-  };
+  useEffect(() => {
+    setFilteredClients(computedFilteredClients);
+  }, [computedFilteredClients]);
 
   const toggleExpandRow = (id: string) => {
     setExpandedRow(expandedRow === id ? null : id);
@@ -292,60 +286,6 @@ const CorporateFatcaTable: React.FC<CorporateFatcaTableProps> = ({
     setEditingClient(null);
     
     setPageLoading(false);
-  };
-
-  const renderPagination = () => {
-    if (totalPages <= 1) return null;
-
-    const pages = [];
-    let startPage = Math.max(1, currentPage - 2);
-    let endPage = Math.min(totalPages, startPage + 4);
-
-    if (endPage - startPage < 4) {
-      startPage = Math.max(1, endPage - 4);
-    }
-
-    for (let i = startPage; i <= endPage; i++) {
-      pages.push(
-        <button
-          key={i}
-          onClick={() => handlePageChange(i)}
-          className={`px-3 py-1 rounded-md text-sm font-medium ${
-            currentPage === i
-              ? 'bg-primary-500 text-white'
-              : 'text-gray-700 hover:bg-gray-100'
-          }`}
-        >
-          {i}
-        </button>
-      );
-    }
-
-    return (
-      <div className="flex items-center space-x-2">
-        <Button
-          variant="outline"
-          size="sm"
-          onClick={() => handlePageChange(currentPage - 1)}
-          disabled={currentPage === 1 || loading || pageLoading}
-          leftIcon={<ChevronLeft className="h-4 w-4" />}
-        >
-          Précédent
-        </Button>
-
-        <div className="flex space-x-1">{pages}</div>
-
-        <Button
-          variant="outline"
-          size="sm"
-          onClick={() => handlePageChange(currentPage + 1)}
-          disabled={currentPage === totalPages || loading || pageLoading}
-          rightIcon={<ChevronRight className="h-4 w-4" />}
-        >
-          Suivant
-        </Button>
-      </div>
-    );
   };
 
   // Use filtered clients for display, but fall back to all clients if filtering hasn't been applied yet
@@ -725,17 +665,16 @@ const CorporateFatcaTable: React.FC<CorporateFatcaTableProps> = ({
       </div>
       
       {totalRecords > 0 && (
-        <div className="mt-4 flex items-center justify-between">
-          <div className="text-sm text-gray-700">
-            Affichage de{' '}
-            <span className="font-medium">
-              {(currentPage - 1) * itemsPerPage + 1} - {Math.min(currentPage * itemsPerPage, totalRecords)}
-            </span>{' '}
-            sur <span className="font-medium">{totalRecords.toLocaleString('fr-FR')}</span> entreprises FATCA
-            {selectedStatus && <span className="ml-1 text-primary-600 font-medium">avec statut {selectedStatus}</span>}
-          </div>
-          
-          {renderPagination()}
+        <div className="mt-4">
+          <Pagination
+            currentPage={currentPage}
+            totalPages={totalPages}
+            totalRecords={totalRecords}
+            itemsPerPage={itemsPerPage}
+            onPageChange={handlePageChange}
+            isLoading={loading || pageLoading}
+            summaryText={`Affichage de ${((currentPage - 1) * itemsPerPage + 1).toLocaleString('fr-FR')} - ${Math.min(currentPage * itemsPerPage, totalRecords).toLocaleString('fr-FR')} sur ${totalRecords.toLocaleString('fr-FR')} entreprises FATCA${selectedStatus ? ` avec statut ${selectedStatus}` : ''}`}
+          />
         </div>
       )}
     </div>

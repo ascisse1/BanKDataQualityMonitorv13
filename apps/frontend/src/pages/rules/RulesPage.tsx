@@ -6,7 +6,7 @@ import { ErrorBoundary } from '../../features/rules/components/ErrorBoundary';
 import ValidationTester from './components/ValidationTester';
 import SQLRulesEditor from './components/SQLRulesEditor';
 import DatabaseRulesManager from './components/DatabaseRulesManager';
-import { useNotification } from '../../context/NotificationContext';
+import { useToast } from '../../components/ui/Toaster';
 import ExportRulesButton from './components/ExportRulesButton';
 import ExportDatabaseRulesButton from './components/ExportDatabaseRulesButton';
 import ExportSQLQueriesButton from './components/ExportSQLQueriesButton';
@@ -114,16 +114,16 @@ const tabs: Tab[] = [
 
 const RulesPage: React.FC = () => {
   const [activeTab, setActiveTab] = useState<TabId>('rules');
-  const { showSuccess } = useNotification();
+  const { addToast } = useToast();
   const [databaseRules, setDatabaseRules] = useState<any[]>([]);
 
   const handleTabChange = useCallback((tabId: TabId) => {
     setActiveTab(tabId);
     const tab = tabs.find(t => t.id === tabId);
     if (tab) {
-      showSuccess(`${tab.name} chargées`);
+      addToast(`${tab.name} chargées`, 'success');
     }
-  }, [showSuccess]);
+  }, [addToast]);
 
   const handleDatabaseRulesUpdate = useCallback((rules: any[]) => {
     setDatabaseRules(rules);

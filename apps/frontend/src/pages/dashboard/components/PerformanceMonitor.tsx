@@ -14,9 +14,9 @@ const PerformanceMonitor = () => {
   useEffect(() => {
     const updateStats = () => {
       const cacheStats = db.getCacheStats();
-      
+
       // Only update if stats have changed to prevent unnecessary re-renders
-      if (cacheStats.cacheSize !== stats.cacheSize || 
+      if (cacheStats.cacheSize !== stats.cacheSize ||
           cacheStats.activeRequests !== stats.activeRequests ||
           cacheStats.queuedRequests !== stats.queuedRequests) {
         setStats({

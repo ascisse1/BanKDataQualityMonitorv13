@@ -4,7 +4,7 @@ import Card from './Card';
 import Button from './Button';
 import Input from './Input';
 import { useToast } from './Toaster';
-import { useNotification } from '../../context/NotificationContext';
+
 import { db } from '../../services/db';
 
 interface DatabaseConfigPanelProps {
@@ -28,7 +28,7 @@ const DatabaseConfigPanel: React.FC<DatabaseConfigPanelProps> = ({ onConfigChang
   } | null>(null);
   const [isSaving, setIsSaving] = useState(false);
   const { addToast } = useToast();
-  const { showNotification } = useNotification();
+
 
   // Charger la configuration actuelle
   useEffect(() => {
@@ -75,8 +75,7 @@ const DatabaseConfigPanel: React.FC<DatabaseConfigPanelProps> = ({ onConfigChang
     setIsSaving(true);
 
     try {
-      showNotification('Database configuration is managed via environment variables', 'info');
-      addToast('Configuration is managed via environment variables', 'info');
+      addToast('Database configuration is managed via environment variables', 'info');
 
       onConfigChange?.(true);
     } catch (error) {

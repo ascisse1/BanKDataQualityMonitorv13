@@ -5,6 +5,7 @@ import Button from '../../components/ui/Button';
 import Input from '../../components/ui/Input';
 import { useToast } from '../../components/ui/Toaster';
 import LoadingSpinner from '../../components/ui/LoadingSpinner';
+import { Tabs, TabList, Tab, TabPanel } from '../../components/ui/Tabs';
 import FatcaStats from './components/FatcaStats';
 import FatcaFilters from './components/FatcaFilters';
 import FatcaTable from './components/FatcaTable';
@@ -12,7 +13,7 @@ import CorporateFatcaTable from './components/CorporateFatcaTable';
 import { jsPDF } from 'jspdf';
 import 'jspdf-autotable';
 import { db } from '../../services/db';
-import { useNotification } from '../../context/NotificationContext';
+
 
 const FatcaPage: React.FC = () => {
   const [isLoading, setIsLoading] = useState(true);
@@ -22,9 +23,9 @@ const FatcaPage: React.FC = () => {
   const [isTransmitting, setIsTransmitting] = useState(false);
   const [showFilters, setShowFilters] = useState(false);
   const [selectedStatus, setSelectedStatus] = useState<string | null>(null);
-  const [activeTab, setActiveTab] = useState<'individual' | 'corporate'>('individual');
+  const [activeTab, setActiveTab] = useState<'individual' | 'corporate' | 'transmit'>('individual');
   const { addToast } = useToast();
-  const { showNotification } = useNotification();
+
 
   useEffect(() => {
     setIsLoading(false);
@@ -37,24 +38,20 @@ const FatcaPage: React.FC = () => {
   const refreshData = async () => {
     try {
       setIsRefreshing(true);
-      showNotification('Actualisation des données en cours...', 'loading');
-
       // Clear the cache to force fresh data
       await db.clearCache();
 
       setIsRefreshing(false);
-      showNotification('Données actualisées avec succès', 'success');
+      addToast('Données actualisées avec succès', 'success');
     } catch (error) {
       setIsRefreshing(false);
-      showNotification('Erreur lors de l\'actualisation des données', 'error');
+      addToast('Erreur lors de l\'actualisation des données', 'error');
     }
   };
 
   const handleExportPDF = async () => {
     try {
       setIsExporting(true);
-      showNotification('Préparation de l\'export PDF...', 'loading');
-
       // Fetch real data from API
       const clientType = activeTab === 'individual' ? '1' : '2';
       const result = activeTab === 'individual'
@@ -102,9 +99,9 @@ const FatcaPage: React.FC = () => {
       const filename = `clients_fatca_${activeTab === 'individual' ? 'particuliers' : 'entreprises'}_${date}.pdf`;
 
       doc.save(filename);
-      showNotification(`Export PDF réussi (${tableData.length} clients)`, 'success');
+      addToast(`Export PDF réussi (${tableData.length} clients)`, 'success');
     } catch (error) {
-      showNotification('Erreur lors de l\'export PDF', 'error');
+      addToast('Erreur lors de l\'export PDF', 'error');
       console.error('Export error:', error);
     } finally {
       setIsExporting(false);
@@ -114,8 +111,6 @@ const FatcaPage: React.FC = () => {
   const handleExportExcel = async () => {
     try {
       setIsExporting(true);
-      showNotification('Préparation de l\'export Excel...', 'loading');
-
       // Fetch real data from API
       const clientType = activeTab === 'individual' ? '1' : '2';
       const result = activeTab === 'individual'
@@ -163,9 +158,9 @@ const FatcaPage: React.FC = () => {
       document.body.removeChild(link);
       URL.revokeObjectURL(url);
 
-      showNotification(`Export Excel réussi (${rows.length} clients)`, 'success');
+      addToast(`Export Excel réussi (${rows.length} clients)`, 'success');
     } catch (error) {
-      showNotification('Erreur lors de l\'export Excel', 'error');
+      addToast('Erreur lors de l\'export Excel', 'error');
       console.error('Export error:', error);
     } finally {
       setIsExporting(false);
@@ -175,29 +170,40 @@ const FatcaPage: React.FC = () => {
   const handleExportXML = async () => {
     try {
       setIsExporting(true);
-      showNotification('Préparation de l\'export XML...', 'loading');
+      // Fetch real data from API
+      const clientType = activeTab === 'individual' ? '1' : '2';
+      const result = activeTab === 'individual'
+        ? await db.getFatcaClients(1, 5000, false, selectedStatus, clientType)
+        : await db.getCorporateFatcaClients(1, 5000, false, selectedStatus);
 
-      // Generate XML content
-      const xmlContent = generateFatcaXML(activeTab);
+      const clients = result.data || [];
+
+      if (clients.length === 0) {
+        addToast('Aucun client FATCA à exporter', 'error');
+        return;
+      }
+
+      // Generate XML content from real data
+      const xmlContent = generateFatcaXML(activeTab, clients);
 
       // Create download link
       const blob = new Blob([xmlContent], { type: 'application/xml;charset=utf-8;' });
       const url = URL.createObjectURL(blob);
       const link = document.createElement('a');
       link.href = url;
-      
+
       const date = new Date().toISOString().split('T')[0];
       const filename = `FATCA_BJ_${activeTab === 'individual' ? 'INDIV' : 'CORP'}_${date}.xml`;
-      
+
       link.setAttribute('download', filename);
       document.body.appendChild(link);
       link.click();
       document.body.removeChild(link);
       URL.revokeObjectURL(url);
 
-      showNotification(`Export XML réussi`, 'success');
+      addToast(`Export XML réussi (${clients.length} clients)`, 'success');
     } catch (error) {
-      showNotification('Erreur lors de l\'export XML', 'error');
+      addToast('Erreur lors de l\'export XML', 'error');
       console.error('Export error:', error);
     } finally {
       setIsExporting(false);
@@ -207,41 +213,73 @@ const FatcaPage: React.FC = () => {
   const handleTransmitToBCEAO = async () => {
     try {
       setIsTransmitting(true);
-      showNotification('Préparation de la déclaration IRS...', 'loading');
+      // Fetch real data for both individual and corporate
+      const [indivResult, corpResult] = await Promise.all([
+        db.getFatcaClients(1, 5000, false, null, '1'),
+        db.getCorporateFatcaClients(1, 5000, false, null),
+      ]);
 
-      // Generate XML content
-      const xmlContent = generateFatcaXML(activeTab);
+      const indivClients = indivResult.data || [];
+      const corpClients = corpResult.data || [];
 
-      showNotification('Déclaration IRS prête à être transmise', 'success');
-      addToast(`Fichiers XML générés et validés. Vous pouvez maintenant les transmettre via IRS IDES ou l'administration fiscale locale.`, 'success');
+      if (indivClients.length === 0 && corpClients.length === 0) {
+        addToast('Aucun client FATCA à déclarer', 'error');
+        return;
+      }
+
+      addToast('Déclaration IRS prête à être transmise', 'success');
+      addToast(`Fichiers XML générés et validés (${indivClients.length} particuliers, ${corpClients.length} entreprises). Vous pouvez maintenant les transmettre via IRS IDES ou l'administration fiscale locale.`, 'success');
     } catch (error) {
-      showNotification('Erreur lors de la préparation de la déclaration', 'error');
+      addToast('Erreur lors de la préparation de la déclaration', 'error');
       console.error('Preparation error:', error);
     } finally {
       setIsTransmitting(false);
     }
   };
 
-  // Function to generate FATCA XML
-  const generateFatcaXML = (clientType: 'individual' | 'corporate') => {
+  // Escape special XML characters in text content
+  const escapeXml = (str: string | null | undefined): string => {
+    if (!str) return '';
+    return str
+      .replace(/&/g, '&amp;')
+      .replace(/</g, '&lt;')
+      .replace(/>/g, '&gt;')
+      .replace(/"/g, '&quot;')
+      .replace(/'/g, '&apos;');
+  };
+
+  // GIIN placeholder - must be configured before real IRS submission
+  const REPORTING_FI_GIIN = 'XXXXXX.XXXXX.XX.XXX';
+
+  // Function to generate FATCA XML from real client data
+  const generateFatcaXML = (clientType: 'individual' | 'corporate', clients: any[]) => {
     const date = new Date().toISOString().split('T')[0];
     const reportingYear = new Date().getFullYear() - 1;
-    
+
+    const isPlaceholderGIIN = REPORTING_FI_GIIN.includes('XXXXX');
+    const giinWarning = isPlaceholderGIIN
+      ? '\n  <!-- ATTENTION: Le GIIN ci-dessous est un placeholder. Remplacez-le par votre vrai GIIN avant soumission à l\'IRS. -->'
+      : '';
+
+    const accountReports = clientType === 'individual'
+      ? generateIndividualAccounts(clients)
+      : generateCorporateAccounts(clients);
+
     return `<?xml version="1.0" encoding="UTF-8"?>
 <FATCA_OECD version="2.0">
   <MessageSpec>
-    <SendingCompanyIN>BSIC001</SendingCompanyIN>
+    <SendingCompanyIN>${escapeXml(REPORTING_FI_GIIN)}</SendingCompanyIN>
     <TransmittingCountry>BJ</TransmittingCountry>
     <ReceivingCountry>US</ReceivingCountry>
     <MessageType>FATCA</MessageType>
-    <MessageRefId>BSIC001_${reportingYear}_${date.replace(/-/g, '')}_00001</MessageRefId>
+    <MessageRefId>${escapeXml(REPORTING_FI_GIIN)}_${reportingYear}_${date.replace(/-/g, '')}_00001</MessageRefId>
     <ReportingPeriod>${reportingYear}-12-31</ReportingPeriod>
     <Timestamp>${new Date().toISOString()}</Timestamp>
   </MessageSpec>
-  <FATCA>
+  <FATCA>${giinWarning}
     <ReportingFI>
       <ResCountryCode>BJ</ResCountryCode>
-      <TIN issuedBy="US">000000.00000.00000.00000</TIN>
+      <TIN issuedBy="US">${escapeXml(REPORTING_FI_GIIN)}</TIN>
       <Name>BSIC Bénin</Name>
       <Address>
         <CountryCode>BJ</CountryCode>
@@ -250,123 +288,88 @@ const FatcaPage: React.FC = () => {
       <FilerCategory>FATCA601</FilerCategory>
     </ReportingFI>
     <ReportingGroup>
-      ${clientType === 'individual' ? generateIndividualAccounts() : generateCorporateAccounts()}
+      ${accountReports}
     </ReportingGroup>
   </FATCA>
 </FATCA_OECD>`;
   };
 
-  // Function to generate individual accounts XML
-  const generateIndividualAccounts = () => {
-    return `<AccountReport>
+  // Generate individual account XML from real client data
+  const generateIndividualAccounts = (clients: any[]) => {
+    const reportingYear = new Date().getFullYear() - 1;
+    return clients.map((client, index) => {
+      const docRefId = `BSIC.${reportingYear}.IND.${String(index + 1).padStart(5, '0')}`;
+      // Split name: assume "LASTNAME FIRSTNAME" format
+      const nameParts = (client.nom || '').trim().split(/\s+/);
+      const lastName = nameParts[0] || '';
+      const firstName = nameParts.slice(1).join(' ') || '';
+
+      return `<AccountReport>
         <DocSpec>
           <DocTypeIndic>FATCA1</DocTypeIndic>
-          <DocRefId>BSIC001.2024.ACC001</DocRefId>
+          <DocRefId>${escapeXml(docRefId)}</DocRefId>
         </DocSpec>
-        <AccountNumber>123456789</AccountNumber>
+        <AccountNumber>${escapeXml(client.cli)}</AccountNumber>
         <AccountHolder>
           <Individual>
-            <ResCountryCode>US</ResCountryCode>
-            <TIN issuedBy="US">123456789</TIN>
+            <ResCountryCode>${escapeXml(client.pays_adresse || client.nationalite || 'US')}</ResCountryCode>
             <Name>
-              <FirstName>John</FirstName>
-              <LastName>Smith</LastName>
+              <FirstName>${escapeXml(firstName)}</FirstName>
+              <LastName>${escapeXml(lastName)}</LastName>
             </Name>
             <Address>
-              <CountryCode>US</CountryCode>
-              <AddressFree>123 Broadway Street, Manhattan, New York</AddressFree>
+              <CountryCode>${escapeXml(client.pays_adresse || 'BJ')}</CountryCode>
+              <AddressFree>${escapeXml(client.adresse || '')}</AddressFree>
             </Address>
-            <BirthInfo>
-              <BirthDate>1970-01-01</BirthDate>
-              <City>New York</City>
-              <CountryInfo>
-                <CountryCode>US</CountryCode>
-              </CountryInfo>
-            </BirthInfo>
           </Individual>
         </AccountHolder>
-        <AccountBalance currCode="USD">50000.00</AccountBalance>
-      </AccountReport>
-      <AccountReport>
-        <DocSpec>
-          <DocTypeIndic>FATCA1</DocTypeIndic>
-          <DocRefId>BSIC001.2024.ACC002</DocRefId>
-        </DocSpec>
-        <AccountNumber>987654321</AccountNumber>
-        <AccountHolder>
-          <Individual>
-            <ResCountryCode>US</ResCountryCode>
-            <TIN issuedBy="US">987654321</TIN>
-            <Name>
-              <FirstName>Sarah</FirstName>
-              <LastName>Johnson</LastName>
-            </Name>
-            <Address>
-              <CountryCode>US</CountryCode>
-              <AddressFree>456 Michigan Avenue, Downtown, Chicago</AddressFree>
-            </Address>
-            <BirthInfo>
-              <BirthDate>1985-06-15</BirthDate>
-              <City>Chicago</City>
-              <CountryInfo>
-                <CountryCode>US</CountryCode>
-              </CountryInfo>
-            </BirthInfo>
-          </Individual>
-        </AccountHolder>
-        <AccountBalance currCode="USD">75000.00</AccountBalance>
       </AccountReport>`;
+    }).join('\n      ');
   };
 
-  // Function to generate corporate accounts XML
-  const generateCorporateAccounts = () => {
-    return `<AccountReport>
+  // Generate corporate account XML from real client data
+  const generateCorporateAccounts = (clients: any[]) => {
+    const reportingYear = new Date().getFullYear() - 1;
+    return clients.map((client, index) => {
+      const docRefId = `BSIC.${reportingYear}.CORP.${String(index + 1).padStart(5, '0')}`;
+
+      return `<AccountReport>
         <DocSpec>
           <DocTypeIndic>FATCA1</DocTypeIndic>
-          <DocRefId>BSIC001.2024.CORP001</DocRefId>
+          <DocRefId>${escapeXml(docRefId)}</DocRefId>
         </DocSpec>
-        <AccountNumber>CORP123456789</AccountNumber>
+        <AccountNumber>${escapeXml(client.cli)}</AccountNumber>
         <AccountHolder>
           <Organisation>
-            <ResCountryCode>US</ResCountryCode>
-            <TIN issuedBy="US">98-7654321</TIN>
-            <Name>US COMPANY INC</Name>
+            <ResCountryCode>${escapeXml(client.paysAdresse || client.paysResidenceFiscale || 'US')}</ResCountryCode>
+            <Name>${escapeXml(client.raisonSociale || client.nom)}</Name>
             <Address>
-              <CountryCode>US</CountryCode>
-              <AddressFree>789 Wall Street, Financial District, New York</AddressFree>
+              <CountryCode>${escapeXml(client.paysAdresse || 'BJ')}</CountryCode>
+              <AddressFree>${escapeXml(client.adresse || '')}</AddressFree>
             </Address>
           </Organisation>
         </AccountHolder>
-        <AccountBalance currCode="USD">1500000.00</AccountBalance>
-      </AccountReport>
-      <AccountReport>
-        <DocSpec>
-          <DocTypeIndic>FATCA1</DocTypeIndic>
-          <DocRefId>BSIC001.2024.CORP002</DocRefId>
-        </DocSpec>
-        <AccountNumber>CORP987654321</AccountNumber>
-        <AccountHolder>
-          <Organisation>
-            <ResCountryCode>US</ResCountryCode>
-            <TIN issuedBy="US">98-1234567</TIN>
-            <Name>US CORPORATION A</Name>
-            <Address>
-              <CountryCode>US</CountryCode>
-              <AddressFree>123 Wall Street, Financial District, New York</AddressFree>
-            </Address>
-          </Organisation>
-        </AccountHolder>
-        <AccountBalance currCode="USD">2750000.00</AccountBalance>
       </AccountReport>`;
+    }).join('\n      ');
   };
 
   if (isLoading) {
     return (
-      <div className="flex items-center justify-center min-h-screen">
-        <LoadingSpinner 
-          size="lg" 
-          text="Chargement des données FATCA..." 
-        />
+      <div className="space-y-6 p-6">
+        <div className="flex items-center justify-between">
+          <div>
+            <div className="h-7 w-48 bg-gray-200 rounded animate-pulse mb-2" />
+            <div className="h-4 w-80 bg-gray-200 rounded animate-pulse" />
+          </div>
+          <div className="flex space-x-2">
+            {[...Array(4)].map((_, i) => <div key={i} className="h-9 w-28 bg-gray-200 rounded animate-pulse" />)}
+          </div>
+        </div>
+        <div className="grid grid-cols-1 sm:grid-cols-2 lg:grid-cols-4 gap-4">
+          {[...Array(4)].map((_, i) => <div key={i} className="h-24 bg-white border rounded-xl p-4 animate-pulse"><div className="h-4 w-24 bg-gray-200 rounded mb-3" /><div className="h-8 w-16 bg-gray-200 rounded" /></div>)}
+        </div>
+        <div className="h-10 bg-gray-200 rounded w-full animate-pulse" />
+        {[...Array(5)].map((_, i) => <div key={i} className="h-16 bg-gray-100 rounded w-full animate-pulse" />)}
       </div>
     );
   }
@@ -375,8 +378,8 @@ const FatcaPage: React.FC = () => {
     <div className="space-y-6 animate-fade-in">
       <div className="flex flex-col sm:flex-row sm:items-center sm:justify-between">
         <div>
-          <h1 className="text-2xl font-semibold text-gray-900">Clients FATCA</h1>
-          <p className="mt-1 text-sm text-gray-500">
+          <h1 className="text-2xl font-semibold text-gray-900 dark:text-gray-100">Clients FATCA</h1>
+          <p className="mt-1 text-sm text-gray-500 dark:text-gray-400">
             Identification des clients avec indices d'américanité (FATCA)
           </p>
         </div>
@@ -423,7 +426,7 @@ const FatcaPage: React.FC = () => {
           </Button>
           
           <Button 
-            variant={showFilters ? 'primary' : 'outline'} 
+            variant={showFilters ? 'secondary' : 'outline'}
             size="sm" 
             leftIcon={<Filter className="h-4 w-4" />}
             onClick={() => setShowFilters(!showFilters)}
@@ -437,229 +440,217 @@ const FatcaPage: React.FC = () => {
       <FatcaStats isLoading={isLoading || isRefreshing} clientType={activeTab === 'individual' ? '1' : '2'} />
 
       {/* Tabs for Individual/Corporate */}
-      <div className="border-b border-gray-200">
-        <nav className="-mb-px flex space-x-8">
-          <button
-            onClick={() => setActiveTab('individual')}
-            className={`${
-              activeTab === 'individual'
-                ? 'border-primary-500 text-primary-600'
-                : 'border-transparent text-gray-500 hover:text-gray-700 hover:border-gray-300'
-            } whitespace-nowrap py-4 px-1 border-b-2 font-medium text-sm flex items-center space-x-2`}
-          >
-            <User className="h-4 w-4" />
-            <span>Personnes Physiques</span>
-          </button>
-          <button
-            onClick={() => setActiveTab('corporate')}
-            className={`${
-              activeTab === 'corporate'
-                ? 'border-primary-500 text-primary-600'
-                : 'border-transparent text-gray-500 hover:text-gray-700 hover:border-gray-300'
-            } whitespace-nowrap py-4 px-1 border-b-2 font-medium text-sm flex items-center space-x-2`}
-          >
-            <Building className="h-4 w-4" />
-            <span>Personnes Morales</span>
-          </button>
-          <button
-            onClick={() => setActiveTab('transmit')}
-            className={`${
-              activeTab === 'transmit'
-                ? 'border-primary-500 text-primary-600'
-                : 'border-transparent text-gray-500 hover:text-gray-700 hover:border-gray-300'
-            } whitespace-nowrap py-4 px-1 border-b-2 font-medium text-sm flex items-center space-x-2`}
-          >
-            <Send className="h-4 w-4" />
-            <span>Déclaration IRS</span>
-          </button>
-        </nav>
-      </div>
+      <Tabs value={activeTab} onChange={(v) => setActiveTab(v as 'individual' | 'corporate' | 'transmit')}>
+        <TabList label="Types de clients FATCA">
+          <Tab value="individual" icon={<User className="h-4 w-4" />}>Personnes Physiques</Tab>
+          <Tab value="corporate" icon={<Building className="h-4 w-4" />}>Personnes Morales</Tab>
+          <Tab value="transmit" icon={<Send className="h-4 w-4" />}>Déclaration IRS</Tab>
+        </TabList>
 
-      {showFilters && (
-        <FatcaFilters 
-          isLoading={isLoading || isRefreshing} 
-          onStatusChange={handleStatusChange}
-        />
-      )}
+        {showFilters && (
+          <FatcaFilters
+            isLoading={isLoading || isRefreshing}
+            onStatusChange={handleStatusChange}
+          />
+        )}
 
-      {activeTab === 'transmit' ? (
-        <Card>
-          <div className="p-6 space-y-6">
-            <h3 className="text-lg font-medium text-gray-900">Déclaration FATCA à l'IRS</h3>
+        <TabPanel value="transmit">
+          <Card>
+            <div className="p-6 space-y-6">
+              <h3 className="text-lg font-medium text-gray-900">Déclaration FATCA à l'IRS</h3>
 
-            <div className="bg-primary-50 border border-primary-200 rounded-md p-4">
-              <div className="flex items-start">
-                <FileCode className="h-5 w-5 text-primary-600 mt-0.5 mr-2 flex-shrink-0" />
-                <div>
-                  <p className="text-primary-800 font-medium">
-                    Informations sur la déclaration FATCA
-                  </p>
-                  <p className="mt-1 text-sm text-primary-700">
-                    Les déclarations FATCA doivent être transmises à l'IRS avant le 30 juin de chaque année pour les comptes de l'année N-1.
-                  </p>
-                  <div className="mt-2 space-y-1 text-sm text-primary-700">
-                    <p>• Format: XML conforme au schéma IRS FATCA XML Schema v2.0</p>
-                    <p>• Nomenclature: <code className="bg-primary-100 px-1 rounded">FATCA_BJ_INDIV_YYYYMMDD.xml</code></p>
-                    <p>• Transmission via: <code className="bg-primary-100 px-1 rounded">IRS IDES (International Data Exchange Service)</code></p>
-                    <p>• GIIN requis: Global Intermediary Identification Number</p>
-                    <p>• Fichiers séparés pour personnes physiques et morales</p>
+              <div className="bg-primary-50 border border-primary-200 rounded-md p-4">
+                <div className="flex items-start">
+                  <FileCode className="h-5 w-5 text-primary-600 mt-0.5 mr-2 flex-shrink-0" />
+                  <div>
+                    <p className="text-primary-800 font-medium">
+                      Informations sur la déclaration FATCA
+                    </p>
+                    <p className="mt-1 text-sm text-primary-700">
+                      Les déclarations FATCA doivent être transmises à l'IRS avant le 30 juin de chaque année pour les comptes de l'année N-1.
+                    </p>
+                    <div className="mt-2 space-y-1 text-sm text-primary-700">
+                      <p>• Format: XML conforme au schéma IRS FATCA XML Schema v2.0</p>
+                      <p>• Nomenclature: <code className="bg-primary-100 px-1 rounded">FATCA_BJ_INDIV_YYYYMMDD.xml</code></p>
+                      <p>• Transmission via: <code className="bg-primary-100 px-1 rounded">IRS IDES (International Data Exchange Service)</code></p>
+                      <p>• GIIN requis: Global Intermediary Identification Number</p>
+                      <p>• Fichiers séparés pour personnes physiques et morales</p>
+                    </div>
                   </div>
                 </div>
               </div>
-            </div>
-            
-            <div className="grid grid-cols-1 md:grid-cols-2 gap-6">
-              <div className="space-y-4">
-                <h4 className="text-md font-medium text-gray-900">Fichiers à transmettre</h4>
-                
-                <div className="bg-white border border-gray-200 rounded-md p-4">
-                  <div className="flex items-center justify-between">
-                    <div className="flex items-center">
-                      <FileCode className="h-5 w-5 text-primary-600 mr-2" />
-                      <div>
-                        <p className="text-sm font-medium text-gray-900">FATCA_BJ_INDIV_2024-07-15.xml</p>
-                        <p className="text-xs text-gray-500">Personnes Physiques • 850 clients • Formulaires W-9/W-8BEN</p>
+
+              <div className="grid grid-cols-1 md:grid-cols-2 gap-6">
+                <div className="space-y-4">
+                  <h4 className="text-md font-medium text-gray-900">Fichiers à transmettre</h4>
+
+                  <div className="bg-white border border-gray-200 rounded-md p-4">
+                    <div className="flex items-center justify-between">
+                      <div className="flex items-center">
+                        <FileCode className="h-5 w-5 text-primary-600 mr-2" />
+                        <div>
+                          <p className="text-sm font-medium text-gray-900">FATCA_BJ_INDIV_2024-07-15.xml</p>
+                          <p className="text-xs text-gray-500">Personnes Physiques • 850 clients • Formulaires W-9/W-8BEN</p>
+                        </div>
+                      </div>
+                      <Button
+                        variant="outline"
+                        size="sm"
+                        leftIcon={<Download className="h-4 w-4" />}
+                        onClick={handleExportXML}
+                      >
+                        Télécharger
+                      </Button>
+                    </div>
+                  </div>
+
+                  <div className="bg-white border border-gray-200 rounded-md p-4">
+                    <div className="flex items-center justify-between">
+                      <div className="flex items-center">
+                        <FileCode className="h-5 w-5 text-primary-600 mr-2" />
+                        <div>
+                          <p className="text-sm font-medium text-gray-900">FATCA_BJ_CORP_2024-07-15.xml</p>
+                          <p className="text-xs text-gray-500">Personnes Morales • 400 clients • Formulaires W-8BEN-E</p>
+                        </div>
+                      </div>
+                      <Button
+                        variant="outline"
+                        size="sm"
+                        leftIcon={<Download className="h-4 w-4" />}
+                        onClick={() => handleExportXML()}
+                      >
+                        Télécharger
+                      </Button>
+                    </div>
+                  </div>
+                </div>
+
+                <div className="space-y-4">
+                  <h4 className="text-md font-medium text-gray-900">Workflow de déclaration IRS</h4>
+
+                  <div className="bg-white border border-gray-200 rounded-md p-4 space-y-3">
+                    <div className="space-y-2">
+                      <p className="text-sm font-medium text-gray-900">Étapes de la déclaration FATCA</p>
+                      <div className="space-y-2 text-sm text-gray-600">
+                        <div className="flex items-start">
+                          <span className="text-primary-600 font-semibold mr-2">1.</span>
+                          <span>Obtenir le GIIN (enregistrement sur le portail IRS)</span>
+                        </div>
+                        <div className="flex items-start">
+                          <span className="text-primary-600 font-semibold mr-2">2.</span>
+                          <span>Identifier les comptes déclarables (US indicia)</span>
+                        </div>
+                        <div className="flex items-start">
+                          <span className="text-primary-600 font-semibold mr-2">3.</span>
+                          <span>Collecter les formulaires (W-9, W-8BEN, W-8BEN-E)</span>
+                        </div>
+                        <div className="flex items-start">
+                          <span className="text-primary-600 font-semibold mr-2">4.</span>
+                          <span>Générer les fichiers XML conformes</span>
+                        </div>
+                        <div className="flex items-start">
+                          <span className="text-primary-600 font-semibold mr-2">5.</span>
+                          <span>Transmettre via IRS IDES ou administration fiscale locale</span>
+                        </div>
+                        <div className="flex items-start">
+                          <span className="text-primary-600 font-semibold mr-2">6.</span>
+                          <span>Archiver les preuves (5 à 10 ans)</span>
+                        </div>
                       </div>
                     </div>
+
+                    <div className="pt-3 border-t border-gray-200">
+                      <div className="flex justify-between">
+                        <span className="text-sm text-gray-500">Plateforme:</span>
+                        <span className="text-sm font-medium">IRS IDES</span>
+                      </div>
+                      <div className="flex justify-between mt-2">
+                        <span className="text-sm text-gray-500">Date limite:</span>
+                        <span className="text-sm font-medium">30 juin (année N+1)</span>
+                      </div>
+                      <div className="flex justify-between mt-2">
+                        <span className="text-sm text-gray-500">Accord IGA:</span>
+                        <span className="text-sm font-medium">Model 1 ou Model 2</span>
+                      </div>
+                    </div>
+                  </div>
+
+                  <div className="bg-warning-50 border border-warning-200 rounded-md p-4">
+                    <p className="text-sm text-warning-800">
+                      <strong>Sanctions en cas de non-conformité:</strong>
+                    </p>
+                    <ul className="mt-2 text-xs text-warning-700 space-y-1">
+                      <li>• Retenue à la source de 30% sur flux US</li>
+                      <li>• Sanctions financières</li>
+                      <li>• Blocage de relations bancaires correspondantes</li>
+                    </ul>
+                  </div>
+
+                  <div className="mt-6">
                     <Button
-                      variant="outline"
-                      size="sm"
-                      leftIcon={<Download className="h-4 w-4" />}
-                      onClick={handleExportXML}
+                      variant="primary"
+                      fullWidth
+                      leftIcon={<Send className="h-4 w-4" />}
+                      onClick={handleTransmitToBCEAO}
+                      isLoading={isTransmitting}
                     >
-                      Télécharger
+                      Préparer la déclaration IRS
                     </Button>
                   </div>
                 </div>
-
-                <div className="bg-white border border-gray-200 rounded-md p-4">
-                  <div className="flex items-center justify-between">
-                    <div className="flex items-center">
-                      <FileCode className="h-5 w-5 text-primary-600 mr-2" />
-                      <div>
-                        <p className="text-sm font-medium text-gray-900">FATCA_BJ_CORP_2024-07-15.xml</p>
-                        <p className="text-xs text-gray-500">Personnes Morales • 400 clients • Formulaires W-8BEN-E</p>
-                      </div>
-                    </div>
-                    <Button
-                      variant="outline"
-                      size="sm"
-                      leftIcon={<Download className="h-4 w-4" />}
-                      onClick={() => handleExportXML()}
-                    >
-                      Télécharger
-                    </Button>
-                  </div>
-                </div>
-              </div>
-              
-              <div className="space-y-4">
-                <h4 className="text-md font-medium text-gray-900">Workflow de déclaration IRS</h4>
-
-                <div className="bg-white border border-gray-200 rounded-md p-4 space-y-3">
-                  <div className="space-y-2">
-                    <p className="text-sm font-medium text-gray-900">Étapes de la déclaration FATCA</p>
-                    <div className="space-y-2 text-sm text-gray-600">
-                      <div className="flex items-start">
-                        <span className="text-primary-600 font-semibold mr-2">1.</span>
-                        <span>Obtenir le GIIN (enregistrement sur le portail IRS)</span>
-                      </div>
-                      <div className="flex items-start">
-                        <span className="text-primary-600 font-semibold mr-2">2.</span>
-                        <span>Identifier les comptes déclarables (US indicia)</span>
-                      </div>
-                      <div className="flex items-start">
-                        <span className="text-primary-600 font-semibold mr-2">3.</span>
-                        <span>Collecter les formulaires (W-9, W-8BEN, W-8BEN-E)</span>
-                      </div>
-                      <div className="flex items-start">
-                        <span className="text-primary-600 font-semibold mr-2">4.</span>
-                        <span>Générer les fichiers XML conformes</span>
-                      </div>
-                      <div className="flex items-start">
-                        <span className="text-primary-600 font-semibold mr-2">5.</span>
-                        <span>Transmettre via IRS IDES ou administration fiscale locale</span>
-                      </div>
-                      <div className="flex items-start">
-                        <span className="text-primary-600 font-semibold mr-2">6.</span>
-                        <span>Archiver les preuves (5 à 10 ans)</span>
-                      </div>
-                    </div>
-                  </div>
-
-                  <div className="pt-3 border-t border-gray-200">
-                    <div className="flex justify-between">
-                      <span className="text-sm text-gray-500">Plateforme:</span>
-                      <span className="text-sm font-medium">IRS IDES</span>
-                    </div>
-                    <div className="flex justify-between mt-2">
-                      <span className="text-sm text-gray-500">Date limite:</span>
-                      <span className="text-sm font-medium">30 juin (année N+1)</span>
-                    </div>
-                    <div className="flex justify-between mt-2">
-                      <span className="text-sm text-gray-500">Accord IGA:</span>
-                      <span className="text-sm font-medium">Model 1 ou Model 2</span>
-                    </div>
-                  </div>
-                </div>
-
-                <div className="bg-warning-50 border border-warning-200 rounded-md p-4">
-                  <p className="text-sm text-warning-800">
-                    <strong>Sanctions en cas de non-conformité:</strong>
-                  </p>
-                  <ul className="mt-2 text-xs text-warning-700 space-y-1">
-                    <li>• Retenue à la source de 30% sur flux US</li>
-                    <li>• Sanctions financières</li>
-                    <li>• Blocage de relations bancaires correspondantes</li>
-                  </ul>
-                </div>
-
-                <div className="mt-6">
-                  <Button
-                    variant="primary"
-                    fullWidth
-                    leftIcon={<Send className="h-4 w-4" />}
-                    onClick={handleTransmitToBCEAO}
-                    isLoading={isTransmitting}
-                  >
-                    Préparer la déclaration IRS
-                  </Button>
-                </div>
               </div>
             </div>
-          </div>
-        </Card>
-      ) : (
-        <Card>
-          <div className="p-4 space-y-4">
-            <div className="flex flex-col sm:flex-row sm:items-center sm:justify-between">
-              <div className="w-full sm:w-64 mb-4 sm:mb-0">
-                <Input
-                  placeholder={`Rechercher un client ${activeTab === 'individual' ? 'particulier' : 'entreprise'}...`}
-                  value={searchQuery}
-                  onChange={(e) => setSearchQuery(e.target.value)}
-                  leftIcon={<Flag className="h-4 w-4 text-gray-400" />}
-                  disabled={isLoading || isRefreshing}
-                />
-              </div>
-            </div>
+          </Card>
+        </TabPanel>
 
-            {activeTab === 'individual' ? (
-              <FatcaTable 
-                isLoading={isLoading || isRefreshing} 
+        <TabPanel value="individual">
+          <Card>
+            <div className="p-4 space-y-4">
+              <div className="flex flex-col sm:flex-row sm:items-center sm:justify-between">
+                <div className="w-full sm:w-64 mb-4 sm:mb-0">
+                  <Input
+                    placeholder="Rechercher un client particulier..."
+                    value={searchQuery}
+                    onChange={(e) => setSearchQuery(e.target.value)}
+                    leftIcon={<Flag className="h-4 w-4 text-gray-400" />}
+                    disabled={isLoading || isRefreshing}
+                  />
+                </div>
+              </div>
+
+              <FatcaTable
+                isLoading={isLoading || isRefreshing}
                 searchQuery={searchQuery}
                 selectedStatus={selectedStatus}
               />
-            ) : (
-              <CorporateFatcaTable 
-                isLoading={isLoading || isRefreshing} 
+            </div>
+          </Card>
+        </TabPanel>
+
+        <TabPanel value="corporate">
+          <Card>
+            <div className="p-4 space-y-4">
+              <div className="flex flex-col sm:flex-row sm:items-center sm:justify-between">
+                <div className="w-full sm:w-64 mb-4 sm:mb-0">
+                  <Input
+                    placeholder="Rechercher un client entreprise..."
+                    value={searchQuery}
+                    onChange={(e) => setSearchQuery(e.target.value)}
+                    leftIcon={<Flag className="h-4 w-4 text-gray-400" />}
+                    disabled={isLoading || isRefreshing}
+                  />
+                </div>
+              </div>
+
+              <CorporateFatcaTable
+                isLoading={isLoading || isRefreshing}
                 searchQuery={searchQuery}
                 selectedStatus={selectedStatus}
               />
-            )}
-          </div>
-        </Card>
-      )}
+            </div>
+          </Card>
+        </TabPanel>
+      </Tabs>
 
       <Card className="border-primary-200 bg-primary-50">
         <div className="p-4">

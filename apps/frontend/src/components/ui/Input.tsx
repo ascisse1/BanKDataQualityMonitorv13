@@ -215,14 +215,16 @@ const Input = forwardRef<HTMLInputElement, InputProps>(
               <button
                 type="button"
                 onClick={() => setShowPassword(!showPassword)}
+                aria-label={showPassword ? 'Masquer le mot de passe' : 'Afficher le mot de passe'}
+                aria-pressed={showPassword}
                 className={`
                   ${iconSizeStyles[inputSize]}
                   text-slate-400 hover:text-slate-600
                   dark:text-slate-500 dark:hover:text-slate-300
                   transition-colors duration-200
-                  focus:outline-none
+                  focus:outline-none focus-visible:ring-2 focus-visible:ring-primary-500 rounded
                 `}
-                tabIndex={-1}
+                tabIndex={0}
               >
                 {showPassword ? (
                   <EyeOff className={iconSizeStyles[inputSize]} />

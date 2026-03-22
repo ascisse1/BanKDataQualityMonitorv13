@@ -5,7 +5,7 @@ import Button from '../../components/ui/Button';
 import Input from '../../components/ui/Input';
 import { useToast } from '../../components/ui/Toaster';
 import { useAuth } from '../../context/AuthContext';
-import { useNotification } from '../../context/NotificationContext';
+
 
 interface User {
   id: string | number;
@@ -47,7 +47,7 @@ const UsersPage = () => {
   const [agencies, setAgencies] = useState<{code_agence: string, lib_agence: string}[]>([]);
   const { addToast } = useToast();
   const { user: currentUser } = useAuth();
-  const { showNotification } = useNotification();
+
 
   // Vérifier les permissions
   const hasAdminAccess = currentUser?.role === 'ADMIN';
@@ -62,7 +62,7 @@ const UsersPage = () => {
 
   const loadUsers = async () => {
     setIsLoading(true);
-    showNotification('Chargement des utilisateurs...', 'loading');
+    
     try {
       const response = await fetch('/api/users', {
         headers: {
@@ -111,8 +111,7 @@ const UsersPage = () => {
 
   const handleCreateUser = async (userData: Partial<User>) => {
     try {
-      showNotification('Création de l\'utilisateur en cours...', 'loading');
-
+      
       const response = await fetch('/api/users', {
         method: 'POST',
         headers: {
@@ -128,20 +127,19 @@ const UsersPage = () => {
         setIsCreating(false);
         loadUsers();
         loadUserStats();
-        showNotification('Utilisateur créé avec succès', 'success');
+        addToast('Utilisateur créé avec succès', 'success');
       } else {
-        showNotification(data.error || 'Erreur lors de la création', 'error');
+        addToast(data.error || 'Erreur lors de la création', 'error');
       }
     } catch (error) {
       console.error('Create user error:', error);
-      showNotification('Erreur lors de la création de l\'utilisateur', 'error');
+      addToast('Erreur lors de la création de l\'utilisateur', 'error');
     }
   };
 
   const handleCreateAgencyUser = async (userData: Partial<User> & { agencyName?: string }) => {
     try {
-      showNotification('Création de l\'utilisateur d\'agence en cours...', 'loading');
-      
+            
       const { agencyName, ...userDataWithoutAgencyName } = userData;
       
       const response = await fetch('/api/agency-users', {
@@ -162,19 +160,18 @@ const UsersPage = () => {
         setIsCreatingAgencyUser(false);
         loadUsers();
         loadUserStats();
-        showNotification('Utilisateur d\'agence créé avec succès', 'success');
+        addToast('Utilisateur d\'agence créé avec succès', 'success');
       } else {
-        showNotification(data.error || 'Erreur lors de la création', 'error');
+        addToast(data.error || 'Erreur lors de la création', 'error');
       }
     } catch (error) {
-      showNotification('Erreur lors de la création de l\'utilisateur d\'agence', 'error');
+      addToast('Erreur lors de la création de l\'utilisateur d\'agence', 'error');
     }
   };
 
   const handleUpdateUser = async (userData: User) => {
     try {
-      showNotification('Mise à jour de l\'utilisateur en cours...', 'loading');
-
+      
       const response = await fetch(`/api/users/${userData.id}`, {
         method: 'PUT',
         headers: {
@@ -189,26 +186,25 @@ const UsersPage = () => {
       if (response.ok) {
         setEditingUser(null);
         loadUsers();
-        showNotification('Utilisateur mis à jour avec succès', 'success');
+        addToast('Utilisateur mis à jour avec succès', 'success');
       } else {
-        showNotification(data.error || 'Erreur lors de la mise à jour', 'error');
+        addToast(data.error || 'Erreur lors de la mise à jour', 'error');
       }
     } catch (error) {
       console.error('Update user error:', error);
-      showNotification('Erreur lors de la mise à jour de l\'utilisateur', 'error');
+      addToast('Erreur lors de la mise à jour de l\'utilisateur', 'error');
     }
   };
 
   const handleDeleteUser = async (userId: string) => {
     if (userId === currentUser?.id) {
-      showNotification('Vous ne pouvez pas supprimer votre propre compte', 'error');
+      addToast('Vous ne pouvez pas supprimer votre propre compte', 'error');
       return;
     }
 
     if (confirm('Êtes-vous sûr de vouloir supprimer cet utilisateur ?')) {
       try {
-        showNotification('Suppression de l\'utilisateur en cours...', 'loading');
-
+        
         const response = await fetch(`/api/users/${userId}`, {
           method: 'DELETE',
           headers: {
@@ -221,13 +217,13 @@ const UsersPage = () => {
         if (response.ok) {
           loadUsers();
           loadUserStats();
-          showNotification('Utilisateur supprimé avec succès', 'success');
+          addToast('Utilisateur supprimé avec succès', 'success');
         } else {
-          showNotification(data.error || 'Erreur lors de la suppression', 'error');
+          addToast(data.error || 'Erreur lors de la suppression', 'error');
         }
       } catch (error) {
         console.error('Delete user error:', error);
-        showNotification('Erreur lors de la suppression de l\'utilisateur', 'error');
+        addToast('Erreur lors de la suppression de l\'utilisateur', 'error');
       }
     }
   };
@@ -235,7 +231,7 @@ const UsersPage = () => {
   const handleBulkCreateAgencyUsers = async () => {
     try {
       if (!agencies || agencies.length === 0) {
-        showNotification('Aucune agence disponible', 'error');
+        addToast('Aucune agence disponible', 'error');
         return;
       }
       
@@ -243,8 +239,7 @@ const UsersPage = () => {
         return;
       }
       
-      showNotification('Création des utilisateurs d\'agence en cours...', 'loading');
-      
+            
       // Prepare the data to send
       const agenciesData = agencies.map(agency => ({
         agencyCode: agency.code_agence,
@@ -271,18 +266,18 @@ const UsersPage = () => {
       if (response.ok) {
         loadUsers();
         loadUserStats();
-        showNotification(`${data.results.length} utilisateurs d'agence créés avec succès`, 'success');
+        addToast(`${data.results.length} utilisateurs d'agence créés avec succès`, 'success');
         
         if (data.errors && data.errors.length > 0) {
           console.warn('Erreurs lors de la création de certains utilisateurs:', data.errors);
           addToast(`${data.errors.length} erreurs rencontrées. Voir la console pour plus de détails.`, 'warning');
         }
       } else {
-        showNotification(data.error || 'Erreur lors de la création des utilisateurs', 'error');
+        addToast(data.error || 'Erreur lors de la création des utilisateurs', 'error');
       }
     } catch (error) {
       console.error('Error creating bulk agency users:', error);
-      showNotification('Erreur lors de la création des utilisateurs d\'agence', 'error');
+      addToast('Erreur lors de la création des utilisateurs d\'agence', 'error');
     }
   };
 

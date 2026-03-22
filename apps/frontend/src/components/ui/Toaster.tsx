@@ -72,7 +72,7 @@ const Toast: React.FC<ToastProps> = ({ toast, onClose }) => {
     <div
       className={`${
         toastVariantStyles[toast.variant]
-      } p-4 rounded-md shadow-md border-l-4 mb-4 max-w-sm w-full animate-fade-in flex items-start justify-between`}
+      } p-4 rounded-md shadow-md border-l-4 mb-4 max-w-[calc(100vw-2rem)] sm:max-w-sm w-full animate-fade-in flex items-start justify-between`}
       role="alert"
     >
       <div>{toast.message}</div>

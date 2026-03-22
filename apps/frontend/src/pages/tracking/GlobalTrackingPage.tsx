@@ -5,7 +5,7 @@ import Button from '../../components/ui/Button';
 import Input from '../../components/ui/Input';
 import { useToast } from '../../components/ui/Toaster';
 import { db } from '../../services/db';
-import { useNotification } from '../../context/NotificationContext';
+
 import Chart from 'react-apexcharts';
 import { ApexOptions } from 'apexcharts';
 import { jsPDF } from 'jspdf';
@@ -54,7 +54,7 @@ const GlobalTrackingPage: React.FC = () => {
   const [clientTypes, setClientTypes] = useState<string[]>(['1', '2', '3']);
   const [agencies, setAgencies] = useState<{code_agence: string, lib_agence: string}[]>([]);
   const { addToast } = useToast();
-  const { showNotification } = useNotification();
+
 
   useEffect(() => {
     fetchAgencies();
@@ -80,8 +80,6 @@ const GlobalTrackingPage: React.FC = () => {
   const fetchTrackingData = async () => {
     try {
       setIsLoading(true);
-      showNotification('Chargement des données de suivi...', 'loading');
-
       const response = await fetch('/api/tracking/global');
       if (!response.ok) {
         throw new Error(`HTTP error! status: ${response.status}`);
@@ -90,10 +88,10 @@ const GlobalTrackingPage: React.FC = () => {
 
       setTrackingData(data);
       setFilteredData(data);
-      showNotification('Données de suivi chargées avec succès', 'success');
+      addToast('Données de suivi chargées avec succès', 'success');
     } catch (error) {
       console.error('Error fetching tracking data:', error);
-      showNotification('Erreur lors du chargement des données de suivi', 'error');
+      addToast('Erreur lors du chargement des données de suivi', 'error');
     } finally {
       setIsLoading(false);
     }
@@ -131,8 +129,6 @@ const GlobalTrackingPage: React.FC = () => {
   const handleExportPDF = async () => {
     try {
       setIsExporting(true);
-      showNotification('Préparation de l\'export PDF...', 'loading');
-
       const doc = new jsPDF('l', 'mm', 'a4');
       
       // Title
@@ -240,10 +236,10 @@ const GlobalTrackingPage: React.FC = () => {
       const filename = `suivi_global_${date}.pdf`;
       doc.save(filename);
       
-      showNotification('Export PDF réussi', 'success');
+      addToast('Export PDF réussi', 'success');
     } catch (error) {
       console.error('Error exporting PDF:', error);
-      showNotification('Erreur lors de l\'export PDF', 'error');
+      addToast('Erreur lors de l\'export PDF', 'error');
     } finally {
       setIsExporting(false);
     }
@@ -252,8 +248,6 @@ const GlobalTrackingPage: React.FC = () => {
   const handleExportExcel = async () => {
     try {
       setIsExporting(true);
-      showNotification('Préparation de l\'export Excel...', 'loading');
-
       // Create CSV content
       const headers = [
         'Code Agence',
@@ -310,10 +304,10 @@ const GlobalTrackingPage: React.FC = () => {
       document.body.removeChild(link);
       URL.revokeObjectURL(url);
 
-      showNotification('Export Excel réussi', 'success');
+      addToast('Export Excel réussi', 'success');
     } catch (error) {
       console.error('Error exporting Excel:', error);
-      showNotification('Erreur lors de l\'export Excel', 'error');
+      addToast('Erreur lors de l\'export Excel', 'error');
     } finally {
       setIsExporting(false);
     }
@@ -453,7 +447,7 @@ const GlobalTrackingPage: React.FC = () => {
           </Button>
           
           <Button 
-            variant={showFilters ? 'primary' : 'outline'} 
+            variant={showFilters ? 'secondary' : 'outline'}
             size="sm" 
             leftIcon={<Filter className="h-4 w-4" />}
             onClick={() => setShowFilters(!showFilters)}

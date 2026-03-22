@@ -126,8 +126,10 @@ const AnomaliesPage: React.FC = () => {
             }
 
             // Use a more efficient approach with smaller batch sizes and pagination
-            const batchSize = 100; // Smaller batch size to avoid timeouts
-            const maxRecords = 5000; // Limit total records to avoid memory issues
+            const EXPORT_BATCH_SIZE = 100;
+            const MAX_EXPORT_RECORDS = 5000;
+            const batchSize = EXPORT_BATCH_SIZE;
+            const maxRecords = MAX_EXPORT_RECORDS;
 
             let individualData: any[] = [];
             let corporateData: any[] = [];
@@ -578,8 +580,8 @@ const AnomaliesPage: React.FC = () => {
         <div className="space-y-6 animate-fade-in">
             <div className="flex flex-col sm:flex-row sm:items-center sm:justify-between">
                 <div>
-                    <h1 className="text-2xl font-semibold text-gray-900">Anomalies</h1>
-                    <p className="mt-1 text-sm text-gray-500">
+                    <h1 className="text-2xl font-semibold text-gray-900 dark:text-gray-100">Anomalies</h1>
+                    <p className="mt-1 text-sm text-gray-500 dark:text-gray-400">
                         Visualiser et gérer les anomalies détectées dans les dossiers clients
                         {isAgencyUser && userAgencyCode &&
                             <span className="ml-2 font-medium text-primary-600">• Agence: {userAgencyCode}</span>}
@@ -634,7 +636,7 @@ const AnomaliesPage: React.FC = () => {
                     </Button>
 
                     <Button
-                        variant={showFilters ? 'primary' : 'outline'}
+                        variant={showFilters ? 'secondary' : 'outline'}
                         size="sm"
                         leftIcon={<Filter className="h-4 w-4"/>}
                         onClick={() => setShowFilters(!showFilters)}
@@ -644,7 +646,7 @@ const AnomaliesPage: React.FC = () => {
                     </Button>
 
                     <Button
-                        variant={showHistory ? 'primary' : 'outline'}
+                        variant={showHistory ? 'secondary' : 'outline'}
                         size="sm"
                         leftIcon={<History className="h-4 w-4"/>}
                         onClick={() => setShowHistory(!showHistory)}

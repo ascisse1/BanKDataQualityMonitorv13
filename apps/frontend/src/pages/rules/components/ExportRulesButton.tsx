@@ -3,7 +3,7 @@ import { Download, FileText, Database, FileJson } from 'lucide-react';
 import Button from '../../../components/ui/Button';
 import { validationRulesService } from '../../../services/validationRules';
 import { useToast } from '../../../components/ui/Toaster';
-import { useNotification } from '../../../context/NotificationContext';
+
 
 interface ExportRulesButtonProps {
   clientType?: '1' | '2' | '3' | 'all';
@@ -18,13 +18,9 @@ const ExportRulesButton: React.FC<ExportRulesButtonProps> = ({
 }) => {
   const [isExporting, setIsExporting] = useState(false);
   const { addToast } = useToast();
-  const { showNotification } = useNotification();
-
   const handleExport = async (format: 'json' | 'csv' | 'pdf') => {
     try {
       setIsExporting(true);
-      showNotification('Préparation de l\'export...', 'loading');
-
       // Get rules based on client type
       const rules = clientType === 'all' 
         ? validationRulesService.getRules() 
@@ -35,7 +31,6 @@ const ExportRulesButton: React.FC<ExportRulesButtonProps> = ({
 
       if (rules.length === 0) {
         addToast('Aucune règle à exporter', 'warning');
-        showNotification('Aucune règle à exporter', 'warning');
         return;
       }
 
@@ -49,11 +44,9 @@ const ExportRulesButton: React.FC<ExportRulesButtonProps> = ({
       }
 
       addToast(`Export des règles en ${format.toUpperCase()} réussi (${rules.length} règles)`, 'success');
-      showNotification(`Export des règles en ${format.toUpperCase()} réussi`, 'success');
     } catch (error) {
       console.error('Error exporting rules:', error);
       addToast('Erreur lors de l\'export des règles', 'error');
-      showNotification('Erreur lors de l\'export des règles', 'error');
     } finally {
       setIsExporting(false);
     }

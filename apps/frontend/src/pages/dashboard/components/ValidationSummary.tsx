@@ -67,14 +67,14 @@ const ValidationSummary = ({ isLoading = false }) => {
 
         const duration = endTime - startTime;
         if (duration > 1000) {
-          addToast(`Donnees chargees en ${(duration/1000).toFixed(1)}s`, 'warning');
+          addToast(`Données chargées en ${(duration/1000).toFixed(1)}s`, 'warning');
         }
       } else {
         console.warn('No validation metrics data received');
         setMetrics([]);
       }
     } catch (err) {
-      const message = err instanceof Error ? err.message : 'Erreur lors du chargement des metriques de validation';
+      const message = err instanceof Error ? err.message : 'Erreur lors du chargement des métriques de validation';
       setError(message);
       console.error('Failed to fetch validation metrics:', err);
     } finally {
@@ -84,7 +84,7 @@ const ValidationSummary = ({ isLoading = false }) => {
 
   const handleRefresh = async () => {
     await fetchMetrics();
-    addToast('Donnees actualisees', 'success');
+    addToast('Données actualisées', 'success');
   };
 
   if (loading || isLoading) {
@@ -120,7 +120,7 @@ const ValidationSummary = ({ isLoading = false }) => {
             size="sm"
             leftIcon={<RefreshCw className="h-4 w-4" />}
           >
-            Reessayer
+            Réessayer
           </Button>
         </div>
       </div>
@@ -135,7 +135,7 @@ const ValidationSummary = ({ isLoading = false }) => {
           <div className="space-y-2">
             <h3 className="text-lg font-medium text-gray-900">Aucune donnee disponible</h3>
             <p className="text-sm text-gray-500">
-              Les metriques de validation apparaitront ici une fois les donnees disponibles.
+              Les métriques de validation apparaîtront ici une fois les données disponibles.
             </p>
           </div>
           <Button
@@ -144,7 +144,7 @@ const ValidationSummary = ({ isLoading = false }) => {
             size="sm"
             leftIcon={<RefreshCw className="h-4 w-4" />}
           >
-            Charger les donnees
+            Charger les données
           </Button>
         </div>
       </div>
@@ -192,7 +192,7 @@ const ValidationSummary = ({ isLoading = false }) => {
                       {qualityScore.toFixed(1)}%
                     </span>
                     <span className="ml-2 text-sm text-gray-500">
-                      de qualite
+                      de qualité
                     </span>
                   </div>
                 </div>
@@ -238,7 +238,7 @@ const ValidationSummary = ({ isLoading = false }) => {
 
                 {invalidRecords > 0 && (
                   <div className="flex items-center justify-between text-sm">
-                    <span className="text-gray-500">Anomalies detectees</span>
+                    <span className="text-gray-500">Anomalies détectées</span>
                     <span className="font-medium text-error-600">
                       {invalidRecords.toLocaleString('fr-FR')}
                     </span>
@@ -295,13 +295,13 @@ const ValidationSummary = ({ isLoading = false }) => {
             <div className="text-lg font-semibold text-error-700">
               {metrics.reduce((sum, m) => sum + (m.total_records - m.valid_records), 0).toLocaleString('fr-FR')}
             </div>
-            <div className="text-sm text-error-600">Anomalies detectees</div>
+            <div className="text-sm text-error-600">Anomalies détectées</div>
           </div>
           <div>
             <div className="text-lg font-semibold text-secondary-800">
               {(metrics.reduce((sum, m) => sum + m.quality_score, 0) / metrics.length).toFixed(1)}%
             </div>
-            <div className="text-sm text-secondary-600">Qualite moyenne</div>
+            <div className="text-sm text-secondary-600">Qualité moyenne</div>
           </div>
         </div>
       </div>

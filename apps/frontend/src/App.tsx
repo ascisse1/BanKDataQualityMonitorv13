@@ -8,9 +8,10 @@ import { CommandPaletteProvider } from './components/ui/CommandPalette';
 import AppRoutes from './routes/AppRoutes';
 import { ToastProvider, Toaster } from './components/ui/Toaster';
 
-import { NotificationProvider, NotificationDisplay } from './context/NotificationContext';
+import { NotificationProvider } from './context/NotificationContext';
 import LoadingOverlay from './components/ui/LoadingOverlay';
 import TracerButton from './components/ui/TracerButton';
+import { ErrorBoundary } from './features/rules/components/ErrorBoundary/ErrorBoundary';
 
 // Create a client with optimized defaults
 const queryClient = new QueryClient({
@@ -46,11 +47,12 @@ function App() {
               <SessionAuthProvider>
                 <AuthProvider>
                   <CommandPaletteProvider>
-                    <AppRoutes />
+                    <ErrorBoundary>
+                      <AppRoutes />
+                    </ErrorBoundary>
                     <Toaster />
-                    <NotificationDisplay />
                     <LoadingOverlay />
-                    <TracerButton />
+                    {import.meta.env.DEV && <TracerButton />}
                   </CommandPaletteProvider>
                 </AuthProvider>
               </SessionAuthProvider>

@@ -1,7 +1,7 @@
 import { useState, useEffect } from 'react';
 import { RefreshCw, GitCompare, Download } from 'lucide-react';
 import Button from '../../components/ui/Button';
-import { useNotification } from '../../context/NotificationContext';
+import { useToast } from '../../components/ui/Toaster';
 import {
   reconciliationService,
   ReconciliationTask,
@@ -14,7 +14,7 @@ import { ReconciliationDetails } from './components/ReconciliationDetails';
 import { useAuth } from '../../context/AuthContext';
 
 const ReconciliationPage = () => {
-  const { showNotification } = useNotification();
+  const { addToast } = useToast();
   const { user } = useAuth();
   const [tasks, setTasks] = useState<ReconciliationTask[]>([]);
   const [stats, setStats] = useState<ReconciliationStats | null>(null);
@@ -50,7 +50,7 @@ const ReconciliationPage = () => {
       setStats(statsData);
     } catch (error) {
       console.error('Error fetching reconciliation data:', error);
-      showNotification('Erreur lors du chargement des données', 'error');
+      addToast('Erreur lors du chargement des données', 'error');
     } finally {
       setLoading(false);
     }
@@ -70,14 +70,14 @@ const ReconciliationPage = () => {
         max_tasks: 50,
       });
 
-      showNotification(
+      addToast(
         `Réconciliation terminée: ${result.success} réussies, ${result.failed} échecs sur ${result.total} tâches`,
         result.failed === 0 ? 'success' : 'warning'
       );
 
       await fetchData();
     } catch (error) {
-      showNotification('Erreur lors de la réconciliation en batch', 'error');
+      addToast('Erreur lors de la réconciliation en batch', 'error');
     } finally {
       setReconciling(false);
     }
@@ -92,17 +92,17 @@ const ReconciliationPage = () => {
           result.total_fields
         );
 
-        showNotification(
+        addToast(
           `Réconciliation ${result.status}: ${matchPercentage}% de correspondance (${result.matched_fields}/${result.total_fields})`,
           result.status === 'success' ? 'success' : 'warning'
         );
 
         await fetchData();
       } else {
-        showNotification('Erreur lors de la réconciliation', 'error');
+        addToast('Erreur lors de la réconciliation', 'error');
       }
     } catch (error) {
-      showNotification('Erreur lors de la réconciliation', 'error');
+      addToast('Erreur lors de la réconciliation', 'error');
     }
   };
 
@@ -115,7 +115,7 @@ const ReconciliationPage = () => {
           result.total_fields
         );
 
-        showNotification(
+        addToast(
           `Nouvelle tentative ${result.status}: ${matchPercentage}% de correspondance`,
           result.status === 'success' ? 'success' : 'warning'
         );
@@ -123,10 +123,10 @@ const ReconciliationPage = () => {
         await fetchData();
         setSelectedTask(null);
       } else {
-        showNotification('Erreur lors de la nouvelle tentative', 'error');
+        addToast('Erreur lors de la nouvelle tentative', 'error');
       }
     } catch (error) {
-      showNotification('Erreur lors de la nouvelle tentative', 'error');
+      addToast('Erreur lors de la nouvelle tentative', 'error');
     }
   };
 
@@ -160,9 +160,9 @@ const ReconciliationPage = () => {
       link.download = `reconciliation_history_${new Date().toISOString().split('T')[0]}.csv`;
       link.click();
 
-      showNotification('Historique exporté avec succès', 'success');
+      addToast('Historique exporté avec succès', 'success');
     } catch (error) {
-      showNotification('Erreur lors de l\'export', 'error');
+      addToast('Erreur lors de l\'export', 'error');
     }
   };
 

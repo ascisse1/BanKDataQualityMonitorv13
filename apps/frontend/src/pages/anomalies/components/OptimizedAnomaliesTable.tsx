@@ -1,16 +1,20 @@
-import React, { useState, useEffect, useMemo } from 'react';
-import { AlertTriangle, Eye, ChevronDown, ChevronUp, ChevronLeft, ChevronRight } from 'lucide-react';
-import Button from '../../../components/ui/Button';
-import { createColumnHelper } from '@tanstack/react-table';
+import React, { useState, useEffect, useMemo, useCallback, useRef } from 'react';
+import { AlertTriangle, Loader2 } from 'lucide-react';
+import Pagination from '../../../components/ui/Pagination';
 import { db } from '../../../services/db';
 import { useToast } from '../../../components/ui/Toaster';
-import { useDataPrefetch } from '../../../hooks/useDataPrefetch';
+import { useDebounce } from '../../../hooks/useDebounce';
+import { useVirtualizer } from '@tanstack/react-virtual';
 
 interface OptimizedAnomaliesTableProps {
   isLoading?: boolean;
   searchQuery: string;
   selectedAgency: string | null;
 }
+
+const ROW_HEIGHT = 52;
+const TABLE_HEIGHT = 600;
+const ITEMS_PER_PAGE = 100;
 
 const OptimizedAnomaliesTable: React.FC<OptimizedAnomaliesTableProps> = ({
   isLoading = false,
@@ -23,371 +27,205 @@ const OptimizedAnomaliesTable: React.FC<OptimizedAnomaliesTableProps> = ({
   const [totalPages, setTotalPages] = useState(1);
   const [totalRecords, setTotalRecords] = useState(0);
   const { addToast } = useToast();
-  
-  // Préchargement des données
-  useDataPrefetch();
+  const parentRef = useRef<HTMLDivElement>(null);
 
-  const itemsPerPage = 50; // Augmenté pour de meilleures performances
+  // Debounce search to avoid excessive API calls
+  const debouncedSearch = useDebounce(searchQuery, 300);
+
+  // Reset to page 1 when filters change
+  useEffect(() => {
+    setCurrentPage(1);
+  }, [debouncedSearch, selectedAgency]);
 
   useEffect(() => {
     fetchAnomalies();
-  }, [selectedAgency, currentPage]);
+  }, [selectedAgency, currentPage, debouncedSearch]);
 
-  const fetchAnomalies = async () => {
+  const fetchAnomalies = useCallback(async () => {
     try {
       setLoading(true);
+
+      const params: Record<string, any> = {};
+      if (selectedAgency) params.agencyCode = selectedAgency;
+      if (debouncedSearch) params.search = debouncedSearch;
+
       const [individualRes, corporateRes] = await Promise.all([
-        db.getIndividualAnomalies(currentPage, itemsPerPage),
-        db.getCorporateAnomalies(currentPage, itemsPerPage)
+        db.getIndividualAnomalies(currentPage, ITEMS_PER_PAGE, false, params),
+        db.getCorporateAnomalies(currentPage, ITEMS_PER_PAGE, false, params)
       ]);
-      
+
       const allAnomalies = [...individualRes.data, ...corporateRes.data];
       const totalCount = individualRes.total + corporateRes.total;
-      
-      // Activer la virtualisation pour plus de 100 enregistrements
-      // Removed virtualization setting
-      
-      const formattedAnomalies = allAnomalies
-        .filter(anomaly => !selectedAgency || anomaly.age === selectedAgency)
-        .map(anomaly => ({
-          ...anomaly,
-          cli: anomaly.cli?.trim() || '',
-          nom: anomaly.nom?.trim() || '',
-          pre: anomaly.pre?.trim() || '-',
-          field: getFieldName(anomaly),
-          fieldCode: getFieldCode(anomaly),
-          errorType: getErrorType(anomaly),
-          errorMessage: getErrorMessage(anomaly),
-          age: anomaly.age?.trim() || 'N/A',
-          severity: getSeverity(anomaly),
-          status: 'Nouveau' as const
-        }));
 
-      setAnomalies(formattedAnomalies);
+      setAnomalies(allAnomalies);
       setTotalRecords(totalCount);
-      setTotalPages(Math.ceil(totalCount / itemsPerPage));
+      setTotalPages(Math.max(1, Math.ceil(totalCount / ITEMS_PER_PAGE)));
     } catch (error) {
       addToast('Erreur lors du chargement des anomalies', 'error');
       console.error('Error fetching anomalies:', error);
     } finally {
       setLoading(false);
     }
-  };
+  }, [selectedAgency, currentPage, debouncedSearch, addToast]);
 
-  // Filtrage optimisé avec useMemo
-  const filteredAnomalies = useMemo(() => {
-    if (!searchQuery) return anomalies;
-    
-    const query = searchQuery.toLowerCase();
-    return anomalies.filter(anomaly => 
-      anomaly.cli.toLowerCase().includes(query) ||
-      anomaly.nom.toLowerCase().includes(query) ||
-      anomaly.pre.toLowerCase().includes(query)
-    );
-  }, [anomalies, searchQuery]);
+  // Virtual row rendering for large lists
+  const rowVirtualizer = useVirtualizer({
+    count: anomalies.length,
+    getScrollElement: () => parentRef.current,
+    estimateSize: () => ROW_HEIGHT,
+    overscan: 20,
+  });
 
-  // Configuration des colonnes pour la table virtualisée
-  const columnHelper = createColumnHelper<any>();
-  
   const columns = useMemo(() => [
-    columnHelper.accessor('cli', {
-      header: 'Code Client',
-      cell: info => (
-        <div className="flex items-center">
-          <div className="flex-shrink-0 h-8 w-8 rounded-full bg-gray-100 flex items-center justify-center">
-            {getClientTypeIcon(info.row.original.tcli)}
-          </div>
-          <div className="ml-3">
-            <div className="text-sm font-medium text-gray-900">{info.getValue()}</div>
-          </div>
-        </div>
-      )
-    }),
-    columnHelper.accessor('nom', {
-      header: 'Nom Client',
-      cell: info => <div className="text-sm text-gray-900">{info.getValue()}</div>
-    }),
-    columnHelper.accessor('pre', {
-      header: 'Prénom',
-      cell: info => <div className="text-sm text-gray-900">{info.getValue()}</div>
-    }),
-    columnHelper.accessor('field', {
-      header: 'Champ',
-      cell: info => <div className="text-sm text-gray-900">{info.getValue()} ({info.row.original.fieldCode})</div>
-    }),
-    columnHelper.accessor('errorType', {
-      header: 'Type d\'erreur',
-      cell: info => (
-        <div className="text-sm text-gray-900 flex items-center">
-          <AlertTriangle className="h-4 w-4 text-warning-500 mr-1" />
-          {info.getValue()}
-        </div>
-      )
-    }),
-    columnHelper.accessor('age', {
-      header: 'Code Agence',
-      cell: info => (
-        <div className="text-sm">
-          <div className="font-medium">{info.getValue()}</div>
-        </div>
-      )
-    }),
-    columnHelper.accessor('severity', {
-      header: 'Sévérité',
-      cell: info => (
-        <span className={`px-2 inline-flex text-xs leading-5 font-semibold rounded-full ${getSeverityColor(info.getValue())}`}>
-          {info.getValue()}
-        </span>
-      )
-    }),
-    columnHelper.accessor('status', {
-      header: 'Statut',
-      cell: info => (
-        <span className={`px-2 inline-flex text-xs leading-5 font-semibold rounded-full ${getStatusColor(info.getValue())}`}>
-          {info.getValue()}
-        </span>
-      )
-    })
+    { key: 'cli', header: 'Code Client', width: '120px' },
+    { key: 'nom', header: 'Nom Client', width: '180px' },
+    { key: 'pre', header: 'Prénom', width: '140px' },
+    { key: 'field', header: 'Champ', width: '180px' },
+    { key: 'errorType', header: 'Type d\'erreur', width: '160px' },
+    { key: 'age', header: 'Agence', width: '100px' },
+    { key: 'severity', header: 'Sévérité', width: '100px' },
+    { key: 'status', header: 'Statut', width: '100px' },
   ], []);
 
-  // Fonctions utilitaires (reprises du composant original)
-  const getFieldName = (anomaly: any): string => {
-    if (anomaly.tcli === '1') {
-      if (!anomaly.nmer || anomaly.nmer.trim() === '') return 'Nom de la mère';
-      if (!anomaly.dna || anomaly.dna.trim() === '') return 'Date de naissance';
-      if (!anomaly.nid || anomaly.nid.trim() === '') return 'Numéro d\'identité';
-    } else {
-      if (!anomaly.nrc || anomaly.nrc.trim() === '') return 'Numéro de registre';
-      if (anomaly.nrc && !anomaly.nrc.startsWith('MA')) return 'Format registre invalide';
-      if (!anomaly.datc || anomaly.datc.trim() === '') return 'Date de création';
+  const getSeverityColor = (severity: string) => {
+    switch (severity) {
+      case 'Haute': return 'bg-error-100 text-error-800';
+      case 'Moyenne': return 'bg-warning-100 text-warning-800';
+      case 'Faible': return 'bg-gray-100 text-gray-800';
+      default: return 'bg-gray-100 text-gray-800';
     }
-    return 'Inconnu';
-  };
-
-  const getFieldCode = (anomaly: any): string => {
-    if (anomaly.tcli === '1') {
-      if (!anomaly.nmer || anomaly.nmer.trim() === '') return 'nmer';
-      if (!anomaly.dna || anomaly.dna.trim() === '') return 'dna';
-      if (!anomaly.nid || anomaly.nid.trim() === '') return 'nid';
-    } else {
-      if (!anomaly.nrc || anomaly.nrc.trim() === '') return 'nrc';
-      if (anomaly.nrc && !anomaly.nrc.startsWith('MA')) return 'nrc';
-      if (!anomaly.datc || anomaly.datc.trim() === '') return 'datc';
-    }
-    return '';
-  };
-
-  const getErrorType = (anomaly: any): string => {
-    if (anomaly.tcli === '1') {
-      if (!anomaly.nmer || anomaly.nmer.trim() === '') return 'Valeur manquante';
-      if (!anomaly.dna || anomaly.dna.trim() === '') return 'Valeur manquante';
-      if (!anomaly.nid || anomaly.nid.trim() === '') return 'Valeur manquante';
-    } else {
-      if (!anomaly.nrc || anomaly.nrc.trim() === '') return 'Valeur manquante';
-      if (anomaly.nrc) {
-        if (/^\d+$/.test(anomaly.nrc)) return 'Format invalide (numérique)';
-        if (/^[A-Za-z]+$/.test(anomaly.nrc)) return 'Format invalide (alphabétique)';
-        if (!anomaly.nrc.startsWith('MA')) return 'Format invalide (préfixe)';
-      }
-      if (!anomaly.datc || anomaly.datc.trim() === '') return 'Valeur manquante';
-    }
-    return 'Erreur inconnue';
-  };
-
-  const getErrorMessage = (anomaly: any): string => {
-    if (anomaly.tcli === '1') {
-      if (!anomaly.nmer || anomaly.nmer.trim() === '') 
-        return 'Le nom de la mère est obligatoire pour les clients particuliers';
-      if (!anomaly.dna || anomaly.dna.trim() === '') 
-        return 'La date de naissance est obligatoire pour les clients particuliers';
-      if (!anomaly.nid || anomaly.nid.trim() === '') 
-        return 'Le numéro d\'identité est obligatoire pour les clients particuliers';
-    } else {
-      if (!anomaly.nrc || anomaly.nrc.trim() === '') 
-        return 'Le numéro de registre est obligatoire pour les entreprises';
-      if (anomaly.nrc) {
-        if (/^\d+$/.test(anomaly.nrc)) 
-          return `Le numéro de registre "${anomaly.nrc}" ne peut pas être uniquement numérique`;
-        if (/^[A-Za-z]+$/.test(anomaly.nrc)) 
-          return `Le numéro de registre "${anomaly.nrc}" ne peut pas être uniquement alphabétique`;
-        if (!anomaly.nrc.startsWith('MA')) 
-          return `Le numéro de registre "${anomaly.nrc}" doit commencer par MA`;
-      }
-      if (!anomaly.datc || anomaly.datc.trim() === '') 
-        return 'La date de création est obligatoire pour les entreprises';
-    }
-    return 'Erreur non spécifiée';
-  };
-
-  const getSeverity = (anomaly: any): 'Faible' | 'Moyenne' | 'Haute' => {
-    if (anomaly.tcli === '1') {
-      if (!anomaly.nid || anomaly.nid.trim() === '') return 'Haute';
-      if (!anomaly.nmer || anomaly.nmer.trim() === '') return 'Haute';
-      if (!anomaly.dna || anomaly.dna.trim() === '') return 'Haute';
-    } else {
-      if (!anomaly.nrc || anomaly.nrc.trim() === '') return 'Haute';
-      if (anomaly.nrc && !anomaly.nrc.startsWith('MA')) return 'Haute';
-      if (!anomaly.datc || anomaly.datc.trim() === '') return 'Moyenne';
-    }
-    return 'Faible';
   };
 
   const getStatusColor = (status: string) => {
     switch (status) {
-      case 'Nouveau':
-        return 'bg-warning-100 text-warning-800';
-      case 'En revue':
-        return 'bg-primary-100 text-primary-800';
-      case 'Résolu':
-        return 'bg-success-100 text-success-800';
-      default:
-        return 'bg-gray-100 text-gray-800';
+      case 'Nouveau': return 'bg-warning-100 text-warning-800';
+      case 'En cours': return 'bg-primary-100 text-primary-800';
+      case 'Corrigé':
+      case 'Résolu': return 'bg-success-100 text-success-800';
+      default: return 'bg-gray-100 text-gray-800';
     }
   };
 
-  const getSeverityColor = (severity: string) => {
-    switch (severity) {
-      case 'Haute':
-        return 'bg-error-100 text-error-800';
-      case 'Moyenne':
-        return 'bg-warning-100 text-warning-800';
-      case 'Faible':
-        return 'bg-gray-100 text-gray-800';
-      default:
-        return 'bg-gray-100 text-gray-800';
-    }
-  };
-
-  const getClientTypeIcon = (tcli: string) => {
-    return tcli === '1' ? (
-      <svg 
-        xmlns="http://www.w3.org/2000/svg"
-        width="16" 
-        height="16" 
-        viewBox="0 0 24 24" 
-        fill="none" 
-        stroke="currentColor" 
-        strokeWidth="2" 
-        strokeLinecap="round" 
-        strokeLinejoin="round"
-        className="text-gray-500"
-      >
-        <path d="M20 21v-2a4 4 0 0 0-4-4H8a4 4 0 0 0-4 4v2"></path>
-        <circle cx="12" cy="7" r="4"></circle>
-      </svg>
-    ) : (
-      <svg 
-        xmlns="http://www.w3.org/2000/svg"
-        width="16" 
-        height="16" 
-        viewBox="0 0 24 24" 
-        fill="none" 
-        stroke="currentColor" 
-        strokeWidth="2" 
-        strokeLinecap="round" 
-        strokeLinejoin="round"
-        className="text-primary-500"
-      >
-        <rect x="4" y="2" width="16" height="20" rx="2" ry="2"></rect>
-        <line x1="12" y1="6" x2="12" y2="18"></line>
-        <line x1="8" y1="6" x2="8" y2="18"></line>
-        <line x1="16" y1="6" x2="16" y2="18"></line>
-      </svg>
-    );
-  };
+  const goToPage = useCallback((page: number) => {
+    setCurrentPage(Math.max(1, Math.min(page, totalPages)));
+    parentRef.current?.scrollTo(0, 0);
+  }, [totalPages]);
 
   if (loading && anomalies.length === 0) {
     return (
-      <div className="animate-pulse">
-        <div className="h-10 bg-gray-200 rounded w-full mb-4"></div>
-        {[...Array(5)].map((_, i) => (
-          <div key={i} className="mb-4">
-            <div className="h-16 bg-gray-200 rounded w-full"></div>
-          </div>
-        ))}
+      <div className="flex items-center justify-center py-12">
+        <Loader2 className="h-8 w-8 animate-spin text-primary-500" />
+        <span className="ml-3 text-gray-500">Chargement des anomalies...</span>
       </div>
     );
   }
 
   return (
-    <div className="space-y-4">
-      {/* Indicateur de performance */}
+    <div className="space-y-3">
+      {/* Stats bar */}
       <div className="flex items-center justify-between text-sm text-gray-500">
         <div>
-          {filteredAnomalies.length.toLocaleString('fr-FR')} anomalies
+          <span className="font-medium text-gray-900">{totalRecords.toLocaleString('fr-FR')}</span> anomalies
           {selectedAgency && <span className="ml-1">pour l'agence {selectedAgency}</span>}
+          {debouncedSearch && <span className="ml-1">— recherche: "{debouncedSearch}"</span>}
         </div>
-        <div className="flex items-center space-x-2">
-          <span className="text-xs">
-            Performance optimisée pour 120k+ enregistrements
-          </span>
-        </div>
+        {loading && (
+          <div className="flex items-center text-primary-500">
+            <Loader2 className="h-4 w-4 animate-spin mr-1" />
+            Mise à jour...
+          </div>
+        )}
       </div>
-      <div className="overflow-x-auto">
-        <table className="min-w-full divide-y divide-gray-200">
-          <thead className="bg-gray-50">
-            <tr>
-              {columns.map((column) => (
-                <th
-                  key={column.id}
-                  scope="col"
-                  className="px-3 py-3 text-left text-xs font-medium text-gray-500 uppercase tracking-wider"
-                >
-                  {typeof column.header === 'function' ? column.header({}) : column.header}
-                </th>
-              ))}
-            </tr>
-          </thead>
-          <tbody className="bg-white divide-y divide-gray-200">
-            {filteredAnomalies.map((anomaly, index) => (
-              <tr key={`${anomaly.cli}-${index}`} className="hover:bg-gray-50">
-                {columns.map((column) => (
-                  <td
-                    key={column.id}
-                    className="px-3 py-4 whitespace-nowrap"
-                  >
-                    {column.cell({ row: { original: anomaly }, getValue: () => anomaly[column.accessorKey as string] })}
-                  </td>
-                ))}
-              </tr>
+
+      {/* Virtualized table */}
+      <div className="border border-gray-200 rounded-lg overflow-hidden">
+        {/* Header */}
+        <div className="bg-gray-50 border-b border-gray-200">
+          <div className="flex">
+            {columns.map((col) => (
+              <div
+                key={col.key}
+                className="px-3 py-3 text-left text-xs font-medium text-gray-500 uppercase tracking-wider flex-shrink-0"
+                style={{ width: col.width, minWidth: col.width }}
+              >
+                {col.header}
+              </div>
             ))}
-          </tbody>
-        </table>
-      </div>
-
-      {/* Pagination optimisée */}
-      {totalPages > 1 && (
-        <div className="flex items-center justify-between">
-          <div className="text-sm text-gray-700">
-            Page {currentPage} sur {totalPages} 
-            <span className="ml-2 text-gray-500">
-              ({totalRecords.toLocaleString('fr-FR')} total)
-            </span>
-          </div>
-          
-          <div className="flex items-center space-x-2">
-            <Button
-              variant="outline"
-              size="sm"
-              onClick={() => setCurrentPage(Math.max(1, currentPage - 1))}
-              disabled={currentPage === 1 || loading}
-              leftIcon={<ChevronLeft className="h-4 w-4" />}
-            >
-              Précédent
-            </Button>
-
-            <Button
-              variant="outline"
-              size="sm"
-              onClick={() => setCurrentPage(Math.min(totalPages, currentPage + 1))}
-              disabled={currentPage === totalPages || loading}
-              rightIcon={<ChevronRight className="h-4 w-4" />}
-            >
-              Suivant
-            </Button>
           </div>
         </div>
-      )}
+
+        {/* Virtualized body */}
+        <div
+          ref={parentRef}
+          className="overflow-auto"
+          style={{ height: Math.min(TABLE_HEIGHT, anomalies.length * ROW_HEIGHT + 2) }}
+        >
+          <div
+            style={{
+              height: `${rowVirtualizer.getTotalSize()}px`,
+              width: '100%',
+              position: 'relative',
+            }}
+          >
+            {rowVirtualizer.getVirtualItems().map((virtualRow) => {
+              const anomaly = anomalies[virtualRow.index];
+              return (
+                <div
+                  key={`${anomaly.cli}-${virtualRow.index}`}
+                  className="flex border-b border-gray-100 hover:bg-gray-50 absolute top-0 left-0 w-full"
+                  style={{
+                    height: `${virtualRow.size}px`,
+                    transform: `translateY(${virtualRow.start}px)`,
+                  }}
+                >
+                  <div className="px-3 py-2 flex items-center flex-shrink-0" style={{ width: '120px' }}>
+                    <span className="text-sm font-medium text-gray-900 truncate">{anomaly.cli}</span>
+                  </div>
+                  <div className="px-3 py-2 flex items-center flex-shrink-0" style={{ width: '180px' }}>
+                    <span className="text-sm text-gray-900 truncate">{anomaly.nom}</span>
+                  </div>
+                  <div className="px-3 py-2 flex items-center flex-shrink-0" style={{ width: '140px' }}>
+                    <span className="text-sm text-gray-900 truncate">{anomaly.pre || '-'}</span>
+                  </div>
+                  <div className="px-3 py-2 flex items-center flex-shrink-0" style={{ width: '180px' }}>
+                    <span className="text-sm text-gray-900 truncate">
+                      {anomaly.field || anomaly.fieldCode}
+                    </span>
+                  </div>
+                  <div className="px-3 py-2 flex items-center flex-shrink-0" style={{ width: '160px' }}>
+                    <AlertTriangle className="h-3.5 w-3.5 text-warning-500 mr-1 flex-shrink-0" />
+                    <span className="text-sm text-gray-900 truncate">{anomaly.errorType}</span>
+                  </div>
+                  <div className="px-3 py-2 flex items-center flex-shrink-0" style={{ width: '100px' }}>
+                    <span className="text-sm font-medium truncate">{anomaly.age || 'N/A'}</span>
+                  </div>
+                  <div className="px-3 py-2 flex items-center flex-shrink-0" style={{ width: '100px' }}>
+                    <span className={`px-2 py-0.5 text-xs font-semibold rounded-full ${getSeverityColor(anomaly.severity)}`}>
+                      {anomaly.severity}
+                    </span>
+                  </div>
+                  <div className="px-3 py-2 flex items-center flex-shrink-0" style={{ width: '100px' }}>
+                    <span className={`px-2 py-0.5 text-xs font-semibold rounded-full ${getStatusColor(anomaly.status)}`}>
+                      {anomaly.status}
+                    </span>
+                  </div>
+                </div>
+              );
+            })}
+          </div>
+        </div>
+      </div>
+
+      {/* Pagination */}
+      <Pagination
+        currentPage={currentPage}
+        totalPages={totalPages}
+        totalRecords={totalRecords}
+        itemsPerPage={ITEMS_PER_PAGE}
+        onPageChange={goToPage}
+        isLoading={loading}
+        summaryText={`Page ${currentPage} sur ${totalPages.toLocaleString('fr-FR')} (${totalRecords.toLocaleString('fr-FR')} enregistrements)`}
+      />
     </div>
   );
 };

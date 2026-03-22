@@ -51,7 +51,7 @@ python generate_amplitude_data.py --clients 2000 --output my_data.sql
 
 ```bash
 # Container name
-CONTAINER=bdqm-informix-1
+CONTAINER=informix-informix-1
 
 # 1. Copy files to container
 docker exec $CONTAINER mkdir -p /opt/ibm/database
@@ -75,12 +75,12 @@ docker exec -u informix $CONTAINER bash -c "source /opt/ibm/scripts/informix_inf
 
 ```powershell
 # Container name
-$CONTAINER = "bdqm-informix-1"
+$CONTAINER = "informix-informix-1"
 
 # 1. Copy files to container
 docker exec $CONTAINER mkdir -p /opt/ibm/database
-docker cp amplitude_ddl_informix.sql "${CONTAINER}:/opt/ibm/database/"
-docker cp amplitude_seed_data_1k_informix.sql "${CONTAINER}:/opt/ibm/database/"
+docker cp schemas/informix/amplitude_ddl_informix.sql "${CONTAINER}:/opt/ibm/database/"
+docker cp seeds/amplitude_seed_data_1k_informix.sql "${CONTAINER}:/opt/ibm/database/"
 
 # 2. Create database (run as informix user with environment)
 docker exec -u informix $CONTAINER bash -c "source /opt/ibm/scripts/informix_inf.env && echo 'DROP DATABASE amplitude' | dbaccess sysmaster"

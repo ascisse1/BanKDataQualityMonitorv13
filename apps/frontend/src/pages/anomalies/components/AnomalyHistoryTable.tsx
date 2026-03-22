@@ -1,6 +1,7 @@
 import { useState, useEffect } from 'react';
 import { History, RefreshCw, AlertTriangle, CheckCircle, XCircle, Clock, User, Calendar } from 'lucide-react';
 import Button from '../../../components/ui/Button';
+import Pagination from '../../../components/ui/Pagination';
 import { useToast } from '../../../components/ui/Toaster';
 import { useAuth } from '../../../context/AuthContext';
 
@@ -273,71 +274,17 @@ const AnomalyHistoryTable = ({ isLoading = false, cli, field }: AnomalyHistoryPr
         </table>
       </div>
       
-      {totalPages > 1 && (
-        <div className="flex justify-between items-center mt-4">
-          <div className="text-sm text-gray-700">
-            Affichage de {(currentPage - 1) * itemsPerPage + 1} à {Math.min(currentPage * itemsPerPage, totalRecords)} sur {totalRecords} enregistrements
-          </div>
-          
-          <div className="flex space-x-2">
-            <Button
-              variant="outline"
-              size="sm"
-              onClick={() => handlePageChange(currentPage - 1)}
-              disabled={currentPage === 1}
-              leftIcon={<ChevronLeft className="h-4 w-4" />}
-            >
-              Précédent
-            </Button>
-            
-            <Button
-              variant="outline"
-              size="sm"
-              onClick={() => handlePageChange(currentPage + 1)}
-              disabled={currentPage === totalPages}
-              rightIcon={<ChevronRight className="h-4 w-4" />}
-            >
-              Suivant
-            </Button>
-          </div>
-        </div>
-      )}
+      <Pagination
+        currentPage={currentPage}
+        totalPages={totalPages}
+        totalRecords={totalRecords}
+        itemsPerPage={itemsPerPage}
+        onPageChange={handlePageChange}
+        isLoading={loading}
+        summaryText={`Affichage de ${(currentPage - 1) * itemsPerPage + 1} à ${Math.min(currentPage * itemsPerPage, totalRecords)} sur ${totalRecords} enregistrements`}
+      />
     </div>
   );
 };
-
-const ChevronLeft = (props: any) => (
-  <svg 
-    xmlns="http://www.w3.org/2000/svg"
-    width="24"
-    height="24"
-    viewBox="0 0 24 24"
-    fill="none"
-    stroke="currentColor"
-    strokeWidth="2"
-    strokeLinecap="round"
-    strokeLinejoin="round"
-    {...props}
-  >
-    <polyline points="15 18 9 12 15 6"></polyline>
-  </svg>
-);
-
-const ChevronRight = (props: any) => (
-  <svg 
-    xmlns="http://www.w3.org/2000/svg"
-    width="24"
-    height="24"
-    viewBox="0 0 24 24"
-    fill="none"
-    stroke="currentColor"
-    strokeWidth="2"
-    strokeLinecap="round"
-    strokeLinejoin="round"
-    {...props}
-  >
-    <polyline points="9 18 15 12 9 6"></polyline>
-  </svg>
-);
 
 export default AnomalyHistoryTable;

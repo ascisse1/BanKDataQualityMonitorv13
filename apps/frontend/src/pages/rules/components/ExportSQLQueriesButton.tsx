@@ -2,7 +2,7 @@ import React, { useState } from 'react';
 import { Download, FileText, Code } from 'lucide-react';
 import Button from '../../../components/ui/Button';
 import { useToast } from '../../../components/ui/Toaster';
-import { useNotification } from '../../../context/NotificationContext';
+
 
 interface SQLQuery {
   name: string;
@@ -25,18 +25,13 @@ const ExportSQLQueriesButton: React.FC<ExportSQLQueriesButtonProps> = ({
 }) => {
   const [isExporting, setIsExporting] = useState(false);
   const { addToast } = useToast();
-  const { showNotification } = useNotification();
-
   const handleExport = async (format: 'sql' | 'json' | 'markdown') => {
     try {
       setIsExporting(true);
-      showNotification('Préparation de l\'export...', 'loading');
-
       const queryEntries = Object.entries(queries);
       
       if (queryEntries.length === 0) {
         addToast('Aucune requête à exporter', 'warning');
-        showNotification('Aucune requête à exporter', 'warning');
         return;
       }
 
@@ -50,11 +45,9 @@ const ExportSQLQueriesButton: React.FC<ExportSQLQueriesButtonProps> = ({
       }
 
       addToast(`Export des requêtes en ${format.toUpperCase()} réussi (${queryEntries.length} requêtes)`, 'success');
-      showNotification(`Export des requêtes en ${format.toUpperCase()} réussi`, 'success');
     } catch (error) {
       console.error('Error exporting queries:', error);
       addToast('Erreur lors de l\'export des requêtes', 'error');
-      showNotification('Erreur lors de l\'export des requêtes', 'error');
     } finally {
       setIsExporting(false);
     }

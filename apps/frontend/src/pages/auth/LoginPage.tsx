@@ -34,7 +34,7 @@ const LoginPage = () => {
             BSIC Bank
           </h2>
           <p className="mt-2 text-sm text-gray-600">
-            Moniteur de Qualite des Donnees Clients
+            Moniteur de Qualité des Données Clients
 
           </p>
         </div>

@@ -237,7 +237,7 @@ class DatabaseService {
   private readonly CACHE_TTL = 5 * 60 * 1000; // 5 minutes
   private readonly MAX_RETRIES = 2;
   private readonly DEFAULT_LIMIT = 10;
-  private readonly MAX_LIMIT = 50;
+  private readonly MAX_LIMIT = 100;
   private readonly REQUEST_TIMEOUT = 8000; // 8 seconds timeout for regular requests
   private readonly EXPORT_TIMEOUT = 15000; // 15 seconds timeout for exports
   private readonly PREFETCH_TIMEOUT = 5000; // 5 seconds timeout for prefetch requests

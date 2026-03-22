@@ -1,5 +1,5 @@
 import { useState } from 'react';
-import { useNotification } from '../context/NotificationContext';
+import { useToast } from '../components/ui/Toaster';
 import { useAuth } from '../context/AuthContext';
 import { logger } from '../services/logger';
 import { tracer } from '../services/tracer';
@@ -26,7 +26,7 @@ interface CorrectionResult {
 export const useAnomalyCorrection = () => {
   const [isProcessing, setIsProcessing] = useState(false);
   const [lastCorrection, setLastCorrection] = useState<CorrectionResponse | null>(null);
-  const { showNotification } = useNotification();
+  const { addToast } = useToast();
   const { user } = useAuth();
 
   /**
@@ -35,14 +35,12 @@ export const useAnomalyCorrection = () => {
    */
   const fixAnomaly = async (anomalyData: AnomalyData): Promise<CorrectionResult> => {
     if (!user) {
-      showNotification('Vous devez être connecté pour effectuer cette action', 'error');
+      addToast('Vous devez être connecté pour effectuer cette action', 'error');
       return { success: false, message: 'Non authentifié' };
     }
 
     try {
       setIsProcessing(true);
-      showNotification('Traitement de l\'anomalie en cours...', 'loading');
-
       tracer.info('business', `Processing anomaly for client ${anomalyData.cli}`, {
         field: anomalyData.field,
         oldValue: anomalyData.oldValue,
@@ -89,7 +87,7 @@ export const useAnomalyCorrection = () => {
             ? `Anomalie mise en revue (Ticket: ${response.ticketNumber})`
             : `Anomalie rejetée (Ticket: ${response.ticketNumber})`;
 
-      showNotification(message, 'success');
+      addToast(message, 'success');
 
       return {
         success: true,
@@ -111,7 +109,7 @@ export const useAnomalyCorrection = () => {
         field: anomalyData.field
       });
 
-      showNotification(`Erreur lors du traitement de l'anomalie: ${errorMessage}`, 'error');
+      addToast(`Erreur lors du traitement de l'anomalie: ${errorMessage}`, 'error');
       return { success: false, message: errorMessage };
     } finally {
       setIsProcessing(false);
@@ -147,17 +145,15 @@ export const useAnomalyCorrection = () => {
    */
   const validateCorrection = async (ticketId: number, approved: boolean, reason?: string) => {
     if (!user) {
-      showNotification('Vous devez être connecté pour valider', 'error');
+      addToast('Vous devez être connecté pour valider', 'error');
       return { success: false };
     }
 
     try {
       setIsProcessing(true);
-      showNotification(approved ? 'Validation en cours...' : 'Rejet en cours...', 'loading');
-
       const response = await correctionService.validateCorrection(ticketId, approved, reason);
 
-      showNotification(
+      addToast(
         approved
           ? `Correction validée (Ticket: ${response.ticketNumber})`
           : `Correction rejetée (Ticket: ${response.ticketNumber})`,
@@ -167,7 +163,7 @@ export const useAnomalyCorrection = () => {
       return { success: true, response };
     } catch (error) {
       const errorMessage = error instanceof Error ? error.message : 'Erreur de validation';
-      showNotification(errorMessage, 'error');
+      addToast(errorMessage, 'error');
       return { success: false, message: errorMessage };
     } finally {
       setIsProcessing(false);

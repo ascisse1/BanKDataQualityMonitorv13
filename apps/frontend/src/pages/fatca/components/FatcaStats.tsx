@@ -77,11 +77,11 @@ const FatcaStats = ({ isLoading = false, clientType = 'all' }) => {
                        clientType === '2' ? stats.corporate : stats.total;
   
   // Calculate proportional values for the selected client type
-  const proportion = displayTotal / stats.total;
-  const displayToVerify = Math.round(stats.toVerify * proportion);
-  const displayConfirmed = Math.round(stats.confirmed * proportion);
-  const displayExcluded = Math.round(stats.excluded * proportion);
-  const displayCurrentMonth = Math.round(stats.currentMonth * proportion);
+  const proportion = stats.total > 0 ? displayTotal / stats.total : 0;
+  const displayToVerify = Math.round((stats.toVerify || 0) * proportion);
+  const displayConfirmed = Math.round((stats.confirmed || 0) * proportion);
+  const displayExcluded = Math.round((stats.excluded || 0) * proportion);
+  const displayCurrentMonth = Math.round((stats.currentMonth || 0) * proportion);
 
   return (
     <div className="grid grid-cols-1 md:grid-cols-5 gap-4">
@@ -103,7 +103,7 @@ const FatcaStats = ({ isLoading = false, clientType = 'all' }) => {
             <Clock className="h-5 w-5 text-warning-600" />
           </div>
           <div className="ml-3">
-            <p className="text-sm font-medium text-gray-500">À documenter</p>
+            <p className="text-sm font-medium text-gray-500">À vérifier</p>
             <p className="text-lg font-semibold text-warning-600">{displayToVerify.toLocaleString()}</p>
           </div>
         </div>

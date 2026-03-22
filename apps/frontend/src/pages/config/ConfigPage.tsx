@@ -2,7 +2,7 @@ import React, { useState, useEffect } from 'react';
 import Card from '../../components/ui/Card';
 import Button from '../../components/ui/Button';
 import { Database, RefreshCw, CheckCircle, AlertTriangle, Settings, Server, Shield, Save, Users, Key, Globe, Upload, FileCode } from 'lucide-react';
-import { useNotification } from '../../context/NotificationContext';
+import { useToast } from '../../components/ui/Toaster';
 import { useAuth } from '../../context/AuthContext';
 import DatabaseConfigPanel from '../../components/ui/DatabaseConfigPanel';
 import Input from '../../components/ui/Input';
@@ -15,7 +15,7 @@ function ConfigPage() {
     error?: any
   } | null>(null);
   const [activeTab, setActiveTab] = useState<'database' | 'ldap' | 'api' | 'sftp'>('database');
-  const { showNotification } = useNotification();
+  const { addToast } = useToast();
   const { user } = useAuth();
 
   // LDAP Configuration state
@@ -79,13 +79,11 @@ function ConfigPage() {
 
   const testLdapConnection = async () => {
     if (!isAdmin) {
-      showNotification('Vous n\'avez pas les permissions nécessaires pour effectuer cette action', 'error');
+      addToast('Vous n\'avez pas les permissions nécessaires pour effectuer cette action', 'error');
       return;
     }
 
     setIsTestingLdap(true);
-    showNotification('Test de connexion au serveur LDAP en cours...', 'loading');
-
     try {
       const response = await fetch('/api/config/test-ldap', {
         method: 'POST',
@@ -96,9 +94,9 @@ function ConfigPage() {
 
       setLdapStatus(result);
       if (result.success) {
-        showNotification('Connexion au serveur LDAP réussie', 'success');
+        addToast('Connexion au serveur LDAP réussie', 'success');
       } else {
-        showNotification(result.message || 'Échec du test de connexion LDAP', 'error');
+        addToast(result.message || 'Échec du test de connexion LDAP', 'error');
       }
     } catch (error) {
       setLdapStatus({
@@ -106,7 +104,7 @@ function ConfigPage() {
         message: 'Erreur lors du test de connexion au serveur LDAP',
         error: error instanceof Error ? error.message : String(error)
       });
-      showNotification('Erreur lors du test de connexion au serveur LDAP', 'error');
+      addToast('Erreur lors du test de connexion au serveur LDAP', 'error');
     } finally {
       setIsTestingLdap(false);
     }
@@ -114,13 +112,11 @@ function ConfigPage() {
 
   const testApiConnection = async () => {
     if (!isAdmin) {
-      showNotification('Vous n\'avez pas les permissions nécessaires pour effectuer cette action', 'error');
+      addToast('Vous n\'avez pas les permissions nécessaires pour effectuer cette action', 'error');
       return;
     }
 
     setIsTestingApi(true);
-    showNotification('Test de connexion à l\'API en cours...', 'loading');
-
     try {
       const response = await fetch('/api/config/test-api', {
         method: 'POST',
@@ -131,9 +127,9 @@ function ConfigPage() {
 
       setApiStatus(result);
       if (result.success) {
-        showNotification('Connexion à l\'API réussie', 'success');
+        addToast('Connexion à l\'API réussie', 'success');
       } else {
-        showNotification(result.message || 'Échec du test de connexion API', 'error');
+        addToast(result.message || 'Échec du test de connexion API', 'error');
       }
     } catch (error) {
       setApiStatus({
@@ -141,7 +137,7 @@ function ConfigPage() {
         message: 'Erreur lors du test de connexion à l\'API',
         error: error instanceof Error ? error.message : String(error)
       });
-      showNotification('Erreur lors du test de connexion à l\'API', 'error');
+      addToast('Erreur lors du test de connexion à l\'API', 'error');
     } finally {
       setIsTestingApi(false);
     }
@@ -149,13 +145,11 @@ function ConfigPage() {
 
   const testSftpConnection = async () => {
     if (!isAdmin) {
-      showNotification('Vous n\'avez pas les permissions nécessaires pour effectuer cette action', 'error');
+      addToast('Vous n\'avez pas les permissions nécessaires pour effectuer cette action', 'error');
       return;
     }
 
     setIsTestingSftp(true);
-    showNotification('Test de connexion SFTP en cours...', 'loading');
-
     try {
       const response = await fetch('/api/config/test-sftp', {
         method: 'POST',
@@ -166,9 +160,9 @@ function ConfigPage() {
 
       setSftpStatus(result);
       if (result.success) {
-        showNotification('Connexion SFTP réussie', 'success');
+        addToast('Connexion SFTP réussie', 'success');
       } else {
-        showNotification(result.message || 'Échec du test de connexion SFTP', 'error');
+        addToast(result.message || 'Échec du test de connexion SFTP', 'error');
       }
     } catch (error) {
       setSftpStatus({
@@ -176,7 +170,7 @@ function ConfigPage() {
         message: 'Erreur lors du test de connexion SFTP',
         error: error instanceof Error ? error.message : String(error)
       });
-      showNotification('Erreur lors du test de connexion SFTP', 'error');
+      addToast('Erreur lors du test de connexion SFTP', 'error');
     } finally {
       setIsTestingSftp(false);
     }
@@ -184,11 +178,9 @@ function ConfigPage() {
 
   const handleSaveLdapConfig = async () => {
     if (!isAdmin) {
-      showNotification('Vous n\'avez pas les permissions nécessaires pour effectuer cette action', 'error');
+      addToast('Vous n\'avez pas les permissions nécessaires pour effectuer cette action', 'error');
       return;
     }
-
-    showNotification('Sauvegarde de la configuration LDAP en cours...', 'loading');
 
     try {
       const response = await fetch('/api/config/ldap', {
@@ -197,19 +189,17 @@ function ConfigPage() {
         body: JSON.stringify({ ...ldapConfig, enabled: ldapEnabled })
       });
       if (!response.ok) throw new Error('Failed to save LDAP config');
-      showNotification('Configuration LDAP sauvegardée avec succès', 'success');
+      addToast('Configuration LDAP sauvegardée avec succès', 'success');
     } catch (error) {
-      showNotification('Erreur lors de la sauvegarde de la configuration LDAP', 'error');
+      addToast('Erreur lors de la sauvegarde de la configuration LDAP', 'error');
     }
   };
 
   const handleSaveApiConfig = async () => {
     if (!isAdmin) {
-      showNotification('Vous n\'avez pas les permissions nécessaires pour effectuer cette action', 'error');
+      addToast('Vous n\'avez pas les permissions nécessaires pour effectuer cette action', 'error');
       return;
     }
-
-    showNotification('Sauvegarde de la configuration API en cours...', 'loading');
 
     try {
       const response = await fetch('/api/config/api', {
@@ -218,19 +208,17 @@ function ConfigPage() {
         body: JSON.stringify(apiConfig)
       });
       if (!response.ok) throw new Error('Failed to save API config');
-      showNotification('Configuration API sauvegardée avec succès', 'success');
+      addToast('Configuration API sauvegardée avec succès', 'success');
     } catch (error) {
-      showNotification('Erreur lors de la sauvegarde de la configuration API', 'error');
+      addToast('Erreur lors de la sauvegarde de la configuration API', 'error');
     }
   };
 
   const handleSaveSftpConfig = async () => {
     if (!isAdmin) {
-      showNotification('Vous n\'avez pas les permissions nécessaires pour effectuer cette action', 'error');
+      addToast('Vous n\'avez pas les permissions nécessaires pour effectuer cette action', 'error');
       return;
     }
-
-    showNotification('Sauvegarde de la configuration SFTP en cours...', 'loading');
 
     try {
       const response = await fetch('/api/config/sftp', {
@@ -239,9 +227,9 @@ function ConfigPage() {
         body: JSON.stringify(sftpConfig)
       });
       if (!response.ok) throw new Error('Failed to save SFTP config');
-      showNotification('Configuration SFTP sauvegardée avec succès', 'success');
+      addToast('Configuration SFTP sauvegardée avec succès', 'success');
     } catch (error) {
-      showNotification('Erreur lors de la sauvegarde de la configuration SFTP', 'error');
+      addToast('Erreur lors de la sauvegarde de la configuration SFTP', 'error');
     }
   };
 

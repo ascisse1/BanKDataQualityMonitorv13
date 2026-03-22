@@ -1,10 +1,25 @@
-import React, { useState, useEffect } from 'react';
-import { AlertTriangle, Eye, ChevronDown, ChevronUp, ChevronLeft, ChevronRight, RefreshCw, User, CheckSquare, XSquare, Clock, Save } from 'lucide-react';
+import React, { useState, useEffect, useMemo } from 'react';
+import { AlertTriangle, Eye, ChevronDown, ChevronUp, RefreshCw, User, CheckSquare, XSquare, Clock, Save, Flag } from 'lucide-react';
 import Button from '../../../components/ui/Button';
+import Pagination from '../../../components/ui/Pagination';
 import { db } from '../../../services/db';
 import { useToast } from '../../../components/ui/Toaster';
 import { useAuth } from '../../../context/AuthContext';
 import Input from '../../../components/ui/Input';
+import { useDebounce } from '../../../hooks/useDebounce';
+import apiClient from '../../../lib/apiClient';
+
+/** Renders a US indicator badge with icon + text (accessible, not color-only) */
+const UsIndicator: React.FC<{ value: string | null; isUs: boolean }> = ({ value, isUs }) => {
+  if (!value) return <span>-</span>;
+  if (!isUs) return <span>{value}</span>;
+  return (
+    <span className="inline-flex items-center gap-1 px-1.5 py-0.5 rounded bg-warning-100 text-warning-700 dark:bg-warning-900/30 dark:text-warning-400 font-medium" aria-label={`${value} - Indice d'américanité`}>
+      <Flag className="h-3 w-3" aria-hidden="true" />
+      {value}
+    </span>
+  );
+};
 
 interface FatcaClient {
   id?: number;
@@ -51,6 +66,7 @@ const FatcaTable: React.FC<FatcaTableProps> = ({
   const itemsPerPage = 20;
 
   const hasEditAccess = user?.role === 'ADMIN' || user?.role === 'AUDITOR';
+  const debouncedSearch = useDebounce(searchQuery, 300);
 
   // Reset to page 1 when status filter changes
   useEffect(() => {
@@ -61,11 +77,6 @@ const FatcaTable: React.FC<FatcaTableProps> = ({
   useEffect(() => {
     fetchClients();
   }, [currentPage, selectedStatus]);
-
-  // Apply search filter when search query changes
-  useEffect(() => {
-    applyFilters();
-  }, [clients, searchQuery]);
 
   const fetchClients = async () => {
     try {
@@ -115,27 +126,23 @@ const FatcaTable: React.FC<FatcaTableProps> = ({
     }
   };
 
-  const applyFilters = () => {
-    console.log('🔍 Applying search filter:', searchQuery);
+  // Memoized filtering with debounced search
+  const computedFilteredClients = useMemo(() => {
+    if (!debouncedSearch || !debouncedSearch.trim()) return clients;
+    const query = debouncedSearch.toLowerCase().trim();
+    return clients.filter(client =>
+      client.cli?.toLowerCase().includes(query) ||
+      client.nom?.toLowerCase().includes(query) ||
+      client.pays_naissance?.toLowerCase().includes(query) ||
+      client.nationalite?.toLowerCase().includes(query) ||
+      client.pays_adresse?.toLowerCase().includes(query) ||
+      client.telephone?.toLowerCase().includes(query)
+    );
+  }, [clients, debouncedSearch]);
 
-    let filtered = [...clients];
-
-    // Apply search filter
-    if (searchQuery && searchQuery.trim()) {
-      const query = searchQuery.toLowerCase().trim();
-      filtered = filtered.filter(client => 
-        client.cli?.toLowerCase().includes(query) ||
-        client.nom?.toLowerCase().includes(query) ||
-        client.pays_naissance?.toLowerCase().includes(query) ||
-        client.nationalite?.toLowerCase().includes(query) ||
-        client.pays_adresse?.toLowerCase().includes(query) ||
-        client.telephone?.toLowerCase().includes(query)
-      );
-      console.log(`🔎 Filtered by search "${searchQuery}":`, filtered.length);
-    }
-
-    setFilteredClients(filtered);
-  };
+  useEffect(() => {
+    setFilteredClients(computedFilteredClients);
+  }, [computedFilteredClients]);
 
   const toggleExpandRow = (id: string) => {
     setExpandedRow(expandedRow === id ? null : id);
@@ -156,21 +163,14 @@ const FatcaTable: React.FC<FatcaTableProps> = ({
     try {
       setLoading(true);
       
-      // Call API to update client status
-      const response = await fetch(`/api/fatca/clients/${editingClient.cli}`, {
-        method: 'PUT',
-        headers: {
-          'Content-Type': 'application/json',
-          'Authorization': `Bearer ${user?.token}`
-        },
-        body: JSON.stringify({
-          fatcaStatus: editingClient.fatca_status,
-          notes: editingClient.notes,
-          username: user?.username
-        })
+      // Call API to update client status (uses session cookies + CSRF automatically)
+      const response = await apiClient.put(`/api/fatca/clients/${editingClient.cli}`, {
+        fatcaStatus: editingClient.fatca_status,
+        notes: editingClient.notes,
+        username: user?.username
       });
-      
-      if (response.ok) {
+
+      if (response.status === 200) {
         addToast('Statut FATCA mis à jour avec succès', 'success');
         
         // Update local state
@@ -193,13 +193,11 @@ const FatcaTable: React.FC<FatcaTableProps> = ({
         
         // Reset editing state
         setEditingClient(null);
-      } else {
-        const errorData = await response.json();
-        addToast(errorData.error || 'Erreur lors de la mise à jour du statut FATCA', 'error');
       }
-    } catch (error) {
+    } catch (error: any) {
       console.error('Error updating FATCA status:', error);
-      addToast('Erreur lors de la mise à jour du statut FATCA', 'error');
+      const message = error?.response?.data?.error || 'Erreur lors de la mise à jour du statut FATCA';
+      addToast(message, 'error');
     } finally {
       setLoading(false);
     }
@@ -283,60 +281,6 @@ const FatcaTable: React.FC<FatcaTableProps> = ({
     setEditingClient(null);
     
     setPageLoading(false);
-  };
-
-  const renderPagination = () => {
-    if (totalPages <= 1) return null;
-
-    const pages = [];
-    let startPage = Math.max(1, currentPage - 2);
-    let endPage = Math.min(totalPages, startPage + 4);
-
-    if (endPage - startPage < 4) {
-      startPage = Math.max(1, endPage - 4);
-    }
-
-    for (let i = startPage; i <= endPage; i++) {
-      pages.push(
-        <button
-          key={i}
-          onClick={() => handlePageChange(i)}
-          className={`px-3 py-1 rounded-md text-sm font-medium ${
-            currentPage === i
-              ? 'bg-primary-500 text-white'
-              : 'text-gray-700 hover:bg-gray-100'
-          }`}
-        >
-          {i}
-        </button>
-      );
-    }
-
-    return (
-      <div className="flex items-center space-x-2">
-        <Button
-          variant="outline"
-          size="sm"
-          onClick={() => handlePageChange(currentPage - 1)}
-          disabled={currentPage === 1 || loading || pageLoading}
-          leftIcon={<ChevronLeft className="h-4 w-4" />}
-        >
-          Précédent
-        </Button>
-
-        <div className="flex space-x-1">{pages}</div>
-
-        <Button
-          variant="outline"
-          size="sm"
-          onClick={() => handlePageChange(currentPage + 1)}
-          disabled={currentPage === totalPages || loading || pageLoading}
-          rightIcon={<ChevronRight className="h-4 w-4" />}
-        >
-          Suivant
-        </Button>
-      </div>
-    );
   };
 
   // Use filtered clients for display, but fall back to all clients if filtering hasn't been applied yet
@@ -477,38 +421,22 @@ const FatcaTable: React.FC<FatcaTableProps> = ({
                     </td>
                     <td className="px-3 py-4 whitespace-nowrap">
                       <div className="text-sm text-gray-900">
-                        {client.pays_naissance === 'US' ? (
-                          <span className="text-warning-600 font-medium">{client.pays_naissance}</span>
-                        ) : (
-                          client.pays_naissance
-                        )}
+                        <UsIndicator value={client.pays_naissance} isUs={client.pays_naissance === 'US'} />
                       </div>
                     </td>
                     <td className="px-3 py-4 whitespace-nowrap">
                       <div className="text-sm text-gray-900">
-                        {client.nationalite === 'US' ? (
-                          <span className="text-warning-600 font-medium">{client.nationalite}</span>
-                        ) : (
-                          client.nationalite
-                        )}
+                        <UsIndicator value={client.nationalite} isUs={client.nationalite === 'US'} />
                       </div>
                     </td>
                     <td className="px-3 py-4 whitespace-nowrap">
                       <div className="text-sm text-gray-900">
-                        {client.pays_adresse === 'US' ? (
-                          <span className="text-warning-600 font-medium">{client.pays_adresse}</span>
-                        ) : (
-                          client.pays_adresse
-                        )}
+                        <UsIndicator value={client.pays_adresse} isUs={client.pays_adresse === 'US'} />
                       </div>
                     </td>
                     <td className="px-3 py-4 whitespace-nowrap">
                       <div className="text-sm text-gray-900">
-                        {client.telephone && client.telephone.startsWith('+1') ? (
-                          <span className="text-warning-600 font-medium">{client.telephone}</span>
-                        ) : (
-                          client.telephone
-                        )}
+                        <UsIndicator value={client.telephone} isUs={!!client.telephone && client.telephone.startsWith('+1')} />
                       </div>
                     </td>
                     <td className="px-3 py-4 whitespace-nowrap">
@@ -625,16 +553,16 @@ const FatcaTable: React.FC<FatcaTableProps> = ({
                                       <span className="text-sm text-gray-500">Statut client:</span>
                                       <span className="text-sm font-medium">{client.status_client}</span>
                                     </div>
-                                    <div className="flex justify-between">
+                                    <div className="flex justify-between items-center">
                                       <span className="text-sm text-gray-500">Pays de naissance:</span>
-                                      <span className={`text-sm font-medium ${client.pays_naissance === 'US' ? 'text-warning-600' : ''}`}>
-                                        {client.pays_naissance}
+                                      <span className="text-sm font-medium">
+                                        <UsIndicator value={client.pays_naissance} isUs={client.pays_naissance === 'US'} />
                                       </span>
                                     </div>
-                                    <div className="flex justify-between">
+                                    <div className="flex justify-between items-center">
                                       <span className="text-sm text-gray-500">Nationalité:</span>
-                                      <span className={`text-sm font-medium ${client.nationalite === 'US' ? 'text-warning-600' : ''}`}>
-                                        {client.nationalite}
+                                      <span className="text-sm font-medium">
+                                        <UsIndicator value={client.nationalite} isUs={client.nationalite === 'US'} />
                                       </span>
                                     </div>
                                   </div>
@@ -647,16 +575,16 @@ const FatcaTable: React.FC<FatcaTableProps> = ({
                                       <span className="text-sm text-gray-500">Adresse:</span>
                                       <span className="text-sm font-medium">{client.adresse}</span>
                                     </div>
-                                    <div className="flex justify-between">
+                                    <div className="flex justify-between items-center">
                                       <span className="text-sm text-gray-500">Pays d'adresse:</span>
-                                      <span className={`text-sm font-medium ${client.pays_adresse === 'US' ? 'text-warning-600' : ''}`}>
-                                        {client.pays_adresse}
+                                      <span className="text-sm font-medium">
+                                        <UsIndicator value={client.pays_adresse} isUs={client.pays_adresse === 'US'} />
                                       </span>
                                     </div>
-                                    <div className="flex justify-between">
+                                    <div className="flex justify-between items-center">
                                       <span className="text-sm text-gray-500">Téléphone:</span>
-                                      <span className={`text-sm font-medium ${client.telephone && client.telephone.startsWith('+1') ? 'text-warning-600' : ''}`}>
-                                        {client.telephone}
+                                      <span className="text-sm font-medium">
+                                        <UsIndicator value={client.telephone} isUs={!!client.telephone && client.telephone.startsWith('+1')} />
                                       </span>
                                     </div>
                                     <div className="flex justify-between">
@@ -721,17 +649,16 @@ const FatcaTable: React.FC<FatcaTableProps> = ({
       </div>
       
       {totalRecords > 0 && (
-        <div className="mt-4 flex items-center justify-between">
-          <div className="text-sm text-gray-700">
-            Affichage de{' '}
-            <span className="font-medium">
-              {(currentPage - 1) * itemsPerPage + 1} - {Math.min(currentPage * itemsPerPage, totalRecords)}
-            </span>{' '}
-            sur <span className="font-medium">{totalRecords.toLocaleString('fr-FR')}</span> clients FATCA
-            {selectedStatus && <span className="ml-1 text-primary-600 font-medium">avec statut {selectedStatus}</span>}
-          </div>
-          
-          {renderPagination()}
+        <div className="mt-4">
+          <Pagination
+            currentPage={currentPage}
+            totalPages={totalPages}
+            totalRecords={totalRecords}
+            itemsPerPage={itemsPerPage}
+            onPageChange={handlePageChange}
+            isLoading={loading || pageLoading}
+            summaryText={`Affichage de ${((currentPage - 1) * itemsPerPage + 1).toLocaleString('fr-FR')} - ${Math.min(currentPage * itemsPerPage, totalRecords).toLocaleString('fr-FR')} sur ${totalRecords.toLocaleString('fr-FR')} clients FATCA${selectedStatus ? ` avec statut ${selectedStatus}` : ''}`}
+          />
         </div>
       )}
     </div>

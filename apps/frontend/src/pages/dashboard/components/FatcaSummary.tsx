@@ -286,7 +286,7 @@ const FatcaSummary: React.FC<FatcaSummaryProps> = ({
       });
   };
 
-  const fatcaPercentage = ((fatcaCount / totalClients) * 100).toFixed(2);
+  const fatcaPercentage = totalClients > 0 ? ((fatcaCount / totalClients) * 100).toFixed(2) : '0.00';
 
   return (
     <div className="space-y-6">
@@ -345,7 +345,7 @@ const FatcaSummary: React.FC<FatcaSummaryProps> = ({
           description="Tendance mensuelle des détections FATCA"
           isLoading={isLoading}
         >
-          <div className="h-80 flex items-center justify-center">
+          <div className="h-56 sm:h-64 lg:h-80 flex items-center justify-center">
             <FatcaTrendChart isLoading={isLoading} />
           </div>
         </Card>
@@ -355,7 +355,7 @@ const FatcaSummary: React.FC<FatcaSummaryProps> = ({
           description="Répartition par statut de documentation"
           isLoading={isLoading}
         >
-          <div className="h-80 flex items-center justify-center">
+          <div className="h-56 sm:h-64 lg:h-80 flex items-center justify-center">
             <FatcaStatusChart isLoading={isLoading} />
           </div>
         </Card>

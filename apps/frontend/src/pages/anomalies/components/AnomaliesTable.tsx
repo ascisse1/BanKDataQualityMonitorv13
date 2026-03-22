@@ -1,12 +1,14 @@
 import React, { useMemo } from 'react';
 import { createPortal } from 'react-dom';
 import { useState, useEffect } from 'react';
-import { AlertTriangle, Eye, ChevronDown, ChevronUp, ChevronLeft, ChevronRight, RefreshCw, User, Building, Edit, Users, FileWarning } from 'lucide-react';
+import { AlertTriangle, Eye, ChevronDown, ChevronUp, RefreshCw, User, Building, Edit, Users, FileWarning } from 'lucide-react';
 import Button from '../../../components/ui/Button';
+import Pagination from '../../../components/ui/Pagination';
 import AnomalyCorrection from './AnomalyCorrection';
 import { db } from '../../../services/db';
 import { useToast } from '../../../components/ui/Toaster';
 import { useAuth } from '../../../context/AuthContext';
+import { useDebounce } from '../../../hooks/useDebounce';
 
 interface Anomaly {
   cli: string;
@@ -78,6 +80,7 @@ const AnomaliesTable: React.FC<AnomaliesTableProps> = ({
 
   const isAgencyUser = user?.role === 'AGENCY_USER';
   const userAgencyCode = user?.agencyCode;
+  const debouncedSearch = useDebounce(searchTerm, 300);
 
   // Group anomalies by client
   const groupedClients = useMemo((): GroupedClient[] => {
@@ -141,6 +144,11 @@ const AnomaliesTable: React.FC<AnomaliesTableProps> = ({
         params.status = selectedStatus;
       }
 
+      // Server-side search
+      if (debouncedSearch) {
+        params.search = debouncedSearch;
+      }
+
       // Get data based on client type
       let result;
       if (selectedClientType === '2') {
@@ -148,25 +156,10 @@ const AnomaliesTable: React.FC<AnomaliesTableProps> = ({
       } else if (selectedClientType === '3') {
         result = await db.getInstitutionalAnomalies(currentPage, itemsPerPage, false, params);
       } else {
-        window.console.log('loading individual anomalies ==========================');
         result = await db.getIndividualAnomalies(currentPage, itemsPerPage, false, params);
       }
 
-      let anomaliesData = result.data || [];
-
-      // Filtrage par terme de recherche (côté client)
-      if (searchTerm) {
-        const searchLower = searchTerm.toLowerCase().trim();
-        anomaliesData = anomaliesData.filter((anomaly: any) => {
-          return (
-            (anomaly.cli && anomaly.cli.toLowerCase().includes(searchLower)) ||
-            (anomaly.nom && anomaly.nom.toLowerCase().includes(searchLower)) ||
-            (anomaly.pre && anomaly.pre.toLowerCase().includes(searchLower)) ||
-            (anomaly.email && anomaly.email?.toLowerCase().includes(searchLower)) ||
-            (anomaly.telephone && anomaly.telephone?.toLowerCase().includes(searchLower))
-          );
-        });
-      }
+      const anomaliesData = result.data || [];
 
       setAnomalies(anomaliesData);
       setTotalRecords(result.total || anomaliesData.length);
@@ -182,16 +175,13 @@ const AnomaliesTable: React.FC<AnomaliesTableProps> = ({
 
   useEffect(() => {
     setCurrentPage(1);
-  }, [selectedAgency, searchTerm, selectedStatus, selectedClientType]);
+  }, [selectedAgency, debouncedSearch, selectedStatus, selectedClientType]);
 
   useEffect(() => {
-    // Reset expanded row when page changes
     setExpandedRow(null);
     setEditingAnomaly(null);
-    window.console.log('----------------------------Fetching anomalies with params: useEffect----------');
-    // Fetch anomalies from backend API
     fetchAnomaliesFromBackend();
-  }, [selectedAgency, searchTerm, selectedStatus, selectedClientType, currentPage, userAgencyCode, paginationKey]);
+  }, [selectedAgency, debouncedSearch, selectedStatus, selectedClientType, currentPage, userAgencyCode, paginationKey]);
 
   const toggleExpandRow = (cli: string) => {
     setExpandedRow(expandedRow === cli ? null : cli);
@@ -315,84 +305,6 @@ const AnomaliesTable: React.FC<AnomaliesTableProps> = ({
     setTimeout(() => {
       setPageLoading(false);
     }, 300);
-  };
-
-  const renderPagination = () => {
-    if (totalPages <= 1) return null;
-
-    // Calculate total pages based on actual data
-    const calculatedTotalPages = Math.ceil(totalRecords / itemsPerPage);
-    
-    const pages = [];
-    const maxVisiblePages = 5;
-    let startPage = Math.max(1, currentPage - Math.floor(maxVisiblePages / 2));
-    let endPage = Math.min(calculatedTotalPages, startPage + maxVisiblePages - 1);
-
-    if (endPage - startPage + 1 < maxVisiblePages) {
-      startPage = Math.max(1, endPage - maxVisiblePages + 1);
-    }
-
-    for (let i = startPage; i <= endPage; i++) {
-      pages.push(
-        <button
-          key={i}
-          onClick={() => setCurrentPage(i)}
-          className={`px-3 py-2 text-sm font-medium rounded-md ${
-            currentPage === i
-              ? 'bg-primary-600 text-white'
-              : 'text-gray-700 hover:bg-gray-50'
-          }`}
-        >
-          {i}
-        </button>
-      );
-    }
-
-    return (
-      <div className="flex items-center space-x-1">
-        <button
-          onClick={() => setCurrentPage(Math.max(1, currentPage - 1))}
-          disabled={currentPage === 1}
-          className="p-2 text-gray-400 hover:text-gray-600 disabled:opacity-50 disabled:cursor-not-allowed"
-        >
-          <ChevronLeft className="h-4 w-4" />
-        </button>
-        
-        {startPage > 1 && (
-          <>
-            <button
-              onClick={() => setCurrentPage(1)}
-              className="px-3 py-2 text-sm font-medium text-gray-700 hover:bg-gray-50 rounded-md"
-            >
-              1
-            </button>
-            {startPage > 2 && <span className="px-2 text-gray-500">...</span>}
-          </>
-        )}
-        
-        {pages}
-        
-        {endPage < totalPages && (
-          <>
-            {endPage < totalPages - 1 && <span className="px-2 text-gray-500">...</span>}
-            <button
-              onClick={() => setCurrentPage(totalPages)}
-              className="px-3 py-2 text-sm font-medium text-gray-700 hover:bg-gray-50 rounded-md"
-            >
-              {totalPages}
-            </button>
-          </>
-        )}
-        
-        <button
-          onClick={() => setCurrentPage(Math.min(calculatedTotalPages, currentPage + 1))}
-          disabled={currentPage === calculatedTotalPages}
-          className="p-2 text-gray-400 hover:text-gray-600 disabled:opacity-50 disabled:cursor-not-allowed"
-        >
-          <ChevronRight className="h-4 w-4" />
-        </button>
-      </div>
-    );
   };
 
   if (loading) {
@@ -740,15 +652,16 @@ const AnomaliesTable: React.FC<AnomaliesTableProps> = ({
       </div>
       
       {totalRecords > 0 && (
-        <div className="mt-4 flex items-center justify-between">
-          <div className="text-sm text-gray-700">
-            <span className="font-medium">{groupedClients.length}</span> client{groupedClients.length > 1 ? 's' : ''} avec{' '}
-            <span className="font-medium">{anomalies.length}</span> anomalie{anomalies.length > 1 ? 's' : ''} au total
-            {selectedAgency && <span className="ml-1 text-primary-600 font-medium">pour l'agence {selectedAgency}</span>}
-            {isAgencyUser && userAgencyCode && <span className="ml-1 text-primary-600 font-medium">pour votre agence {userAgencyCode}</span>}
-          </div>
-
-          {renderPagination()}
+        <div className="mt-4">
+          <Pagination
+            currentPage={currentPage}
+            totalPages={totalPages}
+            totalRecords={totalRecords}
+            itemsPerPage={itemsPerPage}
+            onPageChange={handlePageChange}
+            isLoading={loading || pageLoading}
+            summaryText={`${groupedClients.length} client${groupedClients.length > 1 ? 's' : ''} avec ${anomalies.length} anomalie${anomalies.length > 1 ? 's' : ''} au total${selectedAgency ? ` pour l'agence ${selectedAgency}` : ''}${isAgencyUser && userAgencyCode ? ` pour votre agence ${userAgencyCode}` : ''}`}
+          />
         </div>
       )}
     </div>

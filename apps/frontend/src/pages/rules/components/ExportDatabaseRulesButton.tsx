@@ -2,7 +2,7 @@ import React, { useState } from 'react';
 import { Download, FileText, Database, FileJson } from 'lucide-react';
 import Button from '../../../components/ui/Button';
 import { useToast } from '../../../components/ui/Toaster';
-import { useNotification } from '../../../context/NotificationContext';
+
 
 interface DatabaseRule {
   id: string;
@@ -30,16 +30,11 @@ const ExportDatabaseRulesButton: React.FC<ExportDatabaseRulesButtonProps> = ({
 }) => {
   const [isExporting, setIsExporting] = useState(false);
   const { addToast } = useToast();
-  const { showNotification } = useNotification();
-
   const handleExport = async (format: 'json' | 'csv' | 'sql') => {
     try {
       setIsExporting(true);
-      showNotification('Préparation de l\'export...', 'loading');
-
       if (rules.length === 0) {
         addToast('Aucune règle à exporter', 'warning');
-        showNotification('Aucune règle à exporter', 'warning');
         return;
       }
 
@@ -53,11 +48,9 @@ const ExportDatabaseRulesButton: React.FC<ExportDatabaseRulesButtonProps> = ({
       }
 
       addToast(`Export des règles en ${format.toUpperCase()} réussi (${rules.length} règles)`, 'success');
-      showNotification(`Export des règles en ${format.toUpperCase()} réussi`, 'success');
     } catch (error) {
       console.error('Error exporting rules:', error);
       addToast('Erreur lors de l\'export des règles', 'error');
-      showNotification('Erreur lors de l\'export des règles', 'error');
     } finally {
       setIsExporting(false);
     }

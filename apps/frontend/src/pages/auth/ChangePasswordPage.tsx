@@ -6,7 +6,7 @@ import { Lock, Save, ArrowLeft } from 'lucide-react';
 import Card from '../../components/ui/Card';
 import Input from '../../components/ui/Input';
 import Button from '../../components/ui/Button';
-import { useNotification } from '../../context/NotificationContext';
+import { useToast } from '../../components/ui/Toaster';
 
 interface ChangePasswordFormData {
   currentPassword: string;
@@ -18,7 +18,7 @@ const ChangePasswordPage = () => {
   const [isLoading, setIsLoading] = useState(false);
   const { user } = useAuth();
   const navigate = useNavigate();
-  const { showNotification } = useNotification();
+  const { addToast } = useToast();
   
   const { 
     register, 
@@ -34,8 +34,6 @@ const ChangePasswordPage = () => {
     
     try {
       setIsLoading(true);
-      showNotification('Changement du mot de passe en cours...', 'loading');
-      
       const response = await fetch(`/api/users/${user.id}/change-password`, {
         method: 'POST',
         headers: {
@@ -49,15 +47,15 @@ const ChangePasswordPage = () => {
       });
       
       if (response.ok) {
-        showNotification('Mot de passe modifié avec succès', 'success');
+        addToast('Mot de passe modifié avec succès', 'success');
         navigate(-1); // Retour à la page précédente
       } else {
         const errorData = await response.json();
-        showNotification(errorData.error || 'Erreur lors du changement de mot de passe', 'error');
+        addToast(errorData.error || 'Erreur lors du changement de mot de passe', 'error');
       }
     } catch (error) {
       console.error('Error changing password:', error);
-      showNotification('Erreur lors du changement de mot de passe', 'error');
+      addToast('Erreur lors du changement de mot de passe', 'error');
     } finally {
       setIsLoading(false);
     }
