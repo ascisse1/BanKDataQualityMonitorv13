@@ -1,5 +1,6 @@
 package com.bsic.dataqualitybackend.controller;
 
+import com.bsic.dataqualitybackend.service.UserService;
 import lombok.RequiredArgsConstructor;
 import lombok.extern.slf4j.Slf4j;
 import org.springframework.http.ResponseEntity;
@@ -25,6 +26,8 @@ import java.util.stream.Collectors;
 @RequestMapping("/api")
 @RequiredArgsConstructor
 public class UserInfoController {
+
+    private final UserService userService;
 
     /**
      * Returns information about the currently authenticated user.
@@ -74,6 +77,13 @@ public class UserInfoController {
         // Determine primary role (highest priority)
         String primaryRole = determinePrimaryRole(roles);
         userInfo.put("role", primaryRole);
+
+        // Sync user info to local database
+        try {
+            userService.syncFromOidc(principal, roles);
+        } catch (Exception e) {
+            log.warn("Failed to sync user {} to local database: {}", principal.getPreferredUsername(), e.getMessage());
+        }
 
         log.debug("Returning user info for: {}", principal.getPreferredUsername());
         return ResponseEntity.ok(userInfo);

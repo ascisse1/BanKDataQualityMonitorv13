@@ -293,7 +293,7 @@ public class InformixRepository {
                 rrc,
                 dvrrc,
                 uti_vrrc
-        from bkcli 
+        from bank.bkcli
          limit 10
         """;
 
@@ -409,7 +409,7 @@ public class InformixRepository {
                 rrc,
                 dvrrc,
                 uti_vrrc
-        from bkcli 
+        from bkcli
         """;
 
 

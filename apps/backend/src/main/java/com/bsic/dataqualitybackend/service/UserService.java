@@ -1,6 +1,8 @@
 package com.bsic.dataqualitybackend.service;
 
 import com.bsic.dataqualitybackend.model.User;
+import com.bsic.dataqualitybackend.model.enums.UserRole;
+import com.bsic.dataqualitybackend.model.enums.UserStatus;
 import com.bsic.dataqualitybackend.repository.UserRepository;
 import lombok.RequiredArgsConstructor;
 import lombok.extern.slf4j.Slf4j;
@@ -8,6 +10,7 @@ import org.springframework.security.core.userdetails.UserDetails;
 import org.springframework.security.core.userdetails.UserDetailsService;
 import org.springframework.security.core.userdetails.UsernameNotFoundException;
 import org.springframework.security.crypto.password.PasswordEncoder;
+import org.springframework.security.oauth2.core.oidc.user.OidcUser;
 import org.springframework.stereotype.Service;
 import org.springframework.transaction.annotation.Transactional;
 
@@ -134,5 +137,58 @@ public class UserService implements UserDetailsService {
 
     public long countActiveUsers() {
         return userRepository.countActiveUsers();
+    }
+
+    @Transactional
+    public User syncFromOidc(OidcUser principal, List<String> roles) {
+        String keycloakId = principal.getSubject();
+        String username = principal.getPreferredUsername();
+
+        // Try to find by keycloakId first, then by username (migration path)
+        User user = userRepository.findByKeycloakId(keycloakId)
+                .orElseGet(() -> userRepository.findByUsername(username)
+                        .orElse(null));
+
+        boolean isNew = (user == null);
+
+        if (isNew) {
+            user = User.builder()
+                    .username(username)
+                    .email(principal.getEmail())
+                    .keycloakId(keycloakId)
+                    .status(UserStatus.ACTIVE)
+                    .failedLoginAttempts(0)
+                    .build();
+            log.info("Creating new user from Keycloak: {}", username);
+        } else {
+            // Link existing user to Keycloak if not already linked
+            if (user.getKeycloakId() == null) {
+                user.setKeycloakId(keycloakId);
+                log.info("Linking existing user {} to Keycloak ID {}", username, keycloakId);
+            }
+        }
+
+        // Update fields from OIDC token
+        user.setEmail(principal.getEmail());
+        user.setFullName(principal.getFullName());
+        user.setRole(determinePrimaryRole(roles));
+        user.setLastLogin(LocalDateTime.now());
+        user.setFailedLoginAttempts(0);
+        user.setStatus(UserStatus.ACTIVE);
+
+        // Sync agency_code from custom claim
+        Object agencyCode = principal.getClaim("agency_code");
+        if (agencyCode != null) {
+            user.setAgencyCode(agencyCode.toString());
+        }
+
+        return userRepository.save(user);
+    }
+
+    private UserRole determinePrimaryRole(List<String> roles) {
+        if (roles.contains("ADMIN")) return UserRole.ADMIN;
+        if (roles.contains("AUDITOR")) return UserRole.AUDITOR;
+        if (roles.contains("AGENCY_USER")) return UserRole.AGENCY_USER;
+        return UserRole.USER;
     }
 }

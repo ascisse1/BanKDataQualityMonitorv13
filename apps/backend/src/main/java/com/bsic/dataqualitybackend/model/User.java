@@ -37,8 +37,11 @@ public class User implements UserDetails {
     @Column(unique = true, nullable = false, length = 100)
     private String email;
 
-    @Column(name = "password_hash", nullable = false)
+    @Column(name = "password_hash")
     private String passwordHash;
+
+    @Column(name = "keycloak_id", unique = true)
+    private String keycloakId;
 
     @Column(name = "full_name", length = 100)
     private String fullName;

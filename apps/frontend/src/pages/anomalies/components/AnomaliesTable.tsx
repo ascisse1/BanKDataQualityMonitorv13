@@ -226,71 +226,19 @@ const AnomaliesTable: React.FC<AnomaliesTableProps> = ({
   };
 
   const getFieldName = (anomaly: any) => {
-    if (anomaly.field) {
-      return anomaly.field;
-    }
-    
-    if (anomaly.tcli === '1') {
-      if (!anomaly.nmer || anomaly.nmer.trim() === '') return 'Nom de la mère';
-      if (!anomaly.dna || anomaly.dna.trim() === '') return 'Date de naissance';
-      if (!anomaly.nid || anomaly.nid.trim() === '') return 'Numéro d\'identité';
-      if (!anomaly.nat || anomaly.nat.trim() === '') return 'Nationalité';
-    } else {
-      if (!anomaly.nrc || anomaly.nrc.trim() === '') return 'Numéro de registre';
-      if (!anomaly.datc || anomaly.datc.trim() === '') return 'Date de création';
-      if (!anomaly.rso || anomaly.rso.trim() === '') return 'Raison sociale';
-    }
-    return 'Inconnu';
+    return anomaly.field || 'Inconnu';
   };
 
   const getFieldCode = (anomaly: any) => {
-    if (anomaly.fieldCode) {
-      return anomaly.fieldCode;
-    }
-    
-    if (anomaly.tcli === '1') {
-      if (!anomaly.nmer || anomaly.nmer.trim() === '') return 'nmer';
-      if (!anomaly.dna || anomaly.dna.trim() === '') return 'dna';
-      if (!anomaly.nid || anomaly.nid.trim() === '') return 'nid';
-      if (!anomaly.nat || anomaly.nat.trim() === '') return 'nat';
-    } else {
-      if (!anomaly.nrc || anomaly.nrc.trim() === '') return 'nrc';
-      if (!anomaly.datc || anomaly.datc.trim() === '') return 'datc';
-      if (!anomaly.rso || anomaly.rso.trim() === '') return 'rso';
-    }
-    return '';
+    return anomaly.fieldCode || '';
   };
 
   const getFieldValue = (anomaly: any) => {
-    const fieldCode = getFieldCode(anomaly);
-    if (!fieldCode) return '';
-    
-    return anomaly[fieldCode] || '';
+    return anomaly.currentValue || '';
   };
 
   const getErrorMessage = (anomaly: any) => {
-    if (anomaly.errorMessage) {
-      return anomaly.errorMessage;
-    }
-    
-    if (anomaly.tcli === '1') {
-      if (!anomaly.nmer || anomaly.nmer.trim() === '') 
-        return 'Le nom de la mère est obligatoire pour les clients particuliers';
-      if (!anomaly.dna || anomaly.dna.trim() === '') 
-        return 'La date de naissance est obligatoire pour les clients particuliers';
-      if (!anomaly.nid || anomaly.nid.trim() === '') 
-        return 'Le numéro d\'identité est obligatoire pour les clients particuliers';
-      if (!anomaly.nat || anomaly.nat.trim() === '') 
-        return 'La nationalité est obligatoire pour les clients particuliers';
-    } else {
-      if (!anomaly.nrc || anomaly.nrc.trim() === '') 
-        return 'Le numéro de registre est obligatoire pour les entreprises';
-      if (!anomaly.datc || anomaly.datc.trim() === '') 
-        return 'La date de création est obligatoire pour les entreprises';
-      if (!anomaly.rso || anomaly.rso.trim() === '') 
-        return 'La raison sociale est obligatoire pour les entreprises';
-    }
-    return 'Erreur non spécifiée';
+    return anomaly.errorMessage || 'Erreur non spécifiée';
   };
 
   const handlePageChange = (page: number) => {
@@ -300,7 +248,7 @@ const AnomaliesTable: React.FC<AnomaliesTableProps> = ({
     setEditingAnomaly(null);
     setCurrentPage(page);
     setPaginationKey(prev => prev + 1); // Force re-render with new data
-    
+
     // Simulate a delay for the loading animation
     setTimeout(() => {
       setPageLoading(false);
@@ -355,7 +303,7 @@ const AnomaliesTable: React.FC<AnomaliesTableProps> = ({
         </div>,
         document.body
       )}
-      
+
       <div className="inline-block min-w-full align-middle">
         {pageLoading && (
           <div className="fixed inset-0 flex items-center justify-center bg-black bg-opacity-20 z-50">
@@ -365,7 +313,7 @@ const AnomaliesTable: React.FC<AnomaliesTableProps> = ({
             </div>
           </div>
         )}
-        
+
         <table className="min-w-full divide-y divide-gray-200">
           <thead className="bg-gray-50">
             <tr>
@@ -650,7 +598,7 @@ const AnomaliesTable: React.FC<AnomaliesTableProps> = ({
           </tbody>
         </table>
       </div>
-      
+
       {totalRecords > 0 && (
         <div className="mt-4">
           <Pagination
