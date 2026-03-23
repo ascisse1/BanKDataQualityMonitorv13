@@ -40,5 +40,18 @@ app:
   scheduling:
     bkcli-sync-cron: "*/30 * * * * ?"      # Every 30 seconds (dev only)
     agency-sync-cron: "*/20 * * * * ?"     # Every 30 seconds (dev only)
+  keycloak:
+    server-url: http://localhost:9080
+    realm: web_app
+    client-id: admin-cli
+    client-secret: 6c1d4552-e109-4127-afa3-124d55b4e952
+    migration:
+      enabled: true
+      async: true
+      delay: 5000 # Délai en ms avant de démarrer les migrations
+      retry:
+        max-attempts: 3
+        delay: 2000 # Délai entre les tentatives en cas d'échec
+
 server:
   port: 8086

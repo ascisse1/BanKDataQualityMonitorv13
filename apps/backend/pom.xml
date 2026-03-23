@@ -8,7 +8,7 @@
     <parent>
         <groupId>org.springframework.boot</groupId>
         <artifactId>spring-boot-starter-parent</artifactId>
-        <version>3.2.1</version>
+        <version>3.2.12</version>
         <relativePath/>
     </parent>
 
@@ -23,7 +23,9 @@
         <maven.compiler.source>17</maven.compiler.source>
         <maven.compiler.target>17</maven.compiler.target>
         <project.build.sourceEncoding>UTF-8</project.build.sourceEncoding>
-        <flowable.version>7.1.0</flowable.version>
+        <flowable.version>7.2.0</flowable.version>
+      <keycloak.client.version>26.0.8</keycloak.client.version>
+      <keycloak.core.version>26.5.6</keycloak.core.version>
     </properties>
 
     <dependencies>
@@ -119,13 +121,19 @@
             <version>${flowable.version}</version>
         </dependency>
 
-        <dependency>
-            <groupId>org.keycloak</groupId>
-            <artifactId>keycloak-admin-client</artifactId>
-            <version>26.0.5</version>
-        </dependency>
+      <dependency>
+        <groupId>org.keycloak</groupId>
+        <artifactId>keycloak-admin-client</artifactId>
+        <version>${keycloak.client.version}</version>
+      </dependency>
+      <!-- Keycloak Core for common classes -->
+      <dependency>
+        <groupId>org.keycloak</groupId>
+        <artifactId>keycloak-core</artifactId>
+        <version>${keycloak.core.version}</version>
+      </dependency>
 
-        <!-- Caffeine Cache for UserInfo caching -->
+      <!-- Caffeine Cache for UserInfo caching -->
         <dependency>
             <groupId>com.github.ben-manes.caffeine</groupId>
             <artifactId>caffeine</artifactId>
@@ -142,7 +150,7 @@
         <dependency>
             <groupId>io.jsonwebtoken</groupId>
             <artifactId>jjwt-impl</artifactId>
-            <version>0.12.3</version>
+            <version>0.13.0</version>
             <scope>runtime</scope>
         </dependency>
 

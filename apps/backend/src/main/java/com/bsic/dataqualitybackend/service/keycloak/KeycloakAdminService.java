@@ -1,10 +1,9 @@
-package com.bsic.dataqualitybackend.service;
+package com.bsic.dataqualitybackend.service.keycloak;
 
 import com.bsic.dataqualitybackend.config.KeycloakAdminConfig;
 import jakarta.ws.rs.core.Response;
 import lombok.RequiredArgsConstructor;
 import lombok.extern.slf4j.Slf4j;
-import org.keycloak.admin.client.resource.GroupResource;
 import org.keycloak.admin.client.resource.UserResource;
 import org.keycloak.representations.idm.CredentialRepresentation;
 import org.keycloak.representations.idm.GroupRepresentation;
