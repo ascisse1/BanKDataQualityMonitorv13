@@ -3,8 +3,11 @@ package com.bsic.dataqualitybackend.controller;
 import com.bsic.dataqualitybackend.dto.ApiResponse;
 import com.bsic.dataqualitybackend.dto.CorrectionRequest;
 import com.bsic.dataqualitybackend.dto.CorrectionResponse;
+import com.bsic.dataqualitybackend.dto.TicketDto;
+import com.bsic.dataqualitybackend.dto.UserDto;
 import com.bsic.dataqualitybackend.model.Ticket;
 import com.bsic.dataqualitybackend.model.TicketIncident;
+import com.bsic.dataqualitybackend.model.User;
 import com.bsic.dataqualitybackend.security.SecurityUtils;
 import com.bsic.dataqualitybackend.service.CorrectionService;
 import jakarta.validation.Valid;
@@ -61,10 +64,48 @@ public class CorrectionController {
      * Get tickets pending validation (for supervisors - 4 Eyes workflow)
      */
     @GetMapping("/pending-validation")
-    @PreAuthorize("hasAnyRole('ADMIN', 'SUPERVISOR', 'AUDITOR')")
-    public ResponseEntity<ApiResponse<List<Ticket>>> getPendingValidation() {
+    @PreAuthorize("hasAnyRole('ADMIN', 'AUDITOR', 'AGENCY_USER')")
+    public ResponseEntity<ApiResponse<List<TicketDto>>> getPendingValidation() {
         List<Ticket> tickets = correctionService.getPendingValidationTickets();
-        return ResponseEntity.ok(ApiResponse.success(tickets));
+        List<TicketDto> ticketDtos = tickets.stream()
+                .map(this::mapToTicketDto)
+                .toList();
+        return ResponseEntity.ok(ApiResponse.success(ticketDtos));
+    }
+
+    private TicketDto mapToTicketDto(Ticket ticket) {
+        return TicketDto.builder()
+                .id(ticket.getId())
+                .ticketNumber(ticket.getTicketNumber())
+                .cli(ticket.getCli())
+                .clientName(ticket.getClientName())
+                .clientType(ticket.getClientType())
+                .agencyCode(ticket.getAgencyCode())
+                .status(ticket.getStatus())
+                .priority(ticket.getPriority())
+                .assignedTo(ticket.getAssignedTo() != null ? mapToUserDto(ticket.getAssignedTo()) : null)
+                .assignedBy(ticket.getAssignedBy() != null ? mapToUserDto(ticket.getAssignedBy()) : null)
+                .assignedAt(ticket.getAssignedAt())
+                .validatedBy(ticket.getValidatedBy() != null ? mapToUserDto(ticket.getValidatedBy()) : null)
+                .validatedAt(ticket.getValidatedAt())
+                .slaDeadline(ticket.getSlaDeadline())
+                .slaBreached(ticket.getSlaBreached())
+                .totalIncidents(ticket.getTotalIncidents())
+                .resolvedIncidents(ticket.getResolvedIncidents())
+                .createdAt(ticket.getCreatedAt())
+                .updatedAt(ticket.getUpdatedAt())
+                .build();
+    }
+
+    private UserDto mapToUserDto(User user) {
+        return UserDto.builder()
+                .id(user.getId())
+                .username(user.getUsername())
+                .email(user.getEmail())
+                .fullName(user.getFullName())
+                .role(user.getRole())
+                .agencyCode(user.getAgencyCode())
+                .build();
     }
 
     /**
@@ -72,7 +113,7 @@ public class CorrectionController {
      * Only supervisors/admins can validate, and they cannot validate their own submissions.
      */
     @PostMapping("/{ticketId}/validate")
-    @PreAuthorize("hasAnyRole('ADMIN', 'SUPERVISOR', 'AUDITOR')")
+    @PreAuthorize("hasAnyRole('ADMIN', 'AUDITOR', 'AGENCY_USER')")
     public ResponseEntity<ApiResponse<CorrectionResponse>> validateCorrection(
             @PathVariable Long ticketId,
             @RequestBody Map<String, Object> request) {

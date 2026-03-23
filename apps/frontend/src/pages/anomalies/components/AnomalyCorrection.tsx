@@ -108,11 +108,15 @@ const AnomalyCorrection: React.FC<AnomalieCorrectionProps> = ({
 
   // Show success state after submission
   if (submissionResult) {
+    const allCorrected = submissionResult.requiresValidation;
+
     return (
       <div className="space-y-4 p-4 bg-white rounded-lg border border-gray-200">
         <div className="text-center py-4">
-          <CheckCircle className="h-12 w-12 text-success-500 mx-auto mb-3" />
-          <h3 className="text-lg font-medium text-gray-900">Correction soumise</h3>
+          <CheckCircle className={`h-12 w-12 mx-auto mb-3 ${allCorrected ? 'text-success-500' : 'text-primary-500'}`} />
+          <h3 className="text-lg font-medium text-gray-900">
+            {allCorrected ? 'Toutes les corrections soumises' : 'Correction enregistrée'}
+          </h3>
 
           {submissionResult.ticketNumber && (
             <div className="mt-3 inline-flex items-center gap-2 px-3 py-2 bg-primary-50 rounded-lg">
@@ -123,10 +127,15 @@ const AnomalyCorrection: React.FC<AnomalieCorrectionProps> = ({
             </div>
           )}
 
-          {submissionResult.requiresValidation && (
+          {allCorrected ? (
             <div className="mt-3 flex items-center justify-center gap-2 text-sm text-warning-600">
               <Users className="h-4 w-4" />
               <span>En attente de validation superviseur (4 Eyes)</span>
+            </div>
+          ) : (
+            <div className="mt-3 flex items-center justify-center gap-2 text-sm text-blue-600">
+              <AlertCircle className="h-4 w-4" />
+              <span>D'autres champs restent à corriger pour ce client</span>
             </div>
           )}
 

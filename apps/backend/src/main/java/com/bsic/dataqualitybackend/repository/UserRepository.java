@@ -20,8 +20,6 @@ public interface UserRepository extends JpaRepository<User, Integer> {
 
     Optional<User> findByKeycloakId(String keycloakId);
 
-    Optional<User> findByLdapDn(String ldapDn);
-
     List<User> findByRole(UserRole role);
 
     List<User> findByAgencyCode(String agencyCode);

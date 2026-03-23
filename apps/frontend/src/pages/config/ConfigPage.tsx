@@ -1,7 +1,7 @@
 import React, { useState, useEffect } from 'react';
 import Card from '../../components/ui/Card';
 import Button from '../../components/ui/Button';
-import { Database, RefreshCw, CheckCircle, AlertTriangle, Settings, Server, Shield, Save, Users, Key, Globe, Upload, FileCode } from 'lucide-react';
+import { Database, RefreshCw, CheckCircle, AlertTriangle, Settings, Server, Shield, Save, Globe, Upload, FileCode } from 'lucide-react';
 import { useToast } from '../../components/ui/Toaster';
 import { useAuth } from '../../context/AuthContext';
 import DatabaseConfigPanel from '../../components/ui/DatabaseConfigPanel';
@@ -14,30 +14,10 @@ function ConfigPage() {
     data?: any,
     error?: any
   } | null>(null);
-  const [activeTab, setActiveTab] = useState<'database' | 'ldap' | 'api' | 'sftp'>('database');
+  const [activeTab, setActiveTab] = useState<'database' | 'api' | 'sftp'>('database');
   const { addToast } = useToast();
   const { user } = useAuth();
 
-  // LDAP Configuration state
-  const [ldapEnabled, setLdapEnabled] = useState(false);
-  const [ldapConfig, setLdapConfig] = useState({
-    url: 'ldap://your-domain-controller.com',
-    baseDN: 'dc=example,dc=com',
-    bindDN: 'cn=admin,dc=example,dc=com',
-    bindCredentials: '',
-    userSearchBase: 'ou=users,dc=example,dc=com',
-    userSearchFilter: '(sAMAccountName={{username}})',
-    groupSearchBase: 'ou=groups,dc=example,dc=com',
-    groupSearchFilter: '(member={{dn}})'
-  });
-  const [isTestingLdap, setIsTestingLdap] = useState(false);
-  const [ldapStatus, setLdapStatus] = useState<{
-    success: boolean,
-    message: string,
-    data?: any,
-    error?: any
-  } | null>(null);
-  
   // API Configuration state
   const [apiConfig, setApiConfig] = useState({
     baseUrl: 'https://api.banque-centrale.ml',
@@ -76,39 +56,6 @@ function ConfigPage() {
   const isAdmin = user?.role === 'ADMIN';
   
   const [dbConfigChanged, setDbConfigChanged] = useState(false);
-
-  const testLdapConnection = async () => {
-    if (!isAdmin) {
-      addToast('Vous n\'avez pas les permissions nécessaires pour effectuer cette action', 'error');
-      return;
-    }
-
-    setIsTestingLdap(true);
-    try {
-      const response = await fetch('/api/config/test-ldap', {
-        method: 'POST',
-        headers: { 'Content-Type': 'application/json' },
-        body: JSON.stringify(ldapConfig)
-      });
-      const result = await response.json();
-
-      setLdapStatus(result);
-      if (result.success) {
-        addToast('Connexion au serveur LDAP réussie', 'success');
-      } else {
-        addToast(result.message || 'Échec du test de connexion LDAP', 'error');
-      }
-    } catch (error) {
-      setLdapStatus({
-        success: false,
-        message: 'Erreur lors du test de connexion au serveur LDAP',
-        error: error instanceof Error ? error.message : String(error)
-      });
-      addToast('Erreur lors du test de connexion au serveur LDAP', 'error');
-    } finally {
-      setIsTestingLdap(false);
-    }
-  };
 
   const testApiConnection = async () => {
     if (!isAdmin) {
@@ -176,25 +123,6 @@ function ConfigPage() {
     }
   };
 
-  const handleSaveLdapConfig = async () => {
-    if (!isAdmin) {
-      addToast('Vous n\'avez pas les permissions nécessaires pour effectuer cette action', 'error');
-      return;
-    }
-
-    try {
-      const response = await fetch('/api/config/ldap', {
-        method: 'POST',
-        headers: { 'Content-Type': 'application/json' },
-        body: JSON.stringify({ ...ldapConfig, enabled: ldapEnabled })
-      });
-      if (!response.ok) throw new Error('Failed to save LDAP config');
-      addToast('Configuration LDAP sauvegardée avec succès', 'success');
-    } catch (error) {
-      addToast('Erreur lors de la sauvegarde de la configuration LDAP', 'error');
-    }
-  };
-
   const handleSaveApiConfig = async () => {
     if (!isAdmin) {
       addToast('Vous n\'avez pas les permissions nécessaires pour effectuer cette action', 'error');
@@ -255,17 +183,6 @@ function ConfigPage() {
           >
             <Database className="h-4 w-4" />
             <span>Base de Données</span>
-          </button>
-          <button
-            onClick={() => setActiveTab('ldap')}
-            className={`${
-              activeTab === 'ldap'
-                ? 'border-primary-500 text-primary-600'
-                : 'border-transparent text-gray-500 hover:text-gray-700 hover:border-gray-300'
-            } whitespace-nowrap py-4 px-1 border-b-2 font-medium text-sm flex items-center space-x-2`}
-          >
-            <Users className="h-4 w-4" />
-            <span>LDAP</span>
           </button>
           <button
             onClick={() => setActiveTab('api')}
@@ -333,195 +250,6 @@ function ConfigPage() {
             </div>
           </Card>
         </div>
-      )}
-
-      {activeTab === 'ldap' && (
-        <Card className="overflow-hidden">
-          <div className="p-6">
-            <div className="flex items-center justify-between mb-4">
-              <h2 className="text-xl font-semibold flex items-center">
-                <Users className="mr-2 h-5 w-5 text-primary-600" />
-                Configuration de l'Authentification LDAP
-              </h2>
-              <div className="flex space-x-2">
-                {ldapEnabled && (
-                  <Button
-                    variant="outline"
-                    size="sm"
-                    leftIcon={isTestingLdap ? <RefreshCw className="h-4 w-4 animate-spin" /> : <RefreshCw className="h-4 w-4" />}
-                    onClick={testLdapConnection}
-                    disabled={isTestingLdap}
-                  >
-                    {isTestingLdap ? 'Test en cours...' : 'Tester LDAP'}
-                  </Button>
-                )}
-                <Button
-                  variant="primary"
-                  size="sm"
-                  leftIcon={<Save className="h-4 w-4" />}
-                  onClick={handleSaveLdapConfig}
-                  disabled={isTestingLdap}
-                >
-                  Sauvegarder
-                </Button>
-              </div>
-            </div>
-
-            <div className="space-y-4">
-              <div className="flex items-center space-x-2 mb-4">
-                <label className="inline-flex items-center">
-                  <input
-                    type="radio"
-                    className="form-radio h-4 w-4 text-primary-600"
-                    checked={!ldapEnabled}
-                    onChange={() => setLdapEnabled(false)}
-                  />
-                  <span className="ml-2">Authentification locale (base de données interne)</span>
-                </label>
-                <label className="inline-flex items-center">
-                  <input
-                    type="radio"
-                    className="form-radio h-4 w-4 text-primary-600"
-                    checked={ldapEnabled}
-                    onChange={() => setLdapEnabled(true)}
-                  />
-                  <span className="ml-2">Authentification LDAP (Active Directory)</span>
-                </label>
-              </div>
-
-              {ldapEnabled && (
-                <div className="space-y-4 border p-4 rounded-md bg-gray-50">
-                  <div className="grid grid-cols-1 md:grid-cols-2 gap-4">
-                    <Input
-                      label="URL du serveur LDAP"
-                      value={ldapConfig.url}
-                      onChange={(e) => setLdapConfig({ ...ldapConfig, url: e.target.value })}
-                      placeholder="ldap://your-domain-controller.com"
-                      helperText="Exemple: ldap://ad.votreentreprise.com:389"
-                    />
-                    <Input
-                      label="Base DN"
-                      value={ldapConfig.baseDN}
-                      onChange={(e) => setLdapConfig({ ...ldapConfig, baseDN: e.target.value })}
-                      placeholder="dc=example,dc=com"
-                      helperText="Base de recherche LDAP"
-                    />
-                  </div>
-
-                  <div className="grid grid-cols-1 md:grid-cols-2 gap-4">
-                    <Input
-                      label="Bind DN"
-                      value={ldapConfig.bindDN}
-                      onChange={(e) => setLdapConfig({ ...ldapConfig, bindDN: e.target.value })}
-                      placeholder="cn=admin,dc=example,dc=com"
-                      helperText="Compte utilisé pour se connecter au LDAP"
-                    />
-                    <Input
-                      label="Mot de passe"
-                      type="password"
-                      value={ldapConfig.bindCredentials}
-                      onChange={(e) => setLdapConfig({ ...ldapConfig, bindCredentials: e.target.value })}
-                      placeholder="********"
-                      helperText="Mot de passe du compte de liaison"
-                    />
-                  </div>
-
-                  <div className="grid grid-cols-1 md:grid-cols-2 gap-4">
-                    <Input
-                      label="Base de recherche utilisateurs"
-                      value={ldapConfig.userSearchBase}
-                      onChange={(e) => setLdapConfig({ ...ldapConfig, userSearchBase: e.target.value })}
-                      placeholder="ou=users,dc=example,dc=com"
-                      helperText="OU contenant les utilisateurs"
-                    />
-                    <Input
-                      label="Filtre de recherche utilisateurs"
-                      value={ldapConfig.userSearchFilter}
-                      onChange={(e) => setLdapConfig({ ...ldapConfig, userSearchFilter: e.target.value })}
-                      placeholder="(sAMAccountName={{username}})"
-                      helperText="Filtre pour trouver l'utilisateur"
-                    />
-                  </div>
-
-                  <div className="grid grid-cols-1 md:grid-cols-2 gap-4">
-                    <Input
-                      label="Base de recherche groupes"
-                      value={ldapConfig.groupSearchBase}
-                      onChange={(e) => setLdapConfig({ ...ldapConfig, groupSearchBase: e.target.value })}
-                      placeholder="ou=groups,dc=example,dc=com"
-                      helperText="OU contenant les groupes"
-                    />
-                    <Input
-                      label="Filtre de recherche groupes"
-                      value={ldapConfig.groupSearchFilter}
-                      onChange={(e) => setLdapConfig({ ...ldapConfig, groupSearchFilter: e.target.value })}
-                      placeholder="(member={{dn}})"
-                      helperText="Filtre pour trouver les groupes de l'utilisateur"
-                    />
-                  </div>
-
-                  <div className="bg-blue-50 border border-blue-200 rounded-md p-4">
-                    <div className="flex items-start">
-                      <Key className="h-5 w-5 text-blue-600 mt-0.5 mr-2 flex-shrink-0" />
-                      <div>
-                        <p className="text-blue-800 font-medium">
-                          Correspondance des rôles
-                        </p>
-                        <p className="mt-1 text-sm text-blue-700">
-                          Les utilisateurs LDAP seront associés aux rôles de l'application en fonction de leur appartenance aux groupes AD.
-                        </p>
-                        <div className="mt-2 grid grid-cols-1 md:grid-cols-2 gap-2">
-                          <div className="flex items-center">
-                            <span className="text-xs px-2 py-1 bg-primary-100 text-primary-800 rounded-full mr-2">Admin</span>
-                            <Input
-                              placeholder="CN=Admins,OU=Groups,DC=example,DC=com"
-                              className="text-xs"
-                            />
-                          </div>
-                          <div className="flex items-center">
-                            <span className="text-xs px-2 py-1 bg-secondary-100 text-secondary-800 rounded-full mr-2">Auditeur</span>
-                            <Input
-                              placeholder="CN=Auditors,OU=Groups,DC=example,DC=com"
-                              className="text-xs"
-                            />
-                          </div>
-                        </div>
-                      </div>
-                    </div>
-                  </div>
-                </div>
-              )}
-
-              {ldapStatus && (
-                <div className={`mt-4 p-4 rounded-md ${ldapStatus.success ? 'bg-success-50 border border-success-200' : 'bg-error-50 border border-error-200'}`}>
-                  <div className="flex items-start">
-                    {ldapStatus.success ? (
-                      <CheckCircle className="h-5 w-5 text-success-500 mt-0.5 mr-2 flex-shrink-0" />
-                    ) : (
-                      <AlertTriangle className="h-5 w-5 text-error-500 mt-0.5 mr-2 flex-shrink-0" />
-                    )}
-                    <div>
-                      <p className={`font-medium ${ldapStatus.success ? 'text-success-700' : 'text-error-700'}`}>
-                        {ldapStatus.message}
-                      </p>
-                      {ldapStatus.data && (
-                        <div className="mt-2 text-sm">
-                          <p className="text-gray-600">Serveur: <span className="font-medium">{ldapStatus.data.server}</span></p>
-                          <p className="text-gray-600">Utilisateurs: <span className="font-medium">{ldapStatus.data.userCount}</span></p>
-                        </div>
-                      )}
-                      {ldapStatus.error && (
-                        <p className="mt-2 text-sm text-error-600">
-                          {typeof ldapStatus.error === 'string' ? ldapStatus.error : JSON.stringify(ldapStatus.error)}
-                        </p>
-                      )}
-                    </div>
-                  </div>
-                </div>
-              )}
-            </div>
-          </div>
-        </Card>
       )}
 
       {activeTab === 'api' && (

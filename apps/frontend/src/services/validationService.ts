@@ -1,232 +1,108 @@
-import { apiService } from './apiService';
+import apiClient from '../lib/apiClient';
+import { logger } from './logger';
+import type { TicketDto } from './ticketService';
 
-export interface PendingValidation {
-  id: string;
-  ticket_id: string;
-  client_id: string;
-  client_name: string;
-  agent_id: string;
-  agent_name: string;
-  agency_code: string;
-  agency_name: string;
-  corrections: CorrectionItem[];
-  documents: Document[];
-  created_at: string;
-  submitted_at: string;
-  status: 'pending' | 'approved' | 'rejected';
-  priority: 'low' | 'medium' | 'high' | 'critical';
+export interface TicketIncidentDto {
+  id: number;
+  incidentType: string;
+  category: string;
+  fieldName: string;
+  fieldLabel: string;
+  oldValue: string | null;
+  newValue: string | null;
+  status: string;
+  resolved: boolean;
+  resolvedAt: string | null;
+  notes: string | null;
+  createdAt: string;
 }
 
-export interface CorrectionItem {
-  field: string;
-  field_label: string;
-  old_value: string | null;
-  new_value: string;
-  anomaly_type: string;
-  severity: string;
-}
-
-export interface Document {
-  id: string;
-  name: string;
-  type: string;
-  url: string;
-  uploaded_at: string;
-}
-
-export interface ValidationDecision {
-  validation_id: string;
-  decision: 'approved' | 'rejected';
-  validator_id: string;
-  validator_name: string;
-  validator_role: string;
-  comments: string;
-  validated_at: string;
-}
-
-export interface ValidationStats {
-  total_pending: number;
-  approved_today: number;
-  rejected_today: number;
-  average_validation_time: number;
-  by_agency: {
-    agency_code: string;
-    agency_name: string;
-    pending: number;
-  }[];
-  by_priority: {
-    priority: string;
-    count: number;
-  }[];
+interface ApiResponse<T> {
+  success: boolean;
+  message?: string;
+  data: T;
 }
 
 class ValidationService {
-  async getPendingValidations(filters?: {
-    agency_code?: string;
-    priority?: string;
-    agent_id?: string;
-  }): Promise<PendingValidation[]> {
+  /**
+   * Get tickets pending 4-eyes validation from the corrections API
+   */
+  async getPendingValidations(): Promise<TicketDto[]> {
     try {
-      const params = new URLSearchParams();
-      if (filters?.agency_code) params.append('agency_code', filters.agency_code);
-      if (filters?.priority) params.append('priority', filters.priority);
-      if (filters?.agent_id) params.append('agent_id', filters.agent_id);
-
-      const response = await apiService.get<PendingValidation[]>(
-        `/api/validations/pending?${params.toString()}`
+      const response = await apiClient.get<ApiResponse<TicketDto[]>>(
+        '/api/corrections/pending-validation'
       );
-      return response;
+      return response.data.data || [];
     } catch (error) {
-      console.error('Error fetching pending validations:', error);
-      return [];
+      logger.error('api', 'Error fetching pending validations', { error });
+      throw error;
     }
   }
 
-  async getValidationById(id: string): Promise<PendingValidation | null> {
+  /**
+   * Get ticket details by ID
+   */
+  async getTicketById(id: number): Promise<TicketDto | null> {
     try {
-      return await apiService.get<PendingValidation>(`/api/validations/${id}`);
+      const response = await apiClient.get<ApiResponse<TicketDto>>(
+        `/api/tickets/${id}`
+      );
+      return response.data.data;
     } catch (error) {
-      console.error('Error fetching validation:', error);
+      logger.error('api', 'Error fetching ticket', { error, id });
       return null;
     }
   }
 
-  async approveValidation(
-    validationId: string,
-    validatorId: string,
-    validatorName: string,
-    validatorRole: string,
-    comments: string
-  ): Promise<boolean> {
+  /**
+   * Get incidents for a ticket
+   */
+  async getTicketIncidents(ticketId: number): Promise<TicketIncidentDto[]> {
     try {
-      await apiService.post('/api/validations/approve', {
-        validation_id: validationId,
-        validator_id: validatorId,
-        validator_name: validatorName,
-        validator_role: validatorRole,
-        comments,
-      });
-      return true;
-    } catch (error) {
-      console.error('Error approving validation:', error);
-      return false;
-    }
-  }
-
-  async rejectValidation(
-    validationId: string,
-    validatorId: string,
-    validatorName: string,
-    validatorRole: string,
-    comments: string
-  ): Promise<boolean> {
-    try {
-      await apiService.post('/api/validations/reject', {
-        validation_id: validationId,
-        validator_id: validatorId,
-        validator_name: validatorName,
-        validator_role: validatorRole,
-        comments,
-      });
-      return true;
-    } catch (error) {
-      console.error('Error rejecting validation:', error);
-      return false;
-    }
-  }
-
-  async getValidationHistory(filters?: {
-    ticket_id?: string;
-    client_id?: string;
-    agency_code?: string;
-    start_date?: string;
-    end_date?: string;
-  }): Promise<ValidationDecision[]> {
-    try {
-      const params = new URLSearchParams();
-      if (filters?.ticket_id) params.append('ticket_id', filters.ticket_id);
-      if (filters?.client_id) params.append('client_id', filters.client_id);
-      if (filters?.agency_code) params.append('agency_code', filters.agency_code);
-      if (filters?.start_date) params.append('start_date', filters.start_date);
-      if (filters?.end_date) params.append('end_date', filters.end_date);
-
-      const response = await apiService.get<ValidationDecision[]>(
-        `/api/validations/history?${params.toString()}`
+      const response = await apiClient.get<ApiResponse<TicketIncidentDto[]>>(
+        `/api/tickets/${ticketId}/incidents`
       );
-      return response;
+      return response.data.data || [];
     } catch (error) {
-      console.error('Error fetching validation history:', error);
+      logger.error('api', 'Error fetching ticket incidents', { error, ticketId });
       return [];
     }
   }
 
-  async getValidationStats(agencyCode?: string): Promise<ValidationStats | null> {
+  /**
+   * Approve or reject a ticket (4-eyes validation)
+   */
+  async validateTicket(ticketId: number, approved: boolean, reason?: string): Promise<boolean> {
     try {
-      const url = agencyCode
-        ? `/api/validations/stats?agency_code=${agencyCode}`
-        : '/api/validations/stats';
-      return await apiService.get<ValidationStats>(url);
+      const response = await apiClient.post<ApiResponse<any>>(
+        `/api/corrections/${ticketId}/validate`,
+        { approved, reason }
+      );
+      return response.data.success;
     } catch (error) {
-      console.error('Error fetching validation stats:', error);
-      return null;
+      logger.error('api', 'Error validating ticket', { error, ticketId, approved });
+      throw error;
     }
-  }
-
-  async submitForValidation(
-    ticketId: string,
-    clientId: string,
-    agentId: string,
-    corrections: CorrectionItem[],
-    documentIds: string[]
-  ): Promise<boolean> {
-    try {
-      await apiService.post('/api/validations/submit', {
-        ticket_id: ticketId,
-        client_id: clientId,
-        agent_id: agentId,
-        corrections,
-        document_ids: documentIds,
-      });
-      return true;
-    } catch (error) {
-      console.error('Error submitting for validation:', error);
-      return false;
-    }
-  }
-
-  calculatePriority(anomalies: { severity: string }[]): 'low' | 'medium' | 'high' | 'critical' {
-    const hasCritical = anomalies.some(a => a.severity === 'critical');
-    const highCount = anomalies.filter(a => a.severity === 'high').length;
-
-    if (hasCritical) return 'critical';
-    if (highCount >= 3) return 'high';
-    if (highCount >= 1) return 'medium';
-    return 'low';
   }
 
   getPriorityColor(priority: string): string {
-    switch (priority) {
-      case 'critical':
-        return 'text-red-600 bg-red-100';
-      case 'high':
-        return 'text-orange-600 bg-orange-100';
-      case 'medium':
-        return 'text-yellow-600 bg-yellow-100';
-      case 'low':
-        return 'text-green-600 bg-green-100';
-      default:
-        return 'text-gray-600 bg-gray-100';
+    switch (priority?.toUpperCase()) {
+      case 'CRITICAL': return 'text-red-600 bg-red-100';
+      case 'HIGH': return 'text-orange-600 bg-orange-100';
+      case 'MEDIUM': return 'text-yellow-600 bg-yellow-100';
+      case 'LOW': return 'text-green-600 bg-green-100';
+      default: return 'text-gray-600 bg-gray-100';
     }
   }
 
   getPriorityLabel(priority: string): string {
     const labels: Record<string, string> = {
-      critical: 'Critique',
-      high: 'Haute',
-      medium: 'Moyenne',
-      low: 'Basse',
+      CRITICAL: 'Critique',
+      HIGH: 'Haute',
+      MEDIUM: 'Moyenne',
+      LOW: 'Faible',
     };
-    return labels[priority] || priority;
+    return labels[priority?.toUpperCase()] || priority;
   }
 }
 

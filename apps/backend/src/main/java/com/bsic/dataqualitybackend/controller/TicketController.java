@@ -4,6 +4,8 @@ import com.bsic.dataqualitybackend.dto.*;
 import com.bsic.dataqualitybackend.model.Ticket;
 import com.bsic.dataqualitybackend.model.TicketComment;
 import com.bsic.dataqualitybackend.model.TicketHistory;
+import com.bsic.dataqualitybackend.model.TicketIncident;
+import com.bsic.dataqualitybackend.dto.TicketIncidentDto;
 import com.bsic.dataqualitybackend.model.User;
 import com.bsic.dataqualitybackend.model.enums.TicketPriority;
 import com.bsic.dataqualitybackend.model.enums.TicketStatus;
@@ -89,7 +91,7 @@ public class TicketController {
         Sort sort = sortDirection.equalsIgnoreCase("ASC") ? Sort.by(sortBy).ascending() : Sort.by(sortBy).descending();
         Pageable pageable = PageRequest.of(page, size, sort);
 
-        Page<Ticket> tickets = ticketService.getTicketsByStatus(null, pageable);
+        Page<Ticket> tickets = ticketService.getAllTickets(pageable);
         Page<TicketDto> ticketDtos = tickets.map(this::mapToTicketDto);
 
         return ResponseEntity.ok(ApiResponse.success(ticketDtos));
@@ -171,6 +173,15 @@ public class TicketController {
         return ResponseEntity.ok(ApiResponse.success("Comment added successfully", null));
     }
 
+    @GetMapping("/{id}/incidents")
+    public ResponseEntity<ApiResponse<List<TicketIncidentDto>>> getTicketIncidents(@PathVariable Long id) {
+        List<TicketIncident> incidents = ticketService.getTicketIncidents(id);
+        List<TicketIncidentDto> dtos = incidents.stream()
+                .map(this::mapToIncidentDto)
+                .toList();
+        return ResponseEntity.ok(ApiResponse.success(dtos));
+    }
+
     @GetMapping("/{id}/comments")
     public ResponseEntity<ApiResponse<List<TicketComment>>> getTicketComments(@PathVariable Long id) {
         List<TicketComment> comments = ticketService.getTicketComments(id);
@@ -214,6 +225,23 @@ public class TicketController {
                 .resolvedIncidents(ticket.getResolvedIncidents())
                 .createdAt(ticket.getCreatedAt())
                 .updatedAt(ticket.getUpdatedAt())
+                .build();
+    }
+
+    private TicketIncidentDto mapToIncidentDto(TicketIncident incident) {
+        return TicketIncidentDto.builder()
+                .id(incident.getId())
+                .incidentType(incident.getIncidentType())
+                .category(incident.getCategory())
+                .fieldName(incident.getFieldName())
+                .fieldLabel(incident.getFieldLabel())
+                .oldValue(incident.getOldValue())
+                .newValue(incident.getNewValue())
+                .status(incident.getStatus())
+                .resolved(incident.getResolved())
+                .resolvedAt(incident.getResolvedAt())
+                .notes(incident.getNotes())
+                .createdAt(incident.getCreatedAt())
                 .build();
     }
 

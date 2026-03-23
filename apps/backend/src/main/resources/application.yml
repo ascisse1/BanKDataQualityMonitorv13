@@ -90,14 +90,6 @@ spring:
       time-to-live: 600000
       cache-null-values: false
 
-  ldap:
-    urls: ${LDAP_URL:ldap://localhost:389}
-    base: ${LDAP_BASE:dc=bsic,dc=local}
-    username: ${LDAP_USER:cn=admin,dc=bsic,dc=local}
-    password: ${LDAP_PASSWORD:admin}
-    base-environment:
-      java.naming.security.authentication: simple
-
   security:
     oauth2:
       # OAuth2 Client - handles login flow and stores tokens server-side (most secure)
@@ -204,6 +196,5 @@ app:
   features:
     workflow-automation: ${FEATURE_WORKFLOW:true}
     rpa-integration: ${FEATURE_RPA:true}
-    ldap-authentication: ${FEATURE_LDAP:false}
     kpi-tracking: ${FEATURE_KPI:true}
     informix-integration: ${FEATURE_INFORMIX:false}

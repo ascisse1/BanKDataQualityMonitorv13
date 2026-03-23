@@ -66,6 +66,10 @@ public class TicketService {
         return ticketRepository.findByAgencyCode(agencyCode, pageable);
     }
 
+    public Page<Ticket> getAllTickets(Pageable pageable) {
+        return ticketRepository.findAll(pageable);
+    }
+
     public Page<Ticket> getTicketsByStatus(TicketStatus status, Pageable pageable) {
         return ticketRepository.findByStatus(status, pageable);
     }
@@ -156,6 +160,10 @@ public class TicketService {
                 .build();
 
         return commentRepository.save(comment);
+    }
+
+    public List<TicketIncident> getTicketIncidents(Long ticketId) {
+        return incidentRepository.findByTicketId(ticketId);
     }
 
     public List<TicketComment> getTicketComments(Long ticketId) {

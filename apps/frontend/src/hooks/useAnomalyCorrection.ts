@@ -78,23 +78,15 @@ export const useAnomalyCorrection = () => {
         ticketNumber: response.ticketNumber,
       });
 
-      // Show success message with ticket info
-      const message = response.requiresValidation
-        ? `Correction soumise (Ticket: ${response.ticketNumber}). En attente de validation superviseur.`
-        : anomalyData.status === 'fixed'
-          ? `Anomalie corrigée avec succès (Ticket: ${response.ticketNumber})`
-          : anomalyData.status === 'in_review'
-            ? `Anomalie mise en revue (Ticket: ${response.ticketNumber})`
-            : `Anomalie rejetée (Ticket: ${response.ticketNumber})`;
-
-      addToast(message, 'success');
+      // Show success toast from backend message
+      addToast(response.message, 'success');
 
       return {
         success: true,
         ticketNumber: response.ticketNumber,
         ticketId: response.ticketId,
         requiresValidation: response.requiresValidation,
-        message,
+        message: response.message,
       };
     } catch (error) {
       const errorMessage = error instanceof Error ? error.message : 'Erreur inconnue';

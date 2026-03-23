@@ -60,32 +60,25 @@ public class CorrectionService {
             log.info("Created new ticket: {}", ticket.getTicketNumber());
         }
 
-        // Create the incident (correction record)
-        TicketIncident incident = createIncident(ticket, request);
-        ticketIncidentRepository.save(incident);
+        // Find existing incident for same field or create a new one
+        Optional<TicketIncident> existingIncident = ticketIncidentRepository
+                .findOpenByTicketIdAndFieldName(ticket.getId(), request.getFieldName());
 
-        // Update ticket incident counts
-        ticket.setTotalIncidents(ticket.getTotalIncidents() + 1);
-        ticketRepository.save(ticket);
-
-        // Complete the current workflow task (move to 4-Eyes validation)
-        if (request.getAction() == CorrectionRequest.CorrectionAction.FIX) {
-            try {
-                // Complete the AgencyCorrection task - this moves to 4-Eyes validation step
-                workflowService.completeCorrectionTask(
-                        ticket.getId(),
-                        currentUser.getUsername(),
-                        request.getFieldName(),
-                        request.getOldValue(),
-                        request.getNewValue(),
-                        request.getNotes()
-                );
-                log.info("Correction submitted for ticket {} - moved to 4-Eyes validation", ticket.getTicketNumber());
-            } catch (Exception e) {
-                log.warn("Could not complete workflow task: {}", e.getMessage());
-                // Continue without workflow - manual processing
-            }
+        TicketIncident incident;
+        if (existingIncident.isPresent()) {
+            // Update existing incident with new correction value
+            incident = existingIncident.get();
+            incident.setNewValue(request.getNewValue());
+            incident.setNotes(request.getNotes());
+            incident.setStatus("pending");
+            log.info("Updating existing incident {} for field {}", incident.getId(), request.getFieldName());
+        } else {
+            // Create new incident
+            incident = createIncident(ticket, request);
+            ticket.setTotalIncidents(ticket.getTotalIncidents() + 1);
+            ticketRepository.save(ticket);
         }
+        ticketIncidentRepository.save(incident);
 
         // Update status based on action
         updateStatusBasedOnAction(ticket, incident, request.getAction(), currentUser);
@@ -222,12 +215,46 @@ public class CorrectionService {
                                            CorrectionRequest.CorrectionAction action, User user) {
         switch (action) {
             case FIX:
-                // Move ticket to PENDING_VALIDATION (4-Eyes step)
-                ticket.setStatus(TicketStatus.PENDING_VALIDATION);
+                // Mark this incident as corrected
+                incident.setIncidentType("CORRECTION");
+                incident.setStatus("corrected");
                 ticket.setAssignedTo(user);
                 ticket.setAssignedAt(LocalDateTime.now());
-                incident.setStatus("pending_validation");
-                log.info("Ticket {} moved to 4-Eyes validation (PENDING_VALIDATION)", ticket.getTicketNumber());
+
+                // Check if ALL incidents for this ticket are now corrected
+                if (allIncidentsCorrected(ticket, incident)) {
+                    // All fields corrected — move to 4-Eyes validation
+                    ticket.setStatus(TicketStatus.PENDING_VALIDATION);
+                    markAllIncidentsPendingValidation(ticket, incident);
+                    log.info("All incidents corrected for ticket {} — moved to 4-Eyes validation", ticket.getTicketNumber());
+
+                    // Complete the BPMN workflow task
+                    try {
+                        workflowService.completeCorrectionTask(
+                                ticket.getId(),
+                                user.getUsername(),
+                                incident.getFieldName(),
+                                incident.getOldValue(),
+                                incident.getNewValue(),
+                                incident.getNotes()
+                        );
+                    } catch (Exception e) {
+                        log.warn("Could not complete workflow task: {}", e.getMessage());
+                    }
+                } else {
+                    // Still pending corrections on other fields — keep IN_PROGRESS
+                    ticket.setStatus(TicketStatus.IN_PROGRESS);
+                    long totalIncidents = ticketIncidentRepository.findByTicket(ticket).size();
+                    long corrected = ticketIncidentRepository.findByTicket(ticket).stream()
+                            .filter(i -> "corrected".equals(i.getStatus()) || "pending_validation".equals(i.getStatus()))
+                            .count();
+                    // Count the current incident being saved
+                    if (incident.getId() == null || !"corrected".equals(incident.getStatus())) {
+                        corrected++;
+                    }
+                    log.info("Ticket {} — {}/{} incidents corrected, waiting for remaining",
+                            ticket.getTicketNumber(), corrected, totalIncidents);
+                }
                 break;
 
             case REVIEW:
@@ -245,6 +272,44 @@ public class CorrectionService {
 
         ticketRepository.save(ticket);
         ticketIncidentRepository.save(incident);
+    }
+
+    /**
+     * Check if all incidents for a ticket are corrected.
+     * Considers the current incident (not yet saved) as corrected.
+     */
+    private boolean allIncidentsCorrected(Ticket ticket, TicketIncident currentIncident) {
+        List<TicketIncident> allIncidents = ticketIncidentRepository.findByTicket(ticket);
+
+        for (TicketIncident inc : allIncidents) {
+            // Skip the current incident being corrected
+            if (currentIncident.getId() != null && inc.getId().equals(currentIncident.getId())) {
+                continue;
+            }
+            // Skip already resolved (rejected) incidents
+            if (inc.getResolved() != null && inc.getResolved()) {
+                continue;
+            }
+            // If any other incident is not yet corrected, return false
+            if (!"corrected".equals(inc.getStatus()) && !"pending_validation".equals(inc.getStatus())) {
+                return false;
+            }
+        }
+        return true;
+    }
+
+    /**
+     * Mark all corrected incidents as pending_validation when ticket moves to validation.
+     */
+    private void markAllIncidentsPendingValidation(Ticket ticket, TicketIncident currentIncident) {
+        List<TicketIncident> allIncidents = ticketIncidentRepository.findByTicket(ticket);
+        for (TicketIncident inc : allIncidents) {
+            if ("corrected".equals(inc.getStatus())) {
+                inc.setStatus("pending_validation");
+                ticketIncidentRepository.save(inc);
+            }
+        }
+        currentIncident.setStatus("pending_validation");
     }
 
     /**
@@ -285,12 +350,16 @@ public class CorrectionService {
 
     private CorrectionResponse buildCorrectionResponse(Ticket ticket, TicketIncident incident,
                                                         String processInstanceId, boolean isNewTicket) {
-        String message = isNewTicket
-                ? "Correction soumise. Ticket créé: " + ticket.getTicketNumber()
-                : "Correction ajoutée au ticket existant: " + ticket.getTicketNumber();
+        String message;
+        if (ticket.getStatus() == TicketStatus.PENDING_VALIDATION) {
+            message = "Toutes les corrections soumises. En attente de validation superviseur (4 Eyes). Ticket: " + ticket.getTicketNumber();
+        } else if (isNewTicket) {
+            message = "Correction soumise. Ticket créé: " + ticket.getTicketNumber() + ". D'autres champs restent à corriger.";
+        } else {
+            message = "Correction enregistrée pour le ticket: " + ticket.getTicketNumber() + ". D'autres champs restent à corriger.";
+        }
 
-        boolean requiresValidation = ticket.getStatus() == TicketStatus.IN_PROGRESS ||
-                ticket.getStatus() == TicketStatus.PENDING_VALIDATION;
+        boolean requiresValidation = ticket.getStatus() == TicketStatus.PENDING_VALIDATION;
 
         return CorrectionResponse.builder()
                 .correctionId(incident.getId())

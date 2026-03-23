@@ -66,9 +66,6 @@ public class User implements UserDetails {
     @Column(name = "failed_login_attempts")
     private Integer failedLoginAttempts = 0;
 
-    @Column(name = "ldap_dn")
-    private String ldapDn;
-
     @CreatedDate
     @Column(name = "created_at", nullable = false, updatable = false)
     private LocalDateTime createdAt;
