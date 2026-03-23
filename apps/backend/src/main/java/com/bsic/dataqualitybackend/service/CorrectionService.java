@@ -12,8 +12,8 @@ import com.bsic.dataqualitybackend.model.enums.TicketStatus;
 import com.bsic.dataqualitybackend.repository.AnomalyRepository;
 import com.bsic.dataqualitybackend.repository.TicketIncidentRepository;
 import com.bsic.dataqualitybackend.repository.TicketRepository;
-import lombok.RequiredArgsConstructor;
 import lombok.extern.slf4j.Slf4j;
+import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Service;
 import org.springframework.transaction.annotation.Transactional;
 
@@ -23,7 +23,6 @@ import java.util.Optional;
 
 @Slf4j
 @Service
-@RequiredArgsConstructor
 public class CorrectionService {
 
     private final TicketRepository ticketRepository;
@@ -32,6 +31,23 @@ public class CorrectionService {
     private final TicketService ticketService;
     private final WorkflowService workflowService;
     private final UserService userService;
+
+    @Autowired(required = false)
+    private CbsUpdateService cbsUpdateService;
+
+    public CorrectionService(TicketRepository ticketRepository,
+                             TicketIncidentRepository ticketIncidentRepository,
+                             AnomalyRepository anomalyRepository,
+                             TicketService ticketService,
+                             WorkflowService workflowService,
+                             UserService userService) {
+        this.ticketRepository = ticketRepository;
+        this.ticketIncidentRepository = ticketIncidentRepository;
+        this.anomalyRepository = anomalyRepository;
+        this.ticketService = ticketService;
+        this.workflowService = workflowService;
+        this.userService = userService;
+    }
     /**
      * Submit a correction for an anomaly.
      * This creates a ticket (or adds to existing) and starts the 4 Eyes validation workflow.
@@ -141,6 +157,38 @@ public class CorrectionService {
                 incident.setStatus("validated");
                 ticketIncidentRepository.save(incident);
             });
+
+            ticketRepository.save(ticket);
+
+            // Apply corrections directly to CBS (Informix) if available
+            String cbsMessage;
+            if (cbsUpdateService != null) {
+                try {
+                    boolean cbsUpdated = cbsUpdateService.applyCorrections(ticket);
+                    if (cbsUpdated) {
+                        cbsMessage = "Correction validée et appliquée au CBS avec succès";
+                        // Reload ticket after CBS update (status is now CLOSED)
+                        ticket = ticketRepository.findById(ticketId).orElse(ticket);
+                    } else {
+                        cbsMessage = "Correction validée. Mise à jour CBS en attente (aucune donnée à appliquer)";
+                    }
+                } catch (Exception e) {
+                    log.error("CBS update failed for ticket {}: {}", ticket.getTicketNumber(), e.getMessage());
+                    cbsMessage = "Correction validée. Erreur lors de la mise à jour CBS: " + e.getMessage();
+                }
+            } else {
+                log.info("CBS integration not enabled — ticket {} validated but CBS not updated", ticket.getTicketNumber());
+                cbsMessage = "Correction validée avec succès";
+            }
+
+            return CorrectionResponse.builder()
+                    .ticketId(ticket.getId())
+                    .ticketNumber(ticket.getTicketNumber())
+                    .cli(ticket.getCli())
+                    .ticketStatus(ticket.getStatus())
+                    .message(cbsMessage)
+                    .requiresValidation(false)
+                    .build();
         } else {
             ticket.setStatus(TicketStatus.REJECTED);
             log.info("Ticket {} rejected by {} - Reason: {}", ticket.getTicketNumber(), validatorUsername, reason);
@@ -154,18 +202,18 @@ public class CorrectionService {
                 incident.setNotes(reason);
                 ticketIncidentRepository.save(incident);
             });
+
+            ticketRepository.save(ticket);
+
+            return CorrectionResponse.builder()
+                    .ticketId(ticket.getId())
+                    .ticketNumber(ticket.getTicketNumber())
+                    .cli(ticket.getCli())
+                    .ticketStatus(ticket.getStatus())
+                    .message("Correction rejetée: " + reason)
+                    .requiresValidation(false)
+                    .build();
         }
-
-        ticketRepository.save(ticket);
-
-        return CorrectionResponse.builder()
-                .ticketId(ticket.getId())
-                .ticketNumber(ticket.getTicketNumber())
-                .cli(ticket.getCli())
-                .ticketStatus(ticket.getStatus())
-                .message(approved ? "Correction validée avec succès" : "Correction rejetée: " + reason)
-                .requiresValidation(false)
-                .build();
     }
 
     private Optional<Ticket> findOpenTicketForClient(String cli) {

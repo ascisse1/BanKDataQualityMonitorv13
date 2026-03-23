@@ -243,7 +243,7 @@ public class TicketService {
         }
     }
 
-    private void addHistory(Ticket ticket, String action, TicketStatus previousStatus,
+    public void addHistory(Ticket ticket, String action, TicketStatus previousStatus,
                           TicketStatus newStatus, String previousValue, String notes, User performedBy) {
         TicketHistory history = TicketHistory.builder()
                 .ticket(ticket)
