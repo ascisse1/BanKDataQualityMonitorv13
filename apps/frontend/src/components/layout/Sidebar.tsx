@@ -61,7 +61,9 @@ const Sidebar = ({ isMobile, isOpen, onClose }: SidebarProps) => {
 
   // Navigation groups
   const mainNavigation: NavItem[] = [
-    { name: 'Tableau de bord', icon: BarChart3, path: '/dashboard' },
+    ...(isAdmin || isAuditor
+      ? [{ name: 'Tableau de bord', icon: BarChart3, path: '/dashboard' }]
+      : []),
     { name: 'Anomalies', icon: AlertTriangle, path: '/anomalies', badge: 12 },
     { name: 'Tickets', icon: Ticket, path: '/tickets' },
   ];

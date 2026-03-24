@@ -27,14 +27,17 @@ import ReconciliationPage from '../pages/reconciliation/ReconciliationPage';
 import ReconciliationDashboard from '../pages/reconciliation/ReconciliationDashboard';
 
 const AppRoutes = () => {
-  const { isAuthenticated } = useAuth();
+  const { isAuthenticated, user } = useAuth();
+
+  const userRole = user?.role?.toUpperCase();
+  const defaultRoute = (userRole === 'ADMIN' || userRole === 'AUDITOR') ? '/dashboard' : '/anomalies';
 
   return (
     <Routes>
       <Route path="/login" element={
-        isAuthenticated ? <Navigate to="/dashboard" replace /> : <LoginPage />
+        isAuthenticated ? <Navigate to={defaultRoute} replace /> : <LoginPage />
       } />
-      
+
       <Route element={<ProtectedRoute />}>
         <Route element={<Layout />}>
           {/* Routes accessibles à tous les utilisateurs authentifiés */}
@@ -58,7 +61,7 @@ const AppRoutes = () => {
             <Route path="/reconciliation" element={<ReconciliationPage />} />
             <Route path="/reconciliation/dashboard" element={<ReconciliationDashboard />} />
           </Route>
-          
+
           {/* Route protégée pour les administrateurs */}
           <Route element={<AdminRoute />}>
             <Route path="/users" element={<UsersPage />} />
@@ -66,8 +69,8 @@ const AppRoutes = () => {
           </Route>
         </Route>
       </Route>
-      
-      <Route path="/" element={<Navigate to={isAuthenticated ? "/dashboard" : "/login"} replace />} />
+
+      <Route path="/" element={<Navigate to={isAuthenticated ? defaultRoute : "/login"} replace />} />
       <Route path="*" element={<NotFoundPage />} />
     </Routes>
   );
