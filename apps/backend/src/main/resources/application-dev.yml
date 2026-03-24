@@ -40,9 +40,12 @@ app:
   scheduling:
     bkcli-sync-cron: "*/30 * * * * ?"      # Every 30 seconds (dev only)
     agency-sync-cron: "*/20 * * * * ?"     # Every 30 seconds (dev only)
+  client:
+    name: bsic-bank
+    fullName: "Agence de Gestion du Fonds d'Accès Universel"
   keycloak:
-    server-url: http://localhost:9080
-    realm: web_app
+    server-url: http://localhost:9083
+    realm: bsic-bank
     client-id: admin-cli
     client-secret: 6c1d4552-e109-4127-afa3-124d55b4e952
     migration:
