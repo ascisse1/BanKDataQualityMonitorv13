@@ -1,5 +1,6 @@
 package com.bsic.dataqualitybackend.config;
 
+import com.bsic.dataqualitybackend.security.SecurityUtils;
 import lombok.RequiredArgsConstructor;
 import org.springframework.beans.factory.annotation.Value;
 import org.springframework.context.annotation.Bean;
@@ -151,8 +152,7 @@ public class SecurityConfig {
 
             authorities.forEach(authority -> {
                 if (authority instanceof OidcUserAuthority oidcAuthority) {
-                    extractAuthorities(oidcAuthority.getIdToken().getClaims(), mappedAuthorities);
-                    extractAuthorities(oidcAuthority.getUserInfo().getClaims(), mappedAuthorities);
+                    mappedAuthorities.addAll(SecurityUtils.extractAuthorityFromClaims(oidcAuthority.getUserInfo().getClaims()));
                 } else if (authority instanceof OAuth2UserAuthority oauth2Authority) {
                     extractAuthorities(oauth2Authority.getAttributes(), mappedAuthorities);
                 }
@@ -168,12 +168,12 @@ public class SecurityConfig {
     private void extractAuthorities(Map<String, Object> claims, Set<GrantedAuthority> authorities) {
         log.info("Extracting authorities from claims keys: {}", claims.keySet());
 
-        // Extract from realm_access.roles
+        // 1. Extract from realm_access.roles (standard Keycloak access token claim)
         Object realmAccess = claims.get("realm_access");
-        log.info("realm_access claim: {}", realmAccess);
         if (realmAccess instanceof Map<?, ?> realmAccessMap) {
             Object roles = realmAccessMap.get("roles");
             if (roles instanceof Collection<?> rolesList) {
+                log.info("Found realm_access.roles: {}", rolesList);
                 rolesList.stream()
                         .map(String.class::cast)
                         .filter(g -> g.startsWith(ROLE_PREFIX))
@@ -182,9 +182,22 @@ public class SecurityConfig {
             }
         }
 
-        // Extract from groups claim
+        // 2. Extract from "roles" claim (custom mapper: User Realm Role → "roles")
+        Object rolesClaim = claims.get("roles");
+        if (rolesClaim instanceof Collection<?> rolesList) {
+            log.info("Found roles claim: {}", rolesList);
+            rolesList.stream()
+                    .filter(String.class::isInstance)
+                    .map(String.class::cast)
+                    .filter(g -> g.startsWith(ROLE_PREFIX))
+                    .map(role -> new SimpleGrantedAuthority(role.toUpperCase()))
+                    .forEach(authorities::add);
+        }
+
+        // 3. Extract from groups claim
         Object groups = claims.get("groups");
         if (groups instanceof Collection<?> groupsList) {
+            log.info("Found groups claim: {}", groupsList);
             groupsList.stream()
                     .filter(String.class::isInstance)
                     .map(String.class::cast)
@@ -192,6 +205,8 @@ public class SecurityConfig {
                     .map(SimpleGrantedAuthority::new)
                     .forEach(authorities::add);
         }
+
+        log.info("Extracted authorities: {}", authorities);
     }
 
 

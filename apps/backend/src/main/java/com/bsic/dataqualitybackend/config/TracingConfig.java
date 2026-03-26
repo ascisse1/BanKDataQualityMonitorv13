@@ -3,6 +3,7 @@ package com.bsic.dataqualitybackend.config;
 import io.micrometer.tracing.Tracer;
 import io.micrometer.tracing.propagation.Propagator;
 import io.opentelemetry.api.OpenTelemetry;
+import io.opentelemetry.api.common.AttributeKey;
 import io.opentelemetry.api.common.Attributes;
 import io.opentelemetry.api.trace.propagation.W3CTraceContextPropagator;
 import io.opentelemetry.context.propagation.ContextPropagators;
@@ -11,7 +12,6 @@ import io.opentelemetry.sdk.OpenTelemetrySdk;
 import io.opentelemetry.sdk.resources.Resource;
 import io.opentelemetry.sdk.trace.SdkTracerProvider;
 import io.opentelemetry.sdk.trace.export.BatchSpanProcessor;
-import io.opentelemetry.semconv.ResourceAttributes;
 import lombok.extern.slf4j.Slf4j;
 import org.springframework.beans.factory.annotation.Value;
 import org.springframework.boot.autoconfigure.condition.ConditionalOnProperty;
@@ -37,9 +37,9 @@ public class TracingConfig {
     public OpenTelemetry openTelemetry() {
         Resource resource = Resource.getDefault()
                 .merge(Resource.create(Attributes.of(
-                        ResourceAttributes.SERVICE_NAME, applicationName,
-                        ResourceAttributes.SERVICE_VERSION, "1.0.0",
-                        ResourceAttributes.DEPLOYMENT_ENVIRONMENT, "development"
+                        AttributeKey.stringKey("service.name"), applicationName,
+                        AttributeKey.stringKey("service.version"), "1.0.0",
+                        AttributeKey.stringKey("deployment.environment"), "development"
                 )));
 
         OtlpGrpcSpanExporter spanExporter = OtlpGrpcSpanExporter.builder()
