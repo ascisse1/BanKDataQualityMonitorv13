@@ -509,6 +509,7 @@ const AnomaliesTable: React.FC<AnomaliesTableProps> = ({
                                       </span>
                                     </div>
                                     <div className="flex items-center gap-2">
+                                      {!['CLOSED', 'CORRECTED', 'VALIDATED'].includes(anomaly.status?.toUpperCase?.() || '') && (
                                       <Button
                                         variant="outline"
                                         size="sm"
@@ -523,6 +524,7 @@ const AnomaliesTable: React.FC<AnomaliesTableProps> = ({
                                       >
                                         Corriger
                                       </Button>
+                                      )}
                                       <button
                                         type="button"
                                         className="text-gray-400 hover:text-gray-600 p-1"
