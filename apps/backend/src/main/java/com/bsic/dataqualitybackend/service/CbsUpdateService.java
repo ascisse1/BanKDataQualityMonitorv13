@@ -14,7 +14,9 @@ import com.bsic.dataqualitybackend.repository.UserRepository;
 import com.bsic.dataqualitybackend.security.SecurityUtils;
 import lombok.RequiredArgsConstructor;
 import lombok.extern.slf4j.Slf4j;
+import org.springframework.beans.factory.annotation.Qualifier;
 import org.springframework.boot.autoconfigure.condition.ConditionalOnProperty;
+import org.springframework.jdbc.core.JdbcTemplate;
 import org.springframework.stereotype.Service;
 import org.springframework.transaction.annotation.Transactional;
 
@@ -34,7 +36,6 @@ import java.util.Map;
  */
 @Slf4j
 @Service
-@RequiredArgsConstructor
 @ConditionalOnProperty(name = "app.features.informix-integration", havingValue = "true", matchIfMissing = false)
 public class CbsUpdateService {
 
@@ -44,6 +45,24 @@ public class CbsUpdateService {
     private final AnomalyRepository anomalyRepository;
     private final TicketService ticketService;
     private final UserRepository userRepository;
+    private final JdbcTemplate mysqlJdbcTemplate;
+
+    public CbsUpdateService(
+            InformixRepository informixRepository,
+            TicketRepository ticketRepository,
+            TicketIncidentRepository ticketIncidentRepository,
+            AnomalyRepository anomalyRepository,
+            TicketService ticketService,
+            UserRepository userRepository,
+            @Qualifier("primaryJdbcTemplate") JdbcTemplate mysqlJdbcTemplate) {
+        this.informixRepository = informixRepository;
+        this.ticketRepository = ticketRepository;
+        this.ticketIncidentRepository = ticketIncidentRepository;
+        this.anomalyRepository = anomalyRepository;
+        this.ticketService = ticketService;
+        this.userRepository = userRepository;
+        this.mysqlJdbcTemplate = mysqlJdbcTemplate;
+    }
 
     /**
      * Apply validated corrections to CBS and close the ticket.
@@ -117,6 +136,9 @@ public class CbsUpdateService {
             // Close related anomalies
             closeAnomalies(cli, validatedIncidents);
 
+            // Create reconciliation task for CBS verification
+            createReconciliationTask(ticket, validatedIncidents);
+
             log.info("CBS updated and ticket {} closed successfully", ticket.getTicketNumber());
             return true;
 
@@ -141,6 +163,38 @@ public class CbsUpdateService {
                 anomalyRepository.save(anomaly);
                 log.debug("Closed anomaly {} for client {} field {}", anomaly.getId(), cli, incident.getFieldName());
             }
+        }
+    }
+
+    /**
+     * Creates a reconciliation task and its correction entries after CBS update.
+     * This allows users to verify the CBS update was applied correctly.
+     */
+    private void createReconciliationTask(Ticket ticket, List<TicketIncident> incidents) {
+        try {
+            // Insert reconciliation task
+            mysqlJdbcTemplate.update(
+                "INSERT INTO reconciliation_tasks (ticket_id, client_id, status, attempts, created_at) VALUES (?, ?, 'pending', 0, NOW())",
+                ticket.getTicketNumber(), ticket.getCli()
+            );
+
+            // Insert correction entries for each corrected field
+            for (TicketIncident incident : incidents) {
+                mysqlJdbcTemplate.update(
+                    "INSERT INTO corrections (ticket_id, field_name, field_label, old_value, new_value, is_matched) VALUES (?, ?, ?, ?, ?, false)",
+                    ticket.getTicketNumber(),
+                    incident.getFieldName(),
+                    incident.getFieldName(), // field_label defaults to field_name
+                    incident.getOldValue(),
+                    incident.getNewValue()
+                );
+            }
+
+            log.info("Reconciliation task created for ticket {} with {} corrections",
+                    ticket.getTicketNumber(), incidents.size());
+        } catch (Exception e) {
+            log.warn("Failed to create reconciliation task for ticket {}: {}",
+                    ticket.getTicketNumber(), e.getMessage());
         }
     }
 

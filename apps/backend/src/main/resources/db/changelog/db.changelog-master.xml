@@ -34,4 +34,10 @@
     <!-- V10: Remove LDAP integration -->
     <include file="db/changelog/changes/010-remove-ldap.xml"/>
 
+    <!-- V11: Reconciliation tables for CBS update verification -->
+    <include file="db/changelog/changes/011-reconciliation-tables.xml"/>
+
+    <!-- V12: Drop RPA jobs table - replaced by direct CBS JDBC integration -->
+    <include file="db/changelog/changes/012-drop-rpa-jobs.xml"/>
+
 </databaseChangeLog>
