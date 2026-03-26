@@ -13,6 +13,7 @@ import org.springframework.security.config.annotation.web.builders.HttpSecurity;
 import org.springframework.security.config.annotation.web.configuration.EnableWebSecurity;
 import org.springframework.security.core.GrantedAuthority;
 import org.springframework.security.core.authority.SimpleGrantedAuthority;
+import org.springframework.security.config.core.GrantedAuthorityDefaults;
 import org.springframework.security.core.authority.mapping.GrantedAuthoritiesMapper;
 import org.springframework.security.core.userdetails.UserDetailsService;
 import org.springframework.security.crypto.password.PasswordEncoder;
@@ -25,6 +26,9 @@ import org.springframework.security.web.authentication.logout.LogoutSuccessHandl
 import org.springframework.security.web.csrf.CookieCsrfTokenRepository;
 import org.springframework.security.web.csrf.CsrfTokenRequestAttributeHandler;
 import org.springframework.web.cors.CorsConfigurationSource;
+
+import org.slf4j.Logger;
+import org.slf4j.LoggerFactory;
 
 import java.util.Collection;
 import java.util.HashSet;
@@ -46,6 +50,8 @@ import java.util.Set;
 @RequiredArgsConstructor
 public class SecurityConfig {
 
+    private static final Logger log = LoggerFactory.getLogger(SecurityConfig.class);
+
     private final CorsConfigurationSource corsConfigurationSource;
     private final PasswordEncoder passwordEncoder;
     private final UserDetailsService userDetailsService;
@@ -57,7 +63,7 @@ public class SecurityConfig {
     @Value("${keycloak.realm:bsic-bank}")
     private String realm;
 
-    private static final String ROLE_PREFIX = "ROLE_";
+    private static final String ROLE_PREFIX = "BDQM:ROLE_";
 
     @Bean
     public SecurityFilterChain securityFilterChain(HttpSecurity http) throws Exception {
@@ -160,16 +166,18 @@ public class SecurityConfig {
      * Extracts authorities from Keycloak token claims.
      */
     private void extractAuthorities(Map<String, Object> claims, Set<GrantedAuthority> authorities) {
+        log.info("Extracting authorities from claims keys: {}", claims.keySet());
+
         // Extract from realm_access.roles
         Object realmAccess = claims.get("realm_access");
+        log.info("realm_access claim: {}", realmAccess);
         if (realmAccess instanceof Map<?, ?> realmAccessMap) {
             Object roles = realmAccessMap.get("roles");
             if (roles instanceof Collection<?> rolesList) {
                 rolesList.stream()
-                        .filter(String.class::isInstance)
                         .map(String.class::cast)
-                        .filter(this::isApplicationRole)
-                        .map(role -> new SimpleGrantedAuthority(ROLE_PREFIX + role.toUpperCase()))
+                        .filter(g -> g.startsWith(ROLE_PREFIX))
+                        .map(role -> new SimpleGrantedAuthority(role.toUpperCase()))
                         .forEach(authorities::add);
             }
         }
@@ -186,11 +194,16 @@ public class SecurityConfig {
         }
     }
 
-    private boolean isApplicationRole(String role) {
-        return role.equalsIgnoreCase("ADMIN") ||
-                role.equalsIgnoreCase("AUDITOR") ||
-                role.equalsIgnoreCase("AGENCY_USER") ||
-                role.equalsIgnoreCase("USER");
+
+
+    /**
+     * Configures Spring Security to use "BDQM:ROLE_" as the role prefix.
+     * This means hasRole("ADMIN") will check for authority "BDQM:ROLE_ADMIN".
+     * This ensures only BDQM-specific roles are matched, filtering out roles from other applications.
+     */
+    @Bean
+    public GrantedAuthorityDefaults grantedAuthorityDefaults() {
+        return new GrantedAuthorityDefaults(ROLE_PREFIX);
     }
 
     /**

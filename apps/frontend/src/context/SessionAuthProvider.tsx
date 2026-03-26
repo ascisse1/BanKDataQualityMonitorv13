@@ -146,43 +146,31 @@ export const SessionAuthProvider = ({ children }: SessionAuthProviderProps) => {
    * Logs out by calling Spring Security logout endpoint.
    * This invalidates the session and redirects to Keycloak end_session_endpoint.
    */
-  const logout = useCallback(async () => {
+  const logout = useCallback(() => {
     logger.info('security', 'Logging out via BFF', { username: user?.username });
 
-    try {
-      // Get CSRF token from cookie if available
-      const csrfToken = getCsrfTokenFromCookie();
+    setUser(null);
+    setAuthenticated(false);
+    monitoring.clearUser();
 
-      // Call Spring Security logout endpoint
-      const response = await fetch('/logout', {
-        method: 'POST',
-        credentials: 'include',
-        headers: {
-          'Accept': 'application/json',
-          ...(csrfToken ? { 'X-XSRF-TOKEN': csrfToken } : {}),
-        },
-      });
+    // Submit a form POST to /logout so the browser follows the redirect
+    // natively to Keycloak's end_session_endpoint (kills the SSO session)
+    const form = document.createElement('form');
+    form.method = 'POST';
+    form.action = '/logout';
 
-      if (response.redirected) {
-        // Follow the redirect to Keycloak logout
-        monitoring.clearUser();
-        window.location.href = response.url;
-      } else if (response.ok) {
-        // Logout successful, redirect to login page
-        setUser(null);
-        setAuthenticated(false);
-        monitoring.clearUser();
-        window.location.href = '/login';
-      }
-    } catch (error) {
-      logger.error('security', 'Logout failed', { error });
-      monitoring.captureException(error, { context: 'logout' });
-      // Force redirect to login on error
-      setUser(null);
-      setAuthenticated(false);
-      monitoring.clearUser();
-      window.location.href = '/login';
+    // Include CSRF token
+    const csrfToken = getCsrfTokenFromCookie();
+    if (csrfToken) {
+      const csrfInput = document.createElement('input');
+      csrfInput.type = 'hidden';
+      csrfInput.name = '_csrf';
+      csrfInput.value = csrfToken;
+      form.appendChild(csrfInput);
     }
+
+    document.body.appendChild(form);
+    form.submit();
   }, [user?.username]);
 
   const value: SessionAuthContextType = {

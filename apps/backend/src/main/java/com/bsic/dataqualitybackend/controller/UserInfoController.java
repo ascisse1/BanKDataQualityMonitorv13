@@ -65,12 +65,18 @@ public class UserInfoController {
         Object agencyCode = principal.getClaim("agency_code");
         userInfo.put("agencyCode", agencyCode);
 
-        // Get roles from Spring Security authorities
-        List<String> roles = authentication.getAuthorities().stream()
+        // Log all authorities for debugging
+        List<String> allAuthorities = authentication.getAuthorities().stream()
                 .map(GrantedAuthority::getAuthority)
-                .filter(auth -> auth.startsWith("ROLE_"))
-                .map(auth -> auth.substring(5)) // Remove ROLE_ prefix
                 .collect(Collectors.toList());
+        log.info("All authorities for user {}: {}", principal.getPreferredUsername(), allAuthorities);
+
+        // Get roles from Spring Security authorities (strip BDQM:ROLE_ prefix)
+        List<String> roles = allAuthorities.stream()
+                .filter(auth -> auth.startsWith("BDQM:ROLE_"))
+                .map(auth -> auth.substring(10)) // Remove BDQM:ROLE_ prefix
+                .collect(Collectors.toList());
+        log.info("Mapped roles for user {}: {}", principal.getPreferredUsername(), roles);
 
         userInfo.put("roles", roles);
 

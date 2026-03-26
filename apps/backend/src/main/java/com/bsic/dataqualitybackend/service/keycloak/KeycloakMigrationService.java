@@ -2,6 +2,7 @@ package com.bsic.dataqualitybackend.service.keycloak;
 
 import com.fasterxml.jackson.core.type.TypeReference;
 import com.fasterxml.jackson.databind.ObjectMapper;
+import lombok.Getter;
 import org.keycloak.admin.client.Keycloak;
 import org.keycloak.admin.client.resource.RealmResource;
 import org.keycloak.admin.client.resource.RolesResource;
@@ -942,17 +943,10 @@ public class KeycloakMigrationService {
      */
     private List<RoleConfig> getDefaultRoleConfigurations() {
         return List.of(
-            new RoleConfig("ROLE_ADMIN", "Administrateur système avec tous les droits d'accès et de gestion"),
-            new RoleConfig("ROLE_USER", "Utilisateur standard avec droits de base pour l'application"),
-            new RoleConfig("ROLE_CREATE_DOCUMENT", "Créateur de documents - Peut créer et modifier des documents"),
-            new RoleConfig("ROLE_VIEWER", "Lecteur avec droits de consultation uniquement - Accès en lecture seule"),
-            new RoleConfig(
-                "ROLE_REGISTRY_DOCUMENT",
-                "Document d'enregistrement - Peut enregistrer et gérer les documents dans le registre"
-            ),
-            new RoleConfig("ROLE_ARCHIVIST", "Archiviste - Peut archiver et gérer l'historique des documents"),
-            new RoleConfig("ROLE_SIGN_DOCUMENT", "Signe document."),
-            new RoleConfig("ROLE_ADD_SIGN_INFO_DOCUMENT", "Ajouter infos de signature du document.")
+            new RoleConfig("BDQM:ROLE_ADMIN", "Administrateur système - Accès complet à toutes les fonctionnalités de gestion et configuration"),
+            new RoleConfig("BDQM:ROLE_AUDITOR", "Auditeur - Accès aux rapports, audits FATCA, réconciliations et suivi des anomalies"),
+            new RoleConfig("BDQM:ROLE_AGENCY_USER", "Utilisateur agence - Gestion des anomalies, corrections et réconciliations au niveau agence"),
+            new RoleConfig("BDQM:ROLE_USER", "Utilisateur standard - Accès de base au tableau de bord et consultation")
         );
     }
 
@@ -961,15 +955,10 @@ public class KeycloakMigrationService {
      */
     private List<GroupConfig> getDefaultGroupConfigurations() {
         return List.of(
-            new GroupConfig("Administrators", List.of("ROLE_ADMIN"), null),
-            new GroupConfig("Secretaries", List.of("ROLE_CREATE_DOCUMENT"), null),
-            new GroupConfig("Registry-Officer", List.of("ROLE_REGISTRY_DOCUMENT"), null),
-            new GroupConfig(
-                "CEO",
-                List.of("ROLE_SIGN_DOCUMENT", "ROLE_ADD_SIGN_INFO_DOCUMENT", "ROLE_VIEWER", "ROLE_CREATE_DOCUMENT"),
-                null
-            ),
-            new GroupConfig("Viewers", List.of("ROLE_VIEWER"), null)
+            new GroupConfig("Administrators", List.of("BDQM:ROLE_ADMIN"), null),
+            new GroupConfig("Auditors", List.of("BDQM:ROLE_AUDITOR"), null),
+            new GroupConfig("Agency-Users", List.of("BDQM:ROLE_AGENCY_USER"), null),
+            new GroupConfig("Users", List.of("BDQM:ROLE_USER"), null)
         );
     }
 
@@ -982,60 +971,62 @@ public class KeycloakMigrationService {
                 "admin",
                 "admin@adakalgroup.com",
                 "Admin",
-                "System",
+                "ADMIN",
                 "admin123",
-                false,
                 true,
                 true,
-                List.of("ROLE_ADMIN"),
+                true,
+                null,
                 List.of("Administrators"),
                 null
             ),
             new UserConfig(
-                "secretary",
-                "secretary@adakalgroup.com",
-                "Secretary",
-                "User",
-                "secretary123",
+                "auditor",
+                "auditor@adakalgroup.com",
+                "Auditeur",
+                "BDQM",
+                "auditor123",
                 true,
                 true,
                 true,
-                List.of("ROLE_CREATE_DOCUMENT"),
-                List.of("Secretaries"),
+                null,
+                List.of("Auditors"),
                 null
             ),
             new UserConfig(
-                "ceo",
-                "ceo@adakalgroup.com",
-                "Chief",
-                "Executive Officer",
-                "ceo123",
+                "agency_user",
+                "agency@adakalgroup.com",
+                "Agent",
+                "Agence",
+                "agency123",
                 true,
                 true,
                 true,
-                List.of("ROLE_SIGN_DOCUMENT", "ROLE_ADD_SIGN_INFO_DOCUMENT"),
-                List.of("CEO"),
+                null,
+                List.of("Agency-Users"),
                 null
             ),
             new UserConfig(
-                "registry_officer",
-                "registry@adakalgroup.com",
-                "Registry",
-                "Officer",
-                "registry123",
+                "viewer",
+                "viewer@adakalgroup.com",
+                "Viewer",
+                "BDQM",
+                "viewer123",
                 true,
                 true,
                 true,
-                List.of("ROLE_REGISTRY_DOCUMENT"),
-                List.of("Registry-Officer"),
+                null,
+                List.of("Users"),
                 null
             )
         );
     }
 
     // Classes de configuration
+    @Getter
     public static class RoleConfig {
 
+        // Getters et setters
         private String name;
         private String description;
 
@@ -1046,17 +1037,8 @@ public class KeycloakMigrationService {
             this.description = description;
         }
 
-        // Getters et setters
-        public String getName() {
-            return name;
-        }
-
         public void setName(String name) {
             this.name = name;
-        }
-
-        public String getDescription() {
-            return description;
         }
 
         public void setDescription(String description) {

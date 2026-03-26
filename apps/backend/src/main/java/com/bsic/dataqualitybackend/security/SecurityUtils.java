@@ -19,7 +19,7 @@ import java.util.stream.Stream;
  */
 public final class SecurityUtils {
 
-    private static final String ROLE_PREFIX = "ROLE_";
+    private static final String ROLE_PREFIX = "BDQM:ROLE_";
 
     private SecurityUtils() {
         // Utility class

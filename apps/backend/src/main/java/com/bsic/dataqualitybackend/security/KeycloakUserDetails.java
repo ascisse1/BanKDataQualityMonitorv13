@@ -98,8 +98,8 @@ public class KeycloakUserDetails {
         if (authentication != null) {
             return authentication.getAuthorities().stream()
                     .map(GrantedAuthority::getAuthority)
-                    .filter(auth -> auth.startsWith("ROLE_"))
-                    .map(auth -> auth.substring(5)) // Remove ROLE_ prefix
+                    .filter(auth -> auth.startsWith("BDQM:ROLE_"))
+                    .map(auth -> auth.substring(10)) // Remove BDQM:ROLE_ prefix
                     .collect(Collectors.toList());
         }
         return List.of();
