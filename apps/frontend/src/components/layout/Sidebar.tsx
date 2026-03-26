@@ -1,4 +1,4 @@
-import { useState } from 'react';
+import { useState, useEffect } from 'react';
 import { NavLink, useLocation } from 'react-router-dom';
 import { motion, AnimatePresence } from 'framer-motion';
 import { useAuth } from '../../context/AuthContext';
@@ -50,6 +50,27 @@ const Sidebar = ({ isMobile, isOpen, onClose }: SidebarProps) => {
   const { open: openCommandPalette } = useCommandPalette();
   const location = useLocation();
   const [isCollapsed, setIsCollapsed] = useState(false);
+  const [openAnomaliesCount, setOpenAnomaliesCount] = useState<number | undefined>(undefined);
+
+  useEffect(() => {
+    const fetchAnomalyCount = async () => {
+      try {
+        const response = await fetch('/api/anomalies/counts/by-status', { credentials: 'include' });
+        if (response.ok) {
+          const data = await response.json();
+          const counts = data.data || data;
+          const open = (counts.PENDING || 0) + (counts.OPEN || 0) + (counts.IN_PROGRESS || 0);
+          setOpenAnomaliesCount(open > 0 ? open : undefined);
+        }
+      } catch {
+        // Silently ignore - badge just won't show
+      }
+    };
+
+    fetchAnomalyCount();
+    const interval = setInterval(fetchAnomalyCount, 60000); // Refresh every minute
+    return () => clearInterval(interval);
+  }, []);
 
   if (!isOpen && !isMobile) return null;
 
@@ -64,7 +85,7 @@ const Sidebar = ({ isMobile, isOpen, onClose }: SidebarProps) => {
     ...(isAdmin || isAuditor
       ? [{ name: 'Tableau de bord', icon: BarChart3, path: '/dashboard' }]
       : []),
-    { name: 'Anomalies', icon: AlertTriangle, path: '/anomalies', badge: 12 },
+    { name: 'Anomalies', icon: AlertTriangle, path: '/anomalies', badge: openAnomaliesCount },
     { name: 'Tickets', icon: Ticket, path: '/tickets' },
   ];
 
