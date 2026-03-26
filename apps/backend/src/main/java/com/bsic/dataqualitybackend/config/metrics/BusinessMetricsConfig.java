@@ -23,9 +23,6 @@ public class BusinessMetricsConfig {
     private final Counter ticketsCreatedCounter;
     private final Counter ticketsValidatedCounter;
     private final Counter ticketsRejectedCounter;
-    private final Counter rpaJobsStartedCounter;
-    private final Counter rpaJobsCompletedCounter;
-    private final Counter rpaJobsFailedCounter;
     private final Counter dataSyncSuccessCounter;
     private final Counter dataSyncFailureCounter;
     private final Counter validationRulesTriggeredCounter;
@@ -34,13 +31,11 @@ public class BusinessMetricsConfig {
     // Gauges (atomic values)
     private final AtomicLong pendingTicketsGauge = new AtomicLong(0);
     private final AtomicLong pendingAnomaliesGauge = new AtomicLong(0);
-    private final AtomicLong activeRpaJobsGauge = new AtomicLong(0);
     private final AtomicLong lastSyncTimestamp = new AtomicLong(0);
 
     // Timers
     private final Timer anomalyDetectionTimer;
     private final Timer ticketProcessingTimer;
-    private final Timer rpaExecutionTimer;
     private final Timer dataSyncTimer;
     private final Timer cbsQueryTimer;
 
@@ -93,34 +88,6 @@ public class BusinessMetricsConfig {
 
         this.ticketProcessingTimer = Timer.builder("bsic_ticket_processing_duration")
                 .description("Time taken to process a ticket")
-                .tag("application", "bsic-data-quality")
-                .register(registry);
-
-        // =============================================
-        // RPA (UiPath) Metrics
-        // =============================================
-        this.rpaJobsStartedCounter = Counter.builder("bsic_rpa_jobs_started_total")
-                .description("Total number of RPA jobs started")
-                .tag("application", "bsic-data-quality")
-                .register(registry);
-
-        this.rpaJobsCompletedCounter = Counter.builder("bsic_rpa_jobs_completed_total")
-                .description("Total number of RPA jobs completed successfully")
-                .tag("application", "bsic-data-quality")
-                .register(registry);
-
-        this.rpaJobsFailedCounter = Counter.builder("bsic_rpa_jobs_failed_total")
-                .description("Total number of RPA jobs that failed")
-                .tag("application", "bsic-data-quality")
-                .register(registry);
-
-        Gauge.builder("bsic_rpa_jobs_active", activeRpaJobsGauge, AtomicLong::get)
-                .description("Current number of active RPA jobs")
-                .tag("application", "bsic-data-quality")
-                .register(registry);
-
-        this.rpaExecutionTimer = Timer.builder("bsic_rpa_execution_duration")
-                .description("Time taken to execute RPA job")
                 .tag("application", "bsic-data-quality")
                 .register(registry);
 
@@ -195,21 +162,6 @@ public class BusinessMetricsConfig {
 
     public void recordTicketRejected() {
         ticketsRejectedCounter.increment();
-    }
-
-    public void recordRpaJobStarted() {
-        rpaJobsStartedCounter.increment();
-        activeRpaJobsGauge.incrementAndGet();
-    }
-
-    public void recordRpaJobCompleted() {
-        rpaJobsCompletedCounter.increment();
-        activeRpaJobsGauge.decrementAndGet();
-    }
-
-    public void recordRpaJobFailed() {
-        rpaJobsFailedCounter.increment();
-        activeRpaJobsGauge.decrementAndGet();
     }
 
     public void recordDataSyncSuccess() {

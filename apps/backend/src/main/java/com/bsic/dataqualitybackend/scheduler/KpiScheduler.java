@@ -45,8 +45,4 @@ public class KpiScheduler {
         }
     }
 
-    @Scheduled(cron = "0 0 * * * ?")
-    public void cleanupStuckRpaJobs() {
-        log.info("Running stuck RPA jobs cleanup...");
-    }
 }

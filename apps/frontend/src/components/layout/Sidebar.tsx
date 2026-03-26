@@ -79,7 +79,7 @@ const Sidebar = ({ isMobile, isOpen, onClose }: SidebarProps) => {
     { name: 'KPIs', icon: TrendingUp, path: '/kpis' },
     { name: 'Suivi Global', icon: LineChart, path: '/tracking' },
     { name: 'Rapports', icon: FileBarChart, path: '/reports' },
-    { name: 'Workflow RPA', icon: Activity, path: '/workflow' },
+    { name: 'Workflow', icon: Activity, path: '/workflow' },
   ];
 
   const configNavigation: NavItem[] = [

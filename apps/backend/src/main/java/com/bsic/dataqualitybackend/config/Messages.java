@@ -26,14 +26,6 @@ public class Messages {
         public static final String EMAIL_EXISTS = "Email déjà existant";
     }
 
-    public static class RPA {
-        public static final String JOB_STARTED = "Job RPA démarré avec succès";
-        public static final String JOB_COMPLETED = "Job RPA terminé avec succès";
-        public static final String JOB_FAILED = "Échec du job RPA";
-        public static final String JOB_NOT_FOUND = "Job RPA non trouvé";
-        public static final String RETRY_SUCCESS = "Job RPA relancé avec succès";
-    }
-
     public static class Workflow {
         public static final String STARTED_SUCCESS = "Workflow démarré avec succès";
         public static final String TASK_NOT_FOUND = "Tâche non trouvée";

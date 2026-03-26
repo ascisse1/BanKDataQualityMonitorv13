@@ -3,7 +3,6 @@ package com.bsic.dataqualitybackend.service;
 import lombok.RequiredArgsConstructor;
 import lombok.extern.slf4j.Slf4j;
 import org.flowable.engine.RuntimeService;
-import org.flowable.engine.runtime.Execution;
 import org.flowable.engine.runtime.ProcessInstance;
 import org.flowable.task.api.Task;
 import org.springframework.stereotype.Service;
@@ -70,32 +69,6 @@ public class WorkflowService {
         }
 
         completeUserTask(taskId, validatorId, variables);
-    }
-
-    public void notifyRpaCompletion(String processInstanceId, boolean success, String errorMessage) {
-        log.info("RPA completion notification for process: {} - Success: {}", processInstanceId, success);
-
-        Map<String, Object> variables = new HashMap<>();
-        variables.put("rpaSuccess", success);
-        variables.put("rpaInProgress", false);
-
-        if (!success && errorMessage != null) {
-            variables.put("rpaErrorMessage", errorMessage);
-        }
-
-        runtimeService.setVariables(processInstanceId, variables);
-
-        // Trigger the receive task (Flowable uses execution trigger instead of message correlation)
-        Execution execution = runtimeService.createExecutionQuery()
-            .processInstanceId(processInstanceId)
-            .activityId("Task_WaitRPACompletion")
-            .singleResult();
-
-        if (execution != null) {
-            runtimeService.trigger(execution.getId());
-        }
-
-        log.info("RPA completion signal sent to process: {}", processInstanceId);
     }
 
     public List<Task> getTasksForUser(String userId) {

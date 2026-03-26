@@ -128,7 +128,7 @@ management:
       percentiles-histogram:
         http.server.requests: true
   tracing:
-    enabled: ${TRACING_ENABLED:true}
+    enabled: ${TRACING_ENABLED:false}
     sampling:
       probability: 1.0
   otlp:
@@ -178,23 +178,12 @@ app:
       version: TLSv1.3
     encryption:
       algorithm: AES-256
-  rpa:
-    uipath:
-      url: ${UIPATH_URL:https://cloud.uipath.com/bsic}
-      api-key: ${UIPATH_API_KEY:change-this-in-production}
-      tenant: ${UIPATH_TENANT:bsic}
-      organization: ${UIPATH_ORG:bsic-org}
-    webhook-url: ${RPA_WEBHOOK_URL:http://localhost:8080/api/rpa/callback}
-    timeout-minutes: 30
-    max-retries: 3
   scheduling:
     kpi-calculation-cron: "0 0 1 * * ?"
     sla-check-cron: "0 */15 * * * ?"
-    rpa-cleanup-cron: "0 0 * * * ?"
     bkcli-sync-cron: "0 0 2 * * ?"      # Daily at 2:00 AM
     agency-sync-cron: "0 30 2 * * ?"    # Daily at 2:30 AM
   features:
     workflow-automation: ${FEATURE_WORKFLOW:true}
-    rpa-integration: ${FEATURE_RPA:true}
     kpi-tracking: ${FEATURE_KPI:true}
     informix-integration: ${FEATURE_INFORMIX:false}

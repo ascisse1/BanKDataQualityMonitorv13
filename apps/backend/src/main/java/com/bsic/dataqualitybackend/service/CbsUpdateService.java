@@ -3,12 +3,15 @@ package com.bsic.dataqualitybackend.service;
 import com.bsic.dataqualitybackend.model.Anomaly;
 import com.bsic.dataqualitybackend.model.Ticket;
 import com.bsic.dataqualitybackend.model.TicketIncident;
+import com.bsic.dataqualitybackend.model.User;
 import com.bsic.dataqualitybackend.model.enums.AnomalyStatus;
 import com.bsic.dataqualitybackend.model.enums.TicketStatus;
 import com.bsic.dataqualitybackend.repository.AnomalyRepository;
 import com.bsic.dataqualitybackend.repository.InformixRepository;
 import com.bsic.dataqualitybackend.repository.TicketIncidentRepository;
 import com.bsic.dataqualitybackend.repository.TicketRepository;
+import com.bsic.dataqualitybackend.repository.UserRepository;
+import com.bsic.dataqualitybackend.security.SecurityUtils;
 import lombok.RequiredArgsConstructor;
 import lombok.extern.slf4j.Slf4j;
 import org.springframework.boot.autoconfigure.condition.ConditionalOnProperty;
@@ -22,7 +25,7 @@ import java.util.Map;
 
 /**
  * Service for applying validated corrections directly to CBS (Informix)
- * via JDBC, replacing the RPA/UiPath approach.
+ * via JDBC.
  *
  * Audit trail is maintained through:
  * - TicketIncident: oldValue/newValue for each field
@@ -40,6 +43,7 @@ public class CbsUpdateService {
     private final TicketIncidentRepository ticketIncidentRepository;
     private final AnomalyRepository anomalyRepository;
     private final TicketService ticketService;
+    private final UserRepository userRepository;
 
     /**
      * Apply validated corrections to CBS and close the ticket.
@@ -143,8 +147,10 @@ public class CbsUpdateService {
     private void addHistoryEntry(Ticket ticket, String action, TicketStatus previousStatus,
                                   TicketStatus newStatus, String notes) {
         try {
-            // Use system user (null) for automated actions
-            ticketService.addHistory(ticket, action, previousStatus, newStatus, null, notes, null);
+            User currentUser = SecurityUtils.getCurrentUserLogin()
+                    .flatMap(userRepository::findByUsername)
+                    .orElse(null);
+            ticketService.addHistory(ticket, action, previousStatus, newStatus, null, notes, currentUser);
         } catch (Exception e) {
             log.warn("Failed to add history entry for ticket {}: {}", ticket.getTicketNumber(), e.getMessage());
         }

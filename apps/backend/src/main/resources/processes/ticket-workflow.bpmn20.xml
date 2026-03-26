@@ -57,7 +57,7 @@
       <outgoing>Flow_Rejected</outgoing>
     </exclusiveGateway>
 
-    <sequenceFlow id="Flow_Approved" name="Approved" sourceRef="Gateway_ValidationDecision" targetRef="Task_TriggerRPA">
+    <sequenceFlow id="Flow_Approved" name="Approved" sourceRef="Gateway_ValidationDecision" targetRef="Task_CloseTicket">
       <conditionExpression xsi:type="tFormalExpression">${validationApproved == true}</conditionExpression>
     </sequenceFlow>
 
@@ -72,47 +72,8 @@
 
     <sequenceFlow id="Flow_Rework" sourceRef="Task_NotifyRejection" targetRef="Task_AgencyCorrection"/>
 
-    <serviceTask id="Task_TriggerRPA" name="Trigger RPA (UiPath)" flowable:delegateExpression="${triggerRpaDelegate}">
-      <incoming>Flow_Approved</incoming>
-      <outgoing>Flow_7</outgoing>
-    </serviceTask>
-
-    <sequenceFlow id="Flow_7" sourceRef="Task_TriggerRPA" targetRef="Task_WaitRPACompletion"/>
-
-    <receiveTask id="Task_WaitRPACompletion" name="Wait for RPA Completion">
-      <incoming>Flow_7</incoming>
-      <outgoing>Flow_8</outgoing>
-    </receiveTask>
-
-    <sequenceFlow id="Flow_8" sourceRef="Task_WaitRPACompletion" targetRef="Gateway_RPASuccess"/>
-
-    <exclusiveGateway id="Gateway_RPASuccess" name="RPA Success?">
-      <incoming>Flow_8</incoming>
-      <outgoing>Flow_RPASuccess</outgoing>
-      <outgoing>Flow_RPAFailed</outgoing>
-    </exclusiveGateway>
-
-    <sequenceFlow id="Flow_RPASuccess" name="Success" sourceRef="Gateway_RPASuccess" targetRef="Task_CloseTicket">
-      <conditionExpression xsi:type="tFormalExpression">${rpaSuccess == true}</conditionExpression>
-    </sequenceFlow>
-
-    <sequenceFlow id="Flow_RPAFailed" name="Failed" sourceRef="Gateway_RPASuccess" targetRef="Task_HandleRPAFailure">
-      <conditionExpression xsi:type="tFormalExpression">${rpaSuccess == false}</conditionExpression>
-    </sequenceFlow>
-
-    <serviceTask id="Task_HandleRPAFailure" name="Handle RPA Failure" flowable:delegateExpression="${handleRpaFailureDelegate}">
-      <incoming>Flow_RPAFailed</incoming>
-      <outgoing>Flow_9</outgoing>
-    </serviceTask>
-
-    <sequenceFlow id="Flow_9" sourceRef="Task_HandleRPAFailure" targetRef="EndEvent_RPAFailed"/>
-
-    <endEvent id="EndEvent_RPAFailed" name="RPA Failed - Manual Intervention Required">
-      <incoming>Flow_9</incoming>
-    </endEvent>
-
     <serviceTask id="Task_CloseTicket" name="Close Ticket" flowable:delegateExpression="${closeTicketDelegate}">
-      <incoming>Flow_RPASuccess</incoming>
+      <incoming>Flow_Approved</incoming>
       <outgoing>Flow_10</outgoing>
     </serviceTask>
 

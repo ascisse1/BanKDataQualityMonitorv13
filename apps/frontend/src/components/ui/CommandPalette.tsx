@@ -201,11 +201,11 @@ const CommandPalette = () => {
       {
         id: 'workflow',
         title: 'Workflow',
-        subtitle: 'Moniteur de workflow RPA',
+        subtitle: 'Suivi du workflow de correction',
         icon: <Workflow className="w-4 h-4" />,
         href: '/workflow',
         group: 'Navigation',
-        keywords: ['rpa', 'uipath', 'automatisation'],
+        keywords: ['workflow', 'automatisation', 'correction'],
       },
       {
         id: 'users',

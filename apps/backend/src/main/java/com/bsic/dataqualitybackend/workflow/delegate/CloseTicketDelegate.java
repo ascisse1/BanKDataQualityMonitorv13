@@ -33,7 +33,7 @@ public class CloseTicketDelegate implements JavaDelegate {
             ticketId,
             TicketStatus.CLOSED,
             systemUserId,
-            "Ticket closed successfully. Data updated in Amplitude CBS via RPA."
+            "Ticket closed successfully. Data updated in CBS."
         );
 
         if (anomalyId != null) {
