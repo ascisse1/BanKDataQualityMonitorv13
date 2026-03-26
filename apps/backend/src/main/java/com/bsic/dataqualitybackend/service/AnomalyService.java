@@ -36,6 +36,9 @@ public class AnomalyService {
     public Page<AnomalyDto> getAnomaliesByClientType(ClientType clientType, int page, int size) {
         log.debug("Fetching anomalies for clientType={}, page={}, size={}", clientType, page, size);
         Pageable pageable = PageRequest.of(page, size, Sort.by("createdAt").descending());
+        if (clientType == null) {
+            return anomalyRepository.findAll(pageable).map(this::mapToDto);
+        }
         return anomalyRepository.findByClientType(clientType, pageable)
             .map(this::mapToDto);
     }

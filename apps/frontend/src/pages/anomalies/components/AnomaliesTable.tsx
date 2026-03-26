@@ -155,8 +155,10 @@ const AnomaliesTable: React.FC<AnomaliesTableProps> = ({
         result = await db.getCorporateAnomalies(currentPage, itemsPerPage, false, params);
       } else if (selectedClientType === '3') {
         result = await db.getInstitutionalAnomalies(currentPage, itemsPerPage, false, params);
-      } else {
+      } else if (selectedClientType === '1') {
         result = await db.getIndividualAnomalies(currentPage, itemsPerPage, false, params);
+      } else {
+        result = await db.getAllAnomalies(currentPage, itemsPerPage, false, params);
       }
 
       const anomaliesData = result.data || [];

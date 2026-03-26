@@ -612,6 +612,33 @@ class DatabaseService {
     }
   }
 
+  public async getAllAnomalies(page = 1, limit = this.DEFAULT_LIMIT, forExport = false, params: Record<string, any> = {}): Promise<PaginatedResponse<any>> {
+    try {
+      tracer.info('database', 'Getting all anomalies', { page, limit, forExport, ...params });
+
+      const queryLimit = forExport ? 5000 : Math.min(limit, this.MAX_LIMIT);
+      const queryParams = {
+        page: Math.max(0, page - 1),
+        size: queryLimit,
+        ...params
+      };
+
+      const result = await this.fetchApi<any>('/anomalies', {}, queryParams);
+      const paginatedResult = toPagedResponse<any>(result);
+      paginatedResult.data = paginatedResult.data.map(mapAnomalyToFrontend);
+
+      tracer.info('database', 'All anomalies retrieved successfully', {
+        count: paginatedResult.data?.length || 0,
+        total: paginatedResult.total || 0
+      });
+      return paginatedResult;
+    } catch (error) {
+      tracer.error('database', 'Failed to get all anomalies', { error, page, limit, ...params });
+      logger.error('api', 'Failed to get all anomalies', { error });
+      return { data: [], page, limit, total: 0 };
+    }
+  }
+
   public async getIndividualAnomalies(page = 1, limit = this.DEFAULT_LIMIT, forExport = false, params: Record<string, any> = {}): Promise<PaginatedResponse<any>> {
     try {
       tracer.info('database', 'Getting individual anomalies', { page, limit, forExport, ...params });

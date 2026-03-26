@@ -24,6 +24,15 @@ public class AnomalyController {
 
     private final AnomalyService anomalyService;
 
+    @GetMapping
+    public ResponseEntity<ApiResponse<Page<AnomalyDto>>> getAllAnomalies(
+            @RequestParam(defaultValue = "0") int page,
+            @RequestParam(defaultValue = "100") int size) {
+
+        Page<AnomalyDto> anomalies = anomalyService.getAnomaliesByClientType(null, page, size);
+        return ResponseEntity.ok(ApiResponse.success(anomalies));
+    }
+
     @GetMapping("/individual")
     public ResponseEntity<ApiResponse<Page<AnomalyDto>>> getIndividualAnomalies(
             @RequestParam(defaultValue = "0") int page,
