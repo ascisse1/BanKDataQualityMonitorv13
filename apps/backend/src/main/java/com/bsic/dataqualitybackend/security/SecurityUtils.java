@@ -1,15 +1,13 @@
 package com.bsic.dataqualitybackend.security;
 
-import java.util.ArrayList;
-import java.util.Arrays;
-import java.util.Collection;
-import java.util.List;
-import java.util.Map;
-import java.util.Optional;
+import java.util.*;
 import java.util.stream.Collectors;
 import java.util.stream.Stream;
 
+import com.bsic.dataqualitybackend.config.SecurityConfig;
 import com.bsic.dataqualitybackend.security.AuthoritiesConstants;
+import org.slf4j.Logger;
+import org.slf4j.LoggerFactory;
 import org.springframework.security.core.Authentication;
 import org.springframework.security.core.GrantedAuthority;
 import org.springframework.security.core.authority.SimpleGrantedAuthority;
@@ -25,8 +23,11 @@ import org.springframework.security.oauth2.server.resource.authentication.JwtAut
 public final class SecurityUtils {
 
     public static final String CLAIMS_NAMESPACE = "https://www.jhipster.tech/";
+    public static final String ROLE_PREFIX = "BDQM:ROLE_";
+    private static final Logger log = LoggerFactory.getLogger(SecurityConfig.class);
 
-    private SecurityUtils() {}
+    private SecurityUtils() {
+    }
 
     /**
      * Get the login of the current user.
@@ -119,6 +120,53 @@ public final class SecurityUtils {
     }
 
     private static List<GrantedAuthority> mapRolesToGrantedAuthorities(Collection<String> roles) {
-        return roles.stream().filter(role -> role.startsWith("ROLE_")).map(SimpleGrantedAuthority::new).collect(Collectors.toList());
+        return roles.stream().filter(role -> role.startsWith(ROLE_PREFIX)).map(SimpleGrantedAuthority::new).collect(Collectors.toList());
+    }
+
+    /**
+     * Extracts authorities from Keycloak token claims.
+     */
+    public static void extractAuthorities(Map<String, Object> claims, Set<GrantedAuthority> authorities) {
+        log.info("Extracting authorities from claims keys: {}", claims.keySet());
+
+        // 1. Extract from realm_access.roles (standard Keycloak access token claim)
+        Object realmAccess = claims.get("realm_access");
+        if (realmAccess instanceof Map<?, ?> realmAccessMap) {
+            Object roles = realmAccessMap.get("roles");
+            if (roles instanceof Collection<?> rolesList) {
+                log.info("Found realm_access.roles: {}", rolesList);
+                rolesList.stream()
+                    .map(String.class::cast)
+                    .filter(g -> g.startsWith(ROLE_PREFIX))
+                    .map(role -> new SimpleGrantedAuthority(role.toUpperCase()))
+                    .forEach(authorities::add);
+            }
+        }
+
+        // 2. Extract from "roles" claim (custom mapper: User Realm Role → "roles")
+        Object rolesClaim = claims.get("roles");
+        if (rolesClaim instanceof Collection<?> rolesList) {
+            log.info("Found roles claim: {}", rolesList);
+            rolesList.stream()
+                .filter(String.class::isInstance)
+                .map(String.class::cast)
+                .filter(g -> g.startsWith(ROLE_PREFIX))
+                .map(role -> new SimpleGrantedAuthority(role.toUpperCase()))
+                .forEach(authorities::add);
+        }
+
+        // 3. Extract from groups claim
+        Object groups = claims.get("groups");
+        if (groups instanceof Collection<?> groupsList) {
+            log.info("Found groups claim: {}", groupsList);
+            groupsList.stream()
+                .filter(String.class::isInstance)
+                .map(String.class::cast)
+                .filter(g -> g.startsWith(ROLE_PREFIX))
+                .map(SimpleGrantedAuthority::new)
+                .forEach(authorities::add);
+        }
+
+        log.info("Extracted authorities: {}", authorities);
     }
 }

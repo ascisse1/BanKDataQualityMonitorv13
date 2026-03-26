@@ -18,8 +18,13 @@ import org.springframework.security.config.core.GrantedAuthorityDefaults;
 import org.springframework.security.core.authority.mapping.GrantedAuthoritiesMapper;
 import org.springframework.security.core.userdetails.UserDetailsService;
 import org.springframework.security.crypto.password.PasswordEncoder;
+import org.springframework.security.oauth2.client.oidc.userinfo.OidcUserRequest;
+import org.springframework.security.oauth2.client.oidc.userinfo.OidcUserService;
 import org.springframework.security.oauth2.client.oidc.web.logout.OidcClientInitiatedLogoutSuccessHandler;
 import org.springframework.security.oauth2.client.registration.ClientRegistrationRepository;
+import org.springframework.security.oauth2.client.userinfo.OAuth2UserService;
+import org.springframework.security.oauth2.core.oidc.user.DefaultOidcUser;
+import org.springframework.security.oauth2.core.oidc.user.OidcUser;
 import org.springframework.security.oauth2.core.oidc.user.OidcUserAuthority;
 import org.springframework.security.oauth2.core.user.OAuth2UserAuthority;
 import org.springframework.security.web.SecurityFilterChain;
@@ -35,6 +40,10 @@ import java.util.Collection;
 import java.util.HashSet;
 import java.util.Map;
 import java.util.Set;
+
+import static com.bsic.dataqualitybackend.security.SecurityUtils.ROLE_PREFIX;
+import static com.bsic.dataqualitybackend.security.SecurityUtils.extractAuthorities;
+import static org.springframework.security.oauth2.core.oidc.StandardClaimNames.PREFERRED_USERNAME;
 
 /**
  * Security configuration using OAuth2 Client (BFF pattern).
@@ -64,7 +73,6 @@ public class SecurityConfig {
     @Value("${keycloak.realm:bsic-bank}")
     private String realm;
 
-    private static final String ROLE_PREFIX = "BDQM:ROLE_";
 
     @Bean
     public SecurityFilterChain securityFilterChain(HttpSecurity http) throws Exception {
@@ -110,15 +118,9 @@ public class SecurityConfig {
                         // All other requests require authentication
                         .anyRequest().authenticated()
                 )
-
-                // OAuth2 Login configuration
-                .oauth2Login(oauth2 -> oauth2
-                        .loginPage("/oauth2/authorization/keycloak")
-                        .userInfoEndpoint(userInfo -> userInfo
-                                .userAuthoritiesMapper(userAuthoritiesMapper())
-                        )
-                        .defaultSuccessUrl("/", true)
-                )
+                .oauth2Login(oauth2 ->
+                    oauth2.loginPage("/")
+                        .userInfoEndpoint(userInfo -> userInfo.oidcUserService(this.oidcUserService())))
 
                 // Logout configuration with Keycloak
                 .logout(logout -> logout
@@ -162,53 +164,14 @@ public class SecurityConfig {
         };
     }
 
-    /**
-     * Extracts authorities from Keycloak token claims.
-     */
-    private void extractAuthorities(Map<String, Object> claims, Set<GrantedAuthority> authorities) {
-        log.info("Extracting authorities from claims keys: {}", claims.keySet());
+    OAuth2UserService<OidcUserRequest, OidcUser> oidcUserService() {
+        final OidcUserService delegate = new OidcUserService();
 
-        // 1. Extract from realm_access.roles (standard Keycloak access token claim)
-        Object realmAccess = claims.get("realm_access");
-        if (realmAccess instanceof Map<?, ?> realmAccessMap) {
-            Object roles = realmAccessMap.get("roles");
-            if (roles instanceof Collection<?> rolesList) {
-                log.info("Found realm_access.roles: {}", rolesList);
-                rolesList.stream()
-                        .map(String.class::cast)
-                        .filter(g -> g.startsWith(ROLE_PREFIX))
-                        .map(role -> new SimpleGrantedAuthority(role.toUpperCase()))
-                        .forEach(authorities::add);
-            }
-        }
-
-        // 2. Extract from "roles" claim (custom mapper: User Realm Role → "roles")
-        Object rolesClaim = claims.get("roles");
-        if (rolesClaim instanceof Collection<?> rolesList) {
-            log.info("Found roles claim: {}", rolesList);
-            rolesList.stream()
-                    .filter(String.class::isInstance)
-                    .map(String.class::cast)
-                    .filter(g -> g.startsWith(ROLE_PREFIX))
-                    .map(role -> new SimpleGrantedAuthority(role.toUpperCase()))
-                    .forEach(authorities::add);
-        }
-
-        // 3. Extract from groups claim
-        Object groups = claims.get("groups");
-        if (groups instanceof Collection<?> groupsList) {
-            log.info("Found groups claim: {}", groupsList);
-            groupsList.stream()
-                    .filter(String.class::isInstance)
-                    .map(String.class::cast)
-                    .filter(g -> g.startsWith(ROLE_PREFIX))
-                    .map(SimpleGrantedAuthority::new)
-                    .forEach(authorities::add);
-        }
-
-        log.info("Extracted authorities: {}", authorities);
+        return userRequest -> {
+            OidcUser oidcUser = delegate.loadUser(userRequest);
+            return new DefaultOidcUser(oidcUser.getAuthorities(), oidcUser.getIdToken(), oidcUser.getUserInfo(), PREFERRED_USERNAME);
+        };
     }
-
 
 
     /**
