@@ -162,6 +162,7 @@ function mapAnomalyToFrontend(anomaly: any): any {
     errorMessage: anomaly.errorMessage || '',
     severity: mapSeverityToFrench(anomaly.severity),
     status: mapStatusToFrench(anomaly.status),
+    rawStatus: anomaly.status || 'PENDING',
 
     // Additional fields from backend
     currentValue: anomaly.currentValue || '',

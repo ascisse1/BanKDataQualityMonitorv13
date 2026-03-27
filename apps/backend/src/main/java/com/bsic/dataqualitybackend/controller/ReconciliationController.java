@@ -3,7 +3,6 @@ package com.bsic.dataqualitybackend.controller;
 import com.bsic.dataqualitybackend.service.ReconciliationService;
 import lombok.RequiredArgsConstructor;
 import lombok.extern.slf4j.Slf4j;
-import org.springframework.boot.autoconfigure.condition.ConditionalOnProperty;
 import org.springframework.format.annotation.DateTimeFormat;
 import org.springframework.http.ResponseEntity;
 import org.springframework.security.access.prepost.PreAuthorize;
@@ -18,7 +17,6 @@ import java.util.Map;
 @RequiredArgsConstructor
 @Slf4j
 @CrossOrigin(origins = {"http://localhost:5173", "http://localhost:3000"})
-@ConditionalOnProperty(name = "app.features.informix-integration", havingValue = "true", matchIfMissing = false)
 public class ReconciliationController {
 
     private final ReconciliationService reconciliationService;

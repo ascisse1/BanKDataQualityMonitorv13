@@ -22,8 +22,8 @@ const ReconciliationPage = () => {
   const [loading, setLoading] = useState(true);
   const [reconciling, setReconciling] = useState(false);
   const [filters, setFilters] = useState({
-    agency_code: user?.agencyCode || '',
-    client_id: '',
+    agencyCode: user?.agencyCode || '',
+    clientId: '',
     status: 'pending',
   });
 
@@ -31,8 +31,8 @@ const ReconciliationPage = () => {
     setLoading(true);
     try {
       const filterParams: any = {};
-      if (filters.agency_code) filterParams.agency_code = filters.agency_code;
-      if (filters.client_id) filterParams.client_id = filters.client_id;
+      if (filters.agencyCode) filterParams.agencyCode = filters.agencyCode;
+      if (filters.clientId) filterParams.clientId = filters.clientId;
 
       const [tasksData, statsData] = await Promise.all([
         filters.status === 'pending'
@@ -42,7 +42,7 @@ const ReconciliationPage = () => {
               status: filters.status || undefined,
             }),
         reconciliationService.getReconciliationStats(
-          filters.agency_code || user?.agencyCode
+          filters.agencyCode || user?.agencyCode
         ),
       ]);
 
@@ -66,7 +66,7 @@ const ReconciliationPage = () => {
     setReconciling(true);
     try {
       const result = await reconciliationService.reconcileAll({
-        agency_code: filters.agency_code || undefined,
+        agency_code: filters.agencyCode || undefined,
         max_tasks: 50,
       });
 
@@ -133,7 +133,7 @@ const ReconciliationPage = () => {
   const handleExportHistory = async () => {
     try {
       const history = await reconciliationService.getReconciliationHistory({
-        agency_code: filters.agency_code || undefined,
+        agencyCode: filters.agencyCode || undefined,
       });
 
       const csvContent = [
@@ -168,8 +168,8 @@ const ReconciliationPage = () => {
 
   const handleResetFilters = () => {
     setFilters({
-      agency_code: user?.agencyCode || '',
-      client_id: '',
+      agencyCode: user?.agencyCode || '',
+      clientId: '',
       status: 'pending',
     });
   };

@@ -24,7 +24,6 @@ import { KpiDashboardPage } from '../pages/kpis/KpiDashboardPage';
 import ValidationPage from '../pages/validation/ValidationPage';
 import DuplicatesPage from '../pages/duplicates/DuplicatesPage';
 import ReconciliationPage from '../pages/reconciliation/ReconciliationPage';
-import ReconciliationDashboard from '../pages/reconciliation/ReconciliationDashboard';
 
 const AppRoutes = () => {
   const { isAuthenticated, user } = useAuth();
@@ -59,7 +58,6 @@ const AppRoutes = () => {
             <Route path="/validation" element={<ValidationPage />} />
             <Route path="/duplicates" element={<DuplicatesPage />} />
             <Route path="/reconciliation" element={<ReconciliationPage />} />
-            <Route path="/reconciliation/dashboard" element={<ReconciliationDashboard />} />
           </Route>
 
           {/* Route protégée pour les administrateurs */}

@@ -1,12 +1,9 @@
 package com.bsic.dataqualitybackend.service;
 
 import com.bsic.dataqualitybackend.repository.InformixRepository;
-import lombok.RequiredArgsConstructor;
 import lombok.extern.slf4j.Slf4j;
+import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.beans.factory.annotation.Qualifier;
-
-import org.springframework.boot.autoconfigure.condition.ConditionalOnProperty;
-
 import org.springframework.jdbc.core.JdbcTemplate;
 import org.springframework.stereotype.Service;
 import org.springframework.transaction.annotation.Transactional;
@@ -16,19 +13,25 @@ import java.util.*;
 import java.util.stream.Collectors;
 
 @Service
-@RequiredArgsConstructor
 @Slf4j
-
-@ConditionalOnProperty(name = "app.features.informix-integration", havingValue = "true", matchIfMissing = false)
 public class ReconciliationService {
 
     private final InformixRepository informixRepository;
-
-    @Qualifier("primaryJdbcTemplate")
     private final JdbcTemplate mysqlJdbcTemplate;
+
+    public ReconciliationService(
+            @Autowired(required = false) InformixRepository informixRepository,
+            @Qualifier("primaryJdbcTemplate") JdbcTemplate mysqlJdbcTemplate) {
+        this.informixRepository = informixRepository;
+        this.mysqlJdbcTemplate = mysqlJdbcTemplate;
+    }
 
     public Map<String, Object> reconcileTask(String taskId) {
         log.info("Starting reconciliation for task: {}", taskId);
+
+        if (informixRepository == null) {
+            throw new RuntimeException("CBS integration is not enabled. Enable app.features.informix-integration to reconcile.");
+        }
 
         Map<String, Object> task = getTask(taskId);
         if (task == null) {
@@ -97,17 +100,16 @@ public class ReconciliationService {
             SELECT DISTINCT
                 t.id, t.ticket_id, t.client_id, t.status, t.created_at,
                 t.attempts, t.last_attempt_at, t.error_message,
-                a.client_name, a.agency_code
+                tk.client_name, tk.agency_code
             FROM reconciliation_tasks t
             LEFT JOIN tickets tk ON tk.ticket_number = t.ticket_id
-            LEFT JOIN anomalies a ON a.id = tk.anomaly_id
             WHERE t.status = 'pending'
         """);
 
         List<Object> params = new ArrayList<>();
 
         if (agencyCode != null && !agencyCode.isEmpty()) {
-            sql.append(" AND a.agency_code = ?");
+            sql.append(" AND tk.agency_code = ?");
             params.add(agencyCode);
         }
 
@@ -140,10 +142,9 @@ public class ReconciliationService {
             SELECT DISTINCT
                 t.id, t.ticket_id, t.client_id, t.status, t.created_at,
                 t.reconciled_at, t.attempts, t.last_attempt_at, t.error_message,
-                a.client_name, a.agency_code
+                tk.client_name, tk.agency_code
             FROM reconciliation_tasks t
             LEFT JOIN tickets tk ON tk.ticket_number = t.ticket_id
-            LEFT JOIN anomalies a ON a.id = tk.anomaly_id
             WHERE 1=1
         """);
 
@@ -192,7 +193,7 @@ public class ReconciliationService {
 
     public Map<String, Object> getStats(String agencyCode) {
         String whereClause = agencyCode != null && !agencyCode.isEmpty()
-                ? "WHERE a.agency_code = ?"
+                ? "WHERE tk.agency_code = ?"
                 : "WHERE 1=1";
 
         String sql = String.format("""
@@ -207,7 +208,6 @@ public class ReconciliationService {
                 AVG(TIMESTAMPDIFF(SECOND, t.created_at, t.reconciled_at)) as average_reconciliation_time
             FROM reconciliation_tasks t
             LEFT JOIN tickets tk ON tk.ticket_number = t.ticket_id
-            LEFT JOIN anomalies a ON a.id = tk.anomaly_id
             %s
         """, whereClause);
 
@@ -219,7 +219,6 @@ public class ReconciliationService {
             SELECT t.status, COUNT(*) as count
             FROM reconciliation_tasks t
             LEFT JOIN tickets tk ON tk.ticket_number = t.ticket_id
-            LEFT JOIN anomalies a ON a.id = tk.anomaly_id
             %s
             GROUP BY t.status
         """, whereClause);
@@ -268,10 +267,9 @@ public class ReconciliationService {
     private Map<String, Object> getTask(String taskId) {
         String sql = """
             SELECT t.id, t.ticket_id, t.client_id, t.status, t.created_at, t.attempts,
-                   a.client_name
+                   tk.client_name
             FROM reconciliation_tasks t
             LEFT JOIN tickets tk ON tk.ticket_number = t.ticket_id
-            LEFT JOIN anomalies a ON a.id = tk.anomaly_id
             WHERE t.id = ?
         """;
 
@@ -284,7 +282,8 @@ public class ReconciliationService {
 
     private List<Map<String, Object>> getCorrections(String ticketId) {
         String sql = """
-            SELECT field_name, field_label, old_value, new_value,
+            SELECT field_name, field_label, old_value,
+                   new_value as expected_value,
                    cbs_value, is_matched, last_checked_at
             FROM corrections
             WHERE ticket_id = ?

@@ -53,10 +53,8 @@ const AnomalyCorrection: React.FC<AnomalieCorrectionProps> = ({
         requiresValidation: result.requiresValidation,
         message: result.message,
       });
-      // Wait a moment to show the success message before closing
-      setTimeout(() => {
-        onCorrectionComplete();
-      }, 2000);
+      // Refresh the list immediately, close modal after brief delay
+      onCorrectionComplete();
     }
   };
 
@@ -77,9 +75,7 @@ const AnomalyCorrection: React.FC<AnomalieCorrectionProps> = ({
         requiresValidation: true,
         message: result.message,
       });
-      setTimeout(() => {
-        onCorrectionComplete();
-      }, 2000);
+      onCorrectionComplete();
     }
   };
 
@@ -100,9 +96,7 @@ const AnomalyCorrection: React.FC<AnomalieCorrectionProps> = ({
         requiresValidation: false,
         message: result.message,
       });
-      setTimeout(() => {
-        onCorrectionComplete();
-      }, 2000);
+      onCorrectionComplete();
     }
   };
 

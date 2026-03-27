@@ -93,7 +93,7 @@ const Sidebar = ({ isMobile, isOpen, onClose }: SidebarProps) => {
     { name: 'Validation "4 Yeux"', icon: CheckCircle, path: '/validation' },
     { name: 'FATCA', icon: Flag, path: '/fatca' },
     { name: 'Détection Doublons', icon: UsersRound, path: '/duplicates' },
-    { name: 'Réconciliation CBS', icon: GitCompare, path: '/reconciliation/dashboard' },
+    { name: 'Réconciliation CBS', icon: GitCompare, path: '/reconciliation' },
   ];
 
   const analyticsNavigation: NavItem[] = [

@@ -288,8 +288,9 @@ const AnomaliesTable: React.FC<AnomaliesTableProps> = ({
             <AnomalyCorrection
               key={`${editingAnomaly.cli}-${editingAnomaly.fieldCode}`}
               anomaly={editingAnomaly}
-              onCorrectionComplete={() => {
+              onCorrectionComplete={async () => {
                 setEditingAnomaly(null);
+                await db.clearCache();
                 fetchAnomaliesFromBackend();
               }}
             />
@@ -511,7 +512,7 @@ const AnomaliesTable: React.FC<AnomaliesTableProps> = ({
                                       </span>
                                     </div>
                                     <div className="flex items-center gap-2">
-                                      {!['CLOSED', 'CORRECTED', 'VALIDATED'].includes(anomaly.status?.toUpperCase?.() || '') && (
+                                      {!['CLOSED', 'CORRECTED', 'VALIDATED'].includes(anomaly.rawStatus?.toUpperCase?.() || '') && (
                                       <Button
                                         variant="outline"
                                         size="sm"
@@ -548,8 +549,9 @@ const AnomaliesTable: React.FC<AnomaliesTableProps> = ({
                                         <AnomalyCorrection
                                           key={`inline-${editingAnomaly.cli}-${editingAnomaly.fieldCode}`}
                                           anomaly={editingAnomaly}
-                                          onCorrectionComplete={() => {
+                                          onCorrectionComplete={async () => {
                                             setEditingAnomaly(null);
+                                            await db.clearCache();
                                             fetchAnomaliesFromBackend();
                                           }}
                                         />

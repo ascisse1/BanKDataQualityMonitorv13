@@ -153,9 +153,20 @@ public class CorrectionService {
             log.info("Ticket {} validated by {}", ticket.getTicketNumber(), validatorUsername);
 
             // Update all incidents to validated
+            Ticket finalTicket = ticket;
             ticketIncidentRepository.findByTicket(ticket).forEach(incident -> {
                 incident.setStatus("validated");
                 ticketIncidentRepository.save(incident);
+
+                // Update anomaly status to CORRECTED
+                List<Anomaly> anomalies = anomalyRepository.findOpenAnomalyByClientAndField(
+                        finalTicket.getCli(), incident.getFieldName());
+                for (Anomaly anomaly : anomalies) {
+                    anomaly.setStatus(AnomalyStatus.CORRECTED);
+                    anomaly.setValidatedBy(validatorUsername);
+                    anomaly.setValidatedAt(LocalDateTime.now());
+                    anomalyRepository.save(anomaly);
+                }
             });
 
             ticketRepository.save(ticket);
@@ -197,10 +208,22 @@ public class CorrectionService {
             ticketService.addComment(ticketId, validator.getId(), "Rejeté: " + reason, false);
 
             // Update all incidents to rejected
+            Ticket finalTicket1 = ticket;
             ticketIncidentRepository.findByTicket(ticket).forEach(incident -> {
                 incident.setStatus("rejected");
                 incident.setNotes(reason);
                 ticketIncidentRepository.save(incident);
+
+                // Reset anomaly status back to PENDING
+                List<Anomaly> anomalies = anomalyRepository.findOpenAnomalyByClientAndField(
+                        finalTicket1.getCli(), incident.getFieldName());
+                for (Anomaly anomaly : anomalies) {
+                    anomaly.setStatus(AnomalyStatus.PENDING);
+                    anomaly.setCorrectionValue(null);
+                    anomaly.setCorrectedBy(null);
+                    anomaly.setCorrectedAt(null);
+                    anomalyRepository.save(anomaly);
+                }
             });
 
             ticketRepository.save(ticket);

@@ -54,16 +54,16 @@ export interface ReconciliationStats {
 
 class ReconciliationService {
   async getPendingReconciliations(filters?: {
-    agency_code?: string;
-    client_id?: string;
+    agencyCode?: string;
+    clientId?: string;
   }): Promise<ReconciliationTask[]> {
     try {
       const params = new URLSearchParams();
-      if (filters?.agency_code) params.append('agency_code', filters.agency_code);
-      if (filters?.client_id) params.append('client_id', filters.client_id);
+      if (filters?.agencyCode) params.append('agencyCode', filters.agencyCode);
+      if (filters?.clientId) params.append('clientId', filters.clientId);
 
       const response = await apiService.get<ReconciliationTask[]>(
-        `/api/reconciliation/pending?${params.toString()}`
+        `/reconciliation/pending?${params.toString()}`
       );
       return response;
     } catch (error) {
@@ -74,7 +74,7 @@ class ReconciliationService {
 
   async getReconciliationById(id: string): Promise<ReconciliationTask | null> {
     try {
-      return await apiService.get<ReconciliationTask>(`/api/reconciliation/${id}`);
+      return await apiService.get<ReconciliationTask>(`/reconciliation/${id}`);
     } catch (error) {
       console.error('Error fetching reconciliation:', error);
       return null;
@@ -84,7 +84,7 @@ class ReconciliationService {
   async reconcileTask(taskId: string): Promise<ReconciliationResult | null> {
     try {
       return await apiService.post<ReconciliationResult>(
-        `/api/reconciliation/${taskId}/reconcile`,
+        `/reconciliation/${taskId}/reconcile`,
         {}
       );
     } catch (error) {
@@ -99,7 +99,7 @@ class ReconciliationService {
   }): Promise<{ success: number; failed: number; total: number }> {
     try {
       const response = await apiService.post<{ success: number; failed: number; total: number }>(
-        '/api/reconciliation/reconcile-all',
+        '/reconciliation/reconcile-all',
         filters || {}
       );
       return response;
@@ -112,7 +112,7 @@ class ReconciliationService {
   async retryReconciliation(taskId: string): Promise<ReconciliationResult | null> {
     try {
       return await apiService.post<ReconciliationResult>(
-        `/api/reconciliation/${taskId}/retry`,
+        `/reconciliation/${taskId}/retry`,
         {}
       );
     } catch (error) {
@@ -123,7 +123,7 @@ class ReconciliationService {
 
   async closeTicket(ticketId: string, userId: string, comments: string): Promise<boolean> {
     try {
-      await apiService.post(`/api/reconciliation/${ticketId}/close`, {
+      await apiService.post(`/reconciliation/${ticketId}/close`, {
         user_id: userId,
         comments,
       });
@@ -137,8 +137,8 @@ class ReconciliationService {
   async getReconciliationStats(agencyCode?: string): Promise<ReconciliationStats | null> {
     try {
       const url = agencyCode
-        ? `/api/reconciliation/stats?agency_code=${agencyCode}`
-        : '/api/reconciliation/stats';
+        ? `/reconciliation/stats?agencyCode=${agencyCode}`
+        : '/reconciliation/stats';
       return await apiService.get<ReconciliationStats>(url);
     } catch (error) {
       console.error('Error fetching reconciliation stats:', error);
@@ -147,22 +147,22 @@ class ReconciliationService {
   }
 
   async getReconciliationHistory(filters?: {
-    ticket_id?: string;
-    client_id?: string;
-    start_date?: string;
-    end_date?: string;
+    ticketId?: string;
+    clientId?: string;
+    startDate?: string;
+    endDate?: string;
     status?: string;
   }): Promise<ReconciliationTask[]> {
     try {
       const params = new URLSearchParams();
-      if (filters?.ticket_id) params.append('ticket_id', filters.ticket_id);
-      if (filters?.client_id) params.append('client_id', filters.client_id);
-      if (filters?.start_date) params.append('start_date', filters.start_date);
-      if (filters?.end_date) params.append('end_date', filters.end_date);
+      if (filters?.ticketId) params.append('ticketId', filters.ticketId);
+      if (filters?.clientId) params.append('clientId', filters.clientId);
+      if (filters?.startDate) params.append('startDate', filters.startDate);
+      if (filters?.endDate) params.append('endDate', filters.endDate);
       if (filters?.status) params.append('status', filters.status);
 
       const response = await apiService.get<ReconciliationTask[]>(
-        `/api/reconciliation/history?${params.toString()}`
+        `/reconciliation/history?${params.toString()}`
       );
       return response;
     } catch (error) {
