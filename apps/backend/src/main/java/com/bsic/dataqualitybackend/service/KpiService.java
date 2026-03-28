@@ -5,6 +5,7 @@ import com.bsic.dataqualitybackend.model.Ticket;
 import com.bsic.dataqualitybackend.model.enums.TicketStatus;
 import com.bsic.dataqualitybackend.repository.KpiRepository;
 import com.bsic.dataqualitybackend.repository.TicketRepository;
+import com.bsic.dataqualitybackend.security.StructureSecurityService;
 import lombok.RequiredArgsConstructor;
 import lombok.extern.slf4j.Slf4j;
 import org.springframework.stereotype.Service;
@@ -24,6 +25,7 @@ public class KpiService {
 
     private final KpiRepository kpiRepository;
     private final TicketRepository ticketRepository;
+    private final StructureSecurityService structureSecurityService;
 
     @Transactional
     public void calculateDailyKpis(LocalDate date) {
@@ -111,10 +113,12 @@ public class KpiService {
     }
 
     public List<Kpi> getKpisByAgency(String agencyCode) {
+        structureSecurityService.requireAgencyAccess(agencyCode);
         return kpiRepository.findByAgencyCode(agencyCode);
     }
 
     public List<Kpi> getKpisByDateRange(String agencyCode, LocalDate startDate, LocalDate endDate) {
+        structureSecurityService.requireAgencyAccess(agencyCode);
         return kpiRepository.findByAgencyAndDateRange(agencyCode, startDate, endDate);
     }
 
@@ -127,6 +131,9 @@ public class KpiService {
     }
 
     public Map<String, Object> getDashboardMetrics(String agencyCode, LocalDate date) {
+        if (agencyCode != null) {
+            structureSecurityService.requireAgencyAccess(agencyCode);
+        }
         List<Kpi> kpis = agencyCode != null ?
             kpiRepository.findByAgencyAndDateRange(agencyCode, date, date) :
             kpiRepository.findByPeriodDate(date);

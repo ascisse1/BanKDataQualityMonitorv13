@@ -1,0 +1,171 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<databaseChangeLog
+    xmlns="http://www.liquibase.org/xml/ns/dbchangelog"
+    xmlns:xsi="http://www.w3.org/2001/XMLSchema-instance"
+    xsi:schemaLocation="http://www.liquibase.org/xml/ns/dbchangelog
+        http://www.liquibase.org/xml/ns/dbchangelog/dbchangelog-latest.xsd">
+
+    <!-- Structure: wraps Agency as a tenant unit -->
+    <changeSet id="012-1-create-structure" author="bdqm">
+        <createTable tableName="structure">
+            <column name="id" type="BIGINT" autoIncrement="true">
+                <constraints primaryKey="true" nullable="false"/>
+            </column>
+            <column name="code" type="VARCHAR(10)">
+                <constraints nullable="false" unique="true" uniqueConstraintName="uk_structure_code"/>
+            </column>
+            <column name="name" type="VARCHAR(100)">
+                <constraints nullable="false"/>
+            </column>
+            <column name="type" type="VARCHAR(50)" defaultValue="AGENCY"/>
+            <column name="parent_id" type="BIGINT"/>
+            <column name="status" type="VARCHAR(20)" defaultValue="ACTIVE">
+                <constraints nullable="false"/>
+            </column>
+            <column name="created_at" type="DATETIME" defaultValueComputed="CURRENT_TIMESTAMP">
+                <constraints nullable="false"/>
+            </column>
+            <column name="updated_at" type="DATETIME" defaultValueComputed="CURRENT_TIMESTAMP"/>
+        </createTable>
+
+        <addForeignKeyConstraint
+            baseTableName="structure" baseColumnNames="parent_id"
+            referencedTableName="structure" referencedColumnNames="id"
+            constraintName="fk_structure_parent"/>
+
+        <createIndex tableName="structure" indexName="idx_structure_type">
+            <column name="type"/>
+        </createIndex>
+        <createIndex tableName="structure" indexName="idx_structure_status">
+            <column name="status"/>
+        </createIndex>
+    </changeSet>
+
+    <!-- AppProfile: functional group (not a role) -->
+    <changeSet id="012-2-create-app-profile" author="bdqm">
+        <createTable tableName="app_profile">
+            <column name="id" type="BIGINT" autoIncrement="true">
+                <constraints primaryKey="true" nullable="false"/>
+            </column>
+            <column name="code" type="VARCHAR(50)">
+                <constraints nullable="false" unique="true" uniqueConstraintName="uk_app_profile_code"/>
+            </column>
+            <column name="name" type="VARCHAR(100)">
+                <constraints nullable="false"/>
+            </column>
+            <column name="description" type="VARCHAR(255)"/>
+            <column name="status" type="VARCHAR(20)" defaultValue="ACTIVE">
+                <constraints nullable="false"/>
+            </column>
+            <column name="created_at" type="DATETIME" defaultValueComputed="CURRENT_TIMESTAMP">
+                <constraints nullable="false"/>
+            </column>
+            <column name="updated_at" type="DATETIME" defaultValueComputed="CURRENT_TIMESTAMP"/>
+        </createTable>
+    </changeSet>
+
+    <!-- UserProfile: links User to Structure with time range and group -->
+    <changeSet id="012-3-create-user-profile" author="bdqm">
+        <createTable tableName="user_profile">
+            <column name="id" type="BIGINT" autoIncrement="true">
+                <constraints primaryKey="true" nullable="false"/>
+            </column>
+            <column name="date_from" type="DATE">
+                <constraints nullable="false"/>
+            </column>
+            <column name="date_to" type="DATE"/>
+            <column name="status" type="VARCHAR(20)">
+                <constraints nullable="false"/>
+            </column>
+            <column name="user_id" type="INT">
+                <constraints nullable="false"/>
+            </column>
+            <column name="profile_id" type="BIGINT"/>
+            <column name="structure_id" type="BIGINT">
+                <constraints nullable="false"/>
+            </column>
+            <column name="created_at" type="DATETIME" defaultValueComputed="CURRENT_TIMESTAMP">
+                <constraints nullable="false"/>
+            </column>
+            <column name="updated_at" type="DATETIME" defaultValueComputed="CURRENT_TIMESTAMP"/>
+        </createTable>
+
+        <addForeignKeyConstraint
+            baseTableName="user_profile" baseColumnNames="user_id"
+            referencedTableName="users" referencedColumnNames="id"
+            constraintName="fk_user_profile_user"/>
+        <addForeignKeyConstraint
+            baseTableName="user_profile" baseColumnNames="profile_id"
+            referencedTableName="app_profile" referencedColumnNames="id"
+            constraintName="fk_user_profile_app_profile"/>
+        <addForeignKeyConstraint
+            baseTableName="user_profile" baseColumnNames="structure_id"
+            referencedTableName="structure" referencedColumnNames="id"
+            constraintName="fk_user_profile_structure"/>
+
+        <addUniqueConstraint tableName="user_profile"
+            columnNames="user_id,structure_id,profile_id,date_from"
+            constraintName="uk_user_profile_assignment"/>
+
+        <createIndex tableName="user_profile" indexName="idx_user_profile_user_status">
+            <column name="user_id"/>
+            <column name="status"/>
+        </createIndex>
+        <createIndex tableName="user_profile" indexName="idx_user_profile_structure">
+            <column name="structure_id"/>
+        </createIndex>
+    </changeSet>
+
+    <!-- Seed Structure from existing bkage -->
+    <changeSet id="012-4-seed-structure-from-agencies" author="bdqm">
+        <sql>
+            INSERT INTO structure (code, name, type, status, created_at, updated_at)
+            SELECT age, lib, 'AGENCY', 'ACTIVE', NOW(), NOW()
+            FROM bkage
+        </sql>
+    </changeSet>
+
+    <!-- Seed default AppProfile -->
+    <changeSet id="012-5-seed-default-app-profile" author="bdqm">
+        <insert tableName="app_profile">
+            <column name="code" value="DEFAULT"/>
+            <column name="name" value="Default"/>
+            <column name="description" value="Default application profile"/>
+            <column name="status" value="ACTIVE"/>
+        </insert>
+    </changeSet>
+
+    <!-- Migrate existing user-agency assignments to user_profile -->
+    <changeSet id="012-6-migrate-user-agency-to-user-profile" author="bdqm">
+        <sql>
+            INSERT INTO user_profile (date_from, status, user_id, structure_id, profile_id, created_at, updated_at)
+            SELECT CURDATE(), 'ACTIVE', u.id, s.id,
+                   (SELECT id FROM app_profile WHERE code = 'DEFAULT'),
+                   NOW(), NOW()
+            FROM users u
+            JOIN structure s ON s.code = u.agency_code
+            WHERE u.agency_code IS NOT NULL
+        </sql>
+    </changeSet>
+
+    <!-- Add id_structure FK to bkage (Agency -> Structure one-to-one) -->
+    <changeSet id="012-7-add-structure-fk-to-agency" author="bdqm">
+        <addColumn tableName="bkage">
+            <column name="id_structure" type="BIGINT"/>
+        </addColumn>
+        <addForeignKeyConstraint
+            baseTableName="bkage" baseColumnNames="id_structure"
+            referencedTableName="structure" referencedColumnNames="id"
+            constraintName="fk_bkage_structure"/>
+        <sql>
+            UPDATE bkage a SET a.id_structure = (SELECT s.id FROM structure s WHERE s.code = a.age)
+        </sql>
+    </changeSet>
+
+    <!-- Drop agency_code column from users -->
+    <changeSet id="012-8-drop-user-agency-code" author="bdqm">
+        <dropIndex tableName="users" indexName="idx_users_agency_code"/>
+        <dropColumn tableName="users" columnName="agency_code"/>
+    </changeSet>
+
+</databaseChangeLog>

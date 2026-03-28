@@ -7,6 +7,7 @@ public enum TicketStatus {
     PENDING_VALIDATION,
     VALIDATED,
     UPDATED_CBS,
+    CBS_UPDATE_FAILED,
     CLOSED,
     REJECTED
 }

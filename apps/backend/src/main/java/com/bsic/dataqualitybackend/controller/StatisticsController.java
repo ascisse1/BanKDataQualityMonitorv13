@@ -19,7 +19,6 @@ import java.util.Map;
 @RestController
 @RequestMapping("/api/stats")
 @RequiredArgsConstructor
-@CrossOrigin(origins = "*")
 public class StatisticsController {
 
     private final StatisticsService statisticsService;

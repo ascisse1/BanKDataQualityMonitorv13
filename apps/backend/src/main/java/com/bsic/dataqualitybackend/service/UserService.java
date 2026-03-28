@@ -1,8 +1,10 @@
 package com.bsic.dataqualitybackend.service;
 
 import com.bsic.dataqualitybackend.model.User;
+import com.bsic.dataqualitybackend.model.UserProfile;
 import com.bsic.dataqualitybackend.model.enums.UserRole;
 import com.bsic.dataqualitybackend.model.enums.UserStatus;
+import com.bsic.dataqualitybackend.repository.UserProfileRepository;
 import com.bsic.dataqualitybackend.repository.UserRepository;
 import lombok.RequiredArgsConstructor;
 import lombok.extern.slf4j.Slf4j;
@@ -14,9 +16,11 @@ import org.springframework.security.oauth2.core.oidc.user.OidcUser;
 import org.springframework.stereotype.Service;
 import org.springframework.transaction.annotation.Transactional;
 
+import java.time.LocalDate;
 import java.time.LocalDateTime;
 import java.util.List;
 import java.util.Optional;
+import java.util.stream.Collectors;
 
 @Slf4j
 @Service
@@ -24,6 +28,7 @@ import java.util.Optional;
 public class UserService implements UserDetailsService {
 
     private final UserRepository userRepository;
+    private final UserProfileRepository userProfileRepository;
     private final PasswordEncoder passwordEncoder;
 
     @Override
@@ -63,14 +68,6 @@ public class UserService implements UserDetailsService {
         return userRepository.findAll();
     }
 
-    public List<User> getUsersByAgency(String agencyCode) {
-        return userRepository.findByAgencyCode(agencyCode);
-    }
-
-    public List<User> getActiveAgencyUsers(String agencyCode) {
-        return userRepository.findActiveAgencyUsers(agencyCode);
-    }
-
     @Transactional
     public User updateUser(Integer id, User updatedUser) {
         User user = userRepository.findById(id)
@@ -91,14 +88,21 @@ public class UserService implements UserDetailsService {
         if (updatedUser.getDepartment() != null) {
             user.setDepartment(updatedUser.getDepartment());
         }
-        if (updatedUser.getAgencyCode() != null) {
-            user.setAgencyCode(updatedUser.getAgencyCode());
-        }
         if (updatedUser.getStatus() != null) {
             user.setStatus(updatedUser.getStatus());
         }
 
         return userRepository.save(user);
+    }
+
+    /**
+     * Returns the list of active agency codes for a user via UserProfile.
+     */
+    public List<String> getUserAgencyCodes(Integer userId) {
+        return userProfileRepository.findActiveByUserId(userId, LocalDate.now())
+                .stream()
+                .map(up -> up.getStructure().getCode())
+                .collect(Collectors.toList());
     }
 
     @Transactional
@@ -175,12 +179,6 @@ public class UserService implements UserDetailsService {
         user.setLastLogin(LocalDateTime.now());
         user.setFailedLoginAttempts(0);
         user.setStatus(UserStatus.ACTIVE);
-
-        // Sync agency_code from custom claim
-        Object agencyCode = principal.getClaim("agency_code");
-        if (agencyCode != null) {
-            user.setAgencyCode(agencyCode.toString());
-        }
 
         return userRepository.save(user);
     }

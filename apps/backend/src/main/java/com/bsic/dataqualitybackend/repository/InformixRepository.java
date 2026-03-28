@@ -6,6 +6,8 @@ import org.springframework.boot.autoconfigure.condition.ConditionalOnProperty;
 import org.springframework.jdbc.core.JdbcTemplate;
 import org.springframework.stereotype.Repository;
 
+import com.bsic.dataqualitybackend.service.CbsColumnRegistry;
+
 import java.util.List;
 import java.util.Map;
 
@@ -151,6 +153,13 @@ public class InformixRepository {
 
     public boolean updateClient(String clientId, Map<String, Object> updates) {
         try {
+            // Validate all column names against the whitelist before building SQL
+            for (String column : updates.keySet()) {
+                if (!CbsColumnRegistry.isAllowedColumn(column)) {
+                    throw new IllegalArgumentException("Invalid CBS column name: " + column);
+                }
+            }
+
             StringBuilder sql = new StringBuilder("UPDATE bkcli SET ");
             List<Object> params = new java.util.ArrayList<>();
 

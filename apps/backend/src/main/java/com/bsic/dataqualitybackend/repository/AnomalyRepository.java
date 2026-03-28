@@ -32,6 +32,53 @@ public interface AnomalyRepository extends JpaRepository<Anomaly, Long> {
 
     long countByAgencyCode(String agencyCode);
 
+    // Multi-agency (IN clause) variants
+    Page<Anomaly> findByAgencyCodeIn(List<String> agencyCodes, Pageable pageable);
+
+    List<Anomaly> findByAgencyCodeIn(List<String> agencyCodes);
+
+    Page<Anomaly> findByClientTypeAndAgencyCodeIn(ClientType clientType, List<String> agencyCodes, Pageable pageable);
+
+    Page<Anomaly> findByStatusAndAgencyCodeIn(AnomalyStatus status, List<String> agencyCodes, Pageable pageable);
+
+    long countByClientTypeAndAgencyCodeIn(ClientType clientType, List<String> agencyCodes);
+
+    long countByStatusAndAgencyCodeIn(AnomalyStatus status, List<String> agencyCodes);
+
+    long countByAgencyCodeIn(List<String> agencyCodes);
+
+    @Query("SELECT a.agencyCode as agencyCode, a.agencyName as agencyName, COUNT(a) as count " +
+           "FROM Anomaly a " +
+           "WHERE a.clientType = :clientType AND a.agencyCode IN :agencyCodes " +
+           "GROUP BY a.agencyCode, a.agencyName " +
+           "ORDER BY count DESC")
+    List<Object[]> countByAgencyAndClientTypeFiltered(@Param("clientType") ClientType clientType,
+                                                      @Param("agencyCodes") List<String> agencyCodes);
+
+    @Query("SELECT a.agencyCode, a.agencyName, COUNT(a) " +
+           "FROM Anomaly a " +
+           "WHERE a.agencyCode IN :agencyCodes " +
+           "GROUP BY a.agencyCode, a.agencyName " +
+           "ORDER BY COUNT(a) DESC")
+    List<Object[]> countByAgencyGroupedFiltered(@Param("agencyCodes") List<String> agencyCodes);
+
+    @Query("SELECT a.fieldName as fieldName, COUNT(a) as count " +
+           "FROM Anomaly a " +
+           "WHERE a.clientType = :clientType AND a.agencyCode IN :agencyCodes " +
+           "GROUP BY a.fieldName " +
+           "ORDER BY count DESC")
+    List<Object[]> countByFieldNameAndClientTypeFiltered(@Param("clientType") ClientType clientType,
+                                                         @Param("agencyCodes") List<String> agencyCodes,
+                                                         Pageable pageable);
+
+    @Query("SELECT DATE(a.createdAt) as date, COUNT(a) as count " +
+           "FROM Anomaly a " +
+           "WHERE a.createdAt >= :startDate AND a.agencyCode IN :agencyCodes " +
+           "GROUP BY DATE(a.createdAt) " +
+           "ORDER BY date DESC")
+    List<Object[]> countByCreatedAtAfterGroupByDateFiltered(@Param("startDate") LocalDateTime startDate,
+                                                            @Param("agencyCodes") List<String> agencyCodes);
+
     long countByClientTypeAndStatus(ClientType clientType, AnomalyStatus status);
 
     @Query("SELECT a.agencyCode as agencyCode, a.agencyName as agencyName, COUNT(a) as count " +
@@ -73,6 +120,8 @@ public interface AnomalyRepository extends JpaRepository<Anomaly, Long> {
      * Find all open anomalies for a client.
      */
     List<Anomaly> findByClientNumberAndStatusNotIn(String clientNumber, List<AnomalyStatus> excludedStatuses);
+
+    List<Anomaly> findByClientNumberAndStatusIn(String clientNumber, List<AnomalyStatus> statuses);
 
     /**
      * Count anomalies grouped by agency for dashboard.

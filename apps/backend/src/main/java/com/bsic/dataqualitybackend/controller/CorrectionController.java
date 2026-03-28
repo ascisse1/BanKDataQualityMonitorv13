@@ -25,7 +25,6 @@ import java.util.Map;
 @RestController
 @RequestMapping("/api/corrections")
 @RequiredArgsConstructor
-@CrossOrigin(origins = "*")
 public class CorrectionController {
 
     private final CorrectionService correctionService;
@@ -104,7 +103,6 @@ public class CorrectionController {
                 .email(user.getEmail())
                 .fullName(user.getFullName())
                 .role(user.getRole())
-                .agencyCode(user.getAgencyCode())
                 .build();
     }
 

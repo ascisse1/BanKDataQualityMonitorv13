@@ -1,6 +1,12 @@
 package com.bsic.dataqualitybackend.service;
 
+import com.bsic.dataqualitybackend.model.Anomaly;
+import com.bsic.dataqualitybackend.model.Ticket;
+import com.bsic.dataqualitybackend.model.enums.AnomalyStatus;
+import com.bsic.dataqualitybackend.model.enums.TicketStatus;
+import com.bsic.dataqualitybackend.repository.AnomalyRepository;
 import com.bsic.dataqualitybackend.repository.InformixRepository;
+import com.bsic.dataqualitybackend.repository.TicketRepository;
 import lombok.extern.slf4j.Slf4j;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.beans.factory.annotation.Qualifier;
@@ -18,12 +24,18 @@ public class ReconciliationService {
 
     private final InformixRepository informixRepository;
     private final JdbcTemplate mysqlJdbcTemplate;
+    private final TicketRepository ticketRepository;
+    private final AnomalyRepository anomalyRepository;
 
     public ReconciliationService(
             @Autowired(required = false) InformixRepository informixRepository,
-            @Qualifier("primaryJdbcTemplate") JdbcTemplate mysqlJdbcTemplate) {
+            @Qualifier("primaryJdbcTemplate") JdbcTemplate mysqlJdbcTemplate,
+            TicketRepository ticketRepository,
+            AnomalyRepository anomalyRepository) {
         this.informixRepository = informixRepository;
         this.mysqlJdbcTemplate = mysqlJdbcTemplate;
+        this.ticketRepository = ticketRepository;
+        this.anomalyRepository = anomalyRepository;
     }
 
     public Map<String, Object> reconcileTask(String taskId) {
@@ -53,7 +65,7 @@ public class ReconciliationService {
         for (Map<String, Object> correction : corrections) {
             String field = (String) correction.get("field_name");
             String expectedValue = (String) correction.get("new_value");
-            String cbsColumn = mapFieldToCBSColumn(field);
+            String cbsColumn = CbsColumnRegistry.toAlias(field);
             Object cbsValueObj = cbsData.get(cbsColumn);
             String cbsValue = cbsValueObj != null ? cbsValueObj.toString().trim() : "";
 
@@ -80,6 +92,11 @@ public class ReconciliationService {
                 : "failed";
 
         updateTaskStatus(taskId, status);
+
+        // If fully reconciled, close the ticket and its anomalies
+        if ("reconciled".equals(status)) {
+            closeTicketAfterReconciliation(ticketId, clientId);
+        }
 
         Map<String, Object> result = new HashMap<>();
         result.put("task_id", taskId);
@@ -264,6 +281,45 @@ public class ReconciliationService {
         return result;
     }
 
+    /**
+     * Close the ticket and related anomalies after successful reconciliation.
+     * This is the final step — ticket moves UPDATED_CBS → CLOSED.
+     */
+    @Transactional
+    private void closeTicketAfterReconciliation(String ticketNumber, String clientId) {
+        try {
+            Optional<Ticket> ticketOpt = ticketRepository.findByTicketNumber(ticketNumber);
+            if (ticketOpt.isEmpty()) {
+                log.warn("Ticket {} not found for post-reconciliation closure", ticketNumber);
+                return;
+            }
+
+            Ticket ticket = ticketOpt.get();
+            if (ticket.getStatus() != TicketStatus.UPDATED_CBS) {
+                log.info("Ticket {} is in status {} — skipping post-reconciliation closure",
+                        ticketNumber, ticket.getStatus());
+                return;
+            }
+
+            ticket.setStatus(TicketStatus.CLOSED);
+            ticket.setClosedAt(LocalDateTime.now());
+            ticketRepository.save(ticket);
+
+            // Close related anomalies
+            List<Anomaly> openAnomalies = anomalyRepository.findByClientNumberAndStatusIn(
+                    clientId, List.of(AnomalyStatus.CORRECTED, AnomalyStatus.IN_PROGRESS));
+            for (Anomaly anomaly : openAnomalies) {
+                anomaly.setStatus(AnomalyStatus.CLOSED);
+                anomalyRepository.save(anomaly);
+            }
+
+            log.info("Ticket {} and {} anomalies closed after successful reconciliation",
+                    ticketNumber, openAnomalies.size());
+        } catch (Exception e) {
+            log.error("Failed to close ticket {} after reconciliation: {}", ticketNumber, e.getMessage(), e);
+        }
+    }
+
     private Map<String, Object> getTask(String taskId) {
         String sql = """
             SELECT t.id, t.ticket_id, t.client_id, t.status, t.created_at, t.attempts,
@@ -313,23 +369,7 @@ public class ReconciliationService {
         mysqlJdbcTemplate.update(sql, status, status, taskId);
     }
 
-    private String mapFieldToCBSColumn(String field) {
-        Map<String, String> fieldMapping = Map.ofEntries(
-                Map.entry("name", "name"),
-                Map.entry("firstname", "firstname"),
-                Map.entry("address", "address"),
-                Map.entry("city", "city"),
-                Map.entry("postal_code", "postal_code"),
-                Map.entry("phone", "phone"),
-                Map.entry("email", "email"),
-                Map.entry("birth_date", "birth_date"),
-                Map.entry("nationality", "nationality"),
-                Map.entry("client_type", "client_type"),
-                Map.entry("fatca_status", "fatca_status")
-    );
-
-        return fieldMapping.getOrDefault(field, field);
-    }
+    // Field-to-CBS-alias mapping is now centralized in CbsColumnRegistry
 
     private boolean compareValues(String expected, String actual) {
         String normalizedExpected = normalizeValue(expected);

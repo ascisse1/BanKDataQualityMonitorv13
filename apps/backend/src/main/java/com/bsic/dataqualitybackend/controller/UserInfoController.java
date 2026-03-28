@@ -61,9 +61,8 @@ public class UserInfoController {
         userInfo.put("givenName", principal.getGivenName());
         userInfo.put("familyName", principal.getFamilyName());
 
-        // Extract agency_code from claims (custom Keycloak attribute)
-        Object agencyCode = principal.getClaim("agency_code");
-        userInfo.put("agencyCode", agencyCode);
+        // Agency codes from active UserProfile assignments (DB-driven, not token-driven)
+        // Will be populated after sync below
 
         // Log all authorities for debugging
         List<String> allAuthorities = authentication.getAuthorities().stream()
@@ -84,11 +83,14 @@ public class UserInfoController {
         String primaryRole = determinePrimaryRole(roles);
         userInfo.put("role", primaryRole);
 
-        // Sync user info to local database
+        // Sync user info to local database and resolve agency codes
         try {
-            userService.syncFromOidc(principal, roles);
+            com.bsic.dataqualitybackend.model.User syncedUser = userService.syncFromOidc(principal, roles);
+            List<String> agencyCodes = userService.getUserAgencyCodes(syncedUser.getId());
+            userInfo.put("agencyCodes", agencyCodes);
         } catch (Exception e) {
             log.warn("Failed to sync user {} to local database: {}", principal.getPreferredUsername(), e.getMessage());
+            userInfo.put("agencyCodes", List.of());
         }
 
         log.debug("Returning user info for: {}", principal.getPreferredUsername());

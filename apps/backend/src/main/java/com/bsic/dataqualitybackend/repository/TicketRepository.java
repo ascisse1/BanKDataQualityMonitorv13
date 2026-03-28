@@ -60,4 +60,19 @@ public interface TicketRepository extends JpaRepository<Ticket, Long> {
 
     @Query("SELECT COUNT(t) FROM Ticket t WHERE t.status = :status ")
     long countByStatus(@Param("status") TicketStatus status);
+
+    // Multi-agency (IN clause) variants
+    Page<Ticket> findByAgencyCodeIn(List<String> agencyCodes, Pageable pageable);
+
+    @Query("SELECT t FROM Ticket t WHERE t.agencyCode IN :agencyCodes AND t.status = :status")
+    Page<Ticket> findByAgencyCodeInAndStatus(@Param("agencyCodes") List<String> agencyCodes,
+                                              @Param("status") TicketStatus status, Pageable pageable);
+
+    @Query("SELECT t FROM Ticket t WHERE t.status = :status AND t.agencyCode IN :agencyCodes")
+    List<Ticket> findByStatusAndAgencyCodeIn(@Param("status") TicketStatus status,
+                                              @Param("agencyCodes") List<String> agencyCodes);
+
+    @Query("SELECT COUNT(t) FROM Ticket t WHERE t.status = :status AND t.agencyCode IN :agencyCodes")
+    long countByStatusAndAgencyCodeIn(@Param("status") TicketStatus status,
+                                      @Param("agencyCodes") List<String> agencyCodes);
 }

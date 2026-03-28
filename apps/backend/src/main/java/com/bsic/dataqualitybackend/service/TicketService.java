@@ -5,6 +5,7 @@ import com.bsic.dataqualitybackend.model.*;
 import com.bsic.dataqualitybackend.model.enums.TicketPriority;
 import com.bsic.dataqualitybackend.model.enums.TicketStatus;
 import com.bsic.dataqualitybackend.repository.*;
+import com.bsic.dataqualitybackend.security.StructureSecurityService;
 import lombok.RequiredArgsConstructor;
 import lombok.extern.slf4j.Slf4j;
 import org.springframework.data.domain.Page;
@@ -28,6 +29,7 @@ public class TicketService {
     private final ClientRepository clientRepository;
     private final UserRepository userRepository;
     private final BusinessMetricsConfig metricsConfig;
+    private final StructureSecurityService structureSecurityService;
 
     @Transactional
     public Ticket createTicket(Ticket ticket, User createdBy) {
@@ -55,19 +57,31 @@ public class TicketService {
     }
 
     public Optional<Ticket> getTicketById(Long id) {
-        return ticketRepository.findById(id);
+        Optional<Ticket> ticket = ticketRepository.findById(id);
+        ticket.ifPresent(t -> structureSecurityService.requireAgencyAccess(t.getAgencyCode()));
+        return ticket;
     }
 
     public Optional<Ticket> getTicketByNumber(String ticketNumber) {
-        return ticketRepository.findByTicketNumber(ticketNumber);
+        Optional<Ticket> ticket = ticketRepository.findByTicketNumber(ticketNumber);
+        ticket.ifPresent(t -> structureSecurityService.requireAgencyAccess(t.getAgencyCode()));
+        return ticket;
     }
 
     public Page<Ticket> getTicketsByAgency(String agencyCode, Pageable pageable) {
+        structureSecurityService.requireAgencyAccess(agencyCode);
         return ticketRepository.findByAgencyCode(agencyCode, pageable);
     }
 
     public Page<Ticket> getAllTickets(Pageable pageable) {
-        return ticketRepository.findAll(pageable);
+        List<String> agencies = structureSecurityService.getAgencyFilter();
+        if (agencies.isEmpty()) {
+            return ticketRepository.findAll(pageable);
+        } else if (agencies.size() == 1) {
+            return ticketRepository.findByAgencyCode(agencies.get(0), pageable);
+        } else {
+            return ticketRepository.findByAgencyCodeIn(agencies, pageable);
+        }
     }
 
     public Page<Ticket> getTicketsByStatus(TicketStatus status, Pageable pageable) {

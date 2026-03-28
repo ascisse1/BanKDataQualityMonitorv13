@@ -63,7 +63,6 @@ public class AuthController {
                 .fullName(user.getFullName())
                 .role(user.getRole())
                 .department(user.getDepartment())
-                .agencyCode(user.getAgencyCode())
                 .status(user.getStatus())
                 .lastLogin(user.getLastLogin())
                 .createdAt(user.getCreatedAt())

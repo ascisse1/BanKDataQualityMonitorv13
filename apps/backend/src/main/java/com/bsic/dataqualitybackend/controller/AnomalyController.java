@@ -19,7 +19,6 @@ import java.util.Map;
 @RestController
 @RequestMapping("/api/anomalies")
 @RequiredArgsConstructor
-@CrossOrigin(origins = "*")
 public class AnomalyController {
 
     private final AnomalyService anomalyService;

@@ -12,6 +12,7 @@ import com.bsic.dataqualitybackend.model.enums.TicketStatus;
 import com.bsic.dataqualitybackend.repository.AnomalyRepository;
 import com.bsic.dataqualitybackend.repository.TicketIncidentRepository;
 import com.bsic.dataqualitybackend.repository.TicketRepository;
+import com.bsic.dataqualitybackend.security.StructureSecurityService;
 import lombok.extern.slf4j.Slf4j;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Service;
@@ -31,6 +32,7 @@ public class CorrectionService {
     private final TicketService ticketService;
     private final WorkflowService workflowService;
     private final UserService userService;
+    private final StructureSecurityService structureSecurityService;
 
     @Autowired(required = false)
     private CbsUpdateService cbsUpdateService;
@@ -40,13 +42,15 @@ public class CorrectionService {
                              AnomalyRepository anomalyRepository,
                              TicketService ticketService,
                              WorkflowService workflowService,
-                             UserService userService) {
+                             UserService userService,
+                             StructureSecurityService structureSecurityService) {
         this.ticketRepository = ticketRepository;
         this.ticketIncidentRepository = ticketIncidentRepository;
         this.anomalyRepository = anomalyRepository;
         this.ticketService = ticketService;
         this.workflowService = workflowService;
         this.userService = userService;
+        this.structureSecurityService = structureSecurityService;
     }
     /**
      * Submit a correction for an anomaly.
@@ -122,7 +126,11 @@ public class CorrectionService {
      * Get pending corrections requiring validation (4 Eyes)
      */
     public List<Ticket> getPendingValidationTickets() {
-        return ticketRepository.findByStatus(TicketStatus.PENDING_VALIDATION);
+        List<String> agencies = structureSecurityService.getAgencyFilter();
+        if (agencies.isEmpty()) {
+            return ticketRepository.findByStatus(TicketStatus.PENDING_VALIDATION);
+        }
+        return ticketRepository.findByStatusAndAgencyCodeIn(TicketStatus.PENDING_VALIDATION, agencies);
     }
 
     /**
@@ -177,15 +185,16 @@ public class CorrectionService {
                 try {
                     boolean cbsUpdated = cbsUpdateService.applyCorrections(ticket);
                     if (cbsUpdated) {
-                        cbsMessage = "Correction validée et appliquée au CBS avec succès";
-                        // Reload ticket after CBS update (status is now CLOSED)
-                        ticket = ticketRepository.findById(ticketId).orElse(ticket);
+                        cbsMessage = "Correction validée et appliquée au CBS. En attente de réconciliation.";
                     } else {
-                        cbsMessage = "Correction validée. Mise à jour CBS en attente (aucune donnée à appliquer)";
+                        cbsMessage = "Correction validée. Mise à jour CBS échouée (client introuvable dans le CBS)";
                     }
+                    // Reload ticket after CBS update (status may have changed)
+                    ticket = ticketRepository.findById(ticketId).orElse(ticket);
                 } catch (Exception e) {
                     log.error("CBS update failed for ticket {}: {}", ticket.getTicketNumber(), e.getMessage());
                     cbsMessage = "Correction validée. Erreur lors de la mise à jour CBS: " + e.getMessage();
+                    ticket = ticketRepository.findById(ticketId).orElse(ticket);
                 }
             } else {
                 log.info("CBS integration not enabled — ticket {} validated but CBS not updated", ticket.getTicketNumber());

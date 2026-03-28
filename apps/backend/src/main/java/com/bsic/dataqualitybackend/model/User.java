@@ -53,9 +53,6 @@ public class User implements UserDetails {
     @Column(length = 50)
     private String department;
 
-    @Column(name = "agency_code", length = 5)
-    private String agencyCode;
-
     @Enumerated(EnumType.STRING)
     @Column(nullable = false)
     private UserStatus status = UserStatus.ACTIVE;

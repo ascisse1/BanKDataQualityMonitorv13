@@ -8,6 +8,7 @@ import com.bsic.dataqualitybackend.model.enums.ClientType;
 import com.bsic.dataqualitybackend.repository.AnomalyRepository;
 import com.bsic.dataqualitybackend.repository.CorrectionStatsRepository;
 import com.bsic.dataqualitybackend.repository.FatcaClientRepository;
+import com.bsic.dataqualitybackend.security.StructureSecurityService;
 import lombok.RequiredArgsConstructor;
 import lombok.extern.slf4j.Slf4j;
 import org.springframework.stereotype.Service;
@@ -26,31 +27,50 @@ public class StatisticsService {
     private final AnomalyRepository anomalyRepository;
     private final FatcaClientRepository fatcaClientRepository;
     private final CorrectionStatsRepository correctionStatsRepository;
+    private final StructureSecurityService structureSecurityService;
 
     public StatsDto getGlobalStats() {
+        List<String> agencies = structureSecurityService.getAgencyFilter();
+
         long totalClients = fatcaClientRepository.count();
         long totalIndividual = fatcaClientRepository.countByClientType(ClientType.INDIVIDUAL);
         long totalCorporate = fatcaClientRepository.countByClientType(ClientType.CORPORATE);
         long totalInstitutional = fatcaClientRepository.countByClientType(ClientType.INSTITUTIONAL);
 
-        long totalAnomalies = anomalyRepository.count();
-        long pendingAnomalies = anomalyRepository.countByStatus(AnomalyStatus.PENDING);
-        long correctedAnomalies = anomalyRepository.countByStatus(AnomalyStatus.CORRECTED);
-        long validatedAnomalies = anomalyRepository.countByStatus(AnomalyStatus.VALIDATED);
+        long totalAnomalies;
+        long pendingAnomalies;
+        long correctedAnomalies;
+        long validatedAnomalies;
+        Map<String, Long> anomaliesByType = new HashMap<>();
+        Map<String, Long> anomaliesByStatus = new HashMap<>();
+
+        if (agencies.isEmpty()) {
+            totalAnomalies = anomalyRepository.count();
+            pendingAnomalies = anomalyRepository.countByStatus(AnomalyStatus.PENDING);
+            correctedAnomalies = anomalyRepository.countByStatus(AnomalyStatus.CORRECTED);
+            validatedAnomalies = anomalyRepository.countByStatus(AnomalyStatus.VALIDATED);
+            anomaliesByType.put("INDIVIDUAL", anomalyRepository.countByClientType(ClientType.INDIVIDUAL));
+            anomaliesByType.put("CORPORATE", anomalyRepository.countByClientType(ClientType.CORPORATE));
+            anomaliesByType.put("INSTITUTIONAL", anomalyRepository.countByClientType(ClientType.INSTITUTIONAL));
+            for (AnomalyStatus status : AnomalyStatus.values()) {
+                anomaliesByStatus.put(status.name(), anomalyRepository.countByStatus(status));
+            }
+        } else {
+            totalAnomalies = anomalyRepository.countByAgencyCodeIn(agencies);
+            pendingAnomalies = anomalyRepository.countByStatusAndAgencyCodeIn(AnomalyStatus.PENDING, agencies);
+            correctedAnomalies = anomalyRepository.countByStatusAndAgencyCodeIn(AnomalyStatus.CORRECTED, agencies);
+            validatedAnomalies = anomalyRepository.countByStatusAndAgencyCodeIn(AnomalyStatus.VALIDATED, agencies);
+            anomaliesByType.put("INDIVIDUAL", anomalyRepository.countByClientTypeAndAgencyCodeIn(ClientType.INDIVIDUAL, agencies));
+            anomaliesByType.put("CORPORATE", anomalyRepository.countByClientTypeAndAgencyCodeIn(ClientType.CORPORATE, agencies));
+            anomaliesByType.put("INSTITUTIONAL", anomalyRepository.countByClientTypeAndAgencyCodeIn(ClientType.INSTITUTIONAL, agencies));
+            for (AnomalyStatus status : AnomalyStatus.values()) {
+                anomaliesByStatus.put(status.name(), anomalyRepository.countByStatusAndAgencyCodeIn(status, agencies));
+            }
+        }
 
         double correctionRate = totalAnomalies > 0
             ? (double) (correctedAnomalies + validatedAnomalies) / totalAnomalies * 100
             : 0.0;
-
-        Map<String, Long> anomaliesByType = new HashMap<>();
-        anomaliesByType.put("INDIVIDUAL", anomalyRepository.countByClientType(ClientType.INDIVIDUAL));
-        anomaliesByType.put("CORPORATE", anomalyRepository.countByClientType(ClientType.CORPORATE));
-        anomaliesByType.put("INSTITUTIONAL", anomalyRepository.countByClientType(ClientType.INSTITUTIONAL));
-
-        Map<String, Long> anomaliesByStatus = new HashMap<>();
-        for (AnomalyStatus status : AnomalyStatus.values()) {
-            anomaliesByStatus.put(status.name(), anomalyRepository.countByStatus(status));
-        }
 
         return StatsDto.builder()
             .totalClients(totalClients)
@@ -91,14 +111,31 @@ public class StatisticsService {
     }
 
     public Map<String, Object> getValidationMetrics() {
+        List<String> agencies = structureSecurityService.getAgencyFilter();
         Map<String, Object> metrics = new HashMap<>();
 
-        long totalAnomalies = anomalyRepository.count();
-        long pending = anomalyRepository.countByStatus(AnomalyStatus.PENDING);
-        long inProgress = anomalyRepository.countByStatus(AnomalyStatus.IN_PROGRESS);
-        long corrected = anomalyRepository.countByStatus(AnomalyStatus.CORRECTED);
-        long validated = anomalyRepository.countByStatus(AnomalyStatus.VALIDATED);
-        long rejected = anomalyRepository.countByStatus(AnomalyStatus.REJECTED);
+        long totalAnomalies;
+        long pending;
+        long inProgress;
+        long corrected;
+        long validated;
+        long rejected;
+
+        if (agencies.isEmpty()) {
+            totalAnomalies = anomalyRepository.count();
+            pending = anomalyRepository.countByStatus(AnomalyStatus.PENDING);
+            inProgress = anomalyRepository.countByStatus(AnomalyStatus.IN_PROGRESS);
+            corrected = anomalyRepository.countByStatus(AnomalyStatus.CORRECTED);
+            validated = anomalyRepository.countByStatus(AnomalyStatus.VALIDATED);
+            rejected = anomalyRepository.countByStatus(AnomalyStatus.REJECTED);
+        } else {
+            totalAnomalies = anomalyRepository.countByAgencyCodeIn(agencies);
+            pending = anomalyRepository.countByStatusAndAgencyCodeIn(AnomalyStatus.PENDING, agencies);
+            inProgress = anomalyRepository.countByStatusAndAgencyCodeIn(AnomalyStatus.IN_PROGRESS, agencies);
+            corrected = anomalyRepository.countByStatusAndAgencyCodeIn(AnomalyStatus.CORRECTED, agencies);
+            validated = anomalyRepository.countByStatusAndAgencyCodeIn(AnomalyStatus.VALIDATED, agencies);
+            rejected = anomalyRepository.countByStatusAndAgencyCodeIn(AnomalyStatus.REJECTED, agencies);
+        }
 
         metrics.put("totalAnomalies", totalAnomalies);
         metrics.put("pending", pending);

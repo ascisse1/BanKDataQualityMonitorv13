@@ -6,6 +6,7 @@ import com.bsic.dataqualitybackend.model.enums.AnomalyStatus;
 import com.bsic.dataqualitybackend.model.enums.ClientType;
 import com.bsic.dataqualitybackend.repository.AnomalyRepository;
 import com.bsic.dataqualitybackend.config.metrics.BusinessMetricsConfig;
+import com.bsic.dataqualitybackend.security.StructureSecurityService;
 import lombok.RequiredArgsConstructor;
 import lombok.extern.slf4j.Slf4j;
 import org.springframework.cache.annotation.CacheEvict;
@@ -30,25 +31,47 @@ public class AnomalyService {
     private final AnomalyRepository anomalyRepository;
     private final BusinessMetricsConfig metricsConfig;
     private final AnomalyWorkflowService anomalyWorkflowService;
+    private final StructureSecurityService structureSecurityService;
 
     // Note: @Cacheable removed - Page objects don't serialize properly with Spring Cache
     // and cause ClassCastException (LinkedHashMap cannot be cast to Page)
     public Page<AnomalyDto> getAnomaliesByClientType(ClientType clientType, int page, int size) {
         log.debug("Fetching anomalies for clientType={}, page={}, size={}", clientType, page, size);
         Pageable pageable = PageRequest.of(page, size, Sort.by("createdAt").descending());
+        List<String> agencies = structureSecurityService.getAgencyFilter();
+
         if (clientType == null) {
-            return anomalyRepository.findAll(pageable).map(this::mapToDto);
+            if (agencies.isEmpty()) {
+                return anomalyRepository.findAll(pageable).map(this::mapToDto);
+            } else if (agencies.size() == 1) {
+                return anomalyRepository.findByAgencyCode(agencies.get(0), pageable).map(this::mapToDto);
+            } else {
+                return anomalyRepository.findByAgencyCodeIn(agencies, pageable).map(this::mapToDto);
+            }
         }
-        return anomalyRepository.findByClientType(clientType, pageable)
-            .map(this::mapToDto);
+
+        if (agencies.isEmpty()) {
+            return anomalyRepository.findByClientType(clientType, pageable).map(this::mapToDto);
+        } else if (agencies.size() == 1) {
+            return anomalyRepository.findByClientTypeAndAgencyCode(clientType, agencies.get(0), pageable).map(this::mapToDto);
+        } else {
+            return anomalyRepository.findByClientTypeAndAgencyCodeIn(clientType, agencies, pageable).map(this::mapToDto);
+        }
     }
 
     public Page<AnomalyDto> getAnomaliesByClientType(ClientType clientType, Pageable pageable) {
-        return anomalyRepository.findByClientType(clientType, pageable)
-            .map(this::mapToDto);
+        List<String> agencies = structureSecurityService.getAgencyFilter();
+        if (agencies.isEmpty()) {
+            return anomalyRepository.findByClientType(clientType, pageable).map(this::mapToDto);
+        } else if (agencies.size() == 1) {
+            return anomalyRepository.findByClientTypeAndAgencyCode(clientType, agencies.get(0), pageable).map(this::mapToDto);
+        } else {
+            return anomalyRepository.findByClientTypeAndAgencyCodeIn(clientType, agencies, pageable).map(this::mapToDto);
+        }
     }
 
     public Page<AnomalyDto> getAnomaliesByAgency(String agencyCode, int page, int size) {
+        structureSecurityService.requireAgencyAccess(agencyCode);
         Pageable pageable = PageRequest.of(page, size, Sort.by("createdAt").descending());
         return anomalyRepository.findByAgencyCode(agencyCode, pageable)
             .map(this::mapToDto);
@@ -56,22 +79,34 @@ public class AnomalyService {
 
     public Page<AnomalyDto> getAnomaliesByStatus(AnomalyStatus status, int page, int size) {
         Pageable pageable = PageRequest.of(page, size, Sort.by("createdAt").descending());
-        return anomalyRepository.findByStatus(status, pageable)
-            .map(this::mapToDto);
+        List<String> agencies = structureSecurityService.getAgencyFilter();
+        if (agencies.isEmpty()) {
+            return anomalyRepository.findByStatus(status, pageable).map(this::mapToDto);
+        } else if (agencies.size() == 1) {
+            return anomalyRepository.findByStatusAndAgencyCodeIn(status, agencies, pageable).map(this::mapToDto);
+        } else {
+            return anomalyRepository.findByStatusAndAgencyCodeIn(status, agencies, pageable).map(this::mapToDto);
+        }
     }
 
     public Page<AnomalyDto> getAnomaliesByStatus(AnomalyStatus status, Pageable pageable) {
-        return anomalyRepository.findByStatus(status, pageable)
-            .map(this::mapToDto);
+        List<String> agencies = structureSecurityService.getAgencyFilter();
+        if (agencies.isEmpty()) {
+            return anomalyRepository.findByStatus(status, pageable).map(this::mapToDto);
+        } else {
+            return anomalyRepository.findByStatusAndAgencyCodeIn(status, agencies, pageable).map(this::mapToDto);
+        }
     }
 
     public AnomalyDto getAnomalyById(Long id) {
-        return anomalyRepository.findById(id)
-            .map(this::mapToDto)
+        Anomaly anomaly = anomalyRepository.findById(id)
             .orElseThrow(() -> new RuntimeException("Anomaly not found with id: " + id));
+        structureSecurityService.requireAgencyAccess(anomaly.getAgencyCode());
+        return mapToDto(anomaly);
     }
 
     public List<AnomalyDto> getAnomaliesByAgencyCode(String agencyCode) {
+        structureSecurityService.requireAgencyAccess(agencyCode);
         return anomalyRepository.findByAgencyCode(agencyCode)
             .stream()
             .map(this::mapToDto)
@@ -79,42 +114,62 @@ public class AnomalyService {
     }
 
     public long countAnomaliesByStatus(AnomalyStatus status) {
-        return anomalyRepository.countByStatus(status);
+        List<String> agencies = structureSecurityService.getAgencyFilter();
+        if (agencies.isEmpty()) {
+            return anomalyRepository.countByStatus(status);
+        }
+        return anomalyRepository.countByStatusAndAgencyCodeIn(status, agencies);
     }
 
     public List<AnomalyDto> getRecentAnomalies(int limit) {
-        return anomalyRepository.findTop10ByOrderByCreatedAtDesc()
-            .stream()
-            .limit(limit)
-            .map(this::mapToDto)
-            .collect(Collectors.toList());
+        List<String> agencies = structureSecurityService.getAgencyFilter();
+        if (agencies.isEmpty()) {
+            return anomalyRepository.findTop10ByOrderByCreatedAtDesc()
+                .stream().limit(limit).map(this::mapToDto).collect(Collectors.toList());
+        }
+        Pageable pageable = PageRequest.of(0, limit, Sort.by("createdAt").descending());
+        return anomalyRepository.findByAgencyCodeIn(agencies, pageable)
+            .getContent().stream().map(this::mapToDto).collect(Collectors.toList());
     }
 
     public Map<String, Long> getAnomalyCountsByClientType() {
+        List<String> agencies = structureSecurityService.getAgencyFilter();
         Map<String, Long> counts = new HashMap<>();
-        counts.put("INDIVIDUAL", anomalyRepository.countByClientType(ClientType.INDIVIDUAL));
-        counts.put("CORPORATE", anomalyRepository.countByClientType(ClientType.CORPORATE));
-        counts.put("INSTITUTIONAL", anomalyRepository.countByClientType(ClientType.INSTITUTIONAL));
-        return counts;
-    }
-
-    public Map<String, Long> getAnomalyCountsByStatus() {
-        Map<String, Long> counts = new HashMap<>();
-        for (AnomalyStatus status : AnomalyStatus.values()) {
-            counts.put(status.name(), anomalyRepository.countByStatus(status));
+        if (agencies.isEmpty()) {
+            counts.put("INDIVIDUAL", anomalyRepository.countByClientType(ClientType.INDIVIDUAL));
+            counts.put("CORPORATE", anomalyRepository.countByClientType(ClientType.CORPORATE));
+            counts.put("INSTITUTIONAL", anomalyRepository.countByClientType(ClientType.INSTITUTIONAL));
+        } else {
+            counts.put("INDIVIDUAL", anomalyRepository.countByClientTypeAndAgencyCodeIn(ClientType.INDIVIDUAL, agencies));
+            counts.put("CORPORATE", anomalyRepository.countByClientTypeAndAgencyCodeIn(ClientType.CORPORATE, agencies));
+            counts.put("INSTITUTIONAL", anomalyRepository.countByClientTypeAndAgencyCodeIn(ClientType.INSTITUTIONAL, agencies));
         }
         return counts;
     }
 
-    /**
-     * Get anomalies by branch for a specific client type.
-     */
+    public Map<String, Long> getAnomalyCountsByStatus() {
+        List<String> agencies = structureSecurityService.getAgencyFilter();
+        Map<String, Long> counts = new HashMap<>();
+        if (agencies.isEmpty()) {
+            for (AnomalyStatus status : AnomalyStatus.values()) {
+                counts.put(status.name(), anomalyRepository.countByStatus(status));
+            }
+        } else {
+            for (AnomalyStatus status : AnomalyStatus.values()) {
+                counts.put(status.name(), anomalyRepository.countByStatusAndAgencyCodeIn(status, agencies));
+            }
+        }
+        return counts;
+    }
+
     public List<Map<String, Object>> getAnomaliesByBranch(ClientType clientType) {
-        List<Object[]> results = anomalyRepository.countByAgencyAndClientType(clientType);
+        List<String> agencies = structureSecurityService.getAgencyFilter();
+        List<Object[]> results = agencies.isEmpty()
+            ? anomalyRepository.countByAgencyAndClientType(clientType)
+            : anomalyRepository.countByAgencyAndClientTypeFiltered(clientType, agencies);
         return results.stream()
             .map(row -> {
                 Map<String, Object> map = new HashMap<>();
-                // Use field names expected by frontend
                 map.put("code_agence", row[0]);
                 map.put("lib_agence", row[1]);
                 map.put("nombre_anomalies", row[2]);
@@ -123,15 +178,14 @@ public class AnomalyService {
             .collect(Collectors.toList());
     }
 
-    /**
-     * Get anomalies by branch for all client types.
-     */
     public List<Map<String, Object>> getAnomaliesByBranchAll() {
-        List<Object[]> results = anomalyRepository.countByAgencyGrouped();
+        List<String> agencies = structureSecurityService.getAgencyFilter();
+        List<Object[]> results = agencies.isEmpty()
+            ? anomalyRepository.countByAgencyGrouped()
+            : anomalyRepository.countByAgencyGroupedFiltered(agencies);
         return results.stream()
             .map(row -> {
                 Map<String, Object> map = new HashMap<>();
-                // Use field names expected by frontend
                 map.put("code_agence", row[0]);
                 map.put("lib_agence", row[1]);
                 map.put("nombre_anomalies", row[2]);
@@ -142,7 +196,10 @@ public class AnomalyService {
 
     public List<Map<String, Object>> getTopAnomalyFields(ClientType clientType, int limit) {
         Pageable pageable = PageRequest.of(0, limit);
-        List<Object[]> results = anomalyRepository.countByFieldNameAndClientType(clientType, pageable);
+        List<String> agencies = structureSecurityService.getAgencyFilter();
+        List<Object[]> results = agencies.isEmpty()
+            ? anomalyRepository.countByFieldNameAndClientType(clientType, pageable)
+            : anomalyRepository.countByFieldNameAndClientTypeFiltered(clientType, agencies, pageable);
         return results.stream()
             .map(row -> {
                 Map<String, Object> map = new HashMap<>();
@@ -155,7 +212,10 @@ public class AnomalyService {
 
     public List<Map<String, Object>> getAnomalyTrends(int days) {
         LocalDateTime startDate = LocalDateTime.now().minusDays(days);
-        List<Object[]> results = anomalyRepository.countByCreatedAtAfterGroupByDate(startDate);
+        List<String> agencies = structureSecurityService.getAgencyFilter();
+        List<Object[]> results = agencies.isEmpty()
+            ? anomalyRepository.countByCreatedAtAfterGroupByDate(startDate)
+            : anomalyRepository.countByCreatedAtAfterGroupByDateFiltered(startDate, agencies);
         return results.stream()
             .map(row -> {
                 Map<String, Object> map = new HashMap<>();
@@ -200,6 +260,7 @@ public class AnomalyService {
     public AnomalyDto updateAnomaly(Long id, AnomalyDto anomalyDto) {
         Anomaly anomaly = anomalyRepository.findById(id)
             .orElseThrow(() -> new RuntimeException("Anomaly not found with id: " + id));
+        structureSecurityService.requireAgencyAccess(anomaly.getAgencyCode());
 
         AnomalyStatus previousStatus = anomaly.getStatus();
         anomaly.setCorrectionValue(anomalyDto.getCorrectionValue());

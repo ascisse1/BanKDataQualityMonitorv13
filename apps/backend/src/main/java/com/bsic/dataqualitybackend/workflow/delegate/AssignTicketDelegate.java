@@ -2,7 +2,8 @@ package com.bsic.dataqualitybackend.workflow.delegate;
 
 import com.bsic.dataqualitybackend.model.Ticket;
 import com.bsic.dataqualitybackend.model.User;
-import com.bsic.dataqualitybackend.repository.UserRepository;
+import com.bsic.dataqualitybackend.model.UserProfile;
+import com.bsic.dataqualitybackend.repository.UserProfileRepository;
 import com.bsic.dataqualitybackend.service.TicketService;
 import lombok.RequiredArgsConstructor;
 import lombok.extern.slf4j.Slf4j;
@@ -10,6 +11,7 @@ import org.flowable.engine.delegate.DelegateExecution;
 import org.flowable.engine.delegate.JavaDelegate;
 import org.springframework.stereotype.Component;
 
+import java.time.LocalDate;
 import java.util.List;
 
 @Slf4j
@@ -18,7 +20,7 @@ import java.util.List;
 public class AssignTicketDelegate implements JavaDelegate {
 
     private final TicketService ticketService;
-    private final UserRepository userRepository;
+    private final UserProfileRepository userProfileRepository;
 
     @Override
     public void execute(DelegateExecution execution) {
@@ -27,7 +29,12 @@ public class AssignTicketDelegate implements JavaDelegate {
 
         log.info("Auto-assigning ticket {} to agency {}", ticketId, agencyCode);
 
-        List<User> agencyUsers = userRepository.findActiveAgencyUsers(agencyCode);
+        List<User> agencyUsers = userProfileRepository
+            .findActiveByStructureCode(agencyCode, LocalDate.now())
+            .stream()
+            .map(UserProfile::getUser)
+            .distinct()
+            .toList();
 
         if (agencyUsers.isEmpty()) {
             log.warn("No active users found for agency: {} - keeping current assignee", agencyCode);

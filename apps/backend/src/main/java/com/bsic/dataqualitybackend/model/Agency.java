@@ -25,6 +25,10 @@ public class Agency {
     @Column(name = "lib", length = 30)
     private String lib;
 
+    @OneToOne(fetch = FetchType.LAZY)
+    @JoinColumn(name = "id_structure", referencedColumnName = "id")
+    private Structure structure;
+
     @CreationTimestamp
     @Column(name = "created_at", updatable = false)
     private LocalDateTime createdAt;

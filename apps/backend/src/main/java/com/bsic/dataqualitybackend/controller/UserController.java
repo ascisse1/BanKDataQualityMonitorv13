@@ -3,6 +3,8 @@ package com.bsic.dataqualitybackend.controller;
 import com.bsic.dataqualitybackend.dto.ApiResponse;
 import com.bsic.dataqualitybackend.dto.UserDto;
 import com.bsic.dataqualitybackend.model.User;
+import com.bsic.dataqualitybackend.model.UserProfile;
+import com.bsic.dataqualitybackend.repository.UserProfileRepository;
 import com.bsic.dataqualitybackend.service.UserService;
 import lombok.RequiredArgsConstructor;
 import lombok.extern.slf4j.Slf4j;
@@ -11,6 +13,7 @@ import org.springframework.http.ResponseEntity;
 import org.springframework.security.access.prepost.PreAuthorize;
 import org.springframework.web.bind.annotation.*;
 
+import java.time.LocalDate;
 import java.util.List;
 import java.util.stream.Collectors;
 
@@ -21,6 +24,7 @@ import java.util.stream.Collectors;
 public class UserController {
 
     private final UserService userService;
+    private final UserProfileRepository userProfileRepository;
 
     @GetMapping
     @PreAuthorize("hasAnyRole('ADMIN', 'AUDITOR')")
@@ -46,17 +50,11 @@ public class UserController {
     @GetMapping("/agency/{agencyCode}")
     @PreAuthorize("hasAnyRole('ADMIN', 'AUDITOR')")
     public ResponseEntity<ApiResponse<List<UserDto>>> getUsersByAgency(@PathVariable String agencyCode) {
-        List<User> users = userService.getUsersByAgency(agencyCode);
-        List<UserDto> userDtos = users.stream()
-                .map(this::mapToUserDto)
-                .collect(Collectors.toList());
-
-        return ResponseEntity.ok(ApiResponse.success(userDtos));
-    }
-
-    @GetMapping("/agency/{agencyCode}/active")
-    public ResponseEntity<ApiResponse<List<UserDto>>> getActiveAgencyUsers(@PathVariable String agencyCode) {
-        List<User> users = userService.getActiveAgencyUsers(agencyCode);
+        List<User> users = userProfileRepository.findActiveByStructureCode(agencyCode, LocalDate.now())
+                .stream()
+                .map(UserProfile::getUser)
+                .distinct()
+                .toList();
         List<UserDto> userDtos = users.stream()
                 .map(this::mapToUserDto)
                 .collect(Collectors.toList());
@@ -98,7 +96,6 @@ public class UserController {
                 .fullName(user.getFullName())
                 .role(user.getRole())
                 .department(user.getDepartment())
-                .agencyCode(user.getAgencyCode())
                 .status(user.getStatus())
                 .lastLogin(user.getLastLogin())
                 .createdAt(user.getCreatedAt())

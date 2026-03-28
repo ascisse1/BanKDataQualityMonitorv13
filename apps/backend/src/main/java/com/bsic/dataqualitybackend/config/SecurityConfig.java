@@ -102,13 +102,6 @@ public class SecurityConfig {
                                 "/api/public/**",
                                 "/api/auth-info",
                                 "/api/me",                      // User info endpoint for auth check
-                                // Data endpoints (TODO: secure in production)
-                                "/api/stats/**",
-                                "/api/anomalies/**",
-                                "/api/agencies/**",
-                                "/api/validation/**",
-                                "/api/fatca/**",
-                                "/api/tracking/**",
                                 "/api/monitoring/**"      // Frontend monitoring logs
                         ).permitAll()
                         // Role-based access

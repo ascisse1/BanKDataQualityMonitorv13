@@ -16,6 +16,7 @@ const STATUS_LABELS: Record<string, string> = {
   PENDING_VALIDATION: 'En attente de validation',
   VALIDATED: 'Validé',
   UPDATED_CBS: 'CBS mis à jour',
+  CBS_UPDATE_FAILED: 'Échec mise à jour CBS',
   CLOSED: 'Clôturé',
   REJECTED: 'Rejeté',
 };
@@ -27,6 +28,7 @@ const STATUS_COLORS: Record<string, string> = {
   PENDING_VALIDATION: 'bg-orange-100 text-orange-800',
   VALIDATED: 'bg-green-100 text-green-800',
   UPDATED_CBS: 'bg-teal-100 text-teal-800',
+  CBS_UPDATE_FAILED: 'bg-red-100 text-red-800',
   CLOSED: 'bg-gray-100 text-gray-600',
   REJECTED: 'bg-red-100 text-red-800',
 };

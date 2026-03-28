@@ -252,7 +252,6 @@ public class TicketController {
                 .email(user.getEmail())
                 .fullName(user.getFullName())
                 .role(user.getRole())
-                .agencyCode(user.getAgencyCode())
                 .build();
     }
 }
