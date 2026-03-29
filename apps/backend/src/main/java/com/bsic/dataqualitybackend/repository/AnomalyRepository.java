@@ -28,6 +28,13 @@ public interface AnomalyRepository extends JpaRepository<Anomaly, Long> {
 
     long countByClientType(ClientType clientType);
 
+    @Query("SELECT COUNT(DISTINCT a.clientNumber) FROM Anomaly a " +
+           "WHERE a.clientType = :clientType " +
+           "AND a.status NOT IN (com.bsic.dataqualitybackend.model.enums.AnomalyStatus.CORRECTED, " +
+           "com.bsic.dataqualitybackend.model.enums.AnomalyStatus.VALIDATED, " +
+           "com.bsic.dataqualitybackend.model.enums.AnomalyStatus.CLOSED)")
+    long countDistinctClientsWithOpenAnomalies(@Param("clientType") ClientType clientType);
+
     long countByStatus(AnomalyStatus status);
 
     long countByStructureCode(String structureCode);

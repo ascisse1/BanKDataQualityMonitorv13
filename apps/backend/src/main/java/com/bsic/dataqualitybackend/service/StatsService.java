@@ -82,9 +82,11 @@ public class StatsService {
 
         List<ValidationMetricDto> metrics = new ArrayList<>();
 
+        // Count distinct clients with open anomalies (not total anomaly rows)
+        // A client with 5 bad fields = 5 anomalies but only 1 client with issues
         long individualTotal = clientRepository.countByTcli("1");
-        long individualAnomalies = anomalyRepository.countByClientType(ClientType.INDIVIDUAL);
-        long individualValid = individualTotal - individualAnomalies;
+        long individualWithIssues = anomalyRepository.countDistinctClientsWithOpenAnomalies(ClientType.INDIVIDUAL);
+        long individualValid = individualTotal - individualWithIssues;
         double individualScore = individualTotal > 0 ? (double) individualValid / individualTotal * 100 : 100;
 
         metrics.add(ValidationMetricDto.builder()
@@ -95,8 +97,8 @@ public class StatsService {
                 .build());
 
         long corporateTotal = clientRepository.countByTcli("2");
-        long corporateAnomalies = anomalyRepository.countByClientType(ClientType.CORPORATE);
-        long corporateValid = corporateTotal - corporateAnomalies;
+        long corporateWithIssues = anomalyRepository.countDistinctClientsWithOpenAnomalies(ClientType.CORPORATE);
+        long corporateValid = corporateTotal - corporateWithIssues;
         double corporateScore = corporateTotal > 0 ? (double) corporateValid / corporateTotal * 100 : 100;
 
         metrics.add(ValidationMetricDto.builder()
@@ -107,8 +109,8 @@ public class StatsService {
                 .build());
 
         long institutionalTotal = clientRepository.countByTcli("3");
-        long institutionalAnomalies = anomalyRepository.countByClientType(ClientType.INSTITUTIONAL);
-        long institutionalValid = institutionalTotal - institutionalAnomalies;
+        long institutionalWithIssues = anomalyRepository.countDistinctClientsWithOpenAnomalies(ClientType.INSTITUTIONAL);
+        long institutionalValid = institutionalTotal - institutionalWithIssues;
         double institutionalScore = institutionalTotal > 0 ? (double) institutionalValid / institutionalTotal * 100 : 100;
 
         metrics.add(ValidationMetricDto.builder()
