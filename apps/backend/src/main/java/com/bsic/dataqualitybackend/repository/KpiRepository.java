@@ -15,14 +15,14 @@ public interface KpiRepository extends JpaRepository<Kpi, Long> {
 
     List<Kpi> findByPeriodDate(LocalDate periodDate);
 
-    List<Kpi> findByAgencyCode(String agencyCode);
+    List<Kpi> findByStructureCode(String structureCode);
 
     List<Kpi> findByKpiType(String kpiType);
 
-    Optional<Kpi> findByPeriodDateAndAgencyCodeAndKpiType(LocalDate periodDate, String agencyCode, String kpiType);
+    Optional<Kpi> findByPeriodDateAndStructureCodeAndKpiType(LocalDate periodDate, String structureCode, String kpiType);
 
-    @Query("SELECT k FROM Kpi k WHERE k.periodDate BETWEEN :startDate AND :endDate AND k.agencyCode = :agencyCode ORDER BY k.periodDate")
-    List<Kpi> findByAgencyAndDateRange(@Param("agencyCode") String agencyCode,
+    @Query("SELECT k FROM Kpi k WHERE k.periodDate BETWEEN :startDate AND :endDate AND k.structureCode = :structureCode ORDER BY k.periodDate")
+    List<Kpi> findByAgencyAndDateRange(@Param("structureCode") String structureCode,
                                        @Param("startDate") LocalDate startDate,
                                        @Param("endDate") LocalDate endDate);
 

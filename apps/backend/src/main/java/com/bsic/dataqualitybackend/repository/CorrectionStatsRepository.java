@@ -13,13 +13,13 @@ import java.util.Optional;
 @Repository
 public interface CorrectionStatsRepository extends JpaRepository<CorrectionStats, Long> {
 
-    List<CorrectionStats> findByAgencyCode(String agencyCode);
+    List<CorrectionStats> findByStructureCode(String structureCode);
 
     List<CorrectionStats> findByStatsDateBetween(LocalDate startDate, LocalDate endDate);
 
     List<CorrectionStats> findByWeekNumberAndYearNumber(Integer weekNumber, Integer yearNumber);
 
-    Optional<CorrectionStats> findByAgencyCodeAndStatsDate(String agencyCode, LocalDate statsDate);
+    Optional<CorrectionStats> findByStructureCodeAndStatsDate(String structureCode, LocalDate statsDate);
 
     @Query("SELECT c FROM CorrectionStats c " +
            "WHERE c.weekNumber = :weekNumber AND c.yearNumber = :yearNumber " +
@@ -28,14 +28,14 @@ public interface CorrectionStatsRepository extends JpaRepository<CorrectionStats
         @Param("weekNumber") Integer weekNumber,
         @Param("yearNumber") Integer yearNumber);
 
-    @Query("SELECT c.agencyCode as agencyCode, c.agencyName as agencyName, " +
+    @Query("SELECT c.structureCode as structureCode, c.structureName as structureName, " +
            "SUM(c.totalAnomalies) as totalAnomalies, " +
            "SUM(c.correctedAnomalies) as correctedAnomalies, " +
            "SUM(c.validatedAnomalies) as validatedAnomalies, " +
            "AVG(c.correctionRate) as avgCorrectionRate " +
            "FROM CorrectionStats c " +
            "WHERE c.statsDate >= :startDate " +
-           "GROUP BY c.agencyCode, c.agencyName " +
+           "GROUP BY c.structureCode, c.structureName " +
            "ORDER BY avgCorrectionRate DESC")
     List<Object[]> getAgencyStatsSummary(@Param("startDate") LocalDate startDate);
 }

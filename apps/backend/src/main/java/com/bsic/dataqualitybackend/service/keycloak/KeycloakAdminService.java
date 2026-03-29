@@ -28,6 +28,20 @@ public class KeycloakAdminService {
     // ==================== USER MANAGEMENT ====================
 
     /**
+     * Gets all users in the realm.
+     *
+     * @return list of all users.
+     */
+    public List<UserRepresentation> getAllRealmUsers() {
+        try {
+            return keycloakConfig.getUsersResource().list(0, Integer.MAX_VALUE);
+        } catch (Exception e) {
+            log.error("Error getting all realm users: {}", e.getMessage());
+            return Collections.emptyList();
+        }
+    }
+
+    /**
      * Creates a new user in Keycloak.
      *
      * @param username    the username.
@@ -510,11 +524,11 @@ public class KeycloakAdminService {
      * Sets the agency code for a user (custom attribute).
      *
      * @param userId     the user ID.
-     * @param agencyCode the agency code.
+     * @param structureCode the agency code.
      * @return true if successful.
      */
-    public boolean setUserAgencyCode(String userId, String agencyCode) {
-        return setUserAttribute(userId, keycloakConfig.getAgencyCodeClaim(), agencyCode);
+    public boolean setUserStructureCode(String userId, String structureCode) {
+        return setUserAttribute(userId, keycloakConfig.getStructureCodeClaim(), structureCode);
     }
 
     // ==================== HELPER METHODS ====================

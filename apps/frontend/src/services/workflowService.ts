@@ -17,7 +17,7 @@ export interface ProcessVariable {
 export interface StartWorkflowRequest {
   ticketId: number;
   clientId: string;
-  agencyCode: string;
+  structureCode: string;
   priority: string;
 }
 

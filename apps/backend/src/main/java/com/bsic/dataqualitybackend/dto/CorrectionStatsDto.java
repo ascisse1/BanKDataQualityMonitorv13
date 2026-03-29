@@ -14,8 +14,8 @@ import java.time.LocalDateTime;
 @AllArgsConstructor
 public class CorrectionStatsDto {
     private Long id;
-    private String agencyCode;
-    private String agencyName;
+    private String structureCode;
+    private String structureName;
     private LocalDate statsDate;
     private Integer weekNumber;
     private Integer monthNumber;

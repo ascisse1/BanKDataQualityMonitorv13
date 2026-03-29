@@ -18,73 +18,73 @@ public interface AnomalyRepository extends JpaRepository<Anomaly, Long> {
 
     Page<Anomaly> findByClientType(ClientType clientType, Pageable pageable);
 
-    Page<Anomaly> findByAgencyCode(String agencyCode, Pageable pageable);
+    Page<Anomaly> findByStructureCode(String structureCode, Pageable pageable);
 
-    List<Anomaly> findByAgencyCode(String agencyCode);
+    List<Anomaly> findByStructureCode(String structureCode);
 
     Page<Anomaly> findByStatus(AnomalyStatus status, Pageable pageable);
 
-    Page<Anomaly> findByClientTypeAndAgencyCode(ClientType clientType, String agencyCode, Pageable pageable);
+    Page<Anomaly> findByClientTypeAndStructureCode(ClientType clientType, String structureCode, Pageable pageable);
 
     long countByClientType(ClientType clientType);
 
     long countByStatus(AnomalyStatus status);
 
-    long countByAgencyCode(String agencyCode);
+    long countByStructureCode(String structureCode);
 
     // Multi-agency (IN clause) variants
-    Page<Anomaly> findByAgencyCodeIn(List<String> agencyCodes, Pageable pageable);
+    Page<Anomaly> findByStructureCodeIn(List<String> structureCodes, Pageable pageable);
 
-    List<Anomaly> findByAgencyCodeIn(List<String> agencyCodes);
+    List<Anomaly> findByStructureCodeIn(List<String> structureCodes);
 
-    Page<Anomaly> findByClientTypeAndAgencyCodeIn(ClientType clientType, List<String> agencyCodes, Pageable pageable);
+    Page<Anomaly> findByClientTypeAndStructureCodeIn(ClientType clientType, List<String> structureCodes, Pageable pageable);
 
-    Page<Anomaly> findByStatusAndAgencyCodeIn(AnomalyStatus status, List<String> agencyCodes, Pageable pageable);
+    Page<Anomaly> findByStatusAndStructureCodeIn(AnomalyStatus status, List<String> structureCodes, Pageable pageable);
 
-    long countByClientTypeAndAgencyCodeIn(ClientType clientType, List<String> agencyCodes);
+    long countByClientTypeAndStructureCodeIn(ClientType clientType, List<String> structureCodes);
 
-    long countByStatusAndAgencyCodeIn(AnomalyStatus status, List<String> agencyCodes);
+    long countByStatusAndStructureCodeIn(AnomalyStatus status, List<String> structureCodes);
 
-    long countByAgencyCodeIn(List<String> agencyCodes);
+    long countByStructureCodeIn(List<String> structureCodes);
 
-    @Query("SELECT a.agencyCode as agencyCode, a.agencyName as agencyName, COUNT(a) as count " +
+    @Query("SELECT a.structureCode as structureCode, a.structureName as structureName, COUNT(a) as count " +
            "FROM Anomaly a " +
-           "WHERE a.clientType = :clientType AND a.agencyCode IN :agencyCodes " +
-           "GROUP BY a.agencyCode, a.agencyName " +
+           "WHERE a.clientType = :clientType AND a.structureCode IN :structureCodes " +
+           "GROUP BY a.structureCode, a.structureName " +
            "ORDER BY count DESC")
     List<Object[]> countByAgencyAndClientTypeFiltered(@Param("clientType") ClientType clientType,
-                                                      @Param("agencyCodes") List<String> agencyCodes);
+                                                      @Param("structureCodes") List<String> structureCodes);
 
-    @Query("SELECT a.agencyCode, a.agencyName, COUNT(a) " +
+    @Query("SELECT a.structureCode, a.structureName, COUNT(a) " +
            "FROM Anomaly a " +
-           "WHERE a.agencyCode IN :agencyCodes " +
-           "GROUP BY a.agencyCode, a.agencyName " +
+           "WHERE a.structureCode IN :structureCodes " +
+           "GROUP BY a.structureCode, a.structureName " +
            "ORDER BY COUNT(a) DESC")
-    List<Object[]> countByAgencyGroupedFiltered(@Param("agencyCodes") List<String> agencyCodes);
+    List<Object[]> countByAgencyGroupedFiltered(@Param("structureCodes") List<String> structureCodes);
 
     @Query("SELECT a.fieldName as fieldName, COUNT(a) as count " +
            "FROM Anomaly a " +
-           "WHERE a.clientType = :clientType AND a.agencyCode IN :agencyCodes " +
+           "WHERE a.clientType = :clientType AND a.structureCode IN :structureCodes " +
            "GROUP BY a.fieldName " +
            "ORDER BY count DESC")
     List<Object[]> countByFieldNameAndClientTypeFiltered(@Param("clientType") ClientType clientType,
-                                                         @Param("agencyCodes") List<String> agencyCodes,
+                                                         @Param("structureCodes") List<String> structureCodes,
                                                          Pageable pageable);
 
     @Query("SELECT DATE(a.createdAt) as date, COUNT(a) as count " +
            "FROM Anomaly a " +
-           "WHERE a.createdAt >= :startDate AND a.agencyCode IN :agencyCodes " +
+           "WHERE a.createdAt >= :startDate AND a.structureCode IN :structureCodes " +
            "GROUP BY DATE(a.createdAt) " +
            "ORDER BY date DESC")
     List<Object[]> countByCreatedAtAfterGroupByDateFiltered(@Param("startDate") LocalDateTime startDate,
-                                                            @Param("agencyCodes") List<String> agencyCodes);
+                                                            @Param("structureCodes") List<String> structureCodes);
 
     long countByClientTypeAndStatus(ClientType clientType, AnomalyStatus status);
 
-    @Query("SELECT a.agencyCode as agencyCode, a.agencyName as agencyName, COUNT(a) as count " +
+    @Query("SELECT a.structureCode as structureCode, a.structureName as structureName, COUNT(a) as count " +
            "FROM Anomaly a " +
            "WHERE a.clientType = :clientType " +
-           "GROUP BY a.agencyCode, a.agencyName " +
+           "GROUP BY a.structureCode, a.structureName " +
            "ORDER BY count DESC")
     List<Object[]> countByAgencyAndClientType(@Param("clientType") ClientType clientType);
 
@@ -125,11 +125,11 @@ public interface AnomalyRepository extends JpaRepository<Anomaly, Long> {
 
     /**
      * Count anomalies grouped by agency for dashboard.
-     * Returns [agencyCode, agencyName, count]
+     * Returns [structureCode, structureName, count]
      */
-    @Query("SELECT a.agencyCode, a.agencyName, COUNT(a) " +
+    @Query("SELECT a.structureCode, a.structureName, COUNT(a) " +
            "FROM Anomaly a " +
-           "GROUP BY a.agencyCode, a.agencyName " +
+           "GROUP BY a.structureCode, a.structureName " +
            "ORDER BY COUNT(a) DESC")
     List<Object[]> countByAgencyGrouped();
 

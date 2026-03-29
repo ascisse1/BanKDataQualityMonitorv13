@@ -152,7 +152,7 @@ function mapAnomalyToFrontend(anomaly: any): any {
     tcli: mapClientTypeToCode(anomaly.clientType) || anomaly.tcli || '1',
     pre: firstName || anomaly.pre || '',
     prenom: firstName || anomaly.prenom || '', // Also add prenom for compatibility
-    age: anomaly.agencyCode || anomaly.age || '',
+    age: anomaly.structureCode || anomaly.age || '',
 
     // Anomaly-specific fields
     field: anomaly.fieldLabel || anomaly.field || '',
@@ -170,7 +170,7 @@ function mapAnomalyToFrontend(anomaly: any): any {
 
     // Keep original fields for potential use
     id: anomaly.id,
-    agencyName: anomaly.agencyName || '',
+    structureName: anomaly.structureName || '',
     createdAt: anomaly.createdAt,
     updatedAt: anomaly.updatedAt,
 
@@ -196,8 +196,8 @@ interface BranchAnomaly {
 }
 
 interface TrackingData {
-  agencyCode: string;
-  agencyName: string;
+  structureCode: string;
+  structureName: string;
   flux: {
     total: number;
     anomalies: number;
@@ -743,9 +743,9 @@ class DatabaseService {
     }
   }
 
-  public async getGlobalTrackingData(startDate?: string, endDate?: string, clientTypes?: string[], agencyCode?: string): Promise<TrackingData[]> {
+  public async getGlobalTrackingData(startDate?: string, endDate?: string, clientTypes?: string[], structureCode?: string): Promise<TrackingData[]> {
     try {
-      log.info('database', 'Getting global tracking data', { startDate, endDate, clientTypes, agencyCode });
+      log.info('database', 'Getting global tracking data', { startDate, endDate, clientTypes, structureCode });
 
       const params: Record<string, any> = {};
 
@@ -761,8 +761,8 @@ class DatabaseService {
         params.clientTypes = clientTypes.join(',');
       }
 
-      if (agencyCode) {
-        params.agencyCode = agencyCode;
+      if (structureCode) {
+        params.structureCode = structureCode;
       }
 
       const result = await this.fetchApi<any>('/tracking/global', {}, params);
@@ -777,8 +777,8 @@ class DatabaseService {
       // If it's an object with tracking data, return it as a single-item array
       if (result && typeof result === 'object') {
         return [{
-          agencyCode: 'ALL',
-          agencyName: 'Global',
+          structureCode: 'ALL',
+          structureName: 'Global',
           flux: {
             total: result.totalRecordsProcessed || 0,
             anomalies: result.totalAnomaliesDetected || 0,
@@ -803,7 +803,7 @@ class DatabaseService {
 
       return [];
     } catch (error) {
-      log.error('database', 'Failed to get global tracking data', { error, startDate, endDate, clientTypes, agencyCode });
+      log.error('database', 'Failed to get global tracking data', { error, startDate, endDate, clientTypes, structureCode });
       log.error('api', 'Failed to get global tracking data', { error });
       return [];
     }

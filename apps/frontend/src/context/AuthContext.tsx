@@ -11,7 +11,7 @@ interface User {
   role: 'ADMIN' | 'AUDITOR' | 'AGENCY_USER' | 'USER';
   email: string;
   fullName: string;
-  agencyCodes: string[];
+  structureCodes: string[];
 }
 
 /**
@@ -61,7 +61,7 @@ export const AuthProvider = ({ children }: { children: ReactNode }) => {
       email: sessionUser.email,
       fullName: sessionUser.fullName,
       role: mapRole(sessionUser.role),
-      agencyCodes: sessionUser.agencyCodes || [],
+      structureCodes: sessionUser.structureCodes || [],
     };
   }, [authenticated, sessionUser]);
 

@@ -24,14 +24,14 @@ export const KpiDashboardPage: React.FC = () => {
   const loadDashboard = async () => {
     try {
       setLoading(true);
-      const agencyCode = selectedAgency || (user?.agencyCode !== 'GLOBAL' ? user?.agencyCode : undefined);
+      const structureCode = selectedAgency || (user?.structureCode !== 'GLOBAL' ? user?.structureCode : undefined);
 
-      const dashboardData = await kpiService.getDashboardMetrics(agencyCode);
+      const dashboardData = await kpiService.getDashboardMetrics(structureCode);
       setMetrics(dashboardData);
 
-      if (agencyCode) {
+      if (structureCode) {
         const historical = await kpiService.getKpisByAgencyAndDateRange(
-          agencyCode,
+          structureCode,
           dateRange.startDate,
           dateRange.endDate
         );

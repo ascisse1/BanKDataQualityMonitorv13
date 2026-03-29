@@ -17,7 +17,7 @@ export const CreateTicketModal: React.FC<CreateTicketModalProps> = ({
 }) => {
   const [formData, setFormData] = useState({
     clientId: '',
-    agencyCode: '',
+    structureCode: '',
     priority: 'MEDIUM',
     description: ''
   });
@@ -33,13 +33,13 @@ export const CreateTicketModal: React.FC<CreateTicketModalProps> = ({
       await workflowService.startWorkflow({
         ticketId: 0,
         clientId: formData.clientId,
-        agencyCode: formData.agencyCode,
+        structureCode: formData.structureCode,
         priority: formData.priority
       });
 
       setFormData({
         clientId: '',
-        agencyCode: '',
+        structureCode: '',
         priority: 'MEDIUM',
         description: ''
       });
@@ -92,14 +92,14 @@ export const CreateTicketModal: React.FC<CreateTicketModalProps> = ({
           </div>
 
           <div>
-            <label htmlFor="agencyCode" className="block text-sm font-medium text-gray-700 mb-1">
+            <label htmlFor="structureCode" className="block text-sm font-medium text-gray-700 mb-1">
               Code Agence <span className="text-red-500">*</span>
             </label>
             <Input
-              id="agencyCode"
+              id="structureCode"
               type="text"
-              value={formData.agencyCode}
-              onChange={(e) => setFormData({ ...formData, agencyCode: e.target.value })}
+              value={formData.structureCode}
+              onChange={(e) => setFormData({ ...formData, structureCode: e.target.value })}
               placeholder="Ex: AGE001"
               required
             />

@@ -7,7 +7,7 @@ export interface UserDto {
   email: string;
   fullName: string;
   role: string;
-  agencyCode: string;
+  structureCode: string;
 }
 
 export interface TicketDto {
@@ -16,7 +16,7 @@ export interface TicketDto {
   cli: string;
   clientName: string;
   clientType: string;
-  agencyCode: string;
+  structureCode: string;
   status: string;
   priority: string;
   assignedTo: UserDto | null;
@@ -59,14 +59,14 @@ export const ticketService = {
     }
   },
 
-  async getTicketsByAgency(agencyCode: string, page = 0, size = 20): Promise<PageResponse<TicketDto>> {
+  async getTicketsByAgency(structureCode: string, page = 0, size = 20): Promise<PageResponse<TicketDto>> {
     try {
       const response = await apiClient.get<ApiResponse<PageResponse<TicketDto>>>(
-        `/api/tickets/agency/${agencyCode}?page=${page}&size=${size}`
+        `/api/tickets/agency/${structureCode}?page=${page}&size=${size}`
       );
       return response.data.data;
     } catch (error) {
-      log.error('api', 'Failed to fetch agency tickets', { error, agencyCode });
+      log.error('api', 'Failed to fetch agency tickets', { error, structureCode });
       throw error;
     }
   },

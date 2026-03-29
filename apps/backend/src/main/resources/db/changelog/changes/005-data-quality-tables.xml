@@ -25,10 +25,10 @@
             <column name="client_type" type="VARCHAR(50)">
                 <constraints nullable="false"/>
             </column>
-            <column name="agency_code" type="VARCHAR(255)">
+            <column name="structure_code" type="VARCHAR(255)">
                 <constraints nullable="false"/>
             </column>
-            <column name="agency_name" type="VARCHAR(255)"/>
+            <column name="structure_name" type="VARCHAR(255)"/>
             <column name="field_name" type="VARCHAR(255)">
                 <constraints nullable="false"/>
             </column>
@@ -60,8 +60,8 @@
         <createIndex tableName="anomalies" indexName="idx_anomaly_status">
             <column name="status"/>
         </createIndex>
-        <createIndex tableName="anomalies" indexName="idx_anomaly_agency">
-            <column name="agency_code"/>
+        <createIndex tableName="anomalies" indexName="idx_anomaly_structure">
+            <column name="structure_code"/>
         </createIndex>
         <createIndex tableName="anomalies" indexName="idx_anomaly_created">
             <column name="created_at"/>
@@ -104,10 +104,10 @@
             <column name="client_type" type="VARCHAR(50)">
                 <constraints nullable="false"/>
             </column>
-            <column name="agency_code" type="VARCHAR(255)">
+            <column name="structure_code" type="VARCHAR(255)">
                 <constraints nullable="false"/>
             </column>
-            <column name="agency_name" type="VARCHAR(255)"/>
+            <column name="structure_name" type="VARCHAR(255)"/>
             <column name="birth_place" type="VARCHAR(255)"/>
             <column name="birth_country" type="VARCHAR(255)"/>
             <column name="tax_residence_country" type="VARCHAR(255)"/>
@@ -144,8 +144,8 @@
         <createIndex tableName="fatca_clients" indexName="idx_fatca_status">
             <column name="fatca_status"/>
         </createIndex>
-        <createIndex tableName="fatca_clients" indexName="idx_fatca_agency">
-            <column name="agency_code"/>
+        <createIndex tableName="fatca_clients" indexName="idx_fatca_structure">
+            <column name="structure_code"/>
         </createIndex>
         <createIndex tableName="fatca_clients" indexName="idx_fatca_risk_level">
             <column name="risk_level"/>
@@ -248,10 +248,10 @@
             <column name="id" type="BIGINT" autoIncrement="true">
                 <constraints primaryKey="true" nullable="false"/>
             </column>
-            <column name="agency_code" type="VARCHAR(255)">
+            <column name="structure_code" type="VARCHAR(255)">
                 <constraints nullable="false"/>
             </column>
-            <column name="agency_name" type="VARCHAR(255)"/>
+            <column name="structure_name" type="VARCHAR(255)"/>
             <column name="stats_date" type="DATE">
                 <constraints nullable="false"/>
             </column>
@@ -268,8 +268,8 @@
                 <constraints nullable="false"/>
             </column>
         </createTable>
-        <createIndex tableName="correction_stats" indexName="idx_stats_agency">
-            <column name="agency_code"/>
+        <createIndex tableName="correction_stats" indexName="idx_stats_structure">
+            <column name="structure_code"/>
         </createIndex>
         <createIndex tableName="correction_stats" indexName="idx_stats_date">
             <column name="stats_date"/>

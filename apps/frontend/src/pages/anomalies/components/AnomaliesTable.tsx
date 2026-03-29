@@ -80,7 +80,7 @@ const AnomaliesTable: React.FC<AnomaliesTableProps> = ({
   const { user } = useAuth();
 
   const isAgencyUser = user?.role === 'AGENCY_USER';
-  const userAgencyCode = user?.agencyCode;
+  const userStructureCode = user?.structureCode;
   const debouncedSearch = useDebounce(searchTerm, 300);
 
   // Group anomalies by client
@@ -135,9 +135,9 @@ const AnomaliesTable: React.FC<AnomaliesTableProps> = ({
 
       // Filtrage par agence
       if (selectedAgency) {
-        params.agencyCode = selectedAgency;
-      } else if (isAgencyUser && userAgencyCode) {
-        params.agencyCode = userAgencyCode;
+        params.structureCode = selectedAgency;
+      } else if (isAgencyUser && userStructureCode) {
+        params.structureCode = userStructureCode;
       }
 
       // Filtrage par statut
@@ -184,7 +184,7 @@ const AnomaliesTable: React.FC<AnomaliesTableProps> = ({
     setExpandedRow(null);
     setEditingAnomaly(null);
     fetchAnomaliesFromBackend();
-  }, [selectedAgency, debouncedSearch, selectedStatus, selectedClientType, currentPage, userAgencyCode, paginationKey]);
+  }, [selectedAgency, debouncedSearch, selectedStatus, selectedClientType, currentPage, userStructureCode, paginationKey]);
 
   const toggleExpandRow = (cli: string) => {
     setExpandedRow(expandedRow === cli ? null : cli);
@@ -615,7 +615,7 @@ const AnomaliesTable: React.FC<AnomaliesTableProps> = ({
             itemsPerPage={itemsPerPage}
             onPageChange={handlePageChange}
             isLoading={loading || pageLoading}
-            summaryText={`${groupedClients.length} client${groupedClients.length > 1 ? 's' : ''} avec ${anomalies.length} anomalie${anomalies.length > 1 ? 's' : ''} au total${selectedAgency ? ` pour l'agence ${selectedAgency}` : ''}${isAgencyUser && userAgencyCode ? ` pour votre agence ${userAgencyCode}` : ''}`}
+            summaryText={`${groupedClients.length} client${groupedClients.length > 1 ? 's' : ''} avec ${anomalies.length} anomalie${anomalies.length > 1 ? 's' : ''} au total${selectedAgency ? ` pour l'agence ${selectedAgency}` : ''}${isAgencyUser && userStructureCode ? ` pour votre agence ${userStructureCode}` : ''}`}
           />
         </div>
       )}

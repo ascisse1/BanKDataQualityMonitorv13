@@ -18,8 +18,8 @@ public class AnomalyDto {
     private String clientNumber;
     private String clientName;
     private ClientType clientType;
-    private String agencyCode;
-    private String agencyName;
+    private String structureCode;
+    private String structureName;
     private String fieldName;
     private String fieldLabel;
     private String currentValue;

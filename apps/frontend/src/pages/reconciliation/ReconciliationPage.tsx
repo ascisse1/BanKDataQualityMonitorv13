@@ -23,7 +23,7 @@ const ReconciliationPage = () => {
   const [loading, setLoading] = useState(true);
   const [reconciling, setReconciling] = useState(false);
   const [filters, setFilters] = useState({
-    agencyCode: user?.agencyCode || '',
+    structureCode: user?.structureCode || '',
     clientId: '',
     status: 'pending',
   });
@@ -32,7 +32,7 @@ const ReconciliationPage = () => {
     setLoading(true);
     try {
       const filterParams: any = {};
-      if (filters.agencyCode) filterParams.agencyCode = filters.agencyCode;
+      if (filters.structureCode) filterParams.structureCode = filters.structureCode;
       if (filters.clientId) filterParams.clientId = filters.clientId;
 
       const [tasksData, statsData] = await Promise.all([
@@ -43,7 +43,7 @@ const ReconciliationPage = () => {
               status: filters.status || undefined,
             }),
         reconciliationService.getReconciliationStats(
-          filters.agencyCode || user?.agencyCode
+          filters.structureCode || user?.structureCode
         ),
       ]);
 
@@ -67,7 +67,7 @@ const ReconciliationPage = () => {
     setReconciling(true);
     try {
       const result = await reconciliationService.reconcileAll({
-        agency_code: filters.agencyCode || undefined,
+        structure_code: filters.structureCode || undefined,
         max_tasks: 50,
       });
 
@@ -131,10 +131,27 @@ const ReconciliationPage = () => {
     }
   };
 
+  const handleAbandonTask = async (taskId: string) => {
+    try {
+      const result = await reconciliationService.abandonAndCreateAnomaly(taskId);
+      if (result) {
+        addToast(
+          `Tâche abandonnée — ${result.anomalies_created} anomalie(s) créée(s)`,
+          'warning'
+        );
+        await fetchData();
+      } else {
+        addToast('Erreur lors de l\'abandon', 'error');
+      }
+    } catch (error) {
+      addToast('Erreur lors de l\'abandon', 'error');
+    }
+  };
+
   const handleExportHistory = async () => {
     try {
       const history = await reconciliationService.getReconciliationHistory({
-        agencyCode: filters.agencyCode || undefined,
+        structureCode: filters.structureCode || undefined,
       });
 
       const csvContent = [
@@ -169,7 +186,7 @@ const ReconciliationPage = () => {
 
   const handleResetFilters = () => {
     setFilters({
-      agencyCode: user?.agencyCode || '',
+      structureCode: user?.structureCode || '',
       clientId: '',
       status: 'pending',
     });
@@ -180,11 +197,11 @@ const ReconciliationPage = () => {
       <div className="flex items-center justify-between">
         <div>
           <h1 className="text-2xl font-bold text-gray-900 flex items-center">
-            <GitCompare className="h-8 w-8 mr-3 text-primary-600" />
+            <GitCompare className="h-5 w-5 mr-2 text-primary-600" />
             Réconciliation CBS
           </h1>
           <p className="mt-1 text-sm text-gray-600">
-            Vérification des corrections appliquées dans le Core Banking System
+            Vérification CBS
           </p>
         </div>
         <div className="flex space-x-3">
@@ -220,6 +237,7 @@ const ReconciliationPage = () => {
         onViewDetails={setSelectedTask}
         onReconcile={handleReconcileTask}
         onRetry={handleRetryTask}
+        onAbandon={handleAbandonTask}
       />
 
       {selectedTask && (

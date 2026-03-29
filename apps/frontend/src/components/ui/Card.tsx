@@ -1,9 +1,8 @@
 import { forwardRef, type HTMLAttributes, type ReactNode } from 'react';
-import { motion, type HTMLMotionProps } from 'framer-motion';
 
-type CardVariant = 'default' | 'glass' | 'gradient' | 'elevated' | 'bordered';
+type CardVariant = 'default' | 'gradient' | 'elevated' | 'bordered';
 
-interface CardProps extends Omit<HTMLAttributes<HTMLDivElement>, keyof HTMLMotionProps<'div'>> {
+interface CardProps extends HTMLAttributes<HTMLDivElement> {
   children?: ReactNode;
   title?: string;
   description?: string;
@@ -30,7 +29,7 @@ const Card = forwardRef<HTMLDivElement, CardProps>(
       icon,
       variant = 'default',
       isLoading = false,
-      isHoverable = true,
+      isHoverable = false,
       isClickable = false,
       noPadding = false,
       gradient,
@@ -38,22 +37,13 @@ const Card = forwardRef<HTMLDivElement, CardProps>(
     },
     ref
   ) => {
-    // Base styles
-    const baseStyles = `
-      relative rounded-xl overflow-hidden
-      transition-all duration-300 ease-out
-    `;
+    const baseStyles = 'relative rounded-xl overflow-hidden transition-shadow duration-200';
 
-    // Variant styles
     const variantStyles: Record<CardVariant, string> = {
       default: `
         bg-white dark:bg-surface-900
         border border-slate-200/60 dark:border-surface-700
         shadow-sm
-      `,
-      glass: `
-        glass backdrop-blur-glass
-        border border-white/20 dark:border-white/10
       `,
       gradient: `
         bg-gradient-to-br
@@ -76,25 +66,9 @@ const Card = forwardRef<HTMLDivElement, CardProps>(
       `,
     };
 
-    // Hover styles
-    const hoverStyles = isHoverable
-      ? 'hover:shadow-lg hover:-translate-y-1 dark:hover:shadow-xl'
-      : '';
+    const hoverStyles = isHoverable ? 'hover:shadow-md' : '';
+    const clickableStyles = isClickable ? 'cursor-pointer' : '';
 
-    // Clickable styles
-    const clickableStyles = isClickable ? 'cursor-pointer active:scale-[0.99]' : '';
-
-    // Animation variants
-    const cardVariants = {
-      hidden: { opacity: 0, y: 20 },
-      visible: {
-        opacity: 1,
-        y: 0,
-        transition: { duration: 0.4, ease: [0.25, 0.46, 0.45, 0.94] },
-      },
-    };
-
-    // Loading skeleton
     const LoadingSkeleton = () => (
       <div className="animate-pulse">
         {title && <div className="h-6 bg-slate-200 dark:bg-surface-700 rounded-lg w-3/4 mb-3" />}
@@ -110,7 +84,7 @@ const Card = forwardRef<HTMLDivElement, CardProps>(
     );
 
     return (
-      <motion.div
+      <div
         ref={ref}
         className={`
           ${baseStyles}
@@ -119,30 +93,14 @@ const Card = forwardRef<HTMLDivElement, CardProps>(
           ${clickableStyles}
           ${className}
         `}
-        variants={cardVariants}
-        initial="hidden"
-        animate="visible"
-        whileHover={isHoverable ? { y: -4 } : {}}
-        whileTap={isClickable ? { scale: 0.99 } : {}}
-        {...(props as HTMLMotionProps<'div'>)}
+        {...props}
       >
-        {/* Gradient overlay for glass variant */}
-        {variant === 'glass' && (
-          <div className="absolute inset-0 bg-gradient-to-br from-white/5 to-transparent pointer-events-none" />
-        )}
-
-        {/* Subtle corner accent */}
-        {variant === 'default' && (
-          <div className="absolute top-0 right-0 w-24 h-24 bg-gradient-to-br from-primary-500/5 to-transparent rounded-bl-full" />
-        )}
-
         {isLoading ? (
           <div className="p-6">
             <LoadingSkeleton />
           </div>
         ) : (
           <>
-            {/* Header */}
             {(title || description || icon || headerAction) && (
               <div className={`${noPadding ? '' : 'px-6 pt-6 pb-3'}`}>
                 <div className="flex items-start justify-between gap-4">
@@ -185,12 +143,10 @@ const Card = forwardRef<HTMLDivElement, CardProps>(
               </div>
             )}
 
-            {/* Content */}
             <div className={`${title || description ? (noPadding ? '' : 'px-6 pb-6') : (noPadding ? '' : 'p-6')}`}>
               {children}
             </div>
 
-            {/* Footer */}
             {footer && (
               <div
                 className={`
@@ -206,7 +162,7 @@ const Card = forwardRef<HTMLDivElement, CardProps>(
             )}
           </>
         )}
-      </motion.div>
+      </div>
     );
   }
 );
@@ -215,7 +171,6 @@ Card.displayName = 'Card';
 
 export default Card;
 
-// Card Header component
 export const CardHeader = ({
   children,
   className = '',
@@ -226,7 +181,6 @@ export const CardHeader = ({
   <div className={`px-6 pt-6 pb-3 ${className}`}>{children}</div>
 );
 
-// Card Content component
 export const CardContent = ({
   children,
   className = '',
@@ -237,7 +191,6 @@ export const CardContent = ({
   <div className={`px-6 pb-6 ${className}`}>{children}</div>
 );
 
-// Card Footer component
 export const CardFooter = ({
   children,
   className = '',

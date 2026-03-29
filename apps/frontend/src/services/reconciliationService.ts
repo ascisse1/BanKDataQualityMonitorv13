@@ -7,9 +7,11 @@ export interface ReconciliationTask {
   client_id: string;
   client_name: string;
   corrections: CorrectionItem[];
-  status: 'pending' | 'reconciled' | 'failed' | 'partial';
+  status: 'pending' | 'in_progress' | 'reconciled' | 'failed' | 'partial' | 'abandoned';
   created_at: string;
   reconciled_at?: string;
+  abandoned_at?: string;
+  abandoned_reason?: string;
   attempts: number;
   last_attempt_at?: string;
   error_message?: string;
@@ -26,7 +28,7 @@ export interface CorrectionItem {
 
 export interface ReconciliationResult {
   task_id: string;
-  status: 'success' | 'partial' | 'failed';
+  status: 'success' | 'partial' | 'failed' | 'abandoned';
   matched_fields: number;
   total_fields: number;
   discrepancies: Discrepancy[];
@@ -45,6 +47,7 @@ export interface ReconciliationStats {
   total_pending: number;
   reconciled_today: number;
   failed_today: number;
+  total_abandoned: number;
   success_rate: number;
   average_reconciliation_time: number;
   by_status: {
@@ -53,32 +56,29 @@ export interface ReconciliationStats {
   }[];
 }
 
+export interface AbandonResult {
+  task_id: string;
+  status: 'abandoned';
+  anomalies_created: number;
+  anomaly_ids: number[];
+}
+
 class ReconciliationService {
   async getPendingReconciliations(filters?: {
-    agencyCode?: string;
+    structureCode?: string;
     clientId?: string;
   }): Promise<ReconciliationTask[]> {
     try {
       const params = new URLSearchParams();
-      if (filters?.agencyCode) params.append('agencyCode', filters.agencyCode);
+      if (filters?.structureCode) params.append('structureCode', filters.structureCode);
       if (filters?.clientId) params.append('clientId', filters.clientId);
 
-      const response = await apiService.get<ReconciliationTask[]>(
+      return await apiService.get<ReconciliationTask[]>(
         `/reconciliation/pending?${params.toString()}`
       );
-      return response;
     } catch (error) {
       log.error('api', 'Error fetching pending reconciliations', { error });
       return [];
-    }
-  }
-
-  async getReconciliationById(id: string): Promise<ReconciliationTask | null> {
-    try {
-      return await apiService.get<ReconciliationTask>(`/reconciliation/${id}`);
-    } catch (error) {
-      log.error('api', 'Error fetching reconciliation', { error });
-      return null;
     }
   }
 
@@ -95,18 +95,17 @@ class ReconciliationService {
   }
 
   async reconcileAll(filters?: {
-    agency_code?: string;
+    structure_code?: string;
     max_tasks?: number;
-  }): Promise<{ success: number; failed: number; total: number }> {
+  }): Promise<{ success: number; failed: number; abandoned: number; total: number }> {
     try {
-      const response = await apiService.post<{ success: number; failed: number; total: number }>(
+      return await apiService.post<{ success: number; failed: number; abandoned: number; total: number }>(
         '/reconciliation/reconcile-all',
         filters || {}
       );
-      return response;
     } catch (error) {
       log.error('api', 'Error reconciling all tasks', { error });
-      return { success: 0, failed: 0, total: 0 };
+      return { success: 0, failed: 0, abandoned: 0, total: 0 };
     }
   }
 
@@ -122,23 +121,22 @@ class ReconciliationService {
     }
   }
 
-  async closeTicket(ticketId: string, userId: string, comments: string): Promise<boolean> {
+  async abandonAndCreateAnomaly(taskId: string): Promise<AbandonResult | null> {
     try {
-      await apiService.post(`/reconciliation/${ticketId}/close`, {
-        user_id: userId,
-        comments,
-      });
-      return true;
+      return await apiService.post<AbandonResult>(
+        `/reconciliation/${taskId}/abandon`,
+        {}
+      );
     } catch (error) {
-      log.error('api', 'Error closing ticket', { error });
-      return false;
+      log.error('api', 'Error abandoning task', { error });
+      return null;
     }
   }
 
-  async getReconciliationStats(agencyCode?: string): Promise<ReconciliationStats | null> {
+  async getReconciliationStats(structureCode?: string): Promise<ReconciliationStats | null> {
     try {
-      const url = agencyCode
-        ? `/reconciliation/stats?agencyCode=${agencyCode}`
+      const url = structureCode
+        ? `/reconciliation/stats?structureCode=${structureCode}`
         : '/reconciliation/stats';
       return await apiService.get<ReconciliationStats>(url);
     } catch (error) {
@@ -162,13 +160,25 @@ class ReconciliationService {
       if (filters?.endDate) params.append('endDate', filters.endDate);
       if (filters?.status) params.append('status', filters.status);
 
-      const response = await apiService.get<ReconciliationTask[]>(
+      return await apiService.get<ReconciliationTask[]>(
         `/reconciliation/history?${params.toString()}`
       );
-      return response;
     } catch (error) {
       log.error('api', 'Error fetching reconciliation history', { error });
       return [];
+    }
+  }
+
+  async closeTicket(ticketId: string, userId: string, comments: string): Promise<boolean> {
+    try {
+      await apiService.post(`/reconciliation/${ticketId}/close`, {
+        user_id: userId,
+        comments,
+      });
+      return true;
+    } catch (error) {
+      log.error('api', 'Error closing ticket', { error });
+      return false;
     }
   }
 
@@ -177,11 +187,14 @@ class ReconciliationService {
       case 'reconciled':
         return 'text-green-600 bg-green-100';
       case 'pending':
+      case 'in_progress':
         return 'text-yellow-600 bg-yellow-100';
       case 'failed':
         return 'text-red-600 bg-red-100';
       case 'partial':
         return 'text-orange-600 bg-orange-100';
+      case 'abandoned':
+        return 'text-gray-600 bg-gray-200';
       default:
         return 'text-gray-600 bg-gray-100';
     }
@@ -190,9 +203,11 @@ class ReconciliationService {
   getStatusLabel(status: string): string {
     const labels: Record<string, string> = {
       pending: 'En attente',
+      in_progress: 'En cours',
       reconciled: 'Réconcilié',
       failed: 'Échec',
       partial: 'Partiel',
+      abandoned: 'Abandonné',
     };
     return labels[status] || status;
   }

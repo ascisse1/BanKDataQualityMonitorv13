@@ -21,7 +21,6 @@ import java.util.Map;
 @RestController
 @RequestMapping("/api/tracking")
 @RequiredArgsConstructor
-@CrossOrigin(origins = "*")
 public class TrackingController {
 
     private final AnomalyRepository anomalyRepository;

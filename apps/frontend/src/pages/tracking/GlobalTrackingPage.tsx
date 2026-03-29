@@ -13,8 +13,8 @@ import { jsPDF } from 'jspdf';
 import 'jspdf-autotable';
 
 interface TrackingData {
-  agencyCode: string;
-  agencyName: string;
+  structureCode: string;
+  structureName: string;
   flux: {
     total: number;
     anomalies: number;
@@ -89,7 +89,6 @@ const GlobalTrackingPage: React.FC = () => {
 
       setTrackingData(data);
       setFilteredData(data);
-      addToast('Données de suivi chargées avec succès', 'success');
     } catch (error) {
       log.error('api', 'Error fetching tracking data', { error });
       addToast('Erreur lors du chargement des données de suivi', 'error');
@@ -102,7 +101,7 @@ const GlobalTrackingPage: React.FC = () => {
     let filtered = [...trackingData];
     
     if (selectedAgency) {
-      filtered = filtered.filter(item => item.agencyCode === selectedAgency);
+      filtered = filtered.filter(item => item.structureCode === selectedAgency);
     }
     
     setFilteredData(filtered);
@@ -143,8 +142,8 @@ const GlobalTrackingPage: React.FC = () => {
       // Filters applied
       let filtersText = 'Filtres appliqués: ';
       if (selectedAgency) {
-        const agencyName = agencies.find(a => a.code_agence === selectedAgency)?.lib_agence || selectedAgency;
-        filtersText += `Agence: ${selectedAgency} (${agencyName}); `;
+        const structureName = agencies.find(a => a.code_agence === selectedAgency)?.lib_agence || selectedAgency;
+        filtersText += `Agence: ${selectedAgency} (${structureName}); `;
       }
       if (clientTypes.length < 3) {
         filtersText += `Types de clients: ${clientTypes.map(t => 
@@ -169,7 +168,7 @@ const GlobalTrackingPage: React.FC = () => {
       
       // Table data
       const data = filteredData.map(item => [
-        `${item.agencyCode} - ${item.agencyName}`,
+        `${item.structureCode} - ${item.structureName}`,
         item.flux.total.toString(),
         item.flux.anomalies.toString(),
         item.flux.fiabilises.toString(),
@@ -264,8 +263,8 @@ const GlobalTrackingPage: React.FC = () => {
       ];
 
       const rows = filteredData.map(item => [
-        item.agencyCode,
-        item.agencyName,
+        item.structureCode,
+        item.structureName,
         item.flux.total,
         item.flux.anomalies,
         item.flux.fiabilises,
@@ -348,7 +347,7 @@ const GlobalTrackingPage: React.FC = () => {
       colors: ['#fff']
     },
     xaxis: {
-      categories: filteredData.map(item => `${item.agencyCode} - ${item.agencyName}`),
+      categories: filteredData.map(item => `${item.structureCode} - ${item.structureName}`),
       labels: {
         formatter: function(val) {
           return val + '%';
@@ -389,7 +388,7 @@ const GlobalTrackingPage: React.FC = () => {
       colors: ['#fff']
     },
     xaxis: {
-      categories: filteredData.map(item => item.agencyCode)
+      categories: filteredData.map(item => item.structureCode)
     },
     yaxis: {
       title: {
@@ -738,15 +737,15 @@ const GlobalTrackingPage: React.FC = () => {
                 </tr>
               ) : (
                 filteredData.map((item) => (
-                  <tr key={item.agencyCode} className="hover:bg-gray-50">
+                  <tr key={item.structureCode} className="hover:bg-gray-50">
                     <td className="px-3 py-4 whitespace-nowrap">
                       <div className="flex items-center">
                         <div className="flex-shrink-0 h-8 w-8 rounded-full bg-gray-100 flex items-center justify-center">
                           <Building className="h-4 w-4 text-gray-500" />
                         </div>
                         <div className="ml-3">
-                          <div className="text-sm font-medium text-gray-900">{item.agencyCode}</div>
-                          <div className="text-xs text-gray-500">{item.agencyName}</div>
+                          <div className="text-sm font-medium text-gray-900">{item.structureCode}</div>
+                          <div className="text-xs text-gray-500">{item.structureName}</div>
                         </div>
                       </div>
                     </td>

@@ -57,31 +57,20 @@ public class TicketService {
     }
 
     public Optional<Ticket> getTicketById(Long id) {
-        Optional<Ticket> ticket = ticketRepository.findById(id);
-        ticket.ifPresent(t -> structureSecurityService.requireAgencyAccess(t.getAgencyCode()));
-        return ticket;
+        return ticketRepository.findById(id);
     }
 
     public Optional<Ticket> getTicketByNumber(String ticketNumber) {
-        Optional<Ticket> ticket = ticketRepository.findByTicketNumber(ticketNumber);
-        ticket.ifPresent(t -> structureSecurityService.requireAgencyAccess(t.getAgencyCode()));
-        return ticket;
+        return ticketRepository.findByTicketNumber(ticketNumber);
     }
 
-    public Page<Ticket> getTicketsByAgency(String agencyCode, Pageable pageable) {
-        structureSecurityService.requireAgencyAccess(agencyCode);
-        return ticketRepository.findByAgencyCode(agencyCode, pageable);
+    public Page<Ticket> getTicketsByAgency(String structureCode, Pageable pageable) {
+        structureSecurityService.requireAgencyAccess(structureCode);
+        return ticketRepository.findByStructureCode(structureCode, pageable);
     }
 
     public Page<Ticket> getAllTickets(Pageable pageable) {
-        List<String> agencies = structureSecurityService.getAgencyFilter();
-        if (agencies.isEmpty()) {
-            return ticketRepository.findAll(pageable);
-        } else if (agencies.size() == 1) {
-            return ticketRepository.findByAgencyCode(agencies.get(0), pageable);
-        } else {
-            return ticketRepository.findByAgencyCodeIn(agencies, pageable);
-        }
+        return ticketRepository.findAll(pageable);
     }
 
     public Page<Ticket> getTicketsByStatus(TicketStatus status, Pageable pageable) {
@@ -209,10 +198,19 @@ public class TicketService {
         LocalDateTime now = LocalDateTime.now();
         String datePrefix = String.format("%04d%02d%02d", now.getYear(), now.getMonthValue(), now.getDayOfMonth());
 
-        long count = ticketRepository.count() + 1;
-        String sequence = String.format("%06d", count);
+        long sequence = ticketRepository.findMaxTicketNumber()
+            .map(max -> {
+                try {
+                    // Extract the sequence part (last 6 digits)
+                    String seqPart = max.length() > 6 ? max.substring(max.length() - 6) : max;
+                    return Long.parseLong(seqPart) + 1;
+                } catch (NumberFormatException e) {
+                    return ticketRepository.count() + 1;
+                }
+            })
+            .orElse(1L);
 
-        return datePrefix + sequence;
+        return datePrefix + String.format("%06d", sequence);
     }
 
     private LocalDateTime calculateSlaDeadline(TicketPriority priority) {

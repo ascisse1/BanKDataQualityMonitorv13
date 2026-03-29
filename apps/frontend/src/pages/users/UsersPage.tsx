@@ -1,10 +1,11 @@
 import { useState, useEffect } from 'react';
-import { Users as UsersIcon, UserPlus, Mail, Shield, Calendar, Search, Edit, Trash2, Save, X, Building } from 'lucide-react';
+import { Users as UsersIcon, UserPlus, Mail, Shield, Calendar, Search, Edit, Trash2, Save, X, Building, RefreshCw } from 'lucide-react';
 import Card from '../../components/ui/Card';
 import Button from '../../components/ui/Button';
 import Input from '../../components/ui/Input';
 import { useToast } from '../../components/ui/Toaster';
 import { useAuth } from '../../context/AuthContext';
+import apiClient from '../../lib/apiClient';
 import { log } from '../../services/log';
 
 
@@ -18,7 +19,7 @@ interface User {
   createdAt: string;
   fullName: string;
   department?: string;
-  agencyCodes?: string[];
+  structureCodes?: string[];
 }
 
 interface UserStats {
@@ -48,10 +49,29 @@ const UsersPage = () => {
   const [agencies, setAgencies] = useState<{code_agence: string, lib_agence: string}[]>([]);
   const { addToast } = useToast();
   const { user: currentUser } = useAuth();
-
+  const [isSyncing, setIsSyncing] = useState(false);
 
   // Vérifier les permissions
   const hasAdminAccess = currentUser?.role === 'ADMIN';
+
+  const syncFromKeycloak = async () => {
+    setIsSyncing(true);
+    try {
+      const res = await apiClient.post('/api/users/sync-keycloak');
+      const result = res.data.data || {};
+      addToast(
+        `Sync Keycloak: ${result.created || 0} crees, ${result.updated || 0} mis a jour, ${result.skipped || 0} ignores`,
+        'success'
+      );
+      loadUsers();
+      loadUserStats();
+    } catch (error) {
+      console.error('Keycloak sync error:', error);
+      addToast('Erreur lors de la synchronisation Keycloak', 'error');
+    } finally {
+      setIsSyncing(false);
+    }
+  };
 
   useEffect(() => {
     if (hasAdminAccess) {
@@ -138,10 +158,10 @@ const UsersPage = () => {
     }
   };
 
-  const handleCreateAgencyUser = async (userData: Partial<User> & { agencyName?: string }) => {
+  const handleCreateAgencyUser = async (userData: Partial<User> & { structureName?: string }) => {
     try {
             
-      const { agencyName, ...userDataWithoutAgencyName } = userData;
+      const { structureName, ...userDataWithoutStructureName } = userData;
       
       const response = await fetch('/api/agency-users', {
         method: 'POST',
@@ -150,8 +170,8 @@ const UsersPage = () => {
           'Authorization': `Bearer ${currentUser?.token}`,
         },
         body: JSON.stringify({
-          ...userDataWithoutAgencyName,
-          agencyName
+          ...userDataWithoutStructureName,
+          structureName
         }),
       });
 
@@ -243,8 +263,8 @@ const UsersPage = () => {
             
       // Prepare the data to send
       const agenciesData = agencies.map(agency => ({
-        agencyCode: agency.code_agence,
-        agencyName: agency.lib_agence
+        structureCode: agency.code_agence,
+        structureName: agency.lib_agence
       }));
       
       log.debug('api', 'Creating bulk agency users', { agenciesData });
@@ -338,7 +358,7 @@ const UsersPage = () => {
       user.username.toLowerCase().includes(query) ||
       user.email.toLowerCase().includes(query) ||
       user.department?.toLowerCase().includes(query) ||
-      user.agencyCodes?.[0]?.toLowerCase().includes(query)
+      user.structureCodes?.[0]?.toLowerCase().includes(query)
     );
   });
 
@@ -392,6 +412,15 @@ const UsersPage = () => {
             disabled={isLoading}
           >
             Ajouter un utilisateur
+          </Button>
+
+          <Button
+            variant="outline"
+            leftIcon={<RefreshCw className={`h-4 w-4 ${isSyncing ? 'animate-spin' : ''}`} />}
+            onClick={syncFromKeycloak}
+            disabled={isSyncing}
+          >
+            {isSyncing ? 'Synchronisation...' : 'Sync Keycloak'}
           </Button>
         </div>
       </div>
@@ -548,10 +577,10 @@ const UsersPage = () => {
                           <div className="text-sm text-gray-900">{user.department || 'Non défini'}</div>
                         </td>
                         <td className="px-3 py-4 whitespace-nowrap">
-                          {user.agencyCodes?.[0] ? (
+                          {user.structureCodes?.[0] ? (
                             <div className="flex items-center">
                               <Building className="h-4 w-4 text-gray-500 mr-1" />
-                              <span className="text-sm text-gray-900">{user.agencyCodes?.[0]}</span>
+                              <span className="text-sm text-gray-900">{user.structureCodes?.[0]}</span>
                             </div>
                           ) : (
                             <span className="text-sm text-gray-400">-</span>
@@ -647,7 +676,7 @@ const UserEditor: React.FC<UserEditorProps> = ({ user, agencies, onSave, onCance
     role: user?.role || 'USER',
     department: user?.department || '',
     status: user?.status || 'ACTIVE',
-    agencyCode: user?.agencyCodes?.[0] || '',
+    structureCode: user?.structureCodes?.[0] || '',
     password: ''
   });
 
@@ -674,8 +703,8 @@ const UserEditor: React.FC<UserEditorProps> = ({ user, agencies, onSave, onCance
       newErrors.password = 'Le mot de passe est requis pour un nouvel utilisateur';
     }
 
-    if (formData.role === 'AGENCY_USER' && !formData.agencyCode) {
-      newErrors.agencyCode = 'Le code agence est requis pour un utilisateur d\'agence';
+    if (formData.role === 'AGENCY_USER' && !formData.structureCode) {
+      newErrors.structureCode = 'Le code agence est requis pour un utilisateur d\'agence';
     }
 
     setErrors(newErrors);
@@ -765,8 +794,8 @@ const UserEditor: React.FC<UserEditorProps> = ({ user, agencies, onSave, onCance
               </label>
               <select
                 className="w-full rounded-md border-gray-300 shadow-sm focus:border-primary-500 focus:ring-primary-500"
-                value={formData.agencyCode}
-                onChange={(e) => setFormData({ ...formData, agencyCode: e.target.value })}
+                value={formData.structureCode}
+                onChange={(e) => setFormData({ ...formData, structureCode: e.target.value })}
               >
                 <option value="">Sélectionner une agence</option>
                 {agencies.map(agency => (
@@ -775,8 +804,8 @@ const UserEditor: React.FC<UserEditorProps> = ({ user, agencies, onSave, onCance
                   </option>
                 ))}
               </select>
-              {errors.agencyCode && (
-                <p className="mt-1 text-sm text-error-500">{errors.agencyCode}</p>
+              {errors.structureCode && (
+                <p className="mt-1 text-sm text-error-500">{errors.structureCode}</p>
               )}
             </div>
           )}
@@ -827,8 +856,8 @@ const AgencyUserEditor: React.FC<AgencyUserEditorProps> = ({ agencies, onSave, o
     email: '',
     fullName: '',
     password: '',
-    agencyCode: '',
-    agencyName: ''
+    structureCode: '',
+    structureName: ''
   });
 
   const [errors, setErrors] = useState<Record<string, string>>({});
@@ -854,8 +883,8 @@ const AgencyUserEditor: React.FC<AgencyUserEditorProps> = ({ agencies, onSave, o
       newErrors.password = 'Le mot de passe est requis';
     }
 
-    if (!formData.agencyCode) {
-      newErrors.agencyCode = 'Le code agence est requis';
+    if (!formData.structureCode) {
+      newErrors.structureCode = 'Le code agence est requis';
     }
 
     setErrors(newErrors);
@@ -863,15 +892,15 @@ const AgencyUserEditor: React.FC<AgencyUserEditorProps> = ({ agencies, onSave, o
   };
 
   const handleAgencyChange = (e: React.ChangeEvent<HTMLSelectElement>) => {
-    const agencyCode = e.target.value;
-    const selectedAgency = agencies.find(a => a.code_agence === agencyCode);
+    const structureCode = e.target.value;
+    const selectedAgency = agencies.find(a => a.code_agence === structureCode);
     
     setFormData({
       ...formData,
-      agencyCode,
-      agencyName: selectedAgency?.lib_agence || '',
-      username: agencyCode ? `agency_${agencyCode.toLowerCase()}` : '',
-      email: agencyCode ? `agence.${agencyCode.toLowerCase()}@banque.ml` : '',
+      structureCode,
+      structureName: selectedAgency?.lib_agence || '',
+      username: structureCode ? `agency_${structureCode.toLowerCase()}` : '',
+      email: structureCode ? `agence.${structureCode.toLowerCase()}@banque.ml` : '',
       fullName: selectedAgency ? `Utilisateur Agence ${selectedAgency.lib_agence}` : ''
     });
   };
@@ -899,7 +928,7 @@ const AgencyUserEditor: React.FC<AgencyUserEditorProps> = ({ agencies, onSave, o
             </label>
             <select
               className="w-full rounded-md border-gray-300 shadow-sm focus:border-primary-500 focus:ring-primary-500"
-              value={formData.agencyCode}
+              value={formData.structureCode}
               onChange={handleAgencyChange}
               required
             >
@@ -910,8 +939,8 @@ const AgencyUserEditor: React.FC<AgencyUserEditorProps> = ({ agencies, onSave, o
                 </option>
               ))}
             </select>
-            {errors.agencyCode && (
-              <p className="mt-1 text-sm text-error-500">{errors.agencyCode}</p>
+            {errors.structureCode && (
+              <p className="mt-1 text-sm text-error-500">{errors.structureCode}</p>
             )}
           </div>
 

@@ -9,7 +9,7 @@ interface AgencyUserStatsProps {
 }
 
 interface AgencyUserStat {
-  agency_code: string;
+  structure_code: string;
   user_count: number;
   last_activity: string | null;
 }
@@ -130,7 +130,7 @@ const AgencyUserStats = ({ isLoading = false }: AgencyUserStatsProps) => {
                 <td className="px-3 py-4 whitespace-nowrap">
                   <div className="flex items-center">
                     <Building className="h-4 w-4 text-gray-500 mr-2" />
-                    <div className="text-sm font-medium text-gray-900">{stat.agency_code}</div>
+                    <div className="text-sm font-medium text-gray-900">{stat.structure_code}</div>
                   </div>
                 </td>
                 <td className="px-3 py-4 whitespace-nowrap">

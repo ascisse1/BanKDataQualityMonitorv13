@@ -11,8 +11,8 @@ interface AgencyCorrectionChartProps {
 }
 
 interface AgencyCorrectionStat {
-  agency_code: string;
-  agency_name: string;
+  structure_code: string;
+  structure_name: string;
   total_anomalies: number;
   fixed_anomalies: number;
   in_review_anomalies: number;
@@ -165,7 +165,7 @@ const AgencyCorrectionChart = ({ isLoading = false }: AgencyCorrectionChartProps
         ...chartData.options,
         xaxis: {
           ...chartData.options.xaxis,
-          categories: top10.map(item => `${item.agency_name} (${item.agency_code})`),
+          categories: top10.map(item => `${item.structure_name} (${item.structure_code})`),
         },
         colors: top10.map(item => {
           if (item.correction_rate >= 75) return '#34BB80'; // Green for >= 75%

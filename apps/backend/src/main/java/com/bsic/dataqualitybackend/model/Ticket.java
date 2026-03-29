@@ -7,6 +7,7 @@ import lombok.AllArgsConstructor;
 import lombok.Builder;
 import lombok.Data;
 import lombok.NoArgsConstructor;
+import org.hibernate.annotations.Filter;
 import org.springframework.data.annotation.CreatedDate;
 import org.springframework.data.annotation.LastModifiedDate;
 import org.springframework.data.jpa.domain.support.AuditingEntityListener;
@@ -20,6 +21,7 @@ import java.util.List;
 @NoArgsConstructor
 @AllArgsConstructor
 @Entity
+@Filter(name = "structureFilter", condition = "structure_code IN (:codes)")
 @Table(name = "tickets")
 @EntityListeners(AuditingEntityListener.class)
 public class Ticket {
@@ -40,8 +42,8 @@ public class Ticket {
     @Column(name = "client_type", length = 1)
     private String clientType;
 
-    @Column(name = "agency_code", nullable = false, length = 5)
-    private String agencyCode;
+    @Column(name = "structure_code", nullable = false, length = 5)
+    private String structureCode;
 
     @Enumerated(EnumType.STRING)
     @Column(nullable = false)

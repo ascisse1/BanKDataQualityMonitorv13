@@ -12,7 +12,7 @@ interface UserInfo {
   fullName: string;
   givenName?: string;
   familyName?: string;
-  agencyCodes: string[];
+  structureCodes: string[];
   role: string;
   roles: string[];
 }
@@ -76,7 +76,7 @@ export const SessionAuthProvider = ({ children }: SessionAuthProviderProps) => {
             fullName: data.fullName || `${data.givenName || ''} ${data.familyName || ''}`.trim(),
             givenName: data.givenName,
             familyName: data.familyName,
-            agencyCodes: data.agencyCodes || [],
+            structureCodes: data.structureCodes || [],
             role: data.role,
             roles: data.roles || [],
           };
@@ -89,7 +89,7 @@ export const SessionAuthProvider = ({ children }: SessionAuthProviderProps) => {
             username: userInfo.username,
             email: userInfo.email,
             role: userInfo.role,
-            agencyCode: userInfo.agencyCodes?.[0] || undefined
+            structureCode: userInfo.structureCodes?.[0] || undefined
           });
 
           return true;

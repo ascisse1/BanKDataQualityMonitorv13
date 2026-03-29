@@ -19,8 +19,8 @@ public class FatcaClientDto {
     private String clientNumber;
     private String clientName;
     private ClientType clientType;
-    private String agencyCode;
-    private String agencyName;
+    private String structureCode;
+    private String structureName;
     private FatcaStatus fatcaStatus;
     private String taxResidenceCountry;
     private Boolean usPerson;

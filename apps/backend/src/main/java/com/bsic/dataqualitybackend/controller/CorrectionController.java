@@ -79,7 +79,7 @@ public class CorrectionController {
                 .cli(ticket.getCli())
                 .clientName(ticket.getClientName())
                 .clientType(ticket.getClientType())
-                .agencyCode(ticket.getAgencyCode())
+                .structureCode(ticket.getStructureCode())
                 .status(ticket.getStatus())
                 .priority(ticket.getPriority())
                 .assignedTo(ticket.getAssignedTo() != null ? mapToUserDto(ticket.getAssignedTo()) : null)

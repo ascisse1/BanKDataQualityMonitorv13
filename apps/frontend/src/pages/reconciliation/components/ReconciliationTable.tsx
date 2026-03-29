@@ -1,4 +1,4 @@
-import { Eye, RefreshCw, CheckCircle, AlertCircle } from 'lucide-react';
+import { Eye, RefreshCw, CheckCircle, AlertCircle, Ban } from 'lucide-react';
 import { ReconciliationTask, reconciliationService } from '../../../services/reconciliationService';
 import Button from '../../../components/ui/Button';
 
@@ -8,6 +8,7 @@ interface ReconciliationTableProps {
   onViewDetails: (task: ReconciliationTask) => void;
   onReconcile: (taskId: string) => void;
   onRetry: (taskId: string) => void;
+  onAbandon?: (taskId: string) => void;
 }
 
 export const ReconciliationTable = ({
@@ -16,6 +17,7 @@ export const ReconciliationTable = ({
   onViewDetails,
   onReconcile,
   onRetry,
+  onAbandon,
 }: ReconciliationTableProps) => {
   if (loading) {
     return (
@@ -156,13 +158,28 @@ export const ReconciliationTable = ({
                         </Button>
                       )}
                       {(task.status === 'failed' || task.status === 'partial') && (
-                        <Button
-                          size="sm"
-                          onClick={() => onRetry(task.id)}
-                        >
-                          <AlertCircle className="h-4 w-4 mr-1" />
-                          Réessayer
-                        </Button>
+                        <>
+                          <Button
+                            size="sm"
+                            onClick={() => onRetry(task.id)}
+                          >
+                            <AlertCircle className="h-4 w-4 mr-1" />
+                            Réessayer
+                          </Button>
+                          {onAbandon && (
+                            <Button
+                              variant="danger"
+                              size="sm"
+                              onClick={() => onAbandon(task.id)}
+                            >
+                              <Ban className="h-4 w-4 mr-1" />
+                              Abandonner
+                            </Button>
+                          )}
+                        </>
+                      )}
+                      {task.status === 'abandoned' && (
+                        <span className="text-xs text-gray-500 italic">Abandonné</span>
                       )}
                     </div>
                   </td>

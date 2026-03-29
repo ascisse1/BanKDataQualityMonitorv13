@@ -3,7 +3,7 @@ import { apiService } from './apiService';
 export interface Kpi {
   id: number;
   periodDate: string;
-  agencyCode?: string;
+  structureCode?: string;
   kpiType: 'CLOSURE_RATE' | 'SLA_COMPLIANCE' | 'AVG_RESOLUTION_TIME';
   kpiValue: number;
   targetValue?: number;
@@ -35,20 +35,20 @@ class KpiService {
     return response.data;
   }
 
-  async getKpisByAgency(agencyCode: string): Promise<Kpi[]> {
+  async getKpisByAgency(structureCode: string): Promise<Kpi[]> {
     const response = await apiService.get<{ data: Kpi[] }>(
-      `${this.baseUrl}/agency/${agencyCode}`
+      `${this.baseUrl}/agency/${structureCode}`
     );
     return response.data;
   }
 
   async getKpisByAgencyAndDateRange(
-    agencyCode: string,
+    structureCode: string,
     startDate: string,
     endDate: string
   ): Promise<Kpi[]> {
     const response = await apiService.get<{ data: Kpi[] }>(
-      `${this.baseUrl}/agency/${agencyCode}/range?startDate=${startDate}&endDate=${endDate}`
+      `${this.baseUrl}/agency/${structureCode}/range?startDate=${startDate}&endDate=${endDate}`
     );
     return response.data;
   }
@@ -76,11 +76,11 @@ class KpiService {
   }
 
   async getDashboardMetrics(
-    agencyCode?: string,
+    structureCode?: string,
     date?: string
   ): Promise<DashboardMetrics> {
     const params = new URLSearchParams();
-    if (agencyCode) params.append('agencyCode', agencyCode);
+    if (structureCode) params.append('structureCode', structureCode);
     if (date) params.append('date', date);
 
     const queryString = params.toString();

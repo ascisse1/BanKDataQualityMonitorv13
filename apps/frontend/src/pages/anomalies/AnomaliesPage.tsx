@@ -43,7 +43,7 @@ const AnomaliesPage: React.FC = () => {
     const {user} = useAuth();
     // Check if user is an agency user
     const isAgencyUser = user?.role === 'AGENCY_USER';
-    const userAgencyCode = user?.agencyCode;
+    const userStructureCode = user?.structureCode;
 
     useEffect(() => {
         fetchAgencies();
@@ -53,10 +53,10 @@ const AnomaliesPage: React.FC = () => {
 
     useEffect(() => {
         // If user is an agency user, set the selected agency to their agency code
-        if (isAgencyUser && userAgencyCode) {
-            setSelectedAgency(userAgencyCode);
+        if (isAgencyUser && userStructureCode) {
+            setSelectedAgency(userStructureCode);
         }
-    }, [isAgencyUser, userAgencyCode]);
+    }, [isAgencyUser, userStructureCode]);
 
     const fetchTotalAnomaliesCount = async () => {
         try {
@@ -83,8 +83,8 @@ const AnomaliesPage: React.FC = () => {
     const handleAgencyChange = (agency: string | null) => {
         log.debug('ui', 'Agency filter changed', { agency });
         // If user is an agency user, they can only see their own agency
-        if (isAgencyUser && userAgencyCode) {
-            if (agency !== userAgencyCode) {
+        if (isAgencyUser && userStructureCode) {
+            if (agency !== userStructureCode) {
                 addToast('Vous ne pouvez consulter que les données de votre agence', 'warning');
                 return;
             }
@@ -104,7 +104,6 @@ const AnomaliesPage: React.FC = () => {
             await fetchTotalAnomaliesCount();
 
             setIsRefreshing(false);
-            addToast('Données actualisées avec succès', 'success');
         } catch (error) {
             setIsRefreshing(false);
             addToast('Erreur lors de l\'actualisation des données', 'error');
@@ -117,13 +116,13 @@ const AnomaliesPage: React.FC = () => {
             log.debug('ui', 'Starting export data fetch');
 
             // For agency users, force their agency code
-            const effectiveAgencyCode = isAgencyUser && userAgencyCode ? userAgencyCode : selectedAgency;
-            log.debug('ui', 'Selected agency for export', { effectiveAgencyCode });
+            const effectiveStructureCode = isAgencyUser && userStructureCode ? userStructureCode : selectedAgency;
+            log.debug('ui', 'Selected agency for export', { effectiveStructureCode });
 
             // Prepare API parameters
             const params: Record<string, any> = {};
-            if (effectiveAgencyCode) {
-                params.agencyCode = effectiveAgencyCode;
+            if (effectiveStructureCode) {
+                params.structureCode = effectiveStructureCode;
             }
 
             // Use a more efficient approach with smaller batch sizes and pagination
@@ -417,8 +416,8 @@ const AnomaliesPage: React.FC = () => {
 
             // Générer le nom du fichier
             const date = new Date().toISOString().split('T')[0];
-            const agencyFilter = isAgencyUser && userAgencyCode
-                ? `_agence_${userAgencyCode}`
+            const agencyFilter = isAgencyUser && userStructureCode
+                ? `_agence_${userStructureCode}`
                 : selectedAgency
                     ? `_agence_${selectedAgency}`
                     : '';
@@ -461,10 +460,10 @@ const AnomaliesPage: React.FC = () => {
             doc.text('Rapport des Anomalies', 20, 20);
 
             // Agence
-            const effectiveAgencyCode = isAgencyUser && userAgencyCode ? userAgencyCode : selectedAgency;
-            if (effectiveAgencyCode) {
+            const effectiveStructureCode = isAgencyUser && userStructureCode ? userStructureCode : selectedAgency;
+            if (effectiveStructureCode) {
                 doc.setFontSize(12);
-                doc.text(`Agence: ${effectiveAgencyCode}`, 20, 30);
+                doc.text(`Agence: ${effectiveStructureCode}`, 20, 30);
             }
 
             // Préparer les données pour le tableau
@@ -482,7 +481,7 @@ const AnomaliesPage: React.FC = () => {
             (doc as any).autoTable({
                 head: [['Code Client', 'Nom Client', 'Type Client', 'Nb Anomalies', 'Champs', 'Agence', 'Sévérité']],
                 body: tableData,
-                startY: effectiveAgencyCode ? 35 : 25,
+                startY: effectiveStructureCode ? 35 : 25,
                 styles: {fontSize: 8},
                 headStyles: {fillColor: [26, 54, 93], textColor: [255, 255, 255]},
                 columnStyles: {
@@ -504,8 +503,8 @@ const AnomaliesPage: React.FC = () => {
 
             // Sauvegarder le fichier
             const date = new Date().toISOString().split('T')[0];
-            const agencyFilter = isAgencyUser && userAgencyCode
-                ? `_agence_${userAgencyCode}`
+            const agencyFilter = isAgencyUser && userStructureCode
+                ? `_agence_${userStructureCode}`
                 : selectedAgency
                     ? `_agence_${selectedAgency}`
                     : '';
@@ -556,8 +555,8 @@ const AnomaliesPage: React.FC = () => {
             link.href = URL.createObjectURL(blob);
 
             const date = new Date().toISOString().split('T')[0];
-            const agencyFilter = isAgencyUser && userAgencyCode
-                ? `_agence_${userAgencyCode}`
+            const agencyFilter = isAgencyUser && userStructureCode
+                ? `_agence_${userStructureCode}`
                 : selectedAgency
                     ? `_agence_${selectedAgency}`
                     : '';
@@ -583,9 +582,9 @@ const AnomaliesPage: React.FC = () => {
                 <div>
                     <h1 className="text-2xl font-semibold text-gray-900 dark:text-gray-100">Anomalies</h1>
                     <p className="mt-1 text-sm text-gray-500 dark:text-gray-400">
-                        Visualiser et gérer les anomalies détectées dans les dossiers clients
-                        {isAgencyUser && userAgencyCode &&
-                            <span className="ml-2 font-medium text-primary-600">• Agence: {userAgencyCode}</span>}
+                        {totalAnomalies > 0 && `${totalAnomalies.toLocaleString('fr-FR')} anomalies détectées`}
+                        {isAgencyUser && userStructureCode &&
+                            <span className="ml-2 font-medium text-primary-600">• Agence: {userStructureCode}</span>}
                         {!isAgencyUser && selectedAgency &&
                             <span className="ml-2 font-medium text-primary-600">• Agence: {selectedAgency}</span>}
                     </p>
@@ -686,8 +685,7 @@ const AnomaliesPage: React.FC = () => {
             )}
 
             {showHistory && (
-                <Card title="Historique des Corrections d'Anomalies"
-                      description="Suivi des modifications apportées aux anomalies" isLoading={isLoading}>
+                <Card title="Historique des Corrections" isLoading={isLoading}>
                     <AnomalyHistoryTable
                         isLoading={isLoading}
                         cli={searchQuery.length > 5 ? searchQuery : undefined}
@@ -706,7 +704,7 @@ const AnomaliesPage: React.FC = () => {
                             agencies={agencies}
                             selectedAgency={selectedAgency}
                             isAgencyUser={isAgencyUser}
-                            userAgencyCode={userAgencyCode}
+                            userStructureCode={userStructureCode}
                         />
                     )}
 

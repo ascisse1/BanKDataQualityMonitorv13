@@ -234,7 +234,7 @@ const ValidationPage: React.FC = () => {
                             {ticket.clientName || ticket.cli}
                           </div>
                           <div className="text-xs text-gray-500">
-                            CLI: {ticket.cli} | Agence: {ticket.agencyCode || '-'}
+                            CLI: {ticket.cli} | Agence: {ticket.structureCode || '-'}
                           </div>
                         </div>
                       </div>
@@ -362,7 +362,7 @@ const ValidationPage: React.FC = () => {
 
               <div className="mb-4 p-3 bg-gray-50 rounded-lg text-sm">
                 <p><strong>Client:</strong> {selectedTicket.clientName || selectedTicket.cli}</p>
-                <p><strong>Agence:</strong> {selectedTicket.agencyCode}</p>
+                <p><strong>Agence:</strong> {selectedTicket.structureCode}</p>
                 <p><strong>Soumis par:</strong> {selectedTicket.assignedTo?.fullName || selectedTicket.assignedTo?.username || '-'}</p>
                 <p><strong>Corrections:</strong> {selectedTicket.totalIncidents}</p>
               </div>

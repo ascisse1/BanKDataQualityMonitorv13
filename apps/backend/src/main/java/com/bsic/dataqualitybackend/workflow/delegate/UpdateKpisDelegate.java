@@ -17,7 +17,7 @@ public class UpdateKpisDelegate implements JavaDelegate {
     @Override
     public void execute(DelegateExecution execution) {
         Long ticketId = (Long) execution.getVariable("ticketId");
-        String agencyCode = (String) execution.getVariable("agencyCode");
+        String structureCode = (String) execution.getVariable("structureCode");
         LocalDateTime slaDeadline = (LocalDateTime) execution.getVariable("slaDeadline");
 
         log.info("Updating KPIs for ticket: {}", ticketId);
@@ -34,6 +34,6 @@ public class UpdateKpisDelegate implements JavaDelegate {
         execution.setVariable("resolutionTimeHours", resolutionTime.toHours());
 
         log.info("KPIs updated for agency {}: SLA Respected={}, Resolution Time={}h",
-            agencyCode, slaRespected, resolutionTime.toHours());
+            structureCode, slaRespected, resolutionTime.toHours());
     }
 }

@@ -86,7 +86,7 @@ class AnomalyControllerIntegrationTest {
                 .errorMessage("Invalid email format")
                 .status(AnomalyStatus.valueOf("PENDING"))
                 .severity("HIGH")
-                .agencyCode("AG001")
+                .structureCode("AG001")
                 .build();
 
         mockMvc.perform(post("/api/anomalies")
@@ -109,7 +109,7 @@ class AnomalyControllerIntegrationTest {
                 .errorMessage("Invalid phone")
                 .status(AnomalyStatus.valueOf("PENDING"))
                 .severity("MEDIUM")
-                .agencyCode("AG001")
+                .structureCode("AG001")
                 .build();
 
         String createResponse = mockMvc.perform(post("/api/anomalies")
@@ -143,7 +143,7 @@ class AnomalyControllerIntegrationTest {
                 .errorMessage("Invalid address")
                 .status(AnomalyStatus.valueOf("PENDING"))
                 .severity("LOW")
-                .agencyCode("AG001")
+                .structureCode("AG001")
                 .build();
 
         mockMvc.perform(post("/api/anomalies")

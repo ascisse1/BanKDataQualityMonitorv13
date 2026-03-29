@@ -30,10 +30,10 @@ public class WorkflowController {
 
         Long ticketId = ((Number) request.get("ticketId")).longValue();
         String clientId = (String) request.get("clientId");
-        String agencyCode = (String) request.get("agencyCode");
+        String structureCode = (String) request.get("structureCode");
         String priority = (String) request.get("priority");
 
-        String processInstanceId = workflowService.startTicketWorkflow(ticketId, clientId, agencyCode, priority, currentUsername);
+        String processInstanceId = workflowService.startTicketWorkflow(ticketId, clientId, structureCode, priority, currentUsername);
 
         return ResponseEntity.ok(ApiResponse.success("Workflow started", processInstanceId));
     }

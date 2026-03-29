@@ -34,7 +34,7 @@
                 <constraints nullable="false"/>
             </column>
             <column name="department" type="VARCHAR(50)"/>
-            <column name="agency_code" type="VARCHAR(5)"/>
+            <column name="structure_code" type="VARCHAR(5)"/>
             <column name="status" type="VARCHAR(50)">
                 <constraints nullable="false"/>
             </column>
@@ -50,8 +50,8 @@
         <createIndex tableName="users" indexName="idx_users_email">
             <column name="email"/>
         </createIndex>
-        <createIndex tableName="users" indexName="idx_users_agency_code">
-            <column name="agency_code"/>
+        <createIndex tableName="users" indexName="idx_users_structure_code">
+            <column name="structure_code"/>
         </createIndex>
         <createIndex tableName="users" indexName="idx_users_role">
             <column name="role"/>
@@ -414,10 +414,10 @@
     <changeSet id="001-12-create-agency-correction-stats" author="bsic">
         <comment>Create agency correction stats table</comment>
         <createTable tableName="agency_correction_stats">
-            <column name="agency_code" type="CHAR(5)">
+            <column name="structure_code" type="CHAR(5)">
                 <constraints primaryKey="true" nullable="false"/>
             </column>
-            <column name="agency_name" type="VARCHAR(100)"/>
+            <column name="structure_name" type="VARCHAR(100)"/>
             <column name="total_anomalies" type="INT" defaultValueNumeric="0"/>
             <column name="fixed_anomalies" type="INT" defaultValueNumeric="0"/>
             <column name="in_review_anomalies" type="INT" defaultValueNumeric="0"/>
@@ -426,7 +426,7 @@
             <column name="last_updated" type="TIMESTAMP" defaultValueComputed="CURRENT_TIMESTAMP ON UPDATE CURRENT_TIMESTAMP"/>
         </createTable>
         <createIndex tableName="agency_correction_stats" indexName="idx_agency_stats_code">
-            <column name="agency_code"/>
+            <column name="structure_code"/>
         </createIndex>
         <createIndex tableName="agency_correction_stats" indexName="idx_agency_stats_rate">
             <column name="correction_rate"/>
@@ -452,7 +452,7 @@
             <column name="old_value" type="TEXT"/>
             <column name="new_value" type="TEXT"/>
             <column name="status" type="VARCHAR(20)" defaultValue="detected"/>
-            <column name="agency_code" type="CHAR(5)"/>
+            <column name="structure_code" type="CHAR(5)"/>
             <column name="user_id" type="INT"/>
             <column name="notes" type="TEXT"/>
             <column name="created_at" type="TIMESTAMP" defaultValueComputed="CURRENT_TIMESTAMP"/>
@@ -467,8 +467,8 @@
         <createIndex tableName="anomaly_history" indexName="idx_anomaly_history_status">
             <column name="status"/>
         </createIndex>
-        <createIndex tableName="anomaly_history" indexName="idx_anomaly_history_agency_code">
-            <column name="agency_code"/>
+        <createIndex tableName="anomaly_history" indexName="idx_anomaly_history_structure_code">
+            <column name="structure_code"/>
         </createIndex>
         <createIndex tableName="anomaly_history" indexName="idx_anomaly_history_created_at">
             <column name="created_at"/>

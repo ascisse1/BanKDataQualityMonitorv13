@@ -98,7 +98,7 @@ public class UserService implements UserDetailsService {
     /**
      * Returns the list of active agency codes for a user via UserProfile.
      */
-    public List<String> getUserAgencyCodes(Integer userId) {
+    public List<String> getUserStructureCodes(Integer userId) {
         return userProfileRepository.findActiveByUserId(userId, LocalDate.now())
                 .stream()
                 .map(up -> up.getStructure().getCode())

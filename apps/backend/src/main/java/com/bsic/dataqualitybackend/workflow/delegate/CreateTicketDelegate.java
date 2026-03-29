@@ -31,7 +31,7 @@ public class CreateTicketDelegate implements JavaDelegate {
         log.info("Creating ticket from workflow - processInstanceId: {}", execution.getProcessInstanceId());
 
         String cli = (String) execution.getVariable("clientId");
-        String agencyCode = (String) execution.getVariable("agencyCode");
+        String structureCode = (String) execution.getVariable("structureCode");
         String priorityStr = (String) execution.getVariable("priority");
         String initiatorUsername = (String) execution.getVariable("initiator");
         Long anomalyId = (Long) execution.getVariable("anomalyId");
@@ -50,7 +50,7 @@ public class CreateTicketDelegate implements JavaDelegate {
 
         Ticket ticket = Ticket.builder()
                 .cli(cli)
-                .agencyCode(agencyCode)
+                .structureCode(structureCode)
                 .priority(priority)
                 .status(TicketStatus.DETECTED)
                 .totalIncidents(1)

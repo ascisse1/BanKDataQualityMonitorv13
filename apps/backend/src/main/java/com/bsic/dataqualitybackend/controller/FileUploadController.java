@@ -24,7 +24,6 @@ import java.util.Arrays;
 @RestController
 @RequestMapping("/api/upload")
 @RequiredArgsConstructor
-@CrossOrigin(origins = "*")
 public class FileUploadController {
 
     private final FileProcessingService fileProcessingService;

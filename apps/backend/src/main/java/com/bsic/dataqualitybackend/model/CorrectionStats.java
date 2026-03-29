@@ -6,13 +6,15 @@ import lombok.Builder;
 import lombok.Data;
 import lombok.NoArgsConstructor;
 import org.hibernate.annotations.CreationTimestamp;
+import org.hibernate.annotations.Filter;
 
 import java.time.LocalDate;
 import java.time.LocalDateTime;
 
 @Entity
+@Filter(name = "structureFilter", condition = "structure_code IN (:codes)")
 @Table(name = "correction_stats", indexes = {
-    @Index(name = "idx_stats_agency", columnList = "agency_code"),
+    @Index(name = "idx_stats_agency", columnList = "structure_code"),
     @Index(name = "idx_stats_date", columnList = "stats_date")
 })
 @Data
@@ -25,11 +27,11 @@ public class CorrectionStats {
     @GeneratedValue(strategy = GenerationType.IDENTITY)
     private Long id;
 
-    @Column(name = "agency_code", nullable = false)
-    private String agencyCode;
+    @Column(name = "structure_code", nullable = false)
+    private String structureCode;
 
-    @Column(name = "agency_name")
-    private String agencyName;
+    @Column(name = "structure_name")
+    private String structureName;
 
     @Column(name = "stats_date", nullable = false)
     private LocalDate statsDate;

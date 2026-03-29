@@ -51,7 +51,7 @@ public class TicketController {
 
         Ticket ticket = Ticket.builder()
                 .cli(request.getCli())
-                .agencyCode(request.getAgencyCode())
+                .structureCode(request.getStructureCode())
                 .priority(request.getPriority() != null ? request.getPriority() : TicketPriority.MEDIUM)
                 .status(TicketStatus.DETECTED)
                 .build();
@@ -97,14 +97,14 @@ public class TicketController {
         return ResponseEntity.ok(ApiResponse.success(ticketDtos));
     }
 
-    @GetMapping("/agency/{agencyCode}")
+    @GetMapping("/agency/{structureCode}")
     public ResponseEntity<ApiResponse<Page<TicketDto>>> getTicketsByAgency(
-            @PathVariable String agencyCode,
+            @PathVariable String structureCode,
             @RequestParam(defaultValue = "0") int page,
             @RequestParam(defaultValue = "20") int size
     ) {
         Pageable pageable = PageRequest.of(page, size, Sort.by("createdAt").descending());
-        Page<Ticket> tickets = ticketService.getTicketsByAgency(agencyCode, pageable);
+        Page<Ticket> tickets = ticketService.getTicketsByAgency(structureCode, pageable);
         Page<TicketDto> ticketDtos = tickets.map(this::mapToTicketDto);
 
         return ResponseEntity.ok(ApiResponse.success(ticketDtos));
@@ -211,7 +211,7 @@ public class TicketController {
                 .cli(ticket.getCli())
                 .clientName(ticket.getClientName())
                 .clientType(ticket.getClientType())
-                .agencyCode(ticket.getAgencyCode())
+                .structureCode(ticket.getStructureCode())
                 .status(ticket.getStatus())
                 .priority(ticket.getPriority())
                 .assignedTo(ticket.getAssignedTo() != null ? mapToUserDto(ticket.getAssignedTo()) : null)

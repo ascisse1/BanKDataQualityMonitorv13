@@ -29,18 +29,18 @@ public class KpiController {
         return ResponseEntity.ok(ApiResponse.success(kpis));
     }
 
-    @GetMapping("/agency/{agencyCode}")
-    public ResponseEntity<ApiResponse<List<Kpi>>> getKpisByAgency(@PathVariable String agencyCode) {
-        List<Kpi> kpis = kpiService.getKpisByAgency(agencyCode);
+    @GetMapping("/agency/{structureCode}")
+    public ResponseEntity<ApiResponse<List<Kpi>>> getKpisByAgency(@PathVariable String structureCode) {
+        List<Kpi> kpis = kpiService.getKpisByAgency(structureCode);
         return ResponseEntity.ok(ApiResponse.success(kpis));
     }
 
-    @GetMapping("/agency/{agencyCode}/range")
+    @GetMapping("/agency/{structureCode}/range")
     public ResponseEntity<ApiResponse<List<Kpi>>> getKpisByAgencyAndDateRange(
-            @PathVariable String agencyCode,
+            @PathVariable String structureCode,
             @RequestParam @DateTimeFormat(iso = DateTimeFormat.ISO.DATE) LocalDate startDate,
             @RequestParam @DateTimeFormat(iso = DateTimeFormat.ISO.DATE) LocalDate endDate) {
-        List<Kpi> kpis = kpiService.getKpisByDateRange(agencyCode, startDate, endDate);
+        List<Kpi> kpis = kpiService.getKpisByDateRange(structureCode, startDate, endDate);
         return ResponseEntity.ok(ApiResponse.success(kpis));
     }
 
@@ -64,10 +64,10 @@ public class KpiController {
 
     @GetMapping("/dashboard")
     public ResponseEntity<ApiResponse<Map<String, Object>>> getDashboardMetrics(
-            @RequestParam(required = false) String agencyCode,
+            @RequestParam(required = false) String structureCode,
             @RequestParam(required = false) @DateTimeFormat(iso = DateTimeFormat.ISO.DATE) LocalDate date) {
         LocalDate targetDate = date != null ? date : LocalDate.now();
-        Map<String, Object> metrics = kpiService.getDashboardMetrics(agencyCode, targetDate);
+        Map<String, Object> metrics = kpiService.getDashboardMetrics(structureCode, targetDate);
         return ResponseEntity.ok(ApiResponse.success(metrics));
     }
 

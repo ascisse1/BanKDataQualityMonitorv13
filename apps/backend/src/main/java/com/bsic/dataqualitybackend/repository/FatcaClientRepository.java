@@ -22,7 +22,7 @@ public interface FatcaClientRepository extends JpaRepository<FatcaClient, Long> 
 
     Page<FatcaClient> findByFatcaStatus(FatcaStatus fatcaStatus, Pageable pageable);
 
-    Page<FatcaClient> findByAgencyCode(String agencyCode, Pageable pageable);
+    Page<FatcaClient> findByStructureCode(String structureCode, Pageable pageable);
 
     Page<FatcaClient> findByClientTypeAndFatcaStatus(ClientType clientType, FatcaStatus fatcaStatus, Pageable pageable);
 
@@ -48,12 +48,12 @@ public interface FatcaClientRepository extends JpaRepository<FatcaClient, Long> 
            "ORDER BY count DESC")
     List<Object[]> countByRiskLevel();
 
-    @Query("SELECT f.agencyCode as agencyCode, f.agencyName as agencyName, " +
+    @Query("SELECT f.structureCode as structureCode, f.structureName as structureName, " +
            "COUNT(f) as total, " +
            "SUM(CASE WHEN f.fatcaStatus = 'COMPLIANT' THEN 1 ELSE 0 END) as compliant, " +
            "SUM(CASE WHEN f.fatcaStatus = 'NON_COMPLIANT' THEN 1 ELSE 0 END) as nonCompliant " +
            "FROM FatcaClient f " +
-           "GROUP BY f.agencyCode, f.agencyName " +
+           "GROUP BY f.structureCode, f.structureName " +
            "ORDER BY total DESC")
     List<Object[]> getStatsByAgency();
 }

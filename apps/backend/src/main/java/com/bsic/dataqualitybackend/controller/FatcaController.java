@@ -5,6 +5,7 @@ import com.bsic.dataqualitybackend.dto.FatcaClientDto;
 import com.bsic.dataqualitybackend.dto.FatcaStatsDto;
 import com.bsic.dataqualitybackend.model.enums.ClientType;
 import com.bsic.dataqualitybackend.model.enums.FatcaStatus;
+import com.bsic.dataqualitybackend.security.StructureSecurityService;
 import com.bsic.dataqualitybackend.service.FatcaService;
 import lombok.RequiredArgsConstructor;
 import lombok.extern.slf4j.Slf4j;
@@ -20,10 +21,10 @@ import java.util.Map;
 @RestController
 @RequestMapping("/api/fatca")
 @RequiredArgsConstructor
-@CrossOrigin(origins = "*")
 public class FatcaController {
 
     private final FatcaService fatcaService;
+    private final StructureSecurityService structureSecurityService;
 
     @GetMapping("/clients")
     @PreAuthorize("hasAnyRole('ADMIN', 'AUDITOR')")
@@ -60,14 +61,15 @@ public class FatcaController {
         return ResponseEntity.ok(ApiResponse.success(clients));
     }
 
-    @GetMapping("/by-agency/{agencyCode}")
+    @GetMapping("/by-agency/{structureCode}")
     @PreAuthorize("hasAnyRole('ADMIN', 'AUDITOR', 'AGENCY_USER')")
     public ResponseEntity<ApiResponse<Page<FatcaClientDto>>> getFatcaClientsByAgency(
-            @PathVariable String agencyCode,
+            @PathVariable String structureCode,
             @RequestParam(defaultValue = "0") int page,
             @RequestParam(defaultValue = "100") int size) {
 
-        Page<FatcaClientDto> clients = fatcaService.getFatcaClientsByAgency(agencyCode, page, size);
+        structureSecurityService.requireAgencyAccess(structureCode);
+        Page<FatcaClientDto> clients = fatcaService.getFatcaClientsByAgency(structureCode, page, size);
 
         return ResponseEntity.ok(ApiResponse.success(clients));
     }

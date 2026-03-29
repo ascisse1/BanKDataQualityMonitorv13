@@ -43,7 +43,6 @@ const FatcaPage: React.FC = () => {
       await db.clearCache();
 
       setIsRefreshing(false);
-      addToast('Données actualisées avec succès', 'success');
     } catch (error) {
       setIsRefreshing(false);
       addToast('Erreur lors de l\'actualisation des données', 'error');

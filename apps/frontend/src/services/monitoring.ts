@@ -11,7 +11,7 @@ interface UserContext {
   username?: string;
   email?: string;
   role?: string;
-  agencyCode?: string;
+  structureCode?: string;
 }
 
 interface MonitoringConfig {

@@ -33,7 +33,7 @@ public class KeycloakAdminConfig {
     private String resource;
     private String adminClientId;
     private String adminClientSecret;
-    private String agencyCodeClaim = "agency_code";
+    private String structureCodeClaim = "structure_code";
 
     private Keycloak keycloakInstance;
 

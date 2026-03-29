@@ -27,7 +27,7 @@ public class CorrectionRequest {
     private String newValue;
 
     @NotBlank(message = "Agency code is required")
-    private String agencyCode;
+    private String structureCode;
 
     private String notes;
 

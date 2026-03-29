@@ -11,7 +11,7 @@ export interface CorrectionRequest {
   fieldLabel?: string;
   oldValue: string | null;
   newValue: string | null;
-  agencyCode: string;
+  structureCode: string;
   notes?: string;
   action: CorrectionAction;
   priority?: TicketPriority;

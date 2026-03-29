@@ -8,15 +8,17 @@ import lombok.Builder;
 import lombok.Data;
 import lombok.NoArgsConstructor;
 import org.hibernate.annotations.CreationTimestamp;
+import org.hibernate.annotations.Filter;
 import org.hibernate.annotations.UpdateTimestamp;
 
 import java.time.LocalDateTime;
 
 @Entity
+@Filter(name = "structureFilter", condition = "structure_code IN (:codes)")
 @Table(name = "anomalies", indexes = {
     @Index(name = "idx_anomaly_client_type", columnList = "client_type"),
     @Index(name = "idx_anomaly_status", columnList = "status"),
-    @Index(name = "idx_anomaly_agency", columnList = "agency_code"),
+    @Index(name = "idx_anomaly_agency", columnList = "structure_code"),
     @Index(name = "idx_anomaly_created", columnList = "created_at")
 })
 @Data
@@ -39,11 +41,11 @@ public class Anomaly {
     @Column(name = "client_type", nullable = false)
     private ClientType clientType;
 
-    @Column(name = "agency_code", nullable = false)
-    private String agencyCode;
+    @Column(name = "structure_code", nullable = false)
+    private String structureCode;
 
-    @Column(name = "agency_name")
-    private String agencyName;
+    @Column(name = "structure_name")
+    private String structureName;
 
     @Column(name = "field_name", nullable = false)
     private String fieldName;

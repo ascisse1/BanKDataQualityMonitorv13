@@ -20,7 +20,7 @@ public class TicketDto {
     private String cli;
     private String clientName;
     private String clientType;
-    private String agencyCode;
+    private String structureCode;
     private TicketStatus status;
     private TicketPriority priority;
     private UserDto assignedTo;

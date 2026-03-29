@@ -9,7 +9,7 @@ const AgencyUserRoute = () => {
   const { user } = useAuth();
 
   const userRole = user?.role?.toUpperCase();
-  if (userRole !== 'AGENCY_USER' || !user?.agencyCodes || user.agencyCodes.length === 0) {
+  if (userRole !== 'AGENCY_USER' || !user?.structureCodes || user.structureCodes.length === 0) {
     return <Navigate to="/anomalies" replace />;
   }
 

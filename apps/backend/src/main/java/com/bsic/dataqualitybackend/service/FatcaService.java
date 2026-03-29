@@ -45,9 +45,9 @@ public class FatcaService {
             .map(this::mapToDto);
     }
 
-    public Page<FatcaClientDto> getFatcaClientsByAgency(String agencyCode, int page, int size) {
+    public Page<FatcaClientDto> getFatcaClientsByAgency(String structureCode, int page, int size) {
         Pageable pageable = PageRequest.of(page, size, Sort.by("createdAt").descending());
-        return fatcaClientRepository.findByAgencyCode(agencyCode, pageable)
+        return fatcaClientRepository.findByStructureCode(structureCode, pageable)
             .map(this::mapToDto);
     }
 
@@ -95,8 +95,8 @@ public class FatcaService {
         return results.stream()
             .map(row -> {
                 Map<String, Object> map = new HashMap<>();
-                map.put("agencyCode", row[0]);
-                map.put("agencyName", row[1]);
+                map.put("structureCode", row[0]);
+                map.put("structureName", row[1]);
                 map.put("total", row[2]);
                 map.put("compliant", row[3]);
                 map.put("nonCompliant", row[4]);
@@ -146,8 +146,8 @@ public class FatcaService {
             .clientNumber(fatcaClient.getClientNumber())
             .clientName(fatcaClient.getClientName())
             .clientType(fatcaClient.getClientType())
-            .agencyCode(fatcaClient.getAgencyCode())
-            .agencyName(fatcaClient.getAgencyName())
+            .structureCode(fatcaClient.getStructureCode())
+            .structureName(fatcaClient.getStructureName())
             .fatcaStatus(fatcaClient.getFatcaStatus())
             .taxResidenceCountry(fatcaClient.getTaxResidenceCountry())
             .usPerson(fatcaClient.getUsPerson())
@@ -174,8 +174,8 @@ public class FatcaService {
             .clientNumber(dto.getClientNumber())
             .clientName(dto.getClientName())
             .clientType(dto.getClientType())
-            .agencyCode(dto.getAgencyCode())
-            .agencyName(dto.getAgencyName())
+            .structureCode(dto.getStructureCode())
+            .structureName(dto.getStructureName())
             .fatcaStatus(dto.getFatcaStatus())
             .taxResidenceCountry(dto.getTaxResidenceCountry())
             .usPerson(dto.getUsPerson())

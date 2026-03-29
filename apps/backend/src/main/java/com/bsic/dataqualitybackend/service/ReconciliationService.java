@@ -1,16 +1,13 @@
 package com.bsic.dataqualitybackend.service;
 
-import com.bsic.dataqualitybackend.model.Anomaly;
-import com.bsic.dataqualitybackend.model.Ticket;
+import com.bsic.dataqualitybackend.model.*;
 import com.bsic.dataqualitybackend.model.enums.AnomalyStatus;
+import com.bsic.dataqualitybackend.model.enums.ClientType;
 import com.bsic.dataqualitybackend.model.enums.TicketStatus;
-import com.bsic.dataqualitybackend.repository.AnomalyRepository;
-import com.bsic.dataqualitybackend.repository.InformixRepository;
-import com.bsic.dataqualitybackend.repository.TicketRepository;
+import com.bsic.dataqualitybackend.repository.*;
+import lombok.RequiredArgsConstructor;
 import lombok.extern.slf4j.Slf4j;
 import org.springframework.beans.factory.annotation.Autowired;
-import org.springframework.beans.factory.annotation.Qualifier;
-import org.springframework.jdbc.core.JdbcTemplate;
 import org.springframework.stereotype.Service;
 import org.springframework.transaction.annotation.Transactional;
 
@@ -20,271 +17,323 @@ import java.util.stream.Collectors;
 
 @Service
 @Slf4j
+@RequiredArgsConstructor
 public class ReconciliationService {
 
-    private final InformixRepository informixRepository;
-    private final JdbcTemplate mysqlJdbcTemplate;
+    private static final int MAX_ATTEMPTS = 5;
+    private static final List<String> ACTIVE_STATUSES = List.of("pending", "in_progress", "partial", "failed");
+
+    private final ReconciliationTaskRepository taskRepository;
+    private final CorrectionRepository correctionRepository;
+    private final ReconciliationAttemptRepository attemptRepository;
     private final TicketRepository ticketRepository;
     private final AnomalyRepository anomalyRepository;
 
-    public ReconciliationService(
-            @Autowired(required = false) InformixRepository informixRepository,
-            @Qualifier("primaryJdbcTemplate") JdbcTemplate mysqlJdbcTemplate,
-            TicketRepository ticketRepository,
-            AnomalyRepository anomalyRepository) {
-        this.informixRepository = informixRepository;
-        this.mysqlJdbcTemplate = mysqlJdbcTemplate;
-        this.ticketRepository = ticketRepository;
-        this.anomalyRepository = anomalyRepository;
-    }
+    @Autowired(required = false)
+    private InformixRepository informixRepository;
 
+    // ──────────────────────────────────────────────
+    //  Core reconciliation
+    // ──────────────────────────────────────────────
+
+    @Transactional
     public Map<String, Object> reconcileTask(String taskId) {
-        log.info("Starting reconciliation for task: {}", taskId);
+        long startTime = System.currentTimeMillis();
+        Long id = Long.valueOf(taskId);
+
+        ReconciliationTask task = taskRepository.findById(id)
+                .orElseThrow(() -> new RuntimeException("Task not found: " + taskId));
+
+        if (task.isTerminal()) {
+            throw new RuntimeException("Task " + taskId + " is already " + task.getStatus());
+        }
 
         if (informixRepository == null) {
-            throw new RuntimeException("CBS integration is not enabled. Enable app.features.informix-integration to reconcile.");
+            String error = "CBS integration is not enabled";
+            task.markFailed(error);
+            taskRepository.save(task);
+            saveAttempt(task, "error", 0, 0, error, startTime);
+            throw new RuntimeException(error);
         }
 
-        Map<String, Object> task = getTask(taskId);
-        if (task == null) {
-            throw new RuntimeException("Task not found: " + taskId);
+        if (task.getAttempts() >= MAX_ATTEMPTS) {
+            task.markAbandoned("Nombre maximum de tentatives atteint (" + MAX_ATTEMPTS + ")");
+            taskRepository.save(task);
+            return Map.of("task_id", taskId, "status", "abandoned",
+                    "message", "Max attempts reached. Task abandoned.");
         }
 
-        String clientId = (String) task.get("client_id");
-        String ticketId = (String) task.get("ticket_id");
+        // Mark in_progress
+        task.setStatus("in_progress");
+        taskRepository.save(task);
 
-        Map<String, Object> cbsData = informixRepository.getClientById(clientId);
-        if (cbsData == null || cbsData.isEmpty()) {
-            throw new RuntimeException("Client not found in CBS: " + clientId);
-        }
+        try {
+            List<Correction> corrections = correctionRepository.findByTicketIdAndIsMatchedFalse(task.getTicketId());
 
-        List<Map<String, Object>> corrections = getCorrections(ticketId);
-        List<Map<String, Object>> discrepancies = new ArrayList<>();
-        int matchedFields = 0;
-
-        for (Map<String, Object> correction : corrections) {
-            String field = (String) correction.get("field_name");
-            String expectedValue = (String) correction.get("new_value");
-            String cbsColumn = CbsColumnRegistry.toAlias(field);
-            Object cbsValueObj = cbsData.get(cbsColumn);
-            String cbsValue = cbsValueObj != null ? cbsValueObj.toString().trim() : "";
-
-            boolean isMatched = compareValues(expectedValue, cbsValue);
-
-            if (isMatched) {
-                matchedFields++;
-            } else {
-                Map<String, Object> discrepancy = new HashMap<>();
-                discrepancy.put("field", field);
-                discrepancy.put("field_label", correction.get("field_label"));
-                discrepancy.put("expected_value", expectedValue);
-                discrepancy.put("actual_value", cbsValue);
-                discrepancy.put("severity", calculateSeverity(field));
-                discrepancies.add(discrepancy);
+            if (corrections.isEmpty()) {
+                task.markReconciled();
+                taskRepository.save(task);
+                saveAttempt(task, "reconciled", 0, 0, null, startTime);
+                return Map.of("task_id", taskId, "status", "success",
+                        "matched_fields", 0, "total_fields", 0);
             }
 
-            updateCorrectionStatus(ticketId, field, cbsValue, isMatched);
+            Set<String> fieldsToCheck = corrections.stream()
+                    .map(Correction::getFieldName)
+                    .filter(CbsColumnRegistry::isAllowedColumn)
+                    .collect(Collectors.toSet());
+
+            Map<String, Object> cbsData = informixRepository.getClientFields(task.getClientId(), fieldsToCheck);
+
+            if (cbsData == null || cbsData.isEmpty()) {
+                String error = "Client not found in CBS: " + task.getClientId();
+                task.markFailed(error);
+                taskRepository.save(task);
+                saveAttempt(task, "failed", 0, corrections.size(), error, startTime);
+                return Map.of("task_id", taskId, "status", "failed", "error", error,
+                        "matched_fields", 0, "total_fields", corrections.size());
+            }
+
+            List<Map<String, Object>> discrepancies = new ArrayList<>();
+            int matchedFields = 0;
+
+            for (Correction correction : corrections) {
+                String cbsColumn = CbsColumnRegistry.toAlias(correction.getFieldName());
+                Object cbsValueObj = cbsData.get(cbsColumn);
+                String cbsValue = cbsValueObj != null ? cbsValueObj.toString().trim() : "";
+
+                boolean isMatched = compareValues(correction.getNewValue(), cbsValue);
+
+                if (isMatched) {
+                    correction.markMatched(cbsValue);
+                    matchedFields++;
+                } else {
+                    correction.markUnmatched(cbsValue);
+                    Map<String, Object> discrepancy = new HashMap<>();
+                    discrepancy.put("field", correction.getFieldName());
+                    discrepancy.put("field_label", correction.getFieldLabel());
+                    discrepancy.put("expected_value", correction.getNewValue());
+                    discrepancy.put("actual_value", cbsValue);
+                    discrepancy.put("severity", calculateSeverity(correction.getFieldName()));
+                    discrepancies.add(discrepancy);
+                }
+            }
+
+            correctionRepository.saveAll(corrections);
+
+            int totalFields = corrections.size();
+            String status;
+            if (matchedFields == totalFields) {
+                task.markReconciled();
+                status = "reconciled";
+            } else if (matchedFields > 0) {
+                task.markPartial();
+                status = "partial";
+            } else {
+                task.markFailed(null);
+                status = "failed";
+            }
+
+            taskRepository.save(task);
+            saveAttempt(task, status, matchedFields, totalFields, null, startTime);
+
+            if ("reconciled".equals(status)) {
+                closeTicketAfterReconciliation(task.getTicketId(), task.getClientId());
+            }
+
+            // Auto-abandon if max attempts reached
+            if (!"reconciled".equals(status) && task.getAttempts() >= MAX_ATTEMPTS) {
+                task.markAbandoned("Nombre maximum de tentatives atteint (" + MAX_ATTEMPTS
+                        + ") — " + matchedFields + "/" + totalFields + " champs correspondent");
+                taskRepository.save(task);
+                status = "abandoned";
+            }
+
+            Map<String, Object> result = new HashMap<>();
+            result.put("task_id", taskId);
+            result.put("status", "reconciled".equals(status) ? "success" : status);
+            result.put("matched_fields", matchedFields);
+            result.put("total_fields", totalFields);
+            result.put("discrepancies", discrepancies);
+            result.put("checked_at", LocalDateTime.now().toString());
+
+            log.info("Reconciliation completed for task {}: {}/{} fields matched (status: {})",
+                    taskId, matchedFields, totalFields, status);
+            return result;
+
+        } catch (Exception e) {
+            task.markFailed(e.getMessage());
+            taskRepository.save(task);
+            saveAttempt(task, "error", 0, 0, e.getMessage(), startTime);
+            log.error("Reconciliation failed for task {}: {}", taskId, e.getMessage(), e);
+            throw e;
         }
-
-        int totalFields = corrections.size();
-        String status = matchedFields == totalFields ? "reconciled"
-                : matchedFields > 0 ? "partial"
-                : "failed";
-
-        updateTaskStatus(taskId, status);
-
-        // If fully reconciled, close the ticket and its anomalies
-        if ("reconciled".equals(status)) {
-            closeTicketAfterReconciliation(ticketId, clientId);
-        }
-
-        Map<String, Object> result = new HashMap<>();
-        result.put("task_id", taskId);
-        result.put("status", "reconciled".equals(status) ? "success" : status);
-        result.put("matched_fields", matchedFields);
-        result.put("total_fields", totalFields);
-        result.put("discrepancies", discrepancies);
-        result.put("checked_at", LocalDateTime.now().toString());
-
-        log.info("Reconciliation completed for task {}: {}/{} fields matched",
-                taskId, matchedFields, totalFields);
-
-        return result;
     }
 
-    public List<Map<String, Object>> getPendingTasks(String agencyCode, String clientId) {
-        StringBuilder sql = new StringBuilder("""
-            SELECT DISTINCT
-                t.id, t.ticket_id, t.client_id, t.status, t.created_at,
-                t.attempts, t.last_attempt_at, t.error_message,
-                tk.client_name, tk.agency_code
-            FROM reconciliation_tasks t
-            LEFT JOIN tickets tk ON tk.ticket_number = t.ticket_id
-            WHERE t.status = 'pending'
-        """);
+    // ──────────────────────────────────────────────
+    //  Abandon + create new anomaly
+    // ──────────────────────────────────────────────
 
-        List<Object> params = new ArrayList<>();
+    @Transactional
+    public Map<String, Object> abandonAndCreateAnomaly(String taskId, String username) {
+        Long id = Long.valueOf(taskId);
+        ReconciliationTask task = taskRepository.findById(id)
+                .orElseThrow(() -> new RuntimeException("Task not found: " + taskId));
 
-        if (agencyCode != null && !agencyCode.isEmpty()) {
-            sql.append(" AND tk.agency_code = ?");
-            params.add(agencyCode);
+        if ("reconciled".equals(task.getStatus())) {
+            throw new RuntimeException("Cannot abandon a reconciled task");
         }
 
-        if (clientId != null && !clientId.isEmpty()) {
-            sql.append(" AND t.client_id = ?");
-            params.add(clientId);
+        // Get ticket for structure_code and client_type
+        Optional<Ticket> ticketOpt = ticketRepository.findByTicketNumber(task.getTicketId());
+        String structureCode = ticketOpt.map(Ticket::getStructureCode).orElse("UNKNOWN");
+        String clientTypeCode = ticketOpt.map(Ticket::getClientType).orElse("1");
+        String clientName = ticketOpt.map(Ticket::getClientName).orElse(task.getClientId());
+
+        // Abandon
+        task.markAbandoned("Abandonné par " + username + " — nouvelle anomalie créée");
+        taskRepository.save(task);
+
+        // Create anomalies from unmatched corrections
+        List<Correction> unmatchedCorrections = correctionRepository.findByTicketIdAndIsMatchedFalse(task.getTicketId());
+        List<Long> createdAnomalyIds = new ArrayList<>();
+
+        for (Correction correction : unmatchedCorrections) {
+            Anomaly anomaly = Anomaly.builder()
+                    .clientNumber(task.getClientId())
+                    .clientName(clientName)
+                    .clientType(ClientType.fromCode(clientTypeCode))
+                    .structureCode(structureCode)
+                    .fieldName(correction.getFieldName())
+                    .fieldLabel(correction.getFieldLabel() != null ? correction.getFieldLabel() : correction.getFieldName())
+                    .currentValue(correction.getCbsValue() != null ? correction.getCbsValue() : "")
+                    .expectedValue(correction.getNewValue())
+                    .errorType("RECONCILIATION_FAILURE")
+                    .errorMessage("Échec réconciliation CBS — ticket " + task.getTicketId()
+                            + " (attendu: " + correction.getNewValue() + ", CBS: " + correction.getCbsValue() + ")")
+                    .severity(calculateSeverity(correction.getFieldName()))
+                    .dataSource("RECONCILIATION")
+                    .status(AnomalyStatus.PENDING)
+                    .build();
+
+            Anomaly saved = anomalyRepository.save(anomaly);
+            createdAnomalyIds.add(saved.getId());
+            log.info("Created anomaly {} for abandoned task {} field {}",
+                    saved.getId(), taskId, correction.getFieldName());
         }
 
-        sql.append(" ORDER BY t.created_at DESC LIMIT 100");
-
-        List<Map<String, Object>> tasks = mysqlJdbcTemplate.queryForList(
-                sql.toString(),
-                params.toArray()
+        return Map.of(
+                "task_id", taskId,
+                "status", "abandoned",
+                "anomalies_created", createdAnomalyIds.size(),
+                "anomaly_ids", createdAnomalyIds
         );
+    }
 
-        for (Map<String, Object> task : tasks) {
-            String ticketId = (String) task.get("ticket_id");
-            List<Map<String, Object>> corrections = getCorrections(ticketId);
-            task.put("corrections", corrections);
-        }
+    // ──────────────────────────────────────────────
+    //  Queries
+    // ──────────────────────────────────────────────
 
-        return tasks;
+    public List<Map<String, Object>> getPendingTasks(String structureCode, String clientId) {
+        List<ReconciliationTask> tasks = taskRepository.findByStatusInOrderByCreatedAtDesc(ACTIVE_STATUSES);
+
+        return tasks.stream()
+                .map(task -> {
+                    enrichTaskFromTicket(task);
+                    return task;
+                })
+                .filter(task -> structureCode == null || structureCode.isEmpty()
+                        || structureCode.equals(task.getStructureCode()))
+                .filter(task -> clientId == null || clientId.isEmpty()
+                        || task.getClientId().equals(clientId))
+                .limit(100)
+                .map(this::taskToMap)
+                .collect(Collectors.toList());
     }
 
     public List<Map<String, Object>> getReconciliationHistory(
             String ticketId, String clientId, String status,
             LocalDateTime startDate, LocalDateTime endDate) {
 
-        StringBuilder sql = new StringBuilder("""
-            SELECT DISTINCT
-                t.id, t.ticket_id, t.client_id, t.status, t.created_at,
-                t.reconciled_at, t.attempts, t.last_attempt_at, t.error_message,
-                tk.client_name, tk.agency_code
-            FROM reconciliation_tasks t
-            LEFT JOIN tickets tk ON tk.ticket_number = t.ticket_id
-            WHERE 1=1
-        """);
+        List<ReconciliationTask> allTasks = taskRepository.findAll();
 
-        List<Object> params = new ArrayList<>();
-
-        if (ticketId != null && !ticketId.isEmpty()) {
-            sql.append(" AND t.ticket_id = ?");
-            params.add(ticketId);
-        }
-
-        if (clientId != null && !clientId.isEmpty()) {
-            sql.append(" AND t.client_id = ?");
-            params.add(clientId);
-        }
-
-        if (status != null && !status.isEmpty()) {
-            sql.append(" AND t.status = ?");
-            params.add(status);
-        }
-
-        if (startDate != null) {
-            sql.append(" AND t.created_at >= ?");
-            params.add(startDate);
-        }
-
-        if (endDate != null) {
-            sql.append(" AND t.created_at <= ?");
-            params.add(endDate);
-        }
-
-        sql.append(" ORDER BY t.created_at DESC LIMIT 500");
-
-        List<Map<String, Object>> tasks = mysqlJdbcTemplate.queryForList(
-                sql.toString(),
-                params.toArray()
-        );
-
-        for (Map<String, Object> task : tasks) {
-            String tktId = (String) task.get("ticket_id");
-            List<Map<String, Object>> corrections = getCorrections(tktId);
-            task.put("corrections", corrections);
-        }
-
-        return tasks;
+        return allTasks.stream()
+                .filter(t -> ticketId == null || ticketId.isEmpty() || t.getTicketId().equals(ticketId))
+                .filter(t -> clientId == null || clientId.isEmpty() || t.getClientId().equals(clientId))
+                .filter(t -> status == null || status.isEmpty() || t.getStatus().equals(status))
+                .filter(t -> startDate == null || !t.getCreatedAt().isBefore(startDate))
+                .filter(t -> endDate == null || !t.getCreatedAt().isAfter(endDate))
+                .sorted(Comparator.comparing(ReconciliationTask::getCreatedAt).reversed())
+                .limit(500)
+                .map(task -> {
+                    enrichTaskFromTicket(task);
+                    return taskToMap(task);
+                })
+                .collect(Collectors.toList());
     }
 
-    public Map<String, Object> getStats(String agencyCode) {
-        String whereClause = agencyCode != null && !agencyCode.isEmpty()
-                ? "WHERE tk.agency_code = ?"
-                : "WHERE 1=1";
+    public Map<String, Object> getStats(String structureCode) {
+        long totalPending = taskRepository.countByStatusIn(ACTIVE_STATUSES);
+        long reconciledToday = taskRepository.countReconciledToday();
+        long failedToday = taskRepository.countFailedToday();
+        long totalAbandoned = taskRepository.countAbandoned();
+        long totalReconciled = taskRepository.countReconciled();
+        long totalAll = taskRepository.countAll();
 
-        String sql = String.format("""
-            SELECT
-                COUNT(CASE WHEN t.status = 'pending' THEN 1 END) as total_pending,
-                COUNT(CASE WHEN t.status = 'reconciled' AND DATE(t.reconciled_at) = CURDATE() THEN 1 END) as reconciled_today,
-                COUNT(CASE WHEN t.status = 'failed' AND DATE(t.last_attempt_at) = CURDATE() THEN 1 END) as failed_today,
-                ROUND(
-                    COUNT(CASE WHEN t.status = 'reconciled' THEN 1 END) * 100.0 /
-                    NULLIF(COUNT(*), 0), 2
-                ) as success_rate,
-                AVG(TIMESTAMPDIFF(SECOND, t.created_at, t.reconciled_at)) as average_reconciliation_time
-            FROM reconciliation_tasks t
-            LEFT JOIN tickets tk ON tk.ticket_number = t.ticket_id
-            %s
-        """, whereClause);
+        double successRate = totalAll > 0 ? (totalReconciled * 100.0 / totalAll) : 0;
 
-        Map<String, Object> stats = agencyCode != null && !agencyCode.isEmpty()
-                ? mysqlJdbcTemplate.queryForMap(sql, agencyCode)
-                : mysqlJdbcTemplate.queryForMap(sql);
+        List<Object[]> statusCounts = taskRepository.countByStatus();
+        List<Map<String, Object>> byStatus = statusCounts.stream()
+                .map(row -> Map.<String, Object>of("status", row[0], "count", row[1]))
+                .collect(Collectors.toList());
 
-        String statusSql = String.format("""
-            SELECT t.status, COUNT(*) as count
-            FROM reconciliation_tasks t
-            LEFT JOIN tickets tk ON tk.ticket_number = t.ticket_id
-            %s
-            GROUP BY t.status
-        """, whereClause);
+        Map<String, Object> stats = new HashMap<>();
+        stats.put("total_pending", totalPending);
+        stats.put("reconciled_today", reconciledToday);
+        stats.put("failed_today", failedToday);
+        stats.put("total_abandoned", totalAbandoned);
+        stats.put("success_rate", Math.round(successRate * 100.0) / 100.0);
+        stats.put("average_reconciliation_time", 0); // simplified — compute if needed
+        stats.put("by_status", byStatus);
 
-        List<Map<String, Object>> byStatus = agencyCode != null && !agencyCode.isEmpty()
-                ? mysqlJdbcTemplate.queryForList(statusSql, agencyCode)
-                : mysqlJdbcTemplate.queryForList(statusSql);
-      stats.put("by_status", byStatus);
         return stats;
     }
 
-    public Map<String, Object> reconcileAll(String agencyCode, Integer maxTasks) {
+    public List<ReconciliationAttempt> getAttempts(String taskId) {
+        return attemptRepository.findByTaskIdOrderByAttemptNumber(Long.valueOf(taskId));
+    }
+
+    // ──────────────────────────────────────────────
+    //  Batch reconciliation
+    // ──────────────────────────────────────────────
+
+    public Map<String, Object> reconcileAll(String structureCode, Integer maxTasks) {
         int limit = maxTasks != null ? maxTasks : 50;
-        List<Map<String, Object>> tasks = getPendingTasks(agencyCode, null)
+        List<ReconciliationTask> tasks = taskRepository.findByStatusInOrderByCreatedAtDesc(ACTIVE_STATUSES)
+                .stream().limit(limit).collect(Collectors.toList());
 
-                .stream()
-                .limit(limit)
-                .collect(Collectors.toList());
+        int success = 0, failed = 0, abandoned = 0;
 
-        int success = 0;
-        int failed = 0;
-
-        for (Map<String, Object> task : tasks) {
+        for (ReconciliationTask task : tasks) {
             try {
-                String taskId = (String) task.get("id");
-                Map<String, Object> result = reconcileTask(taskId);
-                if ("success".equals(result.get("status"))) {
-                    success++;
-                } else {
-                    failed++;
-                }
+                Map<String, Object> result = reconcileTask(String.valueOf(task.getId()));
+                String resultStatus = (String) result.get("status");
+                if ("success".equals(resultStatus)) success++;
+                else if ("abandoned".equals(resultStatus)) abandoned++;
+                else failed++;
             } catch (Exception e) {
-                log.error("Error reconciling task: {}", e.getMessage());
+                log.error("Error reconciling task {}: {}", task.getId(), e.getMessage());
                 failed++;
             }
         }
 
-        Map<String, Object> result = new HashMap<>();
-        result.put("success", success);
-        result.put("failed", failed);
-        result.put("total", tasks.size());
-
-        return result;
+        return Map.of("success", success, "failed", failed, "abandoned", abandoned, "total", tasks.size());
     }
 
-    /**
-     * Close the ticket and related anomalies after successful reconciliation.
-     * This is the final step — ticket moves UPDATED_CBS → CLOSED.
-     */
+    // ──────────────────────────────────────────────
+    //  Private helpers
+    // ──────────────────────────────────────────────
+
     @Transactional
     private void closeTicketAfterReconciliation(String ticketNumber, String clientId) {
         try {
@@ -296,8 +345,7 @@ public class ReconciliationService {
 
             Ticket ticket = ticketOpt.get();
             if (ticket.getStatus() != TicketStatus.UPDATED_CBS) {
-                log.info("Ticket {} is in status {} — skipping post-reconciliation closure",
-                        ticketNumber, ticket.getStatus());
+                log.info("Ticket {} is in status {} — skipping closure", ticketNumber, ticket.getStatus());
                 return;
             }
 
@@ -305,76 +353,75 @@ public class ReconciliationService {
             ticket.setClosedAt(LocalDateTime.now());
             ticketRepository.save(ticket);
 
-            // Close related anomalies
             List<Anomaly> openAnomalies = anomalyRepository.findByClientNumberAndStatusIn(
                     clientId, List.of(AnomalyStatus.CORRECTED, AnomalyStatus.IN_PROGRESS));
             for (Anomaly anomaly : openAnomalies) {
                 anomaly.setStatus(AnomalyStatus.CLOSED);
-                anomalyRepository.save(anomaly);
             }
+            anomalyRepository.saveAll(openAnomalies);
 
-            log.info("Ticket {} and {} anomalies closed after successful reconciliation",
+            log.info("Ticket {} and {} anomalies closed after reconciliation",
                     ticketNumber, openAnomalies.size());
         } catch (Exception e) {
-            log.error("Failed to close ticket {} after reconciliation: {}", ticketNumber, e.getMessage(), e);
+            log.error("Failed to close ticket {}: {}", ticketNumber, e.getMessage(), e);
         }
     }
 
-    private Map<String, Object> getTask(String taskId) {
-        String sql = """
-            SELECT t.id, t.ticket_id, t.client_id, t.status, t.created_at, t.attempts,
-                   tk.client_name
-            FROM reconciliation_tasks t
-            LEFT JOIN tickets tk ON tk.ticket_number = t.ticket_id
-            WHERE t.id = ?
-        """;
-
-        try {
-            return mysqlJdbcTemplate.queryForMap(sql, taskId);
-        } catch (Exception e) {
-            return null;
-        }
+    private void enrichTaskFromTicket(ReconciliationTask task) {
+        ticketRepository.findByTicketNumber(task.getTicketId()).ifPresent(ticket -> {
+            task.setClientName(ticket.getClientName());
+            task.setStructureCode(ticket.getStructureCode());
+        });
     }
 
-    private List<Map<String, Object>> getCorrections(String ticketId) {
-        String sql = """
-            SELECT field_name, field_label, old_value,
-                   new_value as expected_value,
-                   cbs_value, is_matched, last_checked_at
-            FROM corrections
-            WHERE ticket_id = ?
-        """;
+    private Map<String, Object> taskToMap(ReconciliationTask task) {
+        List<Correction> corrections = correctionRepository.findByTicketId(task.getTicketId());
 
-        return mysqlJdbcTemplate.queryForList(sql, ticketId);
+        Map<String, Object> map = new HashMap<>();
+        map.put("id", String.valueOf(task.getId()));
+        map.put("ticket_id", task.getTicketId());
+        map.put("client_id", task.getClientId());
+        map.put("client_name", task.getClientName());
+        map.put("structure_code", task.getStructureCode());
+        map.put("status", task.getStatus());
+        map.put("attempts", task.getAttempts());
+        map.put("created_at", task.getCreatedAt() != null ? task.getCreatedAt().toString() : null);
+        map.put("reconciled_at", task.getReconciledAt() != null ? task.getReconciledAt().toString() : null);
+        map.put("last_attempt_at", task.getLastAttemptAt() != null ? task.getLastAttemptAt().toString() : null);
+        map.put("error_message", task.getErrorMessage());
+        map.put("abandoned_at", task.getAbandonedAt() != null ? task.getAbandonedAt().toString() : null);
+        map.put("abandoned_reason", task.getAbandonedReason());
+        map.put("corrections", corrections.stream().map(c -> {
+            Map<String, Object> cm = new HashMap<>();
+            cm.put("field_name", c.getFieldName());
+            cm.put("field_label", c.getFieldLabel());
+            cm.put("old_value", c.getOldValue());
+            cm.put("expected_value", c.getNewValue());
+            cm.put("cbs_value", c.getCbsValue());
+            cm.put("is_matched", c.getIsMatched());
+            cm.put("last_checked_at", c.getLastCheckedAt() != null ? c.getLastCheckedAt().toString() : null);
+            return cm;
+        }).collect(Collectors.toList()));
+
+        return map;
     }
 
-    private void updateCorrectionStatus(String ticketId, String field, String cbsValue, boolean isMatched) {
-        String sql = """
-            UPDATE corrections
-            SET cbs_value = ?, is_matched = ?, last_checked_at = NOW()
-            WHERE ticket_id = ? AND field_name = ?
-        """;
-
-        mysqlJdbcTemplate.update(sql, cbsValue, isMatched, ticketId, field);
+    private void saveAttempt(ReconciliationTask task, String status,
+                             int matchedFields, int totalFields, String error, long startTime) {
+        ReconciliationAttempt attempt = ReconciliationAttempt.builder()
+                .task(task)
+                .attemptNumber(task.getAttempts())
+                .status(status)
+                .matchedFields(matchedFields)
+                .totalFields(totalFields)
+                .errorMessage(error)
+                .durationMs(System.currentTimeMillis() - startTime)
+                .build();
+        attemptRepository.save(attempt);
     }
-
-    private void updateTaskStatus(String taskId, String status) {
-        String sql = """
-            UPDATE reconciliation_tasks
-            SET status = ?, last_attempt_at = NOW(), attempts = attempts + 1,
-                reconciled_at = CASE WHEN ? = 'reconciled' THEN NOW() ELSE reconciled_at END
-            WHERE id = ?
-        """;
-
-        mysqlJdbcTemplate.update(sql, status, status, taskId);
-    }
-
-    // Field-to-CBS-alias mapping is now centralized in CbsColumnRegistry
 
     private boolean compareValues(String expected, String actual) {
-        String normalizedExpected = normalizeValue(expected);
-        String normalizedActual = normalizeValue(actual);
-        return normalizedExpected.equals(normalizedActual);
+        return normalizeValue(expected).equals(normalizeValue(actual));
     }
 
     private String normalizeValue(String value) {
@@ -383,12 +430,8 @@ public class ReconciliationService {
     }
 
     private String calculateSeverity(String field) {
-        List<String> criticalFields = List.of("client_id", "tax_id", "nationality");
-        if (criticalFields.contains(field)) return "high";
-
-        List<String> mediumFields = List.of("name", "firstname", "address", "phone", "email");
-        if (mediumFields.contains(field)) return "medium";
-
+        if (List.of("client_id", "tax_id", "nationality", "nid", "nrc").contains(field)) return "high";
+        if (List.of("name", "firstname", "address", "phone", "email", "nom", "pre").contains(field)) return "medium";
         return "low";
     }
 }

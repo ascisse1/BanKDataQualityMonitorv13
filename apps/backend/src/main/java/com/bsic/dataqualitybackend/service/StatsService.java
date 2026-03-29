@@ -10,22 +10,17 @@ import com.bsic.dataqualitybackend.model.enums.TicketStatus;
 import com.bsic.dataqualitybackend.repository.AnomalyRepository;
 import com.bsic.dataqualitybackend.repository.ClientRepository;
 import com.bsic.dataqualitybackend.repository.TicketRepository;
-import com.bsic.dataqualitybackend.security.StructureSecurityService;
 import lombok.RequiredArgsConstructor;
 import lombok.extern.slf4j.Slf4j;
-import org.springframework.cache.annotation.Cacheable;
-import org.springframework.data.domain.PageRequest;
-import org.springframework.data.domain.Pageable;
-import org.springframework.data.domain.Sort;
 import org.springframework.stereotype.Service;
 
 import java.util.ArrayList;
 import java.util.List;
-import java.util.Map;
 import java.util.stream.Collectors;
 
 /**
  * Service for dashboard statistics and metrics.
+ * Tenant filtering is handled automatically by Hibernate @Filter.
  */
 @Slf4j
 @Service
@@ -35,42 +30,24 @@ public class StatsService {
     private final AnomalyRepository anomalyRepository;
     private final TicketRepository ticketRepository;
     private final ClientRepository clientRepository;
-    private final StructureSecurityService structureSecurityService;
 
-    /**
-     * Get overall client statistics for dashboard.
-     */
     public DashboardStatsDto getClientStats() {
         log.info("Calculating client statistics for dashboard");
-        List<String> agencies = structureSecurityService.getAgencyFilter();
 
         long totalClients = clientRepository.count();
         long individualClients = clientRepository.countByTcli("1");
         long corporateClients = clientRepository.countByTcli("2");
         long institutionalClients = clientRepository.countByTcli("3");
 
-        long totalAnomalies;
-        long correctedAnomalies;
-        long pendingTickets;
-        long resolvedTickets;
-
-        if (agencies.isEmpty()) {
-            totalAnomalies = anomalyRepository.count();
-            correctedAnomalies = anomalyRepository.countByStatus(AnomalyStatus.CORRECTED);
-            pendingTickets = ticketRepository.countByStatus(TicketStatus.DETECTED) +
-                              ticketRepository.countByStatus(TicketStatus.ASSIGNED) +
-                              ticketRepository.countByStatus(TicketStatus.IN_PROGRESS);
-            resolvedTickets = ticketRepository.countByStatus(TicketStatus.CLOSED);
-        } else {
-            totalAnomalies = anomalyRepository.countByAgencyCodeIn(agencies);
-            correctedAnomalies = anomalyRepository.countByStatusAndAgencyCodeIn(AnomalyStatus.CORRECTED, agencies);
-            pendingTickets = ticketRepository.countByStatusAndAgencyCodeIn(TicketStatus.DETECTED, agencies) +
-                              ticketRepository.countByStatusAndAgencyCodeIn(TicketStatus.ASSIGNED, agencies) +
-                              ticketRepository.countByStatusAndAgencyCodeIn(TicketStatus.IN_PROGRESS, agencies);
-            resolvedTickets = ticketRepository.countByStatusAndAgencyCodeIn(TicketStatus.CLOSED, agencies);
-        }
+        long totalAnomalies = anomalyRepository.count();
+        long correctedAnomalies = anomalyRepository.countByStatus(AnomalyStatus.CORRECTED);
 
         long fatcaCount = 0;
+
+        long pendingTickets = ticketRepository.countByStatus(TicketStatus.DETECTED) +
+                              ticketRepository.countByStatus(TicketStatus.ASSIGNED) +
+                              ticketRepository.countByStatus(TicketStatus.IN_PROGRESS);
+        long resolvedTickets = ticketRepository.countByStatus(TicketStatus.CLOSED);
 
         double correctionRate = totalAnomalies > 0 ?
                 (double) correctedAnomalies / totalAnomalies * 100 : 0;
@@ -88,17 +65,9 @@ public class StatsService {
                 .build();
     }
 
-    /**
-     * Get anomaly counts grouped by agency/branch.
-     */
     public List<BranchAnomalyDto> getAnomaliesByBranch() {
         log.info("Getting anomalies grouped by branch");
-        List<String> agencies = structureSecurityService.getAgencyFilter();
-
-        List<Object[]> results = agencies.isEmpty()
-            ? anomalyRepository.countByAgencyGrouped()
-            : anomalyRepository.countByAgencyGroupedFiltered(agencies);
-
+        List<Object[]> results = anomalyRepository.countByAgencyGrouped();
         return results.stream()
                 .map(row -> BranchAnomalyDto.builder()
                         .code_agence((String) row[0])
@@ -108,16 +77,11 @@ public class StatsService {
                 .collect(Collectors.toList());
     }
 
-    /**
-     * Get validation metrics per category.
-     */
-    @Cacheable(value = "dashboardStats", key = "'validationMetrics'")
     public List<ValidationMetricDto> getValidationMetrics() {
         log.info("Calculating validation metrics");
 
         List<ValidationMetricDto> metrics = new ArrayList<>();
 
-        // Individual clients
         long individualTotal = clientRepository.countByTcli("1");
         long individualAnomalies = anomalyRepository.countByClientType(ClientType.INDIVIDUAL);
         long individualValid = individualTotal - individualAnomalies;
@@ -130,7 +94,6 @@ public class StatsService {
                 .quality_score(Math.round(individualScore * 100.0) / 100.0)
                 .build());
 
-        // Corporate clients
         long corporateTotal = clientRepository.countByTcli("2");
         long corporateAnomalies = anomalyRepository.countByClientType(ClientType.CORPORATE);
         long corporateValid = corporateTotal - corporateAnomalies;
@@ -143,7 +106,6 @@ public class StatsService {
                 .quality_score(Math.round(corporateScore * 100.0) / 100.0)
                 .build());
 
-        // Institutional clients
         long institutionalTotal = clientRepository.countByTcli("3");
         long institutionalAnomalies = anomalyRepository.countByClientType(ClientType.INSTITUTIONAL);
         long institutionalValid = institutionalTotal - institutionalAnomalies;
@@ -159,19 +121,10 @@ public class StatsService {
         return metrics;
     }
 
-    /**
-     * Get recent anomalies for dashboard.
-     */
     public List<AnomalyDto> getRecentAnomalies(int limit) {
         log.info("Getting {} recent anomalies", limit);
-        List<String> agencies = structureSecurityService.getAgencyFilter();
-        if (agencies.isEmpty()) {
-            return anomalyRepository.findTop10ByOrderByCreatedAtDesc()
-                    .stream().limit(limit).map(this::mapToAnomalyDto).collect(Collectors.toList());
-        }
-        Pageable pageable = PageRequest.of(0, limit, Sort.by("createdAt").descending());
-        return anomalyRepository.findByAgencyCodeIn(agencies, pageable)
-                .getContent().stream().map(this::mapToAnomalyDto).collect(Collectors.toList());
+        return anomalyRepository.findTop10ByOrderByCreatedAtDesc()
+                .stream().limit(limit).map(this::mapToAnomalyDto).collect(Collectors.toList());
     }
 
     private AnomalyDto mapToAnomalyDto(com.bsic.dataqualitybackend.model.Anomaly anomaly) {
@@ -180,8 +133,8 @@ public class StatsService {
                 .clientNumber(anomaly.getClientNumber())
                 .clientName(anomaly.getClientName())
                 .clientType(anomaly.getClientType())
-                .agencyCode(anomaly.getAgencyCode())
-                .agencyName(anomaly.getAgencyName())
+                .structureCode(anomaly.getStructureCode())
+                .structureName(anomaly.getStructureName())
                 .fieldName(anomaly.getFieldName())
                 .fieldLabel(anomaly.getFieldLabel())
                 .currentValue(anomaly.getCurrentValue())

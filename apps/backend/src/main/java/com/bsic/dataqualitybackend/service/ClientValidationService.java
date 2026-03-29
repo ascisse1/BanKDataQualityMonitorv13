@@ -32,7 +32,6 @@ public class ClientValidationService {
     private final AnomalyRepository anomalyRepository;
     private final AgencyRepository agencyRepository;
     private final NaturalLanguageRuleParser naturalLanguageRuleParser;
-    private final AnomalyWorkflowService anomalyWorkflowService;
 
     // Field label mappings for user-friendly display
     private static final Map<String, String> FIELD_LABELS = Map.ofEntries(
@@ -79,7 +78,7 @@ public class ClientValidationService {
         log.info("Loaded {} active validation rules", allActiveRules.size());
 
         // Cache agency names
-        Map<String, String> agencyNames = new HashMap<>();
+        Map<String, String> structureNames = new HashMap<>();
 
         for (Client client : clients) {
             try {
@@ -94,7 +93,7 @@ public class ClientValidationService {
                 List<ValidationRule> applicableRules = getApplicableRules(allActiveRules, clientType);
 
                 // Get agency name
-                String agencyName = getAgencyName(client.getAge(), agencyNames);
+                String structureName = getStructureName(client.getAge(), structureNames);
 
                 // Validate against each rule
                 for (ValidationRule rule : applicableRules) {
@@ -111,19 +110,10 @@ public class ClientValidationService {
                                 continue;
                             }
 
-                            // Create anomaly
-                            Anomaly anomaly = createAnomaly(client, rule, failure, clientType, agencyName);
-                            Anomaly savedAnomaly = anomalyRepository.save(anomaly);
+                            // Create anomaly (ticket is created later when anomaly is corrected)
+                            Anomaly anomaly = createAnomaly(client, rule, failure, clientType, structureName);
+                            anomalyRepository.save(anomaly);
                             totalAnomalies++;
-
-                            // Start BPMN workflow to create ticket
-                            try {
-                                anomalyWorkflowService.startWorkflowForAnomaly(savedAnomaly, "SYSTEM");
-                                log.debug("Workflow started for anomaly {}", savedAnomaly.getId());
-                            } catch (Exception we) {
-                                log.warn("Failed to start workflow for anomaly {}: {}",
-                                        savedAnomaly.getId(), we.getMessage());
-                            }
                         }
                     } catch (Exception e) {
                         log.error("Error validating rule {} for client {}: {}",
@@ -279,12 +269,12 @@ public class ClientValidationService {
     /**
      * Get agency name from cache or database.
      */
-    private String getAgencyName(String agencyCode, Map<String, String> cache) {
-        if (agencyCode == null || agencyCode.isBlank()) {
+    private String getStructureName(String structureCode, Map<String, String> cache) {
+        if (structureCode == null || structureCode.isBlank()) {
             return "Unknown";
         }
 
-        return cache.computeIfAbsent(agencyCode, code ->
+        return cache.computeIfAbsent(structureCode, code ->
                 agencyRepository.findByAge(code)
                         .map(Agency::getLib)
                         .orElse("Agence " + code)
@@ -295,15 +285,15 @@ public class ClientValidationService {
      * Create an Anomaly entity from validation failure.
      */
     private Anomaly createAnomaly(Client client, ValidationRule rule, ValidationFailure failure,
-                                   ClientType clientType, String agencyName) {
+                                   ClientType clientType, String structureName) {
         String clientName = buildClientName(client, clientType);
 
         return Anomaly.builder()
                 .clientNumber(client.getCli())
                 .clientName(clientName)
                 .clientType(clientType)
-                .agencyCode(client.getAge() != null ? client.getAge() : "00000")
-                .agencyName(agencyName)
+                .structureCode(client.getAge() != null ? client.getAge() : "00000")
+                .structureName(structureName)
                 .fieldName(failure.fieldName())
                 .fieldLabel(failure.fieldLabel())
                 .currentValue(failure.currentValue())

@@ -5,6 +5,7 @@ import lombok.AllArgsConstructor;
 import lombok.Builder;
 import lombok.Data;
 import lombok.NoArgsConstructor;
+import org.hibernate.annotations.Filter;
 
 import java.time.LocalDate;
 import java.time.LocalDateTime;
@@ -14,6 +15,7 @@ import java.time.LocalDateTime;
 @NoArgsConstructor
 @AllArgsConstructor
 @Entity
+@Filter(name = "structureFilter", condition = "structure_code IN (:codes)")
 @Table(name = "kpis")
 public class Kpi {
 
@@ -24,8 +26,8 @@ public class Kpi {
     @Column(name = "period_date", nullable = false)
     private LocalDate periodDate;
 
-    @Column(name = "agency_code")
-    private String agencyCode;
+    @Column(name = "structure_code")
+    private String structureCode;
 
     @Column(name = "kpi_type", nullable = false)
     private String kpiType;

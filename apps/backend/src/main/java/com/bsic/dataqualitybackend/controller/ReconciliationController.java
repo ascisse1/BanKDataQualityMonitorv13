@@ -1,5 +1,6 @@
 package com.bsic.dataqualitybackend.controller;
 
+import com.bsic.dataqualitybackend.security.StructureSecurityService;
 import com.bsic.dataqualitybackend.service.ReconciliationService;
 import lombok.RequiredArgsConstructor;
 import lombok.extern.slf4j.Slf4j;
@@ -7,6 +8,11 @@ import org.springframework.format.annotation.DateTimeFormat;
 import org.springframework.http.ResponseEntity;
 import org.springframework.security.access.prepost.PreAuthorize;
 import org.springframework.web.bind.annotation.*;
+
+import org.springframework.security.core.Authentication;
+import org.springframework.security.core.context.SecurityContextHolder;
+
+import com.bsic.dataqualitybackend.model.ReconciliationAttempt;
 
 import java.time.LocalDateTime;
 import java.util.List;
@@ -16,19 +22,22 @@ import java.util.Map;
 @RequestMapping("/api/reconciliation")
 @RequiredArgsConstructor
 @Slf4j
-@CrossOrigin(origins = {"http://localhost:5173", "http://localhost:3000"})
 public class ReconciliationController {
 
     private final ReconciliationService reconciliationService;
+    private final StructureSecurityService structureSecurityService;
 
     @GetMapping("/pending")
     @PreAuthorize("hasAnyRole('ADMIN', 'AUDITOR', 'AGENCY_USER')")
     public ResponseEntity<List<Map<String, Object>>> getPendingTasks(
-            @RequestParam(required = false) String agencyCode,
+            @RequestParam(required = false) String structureCode,
             @RequestParam(required = false) String clientId) {
 
         try {
-            List<Map<String, Object>> tasks = reconciliationService.getPendingTasks(agencyCode, clientId);
+            if (structureCode != null) {
+                structureSecurityService.requireAgencyAccess(structureCode);
+            }
+            List<Map<String, Object>> tasks = reconciliationService.getPendingTasks(structureCode, clientId);
             return ResponseEntity.ok(tasks);
         } catch (Exception e) {
             log.error("Error fetching pending reconciliations: {}", e.getMessage(), e);
@@ -60,10 +69,13 @@ public class ReconciliationController {
     @GetMapping("/stats")
     @PreAuthorize("hasAnyRole('ADMIN', 'AUDITOR')")
     public ResponseEntity<Map<String, Object>> getStats(
-            @RequestParam(required = false) String agencyCode) {
+            @RequestParam(required = false) String structureCode) {
 
         try {
-            Map<String, Object> stats = reconciliationService.getStats(agencyCode);
+            if (structureCode != null) {
+                structureSecurityService.requireAgencyAccess(structureCode);
+            }
+            Map<String, Object> stats = reconciliationService.getStats(structureCode);
             return ResponseEntity.ok(stats);
         } catch (Exception e) {
             log.error("Error fetching reconciliation stats: {}", e.getMessage(), e);
@@ -111,17 +123,44 @@ public class ReconciliationController {
             @RequestBody Map<String, Object> request) {
 
         try {
-            String agencyCode = (String) request.get("agency_code");
+            String structureCode = (String) request.get("structure_code");
+            if (structureCode != null) {
+                structureSecurityService.requireAgencyAccess(structureCode);
+            }
             Integer maxTasks = request.containsKey("max_tasks")
-
                     ? (Integer) request.get("max_tasks")
                     : 50;
 
-            Map<String, Object> result = reconciliationService.reconcileAll(agencyCode, maxTasks);
+            Map<String, Object> result = reconciliationService.reconcileAll(structureCode, maxTasks);
             return ResponseEntity.ok(result);
         } catch (Exception e) {
             log.error("Error in batch reconciliation: {}", e.getMessage(), e);
             return ResponseEntity.status(500).body(Map.of("error", e.getMessage()));
+        }
+    }
+
+    @PostMapping("/{id}/abandon")
+    @PreAuthorize("hasAnyRole('ADMIN', 'AUDITOR')")
+    public ResponseEntity<Map<String, Object>> abandonAndCreateAnomaly(@PathVariable String id) {
+        try {
+            Authentication auth = SecurityContextHolder.getContext().getAuthentication();
+            String username = auth != null ? auth.getName() : "SYSTEM";
+            Map<String, Object> result = reconciliationService.abandonAndCreateAnomaly(id, username);
+            return ResponseEntity.ok(result);
+        } catch (Exception e) {
+            log.error("Error abandoning task {}: {}", id, e.getMessage(), e);
+            return ResponseEntity.status(500).body(Map.of("error", e.getMessage(), "task_id", id));
+        }
+    }
+
+    @GetMapping("/{id}/attempts")
+    @PreAuthorize("hasAnyRole('ADMIN', 'AUDITOR')")
+    public ResponseEntity<List<ReconciliationAttempt>> getAttempts(@PathVariable String id) {
+        try {
+            return ResponseEntity.ok(reconciliationService.getAttempts(id));
+        } catch (Exception e) {
+            log.error("Error fetching attempts for task {}: {}", id, e.getMessage(), e);
+            return ResponseEntity.internalServerError().build();
         }
     }
 

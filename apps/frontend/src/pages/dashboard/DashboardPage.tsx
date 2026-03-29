@@ -88,7 +88,6 @@ const DashboardPage = () => {
           fatca: response.data.fatca
         });
 
-        addToast('Données chargées avec succès', 'success');
       } else {
         throw new Error('Failed to fetch statistics');
       }
@@ -111,7 +110,6 @@ const DashboardPage = () => {
 
       await fetchStats();
 
-      addToast('Données actualisées avec succès', 'success');
       log.info('ui', 'Dashboard data refreshed successfully');
     } catch (err) {
       addToast('Erreur lors de l\'actualisation', 'error');
@@ -257,7 +255,6 @@ const DashboardPage = () => {
           <div className="space-y-6">
             <Card
               title="Resume de la Validation"
-              description="Vue d'ensemble de la qualité des données par catégorie"
               isLoading={isLoading}
             >
               <ValidationSummary isLoading={isLoading} />
@@ -266,7 +263,6 @@ const DashboardPage = () => {
             <div className="grid grid-cols-1 gap-6 lg:grid-cols-2">
               <Card
                 title="Repartition des Types de Clients"
-                description="Repartition des types de clients dans la base de données"
                 isLoading={isLoading}
               >
                 <div className="h-56 sm:h-64 lg:h-80 flex items-center justify-center">
@@ -276,7 +272,6 @@ const DashboardPage = () => {
 
               <Card
                 title="Tendances des Anomalies"
-                description="Tendances hebdomadaires des detections d'anomalies"
                 isLoading={isLoading}
               >
                 <div className="h-56 sm:h-64 lg:h-80 flex items-center justify-center">
@@ -287,7 +282,6 @@ const DashboardPage = () => {
 
             <Card
               title="Évolution de la Qualité des Données"
-              description="Tendances de la qualité des données sur les 6 derniers mois"
               isLoading={isLoading}
             >
               <DataQualityTrends isLoading={isLoading} />
@@ -296,8 +290,7 @@ const DashboardPage = () => {
             <div className="grid grid-cols-1 gap-6 lg:grid-cols-3">
               <div className="lg:col-span-1">
                 <Card
-                  title="Nombre de clients par agence"
-                  description="Liste detaillee des clients par agence (optimise pour gros volumes)"
+                  title="Clients par agence"
                   isLoading={isLoading}
                 >
                   <div className="h-96">
@@ -309,8 +302,7 @@ const DashboardPage = () => {
               {hasAccessToBranchData && (
                 <div className="lg:col-span-2">
                   <Card
-                    title="Nombre d'anomalies par agence"
-                    description="Liste detaillee des anomalies par agence (optimise pour gros volumes)"
+                    title="Anomalies par agence"
                     isLoading={isLoading}
                   >
                     <div className="h-96 overflow-auto">
@@ -323,7 +315,6 @@ const DashboardPage = () => {
 
             <Card
               title="Anomalies Recentes"
-              description="Derniers problèmes de données détectés"
               isLoading={isLoading}
             >
               <div className="h-96">
@@ -340,8 +331,7 @@ const DashboardPage = () => {
         <TabPanel value="tracking">
           <div className="space-y-6">
             <Card
-              title="Evolution des Corrections par Semaine"
-              description="Tendance hebdomadaire des corrections d'anomalies"
+              title="Corrections par Semaine"
               isLoading={isLoading}
             >
               <WeeklyCorrectionTrend isLoading={isLoading} />
@@ -350,7 +340,6 @@ const DashboardPage = () => {
             <div className="grid grid-cols-1 gap-6 lg:grid-cols-2">
               <Card
                 title="Taux de Correction par Agence"
-                description="Classement des agences par taux de correction"
                 isLoading={isLoading}
               >
                 <div className="h-96">
@@ -360,7 +349,6 @@ const DashboardPage = () => {
 
               <Card
                 title="Utilisateurs par Agence"
-                description="Repartition des utilisateurs par agence"
                 isLoading={isLoading}
               >
                 <div className="h-96 overflow-auto">
@@ -370,8 +358,7 @@ const DashboardPage = () => {
             </div>
 
             <Card
-              title="Historique des Chargements de Données"
-              description="Suivi des chargements de données par table"
+              title="Historique des Chargements"
               isLoading={isLoading}
             >
               <div className="h-96 overflow-auto">
@@ -379,40 +366,6 @@ const DashboardPage = () => {
               </div>
             </Card>
 
-            <Card className="border-primary-200 bg-primary-50">
-              <div className="p-6">
-                <h3 className="text-lg font-medium text-primary-800 mb-4">Suivi des Corrections</h3>
-
-                <div className="grid grid-cols-1 md:grid-cols-3 gap-6">
-                  <div className="space-y-2">
-                    <h4 className="text-sm font-semibold text-primary-700">Chargement Hebdomadaire</h4>
-                    <ul className="text-sm text-primary-600 space-y-1">
-                      <li>• Chargement des tables clients chaque semaine</li>
-                      <li>• Detection automatique des anomalies</li>
-                      <li>• Historisation des modifications</li>
-                    </ul>
-                  </div>
-
-                  <div className="space-y-2">
-                    <h4 className="text-sm font-semibold text-primary-700">Suivi par Agence</h4>
-                    <ul className="text-sm text-primary-600 space-y-1">
-                      <li>• Utilisateurs dedies par agence</li>
-                      <li>• Statistiques de correction par agence</li>
-                      <li>• Taux de correction hebdomadaire</li>
-                    </ul>
-                  </div>
-
-                  <div className="space-y-2">
-                    <h4 className="text-sm font-semibold text-primary-700">Rapports</h4>
-                    <ul className="text-sm text-primary-600 space-y-1">
-                      <li>• Evolution des corrections dans le temps</li>
-                      <li>• Classement des agences par performance</li>
-                      <li>• Historique des chargements de données</li>
-                    </ul>
-                  </div>
-                </div>
-              </div>
-            </Card>
           </div>
         </TabPanel>
       </Tabs>

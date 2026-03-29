@@ -69,7 +69,7 @@ export const customerService = {
   // Get customer list using getCustomerList service
   getCustomerList: async (filters?: {
     searchTerm?: string;
-    agencyCode?: string;
+    structureCode?: string;
     clientType?: string;
     page?: number;
     limit?: number;
@@ -77,7 +77,7 @@ export const customerService = {
     const queryParams = new URLSearchParams();
     
     if (filters?.searchTerm) queryParams.append('searchTerm', filters.searchTerm);
-    if (filters?.agencyCode) queryParams.append('agencyCode', filters.agencyCode);
+    if (filters?.structureCode) queryParams.append('structureCode', filters.structureCode);
     if (filters?.clientType) queryParams.append('clientType', filters.clientType);
     if (filters?.page) queryParams.append('page', filters.page.toString());
     if (filters?.limit) queryParams.append('limit', filters.limit.toString());
@@ -142,7 +142,7 @@ export const anomalyService = {
     oldValue: string | null;
     newValue: string | null;
     status: 'fixed' | 'in_review' | 'rejected';
-    agencyCode?: string;
+    structureCode?: string;
   }) => {
     return apiRequest<any>('/api/anomaly-history', 'POST', anomalyData);
   },

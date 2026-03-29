@@ -22,7 +22,7 @@ public class UserDto {
     private String fullName;
     private UserRole role;
     private String department;
-    private List<String> agencyCodes;
+    private List<String> structureCodes;
     private UserStatus status;
     private LocalDateTime lastLogin;
     private LocalDateTime createdAt;

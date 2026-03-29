@@ -8,16 +8,18 @@ import lombok.Builder;
 import lombok.Data;
 import lombok.NoArgsConstructor;
 import org.hibernate.annotations.CreationTimestamp;
+import org.hibernate.annotations.Filter;
 import org.hibernate.annotations.UpdateTimestamp;
 
 import java.time.LocalDate;
 import java.time.LocalDateTime;
 
 @Entity
+@Filter(name = "structureFilter", condition = "structure_code IN (:codes)")
 @Table(name = "fatca_clients", indexes = {
     @Index(name = "idx_fatca_client_type", columnList = "client_type"),
     @Index(name = "idx_fatca_status", columnList = "fatca_status"),
-    @Index(name = "idx_fatca_agency", columnList = "agency_code"),
+    @Index(name = "idx_fatca_agency", columnList = "structure_code"),
     @Index(name = "idx_fatca_risk_level", columnList = "risk_level")
 })
 @Data
@@ -40,11 +42,11 @@ public class FatcaClient {
     @Column(name = "client_type", nullable = false)
     private ClientType clientType;
 
-    @Column(name = "agency_code", nullable = false)
-    private String agencyCode;
+    @Column(name = "structure_code", nullable = false)
+    private String structureCode;
 
-    @Column(name = "agency_name")
-    private String agencyName;
+    @Column(name = "structure_name")
+    private String structureName;
 
     @Enumerated(EnumType.STRING)
     @Column(name = "fatca_status", nullable = false)

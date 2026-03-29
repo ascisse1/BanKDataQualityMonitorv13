@@ -16,7 +16,6 @@ import java.util.List;
 @RestController
 @RequestMapping("/api/validation")
 @RequiredArgsConstructor
-@CrossOrigin(origins = "*")
 public class ValidationController {
 
     private final ValidationService validationService;

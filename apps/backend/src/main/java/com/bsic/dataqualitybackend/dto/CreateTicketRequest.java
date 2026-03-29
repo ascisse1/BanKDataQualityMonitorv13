@@ -18,7 +18,7 @@ public class CreateTicketRequest {
     private String cli;
 
     @NotBlank(message = "Agency code is required")
-    private String agencyCode;
+    private String structureCode;
 
     @NotNull(message = "Priority is required")
     private TicketPriority priority;

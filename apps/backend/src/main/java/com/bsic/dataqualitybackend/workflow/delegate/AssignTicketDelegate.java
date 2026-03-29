@@ -25,19 +25,19 @@ public class AssignTicketDelegate implements JavaDelegate {
     @Override
     public void execute(DelegateExecution execution) {
         Long ticketId = (Long) execution.getVariable("ticketId");
-        String agencyCode = (String) execution.getVariable("agencyCode");
+        String structureCode = (String) execution.getVariable("structureCode");
 
-        log.info("Auto-assigning ticket {} to agency {}", ticketId, agencyCode);
+        log.info("Auto-assigning ticket {} to agency {}", ticketId, structureCode);
 
         List<User> agencyUsers = userProfileRepository
-            .findActiveByStructureCode(agencyCode, LocalDate.now())
+            .findActiveByStructureCode(structureCode, LocalDate.now())
             .stream()
             .map(UserProfile::getUser)
             .distinct()
             .toList();
 
         if (agencyUsers.isEmpty()) {
-            log.warn("No active users found for agency: {} - keeping current assignee", agencyCode);
+            log.warn("No active users found for agency: {} - keeping current assignee", structureCode);
             String currentAssignee = (String) execution.getVariable("assignedUserId");
             log.info("Ticket {} will remain assigned to: {}", ticketId, currentAssignee);
             execution.setVariable("assignmentFailed", true);

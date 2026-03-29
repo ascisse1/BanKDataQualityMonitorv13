@@ -1,6 +1,5 @@
 package com.bsic.dataqualitybackend.security;
 
-import com.bsic.dataqualitybackend.model.User;
 import com.bsic.dataqualitybackend.model.UserProfile;
 import com.bsic.dataqualitybackend.repository.UserProfileRepository;
 import com.bsic.dataqualitybackend.repository.UserRepository;
@@ -10,44 +9,32 @@ import org.springframework.stereotype.Component;
 
 import java.time.LocalDate;
 import java.util.List;
-import java.util.stream.Collectors;
 
 @Component
 @RequiredArgsConstructor
 public class StructureSecurityService {
 
+    private final StructureFilterContext filterContext;
     private final KeycloakUserDetails keycloakUserDetails;
     private final UserProfileRepository userProfileRepository;
     private final UserRepository userRepository;
 
     /**
-     * Returns list of agency codes the current user can access.
+     * Returns list of structure codes the current user can access.
      * Empty list = global access (ADMIN/AUDITOR/system).
+     * Delegates to request-scoped StructureFilterContext (cached per request).
      */
     public List<String> getAgencyFilter() {
-        if (!keycloakUserDetails.isAuthenticated()) return List.of();
-        if (keycloakUserDetails.hasAnyRole("ADMIN", "AUDITOR")) return List.of();
-
-        String username = keycloakUserDetails.getCurrentUsername()
-            .orElseThrow(() -> new AccessDeniedException("No username in token"));
-
-        User user = userRepository.findByUsername(username)
-            .orElseThrow(() -> new AccessDeniedException("User not found"));
-
-        return userProfileRepository
-            .findActiveByUserId(user.getId(), LocalDate.now())
-            .stream()
-            .map(up -> up.getStructure().getCode())
-            .collect(Collectors.toList());
+        return filterContext.getStructureCodes();
     }
 
     /**
-     * Throws 403 if current user cannot access the given agency.
+     * Throws 403 if current user cannot access the given structure/agency.
      */
-    public void requireAgencyAccess(String agencyCode) {
+    public void requireAgencyAccess(String structureCode) {
         List<String> allowed = getAgencyFilter();
-        if (!allowed.isEmpty() && !allowed.contains(agencyCode)) {
-            throw new AccessDeniedException("Access denied to agency: " + agencyCode);
+        if (!allowed.isEmpty() && !allowed.contains(structureCode)) {
+            throw new AccessDeniedException("Access denied to agency: " + structureCode);
         }
     }
 
@@ -55,12 +42,11 @@ public class StructureSecurityService {
      * Returns true if user has global access (no filtering needed).
      */
     public boolean isGlobalAccess() {
-        return getAgencyFilter().isEmpty();
+        return filterContext.isGlobalAccess();
     }
 
     /**
      * Checks if the current user has a specific role (from Keycloak token).
-     * Roles on profiles are managed via Keycloak Group role mappings.
      */
     public void requireRole(String role) {
         if (!keycloakUserDetails.hasRole(role)) {

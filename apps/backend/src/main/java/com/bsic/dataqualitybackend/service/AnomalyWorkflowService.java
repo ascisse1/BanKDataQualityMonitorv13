@@ -53,7 +53,7 @@ public class AnomalyWorkflowService {
         // Core identifiers
         variables.put("anomalyId", anomaly.getId());
         variables.put("clientId", anomaly.getClientNumber());
-        variables.put("agencyCode", anomaly.getAgencyCode());
+        variables.put("structureCode", anomaly.getStructureCode());
 
         // Priority based on severity
         String priority = mapSeverityToPriority(anomaly.getSeverity());

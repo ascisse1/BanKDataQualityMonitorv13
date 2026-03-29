@@ -86,11 +86,11 @@ public class UserInfoController {
         // Sync user info to local database and resolve agency codes
         try {
             com.bsic.dataqualitybackend.model.User syncedUser = userService.syncFromOidc(principal, roles);
-            List<String> agencyCodes = userService.getUserAgencyCodes(syncedUser.getId());
-            userInfo.put("agencyCodes", agencyCodes);
+            List<String> structureCodes = userService.getUserStructureCodes(syncedUser.getId());
+            userInfo.put("structureCodes", structureCodes);
         } catch (Exception e) {
             log.warn("Failed to sync user {} to local database: {}", principal.getPreferredUsername(), e.getMessage());
-            userInfo.put("agencyCodes", List.of());
+            userInfo.put("structureCodes", List.of());
         }
 
         log.debug("Returning user info for: {}", principal.getPreferredUsername());

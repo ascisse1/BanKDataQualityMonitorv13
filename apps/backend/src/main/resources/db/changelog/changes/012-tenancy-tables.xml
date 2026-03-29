@@ -143,8 +143,8 @@
                    (SELECT id FROM app_profile WHERE code = 'DEFAULT'),
                    NOW(), NOW()
             FROM users u
-            JOIN structure s ON s.code = u.agency_code
-            WHERE u.agency_code IS NOT NULL
+            JOIN structure s ON s.code = u.structure_code
+            WHERE u.structure_code IS NOT NULL
         </sql>
     </changeSet>
 
@@ -162,10 +162,10 @@
         </sql>
     </changeSet>
 
-    <!-- Drop agency_code column from users -->
+    <!-- Drop structure_code column from users -->
     <changeSet id="012-8-drop-user-agency-code" author="bdqm">
-        <dropIndex tableName="users" indexName="idx_users_agency_code"/>
-        <dropColumn tableName="users" columnName="agency_code"/>
+        <dropIndex tableName="users" indexName="idx_users_structure_code"/>
+        <dropColumn tableName="users" columnName="structure_code"/>
     </changeSet>
 
 </databaseChangeLog>

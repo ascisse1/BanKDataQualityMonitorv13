@@ -9,7 +9,7 @@ interface AnomaliesFiltersProps {
   agencies?: {code_agence: string, lib_agence: string}[];
   selectedAgency?: string | null;
   isAgencyUser?: boolean;
-  userAgencyCode?: string | null;
+  userStructureCode?: string | null;
 }
 
 const AnomaliesFilters = ({
@@ -18,7 +18,7 @@ const AnomaliesFilters = ({
   agencies = [],
   selectedAgency,
   isAgencyUser = false,
-  userAgencyCode = null
+  userStructureCode = null
 }: AnomaliesFiltersProps) => {
   const [, setSelectedFilters] = useState({
     clientType: [] as string[],
@@ -29,10 +29,10 @@ const AnomaliesFilters = ({
 
   useEffect(() => {
     // If user is an agency user, set their agency code as the selected agency
-    if (isAgencyUser && userAgencyCode) {
-      onAgencyChange?.(userAgencyCode);
+    if (isAgencyUser && userStructureCode) {
+      onAgencyChange?.(userStructureCode);
     }
-  }, [isAgencyUser, userAgencyCode, onAgencyChange]);
+  }, [isAgencyUser, userStructureCode, onAgencyChange]);
 
   const handleAgencyChange = (event: React.ChangeEvent<HTMLSelectElement>) => {
     const value = event.target.value;
@@ -41,14 +41,14 @@ const AnomaliesFilters = ({
 
   const resetFilters = () => {
     // If user is an agency user, they can only reset to their agency
-    if (isAgencyUser && userAgencyCode) {
+    if (isAgencyUser && userStructureCode) {
       setSelectedFilters({
         clientType: [],
         fields: [],
         errorTypes: [],
         status: []
       });
-      onAgencyChange?.(userAgencyCode);
+      onAgencyChange?.(userStructureCode);
     } else {
       setSelectedFilters({
         clientType: [],
@@ -80,7 +80,7 @@ const AnomaliesFilters = ({
               className="w-full rounded-md border-gray-300 shadow-sm focus:border-primary-500 focus:ring-primary-500"
               value={selectedAgency || ''}
               onChange={handleAgencyChange}
-              disabled={isAgencyUser && userAgencyCode !== null}
+              disabled={isAgencyUser && userStructureCode !== null}
             >
               <option value="">Toutes les agences</option>
               {agencies.map((agency) => (
@@ -109,7 +109,7 @@ const AnomaliesFilters = ({
             variant="outline"
             size="sm"
             onClick={resetFilters}
-            disabled={(!selectedAgency && !isAgencyUser) || (isAgencyUser && selectedAgency === userAgencyCode)}
+            disabled={(!selectedAgency && !isAgencyUser) || (isAgencyUser && selectedAgency === userStructureCode)}
           >
             Réinitialiser
           </Button>

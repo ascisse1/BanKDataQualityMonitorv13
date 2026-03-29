@@ -19,7 +19,7 @@ interface AnomalyHistoryRecord {
   old_value: string | null;
   new_value: string | null;
   status: 'detected' | 'in_review' | 'fixed' | 'rejected';
-  agency_code: string | null;
+  structure_code: string | null;
   user_id: number;
   created_at: string;
   username: string;
@@ -39,7 +39,7 @@ const AnomalyHistoryTable = ({ isLoading = false, cli, field }: AnomalyHistoryPr
 
   // Vérifier si l'utilisateur est un utilisateur d'agence
   const isAgencyUser = user?.role === 'AGENCY_USER';
-  const userAgencyCode = user?.agencyCode;
+  const userStructureCode = user?.structureCode;
 
   useEffect(() => {
     fetchHistory();
@@ -62,8 +62,8 @@ const AnomalyHistoryTable = ({ isLoading = false, cli, field }: AnomalyHistoryPr
       }
       
       // Si l'utilisateur est un utilisateur d'agence, filtrer par son agence
-      if (isAgencyUser && userAgencyCode) {
-        url += `&agencyCode=${userAgencyCode}`;
+      if (isAgencyUser && userStructureCode) {
+        url += `&structureCode=${userStructureCode}`;
       }
       
       const response = await fetch(url, {
@@ -260,7 +260,7 @@ const AnomalyHistoryTable = ({ isLoading = false, cli, field }: AnomalyHistoryPr
                     <div className="text-sm text-gray-500">{record.new_value || '-'}</div>
                   </td>
                   <td className="px-3 py-4 whitespace-nowrap">
-                    <div className="text-sm text-gray-500">{record.agency_code || '-'}</div>
+                    <div className="text-sm text-gray-500">{record.structure_code || '-'}</div>
                   </td>
                   <td className="px-3 py-4 whitespace-nowrap">
                     <div className="flex items-center">

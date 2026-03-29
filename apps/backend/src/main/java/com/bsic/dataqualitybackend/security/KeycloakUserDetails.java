@@ -21,8 +21,8 @@ import java.util.stream.Collectors;
 @Component
 public class KeycloakUserDetails {
 
-    @Value("${keycloak.agency-code-claim:agency_code}")
-    private String agencyCodeClaim;
+    @Value("${keycloak.agency-code-claim:structure_code}")
+    private String structureCodeClaim;
 
     /**
      * Gets the current username from the OIDC user.
@@ -46,8 +46,8 @@ public class KeycloakUserDetails {
      * Gets the current user's agency code.
      * This is a custom attribute configured in Keycloak.
      */
-    public Optional<String> getCurrentAgencyCode() {
-        return getOidcUser().map(oidcUser -> oidcUser.getClaimAsString(agencyCodeClaim));
+    public Optional<String> getCurrentStructureCode() {
+        return getOidcUser().map(oidcUser -> oidcUser.getClaimAsString(structureCodeClaim));
     }
 
     /**

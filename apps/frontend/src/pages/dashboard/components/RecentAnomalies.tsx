@@ -12,8 +12,8 @@ interface BackendAnomaly {
   fieldLabel: string;
   errorType: string;
   errorMessage: string;
-  agencyCode: string;
-  agencyName: string;
+  structureCode: string;
+  structureName: string;
   status: string;
   createdAt: string;
 }
@@ -92,7 +92,7 @@ const RecentAnomalies = ({ isLoading: externalLoading = false }: RecentAnomalies
             clientType: mapClientType(a.clientType),
             field: a.fieldLabel || a.fieldName || '',
             errorType: a.errorMessage || a.errorType || 'Erreur',
-            branch: a.agencyCode || '',
+            branch: a.structureCode || '',
             createdAt: a.createdAt,
             status: mapStatus(a.status),
           }));

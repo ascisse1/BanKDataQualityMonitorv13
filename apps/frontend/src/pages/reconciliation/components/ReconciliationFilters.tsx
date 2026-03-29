@@ -4,7 +4,7 @@ import Input from '../../../components/ui/Input';
 
 interface ReconciliationFiltersProps {
   filters: {
-    agencyCode: string;
+    structureCode: string;
     clientId: string;
     status: string;
   };
@@ -21,7 +21,7 @@ export const ReconciliationFilters = ({
     onFilterChange({ ...filters, [field]: value });
   };
 
-  const hasActiveFilters = filters.agencyCode || filters.clientId || filters.status;
+  const hasActiveFilters = filters.structureCode || filters.clientId || filters.status;
 
   return (
     <div className="bg-white p-4 rounded-lg shadow space-y-4">
@@ -50,8 +50,8 @@ export const ReconciliationFilters = ({
           <Input
             type="text"
             placeholder="Ex: AG001"
-            value={filters.agencyCode}
-            onChange={(e) => handleChange('agencyCode', e.target.value)}
+            value={filters.structureCode}
+            onChange={(e) => handleChange('structureCode', e.target.value)}
           />
         </div>
 

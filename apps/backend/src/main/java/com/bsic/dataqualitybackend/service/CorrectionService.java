@@ -126,11 +126,7 @@ public class CorrectionService {
      * Get pending corrections requiring validation (4 Eyes)
      */
     public List<Ticket> getPendingValidationTickets() {
-        List<String> agencies = structureSecurityService.getAgencyFilter();
-        if (agencies.isEmpty()) {
-            return ticketRepository.findByStatus(TicketStatus.PENDING_VALIDATION);
-        }
-        return ticketRepository.findByStatusAndAgencyCodeIn(TicketStatus.PENDING_VALIDATION, agencies);
+        return ticketRepository.findByStatus(TicketStatus.PENDING_VALIDATION);
     }
 
     /**
@@ -259,7 +255,7 @@ public class CorrectionService {
     private Ticket createTicketForCorrection(CorrectionRequest request, User currentUser) {
         Ticket ticket = Ticket.builder()
                 .cli(request.getCli())
-                .agencyCode(request.getAgencyCode())
+                .structureCode(request.getStructureCode())
                 .priority(request.getPriority() != null ? request.getPriority() : TicketPriority.MEDIUM)
                 .status(TicketStatus.DETECTED)
                 .totalIncidents(0)

@@ -37,13 +37,13 @@ public class KpiService {
         List<Ticket> tickets = ticketRepository.findTicketsCreatedBetween(startOfDay, endOfDay);
 
         Map<String, List<Ticket>> ticketsByAgency = tickets.stream()
-            .collect(Collectors.groupingBy(Ticket::getAgencyCode));
+            .collect(Collectors.groupingBy(Ticket::getStructureCode));
 
         for (Map.Entry<String, List<Ticket>> entry : ticketsByAgency.entrySet()) {
-            String agencyCode = entry.getKey();
+            String structureCode = entry.getKey();
             List<Ticket> agencyTickets = entry.getValue();
 
-            calculateAgencyKpis(date, agencyCode, agencyTickets);
+            calculateAgencyKpis(date, structureCode, agencyTickets);
         }
 
         calculateGlobalKpis(date, tickets);
@@ -51,7 +51,7 @@ public class KpiService {
         log.info("KPIs calculated for {} agencies", ticketsByAgency.size());
     }
 
-    private void calculateAgencyKpis(LocalDate date, String agencyCode, List<Ticket> tickets) {
+    private void calculateAgencyKpis(LocalDate date, String structureCode, List<Ticket> tickets) {
         int totalTickets = tickets.size();
         int closedTickets = (int) tickets.stream()
             .filter(t -> t.getStatus() == TicketStatus.CLOSED)
@@ -74,13 +74,13 @@ public class KpiService {
         double closureRate = totalTickets > 0 ? (closedTickets * 100.0 / totalTickets) : 0.0;
         double slaComplianceRate = closedTickets > 0 ? (slaRespectedTickets * 100.0 / closedTickets) : 0.0;
 
-        saveOrUpdateKpi(date, agencyCode, "CLOSURE_RATE", closureRate, 95.0,
+        saveOrUpdateKpi(date, structureCode, "CLOSURE_RATE", closureRate, 95.0,
             totalTickets, closedTickets, slaRespectedTickets, slaBreachedTickets, avgResolutionTime);
 
-        saveOrUpdateKpi(date, agencyCode, "SLA_COMPLIANCE", slaComplianceRate, 90.0,
+        saveOrUpdateKpi(date, structureCode, "SLA_COMPLIANCE", slaComplianceRate, 90.0,
             totalTickets, closedTickets, slaRespectedTickets, slaBreachedTickets, avgResolutionTime);
 
-        saveOrUpdateKpi(date, agencyCode, "AVG_RESOLUTION_TIME", avgResolutionTime, 48.0,
+        saveOrUpdateKpi(date, structureCode, "AVG_RESOLUTION_TIME", avgResolutionTime, 48.0,
             totalTickets, closedTickets, slaRespectedTickets, slaBreachedTickets, avgResolutionTime);
     }
 
@@ -88,12 +88,12 @@ public class KpiService {
         calculateAgencyKpis(date, "GLOBAL", tickets);
     }
 
-    private void saveOrUpdateKpi(LocalDate date, String agencyCode, String kpiType, Double value, Double target,
+    private void saveOrUpdateKpi(LocalDate date, String structureCode, String kpiType, Double value, Double target,
                                  int total, int closed, int slaRespected, int slaBreached, Double avgResTime) {
-        Kpi kpi = kpiRepository.findByPeriodDateAndAgencyCodeAndKpiType(date, agencyCode, kpiType)
+        Kpi kpi = kpiRepository.findByPeriodDateAndStructureCodeAndKpiType(date, structureCode, kpiType)
             .orElse(Kpi.builder()
                 .periodDate(date)
-                .agencyCode(agencyCode)
+                .structureCode(structureCode)
                 .kpiType(kpiType)
                 .build());
 
@@ -112,14 +112,14 @@ public class KpiService {
         return kpiRepository.findByPeriodDate(date);
     }
 
-    public List<Kpi> getKpisByAgency(String agencyCode) {
-        structureSecurityService.requireAgencyAccess(agencyCode);
-        return kpiRepository.findByAgencyCode(agencyCode);
+    public List<Kpi> getKpisByAgency(String structureCode) {
+        structureSecurityService.requireAgencyAccess(structureCode);
+        return kpiRepository.findByStructureCode(structureCode);
     }
 
-    public List<Kpi> getKpisByDateRange(String agencyCode, LocalDate startDate, LocalDate endDate) {
-        structureSecurityService.requireAgencyAccess(agencyCode);
-        return kpiRepository.findByAgencyAndDateRange(agencyCode, startDate, endDate);
+    public List<Kpi> getKpisByDateRange(String structureCode, LocalDate startDate, LocalDate endDate) {
+        structureSecurityService.requireAgencyAccess(structureCode);
+        return kpiRepository.findByAgencyAndDateRange(structureCode, startDate, endDate);
     }
 
     public List<Kpi> getKpisByTypeAndDateRange(String kpiType, LocalDate startDate, LocalDate endDate) {
@@ -130,12 +130,12 @@ public class KpiService {
         return kpiRepository.getAverageKpiValue(kpiType, startDate, endDate);
     }
 
-    public Map<String, Object> getDashboardMetrics(String agencyCode, LocalDate date) {
-        if (agencyCode != null) {
-            structureSecurityService.requireAgencyAccess(agencyCode);
+    public Map<String, Object> getDashboardMetrics(String structureCode, LocalDate date) {
+        if (structureCode != null) {
+            structureSecurityService.requireAgencyAccess(structureCode);
         }
-        List<Kpi> kpis = agencyCode != null ?
-            kpiRepository.findByAgencyAndDateRange(agencyCode, date, date) :
+        List<Kpi> kpis = structureCode != null ?
+            kpiRepository.findByAgencyAndDateRange(structureCode, date, date) :
             kpiRepository.findByPeriodDate(date);
 
         Kpi closureRate = kpis.stream()

@@ -80,13 +80,13 @@ public class AnomalyController {
         return ResponseEntity.ok(ApiResponse.success(anomalies));
     }
 
-    @GetMapping("/by-agency/{agencyCode}")
+    @GetMapping("/by-agency/{structureCode}")
     public ResponseEntity<ApiResponse<Page<AnomalyDto>>> getAnomaliesByAgency(
-            @PathVariable String agencyCode,
+            @PathVariable String structureCode,
             @RequestParam(defaultValue = "0") int page,
             @RequestParam(defaultValue = "100") int size) {
 
-        Page<AnomalyDto> anomalies = anomalyService.getAnomaliesByAgency(agencyCode, page, size);
+        Page<AnomalyDto> anomalies = anomalyService.getAnomaliesByAgency(structureCode, page, size);
 
         return ResponseEntity.ok(ApiResponse.success(anomalies));
     }

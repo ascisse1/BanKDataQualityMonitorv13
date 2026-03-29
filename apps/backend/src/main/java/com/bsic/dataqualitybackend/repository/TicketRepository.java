@@ -19,9 +19,12 @@ public interface TicketRepository extends JpaRepository<Ticket, Long> {
 
     Optional<Ticket> findByTicketNumber(String ticketNumber);
 
+    @Query(value = "SELECT MAX(ticket_number) FROM tickets", nativeQuery = true)
+    Optional<String> findMaxTicketNumber();
+
     List<Ticket> findByCli(String cli);
 
-    Page<Ticket> findByAgencyCode(String agencyCode, Pageable pageable);
+    Page<Ticket> findByStructureCode(String structureCode, Pageable pageable);
 
     Page<Ticket> findByStatus(TicketStatus status, Pageable pageable);
 
@@ -29,7 +32,7 @@ public interface TicketRepository extends JpaRepository<Ticket, Long> {
 
     Page<Ticket> findByPriority(TicketPriority priority, Pageable pageable);
 
-    Page<Ticket> findByAgencyCodeAndStatus(String agencyCode, TicketStatus status, Pageable pageable);
+    Page<Ticket> findByStructureCodeAndStatus(String structureCode, TicketStatus status, Pageable pageable);
 
     @Query("SELECT t FROM Ticket t WHERE t.assignedTo.id = :userId")
     Page<Ticket> findByAssignedUserId(@Param("userId") Integer userId, Pageable pageable);
@@ -43,8 +46,8 @@ public interface TicketRepository extends JpaRepository<Ticket, Long> {
     @Query("SELECT t FROM Ticket t WHERE t.slaDeadline BETWEEN :start AND :end AND t.status NOT IN ('CLOSED', 'REJECTED')")
     List<Ticket> findTicketsNearSlaDeadline(@Param("start") LocalDateTime start, @Param("end") LocalDateTime end);
 
-    @Query("SELECT COUNT(t) FROM Ticket t WHERE t.agencyCode = :agencyCode AND t.status = :status")
-    long countByAgencyCodeAndStatus(@Param("agencyCode") String agencyCode, @Param("status") TicketStatus status);
+    @Query("SELECT COUNT(t) FROM Ticket t WHERE t.structureCode = :structureCode AND t.status = :status")
+    long countByStructureCodeAndStatus(@Param("structureCode") String structureCode, @Param("status") TicketStatus status);
 
     @Query("SELECT COUNT(t) FROM Ticket t WHERE t.assignedTo.id = :userId AND t.status = :status")
     long countByAssignedUserIdAndStatus(@Param("userId") Integer userId, @Param("status") TicketStatus status);
@@ -52,7 +55,7 @@ public interface TicketRepository extends JpaRepository<Ticket, Long> {
     @Query("SELECT COUNT(t) FROM Ticket t WHERE t.slaBreached = true AND t.status NOT IN ('CLOSED', 'REJECTED')")
     long countSlaBreachedTickets();
 
-    @Query("SELECT t.agencyCode, COUNT(t) FROM Ticket t WHERE t.status = :status GROUP BY t.agencyCode")
+    @Query("SELECT t.structureCode, COUNT(t) FROM Ticket t WHERE t.status = :status GROUP BY t.structureCode")
     List<Object[]> countTicketsByAgencyAndStatus(@Param("status") TicketStatus status);
 
     @Query("SELECT t FROM Ticket t WHERE t.createdAt BETWEEN :startDate AND :endDate")
@@ -62,17 +65,17 @@ public interface TicketRepository extends JpaRepository<Ticket, Long> {
     long countByStatus(@Param("status") TicketStatus status);
 
     // Multi-agency (IN clause) variants
-    Page<Ticket> findByAgencyCodeIn(List<String> agencyCodes, Pageable pageable);
+    Page<Ticket> findByStructureCodeIn(List<String> structureCodes, Pageable pageable);
 
-    @Query("SELECT t FROM Ticket t WHERE t.agencyCode IN :agencyCodes AND t.status = :status")
-    Page<Ticket> findByAgencyCodeInAndStatus(@Param("agencyCodes") List<String> agencyCodes,
+    @Query("SELECT t FROM Ticket t WHERE t.structureCode IN :structureCodes AND t.status = :status")
+    Page<Ticket> findByStructureCodeInAndStatus(@Param("structureCodes") List<String> structureCodes,
                                               @Param("status") TicketStatus status, Pageable pageable);
 
-    @Query("SELECT t FROM Ticket t WHERE t.status = :status AND t.agencyCode IN :agencyCodes")
-    List<Ticket> findByStatusAndAgencyCodeIn(@Param("status") TicketStatus status,
-                                              @Param("agencyCodes") List<String> agencyCodes);
+    @Query("SELECT t FROM Ticket t WHERE t.status = :status AND t.structureCode IN :structureCodes")
+    List<Ticket> findByStatusAndStructureCodeIn(@Param("status") TicketStatus status,
+                                              @Param("structureCodes") List<String> structureCodes);
 
-    @Query("SELECT COUNT(t) FROM Ticket t WHERE t.status = :status AND t.agencyCode IN :agencyCodes")
-    long countByStatusAndAgencyCodeIn(@Param("status") TicketStatus status,
-                                      @Param("agencyCodes") List<String> agencyCodes);
+    @Query("SELECT COUNT(t) FROM Ticket t WHERE t.status = :status AND t.structureCode IN :structureCodes")
+    long countByStatusAndStructureCodeIn(@Param("status") TicketStatus status,
+                                      @Param("structureCodes") List<String> structureCodes);
 }

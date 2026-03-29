@@ -1,4 +1,4 @@
-import { CheckCircle, Clock, XCircle, TrendingUp } from 'lucide-react';
+import { CheckCircle, Clock, XCircle, TrendingUp, Ban } from 'lucide-react';
 import { ReconciliationStats } from '../../../services/reconciliationService';
 import Card from '../../../components/ui/Card';
 
@@ -25,28 +25,35 @@ export const ReconciliationStatsComponent = ({ stats, loading }: ReconciliationS
   const statCards = [
     {
       name: 'En attente',
-      value: stats.total_pending,
+      value: stats.total_pending ?? 0,
       icon: Clock,
       color: 'text-yellow-600',
       bgColor: 'bg-yellow-100',
     },
     {
       name: 'Réconciliés aujourd\'hui',
-      value: stats.reconciled_today,
+      value: stats.reconciled_today ?? 0,
       icon: CheckCircle,
       color: 'text-green-600',
       bgColor: 'bg-green-100',
     },
     {
       name: 'Échecs aujourd\'hui',
-      value: stats.failed_today,
+      value: stats.failed_today ?? 0,
       icon: XCircle,
       color: 'text-red-600',
       bgColor: 'bg-red-100',
     },
     {
+      name: 'Abandonné',
+      value: stats.total_abandoned ?? 0,
+      icon: Ban,
+      color: 'text-gray-600',
+      bgColor: 'bg-gray-100',
+    },
+    {
       name: 'Taux de succès',
-      value: `${stats.success_rate.toFixed(1)}%`,
+      value: `${(stats.success_rate ?? 0).toFixed(1)}%`,
       icon: TrendingUp,
       color: 'text-blue-600',
       bgColor: 'bg-blue-100',
@@ -69,7 +76,7 @@ export const ReconciliationStatsComponent = ({ stats, loading }: ReconciliationS
         </Card>
       ))}
 
-      {stats.average_reconciliation_time > 0 && (
+      {(stats.average_reconciliation_time ?? 0) > 0 && (
         <Card className="sm:col-span-2 lg:col-span-4">
           <div className="flex items-center justify-between">
             <div>
@@ -77,11 +84,11 @@ export const ReconciliationStatsComponent = ({ stats, loading }: ReconciliationS
                 Temps moyen de réconciliation
               </p>
               <p className="text-2xl font-bold text-gray-900">
-                {(stats.average_reconciliation_time / 60).toFixed(1)} minutes
+                {((stats.average_reconciliation_time ?? 0) / 60).toFixed(1)} minutes
               </p>
             </div>
             <div className="flex space-x-4">
-              {stats.by_status.map((item) => (
+              {(stats.by_status ?? []).map((item) => (
                 <div key={item.status} className="text-center">
                   <p className="text-sm text-gray-600 capitalize">{item.status}</p>
                   <p className="text-xl font-semibold text-gray-900">{item.count}</p>

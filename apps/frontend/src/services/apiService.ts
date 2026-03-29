@@ -97,14 +97,14 @@ export const customerService = {
   // Get customer list with filtering options
   getCustomerList: async (filters?: {
     searchTerm?: string;
-    agencyCode?: string;
+    structureCode?: string;
     clientType?: string;
     page?: number;
     limit?: number;
   }) => {
     const queryParams = new URLSearchParams();
     if (filters?.searchTerm) queryParams.append('searchTerm', filters.searchTerm);
-    if (filters?.agencyCode) queryParams.append('agencyCode', filters.agencyCode);
+    if (filters?.structureCode) queryParams.append('structureCode', filters.structureCode);
     if (filters?.clientType) queryParams.append('clientType', filters.clientType);
     if (filters?.page) queryParams.append('page', filters.page.toString());
     if (filters?.limit) queryParams.append('limit', filters.limit.toString());
@@ -132,13 +132,13 @@ export const anomalyService = {
   // Get list of anomalies
   getAnomalies: async (filters?: {
     clientType?: string;
-    agencyCode?: string;
+    structureCode?: string;
     page?: number;
     limit?: number;
   }) => {
     const queryParams = new URLSearchParams();
     if (filters?.clientType) queryParams.append('clientType', filters.clientType);
-    if (filters?.agencyCode) queryParams.append('agencyCode', filters.agencyCode);
+    if (filters?.structureCode) queryParams.append('structureCode', filters.structureCode);
     if (filters?.page) queryParams.append('page', filters.page.toString());
     if (filters?.limit) queryParams.append('limit', filters.limit.toString());
 

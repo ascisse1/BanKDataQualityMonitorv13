@@ -47,7 +47,7 @@ const OptimizedAnomaliesTable: React.FC<OptimizedAnomaliesTableProps> = ({
       setLoading(true);
 
       const params: Record<string, any> = {};
-      if (selectedAgency) params.agencyCode = selectedAgency;
+      if (selectedAgency) params.structureCode = selectedAgency;
       if (debouncedSearch) params.search = debouncedSearch;
 
       const [individualRes, corporateRes] = await Promise.all([

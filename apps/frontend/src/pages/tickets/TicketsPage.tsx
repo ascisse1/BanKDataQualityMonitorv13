@@ -75,8 +75,8 @@ export const TicketsPage: React.FC = () => {
       setError(null);
 
       let result;
-      if (isAgencyUser && user?.agencyCode) {
-        result = await ticketService.getTicketsByAgency(user.agencyCode, currentPage - 1, itemsPerPage);
+      if (isAgencyUser && user?.structureCode) {
+        result = await ticketService.getTicketsByAgency(user.structureCode, currentPage - 1, itemsPerPage);
       } else {
         result = await ticketService.getTickets(currentPage - 1, itemsPerPage);
       }
@@ -97,7 +97,7 @@ export const TicketsPage: React.FC = () => {
       ticket.ticketNumber?.toLowerCase().includes(searchTerm.toLowerCase()) ||
       ticket.cli?.toLowerCase().includes(searchTerm.toLowerCase()) ||
       ticket.clientName?.toLowerCase().includes(searchTerm.toLowerCase()) ||
-      ticket.agencyCode?.toLowerCase().includes(searchTerm.toLowerCase());
+      ticket.structureCode?.toLowerCase().includes(searchTerm.toLowerCase());
 
     if (filterStatus === 'all') return matchesSearch;
     return matchesSearch && ticket.status === filterStatus;
@@ -296,7 +296,7 @@ export const TicketsPage: React.FC = () => {
                           {ticket.ticketNumber}
                         </div>
                         <div className="text-xs text-gray-500">
-                          Agence: {ticket.agencyCode || '-'}
+                          Agence: {ticket.structureCode || '-'}
                         </div>
                       </td>
                       <td className="px-6 py-4 whitespace-nowrap">
