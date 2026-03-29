@@ -5,6 +5,7 @@ import Button from '../../components/ui/Button';
 import { duplicateDetectionService, DuplicateCandidate } from '../../services/duplicateDetectionService';
 import { useAuth } from '../../context/AuthContext';
 import { useToast } from '../../components/ui/Toaster';
+import { log } from '../../services/log';
 
 const DuplicatesPage: React.FC = () => {
   const { user } = useAuth();
@@ -37,7 +38,7 @@ const DuplicatesPage: React.FC = () => {
       const data = await duplicateDetectionService.getPendingDuplicates(filters);
       setDuplicates(data);
     } catch (error) {
-      console.error('Error loading duplicates:', error);
+      log.error('database', 'Error loading duplicates', { error });
       addToast('Erreur lors du chargement des doublons', 'error');
     } finally {
       setLoading(false);
@@ -73,7 +74,7 @@ const DuplicatesPage: React.FC = () => {
       await loadDuplicates();
       await loadStats();
     } catch (error) {
-      console.error('Error running detection:', error);
+      log.error('business', 'Error running detection', { error });
       addToast('Erreur lors de la détection des doublons', 'error');
     } finally {
       setIsDetecting(false);
@@ -98,7 +99,7 @@ const DuplicatesPage: React.FC = () => {
         addToast('Erreur lors de la confirmation', 'error');
       }
     } catch (error) {
-      console.error('Error confirming duplicate:', error);
+      log.error('business', 'Error confirming duplicate', { error });
       addToast('Erreur lors de la confirmation', 'error');
     }
   };
@@ -121,7 +122,7 @@ const DuplicatesPage: React.FC = () => {
         addToast('Erreur lors du rejet', 'error');
       }
     } catch (error) {
-      console.error('Error rejecting duplicate:', error);
+      log.error('business', 'Error rejecting duplicate', { error });
       addToast('Erreur lors du rejet', 'error');
     }
   };

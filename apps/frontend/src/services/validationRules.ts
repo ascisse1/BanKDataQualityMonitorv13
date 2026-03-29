@@ -1,6 +1,6 @@
 import { AxiosInstance } from 'axios';
 import { ValidationRule, ValidationResult, ValidationError, ValidationWarning, ClientRecord, RuleCondition } from '../types/ValidationRules';
-import { logger } from './logger';
+import { log } from './log';
 import apiClient from '../lib/apiClient';
 
 // Backend DTO interface (matches Spring Boot ValidationRuleDto)
@@ -82,7 +82,7 @@ export class ValidationRulesService {
     try {
       return JSON.parse(ruleDefinition) as RuleCondition[];
     } catch (error) {
-      logger.warning('validation', 'Failed to parse rule definition', { error, ruleDefinition });
+      log.warning('validation', 'Failed to parse rule definition', { error, ruleDefinition });
       return [];
     }
   }
@@ -160,19 +160,19 @@ export class ValidationRulesService {
 
     this.isLoading = true;
     try {
-      logger.info('validation', 'Fetching validation rules from backend');
+      log.info('validation', 'Fetching validation rules from backend');
       const response = await this.axiosInstance.get<ApiResponse<ValidationRuleDto[]>>('/api/validation/rules/active');
 
       if (response.data.success && response.data.data && response.data.data.length > 0) {
         this.rules = response.data.data.map(dto => this.mapDtoToRule(dto));
         this.lastFetchTime = Date.now();
-        logger.info('validation', `Loaded ${this.rules.length} validation rules from backend`);
+        log.info('validation', `Loaded ${this.rules.length} validation rules from backend`);
       } else {
-        logger.warning('validation', 'No rules returned from backend, using default rules');
+        log.warning('validation', 'No rules returned from backend, using default rules');
       }
       return this.rules;
     } catch (error) {
-      logger.warning('validation', 'Failed to fetch validation rules from backend, using default rules', { error });
+      log.warning('validation', 'Failed to fetch validation rules from backend, using default rules', { error });
       // Return cached/default rules instead of throwing
       return this.rules;
     } finally {
@@ -199,7 +199,7 @@ export class ValidationRulesService {
       }
       return [];
     } catch (error) {
-      logger.error('validation', 'Failed to fetch rules by client type', { error, clientType });
+      log.error('validation', 'Failed to fetch rules by client type', { error, clientType });
       // Fallback to cached rules filtered by client type
       return this.rules.filter(rule => rule.clientType === clientType);
     }
@@ -233,7 +233,7 @@ export class ValidationRulesService {
       }
       return null;
     } catch (error) {
-      logger.error('validation', 'Failed to create validation rule', { error });
+      log.error('validation', 'Failed to create validation rule', { error });
       throw error;
     }
   }
@@ -284,7 +284,7 @@ export class ValidationRulesService {
       }
       return true;
     } catch (error) {
-      logger.error('validation', 'Failed to update validation rule', { error, ruleId });
+      log.error('validation', 'Failed to update validation rule', { error, ruleId });
       return false;
     }
   }
@@ -304,7 +304,7 @@ export class ValidationRulesService {
       }
       return true;
     } catch (error) {
-      logger.error('validation', 'Failed to delete validation rule', { error, ruleId });
+      log.error('validation', 'Failed to delete validation rule', { error, ruleId });
       return false;
     }
   }
@@ -324,7 +324,7 @@ export class ValidationRulesService {
       }
       return true;
     } catch (error) {
-      logger.error('validation', 'Failed to toggle validation rule', { error, ruleId });
+      log.error('validation', 'Failed to toggle validation rule', { error, ruleId });
       return false;
     }
   }

@@ -8,6 +8,7 @@ import { ApexOptions } from 'apexcharts';
 import FatcaTrendChart from './FatcaTrendChart';
 import FatcaStatusChart from './FatcaStatusChart';
 import { db } from '../../../services/db';
+import { log } from '../../../services/log';
 
 interface FatcaSummaryProps {
   isLoading?: boolean;
@@ -165,7 +166,7 @@ const FatcaSummary: React.FC<FatcaSummaryProps> = ({
       
       setFatcaIndicators(formattedIndicators);
     } catch (error) {
-      console.error('Error fetching FATCA indicators:', error);
+      log.error('api', 'Error fetching FATCA indicators', { error });
       // Generate fallback data
       generateFallbackIndicators();
     } finally {
@@ -246,7 +247,7 @@ const FatcaSummary: React.FC<FatcaSummaryProps> = ({
         setFatcaIndicators(indicators);
       })
       .catch(error => {
-        console.error('Error fetching FATCA clients for indicators:', error);
+        log.error('api', 'Error fetching FATCA clients for indicators', { error });
         
         // If all else fails, use estimated percentages
         const indicators: FatcaIndicator[] = [

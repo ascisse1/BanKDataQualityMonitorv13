@@ -5,6 +5,7 @@ import { db } from '../../../services/db';
 import { useToast } from '../../../components/ui/Toaster';
 import { useDebounce } from '../../../hooks/useDebounce';
 import { useVirtualizer } from '@tanstack/react-virtual';
+import { log } from '../../../services/log';
 
 interface OptimizedAnomaliesTableProps {
   isLoading?: boolean;
@@ -62,7 +63,7 @@ const OptimizedAnomaliesTable: React.FC<OptimizedAnomaliesTableProps> = ({
       setTotalPages(Math.max(1, Math.ceil(totalCount / ITEMS_PER_PAGE)));
     } catch (error) {
       addToast('Erreur lors du chargement des anomalies', 'error');
-      console.error('Error fetching anomalies:', error);
+      log.error('api', 'Error fetching anomalies', { error });
     } finally {
       setLoading(false);
     }

@@ -1,5 +1,5 @@
 import axios, { AxiosInstance, InternalAxiosRequestConfig } from 'axios';
-import { logger } from '../services/logger';
+import { log } from '../services/log';
 
 /**
  * Extracts CSRF token from cookie (set by Spring Security).
@@ -52,11 +52,11 @@ apiClient.interceptors.response.use(
   (response) => response,
   (error) => {
     if (error.response?.status === 401) {
-      logger.warning('security', 'Session expired, redirecting to login');
+      log.warning('security', 'Session expired, redirecting to login');
       window.location.href = '/login';
     }
     if (error.response?.status === 403) {
-      logger.warning('security', 'Access denied', { url: error.config?.url });
+      log.warning('security', 'Access denied', { url: error.config?.url });
     }
     return Promise.reject(error);
   }

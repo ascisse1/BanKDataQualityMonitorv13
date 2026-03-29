@@ -7,6 +7,7 @@ import type { TicketIncidentDto } from '../../services/validationService';
 import type { TicketDto } from '../../services/ticketService';
 import { useAuth } from '../../context/AuthContext';
 import { useToast } from '../../components/ui/Toaster';
+import { log } from '../../services/log';
 
 const PRIORITY_COLORS: Record<string, string> = {
   CRITICAL: 'text-red-600 bg-red-100',
@@ -48,7 +49,7 @@ const ValidationPage: React.FC = () => {
       const data = await validationService.getPendingValidations();
       setTickets(data);
     } catch (err) {
-      console.error('Error loading validations:', err);
+      log.error('validation', 'Error loading validations', { error: err });
       setError('Erreur lors du chargement des validations');
     } finally {
       setLoading(false);
@@ -70,7 +71,7 @@ const ValidationPage: React.FC = () => {
         const ticketIncidents = await validationService.getTicketIncidents(ticketId);
         setIncidents(prev => ({ ...prev, [ticketId]: ticketIncidents }));
       } catch (err) {
-        console.error('Error loading incidents:', err);
+        log.error('validation', 'Error loading incidents', { error: err });
       } finally {
         setLoadingIncidents(null);
       }

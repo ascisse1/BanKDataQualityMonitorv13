@@ -5,6 +5,7 @@ import Button from '../../components/ui/Button';
 import Input from '../../components/ui/Input';
 import { useToast } from '../../components/ui/Toaster';
 import { db } from '../../services/db';
+import { log } from '../../services/log';
 
 import Chart from 'react-apexcharts';
 import { ApexOptions } from 'apexcharts';
@@ -73,7 +74,7 @@ const GlobalTrackingPage: React.FC = () => {
         setAgencies(data);
       }
     } catch (error) {
-      console.error('Error loading agencies:', error);
+      log.error('api', 'Error loading agencies', { error });
     }
   };
 
@@ -90,7 +91,7 @@ const GlobalTrackingPage: React.FC = () => {
       setFilteredData(data);
       addToast('Données de suivi chargées avec succès', 'success');
     } catch (error) {
-      console.error('Error fetching tracking data:', error);
+      log.error('api', 'Error fetching tracking data', { error });
       addToast('Erreur lors du chargement des données de suivi', 'error');
     } finally {
       setIsLoading(false);
@@ -238,7 +239,7 @@ const GlobalTrackingPage: React.FC = () => {
       
       addToast('Export PDF réussi', 'success');
     } catch (error) {
-      console.error('Error exporting PDF:', error);
+      log.error('ui', 'Error exporting PDF', { error });
       addToast('Erreur lors de l\'export PDF', 'error');
     } finally {
       setIsExporting(false);
@@ -306,7 +307,7 @@ const GlobalTrackingPage: React.FC = () => {
 
       addToast('Export Excel réussi', 'success');
     } catch (error) {
-      console.error('Error exporting Excel:', error);
+      log.error('ui', 'Error exporting Excel', { error });
       addToast('Erreur lors de l\'export Excel', 'error');
     } finally {
       setIsExporting(false);

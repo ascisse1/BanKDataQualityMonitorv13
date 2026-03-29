@@ -4,7 +4,10 @@ import com.bsic.dataqualitybackend.dto.ApiResponse;
 import com.bsic.dataqualitybackend.dto.UserDto;
 import com.bsic.dataqualitybackend.model.User;
 import com.bsic.dataqualitybackend.model.UserProfile;
+import com.bsic.dataqualitybackend.model.enums.UserRole;
+import com.bsic.dataqualitybackend.model.enums.UserStatus;
 import com.bsic.dataqualitybackend.repository.UserProfileRepository;
+import com.bsic.dataqualitybackend.repository.UserRepository;
 import com.bsic.dataqualitybackend.service.UserService;
 import lombok.RequiredArgsConstructor;
 import lombok.extern.slf4j.Slf4j;
@@ -14,7 +17,10 @@ import org.springframework.security.access.prepost.PreAuthorize;
 import org.springframework.web.bind.annotation.*;
 
 import java.time.LocalDate;
+import java.time.LocalDateTime;
+import java.util.HashMap;
 import java.util.List;
+import java.util.Map;
 import java.util.stream.Collectors;
 
 @Slf4j
@@ -25,6 +31,7 @@ public class UserController {
 
     private final UserService userService;
     private final UserProfileRepository userProfileRepository;
+    private final UserRepository userRepository;
 
     @GetMapping
     @PreAuthorize("hasAnyRole('ADMIN', 'AUDITOR')")
@@ -35,6 +42,36 @@ public class UserController {
                 .collect(Collectors.toList());
 
         return ResponseEntity.ok(ApiResponse.success(userDtos));
+    }
+
+    @GetMapping("/stats")
+    @PreAuthorize("hasRole('ADMIN')")
+    public ResponseEntity<ApiResponse<Map<String, Object>>> getUserStats() {
+        List<User> allUsers = userService.getAllUsers();
+        long total = allUsers.size();
+        long active = allUsers.stream().filter(u -> u.getStatus() == UserStatus.ACTIVE).count();
+        long admins = allUsers.stream().filter(u -> u.getRole() == UserRole.ADMIN).count();
+        long agencyUsers = allUsers.stream().filter(u -> u.getRole() == UserRole.AGENCY_USER).count();
+        long recentLogins = allUsers.stream()
+                .filter(u -> u.getLastLogin() != null && u.getLastLogin().isAfter(LocalDateTime.now().minusDays(7)))
+                .count();
+
+        // Count distinct structures with active user profiles
+        long agenciesWithUsers = userProfileRepository.findAll().stream()
+                .filter(up -> up.getStatus() == com.bsic.dataqualitybackend.model.enums.UserProfileStatus.ACTIVE)
+                .map(up -> up.getStructure().getCode())
+                .distinct()
+                .count();
+
+        Map<String, Object> stats = new HashMap<>();
+        stats.put("total", total);
+        stats.put("active", active);
+        stats.put("admins", admins);
+        stats.put("agency_users", agencyUsers);
+        stats.put("recent_logins", recentLogins);
+        stats.put("agencies_with_users", agenciesWithUsers);
+
+        return ResponseEntity.ok(ApiResponse.success(stats));
     }
 
     @GetMapping("/{id}")

@@ -78,7 +78,7 @@ const Sidebar = ({ isMobile, isOpen, onClose }: SidebarProps) => {
   const userRole = user?.role?.toUpperCase();
   const isAdmin = userRole === 'ADMIN';
   const isAuditor = userRole === 'AUDITOR';
-  const isAgencyUser = userRole === 'AGENCY_USER' || user?.agencyCode;
+  const isAgencyUser = userRole === 'AGENCY_USER' || (user?.agencyCodes && user.agencyCodes.length > 0);
 
   // Navigation groups
   const mainNavigation: NavItem[] = [
@@ -111,6 +111,7 @@ const Sidebar = ({ isMobile, isOpen, onClose }: SidebarProps) => {
 
   const adminNavigation: NavItem[] = [
     { name: 'Utilisateurs', icon: Users, path: '/users' },
+    { name: 'Gestion des acces', icon: Shield, path: '/user-access' },
     { name: 'CoreBanking', icon: Database, path: '/corebanking-config' },
   ];
 
@@ -405,17 +406,17 @@ const Sidebar = ({ isMobile, isOpen, onClose }: SidebarProps) => {
           </div>
 
           {/* Agency info for agency users */}
-          {isAgencyUser && user?.agencyCode && !isCollapsed && (
+          {isAgencyUser && user?.agencyCodes && user.agencyCodes.length > 0 && !isCollapsed && (
             <motion.div
               className="p-3 rounded-xl bg-primary-50 dark:bg-primary-900/20"
               initial={{ opacity: 0, y: 10 }}
               animate={{ opacity: 1, y: 0 }}
             >
               <p className="text-xs text-primary-600/70 dark:text-primary-400/70">
-                Agence assignée
+                {user.agencyCodes.length === 1 ? 'Agence assignee' : 'Agences assignees'}
               </p>
               <p className="text-sm font-semibold text-primary-700 dark:text-primary-300">
-                {user.agencyCode}
+                {user.agencyCodes.join(', ')}
               </p>
             </motion.div>
           )}

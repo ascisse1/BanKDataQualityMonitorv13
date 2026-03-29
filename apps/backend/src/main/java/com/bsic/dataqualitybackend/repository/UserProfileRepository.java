@@ -8,6 +8,7 @@ import org.springframework.stereotype.Repository;
 
 import java.time.LocalDate;
 import java.util.List;
+import java.util.Optional;
 
 @Repository
 public interface UserProfileRepository extends JpaRepository<UserProfile, Long> {
@@ -29,4 +30,7 @@ public interface UserProfileRepository extends JpaRepository<UserProfile, Long> 
            "AND up.dateFrom <= :today " +
            "AND (up.dateTo IS NULL OR up.dateTo >= :today)")
     List<UserProfile> findActiveByStructureCode(@Param("structureCode") String structureCode, @Param("today") LocalDate today);
+
+    Optional<UserProfile> findByUserIdAndStructureIdAndProfileIdAndDateFrom(
+            Integer userId, Long structureId, Long profileId, LocalDate dateFrom);
 }

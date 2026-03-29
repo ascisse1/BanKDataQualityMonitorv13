@@ -2,6 +2,7 @@ import { useState, useEffect } from 'react';
 import { Calendar, Database, RefreshCw, AlertTriangle, CheckCircle, XCircle } from 'lucide-react';
 import { useToast } from '../../../components/ui/Toaster';
 import Button from '../../../components/ui/Button';
+import { log } from '../../../services/log';
 
 interface DataLoadHistoryProps {
   isLoading?: boolean;
@@ -49,7 +50,7 @@ const DataLoadHistoryTable = ({ isLoading = false }: DataLoadHistoryProps) => {
       
       setHistory(data);
     } catch (error) {
-      console.error('Error fetching data load history:', error);
+      log.error('api', 'Error fetching data load history', { error });
       setError('Erreur lors du chargement de l\'historique');
     } finally {
       setLoading(false);

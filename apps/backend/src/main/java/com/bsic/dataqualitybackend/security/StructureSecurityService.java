@@ -1,6 +1,7 @@
 package com.bsic.dataqualitybackend.security;
 
 import com.bsic.dataqualitybackend.model.User;
+import com.bsic.dataqualitybackend.model.UserProfile;
 import com.bsic.dataqualitybackend.repository.UserProfileRepository;
 import com.bsic.dataqualitybackend.repository.UserRepository;
 import lombok.RequiredArgsConstructor;
@@ -55,5 +56,29 @@ public class StructureSecurityService {
      */
     public boolean isGlobalAccess() {
         return getAgencyFilter().isEmpty();
+    }
+
+    /**
+     * Checks if the current user has a specific role (from Keycloak token).
+     * Roles on profiles are managed via Keycloak Group role mappings.
+     */
+    public void requireRole(String role) {
+        if (!keycloakUserDetails.hasRole(role)) {
+            throw new AccessDeniedException("Role required: " + role);
+        }
+    }
+
+    /**
+     * Returns the active UserProfiles for the current user.
+     */
+    public List<UserProfile> getCurrentUserProfiles() {
+        if (!keycloakUserDetails.isAuthenticated()) return List.of();
+
+        String username = keycloakUserDetails.getCurrentUsername().orElse(null);
+        if (username == null) return List.of();
+
+        return userRepository.findByUsername(username)
+            .map(user -> userProfileRepository.findActiveByUserId(user.getId(), LocalDate.now()))
+            .orElse(List.of());
     }
 }

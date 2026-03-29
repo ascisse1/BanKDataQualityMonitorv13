@@ -1,5 +1,4 @@
-import { logger } from './logger';
-import { tracer } from './tracer';
+import { log } from './log';
 
 // API base URL - using Vite proxy to forward to Spring Boot backend
 // Using relative URL so requests go through Vite's proxy which handles CORS and auth
@@ -246,7 +245,7 @@ class DatabaseService {
   private constructor() {
     // Initialize service
     this.cleanCache();
-    tracer.info('database', 'Database service initialized (Backend API mode)');
+    log.info('database', 'Database service initialized (Backend API mode)');
 
     // Set up periodic cache cleaning
     setInterval(() => this.cleanCache(), 60 * 1000); // Clean every minute
@@ -275,7 +274,7 @@ class DatabaseService {
       }
     }
     if (cleaned > 0) {
-      tracer.debug('database', `Cleaned ${cleaned} cache entries`);
+      log.debug('database', `Cleaned ${cleaned} cache entries`);
     }
   }
 
@@ -289,11 +288,11 @@ class DatabaseService {
   }
 
   private abortAllRequests(): void {
-    tracer.info('database', `Aborting ${this.abortControllers.size} active requests`);
+    log.info('database', `Aborting ${this.abortControllers.size} active requests`);
     for (const [key, controller] of this.abortControllers.entries()) {
       try {
         controller.abort();
-        tracer.debug('database', `Aborted request: ${key}`);
+        log.debug('database', `Aborted request: ${key}`);
       } catch (error) {
         // Ignore errors when aborting
       }
@@ -314,7 +313,7 @@ class DatabaseService {
   private getFromCache<T>(key: string): T | null {
     const cached = this.cache.get(key);
     if (cached && Date.now() - cached.timestamp < this.CACHE_TTL) {
-      tracer.debug('database', `Cache hit for key: ${key}`);
+      log.debug('database', `Cache hit for key: ${key}`);
       return cached.data;
     }
     this.cache.delete(key);
@@ -331,7 +330,7 @@ class DatabaseService {
     }
 
     this.cache.set(key, { data, timestamp: Date.now() });
-    tracer.debug('database', `Cache set for key: ${key}`);
+    log.debug('database', `Cache set for key: ${key}`);
   }
 
   private async fetchApi<T>(
@@ -344,7 +343,7 @@ class DatabaseService {
     const cached = this.getFromCache<T>(cacheKey);
 
     if (cached) {
-      tracer.info('database', `Cache hit for ${endpoint}`, { params });
+      log.info('database', `Cache hit for ${endpoint}`, { params });
       return Promise.resolve(cached);
     }
 
@@ -369,7 +368,7 @@ class DatabaseService {
     const timeoutId = setTimeout(() => controller.abort(), timeout);
 
     try {
-      tracer.info('database', `Fetching from API: ${url}`);
+      log.info('database', `Fetching from API: ${url}`);
 
       const response = await fetch(url, {
         ...options,
@@ -406,18 +405,18 @@ class DatabaseService {
 
       // Cache the successful response
       this.setToCache(cacheKey, data);
-      tracer.info('database', `Successfully fetched data from ${endpoint}`);
+      log.info('database', `Successfully fetched data from ${endpoint}`);
 
       return data;
     } catch (error) {
       clearTimeout(timeoutId);
 
       if (error instanceof Error && error.name === 'AbortError') {
-        tracer.warning('database', `Request timeout for ${endpoint}`, { timeout });
-        logger.warning('database', `Request timeout for ${endpoint}`, { timeout });
+        log.warning('database', `Request timeout for ${endpoint}`, { timeout });
+        log.warning('database', `Request timeout for ${endpoint}`, { timeout });
       } else {
-        tracer.error('database', `API request failed for ${endpoint}`, { error });
-        logger.error('database', `API request failed for ${endpoint}`, { error });
+        log.error('database', `API request failed for ${endpoint}`, { error });
+        log.error('database', `API request failed for ${endpoint}`, { error });
       }
 
       throw error;
@@ -426,7 +425,7 @@ class DatabaseService {
 
   public async getValidationMetrics(): Promise<ValidationMetric[]> {
     try {
-      tracer.info('database', 'Getting validation metrics');
+      log.info('database', 'Getting validation metrics');
       // Spring Boot endpoint: /api/stats/validation-metrics
       const result = await this.fetchApi<Record<string, any>>('/stats/validation-metrics');
 
@@ -443,8 +442,8 @@ class DatabaseService {
         quality_score: data?.qualityScore || data?.quality_score || 0
       }));
     } catch (error) {
-      tracer.error('database', 'Failed to get validation metrics', { error });
-      logger.error('api', 'Failed to get validation metrics', { error });
+      log.error('database', 'Failed to get validation metrics', { error });
+      log.error('api', 'Failed to get validation metrics', { error });
       // Return empty array instead of throwing to prevent UI crash
       return [];
     }
@@ -452,17 +451,17 @@ class DatabaseService {
 
   public async testConnection(): Promise<{ success: boolean; message: string }> {
     try {
-      tracer.info('database', 'Testing database connection');
+      log.info('database', 'Testing database connection');
 
       // Try the stats endpoint to verify connection
       const stats = await this.fetchApi<ClientStats>('/stats/clients', {}, {}, false);
-      tracer.info('database', 'Database connection test successful', stats);
+      log.info('database', 'Database connection test successful', stats);
       return {
         success: true,
         message: `Connected to backend (${(stats?.total ?? 0).toLocaleString()} total clients)`
       };
     } catch (error) {
-      tracer.error('database', 'Database connection test failed', { error });
+      log.error('database', 'Database connection test failed', { error });
       return {
         success: false,
         message: `Failed to connect to API: ${(error as Error).message}`
@@ -472,7 +471,7 @@ class DatabaseService {
 
   public async getClientStats(): Promise<ClientStats> {
     try {
-      tracer.info('database', 'Getting client statistics');
+      log.info('database', 'Getting client statistics');
       const stats = await this.fetchApi<ClientStats>('/stats/clients');
       return {
         total: stats?.total ?? 0,
@@ -483,8 +482,8 @@ class DatabaseService {
         fatca: stats?.fatca ?? 0
       };
     } catch (error) {
-      tracer.error('database', 'Failed to get client statistics', { error });
-      logger.error('api', 'Failed to get client statistics', { error });
+      log.error('database', 'Failed to get client statistics', { error });
+      log.error('api', 'Failed to get client statistics', { error });
       // Return default stats on error
       return {
         total: 0,
@@ -499,10 +498,10 @@ class DatabaseService {
 
   public async getFatcaStats(clientType: string = 'all'): Promise<FatcaStats> {
     try {
-      tracer.info('database', 'Getting FATCA statistics', { clientType });
+      log.info('database', 'Getting FATCA statistics', { clientType });
 
       const data = await this.fetchApi<FatcaStats>('/fatca/stats', {}, { clientType });
-      tracer.info('database', 'FATCA statistics retrieved successfully', data);
+      log.info('database', 'FATCA statistics retrieved successfully', data);
       return {
         total: data?.total || 0,
         individual: data?.individual || 0,
@@ -514,8 +513,8 @@ class DatabaseService {
         currentMonth: data?.currentMonth || 0
       };
     } catch (error) {
-      tracer.error('database', 'Failed to get FATCA statistics', { error, clientType });
-      logger.error('api', 'Failed to get FATCA statistics', { error });
+      log.error('database', 'Failed to get FATCA statistics', { error, clientType });
+      log.error('api', 'Failed to get FATCA statistics', { error });
       return {
         total: 0,
         individual: 0,
@@ -531,10 +530,10 @@ class DatabaseService {
 
   public async getFatcaIndicators(): Promise<FatcaIndicators> {
     try {
-      tracer.info('database', 'Getting FATCA indicators');
+      log.info('database', 'Getting FATCA indicators');
 
       const data = await this.fetchApi<FatcaIndicators>('/fatca/indicators');
-      tracer.info('database', 'FATCA indicators retrieved successfully', data);
+      log.info('database', 'FATCA indicators retrieved successfully', data);
       return {
         nationality: data?.nationality || 0,
         birthplace: data?.birthplace || 0,
@@ -543,8 +542,8 @@ class DatabaseService {
         proxy: data?.proxy || 0
       };
     } catch (error) {
-      tracer.error('database', 'Failed to get FATCA indicators', { error });
-      logger.error('api', 'Failed to get FATCA indicators', { error });
+      log.error('database', 'Failed to get FATCA indicators', { error });
+      log.error('api', 'Failed to get FATCA indicators', { error });
       return {
         nationality: 0,
         birthplace: 0,
@@ -557,7 +556,7 @@ class DatabaseService {
 
   public async getFatcaClients(page = 1, limit = this.DEFAULT_LIMIT, forExport = false, status: string | null = null, clientType: string = '1'): Promise<PaginatedResponse<any>> {
     try {
-      tracer.info('database', 'Getting FATCA clients', { page, limit, forExport, status, clientType });
+      log.info('database', 'Getting FATCA clients', { page, limit, forExport, status, clientType });
 
       const queryLimit = forExport ? 5000 : Math.min(limit, this.MAX_LIMIT);
       // Spring Boot uses 0-based page indexing
@@ -572,21 +571,21 @@ class DatabaseService {
 
       const result = await this.fetchApi<any>('/fatca/clients', {}, params);
       const paginatedResult = toPagedResponse<any>(result);
-      tracer.info('database', 'FATCA clients retrieved successfully', {
+      log.info('database', 'FATCA clients retrieved successfully', {
         count: paginatedResult.data?.length || 0,
         total: paginatedResult.total || 0
       });
       return paginatedResult;
     } catch (error) {
-      tracer.error('database', 'Failed to get FATCA clients', { error, page, limit, status, clientType });
-      logger.error('api', 'Failed to get FATCA clients', { error });
+      log.error('database', 'Failed to get FATCA clients', { error, page, limit, status, clientType });
+      log.error('api', 'Failed to get FATCA clients', { error });
       return { data: [], page, limit, total: 0 };
     }
   }
 
   public async getCorporateFatcaClients(page = 1, limit = this.DEFAULT_LIMIT, forExport = false, status: string | null = null): Promise<PaginatedResponse<any>> {
     try {
-      tracer.info('database', 'Getting corporate FATCA clients', { page, limit, forExport, status });
+      log.info('database', 'Getting corporate FATCA clients', { page, limit, forExport, status });
 
       const queryLimit = forExport ? 5000 : Math.min(limit, this.MAX_LIMIT);
       // Spring Boot uses 0-based page indexing
@@ -601,21 +600,21 @@ class DatabaseService {
 
       const result = await this.fetchApi<any>('/fatca/corporate', {}, params);
       const paginatedResult = toPagedResponse<any>(result);
-      tracer.info('database', 'Corporate FATCA clients retrieved successfully', {
+      log.info('database', 'Corporate FATCA clients retrieved successfully', {
         count: paginatedResult.data?.length || 0,
         total: paginatedResult.total || 0
       });
       return paginatedResult;
     } catch (error) {
-      tracer.error('database', 'Failed to get corporate FATCA clients', { error, page, limit, status });
-      logger.error('api', 'Failed to get corporate FATCA clients', { error });
+      log.error('database', 'Failed to get corporate FATCA clients', { error, page, limit, status });
+      log.error('api', 'Failed to get corporate FATCA clients', { error });
       return { data: [], page, limit, total: 0 };
     }
   }
 
   public async getAllAnomalies(page = 1, limit = this.DEFAULT_LIMIT, forExport = false, params: Record<string, any> = {}): Promise<PaginatedResponse<any>> {
     try {
-      tracer.info('database', 'Getting all anomalies', { page, limit, forExport, ...params });
+      log.info('database', 'Getting all anomalies', { page, limit, forExport, ...params });
 
       const queryLimit = forExport ? 5000 : Math.min(limit, this.MAX_LIMIT);
       const queryParams = {
@@ -628,21 +627,21 @@ class DatabaseService {
       const paginatedResult = toPagedResponse<any>(result);
       paginatedResult.data = paginatedResult.data.map(mapAnomalyToFrontend);
 
-      tracer.info('database', 'All anomalies retrieved successfully', {
+      log.info('database', 'All anomalies retrieved successfully', {
         count: paginatedResult.data?.length || 0,
         total: paginatedResult.total || 0
       });
       return paginatedResult;
     } catch (error) {
-      tracer.error('database', 'Failed to get all anomalies', { error, page, limit, ...params });
-      logger.error('api', 'Failed to get all anomalies', { error });
+      log.error('database', 'Failed to get all anomalies', { error, page, limit, ...params });
+      log.error('api', 'Failed to get all anomalies', { error });
       return { data: [], page, limit, total: 0 };
     }
   }
 
   public async getIndividualAnomalies(page = 1, limit = this.DEFAULT_LIMIT, forExport = false, params: Record<string, any> = {}): Promise<PaginatedResponse<any>> {
     try {
-      tracer.info('database', 'Getting individual anomalies', { page, limit, forExport, ...params });
+      log.info('database', 'Getting individual anomalies', { page, limit, forExport, ...params });
 
       const queryLimit = forExport ? 5000 : Math.min(limit, this.MAX_LIMIT);
       // Spring Boot uses 0-based page indexing
@@ -658,21 +657,21 @@ class DatabaseService {
       // Map backend format to frontend expected format
       paginatedResult.data = paginatedResult.data.map(mapAnomalyToFrontend);
 
-      tracer.info('database', 'Individual anomalies retrieved successfully', {
+      log.info('database', 'Individual anomalies retrieved successfully', {
         count: paginatedResult.data?.length || 0,
         total: paginatedResult.total || 0
       });
       return paginatedResult;
     } catch (error) {
-      tracer.error('database', 'Failed to get individual anomalies', { error, page, limit, ...params });
-      logger.error('api', 'Failed to get individual anomalies', { error });
+      log.error('database', 'Failed to get individual anomalies', { error, page, limit, ...params });
+      log.error('api', 'Failed to get individual anomalies', { error });
       return { data: [], page, limit, total: 0 };
     }
   }
 
   public async getCorporateAnomalies(page = 1, limit = this.DEFAULT_LIMIT, forExport = false, params: Record<string, any> = {}): Promise<PaginatedResponse<any>> {
     try {
-      tracer.info('database', 'Getting corporate anomalies', { page, limit, forExport, ...params });
+      log.info('database', 'Getting corporate anomalies', { page, limit, forExport, ...params });
 
       const queryLimit = forExport ? 5000 : Math.min(limit, this.MAX_LIMIT);
       // Spring Boot uses 0-based page indexing
@@ -688,21 +687,21 @@ class DatabaseService {
       // Map backend format to frontend expected format
       paginatedResult.data = paginatedResult.data.map(mapAnomalyToFrontend);
 
-      tracer.info('database', 'Corporate anomalies retrieved successfully', {
+      log.info('database', 'Corporate anomalies retrieved successfully', {
         count: paginatedResult.data?.length || 0,
         total: paginatedResult.total || 0
       });
       return paginatedResult;
     } catch (error) {
-      tracer.error('database', 'Failed to get corporate anomalies', { error, page, limit, ...params });
-      logger.error('api', 'Failed to get corporate anomalies', { error });
+      log.error('database', 'Failed to get corporate anomalies', { error, page, limit, ...params });
+      log.error('api', 'Failed to get corporate anomalies', { error });
       return { data: [], page, limit, total: 0 };
     }
   }
 
   public async getInstitutionalAnomalies(page = 1, limit = this.DEFAULT_LIMIT, forExport = false, params: Record<string, any> = {}): Promise<PaginatedResponse<any>> {
     try {
-      tracer.info('database', 'Getting institutional anomalies', { page, limit, forExport, ...params });
+      log.info('database', 'Getting institutional anomalies', { page, limit, forExport, ...params });
 
       const queryLimit = forExport ? 5000 : Math.min(limit, this.MAX_LIMIT);
       // Spring Boot uses 0-based page indexing
@@ -718,35 +717,35 @@ class DatabaseService {
       // Map backend format to frontend expected format
       paginatedResult.data = paginatedResult.data.map(mapAnomalyToFrontend);
 
-      tracer.info('database', 'Institutional anomalies retrieved successfully', {
+      log.info('database', 'Institutional anomalies retrieved successfully', {
         count: paginatedResult.data?.length || 0,
         total: paginatedResult.total || 0
       });
       return paginatedResult;
     } catch (error) {
-      tracer.error('database', 'Failed to get institutional anomalies', { error, page, limit, ...params });
-      logger.error('api', 'Failed to get institutional anomalies', { error });
+      log.error('database', 'Failed to get institutional anomalies', { error, page, limit, ...params });
+      log.error('api', 'Failed to get institutional anomalies', { error });
       return { data: [], page, limit, total: 0 };
     }
   }
 
   public async getAnomaliesByBranch(): Promise<BranchAnomaly[]> {
     try {
-      tracer.info('database', 'Getting anomalies by branch');
+      log.info('database', 'Getting anomalies by branch');
 
       const data = await this.fetchApi<BranchAnomaly[]>('/anomalies/by-branch');
-      tracer.info('database', 'Anomalies by branch retrieved successfully', { count: data?.length || 0 });
+      log.info('database', 'Anomalies by branch retrieved successfully', { count: data?.length || 0 });
       return Array.isArray(data) ? data : [];
     } catch (error) {
-      tracer.error('database', 'Failed to get anomalies by branch', { error });
-      logger.error('api', 'Failed to get anomalies by branch', { error });
+      log.error('database', 'Failed to get anomalies by branch', { error });
+      log.error('api', 'Failed to get anomalies by branch', { error });
       return [];
     }
   }
 
   public async getGlobalTrackingData(startDate?: string, endDate?: string, clientTypes?: string[], agencyCode?: string): Promise<TrackingData[]> {
     try {
-      tracer.info('database', 'Getting global tracking data', { startDate, endDate, clientTypes, agencyCode });
+      log.info('database', 'Getting global tracking data', { startDate, endDate, clientTypes, agencyCode });
 
       const params: Record<string, any> = {};
 
@@ -767,7 +766,7 @@ class DatabaseService {
       }
 
       const result = await this.fetchApi<any>('/tracking/global', {}, params);
-      tracer.info('database', 'Global tracking data retrieved successfully', { count: result?.length || 0 });
+      log.info('database', 'Global tracking data retrieved successfully', { count: result?.length || 0 });
 
       // The Spring Boot /tracking/global endpoint returns a map, not an array
       // Convert it to the expected format
@@ -804,100 +803,100 @@ class DatabaseService {
 
       return [];
     } catch (error) {
-      tracer.error('database', 'Failed to get global tracking data', { error, startDate, endDate, clientTypes, agencyCode });
-      logger.error('api', 'Failed to get global tracking data', { error });
+      log.error('database', 'Failed to get global tracking data', { error, startDate, endDate, clientTypes, agencyCode });
+      log.error('api', 'Failed to get global tracking data', { error });
       return [];
     }
   }
 
   public async executeQuery(query: string) {
     try {
-      tracer.info('database', 'Executing custom query', { queryLength: query.length });
+      log.info('database', 'Executing custom query', { queryLength: query.length });
 
       const result = await this.fetchApi('/query/execute', {
         method: 'POST',
         body: JSON.stringify({ query })
       });
-      tracer.info('database', 'Query executed successfully', { resultSize: JSON.stringify(result).length });
+      log.info('database', 'Query executed successfully', { resultSize: JSON.stringify(result).length });
       return result;
     } catch (error) {
-      tracer.error('database', 'Query execution failed', { error, queryLength: query.length });
-      logger.error('api', 'Query execution failed', { error });
+      log.error('database', 'Query execution failed', { error, queryLength: query.length });
+      log.error('api', 'Query execution failed', { error });
       throw error;
     }
   }
 
   public async clearCache(): Promise<void> {
     try {
-      tracer.info('database', 'Clearing cache');
+      log.info('database', 'Clearing cache');
 
       // Clear API cache
       try {
         await this.fetchApi('/cache/clear', { method: 'POST' });
       } catch (apiError) {
-        tracer.warning('database', 'Failed to clear API cache', { error: apiError });
+        log.warning('database', 'Failed to clear API cache', { error: apiError });
       }
 
       this.cache.clear();
       this.loadingPromises.clear();
       this.retryCount.clear();
-      tracer.info('database', 'Cache cleared successfully');
-      logger.info('system', 'Cache cleared successfully');
+      log.info('database', 'Cache cleared successfully');
+      log.info('system', 'Cache cleared successfully');
     } catch (error) {
-      tracer.error('database', 'Failed to clear cache', { error });
-      logger.error('api', 'Failed to clear cache', { error });
+      log.error('database', 'Failed to clear cache', { error });
+      log.error('api', 'Failed to clear cache', { error });
     }
   }
 
   public async prefetchCommonData(): Promise<void> {
     try {
-      tracer.info('database', 'Starting data prefetch');
+      log.info('database', 'Starting data prefetch');
 
       // Prefetch in parallel with error handling and shorter timeouts
       const prefetchPromises = [
         this.fetchApi<ClientStats>('/stats/clients', {}, {}, true)
           .catch(e => {
-            tracer.error('database', 'Prefetch client stats failed', { error: e });
+            log.error('database', 'Prefetch client stats failed', { error: e });
             return null;
           }),
         this.fetchApi<BranchAnomaly[]>('/anomalies/by-branch', {}, {}, true)
           .catch(e => {
-            tracer.error('database', 'Prefetch branch anomalies failed', { error: e });
+            log.error('database', 'Prefetch branch anomalies failed', { error: e });
             return null;
           }),
         this.fetchApi<Record<string, any>>('/stats/validation-metrics', {}, {}, true)
           .catch(e => {
-            tracer.error('database', 'Prefetch validation metrics failed', { error: e });
+            log.error('database', 'Prefetch validation metrics failed', { error: e });
             return null;
           }),
         this.fetchApi<PaginatedResponse<any>>('/anomalies/individual', {}, { page: 1, limit: 10 }, true)
           .catch(e => {
-            tracer.error('database', 'Prefetch individual anomalies failed', { error: e });
+            log.error('database', 'Prefetch individual anomalies failed', { error: e });
             return null;
           }),
         this.fetchApi<PaginatedResponse<any>>('/anomalies/corporate', {}, { page: 1, limit: 10 }, true)
           .catch(e => {
-            tracer.error('database', 'Prefetch corporate anomalies failed', { error: e });
+            log.error('database', 'Prefetch corporate anomalies failed', { error: e });
             return null;
           }),
         this.fetchApi<FatcaStats>('/fatca/stats', {}, { clientType: 'all' }, true)
           .catch(e => {
-            tracer.error('database', 'Prefetch FATCA stats failed', { error: e });
+            log.error('database', 'Prefetch FATCA stats failed', { error: e });
             return null;
           }),
         this.fetchApi<PaginatedResponse<any>>('/fatca/clients', {}, { page: 1, limit: 10, clientType: '1' }, true)
           .catch(e => {
-            tracer.error('database', 'Prefetch FATCA clients failed', { error: e });
+            log.error('database', 'Prefetch FATCA clients failed', { error: e });
             return null;
           }),
         this.fetchApi<PaginatedResponse<any>>('/fatca/corporate', {}, { page: 1, limit: 10 }, true)
           .catch(e => {
-            tracer.error('database', 'Prefetch corporate FATCA clients failed', { error: e });
+            log.error('database', 'Prefetch corporate FATCA clients failed', { error: e });
             return null;
           }),
         this.fetchApi<FatcaIndicators>('/fatca/indicators', {}, {}, true)
           .catch(e => {
-            tracer.error('database', 'Prefetch FATCA indicators failed', { error: e });
+            log.error('database', 'Prefetch FATCA indicators failed', { error: e });
             return null;
           })
       ];
@@ -909,26 +908,26 @@ class DatabaseService {
       const successCount = results.filter(r => r.status === 'fulfilled' && r.value !== null).length;
       const failureCount = results.filter(r => r.status === 'rejected' || (r.status === 'fulfilled' && r.value === null)).length;
 
-      tracer.info('database', 'Data prefetch completed', {
+      log.info('database', 'Data prefetch completed', {
         total: results.length,
         success: successCount,
         failure: failureCount
       });
 
-      logger.info('system', 'Data prefetch completed');
+      log.info('system', 'Data prefetch completed');
     } catch (error) {
-      tracer.error('database', 'Failed to prefetch common data', { error });
-      logger.error('api', 'Failed to prefetch common data', { error });
+      log.error('database', 'Failed to prefetch common data', { error });
+      log.error('api', 'Failed to prefetch common data', { error });
     }
   }
 
   public async getAgencies(): Promise<{ code_agence: string; lib_agence: string }[]> {
     try {
-      tracer.info('database', 'Getting agencies');
+      log.info('database', 'Getting agencies');
 
       // Use /agencies/ordered endpoint for sorted agency list
       const data = await this.fetchApi<any[]>('/agencies/ordered');
-      tracer.info('database', 'Agencies retrieved successfully', { count: data?.length || 0 });
+      log.info('database', 'Agencies retrieved successfully', { count: data?.length || 0 });
 
       // Map backend AgencyDto format to frontend format
       if (Array.isArray(data)) {
@@ -940,8 +939,8 @@ class DatabaseService {
 
       return [];
     } catch (error) {
-      tracer.error('database', 'Failed to get agencies', { error });
-      logger.error('api', 'Failed to get agencies', { error });
+      log.error('database', 'Failed to get agencies', { error });
+      log.error('api', 'Failed to get agencies', { error });
       return [];
     }
   }
@@ -956,7 +955,7 @@ class DatabaseService {
       loadingPromises: this.loadingPromises.size
     };
 
-    tracer.debug('database', 'Cache stats retrieved', stats);
+    log.debug('database', 'Cache stats retrieved', stats);
 
     return stats;
   }

@@ -13,6 +13,7 @@ import CorporateFatcaTable from './components/CorporateFatcaTable';
 import { jsPDF } from 'jspdf';
 import 'jspdf-autotable';
 import { db } from '../../services/db';
+import { log } from '../../services/log';
 
 
 const FatcaPage: React.FC = () => {
@@ -102,7 +103,7 @@ const FatcaPage: React.FC = () => {
       addToast(`Export PDF réussi (${tableData.length} clients)`, 'success');
     } catch (error) {
       addToast('Erreur lors de l\'export PDF', 'error');
-      console.error('Export error:', error);
+      log.error('ui', 'Export error', { error });
     } finally {
       setIsExporting(false);
     }
@@ -161,7 +162,7 @@ const FatcaPage: React.FC = () => {
       addToast(`Export Excel réussi (${rows.length} clients)`, 'success');
     } catch (error) {
       addToast('Erreur lors de l\'export Excel', 'error');
-      console.error('Export error:', error);
+      log.error('ui', 'Export error', { error });
     } finally {
       setIsExporting(false);
     }
@@ -204,7 +205,7 @@ const FatcaPage: React.FC = () => {
       addToast(`Export XML réussi (${clients.length} clients)`, 'success');
     } catch (error) {
       addToast('Erreur lors de l\'export XML', 'error');
-      console.error('Export error:', error);
+      log.error('ui', 'Export error', { error });
     } finally {
       setIsExporting(false);
     }
@@ -231,7 +232,7 @@ const FatcaPage: React.FC = () => {
       addToast(`Fichiers XML générés et validés (${indivClients.length} particuliers, ${corpClients.length} entreprises). Vous pouvez maintenant les transmettre via IRS IDES ou l'administration fiscale locale.`, 'success');
     } catch (error) {
       addToast('Erreur lors de la préparation de la déclaration', 'error');
-      console.error('Preparation error:', error);
+      log.error('business', 'Preparation error', { error });
     } finally {
       setIsTransmitting(false);
     }

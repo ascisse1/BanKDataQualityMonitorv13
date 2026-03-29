@@ -8,6 +8,7 @@ import {
   ReconciliationStats,
 } from '../../services/reconciliationService';
 import { ReconciliationStatsComponent } from './components/ReconciliationStats';
+import { log } from '../../services/log';
 import { ReconciliationFilters } from './components/ReconciliationFilters';
 import { ReconciliationTable } from './components/ReconciliationTable';
 import { ReconciliationDetails } from './components/ReconciliationDetails';
@@ -49,7 +50,7 @@ const ReconciliationPage = () => {
       setTasks(tasksData);
       setStats(statsData);
     } catch (error) {
-      console.error('Error fetching reconciliation data:', error);
+      log.error('api', 'Error fetching reconciliation data', { error });
       addToast('Erreur lors du chargement des données', 'error');
     } finally {
       setLoading(false);

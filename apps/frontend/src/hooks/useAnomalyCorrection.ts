@@ -1,8 +1,7 @@
 import { useState } from 'react';
 import { useToast } from '../components/ui/Toaster';
 import { useAuth } from '../context/AuthContext';
-import { logger } from '../services/logger';
-import { tracer } from '../services/tracer';
+import { log } from '../services/log';
 import { correctionService, CorrectionAction, CorrectionResponse } from '../services/correctionService';
 
 interface AnomalyData {
@@ -41,7 +40,7 @@ export const useAnomalyCorrection = () => {
 
     try {
       setIsProcessing(true);
-      tracer.info('business', `Processing anomaly for client ${anomalyData.cli}`, {
+      log.info('business', `Processing anomaly for client ${anomalyData.cli}`, {
         field: anomalyData.field,
         oldValue: anomalyData.oldValue,
         newValue: anomalyData.newValue,
@@ -71,7 +70,7 @@ export const useAnomalyCorrection = () => {
       setLastCorrection(response);
 
       // Log the successful correction
-      logger.info('user', `Anomaly ${anomalyData.status} for client ${anomalyData.cli}`, {
+      log.info('user', `Anomaly ${anomalyData.status} for client ${anomalyData.cli}`, {
         field: anomalyData.field,
         by: user.username,
         agency: user.agencyCode || 'N/A',
@@ -91,12 +90,12 @@ export const useAnomalyCorrection = () => {
     } catch (error) {
       const errorMessage = error instanceof Error ? error.message : 'Erreur inconnue';
 
-      tracer.error('business', `Failed to fix anomaly for client ${anomalyData.cli}`, {
+      log.error('business', `Failed to fix anomaly for client ${anomalyData.cli}`, {
         error: errorMessage,
         field: anomalyData.field
       });
 
-      logger.error('api', `Failed to fix anomaly for client ${anomalyData.cli}`, {
+      log.error('api', `Failed to fix anomaly for client ${anomalyData.cli}`, {
         error: errorMessage,
         field: anomalyData.field
       });
@@ -115,7 +114,7 @@ export const useAnomalyCorrection = () => {
     try {
       return await correctionService.getClientCorrections(cli);
     } catch (error) {
-      logger.error('api', `Failed to get corrections for client ${cli}`, { error });
+      log.error('api', `Failed to get corrections for client ${cli}`, { error });
       return [];
     }
   };
@@ -127,7 +126,7 @@ export const useAnomalyCorrection = () => {
     try {
       return await correctionService.getPendingValidation();
     } catch (error) {
-      logger.error('api', 'Failed to get pending validations', { error });
+      log.error('api', 'Failed to get pending validations', { error });
       return [];
     }
   };

@@ -2,6 +2,7 @@ import React, { useState } from 'react';
 import { Download, FileText, Database, FileJson } from 'lucide-react';
 import Button from '../../../components/ui/Button';
 import { useToast } from '../../../components/ui/Toaster';
+import { log } from '../../../services/log';
 
 
 interface DatabaseRule {
@@ -49,7 +50,7 @@ const ExportDatabaseRulesButton: React.FC<ExportDatabaseRulesButtonProps> = ({
 
       addToast(`Export des règles en ${format.toUpperCase()} réussi (${rules.length} règles)`, 'success');
     } catch (error) {
-      console.error('Error exporting rules:', error);
+      log.error('ui', 'Error exporting rules', { error });
       addToast('Erreur lors de l\'export des règles', 'error');
     } finally {
       setIsExporting(false);

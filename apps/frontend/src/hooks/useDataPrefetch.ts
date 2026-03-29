@@ -1,6 +1,6 @@
 import { useEffect } from 'react';
 import { db } from '../services/db';
-import { logger } from '../services/logger';
+import { log } from '../services/log';
 
 /**
  * Hook pour précharger les données critiques en arrière-plan
@@ -27,16 +27,16 @@ export const useDataPrefetch = () => {
         // Exécution séquentielle pour éviter la surcharge
         for (const promise of prefetchPromises) {
           await promise.catch(error => 
-            logger.warning('prefetch', 'Prefetch failed for promise', { error })
+            log.warning('system', 'Prefetch failed for promise', { error })
           );
           
           // Pause entre les requêtes pour éviter la surcharge
           await new Promise(resolve => setTimeout(resolve, 100));
         }
 
-        logger.info('prefetch', 'Data prefetch completed successfully');
+        log.info('system', 'Data prefetch completed successfully');
       } catch (error) {
-        logger.error('prefetch', 'Data prefetch failed', { error });
+        log.error('system', 'Data prefetch failed', { error });
       }
     };
 

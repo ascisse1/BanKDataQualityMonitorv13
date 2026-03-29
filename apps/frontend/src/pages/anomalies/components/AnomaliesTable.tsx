@@ -8,6 +8,7 @@ import AnomalyCorrection from './AnomalyCorrection';
 import { db } from '../../../services/db';
 import { useToast } from '../../../components/ui/Toaster';
 import { useAuth } from '../../../context/AuthContext';
+import { log } from '../../../services/log';
 import { useDebounce } from '../../../hooks/useDebounce';
 
 interface Anomaly {
@@ -167,7 +168,7 @@ const AnomaliesTable: React.FC<AnomaliesTableProps> = ({
       setTotalRecords(result.total || anomaliesData.length);
       setTotalPages(Math.ceil((result.total || anomaliesData.length) / itemsPerPage));
     } catch (error) {
-      console.error('Erreur lors du chargement des anomalies:', error);
+      log.error('api', 'Erreur lors du chargement des anomalies', { error });
       setError('Erreur lors du chargement des anomalies');
     } finally {
       setLoading(false);
@@ -244,7 +245,7 @@ const AnomaliesTable: React.FC<AnomaliesTableProps> = ({
   };
 
   const handlePageChange = (page: number) => {
-    console.log(`Changing to page ${page}`);
+    log.debug('ui', `Changing to page ${page}`);
     setPageLoading(true);
     setExpandedRow(null);
     setEditingAnomaly(null);

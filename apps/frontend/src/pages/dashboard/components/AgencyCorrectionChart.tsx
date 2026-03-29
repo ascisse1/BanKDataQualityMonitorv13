@@ -4,6 +4,7 @@ import { ApexOptions } from 'apexcharts';
 import { useToast } from '../../../components/ui/Toaster';
 import { AlertTriangle, RefreshCw } from 'lucide-react';
 import Button from '../../../components/ui/Button';
+import { log } from '../../../services/log';
 
 interface AgencyCorrectionChartProps {
   isLoading?: boolean;
@@ -138,7 +139,7 @@ const AgencyCorrectionChart = ({ isLoading = false }: AgencyCorrectionChartProps
       updateChartWithData([]);
 
     } catch (error) {
-      console.error('Error fetching agency correction stats:', error);
+      log.error('api', 'Error fetching agency correction stats', { error });
       setError('Erreur lors du chargement des données');
     } finally {
       setLoading(false);

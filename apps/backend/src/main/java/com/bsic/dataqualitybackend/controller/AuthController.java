@@ -1,12 +1,9 @@
 package com.bsic.dataqualitybackend.controller;
 
 import com.bsic.dataqualitybackend.dto.ApiResponse;
-import com.bsic.dataqualitybackend.dto.LoginRequest;
-import com.bsic.dataqualitybackend.dto.LoginResponse;
 import com.bsic.dataqualitybackend.dto.UserDto;
 import com.bsic.dataqualitybackend.model.User;
 import com.bsic.dataqualitybackend.service.AuthenticationService;
-import jakarta.validation.Valid;
 import lombok.RequiredArgsConstructor;
 import lombok.extern.slf4j.Slf4j;
 import org.springframework.http.ResponseEntity;
@@ -22,23 +19,6 @@ public class AuthController {
 
     private final AuthenticationService authenticationService;
 
-    @PostMapping("/login")
-    public ResponseEntity<ApiResponse<LoginResponse>> login(@Valid @RequestBody LoginRequest request) {
-        log.info("Login attempt for user: {}", request.getUsername());
-
-        String token = authenticationService.authenticate(request.getUsername(), request.getPassword());
-        User user = authenticationService.getCurrentUser(request.getUsername());
-
-        UserDto userDto = mapToUserDto(user);
-
-        LoginResponse response = LoginResponse.builder()
-                .token(token)
-                .user(userDto)
-                .build();
-
-        return ResponseEntity.ok(ApiResponse.success("Connexion réussie", response));
-    }
-
     @GetMapping("/me")
     public ResponseEntity<ApiResponse<UserDto>> getCurrentUser() {
         Authentication authentication = SecurityContextHolder.getContext().getAuthentication();
@@ -52,7 +32,7 @@ public class AuthController {
 
     @PostMapping("/logout")
     public ResponseEntity<ApiResponse<Void>> logout() {
-        return ResponseEntity.ok(ApiResponse.success("Déconnexion réussie", null));
+        return ResponseEntity.ok(ApiResponse.success("Deconnexion reussie", null));
     }
 
     private UserDto mapToUserDto(User user) {

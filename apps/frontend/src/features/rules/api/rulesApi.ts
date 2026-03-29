@@ -1,5 +1,5 @@
 import { ValidationRule, CreateRuleInput, UpdateRuleInput } from '../schemas/ruleSchema';
-import { logger } from '../../../services/logger';
+import { log } from '../../../services/log';
 import apiClient from '../../../lib/apiClient';
 
 // Backend DTO interface
@@ -147,7 +147,7 @@ export const rulesApi = {
       }
       return [];
     } catch (error) {
-      logger.error('api', 'Failed to fetch validation rules', { error });
+      log.error('api', 'Failed to fetch validation rules', { error });
       throw error;
     }
   },
@@ -163,7 +163,7 @@ export const rulesApi = {
       }
       return [];
     } catch (error) {
-      logger.error('api', 'Failed to fetch all validation rules', { error });
+      log.error('api', 'Failed to fetch all validation rules', { error });
       throw error;
     }
   },
@@ -182,7 +182,7 @@ export const rulesApi = {
       }
       return [];
     } catch (error) {
-      logger.error('api', 'Failed to fetch rules by client type', { error, clientType });
+      log.error('api', 'Failed to fetch rules by client type', { error, clientType });
       throw error;
     }
   },
@@ -201,7 +201,7 @@ export const rulesApi = {
       }
       return null;
     } catch (error) {
-      logger.error('api', 'Failed to fetch rule by ID', { error, id });
+      log.error('api', 'Failed to fetch rule by ID', { error, id });
       throw error;
     }
   },
@@ -221,7 +221,7 @@ export const rulesApi = {
       }
       throw new Error('Failed to create rule');
     } catch (error) {
-      logger.error('api', 'Failed to create validation rule', { error });
+      log.error('api', 'Failed to create validation rule', { error });
       throw error;
     }
   },
@@ -242,7 +242,7 @@ export const rulesApi = {
       }
       throw new Error('Failed to update rule');
     } catch (error) {
-      logger.error('api', 'Failed to update validation rule', { error, id });
+      log.error('api', 'Failed to update validation rule', { error, id });
       throw error;
     }
   },
@@ -255,7 +255,7 @@ export const rulesApi = {
       const numericId = parseInt(id.replace('RULE_', ''), 10);
       await apiClient.delete(`/api/validation/rules/${numericId}`);
     } catch (error) {
-      logger.error('api', 'Failed to delete validation rule', { error, id });
+      log.error('api', 'Failed to delete validation rule', { error, id });
       throw error;
     }
   },
@@ -268,7 +268,7 @@ export const rulesApi = {
       const numericId = parseInt(id.replace('RULE_', ''), 10);
       await apiClient.patch(`/api/validation/rules/${numericId}/toggle?active=${active}`);
     } catch (error) {
-      logger.error('api', 'Failed to toggle validation rule', { error, id });
+      log.error('api', 'Failed to toggle validation rule', { error, id });
       throw error;
     }
   },
@@ -281,7 +281,7 @@ export const rulesApi = {
       const numericIds = ids.map(id => parseInt(id.replace('RULE_', ''), 10));
       await apiClient.post('/api/validation/rules/bulk-toggle', { ids: numericIds, active });
     } catch (error) {
-      logger.error('api', 'Failed to bulk toggle rules', { error, ids });
+      log.error('api', 'Failed to bulk toggle rules', { error, ids });
       throw error;
     }
   },
@@ -294,7 +294,7 @@ export const rulesApi = {
       const numericIds = ids.map(id => parseInt(id.replace('RULE_', ''), 10));
       await apiClient.post('/api/validation/rules/bulk-delete', { ids: numericIds });
     } catch (error) {
-      logger.error('api', 'Failed to bulk delete rules', { error, ids });
+      log.error('api', 'Failed to bulk delete rules', { error, ids });
       throw error;
     }
   },
@@ -310,7 +310,7 @@ export const rulesApi = {
       }));
       await apiClient.put('/api/validation/rules/priorities', mappedPriorities);
     } catch (error) {
-      logger.error('api', 'Failed to update rule priorities', { error });
+      log.error('api', 'Failed to update rule priorities', { error });
       throw error;
     }
   },

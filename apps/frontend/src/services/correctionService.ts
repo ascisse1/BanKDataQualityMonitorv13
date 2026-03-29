@@ -1,5 +1,5 @@
 import apiClient from '../lib/apiClient';
-import { logger } from './logger';
+import { log } from './log';
 
 // Types
 export type CorrectionAction = 'FIX' | 'REVIEW' | 'REJECT';
@@ -58,7 +58,7 @@ export const correctionService = {
    */
   async submitCorrection(request: CorrectionRequest): Promise<CorrectionResponse> {
     try {
-      logger.info('api', 'Submitting correction', { cli: request.cli, field: request.fieldName });
+      log.info('api', 'Submitting correction', { cli: request.cli, field: request.fieldName });
 
       const response = await apiClient.post<ApiResponse<CorrectionResponse>>(
         '/api/corrections',
@@ -66,7 +66,7 @@ export const correctionService = {
       );
 
       if (response.data.success) {
-        logger.info('api', 'Correction submitted successfully', {
+        log.info('api', 'Correction submitted successfully', {
           ticketNumber: response.data.data.ticketNumber,
         });
         return response.data.data;
@@ -74,7 +74,7 @@ export const correctionService = {
 
       throw new Error(response.data.message || 'Failed to submit correction');
     } catch (error) {
-      logger.error('api', 'Failed to submit correction', { error });
+      log.error('api', 'Failed to submit correction', { error });
       throw error;
     }
   },
@@ -89,7 +89,7 @@ export const correctionService = {
       );
       return response.data.success ? response.data.data : [];
     } catch (error) {
-      logger.error('api', 'Failed to get client corrections', { error, cli });
+      log.error('api', 'Failed to get client corrections', { error, cli });
       throw error;
     }
   },
@@ -104,7 +104,7 @@ export const correctionService = {
       );
       return response.data.success ? response.data.data : [];
     } catch (error) {
-      logger.error('api', 'Failed to get pending validations', { error });
+      log.error('api', 'Failed to get pending validations', { error });
       throw error;
     }
   },
@@ -118,7 +118,7 @@ export const correctionService = {
     reason?: string
   ): Promise<CorrectionResponse> {
     try {
-      logger.info('api', `${approved ? 'Approving' : 'Rejecting'} correction`, { ticketId });
+      log.info('api', `${approved ? 'Approving' : 'Rejecting'} correction`, { ticketId });
 
       const response = await apiClient.post<ApiResponse<CorrectionResponse>>(
         `/api/corrections/${ticketId}/validate`,
@@ -126,7 +126,7 @@ export const correctionService = {
       );
 
       if (response.data.success) {
-        logger.info('api', 'Validation completed', {
+        log.info('api', 'Validation completed', {
           ticketId,
           status: response.data.data.ticketStatus,
         });
@@ -135,7 +135,7 @@ export const correctionService = {
 
       throw new Error(response.data.message || 'Failed to validate correction');
     } catch (error) {
-      logger.error('api', 'Failed to validate correction', { error, ticketId });
+      log.error('api', 'Failed to validate correction', { error, ticketId });
       throw error;
     }
   },
@@ -156,7 +156,7 @@ export const correctionService = {
 
       throw new Error(response.data.message || 'Failed to request validation');
     } catch (error) {
-      logger.error('api', 'Failed to request validation', { error, ticketId });
+      log.error('api', 'Failed to request validation', { error, ticketId });
       throw error;
     }
   },

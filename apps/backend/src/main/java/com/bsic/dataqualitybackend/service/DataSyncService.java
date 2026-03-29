@@ -3,9 +3,11 @@ package com.bsic.dataqualitybackend.service;
 import com.bsic.dataqualitybackend.config.metrics.BusinessMetricsConfig;
 import com.bsic.dataqualitybackend.model.Agency;
 import com.bsic.dataqualitybackend.model.Client;
+import com.bsic.dataqualitybackend.model.Structure;
 import com.bsic.dataqualitybackend.repository.AgencyRepository;
 import com.bsic.dataqualitybackend.repository.ClientRepository;
 import com.bsic.dataqualitybackend.repository.InformixRepository;
+import com.bsic.dataqualitybackend.repository.StructureRepository;
 import lombok.RequiredArgsConstructor;
 import lombok.extern.slf4j.Slf4j;
 import org.springframework.boot.autoconfigure.condition.ConditionalOnProperty;
@@ -35,6 +37,7 @@ public class DataSyncService {
     private final InformixRepository informixRepository;
     private final ClientRepository clientRepository;
     private final AgencyRepository agencyRepository;
+    private final StructureRepository structureRepository;
     private final ClientValidationService clientValidationService;
     private final BusinessMetricsConfig metricsConfig;
 
@@ -160,7 +163,24 @@ public class DataSyncService {
                         updated++;
                     }
 
-                    agencyRepository.save(agency);
+                    Agency savedAgency = agencyRepository.save(agency);
+
+                    // Auto-create Structure if not exists, and link to Agency
+                    if (savedAgency.getStructure() == null) {
+                        Structure structure = structureRepository.findByCode(age)
+                            .orElseGet(() -> {
+                                Structure s = Structure.builder()
+                                    .code(age)
+                                    .name(savedAgency.getLib() != null ? savedAgency.getLib() : age)
+                                    .type("AGENCY")
+                                    .status("ACTIVE")
+                                    .build();
+                                log.info("Auto-created structure for agency: {}", age);
+                                return structureRepository.save(s);
+                            });
+                        savedAgency.setStructure(structure);
+                        agencyRepository.save(savedAgency);
+                    }
 
                 } catch (Exception e) {
                     log.error("Error syncing agency: {}", e.getMessage());

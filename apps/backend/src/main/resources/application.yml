@@ -138,13 +138,10 @@ management:
 logging:
   level:
     root: INFO
-    com.bsic: DEBUG
-    org.springframework.security: DEBUG
-    org.springframework.security.oauth2: TRACE
-    org.springframework.web: DEBUG
-    org.springframework.web.client.RestTemplate: TRACE
-    org.hibernate.SQL: DEBUG
-    org.hibernate.type.descriptor.sql.BasicBinder: TRACE
+    com.bsic: INFO
+    org.springframework.security: WARN
+    org.springframework.web: WARN
+    org.hibernate.SQL: WARN
   pattern:
     # Include trace_id and span_id for log correlation with distributed tracing
     console: "%d{yyyy-MM-dd HH:mm:ss.SSS} %5p [${spring.application.name:},%X{traceId:-},%X{spanId:-}] --- [%15.15t] %-40.40logger{39} : %m%n"
@@ -157,11 +154,11 @@ logging:
 keycloak:
   realm: ${KEYCLOAK_REALM:bsic-bank}
   auth-server-url: ${KEYCLOAK_AUTH_SERVER_URL:http://localhost:9083}
-  resource: ${KEYCLOAK_CLIENT_ID:bdqm-backend}
+  resource: ${KEYCLOAK_CLIENT_ID:admin-cli}
   agency-code-claim: agency_code
   # Admin client for user management (requires service account with realm-management roles)
-  admin-client-id: ${KEYCLOAK_ADMIN_CLIENT_ID:bdqm-backend}
-  admin-client-secret: ${KEYCLOAK_ADMIN_CLIENT_SECRET:bdqm-secret-change-in-production}
+  admin-client-id: ${KEYCLOAK_ADMIN_CLIENT_ID:admin-cli}
+  admin-client-secret: ${KEYCLOAK_ADMIN_CLIENT_SECRET:6c1d4552-e109-4127-afa3-124d55b4e952}
 
 app:
   jwt:

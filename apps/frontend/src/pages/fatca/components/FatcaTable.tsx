@@ -8,6 +8,7 @@ import { useAuth } from '../../../context/AuthContext';
 import Input from '../../../components/ui/Input';
 import { useDebounce } from '../../../hooks/useDebounce';
 import apiClient from '../../../lib/apiClient';
+import { log } from '../../../services/log';
 
 /** Renders a US indicator badge with icon + text (accessible, not color-only) */
 const UsIndicator: React.FC<{ value: string | null; isUs: boolean }> = ({ value, isUs }) => {
@@ -82,12 +83,12 @@ const FatcaTable: React.FC<FatcaTableProps> = ({
     try {
       setLoading(true);
       setError(null);
-      console.log('🔄 Fetching FATCA clients...', { page: currentPage, status: selectedStatus });
+      log.debug('api', 'Fetching FATCA clients', { page: currentPage, status: selectedStatus });
       
       const result = await db.getFatcaClients(currentPage, itemsPerPage, false, selectedStatus, '1');
       
       if (result.data && result.data.length > 0) {
-        console.log(`✅ Retrieved ${result.data.length} FATCA client records`);
+        log.debug('api', 'Retrieved FATCA client records', { count: result.data.length });
         
         // Create a Map to deduplicate clients by cli
         const clientsMap = new Map();
@@ -101,7 +102,7 @@ const FatcaTable: React.FC<FatcaTableProps> = ({
         
         // Convert Map back to array
         const uniqueClients = Array.from(clientsMap.values());
-        console.log(`✅ After deduplication: ${uniqueClients.length} unique clients`);
+        log.debug('api', 'After deduplication', { uniqueCount: uniqueClients.length });
         
         setClients(uniqueClients);
         setTotalRecords(result.total);
@@ -112,14 +113,14 @@ const FatcaTable: React.FC<FatcaTableProps> = ({
           setTotalPages(newTotalPages);
         }
       } else {
-        console.log(`⚠️ No FATCA client records found`);
+        log.debug('api', 'No FATCA client records found');
         setClients([]);
         setTotalRecords(0);
         setTotalPages(1);
       }
     } catch (error) {
       setError('Erreur lors du chargement des clients FATCA. Veuillez réessayer.');
-      console.error('❌ Error fetching FATCA clients:', error);
+      log.error('api', 'Error fetching FATCA clients', { error });
       addToast('Erreur lors du chargement des clients FATCA', 'error');
     } finally {
       setLoading(false);
@@ -195,7 +196,7 @@ const FatcaTable: React.FC<FatcaTableProps> = ({
         setEditingClient(null);
       }
     } catch (error: any) {
-      console.error('Error updating FATCA status:', error);
+      log.error('api', 'Error updating FATCA status', { error });
       const message = error?.response?.data?.error || 'Erreur lors de la mise à jour du statut FATCA';
       addToast(message, 'error');
     } finally {
@@ -268,13 +269,13 @@ const FatcaTable: React.FC<FatcaTableProps> = ({
       // If all else fails, return the original string
       return dateString;
     } catch (error) {
-      console.error('Error formatting date:', error);
+      log.error('system', 'Error formatting date', { error });
       return dateString;
     }
   };
 
   const handlePageChange = (page: number) => {
-    console.log(`Changing to page ${page}`);
+    log.debug('ui', `Changing to page ${page}`);
     setPageLoading(true);
     setCurrentPage(page);
     setExpandedRow(null);

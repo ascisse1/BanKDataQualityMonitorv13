@@ -3,6 +3,7 @@ import { Download, FileText, Database, FileJson } from 'lucide-react';
 import Button from '../../../components/ui/Button';
 import { validationRulesService } from '../../../services/validationRules';
 import { useToast } from '../../../components/ui/Toaster';
+import { log } from '../../../services/log';
 
 
 interface ExportRulesButtonProps {
@@ -45,7 +46,7 @@ const ExportRulesButton: React.FC<ExportRulesButtonProps> = ({
 
       addToast(`Export des règles en ${format.toUpperCase()} réussi (${rules.length} règles)`, 'success');
     } catch (error) {
-      console.error('Error exporting rules:', error);
+      log.error('ui', 'Error exporting rules', { error });
       addToast('Erreur lors de l\'export des règles', 'error');
     } finally {
       setIsExporting(false);
@@ -160,7 +161,7 @@ const ExportRulesButton: React.FC<ExportRulesButtonProps> = ({
       // Save the PDF
       doc.save(`regles_validation_${getClientTypeLabel(clientType)}_${getFormattedDate()}.pdf`);
     } catch (error) {
-      console.error('Error generating PDF:', error);
+      log.error('ui', 'Error generating PDF', { error });
       addToast('Erreur lors de la génération du PDF', 'error');
     }
   };

@@ -36,6 +36,9 @@ public class AppProfile {
     @Column(nullable = false, length = 20)
     private String status;
 
+    @Column(name = "keycloak_group_id", length = 255)
+    private String keycloakGroupId;
+
     @CreatedDate
     @Column(name = "created_at", nullable = false, updatable = false)
     private LocalDateTime createdAt;

@@ -2,6 +2,7 @@ import { useState, useEffect } from 'react';
 import Chart from 'react-apexcharts';
 import { ApexOptions } from 'apexcharts';
 import { db } from '../../../services/db';
+import { log } from '../../../services/log';
 
 interface FatcaStatusChartProps {
   isLoading?: boolean;
@@ -107,7 +108,7 @@ const FatcaStatusChart = ({ isLoading = false }: FatcaStatusChartProps) => {
         });
       }
     } catch (error) {
-      console.error('Error fetching FATCA stats for chart:', error);
+      log.error('api', 'Error fetching FATCA stats for chart', { error });
     }
   };
 

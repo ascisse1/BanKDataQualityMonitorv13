@@ -11,6 +11,7 @@ import {db} from '../../services/db';
 import {jsPDF} from 'jspdf';
 import 'jspdf-autotable';
 import {useAuth} from '../../context/AuthContext';
+import { log } from '../../services/log';
 
 interface ExportProgress {
     current: number;
@@ -63,7 +64,7 @@ const AnomaliesPage: React.FC = () => {
             const stats = await db.getClientStats();
             setTotalAnomalies(stats.anomalies || 0);
         } catch (error) {
-            console.error('Error fetching total anomalies count:', error);
+            log.error('api', 'Error fetching total anomalies count', { error });
         } finally {
             setIsLoading(false);
         }
@@ -75,12 +76,12 @@ const AnomaliesPage: React.FC = () => {
             const agenciesData = await db.getAgencies();
             setAgencies(agenciesData);
         } catch (error) {
-            console.error('Error fetching agencies:', error);
+            log.error('api', 'Error fetching agencies', { error });
         }
     };
 
     const handleAgencyChange = (agency: string | null) => {
-        console.log('🏢 Agency filter changed to:', agency);
+        log.debug('ui', 'Agency filter changed', { agency });
         // If user is an agency user, they can only see their own agency
         if (isAgencyUser && userAgencyCode) {
             if (agency !== userAgencyCode) {
@@ -113,11 +114,11 @@ const AnomaliesPage: React.FC = () => {
     const getAllAnomaliesData = async () => {
         try {
             setExportProgress({current: 1, total: 5, message: 'Récupération des données...'});
-            console.log('📊 Starting export data fetch...');
+            log.debug('ui', 'Starting export data fetch');
 
             // For agency users, force their agency code
             const effectiveAgencyCode = isAgencyUser && userAgencyCode ? userAgencyCode : selectedAgency;
-            console.log('🏢 Selected agency for export:', effectiveAgencyCode);
+            log.debug('ui', 'Selected agency for export', { effectiveAgencyCode });
 
             // Prepare API parameters
             const params: Record<string, any> = {};
@@ -147,7 +148,7 @@ const AnomaliesPage: React.FC = () => {
                     if (individualData.length >= maxRecords || result.data.length < batchSize) break;
                 }
             } catch (error) {
-                console.warn('Error fetching individual anomalies, using fallback data', error);
+                log.warning('api', 'Error fetching individual anomalies, using fallback data', { error });
                 individualData = preCalculatedData.individualAnomalies;
             }
 
@@ -162,7 +163,7 @@ const AnomaliesPage: React.FC = () => {
                     if (corporateData.length >= maxRecords || result.data.length < batchSize) break;
                 }
             } catch (error) {
-                console.warn('Error fetching corporate anomalies, using fallback data', error);
+                log.warning('api', 'Error fetching corporate anomalies, using fallback data', { error });
                 corporateData = preCalculatedData.corporateAnomalies;
             }
 
@@ -177,13 +178,13 @@ const AnomaliesPage: React.FC = () => {
                     if (institutionalData.length >= maxRecords || result.data.length < batchSize) break;
                 }
             } catch (error) {
-                console.warn('Error fetching institutional anomalies, using fallback data', error);
+                log.warning('api', 'Error fetching institutional anomalies, using fallback data', { error });
                 institutionalData = preCalculatedData.institutionalAnomalies;
             }
 
             setExportProgress({current: 4, total: 5, message: 'Traitement des données...'});
 
-            console.log('📊 Raw data received:', {
+            log.debug('api', 'Raw data received', {
                 individual: individualData.length || 0,
                 corporate: corporateData.length || 0,
                 institutional: institutionalData.length || 0
@@ -196,12 +197,12 @@ const AnomaliesPage: React.FC = () => {
                 ...(institutionalData || []).map(item => ({...item, type_client: 'Institutionnel'}))
             ];
 
-            console.log('📊 Total anomalies before filtering:', allAnomalies.length);
+            log.debug('api', 'Total anomalies before filtering', { count: allAnomalies.length });
 
             // No need to filter by agency again as it's already done in the API call
             let filteredAnomalies = allAnomalies;
 
-            console.log('📊 Final filtered anomalies:', filteredAnomalies.length);
+            log.debug('api', 'Final filtered anomalies', { count: filteredAnomalies.length });
 
             // If no data, use sample data
             setExportProgress({current: 5, total: 5, message: 'Regroupement par client...'});
@@ -340,7 +341,7 @@ const AnomaliesPage: React.FC = () => {
                 };
             });
         } catch (error) {
-            console.error('Error fetching all anomalies:', error);
+            log.error('api', 'Error fetching all anomalies', { error });
             return [];
         }
     };
@@ -385,7 +386,7 @@ const AnomaliesPage: React.FC = () => {
                 return;
             }
 
-            console.log('📊 Exporting', data.length, 'clients to Excel');
+            log.debug('ui', 'Exporting clients to Excel', { count: data.length });
 
             // Créer le contenu CSV (compatible Excel)
             const headers = Object.keys(data[0]);
@@ -433,7 +434,7 @@ const AnomaliesPage: React.FC = () => {
             addToast(`Export Excel réussi (${data.length.toLocaleString()} clients avec anomalies)`, 'success');
         } catch (error) {
             addToast('Erreur lors de l\'export Excel', 'error');
-            console.error('Export error:', error);
+            log.error('ui', 'Export error', { error });
         } finally {
             setIsExporting(false);
             setExportProgress({current: 0, total: 0, message: ''});
@@ -514,7 +515,7 @@ const AnomaliesPage: React.FC = () => {
             addToast(`Export PDF réussi (${Math.min(data.length, 1000).toLocaleString()} clients affichés)`, 'success');
         } catch (error) {
             addToast('Erreur lors de l\'export PDF', 'error');
-            console.error('Export error:', error);
+            log.error('ui', 'Export error', { error });
         } finally {
             setIsExporting(false);
             setExportProgress({current: 0, total: 0, message: ''});
@@ -569,7 +570,7 @@ const AnomaliesPage: React.FC = () => {
             addToast(`Export CSV réussi (${data.length.toLocaleString()} clients)`, 'success');
         } catch (error) {
             addToast('Erreur lors de l\'export CSV', 'error');
-            console.error('Export error:', error);
+            log.error('ui', 'Export error', { error });
         } finally {
             setIsExporting(false);
             setExportProgress({current: 0, total: 0, message: ''});

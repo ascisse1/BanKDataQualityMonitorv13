@@ -1,5 +1,5 @@
 import { ReactNode, useEffect, useState, createContext, useContext, useCallback } from 'react';
-import { logger } from '../services/logger';
+import { log } from '../services/log';
 import { monitoring } from '../services/monitoring';
 
 /**
@@ -12,7 +12,7 @@ interface UserInfo {
   fullName: string;
   givenName?: string;
   familyName?: string;
-  agencyCode?: string | null;
+  agencyCodes: string[];
   role: string;
   roles: string[];
 }
@@ -76,7 +76,7 @@ export const SessionAuthProvider = ({ children }: SessionAuthProviderProps) => {
             fullName: data.fullName || `${data.givenName || ''} ${data.familyName || ''}`.trim(),
             givenName: data.givenName,
             familyName: data.familyName,
-            agencyCode: data.agencyCode,
+            agencyCodes: data.agencyCodes || [],
             role: data.role,
             roles: data.roles || [],
           };
@@ -89,7 +89,7 @@ export const SessionAuthProvider = ({ children }: SessionAuthProviderProps) => {
             username: userInfo.username,
             email: userInfo.email,
             role: userInfo.role,
-            agencyCode: userInfo.agencyCode || undefined
+            agencyCode: userInfo.agencyCodes?.[0] || undefined
           });
 
           return true;
@@ -101,7 +101,7 @@ export const SessionAuthProvider = ({ children }: SessionAuthProviderProps) => {
       monitoring.clearUser();
       return false;
     } catch (error) {
-      logger.error('security', 'Failed to check authentication status', { error });
+      log.error('security', 'Failed to check authentication status', { error });
       monitoring.captureException(error, { context: 'checkAuth' });
       setUser(null);
       setAuthenticated(false);
@@ -115,14 +115,14 @@ export const SessionAuthProvider = ({ children }: SessionAuthProviderProps) => {
    */
   useEffect(() => {
     const initAuth = async () => {
-      logger.info('security', 'Initializing session-based authentication');
+      log.info('security', 'Initializing session-based authentication');
 
       const isAuthenticated = await checkAuth();
 
       if (isAuthenticated) {
-        logger.info('security', 'User is authenticated via session');
+        log.info('security', 'User is authenticated via session');
       } else {
-        logger.info('security', 'User is not authenticated');
+        log.info('security', 'User is not authenticated');
       }
 
       setInitialized(true);
@@ -136,7 +136,7 @@ export const SessionAuthProvider = ({ children }: SessionAuthProviderProps) => {
    * Spring Security handles the full OAuth2 flow with Keycloak.
    */
   const login = useCallback(() => {
-    logger.info('security', 'Initiating OAuth2 login via BFF');
+    log.info('security', 'Initiating OAuth2 login via BFF');
     // Redirect to Spring Security's OAuth2 authorization endpoint
     // This will redirect to Keycloak, handle the callback, and establish a session
     window.location.href = '/oauth2/authorization/keycloak';
@@ -147,7 +147,7 @@ export const SessionAuthProvider = ({ children }: SessionAuthProviderProps) => {
    * This invalidates the session and redirects to Keycloak end_session_endpoint.
    */
   const logout = useCallback(() => {
-    logger.info('security', 'Logging out via BFF', { username: user?.username });
+    log.info('security', 'Logging out via BFF', { username: user?.username });
 
     setUser(null);
     setAuthenticated(false);

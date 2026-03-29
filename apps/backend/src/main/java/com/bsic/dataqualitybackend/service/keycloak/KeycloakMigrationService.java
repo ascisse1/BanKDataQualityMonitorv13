@@ -3,6 +3,7 @@ package com.bsic.dataqualitybackend.service.keycloak;
 import com.fasterxml.jackson.core.type.TypeReference;
 import com.fasterxml.jackson.databind.ObjectMapper;
 import lombok.Getter;
+import lombok.extern.slf4j.Slf4j;
 import org.keycloak.admin.client.Keycloak;
 import org.keycloak.admin.client.resource.RealmResource;
 import org.keycloak.admin.client.resource.RolesResource;
@@ -11,8 +12,6 @@ import org.keycloak.representations.idm.CredentialRepresentation;
 import org.keycloak.representations.idm.GroupRepresentation;
 import org.keycloak.representations.idm.RoleRepresentation;
 import org.keycloak.representations.idm.UserRepresentation;
-import org.slf4j.Logger;
-import org.slf4j.LoggerFactory;
 import org.springframework.beans.factory.annotation.Value;
 import org.springframework.core.io.Resource;
 import org.springframework.core.io.ResourceLoader;
@@ -30,10 +29,9 @@ import java.util.stream.Collectors;
 /**
  * Service pour gérer les migrations automatiques Keycloak au démarrage
  */
+@Slf4j
 @Service
 public class KeycloakMigrationService {
-
-    private static final Logger log = LoggerFactory.getLogger(KeycloakMigrationService.class);
     private static final String MIGRATION_STATE_ATTRIBUTE = "migration_state";
     private static final String LAST_MIGRATION_DATE = "last_migration_date";
     private static final String ROLES_CHECKSUM_ATTRIBUTE = "roles_config_checksum";

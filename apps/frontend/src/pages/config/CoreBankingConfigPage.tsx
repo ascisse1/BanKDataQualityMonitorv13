@@ -6,6 +6,7 @@ import Card from '../../components/ui/Card';
 import Input from '../../components/ui/Input';
 import LoadingSpinner from '../../components/ui/LoadingSpinner';
 import JdbcDriverManager from '../../components/ui/JdbcDriverManager';
+import { log } from '../../services/log';
 
 const CoreBankingConfigPage: React.FC = () => {
   const [configs, setConfigs] = useState<CoreBankingConfig[]>([]);
@@ -45,7 +46,7 @@ const CoreBankingConfigPage: React.FC = () => {
       const data = await coreBankingConfigService.getAllConfigs();
       setConfigs(data);
     } catch (error) {
-      console.error('Failed to load configs:', error);
+      log.error('database', 'Failed to load configs', { error });
     } finally {
       setLoading(false);
     }
@@ -81,7 +82,7 @@ const CoreBankingConfigPage: React.FC = () => {
       await loadConfigs();
       resetForm();
     } catch (error) {
-      console.error('Failed to save config:', error);
+      log.error('database', 'Failed to save config', { error });
       alert('Échec de l\'enregistrement de la configuration');
     }
   };
@@ -99,7 +100,7 @@ const CoreBankingConfigPage: React.FC = () => {
       await coreBankingConfigService.deleteConfig(id);
       await loadConfigs();
     } catch (error) {
-      console.error('Failed to delete config:', error);
+      log.error('database', 'Failed to delete config', { error });
       alert('Échec de la suppression de la configuration');
     }
   };
@@ -145,7 +146,7 @@ const CoreBankingConfigPage: React.FC = () => {
       await coreBankingConfigService.setDefaultConfig(id);
       await loadConfigs();
     } catch (error) {
-      console.error('Failed to set default config:', error);
+      log.error('database', 'Failed to set default config', { error });
       alert('Échec de la définition de la configuration par défaut');
     }
   };

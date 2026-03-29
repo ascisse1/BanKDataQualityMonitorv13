@@ -1,7 +1,7 @@
 import React, { useState, useEffect } from 'react';
 import { Bug } from 'lucide-react';
 import TracerPanel from './TracerPanel';
-import { tracer } from '../../services/tracer';
+import { log } from '../../services/log';
 
 interface TracerButtonProps {
   className?: string;
@@ -14,12 +14,12 @@ const TracerButton: React.FC<TracerButtonProps> = ({ className = '' }) => {
 
   useEffect(() => {
     // Initial error count
-    setErrorCount(tracer.getErrorCount());
+    setErrorCount(log.getErrorCount());
     
     // Listen for new error entries
-    const removeListener = tracer.addListener((entry) => {
+    const removeListener = log.addListener((entry) => {
       if (entry.level === 'error') {
-        setErrorCount(tracer.getErrorCount());
+        setErrorCount(log.getErrorCount());
         setHasNewErrors(true);
       }
     });

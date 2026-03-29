@@ -1,5 +1,5 @@
 import apiClient from '../lib/apiClient';
-import { logger } from './logger';
+import { log } from './log';
 import type { TicketDto } from './ticketService';
 
 export interface TicketIncidentDto {
@@ -34,7 +34,7 @@ class ValidationService {
       );
       return response.data.data || [];
     } catch (error) {
-      logger.error('api', 'Error fetching pending validations', { error });
+      log.error('api', 'Error fetching pending validations', { error });
       throw error;
     }
   }
@@ -49,7 +49,7 @@ class ValidationService {
       );
       return response.data.data;
     } catch (error) {
-      logger.error('api', 'Error fetching ticket', { error, id });
+      log.error('api', 'Error fetching ticket', { error, id });
       return null;
     }
   }
@@ -64,7 +64,7 @@ class ValidationService {
       );
       return response.data.data || [];
     } catch (error) {
-      logger.error('api', 'Error fetching ticket incidents', { error, ticketId });
+      log.error('api', 'Error fetching ticket incidents', { error, ticketId });
       return [];
     }
   }
@@ -80,7 +80,7 @@ class ValidationService {
       );
       return response.data.success;
     } catch (error) {
-      logger.error('api', 'Error validating ticket', { error, ticketId, approved });
+      log.error('api', 'Error validating ticket', { error, ticketId, approved });
       throw error;
     }
   }

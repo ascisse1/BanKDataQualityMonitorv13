@@ -7,6 +7,7 @@ import Card from '../../components/ui/Card';
 import Input from '../../components/ui/Input';
 import Button from '../../components/ui/Button';
 import { useToast } from '../../components/ui/Toaster';
+import { log } from '../../services/log';
 
 interface ChangePasswordFormData {
   currentPassword: string;
@@ -54,7 +55,7 @@ const ChangePasswordPage = () => {
         addToast(errorData.error || 'Erreur lors du changement de mot de passe', 'error');
       }
     } catch (error) {
-      console.error('Error changing password:', error);
+      log.error('auth', 'Error changing password', { error });
       addToast('Erreur lors du changement de mot de passe', 'error');
     } finally {
       setIsLoading(false);

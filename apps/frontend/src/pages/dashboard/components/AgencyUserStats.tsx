@@ -2,6 +2,7 @@ import { useState, useEffect } from 'react';
 import { Users, RefreshCw, Building, AlertTriangle } from 'lucide-react';
 import { useToast } from '../../../components/ui/Toaster';
 import Button from '../../../components/ui/Button';
+import { log } from '../../../services/log';
 
 interface AgencyUserStatsProps {
   isLoading?: boolean;
@@ -35,7 +36,7 @@ const AgencyUserStats = ({ isLoading = false }: AgencyUserStatsProps) => {
       setStats([]);
 
     } catch (error) {
-      console.error('Error fetching agency user stats:', error);
+      log.error('api', 'Error fetching agency user stats', { error });
       setError('Erreur lors du chargement des statistiques');
     } finally {
       setLoading(false);

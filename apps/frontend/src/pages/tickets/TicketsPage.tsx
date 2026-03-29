@@ -8,6 +8,7 @@ import { ticketService } from '../../services/ticketService';
 import type { TicketDto } from '../../services/ticketService';
 import { useAuth } from '../../context/AuthContext';
 import { CreateTicketModal } from './components/CreateTicketModal';
+import { log } from '../../services/log';
 
 const STATUS_LABELS: Record<string, string> = {
   DETECTED: 'Détecté',
@@ -84,7 +85,7 @@ export const TicketsPage: React.FC = () => {
       setTotalPages(result.totalPages);
       setTotalRecords(result.totalElements);
     } catch (err) {
-      console.error('Failed to load tickets:', err);
+      log.error('api', 'Failed to load tickets', { error: err });
       setError('Erreur lors du chargement des tickets');
     } finally {
       setLoading(false);

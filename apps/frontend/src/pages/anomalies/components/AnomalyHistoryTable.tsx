@@ -4,6 +4,7 @@ import Button from '../../../components/ui/Button';
 import Pagination from '../../../components/ui/Pagination';
 import { useToast } from '../../../components/ui/Toaster';
 import { useAuth } from '../../../context/AuthContext';
+import { log } from '../../../services/log';
 
 interface AnomalyHistoryProps {
   isLoading?: boolean;
@@ -85,7 +86,7 @@ const AnomalyHistoryTable = ({ isLoading = false, cli, field }: AnomalyHistoryPr
       setTotalRecords(data.total);
       setTotalPages(Math.ceil(data.total / itemsPerPage));
     } catch (error) {
-      console.error('Error fetching anomaly history:', error);
+      log.error('api', 'Error fetching anomaly history', { error });
       setError('Erreur lors du chargement de l\'historique');
       setHistory([]);
       setTotalRecords(0);

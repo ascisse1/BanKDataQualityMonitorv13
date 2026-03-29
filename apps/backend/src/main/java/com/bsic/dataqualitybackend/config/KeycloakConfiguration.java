@@ -1,10 +1,9 @@
 package com.bsic.dataqualitybackend.config;
 
+import lombok.extern.slf4j.Slf4j;
 import org.keycloak.OAuth2Constants;
 import org.keycloak.admin.client.Keycloak;
 import org.keycloak.admin.client.KeycloakBuilder;
-import org.slf4j.Logger;
-import org.slf4j.LoggerFactory;
 import org.springframework.beans.factory.annotation.Value;
 import org.springframework.context.annotation.Bean;
 import org.springframework.context.annotation.Configuration;
@@ -12,10 +11,9 @@ import org.springframework.context.annotation.Configuration;
 /**
  * Configuration pour le client administrateur Keycloak
  */
+@Slf4j
 @Configuration
 public class KeycloakConfiguration {
-
-    private static final Logger log = LoggerFactory.getLogger(KeycloakConfiguration.class);
 
     @Value("${app.keycloak.server-url:http://localhost:9080}")
     private String keycloakServerUrl;

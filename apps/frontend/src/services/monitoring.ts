@@ -1,23 +1,10 @@
 /**
  * Frontend Monitoring Service
- * Handles error tracking (Sentry-compatible), log shipping to backend, and session tracking.
+ * Handles log shipping to backend, performance tracking, and session tracking.
+ * Subscribes to the unified log service for log entries.
  */
 
-type LogLevel = 'debug' | 'info' | 'warning' | 'error';
-type LogCategory = 'user' | 'system' | 'api' | 'security' | 'ui' | 'performance' | 'business';
-
-interface LogEntry {
-  timestamp: string;
-  level: LogLevel;
-  category: LogCategory;
-  message: string;
-  details?: Record<string, unknown>;
-  userId?: string;
-  sessionId?: string;
-  path?: string;
-  userAgent?: string;
-  stack?: string;
-}
+import { log, type LogEntry } from './log';
 
 interface UserContext {
   id?: string;
@@ -87,21 +74,16 @@ class MonitoringService {
       this.isOnline = false;
     });
 
-    // Capture unhandled errors
-    window.addEventListener('error', (event) => {
-      this.captureError(event.error || new Error(event.message), {
-        filename: event.filename,
-        lineno: event.lineno,
-        colno: event.colno
-      });
-    });
+    // Subscribe to the unified log service
+    log.addListener((entry) => {
+      if (!this.shouldCapture()) return;
+      this.addToBuffer(entry);
 
-    // Capture unhandled promise rejections
-    window.addEventListener('unhandledrejection', (event) => {
-      this.captureError(
-        event.reason instanceof Error ? event.reason : new Error(String(event.reason)),
-        { type: 'unhandledrejection' }
-      );
+      // Errors are sent immediately
+      if (entry.level === 'error') {
+        this.errorCount++;
+        this.flush();
+      }
     });
 
     // Track page visibility changes
@@ -119,7 +101,7 @@ class MonitoringService {
     // Track performance metrics
     this.trackPerformanceMetrics();
 
-    this.info('system', 'Monitoring service initialized', {
+    log.info('system', 'Monitoring service initialized', {
       sessionId: this.sessionId,
       environment: this.config.environment
     });
@@ -142,52 +124,6 @@ class MonitoringService {
 
   private shouldCapture(): boolean {
     return this.config.enabled && Math.random() < this.config.sampleRate;
-  }
-
-  private getCurrentUser(): UserContext | null {
-    if (this.userContext) {
-      return this.userContext;
-    }
-
-    try {
-      const storedUser = localStorage.getItem('user');
-      if (storedUser) {
-        const userData = JSON.parse(storedUser);
-        return {
-          id: userData.id,
-          username: userData.username,
-          email: userData.email,
-          role: userData.role,
-          agencyCode: userData.agencyCode
-        };
-      }
-    } catch {
-      // Ignore parse errors
-    }
-    return null;
-  }
-
-  private createLogEntry(
-    level: LogLevel,
-    category: LogCategory,
-    message: string,
-    details?: Record<string, unknown>,
-    stack?: string
-  ): LogEntry {
-    const user = this.getCurrentUser();
-
-    return {
-      timestamp: new Date().toISOString(),
-      level,
-      category,
-      message,
-      details,
-      userId: user?.id || user?.username,
-      sessionId: this.sessionId,
-      path: window.location.pathname,
-      userAgent: navigator.userAgent,
-      stack
-    };
   }
 
   private addToBuffer(entry: LogEntry): void {
@@ -259,57 +195,6 @@ class MonitoringService {
       }
       // Store failed logs in offline buffer
       this.offlineBuffer.push(...logs);
-      console.error('Failed to send logs to backend:', error);
-    }
-  }
-
-  // ========================================
-  // Public Logging Methods
-  // ========================================
-
-  public debug(category: LogCategory, message: string, details?: Record<string, unknown>): void {
-    if (!this.shouldCapture()) return;
-
-    const entry = this.createLogEntry('debug', category, message, details);
-    this.addToBuffer(entry);
-
-    if (import.meta.env.DEV) {
-      console.debug(`[${category}] ${message}`, details);
-    }
-  }
-
-  public info(category: LogCategory, message: string, details?: Record<string, unknown>): void {
-    if (!this.shouldCapture()) return;
-
-    const entry = this.createLogEntry('info', category, message, details);
-    this.addToBuffer(entry);
-
-    if (import.meta.env.DEV) {
-      console.info(`[${category}] ${message}`, details);
-    }
-  }
-
-  public warning(category: LogCategory, message: string, details?: Record<string, unknown>): void {
-    if (!this.shouldCapture()) return;
-
-    const entry = this.createLogEntry('warning', category, message, details);
-    this.addToBuffer(entry);
-
-    if (import.meta.env.DEV) {
-      console.warn(`[${category}] ${message}`, details);
-    }
-  }
-
-  public error(category: LogCategory, message: string, details?: Record<string, unknown>): void {
-    const entry = this.createLogEntry('error', category, message, details);
-    this.errorCount++;
-    this.addToBuffer(entry);
-
-    // Errors are always sent immediately
-    this.flush();
-
-    if (import.meta.env.DEV) {
-      console.error(`[${category}] ${message}`, details);
     }
   }
 
@@ -318,27 +203,18 @@ class MonitoringService {
   // ========================================
 
   public captureError(error: Error, context?: Record<string, unknown>): void {
-    const entry = this.createLogEntry(
-      'error',
-      'system',
-      error.message,
-      {
-        name: error.name,
-        ...context
-      },
-      error.stack
-    );
-
-    this.errorCount++;
-    this.addToBuffer(entry);
-    this.flush(); // Send errors immediately
+    log.error('system', error.message, {
+      name: error.name,
+      stack: error.stack,
+      ...context
+    });
   }
 
   public captureException(error: unknown, context?: Record<string, unknown>): void {
     if (error instanceof Error) {
       this.captureError(error, context);
     } else {
-      this.error('system', String(error), context);
+      log.error('system', String(error), context);
     }
   }
 
@@ -349,20 +225,24 @@ class MonitoringService {
   public setUser(user: UserContext | null): void {
     this.userContext = user;
 
+    // Also set user on the unified log service
     if (user) {
-      this.info('user', 'User context set', {
+      log.setUser({ id: user.id, username: user.username, role: user.role });
+      log.info('user', 'User context set', {
         userId: user.id,
         username: user.username,
         role: user.role
       });
     } else {
-      this.info('user', 'User context cleared');
+      log.setUser(null);
+      log.info('user', 'User context cleared');
     }
   }
 
   public clearUser(): void {
     this.userContext = null;
-    this.info('user', 'User logged out');
+    log.setUser(null);
+    log.info('user', 'User logged out');
   }
 
   // ========================================
@@ -376,7 +256,7 @@ class MonitoringService {
         const perfData = performance.getEntriesByType('navigation')[0] as PerformanceNavigationTiming;
 
         if (perfData) {
-          this.info('performance', 'Page load metrics', {
+          log.info('performance', 'Page load metrics', {
             dnsLookup: perfData.domainLookupEnd - perfData.domainLookupStart,
             tcpConnection: perfData.connectEnd - perfData.connectStart,
             serverResponse: perfData.responseEnd - perfData.requestStart,
@@ -399,7 +279,7 @@ class MonitoringService {
         const lcpObserver = new PerformanceObserver((entryList) => {
           const entries = entryList.getEntries();
           const lastEntry = entries[entries.length - 1];
-          this.info('performance', 'LCP measured', {
+          log.info('performance', 'LCP measured', {
             value: lastEntry.startTime,
             metric: 'LCP'
           });
@@ -411,7 +291,7 @@ class MonitoringService {
           const entries = entryList.getEntries();
           entries.forEach((entry) => {
             const fidEntry = entry as PerformanceEventTiming;
-            this.info('performance', 'FID measured', {
+            log.info('performance', 'FID measured', {
               value: fidEntry.processingStart - fidEntry.startTime,
               metric: 'FID'
             });
@@ -434,7 +314,7 @@ class MonitoringService {
         // Report CLS on page hide
         document.addEventListener('visibilitychange', () => {
           if (document.visibilityState === 'hidden') {
-            this.info('performance', 'CLS measured', {
+            log.info('performance', 'CLS measured', {
               value: clsValue,
               metric: 'CLS'
             });
@@ -451,11 +331,11 @@ class MonitoringService {
   // ========================================
 
   public trackEvent(eventName: string, properties?: Record<string, unknown>): void {
-    this.info('business', eventName, properties);
+    log.info('business', eventName, properties);
   }
 
   public trackPageView(pageName: string, properties?: Record<string, unknown>): void {
-    this.info('user', `Page view: ${pageName}`, {
+    log.info('user', `Page view: ${pageName}`, {
       ...properties,
       referrer: document.referrer,
       path: window.location.pathname
@@ -463,7 +343,7 @@ class MonitoringService {
   }
 
   public trackUserAction(action: string, target?: string, properties?: Record<string, unknown>): void {
-    this.info('user', `User action: ${action}`, {
+    log.info('user', `User action: ${action}`, {
       target,
       ...properties
     });
@@ -480,15 +360,15 @@ class MonitoringService {
     duration: number,
     error?: string
   ): void {
-    const level: LogLevel = status >= 500 ? 'error' : status >= 400 ? 'warning' : 'info';
+    const level = status >= 500 ? 'error' : status >= 400 ? 'warning' : 'info';
 
-    this.addToBuffer(
-      this.createLogEntry(level, 'api', `${method} ${url}`, {
-        status,
-        duration,
-        error
-      })
-    );
+    if (level === 'error') {
+      log.error('api', `${method} ${url}`, { status, duration, error });
+    } else if (level === 'warning') {
+      log.warning('api', `${method} ${url}`, { status, duration, error });
+    } else {
+      log.info('api', `${method} ${url}`, { status, duration });
+    }
   }
 
   // ========================================

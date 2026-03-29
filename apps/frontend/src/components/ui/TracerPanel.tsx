@@ -1,6 +1,6 @@
 import React, { useState, useEffect, useRef } from 'react';
-import { tracer } from '../../services/tracer';
-import { X, Download, RefreshCw, Bug, AlertTriangle, Info, CheckCircle, Clock } from 'lucide-react';
+import { log } from '../../services/log';
+import { X, Download, RefreshCw, Bug, AlertTriangle, Info, CheckCircle } from 'lucide-react';
 import Button from './Button';
 
 interface TracerPanelProps {
@@ -14,17 +14,16 @@ const TracerPanel: React.FC<TracerPanelProps> = ({ isOpen, onClose }) => {
   const [categoryFilter, setCategoryFilter] = useState<string>('all');
   const [levelFilter, setLevelFilter] = useState<string>('all');
   const [autoScroll, setAutoScroll] = useState<boolean>(true);
-  const [isConsoleIntercepted, setIsConsoleIntercepted] = useState<boolean>(false);
   const entriesEndRef = useRef<HTMLDivElement>(null);
   const entriesContainerRef = useRef<HTMLDivElement>(null);
   
   useEffect(() => {
     if (isOpen) {
       // Initial load
-      setEntries(tracer.getEntries());
+      setEntries(log.getEntries());
       
       // Set up listener for new entries
-      const removeListener = tracer.addListener((entry) => {
+      const removeListener = log.addListener((entry) => {
         setEntries(prev => [entry, ...prev].slice(0, 1000));
       });
       
@@ -39,12 +38,12 @@ const TracerPanel: React.FC<TracerPanelProps> = ({ isOpen, onClose }) => {
   }, [entries, autoScroll, isOpen]);
   
   const handleClear = () => {
-    tracer.clearEntries();
+    log.clearEntries();
     setEntries([]);
   };
   
   const handleExport = () => {
-    const json = tracer.exportEntries();
+    const json = log.exportEntries();
     const blob = new Blob([json], { type: 'application/json' });
     const url = URL.createObjectURL(blob);
     const a = document.createElement('a');
@@ -54,16 +53,6 @@ const TracerPanel: React.FC<TracerPanelProps> = ({ isOpen, onClose }) => {
     a.click();
     document.body.removeChild(a);
     URL.revokeObjectURL(url);
-  };
-  
-  const toggleConsoleInterception = () => {
-    if (isConsoleIntercepted) {
-      tracer.disableConsoleInterception();
-      setIsConsoleIntercepted(false);
-    } else {
-      tracer.enableConsoleInterception();
-      setIsConsoleIntercepted(true);
-    }
   };
   
   const filteredEntries = entries.filter(entry => {
@@ -193,7 +182,7 @@ const TracerPanel: React.FC<TracerPanelProps> = ({ isOpen, onClose }) => {
               variant="outline"
               size="sm"
               leftIcon={<RefreshCw className="h-4 w-4" />}
-              onClick={() => setEntries(tracer.getEntries())}
+              onClick={() => setEntries(log.getEntries())}
             >
               Refresh
             </Button>
@@ -214,15 +203,6 @@ const TracerPanel: React.FC<TracerPanelProps> = ({ isOpen, onClose }) => {
               onClick={handleClear}
             >
               Clear
-            </Button>
-            
-            <Button
-              variant={isConsoleIntercepted ? "primary" : "outline"}
-              size="sm"
-              leftIcon={<Clock className="h-4 w-4" />}
-              onClick={toggleConsoleInterception}
-            >
-              {isConsoleIntercepted ? "Disable Console Capture" : "Enable Console Capture"}
             </Button>
             
             <div className="flex items-center">

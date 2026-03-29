@@ -3,6 +3,7 @@ import { ArrowDownWideNarrow, RefreshCw, AlertCircle } from 'lucide-react';
 import { apiService } from '../../../services/apiService';
 import { useAuth } from '../../../context/AuthContext';
 import { useToast } from '../../../components/ui/Toaster';
+import { log } from '../../../services/log';
 
 interface BranchAnomaliesTableProps {
   isLoading?: boolean;
@@ -54,7 +55,7 @@ const BranchAnomaliesTable = ({ isLoading: externalLoading = false }: BranchAnom
       const errorMessage = err instanceof Error ? err.message : 'Une erreur inattendue est survenue';
       setError(errorMessage);
       addToast('Erreur lors du chargement des données', 'error');
-      console.error('Error fetching branch anomalies:', err);
+      log.error('api', 'Error fetching branch anomalies', { error: err });
     } finally {
       setLoading(false);
     }

@@ -7,6 +7,7 @@ import Input from '../../../components/ui/Input';
 import { ValidationRule, RuleCondition, NaturalRuleType, RULE_TYPE_LABELS, FIELD_LABELS } from '../../../types/ValidationRules';
 import { validationRulesService } from '../../../services/validationRules';
 import { useToast } from '../../../components/ui/Toaster';
+import { log } from '../../../services/log';
 
 const ValidationRulesManager: React.FC = () => {
   const [rules, setRules] = useState<ValidationRule[]>([]);
@@ -30,7 +31,7 @@ const ValidationRulesManager: React.FC = () => {
       }
       setRules(fetchedRules);
     } catch (err) {
-      console.error('Failed to load validation rules:', err);
+      log.error('validation', 'Failed to load validation rules', { error: err });
       setError('Erreur lors du chargement des règles. Vérifiez que le serveur Spring Boot est démarré sur le port 8080.');
       addToast('Erreur lors du chargement des règles', 'error');
     } finally {

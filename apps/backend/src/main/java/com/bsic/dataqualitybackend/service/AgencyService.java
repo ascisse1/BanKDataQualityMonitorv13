@@ -2,7 +2,9 @@ package com.bsic.dataqualitybackend.service;
 
 import com.bsic.dataqualitybackend.dto.AgencyDto;
 import com.bsic.dataqualitybackend.model.Agency;
+import com.bsic.dataqualitybackend.model.Structure;
 import com.bsic.dataqualitybackend.repository.AgencyRepository;
+import com.bsic.dataqualitybackend.repository.StructureRepository;
 import lombok.RequiredArgsConstructor;
 import lombok.extern.slf4j.Slf4j;
 import org.springframework.stereotype.Service;
@@ -17,6 +19,7 @@ import java.util.stream.Collectors;
 public class AgencyService {
 
     private final AgencyRepository agencyRepository;
+    private final StructureRepository structureRepository;
 
     public List<AgencyDto> getAllAgencies() {
         return agencyRepository.findAll()
@@ -45,6 +48,21 @@ public class AgencyService {
         }
 
         Agency agency = mapToEntity(dto);
+
+        // Auto-create Structure if not exists and link it
+        Structure structure = structureRepository.findByCode(dto.getAge())
+            .orElseGet(() -> {
+                Structure s = Structure.builder()
+                    .code(dto.getAge())
+                    .name(dto.getLib() != null ? dto.getLib() : dto.getAge())
+                    .type("AGENCY")
+                    .status("ACTIVE")
+                    .build();
+                log.info("Auto-created structure for new agency: {}", dto.getAge());
+                return structureRepository.save(s);
+            });
+        agency.setStructure(structure);
+
         Agency saved = agencyRepository.save(agency);
         log.info("Created agency with code: {}", saved.getAge());
         return mapToDto(saved);

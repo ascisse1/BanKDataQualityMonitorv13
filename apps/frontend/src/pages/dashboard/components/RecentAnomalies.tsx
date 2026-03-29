@@ -1,6 +1,7 @@
 import { useState, useEffect } from 'react';
 import { AlertTriangle } from 'lucide-react';
 import { apiService } from '../../../services/apiService';
+import { log } from '../../../services/log';
 
 interface BackendAnomaly {
   id: number;
@@ -81,7 +82,7 @@ const RecentAnomalies = ({ isLoading: externalLoading = false }: RecentAnomalies
 
         const response = await apiService.get<ApiResponse<BackendAnomaly[]>>('/stats/recent-anomalies?limit=10');
 
-        console.log('Recent anomalies response:', response);
+        log.debug('api', 'Recent anomalies response', { response });
 
         if (response.success && response.data && Array.isArray(response.data)) {
           const mapped: Anomaly[] = response.data.map((a) => ({
@@ -98,7 +99,7 @@ const RecentAnomalies = ({ isLoading: externalLoading = false }: RecentAnomalies
           setAnomalies(mapped);
         }
       } catch (err) {
-        console.error('Failed to fetch recent anomalies:', err);
+        log.error('api', 'Failed to fetch recent anomalies', { error: err });
         setError('Impossible de charger les anomalies récentes');
       } finally {
         setIsLoading(false);

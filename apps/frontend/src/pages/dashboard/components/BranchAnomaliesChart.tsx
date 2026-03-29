@@ -2,6 +2,7 @@ import { useState, useEffect } from 'react';
 import Chart from 'react-apexcharts';
 import { ApexOptions } from 'apexcharts';
 import { apiService } from '../../../services/apiService';
+import { log } from '../../../services/log';
 
 interface BranchData {
   code_agence: string;
@@ -136,7 +137,7 @@ const BranchAnomaliesChart = ({ isLoading: externalLoading = false }: BranchAnom
           }));
         }
       } catch (err) {
-        console.error('Error fetching branch data:', err);
+        log.error('api', 'Error fetching branch data', { error: err });
       } finally {
         setIsLoading(false);
       }

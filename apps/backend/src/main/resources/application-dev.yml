@@ -56,5 +56,15 @@ app:
         max-attempts: 3
         delay: 2000 # Délai entre les tentatives en cas d'échec
 
+logging:
+  level:
+    com.bsic: DEBUG
+    org.springframework.security: DEBUG
+    org.springframework.security.oauth2: TRACE
+    org.springframework.web: DEBUG
+    org.springframework.web.client.RestTemplate: TRACE
+    org.hibernate.SQL: DEBUG
+    org.hibernate.type.descriptor.sql.BasicBinder: TRACE
+
 server:
   port: 8086

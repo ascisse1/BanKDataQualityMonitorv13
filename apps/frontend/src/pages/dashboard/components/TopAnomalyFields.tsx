@@ -2,6 +2,7 @@ import { useState, useEffect } from 'react';
 import Chart from 'react-apexcharts';
 import { ApexOptions } from 'apexcharts';
 import { apiService } from '../../../services/apiService';
+import { log } from '../../../services/log';
 
 interface FieldData {
   fieldName: string;
@@ -120,7 +121,7 @@ const TopAnomalyFields = ({ isLoading: externalLoading = false, clientType = 'IN
           }));
         }
       } catch (err) {
-        console.error('Failed to fetch top anomaly fields:', err);
+        log.error('api', 'Failed to fetch top anomaly fields', { error: err });
       } finally {
         setIsLoading(false);
       }

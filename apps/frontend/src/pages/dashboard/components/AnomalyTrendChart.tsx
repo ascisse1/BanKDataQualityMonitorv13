@@ -2,6 +2,7 @@ import { useState, useEffect } from 'react';
 import Chart from 'react-apexcharts';
 import { ApexOptions } from 'apexcharts';
 import { apiService } from '../../../services/apiService';
+import { log } from '../../../services/log';
 
 interface TrendData {
   date: string;
@@ -145,7 +146,7 @@ const AnomalyTrendChart = ({ isLoading: externalLoading = false }: AnomalyTrendC
           }));
         }
       } catch (err) {
-        console.error('Failed to fetch anomaly trends:', err);
+        log.error('api', 'Failed to fetch anomaly trends', { error: err });
       } finally {
         setIsLoading(false);
       }

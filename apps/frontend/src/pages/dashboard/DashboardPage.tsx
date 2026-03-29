@@ -17,14 +17,13 @@ import Skeleton, { SkeletonText, SkeletonStats, SkeletonChart, SkeletonTable } f
 import Button from '../../components/ui/Button';
 import { apiService } from '../../services/apiService';
 import { useToast } from '../../components/ui/Toaster';
-import { logger } from '../../services/logger';
+import { log } from '../../services/log';
 import { useAuth } from '../../context/AuthContext';
 import WeeklyCorrectionTrend from './components/WeeklyCorrectionTrend';
 import AgencyCorrectionChart from './components/AgencyCorrectionChart';
 import DataLoadHistoryTable from './components/DataLoadHistoryTable';
 import AgencyUserStats from './components/AgencyUserStats';
 
-import { tracer } from '../../services/tracer';
 
 interface Stats {
   total: number;
@@ -59,11 +58,11 @@ const DashboardPage = () => {
   const hasAccessToBranchData = user?.role === 'ADMIN' || user?.role === 'AUDITOR';
 
   useEffect(() => {
-    tracer.info('ui', 'Dashboard page mounted');
+    log.info('ui', 'Dashboard page mounted');
     fetchStats();
 
     return () => {
-      tracer.info('ui', 'Dashboard page unmounted');
+      log.info('ui', 'Dashboard page unmounted');
     };
   }, []);
 
@@ -72,18 +71,18 @@ const DashboardPage = () => {
       setIsLoading(true);
       setError(null);
 
-      tracer.info('ui', 'Fetching dashboard statistics');
+      log.info('ui', 'Fetching dashboard statistics');
       const response = await apiService.get<ApiResponse<Stats>>('/stats/clients');
 
       if (response.success && response.data) {
         setStats(response.data);
         setLastUpdate(new Date());
 
-        logger.info('dashboard', 'Stats loaded successfully', {
+        log.info('dashboard', 'Stats loaded successfully', {
           recordCount: response.data.total
         });
 
-        tracer.info('ui', 'Dashboard statistics loaded successfully', {
+        log.info('ui', 'Dashboard statistics loaded successfully', {
           total: response.data.total,
           anomalies: response.data.anomalies,
           fatca: response.data.fatca
@@ -96,8 +95,8 @@ const DashboardPage = () => {
     } catch (err) {
       setError('Erreur lors du chargement des statistiques. Veuillez réessayer.');
       addToast('Erreur lors du chargement des statistiques', 'error');
-      logger.error('api', 'Failed to fetch statistics', { error: err });
-      tracer.error('ui', 'Failed to load dashboard statistics', {
+      log.error('api', 'Failed to fetch statistics', { error: err });
+      log.error('ui', 'Failed to load dashboard statistics', {
         error: err instanceof Error ? err.message : String(err)
       });
     } finally {
@@ -113,10 +112,10 @@ const DashboardPage = () => {
       await fetchStats();
 
       addToast('Données actualisées avec succès', 'success');
-      tracer.info('ui', 'Dashboard data refreshed successfully');
+      log.info('ui', 'Dashboard data refreshed successfully');
     } catch (err) {
       addToast('Erreur lors de l\'actualisation', 'error');
-      tracer.error('ui', 'Failed to refresh dashboard data', { error: err });
+      log.error('ui', 'Failed to refresh dashboard data', { error: err });
     } finally {
       setIsRefreshing(false);
     }

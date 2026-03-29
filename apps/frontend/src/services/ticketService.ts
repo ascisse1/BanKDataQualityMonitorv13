@@ -1,5 +1,5 @@
 import apiClient from '../lib/apiClient';
-import { logger } from './logger';
+import { log } from './log';
 
 export interface UserDto {
   id: number;
@@ -54,7 +54,7 @@ export const ticketService = {
       );
       return response.data.data;
     } catch (error) {
-      logger.error('api', 'Failed to fetch tickets', { error });
+      log.error('api', 'Failed to fetch tickets', { error });
       throw error;
     }
   },
@@ -66,7 +66,7 @@ export const ticketService = {
       );
       return response.data.data;
     } catch (error) {
-      logger.error('api', 'Failed to fetch agency tickets', { error, agencyCode });
+      log.error('api', 'Failed to fetch agency tickets', { error, agencyCode });
       throw error;
     }
   },
@@ -78,7 +78,7 @@ export const ticketService = {
       );
       return response.data.data;
     } catch (error) {
-      logger.error('api', 'Failed to fetch my tickets', { error });
+      log.error('api', 'Failed to fetch my tickets', { error });
       throw error;
     }
   },
@@ -90,7 +90,7 @@ export const ticketService = {
       );
       return response.data.data;
     } catch (error) {
-      logger.error('api', 'Failed to fetch ticket', { error, id });
+      log.error('api', 'Failed to fetch ticket', { error, id });
       throw error;
     }
   },
@@ -103,7 +103,7 @@ export const ticketService = {
       );
       return response.data.data;
     } catch (error) {
-      logger.error('api', 'Failed to update ticket status', { error, id, status });
+      log.error('api', 'Failed to update ticket status', { error, id, status });
       throw error;
     }
   },
@@ -116,7 +116,7 @@ export const ticketService = {
       );
       return response.data.data;
     } catch (error) {
-      logger.error('api', 'Failed to assign ticket', { error, id });
+      log.error('api', 'Failed to assign ticket', { error, id });
       throw error;
     }
   },

@@ -2,6 +2,7 @@ import { useState, useEffect } from 'react';
 import Chart from 'react-apexcharts';
 import { ApexOptions } from 'apexcharts';
 import { apiService } from '../../../services/apiService';
+import { log } from '../../../services/log';
 
 interface CountsByType {
   INDIVIDUAL: number;
@@ -116,7 +117,7 @@ const ClientTypeChart = ({ isLoading: externalLoading = false }: ClientTypeChart
           }));
         }
       } catch (err) {
-        console.error('Failed to fetch anomaly counts by type:', err);
+        log.error('api', 'Failed to fetch anomaly counts by type', { error: err });
       } finally {
         setIsLoading(false);
       }

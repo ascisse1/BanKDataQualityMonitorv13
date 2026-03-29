@@ -1,6 +1,5 @@
 import { DatabaseConfig, getDatabaseConfig } from './databaseConfig';
-import { logger } from './logger';
-import { tracer } from './tracer';
+import { log } from './log';
 
 // Interface pour les connexions de base de données
 export interface DatabaseConnection {
@@ -58,15 +57,15 @@ class MySQLConnection extends BaseConnection {
       connection.release();
 
       this.connected = true;
-      tracer.info('database', 'MySQL connection established', {
+      log.info('database', 'MySQL connection established', {
         host: this.config.host,
         database: this.config.database
       });
 
       return true;
     } catch (error) {
-      tracer.error('database', 'MySQL connection failed', { error });
-      logger.error('database', 'MySQL connection failed', { error });
+      log.error('database', 'MySQL connection failed', { error });
+      log.error('database', 'MySQL connection failed', { error });
       this.connected = false;
       return false;
     }
@@ -76,7 +75,7 @@ class MySQLConnection extends BaseConnection {
     if (this.pool) {
       await this.pool.end();
       this.connected = false;
-      tracer.info('database', 'MySQL connection closed');
+      log.info('database', 'MySQL connection closed');
     }
   }
 
@@ -91,8 +90,8 @@ class MySQLConnection extends BaseConnection {
       connection.release();
       return rows;
     } catch (error) {
-      tracer.error('database', 'MySQL query failed', { error, sql });
-      logger.error('database', 'MySQL query failed', { error, sql });
+      log.error('database', 'MySQL query failed', { error, sql });
+      log.error('database', 'MySQL query failed', { error, sql });
       throw error;
     }
   }
@@ -108,8 +107,8 @@ class MySQLConnection extends BaseConnection {
       connection.release();
       return result;
     } catch (error) {
-      tracer.error('database', 'MySQL execute failed', { error, sql });
-      logger.error('database', 'MySQL execute failed', { error, sql });
+      log.error('database', 'MySQL execute failed', { error, sql });
+      log.error('database', 'MySQL execute failed', { error, sql });
       throw error;
     }
   }
@@ -124,7 +123,7 @@ export class DatabaseConnectionFactory {
       case 'mysql':
         return new MySQLConnection(config);
       default:
-        tracer.warning('database', `Unknown database type: ${config.type}, using MySQL as default`);
+        log.warning('database', `Unknown database type: ${config.type}, using MySQL as default`);
         return new MySQLConnection(config);
     }
   }

@@ -1,5 +1,4 @@
-import { logger } from './logger';
-import { tracer } from './tracer';
+import { log } from './log';
 
 // API Base URL - should be configured in .env
 const API_BASE_URL = import.meta.env.VITE_API_BASE_URL || '/api';
@@ -34,7 +33,7 @@ export const apiRequest = async <T>(
   customHeaders?: Record<string, string>
 ): Promise<T> => {
   try {
-    tracer.info('network', `API ${method} request to ${endpoint}`);
+    log.info('network', `API ${method} request to ${endpoint}`);
 
     const headers: Record<string, string> = {
       'Content-Type': 'application/json',
@@ -61,14 +60,14 @@ export const apiRequest = async <T>(
 
     // Handle 401 Unauthorized - redirect to login
     if (response.status === 401) {
-      logger.warning('security', 'Session expired, redirecting to login');
+      log.warning('security', 'Session expired, redirecting to login');
       window.location.href = '/login';
       throw new Error('Authentication required');
     }
 
     // Handle 403 Forbidden - insufficient permissions
     if (response.status === 403) {
-      logger.warning('security', 'Access denied', { endpoint });
+      log.warning('security', 'Access denied', { endpoint });
       throw new Error('Access denied: insufficient permissions');
     }
 
@@ -84,11 +83,11 @@ export const apiRequest = async <T>(
     }
 
     const result = await response.json();
-    tracer.info('network', `API ${method} request to ${endpoint} successful`);
+    log.info('network', `API ${method} request to ${endpoint} successful`);
     return result as T;
   } catch (error) {
-    tracer.error('network', `API ${method} request to ${endpoint} failed`, { error });
-    logger.error('api', `API request failed: ${endpoint}`, { error });
+    log.error('network', `API ${method} request to ${endpoint} failed`, { error });
+    log.error('api', `API request failed: ${endpoint}`, { error });
     throw error;
   }
 };

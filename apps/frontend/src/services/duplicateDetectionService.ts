@@ -1,4 +1,5 @@
 import { apiService } from './apiService';
+import { log } from './log';
 
 export interface DuplicateCandidate {
   id: string;
@@ -79,7 +80,7 @@ class DuplicateDetectionService {
       );
       return response;
     } catch (error) {
-      console.error('Error detecting duplicates:', error);
+      log.error('api', 'Error detecting duplicates', { error });
       return [];
     }
   }
@@ -96,7 +97,7 @@ class DuplicateDetectionService {
       );
       return response;
     } catch (error) {
-      console.error('Error fetching pending duplicates:', error);
+      log.error('api', 'Error fetching pending duplicates', { error });
       return [];
     }
   }
@@ -105,7 +106,7 @@ class DuplicateDetectionService {
     try {
       return await apiService.get<DuplicateDetail>(`/api/duplicates/${duplicateId}`);
     } catch (error) {
-      console.error('Error fetching duplicate detail:', error);
+      log.error('api', 'Error fetching duplicate detail', { error });
       return null;
     }
   }
@@ -118,7 +119,7 @@ class DuplicateDetectionService {
       });
       return true;
     } catch (error) {
-      console.error('Error confirming duplicate:', error);
+      log.error('api', 'Error confirming duplicate', { error });
       return false;
     }
   }
@@ -131,7 +132,7 @@ class DuplicateDetectionService {
       });
       return true;
     } catch (error) {
-      console.error('Error rejecting duplicate:', error);
+      log.error('api', 'Error rejecting duplicate', { error });
       return false;
     }
   }
@@ -152,7 +153,7 @@ class DuplicateDetectionService {
       });
       return true;
     } catch (error) {
-      console.error('Error merging duplicates:', error);
+      log.error('api', 'Error merging duplicates', { error });
       return false;
     }
   }
@@ -161,7 +162,7 @@ class DuplicateDetectionService {
     try {
       return await apiService.get<DuplicateStats>('/api/duplicates/stats');
     } catch (error) {
-      console.error('Error fetching duplicate stats:', error);
+      log.error('api', 'Error fetching duplicate stats', { error });
       return null;
     }
   }
@@ -290,7 +291,7 @@ class DuplicateDetectionService {
       );
       return response;
     } catch (error) {
-      console.error('Error running duplicate detection:', error);
+      log.error('api', 'Error running duplicate detection', { error });
       return { detected: 0, processed: 0 };
     }
   }

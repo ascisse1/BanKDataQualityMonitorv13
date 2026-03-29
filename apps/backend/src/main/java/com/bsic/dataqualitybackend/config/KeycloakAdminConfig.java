@@ -1,5 +1,7 @@
 package com.bsic.dataqualitybackend.config;
 
+import jakarta.annotation.PostConstruct;
+import jakarta.annotation.PreDestroy;
 import lombok.Getter;
 import lombok.Setter;
 import lombok.extern.slf4j.Slf4j;
@@ -7,13 +9,12 @@ import org.jboss.resteasy.client.jaxrs.internal.ResteasyClientBuilderImpl;
 import org.keycloak.OAuth2Constants;
 import org.keycloak.admin.client.Keycloak;
 import org.keycloak.admin.client.KeycloakBuilder;
+import org.keycloak.admin.client.JacksonProvider;
 import org.keycloak.admin.client.resource.RealmResource;
 import org.keycloak.admin.client.resource.UsersResource;
 import org.springframework.boot.context.properties.ConfigurationProperties;
 import org.springframework.context.annotation.Configuration;
 
-import jakarta.annotation.PostConstruct;
-import jakarta.annotation.PreDestroy;
 import java.util.concurrent.TimeUnit;
 
 /**
@@ -69,6 +70,10 @@ public class KeycloakAdminConfig {
         log.debug("Creating new Keycloak instance: serverUrl={}, realm={}, clientId={}",
                 authServerUrl, realm, adminClientId);
 
+        // Register Keycloak's JacksonProvider which configures ObjectMapper with:
+        //   - NON_NULL serialization (skips null fields like "description":null)
+        //   - FAIL_ON_UNKNOWN_PROPERTIES=false (ignores unknown fields from server)
+        // Required when manually creating ResteasyClient per Keycloak docs.
         return KeycloakBuilder.builder()
                 .serverUrl(authServerUrl)
                 .realm(realm)
@@ -78,7 +83,8 @@ public class KeycloakAdminConfig {
                 .resteasyClient(new ResteasyClientBuilderImpl()
                         .connectTimeout(10, TimeUnit.SECONDS)
                         .readTimeout(30, TimeUnit.SECONDS)
-                        .build())
+                        .build()
+                        .register(JacksonProvider.class))
                 .build();
     }
 

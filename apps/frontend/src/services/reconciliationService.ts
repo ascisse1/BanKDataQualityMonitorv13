@@ -1,4 +1,5 @@
 import { apiService } from './apiService';
+import { log } from './log';
 
 export interface ReconciliationTask {
   id: string;
@@ -67,7 +68,7 @@ class ReconciliationService {
       );
       return response;
     } catch (error) {
-      console.error('Error fetching pending reconciliations:', error);
+      log.error('api', 'Error fetching pending reconciliations', { error });
       return [];
     }
   }
@@ -76,7 +77,7 @@ class ReconciliationService {
     try {
       return await apiService.get<ReconciliationTask>(`/reconciliation/${id}`);
     } catch (error) {
-      console.error('Error fetching reconciliation:', error);
+      log.error('api', 'Error fetching reconciliation', { error });
       return null;
     }
   }
@@ -88,7 +89,7 @@ class ReconciliationService {
         {}
       );
     } catch (error) {
-      console.error('Error reconciling task:', error);
+      log.error('api', 'Error reconciling task', { error });
       return null;
     }
   }
@@ -104,7 +105,7 @@ class ReconciliationService {
       );
       return response;
     } catch (error) {
-      console.error('Error reconciling all tasks:', error);
+      log.error('api', 'Error reconciling all tasks', { error });
       return { success: 0, failed: 0, total: 0 };
     }
   }
@@ -116,7 +117,7 @@ class ReconciliationService {
         {}
       );
     } catch (error) {
-      console.error('Error retrying reconciliation:', error);
+      log.error('api', 'Error retrying reconciliation', { error });
       return null;
     }
   }
@@ -129,7 +130,7 @@ class ReconciliationService {
       });
       return true;
     } catch (error) {
-      console.error('Error closing ticket:', error);
+      log.error('api', 'Error closing ticket', { error });
       return false;
     }
   }
@@ -141,7 +142,7 @@ class ReconciliationService {
         : '/reconciliation/stats';
       return await apiService.get<ReconciliationStats>(url);
     } catch (error) {
-      console.error('Error fetching reconciliation stats:', error);
+      log.error('api', 'Error fetching reconciliation stats', { error });
       return null;
     }
   }
@@ -166,7 +167,7 @@ class ReconciliationService {
       );
       return response;
     } catch (error) {
-      console.error('Error fetching reconciliation history:', error);
+      log.error('api', 'Error fetching reconciliation history', { error });
       return [];
     }
   }

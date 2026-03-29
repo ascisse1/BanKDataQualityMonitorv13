@@ -2,7 +2,7 @@ import React, { useCallback, useState } from 'react';
 import { Upload, AlertTriangle, CheckCircle, X } from 'lucide-react';
 import Papa from 'papaparse';
 import * as XLSX from 'xlsx';
-import { logger } from '../../services/logger';
+import { log } from '../../services/log';
 import Button from './Button';
 
 interface FileUploadProps {
@@ -65,7 +65,7 @@ const FileUpload: React.FC<FileUploadProps> = ({
       // Remove any empty rows
       data = data.filter(row => Object.values(row).some(value => value));
 
-      logger.info('system', 'File processed successfully', {
+      log.info('system', 'File processed successfully', {
         fileName: file.name,
         rowCount: data.length
       });
@@ -75,7 +75,7 @@ const FileUpload: React.FC<FileUploadProps> = ({
     } catch (err) {
       const errorMessage = err instanceof Error ? err.message : 'Échec du traitement du fichier';
       setError(errorMessage);
-      logger.error('system', 'File processing error', { error: errorMessage });
+      log.error('system', 'File processing error', { error: errorMessage });
     } finally {
       setIsProcessing(false);
     }

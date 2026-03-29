@@ -1,5 +1,5 @@
 import { createContext, useContext, ReactNode, useMemo } from 'react';
-import { logger } from '../services/logger';
+import { log } from '../services/log';
 import { useSessionAuth } from './SessionAuthProvider';
 
 /**
@@ -11,7 +11,7 @@ interface User {
   role: 'ADMIN' | 'AUDITOR' | 'AGENCY_USER' | 'USER';
   email: string;
   fullName: string;
-  agencyCode?: string | null;
+  agencyCodes: string[];
 }
 
 /**
@@ -61,7 +61,7 @@ export const AuthProvider = ({ children }: { children: ReactNode }) => {
       email: sessionUser.email,
       fullName: sessionUser.fullName,
       role: mapRole(sessionUser.role),
-      agencyCode: sessionUser.agencyCode,
+      agencyCodes: sessionUser.agencyCodes || [],
     };
   }, [authenticated, sessionUser]);
 
@@ -69,7 +69,7 @@ export const AuthProvider = ({ children }: { children: ReactNode }) => {
    * Initiates the OAuth2 login flow via BFF.
    */
   const login = () => {
-    logger.info('security', 'Initiating OAuth2 login via BFF');
+    log.info('security', 'Initiating OAuth2 login via BFF');
     sessionLogin();
   };
 
@@ -77,7 +77,7 @@ export const AuthProvider = ({ children }: { children: ReactNode }) => {
    * Logs out the current user via BFF.
    */
   const logout = () => {
-    logger.info('security', 'User logging out', { username: user?.username });
+    log.info('security', 'User logging out', { username: user?.username });
     sessionLogout();
   };
 

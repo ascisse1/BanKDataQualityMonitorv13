@@ -7,6 +7,7 @@ import { db } from '../../services/db';
 import { jsPDF } from 'jspdf';
 import 'jspdf-autotable';
 import * as XLSX from 'xlsx';
+import { log } from '../../services/log';
 
 const ReportsPage = () => {
   const [isLoading, setIsLoading] = useState(true);
@@ -246,7 +247,7 @@ const ReportsPage = () => {
 
       addToast('Tableau de bord Excel généré avec succès', 'success');
     } catch (error) {
-      console.error('Error generating Excel dashboard:', error);
+      log.error('ui', 'Error generating Excel dashboard', { error });
       addToast('Erreur lors de la génération du tableau de bord Excel', 'error');
     } finally {
       setIsExporting(false);

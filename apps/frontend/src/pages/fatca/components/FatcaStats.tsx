@@ -4,6 +4,7 @@ import Card from '../../../components/ui/Card';
 import Button from '../../../components/ui/Button';
 import { db } from '../../../services/db';
 import { useToast } from '../../../components/ui/Toaster';
+import { log } from '../../../services/log';
 
 interface FatcaStatsProps {
   isLoading?: boolean;
@@ -29,7 +30,7 @@ const FatcaStats = ({ isLoading = false, clientType = 'all' }) => {
       setStats(data);
     } catch (error) {
       setError('Erreur lors du chargement des statistiques FATCA');
-      console.error('Error fetching FATCA stats:', error);
+      log.error('api', 'Error fetching FATCA stats', { error });
       setStats(null);
     } finally {
       setLoading(false);

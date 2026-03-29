@@ -270,6 +270,13 @@ public class KeycloakAdminService {
      */
     public Optional<String> createGroup(String groupName) {
         try {
+            // Check if group already exists first
+            Optional<GroupRepresentation> existing = getGroupByName(groupName);
+            if (existing.isPresent()) {
+                log.info("Group already exists: name={}, id={}", groupName, existing.get().getId());
+                return Optional.of(existing.get().getId());
+            }
+
             GroupRepresentation group = new GroupRepresentation();
             group.setName(groupName);
 
@@ -279,8 +286,15 @@ public class KeycloakAdminService {
                 String groupId = extractIdFromLocation(response);
                 log.info("Group created: name={}, id={}", groupName, groupId);
                 return Optional.ofNullable(groupId);
+            } else if (response.getStatus() == 409) {
+                // Conflict = already exists, try to fetch it
+                log.info("Group already exists (409): {}, fetching...", groupName);
+                return getGroupByName(groupName).map(GroupRepresentation::getId);
+            } else {
+                String body = response.readEntity(String.class);
+                log.warn("Failed to create group {}: status={}, body={}", groupName, response.getStatus(), body);
+                return Optional.empty();
             }
-            return Optional.empty();
         } catch (Exception e) {
             log.error("Error creating group {}: {}", groupName, e.getMessage());
             return Optional.empty();
@@ -334,6 +348,22 @@ public class KeycloakAdminService {
             return keycloakConfig.getUsersResource().get(userId).groups();
         } catch (Exception e) {
             log.error("Error getting groups for user {}: {}", userId, e.getMessage());
+            return Collections.emptyList();
+        }
+    }
+
+    /**
+     * Gets the realm roles mapped to a group.
+     *
+     * @param groupId the group ID.
+     * @return list of role representations.
+     */
+    public List<RoleRepresentation> getGroupRealmRoles(String groupId) {
+        try {
+            return keycloakConfig.getRealmResource().groups().group(groupId)
+                    .roles().realmLevel().listEffective();
+        } catch (Exception e) {
+            log.error("Error getting roles for group {}: {}", groupId, e.getMessage());
             return Collections.emptyList();
         }
     }

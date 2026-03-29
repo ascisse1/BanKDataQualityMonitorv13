@@ -2,6 +2,7 @@ import React, { useState } from 'react';
 import { Download, FileText, Code } from 'lucide-react';
 import Button from '../../../components/ui/Button';
 import { useToast } from '../../../components/ui/Toaster';
+import { log } from '../../../services/log';
 
 
 interface SQLQuery {
@@ -46,7 +47,7 @@ const ExportSQLQueriesButton: React.FC<ExportSQLQueriesButtonProps> = ({
 
       addToast(`Export des requêtes en ${format.toUpperCase()} réussi (${queryEntries.length} requêtes)`, 'success');
     } catch (error) {
-      console.error('Error exporting queries:', error);
+      log.error('ui', 'Error exporting queries', { error });
       addToast('Erreur lors de l\'export des requêtes', 'error');
     } finally {
       setIsExporting(false);

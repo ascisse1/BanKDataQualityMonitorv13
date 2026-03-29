@@ -5,6 +5,7 @@ import Button from '../../components/ui/Button';
 import Input from '../../components/ui/Input';
 import { useToast } from '../../components/ui/Toaster';
 import { useAuth } from '../../context/AuthContext';
+import { log } from '../../services/log';
 
 
 interface User {
@@ -12,12 +13,12 @@ interface User {
   username: string;
   email: string;
   role: 'ADMIN' | 'AUDITOR' | 'USER' | 'AGENCY_USER';
-  last_login: string;
-  status: 'active' | 'inactive';
-  created_at: string;
-  full_name: string;
+  lastLogin: string;
+  status: 'ACTIVE' | 'INACTIVE' | 'LOCKED';
+  createdAt: string;
+  fullName: string;
   department?: string;
-  agency_code?: string;
+  agencyCodes?: string[];
 }
 
 interface UserStats {
@@ -71,10 +72,10 @@ const UsersPage = () => {
       });
       if (response.ok) {
         const data = await response.json();
-        setUsers(data);
+        setUsers(data.data || data || []);
       }
     } catch (error) {
-      console.error('Error loading users:', error);
+      log.error('api', 'Error loading users', { error });
     } finally {
       setIsLoading(false);
     }
@@ -90,10 +91,10 @@ const UsersPage = () => {
 
       if (response.ok) {
         const data = await response.json();
-        setUserStats(data);
+        setUserStats(data.data || data || {});
       }
     } catch (error) {
-      console.error('Error loading user stats:', error);
+      log.error('api', 'Error loading user stats', { error });
     }
   };
 
@@ -105,7 +106,7 @@ const UsersPage = () => {
         setAgencies(data);
       }
     } catch (error) {
-      console.error('Error loading agencies:', error);
+      log.error('api', 'Error loading agencies', { error });
     }
   };
 
@@ -132,7 +133,7 @@ const UsersPage = () => {
         addToast(data.error || 'Erreur lors de la création', 'error');
       }
     } catch (error) {
-      console.error('Create user error:', error);
+      log.error('api', 'Create user error', { error });
       addToast('Erreur lors de la création de l\'utilisateur', 'error');
     }
   };
@@ -191,7 +192,7 @@ const UsersPage = () => {
         addToast(data.error || 'Erreur lors de la mise à jour', 'error');
       }
     } catch (error) {
-      console.error('Update user error:', error);
+      log.error('api', 'Update user error', { error });
       addToast('Erreur lors de la mise à jour de l\'utilisateur', 'error');
     }
   };
@@ -222,7 +223,7 @@ const UsersPage = () => {
           addToast(data.error || 'Erreur lors de la suppression', 'error');
         }
       } catch (error) {
-        console.error('Delete user error:', error);
+        log.error('api', 'Delete user error', { error });
         addToast('Erreur lors de la suppression de l\'utilisateur', 'error');
       }
     }
@@ -246,7 +247,7 @@ const UsersPage = () => {
         agencyName: agency.lib_agence
       }));
       
-      console.log('Creating bulk agency users with data:', agenciesData);
+      log.debug('api', 'Creating bulk agency users', { agenciesData });
       
       const response = await fetch('/api/bulk-create-agency-users', {
         method: 'POST',
@@ -259,9 +260,9 @@ const UsersPage = () => {
         }),
       });
 
-      console.log('Response status:', response.status);
+      log.debug('api', 'Response status', { status: response.status });
       const data = await response.json();
-      console.log('Response data:', data);
+      log.debug('api', 'Response data', { data });
 
       if (response.ok) {
         loadUsers();
@@ -269,14 +270,14 @@ const UsersPage = () => {
         addToast(`${data.results.length} utilisateurs d'agence créés avec succès`, 'success');
         
         if (data.errors && data.errors.length > 0) {
-          console.warn('Erreurs lors de la création de certains utilisateurs:', data.errors);
+          log.warning('api', 'Erreurs lors de la creation de certains utilisateurs', { errors: data.errors });
           addToast(`${data.errors.length} erreurs rencontrées. Voir la console pour plus de détails.`, 'warning');
         }
       } else {
         addToast(data.error || 'Erreur lors de la création des utilisateurs', 'error');
       }
     } catch (error) {
-      console.error('Error creating bulk agency users:', error);
+      log.error('api', 'Error creating bulk agency users', { error });
       addToast('Erreur lors de la création des utilisateurs d\'agence', 'error');
     }
   };
@@ -324,8 +325,8 @@ const UsersPage = () => {
   };
 
   const getStatusColor = (status: string) => {
-    return status === 'active' 
-      ? 'bg-success-100 text-success-800' 
+    return status === 'ACTIVE'
+      ? 'bg-success-100 text-success-800'
       : 'bg-error-100 text-error-800';
   };
 
@@ -333,11 +334,11 @@ const UsersPage = () => {
     if (!searchQuery) return true;
     const query = searchQuery.toLowerCase();
     return (
-      user.full_name.toLowerCase().includes(query) ||
+      user.fullName.toLowerCase().includes(query) ||
       user.username.toLowerCase().includes(query) ||
       user.email.toLowerCase().includes(query) ||
       user.department?.toLowerCase().includes(query) ||
-      user.agency_code?.toLowerCase().includes(query)
+      user.agencyCodes?.[0]?.toLowerCase().includes(query)
     );
   });
 
@@ -530,11 +531,11 @@ const UsersPage = () => {
                           <div className="flex items-center">
                             <div className="flex-shrink-0 h-8 w-8 rounded-full bg-gray-100 flex items-center justify-center">
                               <span className="text-sm font-medium text-gray-600">
-                                {user.full_name && user.full_name.length > 0 ? user.full_name.charAt(0).toUpperCase() : '?'}
+                                {user.fullName && user.fullName.length > 0 ? user.fullName.charAt(0).toUpperCase() : '?'}
                               </span>
                             </div>
                             <div className="ml-3">
-                              <div className="text-sm font-medium text-gray-900">{user.full_name}</div>
+                              <div className="text-sm font-medium text-gray-900">{user.fullName}</div>
                               <div className="text-sm text-gray-500 flex items-center">
                                 <Mail className="h-3 w-3 mr-1" />
                                 {user.email}
@@ -547,10 +548,10 @@ const UsersPage = () => {
                           <div className="text-sm text-gray-900">{user.department || 'Non défini'}</div>
                         </td>
                         <td className="px-3 py-4 whitespace-nowrap">
-                          {user.agency_code ? (
+                          {user.agencyCodes?.[0] ? (
                             <div className="flex items-center">
                               <Building className="h-4 w-4 text-gray-500 mr-1" />
-                              <span className="text-sm text-gray-900">{user.agency_code}</span>
+                              <span className="text-sm text-gray-900">{user.agencyCodes?.[0]}</span>
                             </div>
                           ) : (
                             <span className="text-sm text-gray-400">-</span>
@@ -564,13 +565,13 @@ const UsersPage = () => {
                         </td>
                         <td className="px-3 py-4 whitespace-nowrap">
                           <span className={`px-2 inline-flex text-xs leading-5 font-semibold rounded-full ${getStatusColor(user.status)}`}>
-                            {user.status === 'active' ? 'Actif' : 'Inactif'}
+                            {user.status === 'ACTIVE' ? 'Actif' : user.status === 'LOCKED' ? 'Verrouille' : 'Inactif'}
                           </span>
                         </td>
                         <td className="px-3 py-4 whitespace-nowrap">
                           <div className="text-sm text-gray-500 flex items-center">
                             <Calendar className="h-3 w-3 mr-1" />
-                            {formatDate(user.last_login)}
+                            {formatDate(user.lastLogin)}
                           </div>
                         </td>
                         <td className="px-3 py-4 whitespace-nowrap text-right text-sm font-medium">
@@ -642,11 +643,11 @@ const UserEditor: React.FC<UserEditorProps> = ({ user, agencies, onSave, onCance
   const [formData, setFormData] = useState({
     username: user?.username || '',
     email: user?.email || '',
-    fullName: user?.full_name || '',
-    role: user?.role || 'user',
+    fullName: user?.fullName || '',
+    role: user?.role || 'USER',
     department: user?.department || '',
-    status: user?.status || 'active',
-    agencyCode: user?.agency_code || '',
+    status: user?.status || 'ACTIVE',
+    agencyCode: user?.agencyCodes?.[0] || '',
     password: ''
   });
 

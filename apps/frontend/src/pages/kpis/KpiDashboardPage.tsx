@@ -4,6 +4,7 @@ import Card from '../../components/ui/Card';
 import Button from '../../components/ui/Button';
 import { kpiService, type DashboardMetrics, type Kpi } from '../../services/kpiService';
 import { useAuth } from '../../context/AuthContext';
+import { log } from '../../services/log';
 
 export const KpiDashboardPage: React.FC = () => {
   const { user } = useAuth();
@@ -37,7 +38,7 @@ export const KpiDashboardPage: React.FC = () => {
         setHistoricalKpis(historical);
       }
     } catch (error) {
-      console.error('Failed to load KPI dashboard:', error);
+      log.error('api', 'Failed to load KPI dashboard', { error });
     } finally {
       setLoading(false);
     }

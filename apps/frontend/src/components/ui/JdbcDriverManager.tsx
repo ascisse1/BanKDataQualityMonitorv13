@@ -3,6 +3,7 @@ import { Download, CheckCircle, XCircle, Loader, Trash2, HardDrive, AlertCircle 
 import Button from './Button';
 import Card from './Card';
 import axios from 'axios';
+import { log } from '../../services/log';
 
 const API_URL = import.meta.env.VITE_API_URL || 'http://localhost:3001';
 
@@ -37,7 +38,7 @@ const JdbcDriverManager: React.FC = () => {
       const response = await axios.get(`${API_URL}/api/corebanking/drivers`);
       setDrivers(response.data);
     } catch (error) {
-      console.error('Failed to load drivers status:', error);
+      log.error('api', 'Failed to load drivers status', { error });
     } finally {
       setLoading(false);
     }
@@ -83,7 +84,7 @@ const JdbcDriverManager: React.FC = () => {
         }
       }
     } catch (error) {
-      console.error('Failed to download driver:', error);
+      log.error('api', 'Failed to download driver', { error });
       alert('Échec du téléchargement du driver');
     } finally {
       setDownloading(null);
@@ -98,7 +99,7 @@ const JdbcDriverManager: React.FC = () => {
       await axios.delete(`${API_URL}/api/corebanking/drivers/${dbType}`);
       await loadDriversStatus();
     } catch (error) {
-      console.error('Failed to delete driver:', error);
+      log.error('api', 'Failed to delete driver', { error });
       alert('Échec de la suppression du driver');
     }
   };

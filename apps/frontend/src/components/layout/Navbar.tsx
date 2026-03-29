@@ -165,9 +165,9 @@ const Navbar = ({ onMenuClick }: NavbarProps) => {
                     <span className="ml-2 hidden md:block text-sm font-medium text-gray-700 dark:text-gray-200">
                       {user?.username || 'Chargement...'}
                     </span>
-                    {user?.agencyCode && (
+                    {user?.agencyCodes && user.agencyCodes.length > 0 && (
                       <span className="ml-1 hidden md:block text-xs px-1.5 py-0.5 bg-primary-100 dark:bg-primary-900/30 text-primary-700 dark:text-primary-300 rounded-full">
-                        {user.agencyCode}
+                        {user.agencyCodes.length === 1 ? user.agencyCodes[0] : `${user.agencyCodes.length} agences`}
                       </span>
                     )}
                   </button>
@@ -191,9 +191,9 @@ const Navbar = ({ onMenuClick }: NavbarProps) => {
                         {user?.role === 'USER' && 'Utilisateur'}
                         {!user?.role && 'Chargement...'}
                       </p>
-                      {user?.agencyCode && (
+                      {user?.agencyCodes && user.agencyCodes.length > 0 && (
                         <p className="mt-1 text-xs px-2 py-0.5 bg-success-100 dark:bg-success-900/30 text-success-800 dark:text-success-300 rounded-full inline-block">
-                          Agence: {user.agencyCode}
+                          {user.agencyCodes.length === 1 ? `Agence: ${user.agencyCodes[0]}` : `Agences: ${user.agencyCodes.join(', ')}`}
                         </p>
                       )}
                     </div>

@@ -3,6 +3,7 @@ import { AlertTriangle, CheckCircle, AlertCircle, RefreshCw } from 'lucide-react
 import { apiService } from '../../../services/apiService';
 import { useToast } from '../../../components/ui/Toaster';
 import Button from '../../../components/ui/Button';
+import { log } from '../../../services/log';
 
 interface ValidationMetric {
   category: string;
@@ -37,7 +38,7 @@ const ValidationSummary = ({ isLoading = false }) => {
       const response = await apiService.get<ApiResponse<ValidationMetric[]>>('/stats/validation-metrics');
       const endTime = performance.now();
 
-      console.log('Validation metrics response:', response);
+      log.debug('api', 'Validation metrics response', { response });
 
       // Handle the response - data could be directly the array or wrapped
       const metricsData = response.data;
@@ -70,13 +71,13 @@ const ValidationSummary = ({ isLoading = false }) => {
           addToast(`Données chargées en ${(duration/1000).toFixed(1)}s`, 'warning');
         }
       } else {
-        console.warn('No validation metrics data received');
+        log.warning('api', 'No validation metrics data received');
         setMetrics([]);
       }
     } catch (err) {
       const message = err instanceof Error ? err.message : 'Erreur lors du chargement des métriques de validation';
       setError(message);
-      console.error('Failed to fetch validation metrics:', err);
+      log.error('api', 'Failed to fetch validation metrics', { error: err });
     } finally {
       setLoading(false);
     }

@@ -1,5 +1,4 @@
-import { logger } from './logger';
-import { tracer } from './tracer';
+import { log } from './log';
 
 // API Base URL - should be configured in .env
 const API_BASE_URL = import.meta.env.VITE_API_BASE_URL || '/api';
@@ -25,7 +24,7 @@ export const apiRequest = async <T>(
   customHeaders?: Record<string, string>
 ): Promise<T> => {
   try {
-    tracer.info('network', `Banking API ${method} request to ${endpoint}`);
+    log.info('network', `Banking API ${method} request to ${endpoint}`);
     
     const headers: Record<string, string> = {
       'Content-Type': 'application/json',
@@ -51,11 +50,11 @@ export const apiRequest = async <T>(
     }
     
     const result = await response.json();
-    tracer.info('network', `Banking API ${method} request to ${endpoint} successful`);
+    log.info('network', `Banking API ${method} request to ${endpoint} successful`);
     return result as T;
   } catch (error) {
-    tracer.error('network', `Banking API ${method} request to ${endpoint} failed`, { error });
-    logger.error('api', `Banking API request failed: ${endpoint}`, { error });
+    log.error('network', `Banking API ${method} request to ${endpoint} failed`, { error });
+    log.error('api', `Banking API request failed: ${endpoint}`, { error });
     throw error;
   }
 };

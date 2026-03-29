@@ -24,6 +24,7 @@ import { KpiDashboardPage } from '../pages/kpis/KpiDashboardPage';
 import ValidationPage from '../pages/validation/ValidationPage';
 import DuplicatesPage from '../pages/duplicates/DuplicatesPage';
 import ReconciliationPage from '../pages/reconciliation/ReconciliationPage';
+import UserAccessPage from '../pages/admin/UserAccessPage';
 
 const AppRoutes = () => {
   const { isAuthenticated, user } = useAuth();
@@ -63,6 +64,7 @@ const AppRoutes = () => {
           {/* Route protégée pour les administrateurs */}
           <Route element={<AdminRoute />}>
             <Route path="/users" element={<UsersPage />} />
+            <Route path="/user-access" element={<UserAccessPage />} />
             <Route path="/corebanking-config" element={<CoreBankingConfigPage />} />
           </Route>
         </Route>

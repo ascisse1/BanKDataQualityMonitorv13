@@ -1,8 +1,7 @@
 package com.bsic.dataqualitybackend.config;
 
 import com.bsic.dataqualitybackend.service.keycloak.KeycloakMigrationService;
-import org.slf4j.Logger;
-import org.slf4j.LoggerFactory;
+import lombok.extern.slf4j.Slf4j;
 import org.springframework.beans.factory.annotation.Value;
 import org.springframework.context.ApplicationListener;
 import org.springframework.context.event.ContextRefreshedEvent;
@@ -11,10 +10,9 @@ import org.springframework.stereotype.Component;
 /**
  * Listener qui exécute les migrations Keycloak au démarrage de l'application
  */
+@Slf4j
 @Component
 public class KeycloakMigrationListener implements ApplicationListener<ContextRefreshedEvent> {
-
-    private static final Logger log = LoggerFactory.getLogger(KeycloakMigrationListener.class);
 
     private final KeycloakMigrationService keycloakMigrationService;
 

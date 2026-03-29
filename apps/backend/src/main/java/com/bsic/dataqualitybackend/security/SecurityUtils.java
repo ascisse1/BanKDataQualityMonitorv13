@@ -4,10 +4,8 @@ import java.util.*;
 import java.util.stream.Collectors;
 import java.util.stream.Stream;
 
-import com.bsic.dataqualitybackend.config.SecurityConfig;
 import com.bsic.dataqualitybackend.security.AuthoritiesConstants;
-import org.slf4j.Logger;
-import org.slf4j.LoggerFactory;
+import lombok.extern.slf4j.Slf4j;
 import org.springframework.security.core.Authentication;
 import org.springframework.security.core.GrantedAuthority;
 import org.springframework.security.core.authority.SimpleGrantedAuthority;
@@ -20,11 +18,11 @@ import org.springframework.security.oauth2.server.resource.authentication.JwtAut
 /**
  * Utility class for Spring Security.
  */
+@Slf4j
 public final class SecurityUtils {
 
     public static final String CLAIMS_NAMESPACE = "https://www.jhipster.tech/";
     public static final String ROLE_PREFIX = "BDQM:ROLE_";
-    private static final Logger log = LoggerFactory.getLogger(SecurityConfig.class);
 
     private SecurityUtils() {
     }
