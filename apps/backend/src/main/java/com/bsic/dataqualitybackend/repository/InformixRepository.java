@@ -36,6 +36,38 @@ public class InformixRepository {
         }
     }
 
+    /**
+     * Fetches only specific fields for a client from CBS.
+     * Used by reconciliation to read only the corrected fields, not the entire row.
+     *
+     * @param clientId the client ID
+     * @param fields   CBS column names to fetch (e.g. "nom", "dna", "nid")
+     * @return map of alias → value for the requested fields
+     */
+    public Map<String, Object> getClientFields(String clientId, java.util.Set<String> fields) {
+        if (fields == null || fields.isEmpty()) {
+            return java.util.Collections.emptyMap();
+        }
+
+        // Build SELECT with only requested columns + their aliases
+        StringBuilder selectCols = new StringBuilder("cli as client_id");
+        for (String field : fields) {
+            if (CbsColumnRegistry.isAllowedColumn(field)) {
+                String alias = CbsColumnRegistry.toAlias(field);
+                selectCols.append(", ").append(field).append(" as ").append(alias);
+            }
+        }
+
+        String sql = "SELECT FIRST 1 " + selectCols + " FROM bkcli WHERE cli = ?";
+
+        try {
+            return informixJdbcTemplate.queryForMap(sql, clientId);
+        } catch (Exception e) {
+            log.error("Error fetching fields {} for client {} from CBS: {}", fields, clientId, e.getMessage());
+            throw new RuntimeException("Client not found in CBS", e);
+        }
+    }
+
     public Map<String, Object> getClientById(String clientId) {
         String sql = """
             SELECT FIRST 1
@@ -303,7 +335,7 @@ public class InformixRepository {
                 dvrrc,
                 uti_vrrc
         from bank.bkcli
-         limit 10
+
         """;
 
         try {

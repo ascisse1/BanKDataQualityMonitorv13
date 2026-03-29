@@ -50,7 +50,7 @@ class AnomalyServiceTest {
         testAnomaly.setErrorMessage("Invalid email format");
         testAnomaly.setStatus(AnomalyStatus.PENDING);
         testAnomaly.setSeverity("HIGH");
-        testAnomaly.setAgencyCode("AG001");
+        testAnomaly.setStructureCode("AG001");
 
         testAnomalyDto = AnomalyDto.builder()
                 .id(1L)
@@ -63,7 +63,7 @@ class AnomalyServiceTest {
                 .errorMessage("Invalid email format")
                 .status(AnomalyStatus.valueOf("PENDING"))
                 .severity("HIGH")
-                .agencyCode("AG001")
+                .structureCode("AG001")
                 .build();
     }
 
@@ -133,16 +133,16 @@ class AnomalyServiceTest {
     }
 
     @Test
-    void shouldGetAnomaliesByAgencyCode() {
+    void shouldGetAnomaliesByStructureCode() {
         List<Anomaly> anomalies = Arrays.asList(testAnomaly);
-        when(anomalyRepository.findByAgencyCode("AG001")).thenReturn(anomalies);
+        when(anomalyRepository.findByStructureCode("AG001")).thenReturn(anomalies);
 
-        List<AnomalyDto> result = anomalyService.getAnomaliesByAgencyCode("AG001");
+        List<AnomalyDto> result = anomalyService.getAnomaliesByStructureCode("AG001");
 
         assertThat(result).isNotNull();
         assertThat(result).hasSize(1);
-        assertThat(result.get(0).getAgencyCode()).isEqualTo("AG001");
-        verify(anomalyRepository, times(1)).findByAgencyCode("AG001");
+        assertThat(result.get(0).getStructureCode()).isEqualTo("AG001");
+        verify(anomalyRepository, times(1)).findByStructureCode("AG001");
     }
 
     @Test
