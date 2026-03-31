@@ -115,7 +115,10 @@ export const ruleFormSchema = z.object({
   severity: severitySchema,
   isActive: z.boolean().default(true),
   category: z.string().optional().default('Autres'),
-  priority: z.number().optional(),
+  priority: z.preprocess(
+    (val) => (val === '' || val === undefined || val === null || Number.isNaN(val) ? undefined : Number(val)),
+    z.number().optional()
+  ),
   condition: z.string().optional(), // SQL condition for backward compatibility
 });
 

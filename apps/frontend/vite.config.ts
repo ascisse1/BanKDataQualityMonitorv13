@@ -40,6 +40,8 @@ export default defineConfig({
     }
   },
   build: {
+    outDir: '../backend/src/main/resources/static',
+    emptyOutDir: true,
     target: 'esnext',
     minify: 'esbuild',
     chunkSizeWarningLimit: 1000,

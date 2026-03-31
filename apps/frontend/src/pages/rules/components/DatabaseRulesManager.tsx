@@ -4,6 +4,7 @@ import Card from '../../../components/ui/Card';
 import Button from '../../../components/ui/Button';
 import Input from '../../../components/ui/Input';
 import { useToast } from '../../../components/ui/Toaster';
+import { useAuth } from '../../../context/AuthContext';
 
 interface DatabaseRule {
   id: string;
@@ -23,6 +24,8 @@ interface DatabaseRulesManagerProps {
 }
 
 const DatabaseRulesManager: React.FC<DatabaseRulesManagerProps> = ({ onRulesUpdate }) => {
+  const { hasRole } = useAuth();
+  const isAdmin = hasRole('ADMIN');
   const [rules, setRules] = useState<DatabaseRule[]>([]);
   const [selectedTable, setSelectedTable] = useState<string>('all');
   const [editingRule, setEditingRule] = useState<DatabaseRule | null>(null);
@@ -236,13 +239,15 @@ const DatabaseRulesManager: React.FC<DatabaseRulesManagerProps> = ({ onRulesUpda
           </p>
         </div>
         
-        <Button
-          variant="primary"
-          leftIcon={<Plus className="h-4 w-4" />}
-          onClick={() => setIsCreating(true)}
-        >
-          Nouvelle Règle
-        </Button>
+        {isAdmin && (
+          <Button
+            variant="primary"
+            leftIcon={<Plus className="h-4 w-4" />}
+            onClick={() => setIsCreating(true)}
+          >
+            Nouvelle Règle
+          </Button>
+        )}
       </div>
 
       {/* Filtres */}
@@ -329,9 +334,11 @@ const DatabaseRulesManager: React.FC<DatabaseRulesManagerProps> = ({ onRulesUpda
                   <th className="px-3 py-3 text-left text-xs font-medium text-gray-500 uppercase tracking-wider">
                     Statut
                   </th>
-                  <th className="px-3 py-3 text-right text-xs font-medium text-gray-500 uppercase tracking-wider">
-                    Actions
-                  </th>
+                  {isAdmin && (
+                    <th className="px-3 py-3 text-right text-xs font-medium text-gray-500 uppercase tracking-wider">
+                      Actions
+                    </th>
+                  )}
                 </tr>
               </thead>
               <tbody className="bg-white divide-y divide-gray-200">
@@ -357,44 +364,62 @@ const DatabaseRulesManager: React.FC<DatabaseRulesManagerProps> = ({ onRulesUpda
                       </span>
                     </td>
                     <td className="px-3 py-4 whitespace-nowrap">
-                      <button
-                        onClick={() => handleToggleRule(rule.id)}
-                        className="flex items-center"
-                      >
-                        {rule.isActive ? (
-                          <div className="flex items-center text-success-600">
-                            <CheckCircle className="h-4 w-4 mr-1" />
-                            <span className="text-sm">Active</span>
-                          </div>
-                        ) : (
-                          <div className="flex items-center text-gray-400">
-                            <X className="h-4 w-4 mr-1" />
-                            <span className="text-sm">Inactive</span>
-                          </div>
-                        )}
-                      </button>
-                    </td>
-                    <td className="px-3 py-4 whitespace-nowrap text-right text-sm font-medium">
-                      <div className="flex items-center justify-end space-x-2">
-                        <Button
-                          variant="ghost"
-                          size="sm"
-                          leftIcon={<Edit className="h-4 w-4" />}
-                          onClick={() => setEditingRule(rule)}
+                      {isAdmin ? (
+                        <button
+                          onClick={() => handleToggleRule(rule.id)}
+                          className="flex items-center"
                         >
-                          Modifier
-                        </Button>
-                        <Button
-                          variant="ghost"
-                          size="sm"
-                          leftIcon={<Trash2 className="h-4 w-4" />}
-                          onClick={() => handleDeleteRule(rule.id)}
-                          className="text-error-600 hover:text-error-700"
-                        >
-                          Supprimer
-                        </Button>
-                      </div>
+                          {rule.isActive ? (
+                            <div className="flex items-center text-success-600">
+                              <CheckCircle className="h-4 w-4 mr-1" />
+                              <span className="text-sm">Active</span>
+                            </div>
+                          ) : (
+                            <div className="flex items-center text-gray-400">
+                              <X className="h-4 w-4 mr-1" />
+                              <span className="text-sm">Inactive</span>
+                            </div>
+                          )}
+                        </button>
+                      ) : (
+                        <span className="flex items-center">
+                          {rule.isActive ? (
+                            <div className="flex items-center text-success-600">
+                              <CheckCircle className="h-4 w-4 mr-1" />
+                              <span className="text-sm">Active</span>
+                            </div>
+                          ) : (
+                            <div className="flex items-center text-gray-400">
+                              <X className="h-4 w-4 mr-1" />
+                              <span className="text-sm">Inactive</span>
+                            </div>
+                          )}
+                        </span>
+                      )}
                     </td>
+                    {isAdmin && (
+                      <td className="px-3 py-4 whitespace-nowrap text-right text-sm font-medium">
+                        <div className="flex items-center justify-end space-x-2">
+                          <Button
+                            variant="ghost"
+                            size="sm"
+                            leftIcon={<Edit className="h-4 w-4" />}
+                            onClick={() => setEditingRule(rule)}
+                          >
+                            Modifier
+                          </Button>
+                          <Button
+                            variant="ghost"
+                            size="sm"
+                            leftIcon={<Trash2 className="h-4 w-4" />}
+                            onClick={() => handleDeleteRule(rule.id)}
+                            className="text-error-600 hover:text-error-700"
+                          >
+                            Supprimer
+                          </Button>
+                        </div>
+                      </td>
+                    )}
                   </tr>
                 ))}
               </tbody>

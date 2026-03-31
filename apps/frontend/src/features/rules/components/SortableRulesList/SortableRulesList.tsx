@@ -32,10 +32,10 @@ import Button from '../../../../components/ui/Button';
 
 interface SortableRulesListProps {
   rules: ValidationRule[];
-  onReorder: (rules: ValidationRule[]) => void;
-  onEdit: (rule: ValidationRule) => void;
-  onDelete: (ruleId: string) => void;
-  onToggle: (ruleId: string, active: boolean) => void;
+  onReorder?: (rules: ValidationRule[]) => void;
+  onEdit?: (rule: ValidationRule) => void;
+  onDelete?: (ruleId: string) => void;
+  onToggle?: (ruleId: string, active: boolean) => void;
   selectedIds: string[];
   onSelectionChange: (ids: string[]) => void;
   isLoading?: boolean;
@@ -43,9 +43,9 @@ interface SortableRulesListProps {
 
 interface SortableRuleRowProps {
   rule: ValidationRule;
-  onEdit: (rule: ValidationRule) => void;
-  onDelete: (ruleId: string) => void;
-  onToggle: (ruleId: string, active: boolean) => void;
+  onEdit?: (rule: ValidationRule) => void;
+  onDelete?: (ruleId: string) => void;
+  onToggle?: (ruleId: string, active: boolean) => void;
   isSelected: boolean;
   onSelect: (id: string, selected: boolean) => void;
   isDragging?: boolean;
@@ -159,42 +159,64 @@ const SortableRuleRow: React.FC<SortableRuleRowProps> = ({
         </span>
 
         {/* Status */}
-        <button
-          onClick={() => onToggle(rule.id, !rule.isActive)}
-          className="flex items-center gap-1 px-2 py-1 rounded-md transition-colors hover:bg-gray-100"
-        >
-          {rule.isActive ? (
-            <>
-              <CheckCircle className="w-4 h-4 text-success-600" />
-              <span className="text-sm text-success-600">Active</span>
-            </>
-          ) : (
-            <>
-              <X className="w-4 h-4 text-gray-400" />
-              <span className="text-sm text-gray-400">Inactive</span>
-            </>
-          )}
-        </button>
+        {onToggle ? (
+          <button
+            onClick={() => onToggle(rule.id, !rule.isActive)}
+            className="flex items-center gap-1 px-2 py-1 rounded-md transition-colors hover:bg-gray-100"
+          >
+            {rule.isActive ? (
+              <>
+                <CheckCircle className="w-4 h-4 text-success-600" />
+                <span className="text-sm text-success-600">Active</span>
+              </>
+            ) : (
+              <>
+                <X className="w-4 h-4 text-gray-400" />
+                <span className="text-sm text-gray-400">Inactive</span>
+              </>
+            )}
+          </button>
+        ) : (
+          <span className="flex items-center gap-1 px-2 py-1">
+            {rule.isActive ? (
+              <>
+                <CheckCircle className="w-4 h-4 text-success-600" />
+                <span className="text-sm text-success-600">Active</span>
+              </>
+            ) : (
+              <>
+                <X className="w-4 h-4 text-gray-400" />
+                <span className="text-sm text-gray-400">Inactive</span>
+              </>
+            )}
+          </span>
+        )}
 
         {/* Actions */}
-        <div className="flex items-center gap-1 opacity-0 group-hover:opacity-100 transition-opacity">
-          <Button
-            variant="ghost"
-            size="sm"
-            onClick={() => onEdit(rule)}
-            className="text-gray-600 hover:text-primary-600"
-          >
-            <Edit className="w-4 h-4" />
-          </Button>
-          <Button
-            variant="ghost"
-            size="sm"
-            onClick={() => onDelete(rule.id)}
-            className="text-gray-600 hover:text-error-600"
-          >
-            <Trash2 className="w-4 h-4" />
-          </Button>
-        </div>
+        {(onEdit || onDelete) && (
+          <div className="flex items-center gap-1 opacity-0 group-hover:opacity-100 transition-opacity">
+            {onEdit && (
+              <Button
+                variant="ghost"
+                size="sm"
+                onClick={() => onEdit(rule)}
+                className="text-gray-600 hover:text-primary-600"
+              >
+                <Edit className="w-4 h-4" />
+              </Button>
+            )}
+            {onDelete && (
+              <Button
+                variant="ghost"
+                size="sm"
+                onClick={() => onDelete(rule.id)}
+                className="text-gray-600 hover:text-error-600"
+              >
+                <Trash2 className="w-4 h-4" />
+              </Button>
+            )}
+          </div>
+        )}
       </div>
 
       {/* Expanded content */}
@@ -283,7 +305,7 @@ export const SortableRulesList: React.FC<SortableRulesListProps> = ({
     const { active, over } = event;
     setActiveId(null);
 
-    if (over && active.id !== over.id) {
+    if (over && active.id !== over.id && onReorder) {
       const oldIndex = rules.findIndex((rule) => rule.id === active.id);
       const newIndex = rules.findIndex((rule) => rule.id === over.id);
       const newRules = arrayMove(rules, oldIndex, newIndex);

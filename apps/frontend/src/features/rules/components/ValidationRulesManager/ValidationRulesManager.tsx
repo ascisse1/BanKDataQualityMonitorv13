@@ -19,6 +19,7 @@ import Button from '../../../../components/ui/Button';
 import Input from '../../../../components/ui/Input';
 import Card from '../../../../components/ui/Card';
 import { useDebounce } from '../../../../hooks/useDebounce';
+import { useAuth } from '../../../../context/AuthContext';
 
 interface ValidationRulesManagerProps {
   onSwitchTab?: (tab: string) => void;
@@ -27,6 +28,9 @@ interface ValidationRulesManagerProps {
 export const ValidationRulesManager: React.FC<ValidationRulesManagerProps> = ({
   onSwitchTab,
 }) => {
+  const { hasRole } = useAuth();
+  const isAdmin = hasRole('ADMIN');
+
   // State
   const [selectedClientType, setSelectedClientType] = useState<'1' | '2' | '3' | 'all'>('all');
   const [editingRule, setEditingRule] = useState<ValidationRule | null>(null);
@@ -232,15 +236,17 @@ export const ValidationRulesManager: React.FC<ValidationRulesManagerProps> = ({
             >
               Actualiser
             </Button>
-            <Button
-              variant="primary"
-              size="sm"
-              leftIcon={<Plus className="h-4 w-4" />}
-              onClick={handleCreateRule}
-              disabled={isLoading}
-            >
-              Nouvelle Règle
-            </Button>
+            {isAdmin && (
+              <Button
+                variant="primary"
+                size="sm"
+                leftIcon={<Plus className="h-4 w-4" />}
+                onClick={handleCreateRule}
+                disabled={isLoading}
+              >
+                Nouvelle Règle
+              </Button>
+            )}
           </div>
         </div>
 
@@ -336,10 +342,10 @@ export const ValidationRulesManager: React.FC<ValidationRulesManagerProps> = ({
           ) : (
             <SortableRulesList
               rules={filteredRules}
-              onReorder={handleReorder}
-              onEdit={handleEditRule}
-              onDelete={handleDeleteRule}
-              onToggle={handleToggleRule}
+              onReorder={isAdmin ? handleReorder : undefined}
+              onEdit={isAdmin ? handleEditRule : undefined}
+              onDelete={isAdmin ? handleDeleteRule : undefined}
+              onToggle={isAdmin ? handleToggleRule : undefined}
               selectedIds={selectedIds}
               onSelectionChange={setSelectedIds}
               isLoading={isLoading}
@@ -348,15 +354,17 @@ export const ValidationRulesManager: React.FC<ValidationRulesManagerProps> = ({
         </Card>
 
         {/* Bulk actions bar */}
-        <BulkActionsBar
-          selectedCount={selectedIds.length}
-          onClearSelection={() => setSelectedIds([])}
-          onActivate={handleBulkActivate}
-          onDeactivate={handleBulkDeactivate}
-          onDelete={handleBulkDelete}
-          onExport={handleExport}
-          isLoading={bulkToggle.isPending || bulkDelete.isPending}
-        />
+        {isAdmin && (
+          <BulkActionsBar
+            selectedCount={selectedIds.length}
+            onClearSelection={() => setSelectedIds([])}
+            onActivate={handleBulkActivate}
+            onDeactivate={handleBulkDeactivate}
+            onDelete={handleBulkDelete}
+            onExport={handleExport}
+            isLoading={bulkToggle.isPending || bulkDelete.isPending}
+          />
+        )}
 
         {/* Rule editor modal */}
         {(editingRule || isCreating) && (

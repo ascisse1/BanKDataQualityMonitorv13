@@ -75,7 +75,7 @@ const Sidebar = ({ isMobile, isOpen, onClose }: SidebarProps) => {
   const userRole = user?.role?.toUpperCase();
   const isAdmin = userRole === 'ADMIN';
   const isAuditor = userRole === 'AUDITOR';
-  const isAgencyUser = userRole === 'AGENCY_USER' || (user?.agencyCodes && user.agencyCodes.length > 0);
+  const isAgencyUser = userRole === 'AGENCY_USER' || (user?.structureCodes && user.structureCodes.length > 0);
 
   const mainNavigation: NavItemDef[] = [
     ...(isAdmin || isAuditor
@@ -96,19 +96,16 @@ const Sidebar = ({ isMobile, isOpen, onClose }: SidebarProps) => {
     { name: 'KPIs', icon: TrendingUp, path: '/kpis' },
     { name: 'Suivi Global', icon: LineChart, path: '/tracking' },
     { name: 'Rapports', icon: FileBarChart, path: '/reports' },
-    { name: 'Workflow', icon: Activity, path: '/workflow' },
   ];
 
   const configNavigation: NavItemDef[] = [
     { name: 'Règles', icon: FileCode, path: '/rules' },
-    { name: 'Alertes', icon: BellRing, path: '/alerts' },
     { name: 'Configuration', icon: Settings, path: '/config' },
   ];
 
   const adminNavigation: NavItemDef[] = [
     { name: 'Utilisateurs', icon: Users, path: '/users' },
     { name: 'Gestion des acces', icon: Shield, path: '/user-access' },
-    { name: 'CoreBanking', icon: Database, path: '/corebanking-config' },
   ];
 
   const navigationGroups = [
@@ -280,13 +277,13 @@ const Sidebar = ({ isMobile, isOpen, onClose }: SidebarProps) => {
           )}
 
           {/* Agency info for agency users */}
-          {isAgencyUser && user?.agencyCodes && user.agencyCodes.length > 0 && !isCollapsed && (
+          {isAgencyUser && user?.structureCodes && user.structureCodes.length > 0 && !isCollapsed && (
             <div className="p-3 rounded-xl bg-primary-50 dark:bg-primary-900/20">
               <p className="text-xs text-primary-600/70 dark:text-primary-400/70">
-                {user.agencyCodes.length === 1 ? 'Agence assignee' : 'Agences assignees'}
+                {user.structureCodes.length === 1 ? 'Agence assignee' : 'Agences assignees'}
               </p>
               <p className="text-sm font-semibold text-primary-700 dark:text-primary-300">
-                {user.agencyCodes.join(', ')}
+                {user.structureCodes.join(', ')}
               </p>
             </div>
           )}

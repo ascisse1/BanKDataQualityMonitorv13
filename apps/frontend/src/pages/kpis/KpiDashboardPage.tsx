@@ -24,7 +24,7 @@ export const KpiDashboardPage: React.FC = () => {
   const loadDashboard = async () => {
     try {
       setLoading(true);
-      const structureCode = selectedAgency || (user?.structureCode !== 'GLOBAL' ? user?.structureCode : undefined);
+      const structureCode = selectedAgency  ;
 
       const dashboardData = await kpiService.getDashboardMetrics(structureCode);
       setMetrics(dashboardData);

@@ -1,6 +1,7 @@
 package com.bsic.dataqualitybackend.config;
 
 import com.bsic.dataqualitybackend.security.SecurityUtils;
+import com.bsic.dataqualitybackend.web.filter.SpaWebFilter;
 import lombok.RequiredArgsConstructor;
 import org.springframework.beans.factory.annotation.Value;
 import org.springframework.context.annotation.Bean;
@@ -23,6 +24,7 @@ import org.springframework.security.oauth2.core.oidc.user.OidcUserAuthority;
 import org.springframework.security.oauth2.core.user.OAuth2UserAuthority;
 import org.springframework.security.web.SecurityFilterChain;
 import org.springframework.security.web.authentication.logout.LogoutSuccessHandler;
+import org.springframework.security.web.authentication.www.BasicAuthenticationFilter;
 import org.springframework.security.web.csrf.CookieCsrfTokenRepository;
 import org.springframework.security.web.csrf.CsrfTokenRequestAttributeHandler;
 import org.springframework.web.cors.CorsConfigurationSource;
@@ -73,26 +75,37 @@ public class SecurityConfig {
                         .csrfTokenRequestHandler(new CsrfTokenRequestAttributeHandler())
                 )
                 .cors(cors -> cors.configurationSource(corsConfigurationSource))
+                .addFilterAfter(new SpaWebFilter(), BasicAuthenticationFilter.class)
 
                 // Authorization rules
                 .authorizeHttpRequests(auth -> auth
                         // Public endpoints
+                        // Static assets (frontend served by backend)
                         .requestMatchers(
                                 "/",
                                 "/index.html",
                                 "/assets/**",
-                                "/favicon.ico",
-                                "/logo-*.png",
+                                "/*.js", "/*.css", "/*.map", "/*.json", "/*.txt",
+                                "/*.ico", "/*.png", "/*.svg", "/*.webapp"
+                        ).permitAll()
+                        // Spring / infrastructure endpoints
+                        .requestMatchers(
                                 "/actuator/health/**",
                                 "/swagger-ui/**",
-                                "/v3/api-docs/**",
+                                "/v3/api-docs/**"
+                        ).permitAll()
+                        // OAuth2 / Auth endpoints
+                        .requestMatchers(
                                 "/login",
-                                "/login/oauth2/code/**",        // OAuth2 callback endpoint - MUST be public
-                                "/oauth2/authorization/**",     // OAuth2 authorization initiation
+                                "/login/oauth2/code/**",
+                                "/oauth2/authorization/**"
+                        ).permitAll()
+                        // Public API endpoints
+                        .requestMatchers(
                                 "/api/public/**",
                                 "/api/auth-info",
-                                "/api/me",                      // User info endpoint for auth check
-                                "/api/monitoring/**"      // Frontend monitoring logs
+                                "/api/me",
+                                "/api/monitoring/**"
                         ).permitAll()
                         // Role-based access
                         .requestMatchers("/api/admin/**").hasRole("ADMIN")
@@ -103,6 +116,7 @@ public class SecurityConfig {
                 )
                 .oauth2Login(oauth2 ->
                     oauth2.loginPage("/")
+                        .defaultSuccessUrl("/", true)
                         .userInfoEndpoint(userInfo -> userInfo.oidcUserService(this.oidcUserService())))
 
                 // Logout configuration with Keycloak

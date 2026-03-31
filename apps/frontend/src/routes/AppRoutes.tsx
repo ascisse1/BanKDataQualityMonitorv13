@@ -19,7 +19,6 @@ import Layout from '../components/layout/Layout';
 import GlobalTrackingPage from '../pages/tracking/GlobalTrackingPage';
 import ChangePasswordPage from '../pages/auth/ChangePasswordPage';
 import { TicketsPage } from '../pages/tickets/TicketsPage';
-import { WorkflowMonitorPage } from '../pages/workflow/WorkflowMonitorPage';
 import { KpiDashboardPage } from '../pages/kpis/KpiDashboardPage';
 import ValidationPage from '../pages/validation/ValidationPage';
 import DuplicatesPage from '../pages/duplicates/DuplicatesPage';
@@ -54,7 +53,6 @@ const AppRoutes = () => {
             <Route path="/reports" element={<ReportsPage />} />
             <Route path="/alerts" element={<AlertsPage />} />
             <Route path="/config" element={<ConfigPage />} />
-            <Route path="/workflow" element={<WorkflowMonitorPage />} />
             <Route path="/kpis" element={<KpiDashboardPage />} />
             <Route path="/validation" element={<ValidationPage />} />
             <Route path="/duplicates" element={<DuplicatesPage />} />

@@ -4,7 +4,6 @@ import Card from '../../components/ui/Card';
 import Button from '../../components/ui/Button';
 import Input from '../../components/ui/Input';
 import { useToast } from '../../components/ui/Toaster';
-import { db } from '../../services/db';
 import { log } from '../../services/log';
 
 import Chart from 'react-apexcharts';
@@ -70,8 +69,8 @@ const GlobalTrackingPage: React.FC = () => {
     try {
       const response = await fetch('/api/agencies');
       if (response.ok) {
-        const data = await response.json();
-        setAgencies(data);
+        const json = await response.json();
+        setAgencies(json.data ?? json);
       }
     } catch (error) {
       log.error('api', 'Error loading agencies', { error });
@@ -85,7 +84,8 @@ const GlobalTrackingPage: React.FC = () => {
       if (!response.ok) {
         throw new Error(`HTTP error! status: ${response.status}`);
       }
-      const data = await response.json();
+      const json = await response.json();
+      const data: TrackingData[] = json.data ?? json;
 
       setTrackingData(data);
       setFilteredData(data);
@@ -615,7 +615,7 @@ const GlobalTrackingPage: React.FC = () => {
               options={anomalyRateChartOptions}
               series={[{
                 name: 'Taux d\'anomalies',
-                data: filteredData.map(item => item.indicators.tauxAnomalies).filter(Boolean)
+                data: filteredData.map(item => item.indicators?.tauxAnomalies ?? 0)
               }]}
               type="bar"
               height="100%"
@@ -639,7 +639,7 @@ const GlobalTrackingPage: React.FC = () => {
               options={fiabilisationRateChartOptions}
               series={[{
                 name: 'Taux de fiabilisation',
-                data: filteredData.map(item => item.indicators.tauxFiabilisation).filter(Boolean)
+                data: filteredData.map(item => item.indicators?.tauxFiabilisation ?? 0)
               }]}
               type="bar"
               height="100%"
@@ -664,15 +664,15 @@ const GlobalTrackingPage: React.FC = () => {
               series={[
                 {
                   name: 'Flux Total',
-                  data: filteredData.map(item => item.flux.total).filter(Boolean)
+                  data: filteredData.map(item => item.flux?.total ?? 0)
                 },
                 {
                   name: 'Anomalies',
-                  data: filteredData.map(item => item.flux.anomalies).filter(Boolean)
+                  data: filteredData.map(item => item.flux?.anomalies ?? 0)
                 },
                 {
                   name: 'Fiabilisés',
-                  data: filteredData.map(item => item.flux.fiabilises).filter(Boolean)
+                  data: filteredData.map(item => item.flux?.fiabilises ?? 0)
                 }
               ]}
               type="bar"

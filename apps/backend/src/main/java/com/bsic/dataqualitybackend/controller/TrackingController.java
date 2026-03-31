@@ -1,21 +1,20 @@
 package com.bsic.dataqualitybackend.controller;
 
 import com.bsic.dataqualitybackend.dto.ApiResponse;
+import com.bsic.dataqualitybackend.dto.TrackingDataDto;
+import com.bsic.dataqualitybackend.model.enums.AnomalyStatus;
 import com.bsic.dataqualitybackend.repository.AnomalyRepository;
-import com.bsic.dataqualitybackend.repository.DataLoadHistoryRepository;
-import com.bsic.dataqualitybackend.repository.FatcaClientRepository;
 import com.bsic.dataqualitybackend.repository.TicketRepository;
 import lombok.RequiredArgsConstructor;
 import lombok.extern.slf4j.Slf4j;
 import org.springframework.http.ResponseEntity;
 import org.springframework.security.access.prepost.PreAuthorize;
-import org.springframework.web.bind.annotation.CrossOrigin;
 import org.springframework.web.bind.annotation.GetMapping;
 import org.springframework.web.bind.annotation.RequestMapping;
 import org.springframework.web.bind.annotation.RestController;
 
-import java.util.HashMap;
-import java.util.Map;
+import java.util.*;
+import java.util.stream.Collectors;
 
 @Slf4j
 @RestController
@@ -24,26 +23,69 @@ import java.util.Map;
 public class TrackingController {
 
     private final AnomalyRepository anomalyRepository;
-    private final FatcaClientRepository fatcaClientRepository;
     private final TicketRepository ticketRepository;
-    private final DataLoadHistoryRepository dataLoadHistoryRepository;
 
     @GetMapping("/global")
     @PreAuthorize("hasAnyRole('ADMIN', 'AUDITOR')")
-    public ResponseEntity<ApiResponse<Map<String, Object>>> getGlobalTracking() {
-        Map<String, Object> tracking = new HashMap<>();
+    public ResponseEntity<ApiResponse<List<TrackingDataDto>>> getGlobalTracking() {
+        // Aggregate anomaly counts per structure and status
+        List<Object[]> rows = anomalyRepository.countByAgencyAndStatusGrouped();
 
-        tracking.put("totalAnomalies", anomalyRepository.count());
-        tracking.put("totalFatcaClients", fatcaClientRepository.count());
-        tracking.put("totalTickets", ticketRepository.count());
-        tracking.put("totalDataLoads", dataLoadHistoryRepository.count());
+        // Group by structureCode: { code -> { status -> count } }
+        Map<String, String> codeToName = new LinkedHashMap<>();
+        Map<String, Map<AnomalyStatus, Long>> byStructure = new LinkedHashMap<>();
 
-        Long totalRecordsProcessed = dataLoadHistoryRepository.getTotalRecordsProcessed();
-        tracking.put("totalRecordsProcessed", totalRecordsProcessed != null ? totalRecordsProcessed : 0L);
+        for (Object[] row : rows) {
+            String code = (String) row[0];
+            String name = row[1] != null ? (String) row[1] : code;
+            AnomalyStatus status = (AnomalyStatus) row[2];
+            long count = ((Number) row[3]).longValue();
 
-        Long totalAnomaliesDetected = dataLoadHistoryRepository.getTotalAnomaliesDetected();
-        tracking.put("totalAnomaliesDetected", totalAnomaliesDetected != null ? totalAnomaliesDetected : 0L);
+            codeToName.putIfAbsent(code, name);
+            byStructure
+                .computeIfAbsent(code, k -> new EnumMap<>(AnomalyStatus.class))
+                .put(status, count);
+        }
 
-        return ResponseEntity.ok(ApiResponse.success(tracking));
+        List<TrackingDataDto> result = byStructure.entrySet().stream().map(entry -> {
+            String code = entry.getKey();
+            Map<AnomalyStatus, Long> statusCounts = entry.getValue();
+
+            long total = statusCounts.values().stream().mapToLong(Long::longValue).sum();
+            long corrected = statusCounts.getOrDefault(AnomalyStatus.CORRECTED, 0L);
+            long validated = statusCounts.getOrDefault(AnomalyStatus.VALIDATED, 0L);
+            long closed = statusCounts.getOrDefault(AnomalyStatus.CLOSED, 0L);
+            long fiabilises = corrected + validated + closed;
+            long openAnomalies = total - fiabilises;
+
+            double tauxAnomalies = total > 0 ? (openAnomalies * 100.0 / total) : 0.0;
+            double tauxFiabilisation = total > 0 ? (fiabilises * 100.0 / total) : 0.0;
+
+            return TrackingDataDto.builder()
+                .structureCode(code)
+                .structureName(codeToName.get(code))
+                .flux(TrackingDataDto.FluxDto.builder()
+                    .total(total)
+                    .anomalies(openAnomalies)
+                    .fiabilises(fiabilises)
+                    .build())
+                .stock(TrackingDataDto.StockDto.builder()
+                    .actifs(total)
+                    .anomalies(openAnomalies)
+                    .fiabilises(fiabilises)
+                    .build())
+                .general(TrackingDataDto.GeneralDto.builder()
+                    .actifs(total)
+                    .anomalies(openAnomalies)
+                    .fiabilises(fiabilises)
+                    .build())
+                .indicators(TrackingDataDto.IndicatorsDto.builder()
+                    .tauxAnomalies(Math.round(tauxAnomalies * 10.0) / 10.0)
+                    .tauxFiabilisation(Math.round(tauxFiabilisation * 10.0) / 10.0)
+                    .build())
+                .build();
+        }).collect(Collectors.toList());
+
+        return ResponseEntity.ok(ApiResponse.success(result));
     }
 }

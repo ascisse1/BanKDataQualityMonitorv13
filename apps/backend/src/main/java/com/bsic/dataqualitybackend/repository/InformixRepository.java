@@ -235,7 +235,7 @@ public class InformixRepository {
     }
 
     /**
-     * Fetch all clients from Informix BKCLI table for sync to MySQL.
+     * Fetch all clients from the Informix BKCLI table for sync to MySQL.
      * Returns all fields needed for the Client entity.
      */
     public List<Map<String, Object>> getAllClients() {
@@ -335,7 +335,7 @@ public class InformixRepository {
                 dvrrc,
                 uti_vrrc
         from bank.bkcli
-
+                limit 10
         """;
 
         try {
@@ -451,6 +451,7 @@ public class InformixRepository {
                 dvrrc,
                 uti_vrrc
         from bkcli
+                limit 10
         """;
 
 

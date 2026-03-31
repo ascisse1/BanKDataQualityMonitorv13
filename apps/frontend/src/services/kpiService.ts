@@ -26,7 +26,7 @@ export interface DashboardMetrics {
 }
 
 class KpiService {
-  private baseUrl = '/api/kpis';
+  private baseUrl = '/kpis';
 
   async getKpisByDate(date: string): Promise<Kpi[]> {
     const response = await apiService.get<{ data: Kpi[] }>(
