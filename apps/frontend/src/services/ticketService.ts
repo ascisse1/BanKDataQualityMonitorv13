@@ -46,6 +46,24 @@ interface ApiResponse<T> {
   data: T;
 }
 
+export interface TicketAnomalyDto {
+  id: number;
+  clientNumber: string;
+  clientName: string;
+  fieldName: string;
+  fieldLabel: string;
+  currentValue: string;
+  expectedValue: string;
+  errorType: string;
+  errorMessage: string;
+  severity: string;
+  status: string;
+  correctionValue: string;
+  correctedBy: string | null;
+  correctedAt: string | null;
+  createdAt: string;
+}
+
 export const ticketService = {
   async getTickets(page = 0, size = 20, sortBy = 'createdAt', sortDirection = 'DESC'): Promise<PageResponse<TicketDto>> {
     try {
@@ -104,6 +122,18 @@ export const ticketService = {
       return response.data.data;
     } catch (error) {
       log.error('api', 'Failed to update ticket status', { error, id, status });
+      throw error;
+    }
+  },
+
+  async getTicketAnomalies(ticketId: number): Promise<TicketAnomalyDto[]> {
+    try {
+      const response = await apiClient.get<ApiResponse<TicketAnomalyDto[]>>(
+        `/api/tickets/${ticketId}/anomalies`
+      );
+      return response.data.data;
+    } catch (error) {
+      log.error('api', 'Failed to fetch ticket anomalies', { error, ticketId });
       throw error;
     }
   },

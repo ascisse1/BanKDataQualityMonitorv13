@@ -130,6 +130,10 @@ public interface AnomalyRepository extends JpaRepository<Anomaly, Long> {
 
     List<Anomaly> findByClientNumberAndStatusIn(String clientNumber, List<AnomalyStatus> statuses);
 
+    List<Anomaly> findByTicketId(Long ticketId);
+
+    List<Anomaly> findByClientNumber(String clientNumber);
+
     /**
      * Count anomalies grouped by agency and status for tracking.
      * Returns [structureCode, structureName, status, count]

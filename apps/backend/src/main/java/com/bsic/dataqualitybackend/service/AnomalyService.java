@@ -84,6 +84,11 @@ public class AnomalyService {
             .orElseThrow(() -> new RuntimeException("Anomaly not found with id: " + id));
     }
 
+    public List<AnomalyDto> getAnomaliesByTicketId(Long ticketId) {
+        return anomalyRepository.findByTicketId(ticketId)
+            .stream().map(this::mapToDto).collect(Collectors.toList());
+    }
+
     public List<AnomalyDto> getAnomaliesByStructureCode(String structureCode) {
         structureSecurityService.requireAgencyAccess(structureCode);
         return anomalyRepository.findByStructureCode(structureCode)

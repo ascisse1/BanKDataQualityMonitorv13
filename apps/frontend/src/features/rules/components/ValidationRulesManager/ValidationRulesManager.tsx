@@ -203,23 +203,7 @@ export const ValidationRulesManager: React.FC<ValidationRulesManagerProps> = ({
         <CommandPalette commands={commands} />
 
         {/* Header */}
-        <div className="flex flex-col lg:flex-row lg:items-center lg:justify-between gap-4">
-          <div>
-            <h2 className="text-xl font-semibold text-gray-900">
-              Gestion des Règles de Validation
-            </h2>
-            <p className="mt-1 text-sm text-gray-500">
-              Configurez les règles de contrôle pour chaque type de client •{' '}
-              <button
-                onClick={() => {}}
-                className="text-primary-600 hover:text-primary-700 inline-flex items-center gap-1"
-              >
-                <Keyboard className="w-3 h-3" />
-                Ctrl+K pour les raccourcis
-              </button>
-            </p>
-          </div>
-
+        <div className="flex flex-col lg:flex-row lg:items-end lg:justify-end gap-4">
           <div className="flex items-center gap-2">
             <Button
               variant="outline"

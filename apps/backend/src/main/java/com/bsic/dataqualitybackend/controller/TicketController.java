@@ -10,6 +10,8 @@ import com.bsic.dataqualitybackend.model.User;
 import com.bsic.dataqualitybackend.model.enums.TicketPriority;
 import com.bsic.dataqualitybackend.model.enums.TicketStatus;
 import com.bsic.dataqualitybackend.security.SecurityUtils;
+import com.bsic.dataqualitybackend.model.Anomaly;
+import com.bsic.dataqualitybackend.repository.AnomalyRepository;
 import com.bsic.dataqualitybackend.service.AuthenticationService;
 import com.bsic.dataqualitybackend.service.TicketService;
 import com.bsic.dataqualitybackend.service.UserService;
@@ -37,6 +39,7 @@ import java.util.stream.Collectors;
 public class TicketController {
 
     private final TicketService ticketService;
+    private final AnomalyRepository anomalyRepository;
     private final AuthenticationService authenticationService;
     private final UserService userService;
 
@@ -173,6 +176,25 @@ public class TicketController {
         return ResponseEntity.ok(ApiResponse.success("Comment added successfully", null));
     }
 
+    @GetMapping("/{id}/anomalies")
+    public ResponseEntity<ApiResponse<List<AnomalyDto>>> getTicketAnomalies(@PathVariable Long id) {
+        // First try anomalies explicitly linked to this ticket
+        List<Anomaly> anomalies = anomalyRepository.findByTicketId(id);
+
+        // If none linked by ticketId, find anomalies by the ticket's client number
+        if (anomalies.isEmpty()) {
+            Ticket ticket = ticketService.getTicketById(id).orElse(null);
+            if (ticket != null && ticket.getCli() != null) {
+                anomalies = anomalyRepository.findByClientNumber(ticket.getCli());
+            }
+        }
+
+        List<AnomalyDto> dtos = anomalies.stream()
+                .map(this::mapToAnomalyDto)
+                .collect(Collectors.toList());
+        return ResponseEntity.ok(ApiResponse.success(dtos));
+    }
+
     @GetMapping("/{id}/incidents")
     public ResponseEntity<ApiResponse<List<TicketIncidentDto>>> getTicketIncidents(@PathVariable Long id) {
         List<TicketIncident> incidents = ticketService.getTicketIncidents(id);
@@ -252,6 +274,31 @@ public class TicketController {
                 .email(user.getEmail())
                 .fullName(user.getFullName())
                 .role(user.getRole())
+                .build();
+    }
+
+    private AnomalyDto mapToAnomalyDto(Anomaly anomaly) {
+        return AnomalyDto.builder()
+                .id(anomaly.getId())
+                .clientNumber(anomaly.getClientNumber())
+                .clientName(anomaly.getClientName())
+                .clientType(anomaly.getClientType())
+                .structureCode(anomaly.getStructureCode())
+                .structureName(anomaly.getStructureName())
+                .fieldName(anomaly.getFieldName())
+                .fieldLabel(anomaly.getFieldLabel())
+                .currentValue(anomaly.getCurrentValue())
+                .expectedValue(anomaly.getExpectedValue())
+                .errorType(anomaly.getErrorType())
+                .errorMessage(anomaly.getErrorMessage())
+                .status(anomaly.getStatus())
+                .correctionValue(anomaly.getCorrectionValue())
+                .correctedBy(anomaly.getCorrectedBy())
+                .correctedAt(anomaly.getCorrectedAt())
+                .severity(anomaly.getSeverity())
+                .ticketId(anomaly.getTicketId())
+                .createdAt(anomaly.getCreatedAt())
+                .updatedAt(anomaly.getUpdatedAt())
                 .build();
     }
 }

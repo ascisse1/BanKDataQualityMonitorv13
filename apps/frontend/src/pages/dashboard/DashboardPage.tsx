@@ -78,7 +78,7 @@ const DashboardPage = () => {
         setStats(response.data);
         setLastUpdate(new Date());
 
-        log.info('dashboard', 'Stats loaded successfully', {
+        log.info('ui', 'Stats loaded successfully', {
           recordCount: response.data.total
         });
 
@@ -254,7 +254,6 @@ const DashboardPage = () => {
         <TabPanel value="quality">
           <div className="space-y-6">
             <Card
-              title="Resume de la Validation"
               isLoading={isLoading}
             >
               <ValidationSummary isLoading={isLoading} />

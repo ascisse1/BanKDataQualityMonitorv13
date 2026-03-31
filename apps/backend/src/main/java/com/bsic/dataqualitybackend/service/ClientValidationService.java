@@ -61,6 +61,9 @@ public class ClientValidationService {
 
     /**
      * Validate a list of clients and create anomalies for validation failures.
+     * Includes smart client type detection: if a client's data doesn't match
+     * their declared type (tcli), a "Type client suspect" anomaly is created
+     * and validation rules for the detected type are applied instead.
      *
      * @param clients List of clients to validate
      * @return ValidationResult with statistics
@@ -83,17 +86,39 @@ public class ClientValidationService {
         for (Client client : clients) {
             try {
                 // Determine client type
-                ClientType clientType = getClientType(client.getTcli());
-                if (clientType == null) {
+                ClientType declaredType = getClientType(client.getTcli());
+                if (declaredType == null) {
                     log.warn("Unknown client type for client {}: tcli={}", client.getCli(), client.getTcli());
                     continue;
                 }
 
-                // Get applicable rules for this client type
-                List<ValidationRule> applicableRules = getApplicableRules(allActiveRules, clientType);
+                // Smart detection: check if the actual data matches the declared type
+                ClientTypeDetectionResult detection = detectActualClientType(client, declaredType);
+                ClientType effectiveType = detection.effectiveType();
 
                 // Get agency name
                 String structureName = getStructureName(client.getAge(), structureNames);
+
+                // If mismatch detected, create a "Type client suspect" anomaly
+                if (detection.isMismatch()) {
+                    log.info("Client type mismatch detected for client {}: declared={}, detected={} (enterprise={}, individual={})",
+                            client.getCli(), declaredType, effectiveType,
+                            detection.enterpriseScore(), detection.individualScore());
+
+                    boolean tcliAnomalyExists = anomalyRepository.existsOpenAnomalyForClientAndField(
+                            client.getCli(), "tcli");
+                    if (!tcliAnomalyExists) {
+                        Anomaly mismatchAnomaly = createClientTypeMismatchAnomaly(
+                                client, declaredType, effectiveType, detection, structureName);
+                        anomalyRepository.save(mismatchAnomaly);
+                        totalAnomalies++;
+                    } else {
+                        skippedDuplicates++;
+                    }
+                }
+
+                // Get applicable rules using the effective (detected) type
+                List<ValidationRule> applicableRules = getApplicableRules(allActiveRules, effectiveType);
 
                 // Validate against each rule
                 for (ValidationRule rule : applicableRules) {
@@ -111,7 +136,7 @@ public class ClientValidationService {
                             }
 
                             // Create anomaly (ticket is created later when anomaly is corrected)
-                            Anomaly anomaly = createAnomaly(client, rule, failure, clientType, structureName);
+                            Anomaly anomaly = createAnomaly(client, rule, failure, effectiveType, structureName);
                             anomalyRepository.save(anomaly);
                             totalAnomalies++;
                         }
@@ -135,17 +160,21 @@ public class ClientValidationService {
 
     /**
      * Validate a single client and return list of failures (without saving).
+     * Uses smart client type detection.
      */
     public List<ValidationFailure> validateClient(Client client) {
         List<ValidationFailure> failures = new ArrayList<>();
 
-        ClientType clientType = getClientType(client.getTcli());
-        if (clientType == null) {
+        ClientType declaredType = getClientType(client.getTcli());
+        if (declaredType == null) {
             return failures;
         }
 
+        ClientTypeDetectionResult detection = detectActualClientType(client, declaredType);
+        ClientType effectiveType = detection.effectiveType();
+
         List<ValidationRule> allActiveRules = validationRuleRepository.findByActiveOrderByPriorityDesc(true);
-        List<ValidationRule> applicableRules = getApplicableRules(allActiveRules, clientType);
+        List<ValidationRule> applicableRules = getApplicableRules(allActiveRules, effectiveType);
 
         for (ValidationRule rule : applicableRules) {
             ValidationFailure failure = validateClientAgainstRule(client, rule);
@@ -318,6 +347,105 @@ public class ClientValidationService {
         String pre = client.getPre() != null ? client.getPre() : "";
         return (nom + " " + pre).trim();
     }
+
+    // ===== Smart Client Type Detection =====
+
+    private static final int MISMATCH_THRESHOLD = 4;
+
+    /**
+     * Detect the actual client type by scoring enterprise vs individual field indicators.
+     * If the declared type doesn't match the data pattern, returns the detected type.
+     */
+    private ClientTypeDetectionResult detectActualClientType(Client client, ClientType declaredType) {
+        int enterpriseScore = 0;
+        int individualScore = 0;
+
+        // Enterprise indicators
+        if (isNotBlank(client.getRso())) enterpriseScore += 3;
+        if (isNotBlank(client.getNrc())) enterpriseScore += 3;
+        if (client.getDatc() != null) enterpriseScore += 2;
+        if (isNotBlank(client.getFju())) enterpriseScore += 2;
+        if (isNotBlank(client.getSec())) enterpriseScore += 1;
+        if (isNotBlank(client.getSig())) enterpriseScore += 1;
+
+        // Individual indicators
+        if (client.getDna() != null) individualScore += 3;
+        if (isNotBlank(client.getPre())) individualScore += 2;
+        if (isNotBlank(client.getNmer())) individualScore += 2;
+        if ("M".equals(client.getSext()) || "F".equals(client.getSext())) individualScore += 1;
+
+        // Detect mismatch: individual declared but looks like enterprise
+        if (declaredType == ClientType.INDIVIDUAL
+                && enterpriseScore > individualScore
+                && enterpriseScore >= MISMATCH_THRESHOLD) {
+            return new ClientTypeDetectionResult(ClientType.CORPORATE, true, enterpriseScore, individualScore);
+        }
+
+        // Detect mismatch: enterprise declared but looks like individual
+        if ((declaredType == ClientType.CORPORATE || declaredType == ClientType.INSTITUTIONAL)
+                && individualScore > enterpriseScore
+                && individualScore >= MISMATCH_THRESHOLD) {
+            return new ClientTypeDetectionResult(ClientType.INDIVIDUAL, true, enterpriseScore, individualScore);
+        }
+
+        return new ClientTypeDetectionResult(declaredType, false, enterpriseScore, individualScore);
+    }
+
+    private boolean isNotBlank(String value) {
+        return value != null && !value.trim().isEmpty();
+    }
+
+    /**
+     * Create an anomaly for a client type mismatch.
+     */
+    private Anomaly createClientTypeMismatchAnomaly(Client client, ClientType declaredType,
+                                                     ClientType detectedType,
+                                                     ClientTypeDetectionResult detection,
+                                                     String structureName) {
+        String declaredLabel = switch (declaredType) {
+            case INDIVIDUAL -> "Particulier";
+            case CORPORATE -> "Entreprise";
+            case INSTITUTIONAL -> "Institutionnel";
+        };
+        String detectedLabel = switch (detectedType) {
+            case INDIVIDUAL -> "Particulier";
+            case CORPORATE -> "Entreprise";
+            case INSTITUTIONAL -> "Institutionnel";
+        };
+
+        String clientName = buildClientName(client, detectedType);
+
+        return Anomaly.builder()
+                .clientNumber(client.getCli())
+                .clientName(clientName)
+                .clientType(declaredType)
+                .structureCode(client.getAge() != null ? client.getAge() : "00000")
+                .structureName(structureName)
+                .fieldName("tcli")
+                .fieldLabel("Type client")
+                .currentValue(client.getTcli() + " - " + declaredLabel)
+                .expectedValue(detectedLabel)
+                .errorType("CROSS_FIELD")
+                .errorMessage(String.format(
+                        "Client enregistre comme %s mais presente des caracteristiques de %s " +
+                        "(score entreprise: %d, score particulier: %d)",
+                        declaredLabel, detectedLabel,
+                        detection.enterpriseScore(), detection.individualScore()))
+                .severity("CRITICAL")
+                .status(AnomalyStatus.PENDING)
+                .dataSource("CBS_SYNC")
+                .build();
+    }
+
+    /**
+     * Result of the smart client type detection.
+     */
+    private record ClientTypeDetectionResult(
+            ClientType effectiveType,
+            boolean isMismatch,
+            int enterpriseScore,
+            int individualScore
+    ) {}
 
     /**
      * Record for validation failures.
