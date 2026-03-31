@@ -180,7 +180,10 @@ app:
     sla-check-cron: "0 */15 * * * ?"
     bkcli-sync-cron: "0 0 2 * * ?"      # Daily at 2:00 AM
     agency-sync-cron: "0 30 2 * * ?"    # Daily at 2:30 AM
+    reconciliation-cron: "${RECONCILIATION_CRON:0 0 3 * * ?}"  # Daily at 3:00 AM
+    reconciliation-max-tasks: ${RECONCILIATION_MAX_TASKS:100}
   features:
     workflow-automation: ${FEATURE_WORKFLOW:true}
     kpi-tracking: ${FEATURE_KPI:true}
     informix-integration: ${FEATURE_INFORMIX:false}
+    batch-reconciliation: ${FEATURE_BATCH_RECONCILIATION:false}

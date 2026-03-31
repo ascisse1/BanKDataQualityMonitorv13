@@ -39,7 +39,20 @@ public class AnomalyService {
     private final StructureSecurityService structureSecurityService;
 
     public Page<AnomalyDto> getAnomaliesByClientType(ClientType clientType, int page, int size) {
+        return getAnomaliesByClientTypeAndStructure(clientType, null, page, size);
+    }
+
+    public Page<AnomalyDto> getAnomaliesByClientTypeAndStructure(ClientType clientType, String structureCode, int page, int size) {
         Pageable pageable = PageRequest.of(page, size, Sort.by("createdAt").descending());
+
+        if (structureCode != null && !structureCode.isBlank()) {
+            structureSecurityService.requireAgencyAccess(structureCode);
+            if (clientType == null) {
+                return anomalyRepository.findByStructureCode(structureCode, pageable).map(this::mapToDto);
+            }
+            return anomalyRepository.findByClientTypeAndStructureCode(clientType, structureCode, pageable).map(this::mapToDto);
+        }
+
         if (clientType == null) {
             return anomalyRepository.findAll(pageable).map(this::mapToDto);
         }

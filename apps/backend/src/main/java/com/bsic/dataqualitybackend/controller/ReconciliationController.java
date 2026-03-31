@@ -1,9 +1,11 @@
 package com.bsic.dataqualitybackend.controller;
 
+import com.bsic.dataqualitybackend.scheduler.ReconciliationScheduler;
 import com.bsic.dataqualitybackend.security.StructureSecurityService;
 import com.bsic.dataqualitybackend.service.ReconciliationService;
-import lombok.RequiredArgsConstructor;
 import lombok.extern.slf4j.Slf4j;
+import org.springframework.beans.factory.annotation.Autowired;
+import org.springframework.beans.factory.annotation.Value;
 import org.springframework.format.annotation.DateTimeFormat;
 import org.springframework.http.ResponseEntity;
 import org.springframework.security.access.prepost.PreAuthorize;
@@ -15,17 +17,32 @@ import org.springframework.security.core.context.SecurityContextHolder;
 import com.bsic.dataqualitybackend.model.ReconciliationAttempt;
 
 import java.time.LocalDateTime;
+import java.util.HashMap;
 import java.util.List;
 import java.util.Map;
 
 @RestController
 @RequestMapping("/api/reconciliation")
-@RequiredArgsConstructor
 @Slf4j
 public class ReconciliationController {
 
     private final ReconciliationService reconciliationService;
     private final StructureSecurityService structureSecurityService;
+
+    @Value("${app.features.batch-reconciliation:false}")
+    private boolean batchReconciliationEnabled;
+
+    @Value("${app.scheduling.reconciliation-cron:0 0 3 * * ?}")
+    private String reconciliationCron;
+
+    @Autowired(required = false)
+    private ReconciliationScheduler reconciliationScheduler;
+
+    public ReconciliationController(ReconciliationService reconciliationService,
+                                    StructureSecurityService structureSecurityService) {
+        this.reconciliationService = reconciliationService;
+        this.structureSecurityService = structureSecurityService;
+    }
 
     @GetMapping("/pending")
     @PreAuthorize("hasAnyRole('ADMIN', 'AUDITOR', 'AGENCY_USER')")
@@ -164,13 +181,39 @@ public class ReconciliationController {
         }
     }
 
-    @GetMapping("/health")
-    public ResponseEntity<Map<String, String>> health() {
-        return ResponseEntity.ok(Map.of(
-                "status", "UP",
-                "service", "Reconciliation Service",
-                "timestamp", LocalDateTime.now().toString()
+    @GetMapping("/batch-config")
+    @PreAuthorize("hasAnyRole('ADMIN', 'AUDITOR')")
+    public ResponseEntity<Map<String, Object>> getBatchConfig() {
+        Map<String, Object> config = new HashMap<>();
+        config.put("batch_reconciliation_enabled", batchReconciliationEnabled);
+        config.put("reconciliation_cron", reconciliationCron);
+        config.put("scheduler_active", reconciliationScheduler != null);
+        return ResponseEntity.ok(config);
+    }
 
-        ));
+    @PostMapping("/trigger-batch")
+    @PreAuthorize("hasRole('ADMIN')")
+    public ResponseEntity<Map<String, Object>> triggerBatchReconciliation() {
+        if (reconciliationScheduler == null) {
+            return ResponseEntity.badRequest().body(Map.of(
+                    "error", "Batch reconciliation is not enabled. Set app.features.batch-reconciliation=true and app.features.informix-integration=true"));
+        }
+        try {
+            Map<String, Object> result = reconciliationScheduler.triggerReconciliation();
+            return ResponseEntity.ok(result);
+        } catch (Exception e) {
+            log.error("Error triggering batch reconciliation: {}", e.getMessage(), e);
+            return ResponseEntity.status(500).body(Map.of("error", e.getMessage()));
+        }
+    }
+
+    @GetMapping("/health")
+    public ResponseEntity<Map<String, Object>> health() {
+        Map<String, Object> status = new HashMap<>();
+        status.put("status", "UP");
+        status.put("service", "Reconciliation Service");
+        status.put("batch_mode", batchReconciliationEnabled);
+        status.put("timestamp", LocalDateTime.now().toString());
+        return ResponseEntity.ok(status);
     }
 }
