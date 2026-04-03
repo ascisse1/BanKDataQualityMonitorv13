@@ -3,9 +3,13 @@ package com.bsic.dataqualitybackend.controller;
 import com.bsic.dataqualitybackend.dto.ApiResponse;
 import com.bsic.dataqualitybackend.dto.FatcaClientDto;
 import com.bsic.dataqualitybackend.dto.FatcaStatsDto;
+import com.bsic.dataqualitybackend.model.FatcaAuditLog;
 import com.bsic.dataqualitybackend.model.enums.ClientType;
 import com.bsic.dataqualitybackend.model.enums.FatcaStatus;
+import com.bsic.dataqualitybackend.config.FatcaConfig;
 import com.bsic.dataqualitybackend.security.StructureSecurityService;
+import com.bsic.dataqualitybackend.service.FatcaAuditService;
+import com.bsic.dataqualitybackend.service.FatcaScreeningService;
 import com.bsic.dataqualitybackend.service.FatcaService;
 import lombok.RequiredArgsConstructor;
 import lombok.extern.slf4j.Slf4j;
@@ -14,6 +18,7 @@ import org.springframework.http.ResponseEntity;
 import org.springframework.security.access.prepost.PreAuthorize;
 import org.springframework.web.bind.annotation.*;
 
+import java.util.HashMap;
 import java.util.List;
 import java.util.Map;
 
@@ -24,6 +29,9 @@ import java.util.Map;
 public class FatcaController {
 
     private final FatcaService fatcaService;
+    private final FatcaAuditService fatcaAuditService;
+    private final FatcaScreeningService fatcaScreeningService;
+    private final FatcaConfig fatcaConfig;
     private final StructureSecurityService structureSecurityService;
 
     @GetMapping("/clients")
@@ -110,5 +118,47 @@ public class FatcaController {
 
         FatcaClientDto updated = fatcaService.updateFatcaClient(id, dto);
         return ResponseEntity.ok(ApiResponse.success("Client FATCA mis à jour avec succès", updated));
+    }
+
+    @GetMapping("/config")
+    @PreAuthorize("hasAnyRole('ADMIN', 'AUDITOR')")
+    public ResponseEntity<ApiResponse<Map<String, Object>>> getFatcaConfig() {
+        Map<String, Object> config = new HashMap<>();
+        config.put("giin", fatcaConfig.getGiin());
+        config.put("reportingCountry", fatcaConfig.getReportingCountry());
+        config.put("fiName", fatcaConfig.getFiName());
+        config.put("fiAddress", fatcaConfig.getFiAddress());
+        config.put("filerCategory", fatcaConfig.getFilerCategory());
+        config.put("screeningEnabled", fatcaConfig.isScreeningEnabled());
+        return ResponseEntity.ok(ApiResponse.success(config));
+    }
+
+    @GetMapping("/audit/{cli}")
+    @PreAuthorize("hasAnyRole('ADMIN', 'AUDITOR')")
+    public ResponseEntity<ApiResponse<Page<FatcaAuditLog>>> getAuditHistory(
+            @PathVariable String cli,
+            @RequestParam(defaultValue = "0") int page,
+            @RequestParam(defaultValue = "50") int size) {
+
+        Page<FatcaAuditLog> audit = fatcaAuditService.getAuditHistory(cli, page, size);
+        return ResponseEntity.ok(ApiResponse.success(audit));
+    }
+
+    @PostMapping("/screen")
+    @PreAuthorize("hasRole('ADMIN')")
+    public ResponseEntity<ApiResponse<Map<String, Object>>> triggerScreening() {
+        log.info("Manual FATCA screening triggered via API");
+        FatcaScreeningService.ScreeningResult result = fatcaScreeningService.screenAllClients();
+
+        Map<String, Object> response = new HashMap<>();
+        response.put("totalScanned", result.totalScanned());
+        response.put("newDetections", result.newDetections());
+        response.put("updated", result.updated());
+        response.put("errors", result.errors());
+        response.put("timestamp", System.currentTimeMillis());
+
+        String message = String.format("Screening terminé: %d clients analysés, %d nouvelles détections, %d mis à jour",
+            result.totalScanned(), result.newDetections(), result.updated());
+        return ResponseEntity.ok(ApiResponse.success(message, response));
     }
 }

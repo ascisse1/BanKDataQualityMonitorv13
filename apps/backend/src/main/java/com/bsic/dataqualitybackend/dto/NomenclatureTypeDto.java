@@ -11,9 +11,16 @@ import java.time.LocalDateTime;
 @Builder
 @NoArgsConstructor
 @AllArgsConstructor
-public class AgencyDto {
-    private String age;
-    private String lib;
+public class NomenclatureTypeDto {
+    private Long id;
+    private String ctab;
+    private String name;
+    private String displayName;
+    private String description;
+    private Boolean syncEnabled;
+    private Boolean active;
+    private Integer entryCount;
+    private LocalDateTime lastSyncedAt;
     private LocalDateTime createdAt;
     private LocalDateTime updatedAt;
 }

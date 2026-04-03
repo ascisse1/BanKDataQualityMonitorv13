@@ -16,7 +16,7 @@ import java.time.LocalDateTime;
 
 @Entity
 @Filter(name = "structureFilter", condition = "structure_code IN (:codes)")
-@Table(name = "fatca_clients", indexes = {
+@Table(schema = "public",name = "fatca_clients", indexes = {
     @Index(name = "idx_fatca_client_type", columnList = "client_type"),
     @Index(name = "idx_fatca_status", columnList = "fatca_status"),
     @Index(name = "idx_fatca_agency", columnList = "structure_code"),
@@ -102,6 +102,38 @@ public class FatcaClient {
     @Column(name = "reporting_required")
     @Builder.Default
     private Boolean reportingRequired = false;
+
+    @Column(name = "w9_received_date")
+    private LocalDate w9ReceivedDate;
+
+    @Column(name = "w8_received_date")
+    private LocalDate w8ReceivedDate;
+
+    @Column(name = "w9_expiry_date")
+    private LocalDate w9ExpiryDate;
+
+    @Column(name = "w8_expiry_date")
+    private LocalDate w8ExpiryDate;
+
+    @Column(name = "document_status", length = 30)
+    private String documentStatus;
+
+    @Column(name = "document_notes", columnDefinition = "TEXT")
+    private String documentNotes;
+
+    @Column(name = "indicia_types", length = 255)
+    private String indiciaTypes;
+
+    @Column(name = "indicia_count")
+    @Builder.Default
+    private Integer indiciaCount = 0;
+
+    @Column(name = "last_screening_date")
+    private LocalDateTime lastScreeningDate;
+
+    @Column(name = "detection_source", length = 30)
+    @Builder.Default
+    private String detectionSource = "MANUAL";
 
     @CreationTimestamp
     @Column(name = "created_at", nullable = false, updatable = false)

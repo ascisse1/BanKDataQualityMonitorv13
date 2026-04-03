@@ -13,7 +13,7 @@ import java.time.LocalDateTime;
 
 @Entity
 @Filter(name = "structureFilter", condition = "structure_code IN (:codes)")
-@Table(name = "correction_stats", indexes = {
+@Table(schema = "public",name = "correction_stats", indexes = {
     @Index(name = "idx_stats_agency", columnList = "structure_code"),
     @Index(name = "idx_stats_date", columnList = "stats_date")
 })

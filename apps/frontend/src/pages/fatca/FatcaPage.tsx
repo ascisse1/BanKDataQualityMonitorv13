@@ -1,5 +1,5 @@
-import React, { useState, useEffect } from 'react';
-import { Flag, User, Building, Filter, Download, RefreshCw, FileSpreadsheet, Loader2, FileCode, Send } from 'lucide-react';
+import React, { useState, useEffect, useCallback } from 'react';
+import { Flag, User, Building, Filter, Download, RefreshCw, FileSpreadsheet, Loader2, FileCode, Send, Scan } from 'lucide-react';
 import Card from '../../components/ui/Card';
 import Button from '../../components/ui/Button';
 import Input from '../../components/ui/Input';
@@ -22,15 +22,26 @@ const FatcaPage: React.FC = () => {
   const [isRefreshing, setIsRefreshing] = useState(false);
   const [searchQuery, setSearchQuery] = useState('');
   const [isTransmitting, setIsTransmitting] = useState(false);
+  const [isScreening, setIsScreening] = useState(false);
   const [showFilters, setShowFilters] = useState(false);
   const [selectedStatus, setSelectedStatus] = useState<string | null>(null);
   const [activeTab, setActiveTab] = useState<'individual' | 'corporate' | 'transmit'>('individual');
+  const [fatcaConfigData, setFatcaConfigData] = useState<any>(null);
   const { addToast } = useToast();
 
+  const loadFatcaConfig = useCallback(async () => {
+    try {
+      const config = await db.getFatcaConfig();
+      setFatcaConfigData(config);
+    } catch {
+      // Use defaults
+    }
+  }, []);
 
   useEffect(() => {
+    loadFatcaConfig();
     setIsLoading(false);
-  }, []);
+  }, [loadFatcaConfig]);
 
   const handleStatusChange = (status: string | null) => {
     setSelectedStatus(status);
@@ -237,6 +248,21 @@ const FatcaPage: React.FC = () => {
     }
   };
 
+  const handleTriggerScreening = async () => {
+    try {
+      setIsScreening(true);
+      const result = await db.triggerFatcaScreening();
+      addToast(`Screening terminé: ${result.newDetections || 0} nouvelles détections, ${result.updated || 0} mis à jour sur ${result.totalScanned || 0} clients analysés`, 'success');
+      // Refresh data after screening
+      await db.clearCache();
+    } catch (error) {
+      addToast('Erreur lors du screening FATCA', 'error');
+      log.error('business', 'FATCA screening error', { error });
+    } finally {
+      setIsScreening(false);
+    }
+  };
+
   // Escape special XML characters in text content
   const escapeXml = (str: string | null | undefined): string => {
     if (!str) return '';
@@ -248,8 +274,8 @@ const FatcaPage: React.FC = () => {
       .replace(/'/g, '&apos;');
   };
 
-  // GIIN placeholder - must be configured before real IRS submission
-  const REPORTING_FI_GIIN = 'XXXXXX.XXXXX.XX.XXX';
+  // GIIN from backend configuration (or placeholder if not yet loaded)
+  const REPORTING_FI_GIIN = fatcaConfigData?.giin || 'XXXXXX.XXXXX.XX.XXX';
 
   // Function to generate FATCA XML from real client data
   const generateFatcaXML = (clientType: 'individual' | 'corporate', clients: any[]) => {
@@ -265,11 +291,16 @@ const FatcaPage: React.FC = () => {
       ? generateIndividualAccounts(clients)
       : generateCorporateAccounts(clients);
 
+    const fiCountry = fatcaConfigData?.reportingCountry || 'BJ';
+    const fiName = fatcaConfigData?.fiName || 'BSIC Bénin';
+    const fiAddress = fatcaConfigData?.fiAddress || 'Avenue Jean-Paul II, Cotonou, Bénin';
+    const filerCategory = fatcaConfigData?.filerCategory || 'FATCA601';
+
     return `<?xml version="1.0" encoding="UTF-8"?>
 <FATCA_OECD version="2.0">
   <MessageSpec>
     <SendingCompanyIN>${escapeXml(REPORTING_FI_GIIN)}</SendingCompanyIN>
-    <TransmittingCountry>BJ</TransmittingCountry>
+    <TransmittingCountry>${escapeXml(fiCountry)}</TransmittingCountry>
     <ReceivingCountry>US</ReceivingCountry>
     <MessageType>FATCA</MessageType>
     <MessageRefId>${escapeXml(REPORTING_FI_GIIN)}_${reportingYear}_${date.replace(/-/g, '')}_00001</MessageRefId>
@@ -278,14 +309,14 @@ const FatcaPage: React.FC = () => {
   </MessageSpec>
   <FATCA>${giinWarning}
     <ReportingFI>
-      <ResCountryCode>BJ</ResCountryCode>
+      <ResCountryCode>${escapeXml(fiCountry)}</ResCountryCode>
       <TIN issuedBy="US">${escapeXml(REPORTING_FI_GIIN)}</TIN>
-      <Name>BSIC Bénin</Name>
+      <Name>${escapeXml(fiName)}</Name>
       <Address>
-        <CountryCode>BJ</CountryCode>
-        <AddressFree>Avenue Jean-Paul II, Cotonou, Bénin</AddressFree>
+        <CountryCode>${escapeXml(fiCountry)}</CountryCode>
+        <AddressFree>${escapeXml(fiAddress)}</AddressFree>
       </Address>
-      <FilerCategory>FATCA601</FilerCategory>
+      <FilerCategory>${escapeXml(filerCategory)}</FilerCategory>
     </ReportingFI>
     <ReportingGroup>
       ${accountReports}
@@ -385,9 +416,19 @@ const FatcaPage: React.FC = () => {
         </div>
         
         <div className="mt-4 sm:mt-0 flex flex-col sm:flex-row space-y-2 sm:space-y-0 sm:space-x-2">
-          <Button 
-            variant="outline" 
-            size="sm" 
+          <Button
+            variant="outline"
+            size="sm"
+            leftIcon={<Scan className={`h-4 w-4 ${isScreening ? 'animate-spin' : ''}`} />}
+            onClick={handleTriggerScreening}
+            disabled={isScreening || isRefreshing || isExporting}
+          >
+            {isScreening ? 'Screening...' : 'Screening US'}
+          </Button>
+
+          <Button
+            variant="outline"
+            size="sm"
             leftIcon={<RefreshCw className={`h-4 w-4 ${isRefreshing ? 'animate-spin' : ''}`} />}
             onClick={refreshData}
             disabled={isRefreshing || isExporting}

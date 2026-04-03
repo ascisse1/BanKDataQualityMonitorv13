@@ -22,7 +22,7 @@ import java.util.List;
 @AllArgsConstructor
 @Entity
 @Filter(name = "structureFilter", condition = "structure_code IN (:codes)")
-@Table(name = "tickets")
+@Table(schema = "public",name = "tickets")
 @EntityListeners(AuditingEntityListener.class)
 public class Ticket {
 

@@ -1,7 +1,7 @@
 spring:
   datasource:
     primary:
-      jdbc-url: jdbc:mysql://localhost:3306/bdqm?useSSL=false&allowPublicKeyRetrieval=true&serverTimezone=UTC
+      jdbc-url: jdbc:postgresql://localhost:5432/bdqm
       username: bdqm
       password: bdqm
 
@@ -38,8 +38,7 @@ app:
   features:
     informix-integration: true
   scheduling:
-    bkcli-sync-cron: "*/59 * * * * ?"      # Every 60 seconds (dev only)
-    agency-sync-cron: "*/59 * * * * ?"     # Every 30 seconds (dev only)
+    cbs-sync-cron: "*/59 * * * * ?"      # Every 60 seconds (dev only)
   client:
     name: bsic-bank
     fullName: "Agence de Gestion du Fonds d'Accès Universel"
@@ -59,12 +58,13 @@ app:
 logging:
   level:
     com.bsic: DEBUG
-    org.springframework.security: DEBUG
-    org.springframework.security.oauth2: TRACE
-    org.springframework.web: DEBUG
-    org.springframework.web.client.RestTemplate: TRACE
-    org.hibernate.SQL: DEBUG
-    org.hibernate.type.descriptor.sql.BasicBinder: TRACE
+    org.springframework.security: INFO
+    org.springframework.security.oauth2: INFO
+    org.springframework.web: INFO
+    org.springframework.web.client.RestTemplate: INFO
+    org.hibernate.SQL: INFO
+    org.hibernate.type.descriptor.sql.BasicBinder: INFO
 
 server:
   port: 8086
+

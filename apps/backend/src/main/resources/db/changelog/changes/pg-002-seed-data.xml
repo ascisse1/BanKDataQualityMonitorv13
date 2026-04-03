@@ -1,0 +1,855 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<databaseChangeLog
+    xmlns="http://www.liquibase.org/xml/ns/dbchangelog"
+    xmlns:xsi="http://www.w3.org/2001/XMLSchema-instance"
+    xsi:schemaLocation="http://www.liquibase.org/xml/ns/dbchangelog
+        http://www.liquibase.org/xml/ns/dbchangelog/dbchangelog-latest.xsd">
+
+    <!-- =====================================================
+         1. VALIDATION RULES SEED (from 007-natural-rules-seed.xml)
+         ===================================================== -->
+
+    <!-- PARTICULIERS (tcli = '1') -->
+
+    <changeSet id="pg-002-01-particuliers-nom" author="bsic">
+        <insert tableName="validation_rules">
+            <column name="rule_name" value="Nom obligatoire"/>
+            <column name="description" value="Le nom est obligatoire pour les clients particuliers"/>
+            <column name="field_name" value="nom"/>
+            <column name="field_label" value="Nom"/>
+            <column name="client_type" value="1"/>
+            <column name="rule_type" value="required"/>
+            <column name="rule_definition" value='[{"type": "required", "message": "Le nom est obligatoire"}, {"type": "notPlaceholder", "message": "Le nom ne peut pas etre compose uniquement de X"}]'/>
+            <column name="error_message" value="Le nom est obligatoire et ne peut pas etre compose uniquement de X"/>
+            <column name="severity" value="CRITICAL"/>
+            <column name="active" valueBoolean="true"/>
+            <column name="priority" valueNumeric="1"/>
+            <column name="created_by" value="system"/>
+            <column name="created_at" valueComputed="NOW()"/>
+        </insert>
+    </changeSet>
+
+    <changeSet id="pg-002-02-particuliers-prenom" author="bsic">
+        <insert tableName="validation_rules">
+            <column name="rule_name" value="Prenom obligatoire"/>
+            <column name="description" value="Le prenom est obligatoire pour les clients particuliers"/>
+            <column name="field_name" value="pre"/>
+            <column name="field_label" value="Prenom"/>
+            <column name="client_type" value="1"/>
+            <column name="rule_type" value="required"/>
+            <column name="rule_definition" value='[{"type": "required", "message": "Le prenom est obligatoire"}, {"type": "notPlaceholder", "message": "Le prenom ne peut pas etre compose uniquement de X"}]'/>
+            <column name="error_message" value="Le prenom est obligatoire"/>
+            <column name="severity" value="CRITICAL"/>
+            <column name="active" valueBoolean="true"/>
+            <column name="priority" valueNumeric="1"/>
+            <column name="created_by" value="system"/>
+            <column name="created_at" valueComputed="NOW()"/>
+        </insert>
+    </changeSet>
+
+    <changeSet id="pg-002-03-particuliers-sexe" author="bsic">
+        <insert tableName="validation_rules">
+            <column name="rule_name" value="Sexe obligatoire"/>
+            <column name="description" value="Le sexe doit etre renseigne (M ou F)"/>
+            <column name="field_name" value="sext"/>
+            <column name="field_label" value="Sexe"/>
+            <column name="client_type" value="1"/>
+            <column name="rule_type" value="format"/>
+            <column name="rule_definition" value='[{"type": "required", "message": "Le sexe est obligatoire"}, {"type": "inList", "values": ["M", "F"], "message": "Le sexe doit etre M (Masculin) ou F (Feminin)"}]'/>
+            <column name="error_message" value="Le sexe doit etre M (Masculin) ou F (Feminin)"/>
+            <column name="severity" value="HIGH"/>
+            <column name="active" valueBoolean="true"/>
+            <column name="priority" valueNumeric="5"/>
+            <column name="created_by" value="system"/>
+            <column name="created_at" valueComputed="NOW()"/>
+        </insert>
+    </changeSet>
+
+    <changeSet id="pg-002-04-particuliers-dna" author="bsic">
+        <insert tableName="validation_rules">
+            <column name="rule_name" value="Date de naissance obligatoire"/>
+            <column name="description" value="La date de naissance est obligatoire et doit etre valide"/>
+            <column name="field_name" value="dna"/>
+            <column name="field_label" value="Date de naissance"/>
+            <column name="client_type" value="1"/>
+            <column name="rule_type" value="date"/>
+            <column name="rule_definition" value='[{"type": "required", "message": "La date de naissance est obligatoire"}, {"type": "dateAfter", "value": "1915-01-01", "message": "La date de naissance doit etre apres 1915"}, {"type": "dateNotFuture", "message": "La date de naissance ne peut pas etre dans le futur"}]'/>
+            <column name="error_message" value="La date de naissance est obligatoire et doit etre entre 1915 et aujourd'hui"/>
+            <column name="severity" value="CRITICAL"/>
+            <column name="active" valueBoolean="true"/>
+            <column name="priority" valueNumeric="1"/>
+            <column name="created_by" value="system"/>
+            <column name="created_at" valueComputed="NOW()"/>
+        </insert>
+    </changeSet>
+
+    <changeSet id="pg-002-05-particuliers-nat" author="bsic">
+        <insert tableName="validation_rules">
+            <column name="rule_name" value="Nationalite obligatoire"/>
+            <column name="description" value="La nationalite doit etre renseignee"/>
+            <column name="field_name" value="nat"/>
+            <column name="field_label" value="Nationalite"/>
+            <column name="client_type" value="1"/>
+            <column name="rule_type" value="required"/>
+            <column name="rule_definition" value='[{"type": "required", "message": "La nationalite est obligatoire"}]'/>
+            <column name="error_message" value="La nationalite est obligatoire"/>
+            <column name="severity" value="MEDIUM"/>
+            <column name="active" valueBoolean="true"/>
+            <column name="priority" valueNumeric="20"/>
+            <column name="created_by" value="system"/>
+            <column name="created_at" valueComputed="NOW()"/>
+        </insert>
+    </changeSet>
+
+    <changeSet id="pg-002-06-particuliers-nid" author="bsic">
+        <insert tableName="validation_rules">
+            <column name="rule_name" value="Format numero piece identite"/>
+            <column name="description" value="Le numero de piece d'identite doit respecter le format requis"/>
+            <column name="field_name" value="nid"/>
+            <column name="field_label" value="Numero d'identite"/>
+            <column name="client_type" value="1"/>
+            <column name="rule_type" value="format"/>
+            <column name="rule_definition" value='[{"type": "required", "message": "Le numero de piece d identite est obligatoire"}, {"type": "minLength", "value": 8, "message": "Doit contenir au moins 8 caracteres"}, {"type": "alphanumeric", "message": "Doit contenir uniquement des lettres et chiffres"}, {"type": "forbiddenPatterns", "values": ["123", "XXX", "000", "AAA"], "message": "Ne peut pas contenir de sequences invalides (123, XXX, 000)"}]'/>
+            <column name="error_message" value="Le numero de piece d'identite doit contenir au moins 8 caracteres alphanumeriques"/>
+            <column name="severity" value="HIGH"/>
+            <column name="active" valueBoolean="true"/>
+            <column name="priority" valueNumeric="5"/>
+            <column name="created_by" value="system"/>
+            <column name="created_at" valueComputed="NOW()"/>
+        </insert>
+    </changeSet>
+
+    <changeSet id="pg-002-07-particuliers-vid" author="bsic">
+        <insert tableName="validation_rules">
+            <column name="rule_name" value="Date validite piece d'identite"/>
+            <column name="description" value="La date de validite de la piece d'identite doit etre en cours"/>
+            <column name="field_name" value="vid"/>
+            <column name="field_label" value="Date validite piece"/>
+            <column name="client_type" value="1"/>
+            <column name="rule_type" value="date"/>
+            <column name="rule_definition" value='[{"type": "dateNotExpired", "optional": true, "message": "La piece d identite est expiree"}]'/>
+            <column name="error_message" value="La piece d'identite est expiree"/>
+            <column name="severity" value="CRITICAL"/>
+            <column name="active" valueBoolean="true"/>
+            <column name="priority" valueNumeric="1"/>
+            <column name="created_by" value="system"/>
+            <column name="created_at" valueComputed="NOW()"/>
+        </insert>
+    </changeSet>
+
+    <changeSet id="pg-002-08-particuliers-tid" author="bsic">
+        <insert tableName="validation_rules">
+            <column name="rule_name" value="Type piece identite obligatoire"/>
+            <column name="description" value="Le type de piece d'identite est obligatoire"/>
+            <column name="field_name" value="tid"/>
+            <column name="field_label" value="Type de piece"/>
+            <column name="client_type" value="1"/>
+            <column name="rule_type" value="required"/>
+            <column name="rule_definition" value='[{"type": "required", "message": "Le type de piece d identite est obligatoire"}]'/>
+            <column name="error_message" value="Le type de piece d'identite est obligatoire"/>
+            <column name="severity" value="HIGH"/>
+            <column name="active" valueBoolean="true"/>
+            <column name="priority" valueNumeric="5"/>
+            <column name="created_by" value="system"/>
+            <column name="created_at" valueComputed="NOW()"/>
+        </insert>
+    </changeSet>
+
+    <changeSet id="pg-002-09-particuliers-viln" author="bsic">
+        <insert tableName="validation_rules">
+            <column name="rule_name" value="Ville de naissance obligatoire"/>
+            <column name="description" value="La ville de naissance est obligatoire"/>
+            <column name="field_name" value="viln"/>
+            <column name="field_label" value="Ville de naissance"/>
+            <column name="client_type" value="1"/>
+            <column name="rule_type" value="required"/>
+            <column name="rule_definition" value='[{"type": "required", "message": "La ville de naissance est obligatoire"}]'/>
+            <column name="error_message" value="La ville de naissance est obligatoire"/>
+            <column name="severity" value="MEDIUM"/>
+            <column name="active" valueBoolean="true"/>
+            <column name="priority" valueNumeric="20"/>
+            <column name="created_by" value="system"/>
+            <column name="created_at" valueComputed="NOW()"/>
+        </insert>
+    </changeSet>
+
+    <changeSet id="pg-002-10-particuliers-payn" author="bsic">
+        <insert tableName="validation_rules">
+            <column name="rule_name" value="Pays de naissance obligatoire"/>
+            <column name="description" value="Le pays de naissance est obligatoire"/>
+            <column name="field_name" value="payn"/>
+            <column name="field_label" value="Pays de naissance"/>
+            <column name="client_type" value="1"/>
+            <column name="rule_type" value="required"/>
+            <column name="rule_definition" value='[{"type": "required", "message": "Le pays de naissance est obligatoire"}]'/>
+            <column name="error_message" value="Le pays de naissance est obligatoire"/>
+            <column name="severity" value="MEDIUM"/>
+            <column name="active" valueBoolean="true"/>
+            <column name="priority" valueNumeric="20"/>
+            <column name="created_by" value="system"/>
+            <column name="created_at" valueComputed="NOW()"/>
+        </insert>
+    </changeSet>
+
+    <changeSet id="pg-002-11-particuliers-nmer" author="bsic">
+        <insert tableName="validation_rules">
+            <column name="rule_name" value="Nom de la mere obligatoire"/>
+            <column name="description" value="Le nom de la mere est obligatoire"/>
+            <column name="field_name" value="nmer"/>
+            <column name="field_label" value="Nom de la mere"/>
+            <column name="client_type" value="1"/>
+            <column name="rule_type" value="required"/>
+            <column name="rule_definition" value='[{"type": "required", "message": "Le nom de la mere est obligatoire"}]'/>
+            <column name="error_message" value="Le nom de la mere est obligatoire"/>
+            <column name="severity" value="CRITICAL"/>
+            <column name="active" valueBoolean="true"/>
+            <column name="priority" valueNumeric="1"/>
+            <column name="created_by" value="system"/>
+            <column name="created_at" valueComputed="NOW()"/>
+        </insert>
+    </changeSet>
+
+    <!-- ENTREPRISES (tcli = '2') -->
+
+    <changeSet id="pg-002-20-entreprises-rso" author="bsic">
+        <insert tableName="validation_rules">
+            <column name="rule_name" value="Raison sociale obligatoire"/>
+            <column name="description" value="La raison sociale est obligatoire pour les entreprises"/>
+            <column name="field_name" value="rso"/>
+            <column name="field_label" value="Raison sociale"/>
+            <column name="client_type" value="2"/>
+            <column name="rule_type" value="required"/>
+            <column name="rule_definition" value='[{"type": "required", "message": "La raison sociale est obligatoire"}, {"type": "forbiddenPatterns", "values": ["123", "XXX", "000"], "message": "La raison sociale ne peut pas contenir de sequences invalides"}]'/>
+            <column name="error_message" value="La raison sociale est obligatoire"/>
+            <column name="severity" value="CRITICAL"/>
+            <column name="active" valueBoolean="true"/>
+            <column name="priority" valueNumeric="1"/>
+            <column name="created_by" value="system"/>
+            <column name="created_at" valueComputed="NOW()"/>
+        </insert>
+    </changeSet>
+
+    <changeSet id="pg-002-21-entreprises-sig" author="bsic">
+        <insert tableName="validation_rules">
+            <column name="rule_name" value="Format sigle"/>
+            <column name="description" value="Le sigle doit respecter un format approprie"/>
+            <column name="field_name" value="sig"/>
+            <column name="field_label" value="Sigle"/>
+            <column name="client_type" value="2"/>
+            <column name="rule_type" value="format"/>
+            <column name="rule_definition" value='[{"type": "maxLength", "value": 20, "optional": true, "message": "Le sigle doit contenir au maximum 20 caracteres"}, {"type": "uppercase", "optional": true, "message": "Le sigle doit etre en majuscules"}]'/>
+            <column name="error_message" value="Le sigle doit etre en majuscules (max 20 caracteres)"/>
+            <column name="severity" value="MEDIUM"/>
+            <column name="active" valueBoolean="true"/>
+            <column name="priority" valueNumeric="20"/>
+            <column name="created_by" value="system"/>
+            <column name="created_at" valueComputed="NOW()"/>
+        </insert>
+    </changeSet>
+
+    <changeSet id="pg-002-22-entreprises-nrc" author="bsic">
+        <insert tableName="validation_rules">
+            <column name="rule_name" value="Numero registre commerce obligatoire"/>
+            <column name="description" value="Le numero de registre de commerce est obligatoire"/>
+            <column name="field_name" value="nrc"/>
+            <column name="field_label" value="Numero Registre Commerce"/>
+            <column name="client_type" value="2"/>
+            <column name="rule_type" value="required"/>
+            <column name="rule_definition" value='[{"type": "required", "message": "Le numero de registre de commerce est obligatoire"}, {"type": "startsWith", "value": "MA", "message": "Le RCCM doit commencer par MA"}, {"type": "forbiddenPatterns", "values": ["123", "XXX", "000"], "message": "Le RCCM ne peut pas contenir de sequences invalides"}]'/>
+            <column name="error_message" value="Le numero de registre de commerce est obligatoire et doit commencer par MA"/>
+            <column name="severity" value="CRITICAL"/>
+            <column name="active" valueBoolean="true"/>
+            <column name="priority" valueNumeric="1"/>
+            <column name="created_by" value="system"/>
+            <column name="created_at" valueComputed="NOW()"/>
+        </insert>
+    </changeSet>
+
+    <changeSet id="pg-002-23-entreprises-datc" author="bsic">
+        <insert tableName="validation_rules">
+            <column name="rule_name" value="Date de creation obligatoire"/>
+            <column name="description" value="La date de creation de l'entreprise est obligatoire"/>
+            <column name="field_name" value="datc"/>
+            <column name="field_label" value="Date de creation"/>
+            <column name="client_type" value="2"/>
+            <column name="rule_type" value="date"/>
+            <column name="rule_definition" value='[{"type": "required", "message": "La date de creation est obligatoire"}, {"type": "dateAfter", "value": "1915-01-01", "message": "La date de creation doit etre apres 1915"}, {"type": "dateNotFuture", "message": "La date de creation ne peut pas etre dans le futur"}]'/>
+            <column name="error_message" value="La date de creation est obligatoire"/>
+            <column name="severity" value="CRITICAL"/>
+            <column name="active" valueBoolean="true"/>
+            <column name="priority" valueNumeric="1"/>
+            <column name="created_by" value="system"/>
+            <column name="created_at" valueComputed="NOW()"/>
+        </insert>
+    </changeSet>
+
+    <changeSet id="pg-002-24-entreprises-fju" author="bsic">
+        <insert tableName="validation_rules">
+            <column name="rule_name" value="Forme juridique obligatoire"/>
+            <column name="description" value="La forme juridique est obligatoire"/>
+            <column name="field_name" value="fju"/>
+            <column name="field_label" value="Forme juridique"/>
+            <column name="client_type" value="2"/>
+            <column name="rule_type" value="required"/>
+            <column name="rule_definition" value='[{"type": "required", "message": "La forme juridique est obligatoire"}]'/>
+            <column name="error_message" value="La forme juridique est obligatoire"/>
+            <column name="severity" value="HIGH"/>
+            <column name="active" valueBoolean="true"/>
+            <column name="priority" valueNumeric="5"/>
+            <column name="created_by" value="system"/>
+            <column name="created_at" valueComputed="NOW()"/>
+        </insert>
+    </changeSet>
+
+    <changeSet id="pg-002-25-entreprises-sec" author="bsic">
+        <insert tableName="validation_rules">
+            <column name="rule_name" value="Secteur activite obligatoire"/>
+            <column name="description" value="Le secteur d'activite est obligatoire"/>
+            <column name="field_name" value="sec"/>
+            <column name="field_label" value="Secteur d'activite"/>
+            <column name="client_type" value="2"/>
+            <column name="rule_type" value="required"/>
+            <column name="rule_definition" value='[{"type": "required", "message": "Le secteur d activite est obligatoire"}]'/>
+            <column name="error_message" value="Le secteur d'activite est obligatoire"/>
+            <column name="severity" value="HIGH"/>
+            <column name="active" valueBoolean="true"/>
+            <column name="priority" valueNumeric="5"/>
+            <column name="created_by" value="system"/>
+            <column name="created_at" valueComputed="NOW()"/>
+        </insert>
+    </changeSet>
+
+    <changeSet id="pg-002-26-entreprises-catn" author="bsic">
+        <insert tableName="validation_rules">
+            <column name="rule_name" value="Categorie Banque Centrale obligatoire"/>
+            <column name="description" value="La categorie de la Banque Centrale est obligatoire"/>
+            <column name="field_name" value="catn"/>
+            <column name="field_label" value="Categorie Banque Centrale"/>
+            <column name="client_type" value="2"/>
+            <column name="rule_type" value="required"/>
+            <column name="rule_definition" value='[{"type": "required", "message": "La categorie Banque Centrale est obligatoire"}]'/>
+            <column name="error_message" value="La categorie Banque Centrale est obligatoire"/>
+            <column name="severity" value="HIGH"/>
+            <column name="active" valueBoolean="true"/>
+            <column name="priority" valueNumeric="5"/>
+            <column name="created_by" value="system"/>
+            <column name="created_at" valueComputed="NOW()"/>
+        </insert>
+    </changeSet>
+
+    <changeSet id="pg-002-27-entreprises-lienbq" author="bsic">
+        <insert tableName="validation_rules">
+            <column name="rule_name" value="Lien avec la banque obligatoire"/>
+            <column name="description" value="Le lien d'apparente avec la banque est obligatoire"/>
+            <column name="field_name" value="lienbq"/>
+            <column name="field_label" value="Lien avec la banque"/>
+            <column name="client_type" value="2"/>
+            <column name="rule_type" value="required"/>
+            <column name="rule_definition" value='[{"type": "required", "message": "Le lien avec la banque est obligatoire"}]'/>
+            <column name="error_message" value="Le lien avec la banque est obligatoire"/>
+            <column name="severity" value="MEDIUM"/>
+            <column name="active" valueBoolean="true"/>
+            <column name="priority" valueNumeric="20"/>
+            <column name="created_by" value="system"/>
+            <column name="created_at" valueComputed="NOW()"/>
+        </insert>
+    </changeSet>
+
+    <!-- INSTITUTIONNELS (tcli = '3') -->
+
+    <changeSet id="pg-002-30-institutionnels-rso" author="bsic">
+        <insert tableName="validation_rules">
+            <column name="rule_name" value="Raison sociale obligatoire"/>
+            <column name="description" value="La raison sociale est obligatoire pour les institutionnels"/>
+            <column name="field_name" value="rso"/>
+            <column name="field_label" value="Raison sociale"/>
+            <column name="client_type" value="3"/>
+            <column name="rule_type" value="required"/>
+            <column name="rule_definition" value='[{"type": "required", "message": "La raison sociale est obligatoire"}, {"type": "forbiddenPatterns", "values": ["123", "XXX", "000"], "message": "La raison sociale ne peut pas contenir de sequences invalides"}]'/>
+            <column name="error_message" value="La raison sociale est obligatoire"/>
+            <column name="severity" value="CRITICAL"/>
+            <column name="active" valueBoolean="true"/>
+            <column name="priority" valueNumeric="1"/>
+            <column name="created_by" value="system"/>
+            <column name="created_at" valueComputed="NOW()"/>
+        </insert>
+    </changeSet>
+
+    <changeSet id="pg-002-31-institutionnels-nrc" author="bsic">
+        <insert tableName="validation_rules">
+            <column name="rule_name" value="Numero registre obligatoire"/>
+            <column name="description" value="Le numero de registre est obligatoire pour les institutionnels"/>
+            <column name="field_name" value="nrc"/>
+            <column name="field_label" value="Numero de registre"/>
+            <column name="client_type" value="3"/>
+            <column name="rule_type" value="required"/>
+            <column name="rule_definition" value='[{"type": "required", "message": "Le numero de registre est obligatoire"}, {"type": "forbiddenPatterns", "values": ["123", "XXX", "000"], "message": "Le numero de registre ne peut pas contenir de sequences invalides"}]'/>
+            <column name="error_message" value="Le numero de registre est obligatoire"/>
+            <column name="severity" value="CRITICAL"/>
+            <column name="active" valueBoolean="true"/>
+            <column name="priority" valueNumeric="1"/>
+            <column name="created_by" value="system"/>
+            <column name="created_at" valueComputed="NOW()"/>
+        </insert>
+    </changeSet>
+
+    <changeSet id="pg-002-32-institutionnels-datc" author="bsic">
+        <insert tableName="validation_rules">
+            <column name="rule_name" value="Date de creation obligatoire"/>
+            <column name="description" value="La date de creation est obligatoire pour les institutionnels"/>
+            <column name="field_name" value="datc"/>
+            <column name="field_label" value="Date de creation"/>
+            <column name="client_type" value="3"/>
+            <column name="rule_type" value="date"/>
+            <column name="rule_definition" value='[{"type": "required", "message": "La date de creation est obligatoire"}, {"type": "dateAfter", "value": "1915-01-01", "message": "La date de creation doit etre apres 1915"}, {"type": "dateNotFuture", "message": "La date de creation ne peut pas etre dans le futur"}]'/>
+            <column name="error_message" value="La date de creation est obligatoire"/>
+            <column name="severity" value="CRITICAL"/>
+            <column name="active" valueBoolean="true"/>
+            <column name="priority" valueNumeric="1"/>
+            <column name="created_by" value="system"/>
+            <column name="created_at" valueComputed="NOW()"/>
+        </insert>
+    </changeSet>
+
+    <changeSet id="pg-002-33-institutionnels-fju" author="bsic">
+        <insert tableName="validation_rules">
+            <column name="rule_name" value="Forme juridique obligatoire"/>
+            <column name="description" value="La forme juridique est obligatoire"/>
+            <column name="field_name" value="fju"/>
+            <column name="field_label" value="Forme juridique"/>
+            <column name="client_type" value="3"/>
+            <column name="rule_type" value="required"/>
+            <column name="rule_definition" value='[{"type": "required", "message": "La forme juridique est obligatoire"}]'/>
+            <column name="error_message" value="La forme juridique est obligatoire"/>
+            <column name="severity" value="HIGH"/>
+            <column name="active" valueBoolean="true"/>
+            <column name="priority" valueNumeric="5"/>
+            <column name="created_by" value="system"/>
+            <column name="created_at" valueComputed="NOW()"/>
+        </insert>
+    </changeSet>
+
+    <changeSet id="pg-002-34-institutionnels-sec" author="bsic">
+        <insert tableName="validation_rules">
+            <column name="rule_name" value="Secteur activite obligatoire"/>
+            <column name="description" value="Le secteur d'activite est obligatoire"/>
+            <column name="field_name" value="sec"/>
+            <column name="field_label" value="Secteur d'activite"/>
+            <column name="client_type" value="3"/>
+            <column name="rule_type" value="required"/>
+            <column name="rule_definition" value='[{"type": "required", "message": "Le secteur d activite est obligatoire"}]'/>
+            <column name="error_message" value="Le secteur d'activite est obligatoire"/>
+            <column name="severity" value="HIGH"/>
+            <column name="active" valueBoolean="true"/>
+            <column name="priority" valueNumeric="5"/>
+            <column name="created_by" value="system"/>
+            <column name="created_at" valueComputed="NOW()"/>
+        </insert>
+    </changeSet>
+
+    <changeSet id="pg-002-35-institutionnels-catn" author="bsic">
+        <insert tableName="validation_rules">
+            <column name="rule_name" value="Categorie Banque Centrale obligatoire"/>
+            <column name="description" value="La categorie de la Banque Centrale est obligatoire"/>
+            <column name="field_name" value="catn"/>
+            <column name="field_label" value="Categorie Banque Centrale"/>
+            <column name="client_type" value="3"/>
+            <column name="rule_type" value="required"/>
+            <column name="rule_definition" value='[{"type": "required", "message": "La categorie Banque Centrale est obligatoire"}]'/>
+            <column name="error_message" value="La categorie Banque Centrale est obligatoire"/>
+            <column name="severity" value="HIGH"/>
+            <column name="active" valueBoolean="true"/>
+            <column name="priority" valueNumeric="5"/>
+            <column name="created_by" value="system"/>
+            <column name="created_at" valueComputed="NOW()"/>
+        </insert>
+    </changeSet>
+
+    <changeSet id="pg-002-36-institutionnels-lienbq" author="bsic">
+        <insert tableName="validation_rules">
+            <column name="rule_name" value="Lien avec la banque obligatoire"/>
+            <column name="description" value="Le lien d'apparente avec la banque est obligatoire"/>
+            <column name="field_name" value="lienbq"/>
+            <column name="field_label" value="Lien avec la banque"/>
+            <column name="client_type" value="3"/>
+            <column name="rule_type" value="required"/>
+            <column name="rule_definition" value='[{"type": "required", "message": "Le lien avec la banque est obligatoire"}]'/>
+            <column name="error_message" value="Le lien avec la banque est obligatoire"/>
+            <column name="severity" value="MEDIUM"/>
+            <column name="active" valueBoolean="true"/>
+            <column name="priority" valueNumeric="20"/>
+            <column name="created_by" value="system"/>
+            <column name="created_at" valueComputed="NOW()"/>
+        </insert>
+    </changeSet>
+
+    <!-- COMMON RULES (All client types) -->
+
+    <changeSet id="pg-002-40-common-cli" author="bsic">
+        <insert tableName="validation_rules">
+            <column name="rule_name" value="Code client obligatoire"/>
+            <column name="description" value="Le code client est obligatoire pour tous les types"/>
+            <column name="field_name" value="cli"/>
+            <column name="field_label" value="Code client"/>
+            <column name="client_type" valueComputed="NULL"/>
+            <column name="rule_type" value="required"/>
+            <column name="rule_definition" value='[{"type": "required", "message": "Le code client est obligatoire"}]'/>
+            <column name="error_message" value="Le code client est obligatoire"/>
+            <column name="severity" value="CRITICAL"/>
+            <column name="active" valueBoolean="true"/>
+            <column name="priority" valueNumeric="1"/>
+            <column name="created_by" value="system"/>
+            <column name="created_at" valueComputed="NOW()"/>
+        </insert>
+    </changeSet>
+
+    <changeSet id="pg-002-41-common-age" author="bsic">
+        <insert tableName="validation_rules">
+            <column name="rule_name" value="Code agence obligatoire"/>
+            <column name="description" value="Le code agence est obligatoire pour tous les types"/>
+            <column name="field_name" value="age"/>
+            <column name="field_label" value="Code agence"/>
+            <column name="client_type" valueComputed="NULL"/>
+            <column name="rule_type" value="required"/>
+            <column name="rule_definition" value='[{"type": "required", "message": "Le code agence est obligatoire"}]'/>
+            <column name="error_message" value="Le code agence est obligatoire"/>
+            <column name="severity" value="HIGH"/>
+            <column name="active" valueBoolean="true"/>
+            <column name="priority" valueNumeric="5"/>
+            <column name="created_by" value="system"/>
+            <column name="created_at" valueComputed="NOW()"/>
+        </insert>
+    </changeSet>
+
+    <changeSet id="pg-002-42-common-tcli" author="bsic">
+        <insert tableName="validation_rules">
+            <column name="rule_name" value="Type client valide"/>
+            <column name="description" value="Le type de client doit etre valide (1, 2 ou 3)"/>
+            <column name="field_name" value="tcli"/>
+            <column name="field_label" value="Type client"/>
+            <column name="client_type" valueComputed="NULL"/>
+            <column name="rule_type" value="format"/>
+            <column name="rule_definition" value='[{"type": "required", "message": "Le type client est obligatoire"}, {"type": "inList", "values": ["1", "2", "3"], "message": "Le type client doit etre 1 (Particulier), 2 (Entreprise) ou 3 (Institutionnel)"}]'/>
+            <column name="error_message" value="Le type client doit etre 1 (Particulier), 2 (Entreprise) ou 3 (Institutionnel)"/>
+            <column name="severity" value="CRITICAL"/>
+            <column name="active" valueBoolean="true"/>
+            <column name="priority" valueNumeric="1"/>
+            <column name="created_by" value="system"/>
+            <column name="created_at" valueComputed="NOW()"/>
+        </insert>
+    </changeSet>
+
+    <!-- =====================================================
+         2. CBS DATA DICTIONARY SEED (from 016-data-dictionary-seed.xml)
+         Uses subqueries instead of vendor-specific @variables
+         ===================================================== -->
+
+    <changeSet id="pg-002-50-seed-cbs-tables" author="bsic">
+        <insert tableName="cbs_tables">
+            <column name="table_name" value="bkcli"/>
+            <column name="display_name" value="Clients"/>
+            <column name="description" value="Table principale des clients CBS"/>
+            <column name="schema_name" value="bank"/>
+            <column name="cbs_version" value="DELTA-BANK V10.0"/>
+            <column name="primary_key_columns" value="cli"/>
+            <column name="java_entity_class" value="Client"/>
+            <column name="sync_enabled" valueBoolean="true"/>
+            <column name="sync_order" valueNumeric="2"/>
+            <column name="active" valueBoolean="true"/>
+        </insert>
+        <insert tableName="cbs_tables">
+            <column name="table_name" value="bknom"/>
+            <column name="display_name" value="Nomenclatures"/>
+            <column name="description" value="Referentiel transverse / Parametrage transverse CBS"/>
+            <column name="schema_name" value="bank"/>
+            <column name="cbs_version" value="AMPLITUDE V11.3.6"/>
+            <column name="primary_key_columns" value="ctab,cacc,age"/>
+            <column name="sync_enabled" valueBoolean="false"/>
+            <column name="sync_order" valueNumeric="0"/>
+            <column name="active" valueBoolean="true"/>
+        </insert>
+        <insert tableName="cbs_tables">
+            <column name="table_name" value="bkage"/>
+            <column name="display_name" value="Agences"/>
+            <column name="description" value="Table des agences CBS"/>
+            <column name="schema_name" value="bank"/>
+            <column name="primary_key_columns" value="age"/>
+            <column name="java_entity_class" value="Agency"/>
+            <column name="sync_enabled" valueBoolean="true"/>
+            <column name="sync_order" valueNumeric="1"/>
+            <column name="active" valueBoolean="true"/>
+        </insert>
+    </changeSet>
+
+    <changeSet id="pg-002-51-seed-nomenclature-types" author="bsic">
+        <insert tableName="nomenclature_types">
+            <column name="ctab" value="033"/>
+            <column name="name" value="Nationalites"/>
+            <column name="display_name" value="Nationalites"/>
+            <column name="description" value="Table des nationalites"/>
+            <column name="sync_enabled" valueBoolean="true"/>
+            <column name="active" valueBoolean="true"/>
+        </insert>
+        <insert tableName="nomenclature_types">
+            <column name="ctab" value="035"/>
+            <column name="name" value="Gestionnaires"/>
+            <column name="display_name" value="Gestionnaires"/>
+            <column name="description" value="Table des gestionnaires"/>
+            <column name="sync_enabled" valueBoolean="true"/>
+            <column name="active" valueBoolean="true"/>
+        </insert>
+        <insert tableName="nomenclature_types">
+            <column name="ctab" value="036"/>
+            <column name="name" value="CodeIntitules"/>
+            <column name="display_name" value="Intitules"/>
+            <column name="description" value="Table des codes intitules (Monsieur, Madame...)"/>
+            <column name="sync_enabled" valueBoolean="true"/>
+            <column name="active" valueBoolean="true"/>
+        </insert>
+        <insert tableName="nomenclature_types">
+            <column name="ctab" value="040"/>
+            <column name="name" value="PaysResid"/>
+            <column name="display_name" value="Pays de residence"/>
+            <column name="description" value="Table des pays de residence"/>
+            <column name="sync_enabled" valueBoolean="true"/>
+            <column name="active" valueBoolean="true"/>
+        </insert>
+        <insert tableName="nomenclature_types">
+            <column name="ctab" value="041"/>
+            <column name="name" value="CategInternes"/>
+            <column name="display_name" value="Categories internes"/>
+            <column name="description" value="Table des categories internes clients"/>
+            <column name="sync_enabled" valueBoolean="true"/>
+            <column name="active" valueBoolean="true"/>
+        </insert>
+        <insert tableName="nomenclature_types">
+            <column name="ctab" value="042"/>
+            <column name="name" value="CategBqeCentr"/>
+            <column name="display_name" value="Categories Banque Centrale"/>
+            <column name="description" value="Table des categories de la Banque Centrale"/>
+            <column name="sync_enabled" valueBoolean="true"/>
+            <column name="active" valueBoolean="true"/>
+        </insert>
+        <insert tableName="nomenclature_types">
+            <column name="ctab" value="043"/>
+            <column name="name" value="QualiteCli"/>
+            <column name="display_name" value="Qualite client"/>
+            <column name="description" value="Table des codes qualite client"/>
+            <column name="sync_enabled" valueBoolean="true"/>
+            <column name="active" valueBoolean="true"/>
+        </insert>
+        <insert tableName="nomenclature_types">
+            <column name="ctab" value="047"/>
+            <column name="name" value="SituFamille"/>
+            <column name="display_name" value="Situation familiale"/>
+            <column name="description" value="Table des situations de famille"/>
+            <column name="sync_enabled" valueBoolean="true"/>
+            <column name="active" valueBoolean="true"/>
+        </insert>
+        <insert tableName="nomenclature_types">
+            <column name="ctab" value="048"/>
+            <column name="name" value="RegimMatrim"/>
+            <column name="display_name" value="Regime matrimonial"/>
+            <column name="description" value="Table des regimes matrimoniaux"/>
+            <column name="sync_enabled" valueBoolean="true"/>
+            <column name="active" valueBoolean="true"/>
+        </insert>
+        <insert tableName="nomenclature_types">
+            <column name="ctab" value="049"/>
+            <column name="name" value="FormeJurid"/>
+            <column name="display_name" value="Formes juridiques"/>
+            <column name="description" value="Table des formes juridiques"/>
+            <column name="sync_enabled" valueBoolean="true"/>
+            <column name="active" valueBoolean="true"/>
+        </insert>
+        <insert tableName="nomenclature_types">
+            <column name="ctab" value="063"/>
+            <column name="name" value="ChampLibr1Cli"/>
+            <column name="display_name" value="Champ libre 1 client"/>
+            <column name="description" value="Table des valeurs du champ libre 1 client"/>
+            <column name="sync_enabled" valueBoolean="true"/>
+            <column name="active" valueBoolean="true"/>
+        </insert>
+        <insert tableName="nomenclature_types">
+            <column name="ctab" value="064"/>
+            <column name="name" value="ChampLibr2Cli"/>
+            <column name="display_name" value="Champ libre 2 client"/>
+            <column name="description" value="Table des valeurs du champ libre 2 client"/>
+            <column name="sync_enabled" valueBoolean="true"/>
+            <column name="active" valueBoolean="true"/>
+        </insert>
+        <insert tableName="nomenclature_types">
+            <column name="ctab" value="065"/>
+            <column name="name" value="ChampLibr3Cli"/>
+            <column name="display_name" value="Champ libre 3 client"/>
+            <column name="description" value="Table des valeurs du champ libre 3 client"/>
+            <column name="sync_enabled" valueBoolean="true"/>
+            <column name="active" valueBoolean="true"/>
+        </insert>
+        <insert tableName="nomenclature_types">
+            <column name="ctab" value="071"/>
+            <column name="name" value="SectActivCli"/>
+            <column name="display_name" value="Secteurs d'activite"/>
+            <column name="description" value="Table des secteurs d'activite clients"/>
+            <column name="sync_enabled" valueBoolean="true"/>
+            <column name="active" valueBoolean="true"/>
+        </insert>
+        <insert tableName="nomenclature_types">
+            <column name="ctab" value="077"/>
+            <column name="name" value="ChbCom"/>
+            <column name="display_name" value="Chambre de Commerce"/>
+            <column name="description" value="Table des chambres de commerce"/>
+            <column name="sync_enabled" valueBoolean="true"/>
+            <column name="active" valueBoolean="true"/>
+        </insert>
+        <insert tableName="nomenclature_types">
+            <column name="ctab" value="172"/>
+            <column name="name" value="CapJuridiq"/>
+            <column name="display_name" value="Capacite juridique"/>
+            <column name="description" value="Table des capacites juridiques"/>
+            <column name="sync_enabled" valueBoolean="true"/>
+            <column name="active" valueBoolean="true"/>
+        </insert>
+        <insert tableName="nomenclature_types">
+            <column name="ctab" value="185"/>
+            <column name="name" value="SitJuridiques"/>
+            <column name="display_name" value="Situations juridiques"/>
+            <column name="description" value="Table des situations juridiques"/>
+            <column name="sync_enabled" valueBoolean="true"/>
+            <column name="active" valueBoolean="true"/>
+        </insert>
+    </changeSet>
+
+    <!-- Seed bkcli fields using subquery instead of vendor-specific @variable -->
+    <changeSet id="pg-002-52-seed-bkcli-fields" author="bsic">
+        <sql>
+            INSERT INTO cbs_fields (cbs_table_id, column_name, display_label, description, java_field_name, query_alias, data_type, max_length, is_primary_key, is_required, is_updatable, nomenclature_ctab, nomenclature_description, enum_values, applicable_client_types, display_order, field_group, active) VALUES
+            ((SELECT id FROM cbs_tables WHERE table_name = 'bkcli'), 'cli', 'Code client', 'Code du client', 'cli', 'client_code', 'CHAR', 15, true, true, false, NULL, NULL, NULL, NULL, 1, 'identity', true),
+            ((SELECT id FROM cbs_tables WHERE table_name = 'bkcli'), 'nom', 'Nom', 'Nom du client', 'nom', 'name', 'CHAR', 36, false, true, true, NULL, NULL, NULL, NULL, 2, 'identity', true),
+            ((SELECT id FROM cbs_tables WHERE table_name = 'bkcli'), 'tcli', 'Type client', 'Type de client', 'tcli', 'client_type', 'CHAR', 1, false, true, true, NULL, NULL, '{"1":"Particulier","2":"Societe","3":"Entreprise individuelle"}', NULL, 3, 'identity', true),
+            ((SELECT id FROM cbs_tables WHERE table_name = 'bkcli'), 'lib', 'Intitule', 'Code intitule (Monsieur, Madame...)', 'lib', 'lib', 'CHAR', 2, false, false, true, '036', 'CodeIntitules', NULL, NULL, 4, 'identity', true),
+            ((SELECT id FROM cbs_tables WHERE table_name = 'bkcli'), 'pre', 'Prenom', 'Prenom du client', 'pre', 'firstname', 'CHAR', 30, false, true, true, NULL, NULL, NULL, 'INDIVIDUAL', 5, 'identity', true),
+            ((SELECT id FROM cbs_tables WHERE table_name = 'bkcli'), 'sext', 'Sexe', 'Sexe du titulaire (M=Masculin, F=Feminin)', 'sext', 'sext', 'CHAR', 1, false, true, true, NULL, NULL, '{"M":"Masculin","F":"Feminin"}', 'INDIVIDUAL', 6, 'identity', true),
+            ((SELECT id FROM cbs_tables WHERE table_name = 'bkcli'), 'njf', 'Nom de jeune fille', 'Nom de jeune fille (conjoint)', 'njf', 'njf', 'CHAR', 36, false, false, true, NULL, NULL, NULL, 'INDIVIDUAL', 7, 'identity', true),
+            ((SELECT id FROM cbs_tables WHERE table_name = 'bkcli'), 'dna', 'Date de naissance', 'Date de naissance', 'dna', 'birth_date', 'DATE', NULL, false, true, true, NULL, NULL, NULL, 'INDIVIDUAL', 8, 'identity', true),
+            ((SELECT id FROM cbs_tables WHERE table_name = 'bkcli'), 'viln', 'Ville de naissance', 'Ville de naissance', 'viln', 'viln', 'CHAR', 30, false, false, true, NULL, NULL, NULL, 'INDIVIDUAL', 9, 'identity', true),
+            ((SELECT id FROM cbs_tables WHERE table_name = 'bkcli'), 'depn', 'Departement de naissance', 'Departement de naissance', 'depn', 'depn', 'CHAR', 30, false, false, true, NULL, NULL, NULL, 'INDIVIDUAL', 10, 'identity', true),
+            ((SELECT id FROM cbs_tables WHERE table_name = 'bkcli'), 'payn', 'Pays de naissance', 'Pays de naissance', 'payn', 'payn', 'CHAR', 3, false, false, true, '040', 'PaysResid', NULL, 'INDIVIDUAL', 11, 'identity', true),
+            ((SELECT id FROM cbs_tables WHERE table_name = 'bkcli'), 'locn', 'Localite de naissance', 'Code de la localite de naissance', 'locn', 'locn', 'CHAR', 6, false, false, true, NULL, NULL, NULL, 'INDIVIDUAL', 12, 'identity', true),
+            ((SELECT id FROM cbs_tables WHERE table_name = 'bkcli'), 'tid', 'Type piece identite', 'Type de piece d''identite', 'tid', 'tid', 'CHAR', 5, false, true, true, NULL, NULL, NULL, NULL, 13, 'document', true),
+            ((SELECT id FROM cbs_tables WHERE table_name = 'bkcli'), 'nid', 'Numero identite', 'Numero de piece d''identite', 'nid', 'nid', 'CHAR', 20, false, true, true, NULL, NULL, NULL, NULL, 14, 'document', true),
+            ((SELECT id FROM cbs_tables WHERE table_name = 'bkcli'), 'did', 'Date delivrance piece', 'Date de delivrance de la piece d''identite', 'did', 'did', 'DATE', NULL, false, false, true, NULL, NULL, NULL, NULL, 15, 'document', true),
+            ((SELECT id FROM cbs_tables WHERE table_name = 'bkcli'), 'lid', 'Lieu delivrance piece', 'Lieu de delivrance de la piece d''identite', 'lid', 'lid', 'CHAR', 30, false, false, true, NULL, NULL, NULL, NULL, 16, 'document', true),
+            ((SELECT id FROM cbs_tables WHERE table_name = 'bkcli'), 'oid', 'Organisme delivrance', 'Organisme ayant delivre la piece d''identite', 'oid', 'oid', 'CHAR', 30, false, false, true, NULL, NULL, NULL, NULL, 17, 'document', true),
+            ((SELECT id FROM cbs_tables WHERE table_name = 'bkcli'), 'vid', 'Validite piece identite', 'Date de validite de la piece d''identite', 'vid', 'vid', 'DATE', NULL, false, false, true, NULL, NULL, NULL, NULL, 18, 'document', true),
+            ((SELECT id FROM cbs_tables WHERE table_name = 'bkcli'), 'sit', 'Situation familiale', 'Code de la situation de famille', 'sit', 'sit', 'CHAR', 1, false, false, true, '047', 'SituFamille', NULL, 'INDIVIDUAL', 19, 'family', true),
+            ((SELECT id FROM cbs_tables WHERE table_name = 'bkcli'), 'reg', 'Regime matrimonial', 'Code du regime matrimonial', 'reg', 'reg', 'CHAR', 1, false, false, true, '048', 'RegimMatrim', NULL, 'INDIVIDUAL', 20, 'family', true),
+            ((SELECT id FROM cbs_tables WHERE table_name = 'bkcli'), 'capj', 'Capacite juridique', 'Capacite juridique du titulaire', 'capj', 'capj', 'CHAR', 1, false, false, true, '172', 'CapJuridiq', NULL, NULL, 21, 'legal', true),
+            ((SELECT id FROM cbs_tables WHERE table_name = 'bkcli'), 'dcapj', 'Date capacite juridique', 'Date d''application de la capacite juridique', 'dcapj', 'dcapj', 'DATE', NULL, false, false, true, NULL, NULL, NULL, NULL, 22, 'legal', true),
+            ((SELECT id FROM cbs_tables WHERE table_name = 'bkcli'), 'sitj', 'Situation juridique', 'Situation juridique', 'sitj', 'sitj', 'CHAR', 3, false, false, true, '185', 'SitJuridiques', NULL, NULL, 23, 'legal', true),
+            ((SELECT id FROM cbs_tables WHERE table_name = 'bkcli'), 'dsitj', 'Date situation juridique', 'Date d''application de la situation juridique', 'dsitj', 'dsitj', 'DATE', NULL, false, false, true, NULL, NULL, NULL, NULL, 24, 'legal', true),
+            ((SELECT id FROM cbs_tables WHERE table_name = 'bkcli'), 'tconj', 'Type conjoint', 'Type de conjoint', 'tconj', 'tconj', 'CHAR', 1, false, false, true, NULL, NULL, NULL, 'INDIVIDUAL', 25, 'family', true),
+            ((SELECT id FROM cbs_tables WHERE table_name = 'bkcli'), 'conj', 'Code conjoint', 'Code du conjoint', 'conj', 'conj', 'CHAR', 15, false, false, true, NULL, NULL, NULL, 'INDIVIDUAL', 26, 'family', true),
+            ((SELECT id FROM cbs_tables WHERE table_name = 'bkcli'), 'nbenf', 'Nombre enfants', 'Nombre d''enfants', 'nbenf', 'nbenf', 'SMALLINT', NULL, false, false, true, NULL, NULL, NULL, 'INDIVIDUAL', 27, 'family', true),
+            ((SELECT id FROM cbs_tables WHERE table_name = 'bkcli'), 'clifam', 'Client rattachement familial', 'Code du client de rattachement familial', 'clifam', 'clifam', 'CHAR', 15, false, false, true, NULL, NULL, NULL, 'INDIVIDUAL', 28, 'family', true),
+            ((SELECT id FROM cbs_tables WHERE table_name = 'bkcli'), 'rso', 'Raison sociale', 'Raison sociale de declaration', 'rso', 'rso', 'CHAR', 65, false, true, true, NULL, NULL, NULL, 'CORPORATE,INSTITUTIONAL', 29, 'enterprise', true),
+            ((SELECT id FROM cbs_tables WHERE table_name = 'bkcli'), 'sig', 'Sigle', 'Sigle', 'sig', 'sig', 'CHAR', 20, false, false, true, NULL, NULL, NULL, 'CORPORATE,INSTITUTIONAL', 30, 'enterprise', true),
+            ((SELECT id FROM cbs_tables WHERE table_name = 'bkcli'), 'datc', 'Date creation entreprise', 'Date de creation entreprise', 'datc', 'datc', 'DATE', NULL, false, false, true, NULL, NULL, NULL, 'CORPORATE,INSTITUTIONAL', 31, 'enterprise', true),
+            ((SELECT id FROM cbs_tables WHERE table_name = 'bkcli'), 'fju', 'Forme juridique', 'Code de la forme juridique', 'fju', 'fju', 'CHAR', 2, false, true, true, '049', 'FormeJurid', NULL, 'CORPORATE,INSTITUTIONAL', 32, 'enterprise', true),
+            ((SELECT id FROM cbs_tables WHERE table_name = 'bkcli'), 'nrc', 'Numero registre commerce', 'Numero du registre du commerce', 'nrc', 'nrc', 'CHAR', 20, false, false, true, NULL, NULL, NULL, 'CORPORATE,INSTITUTIONAL', 33, 'enterprise', true),
+            ((SELECT id FROM cbs_tables WHERE table_name = 'bkcli'), 'vrc', 'Validite registre commerce', 'Date de validite du registre du commerce', 'vrc', 'vrc', 'DATE', NULL, false, false, true, NULL, NULL, NULL, 'CORPORATE,INSTITUTIONAL', 34, 'enterprise', true),
+            ((SELECT id FROM cbs_tables WHERE table_name = 'bkcli'), 'nchc', 'Chambre de commerce', 'Code de la chambre de commerce', 'nchc', 'nchc', 'CHAR', 3, false, false, true, '077', 'ChbCom', NULL, 'CORPORATE,INSTITUTIONAL', 35, 'enterprise', true),
+            ((SELECT id FROM cbs_tables WHERE table_name = 'bkcli'), 'npa', 'Numero patente', 'Numero de patente', 'npa', 'npa', 'CHAR', 20, false, false, true, NULL, NULL, NULL, 'CORPORATE,INSTITUTIONAL', 36, 'enterprise', true),
+            ((SELECT id FROM cbs_tables WHERE table_name = 'bkcli'), 'vpa', 'Validite patente', 'Date de validite de la patente', 'vpa', 'vpa', 'DATE', NULL, false, false, true, NULL, NULL, NULL, 'CORPORATE,INSTITUTIONAL', 37, 'enterprise', true),
+            ((SELECT id FROM cbs_tables WHERE table_name = 'bkcli'), 'nidn', 'Identite nationale', 'Numero d''identite nationale', 'nidn', 'nidn', 'CHAR', 20, false, false, true, NULL, NULL, NULL, NULL, 38, 'enterprise', true),
+            ((SELECT id FROM cbs_tables WHERE table_name = 'bkcli'), 'nis', 'Identite sociale', 'Numero d''identite sociale', 'nis', 'nis', 'CHAR', 20, false, false, true, NULL, NULL, NULL, NULL, 39, 'enterprise', true),
+            ((SELECT id FROM cbs_tables WHERE table_name = 'bkcli'), 'nidf', 'Identite fiscale', 'Numero d''identite fiscale', 'nidf', 'nidf', 'CHAR', 20, false, false, true, NULL, NULL, NULL, NULL, 40, 'enterprise', true),
+            ((SELECT id FROM cbs_tables WHERE table_name = 'bkcli'), 'grp', 'Code groupe', 'Code groupe', 'grp', 'grp', 'CHAR', 6, false, false, true, NULL, NULL, NULL, NULL, 41, 'classification', true),
+            ((SELECT id FROM cbs_tables WHERE table_name = 'bkcli'), 'sgrp', 'Sous-groupe', 'Sous-groupe', 'sgrp', 'sgrp', 'CHAR', 6, false, false, true, NULL, NULL, NULL, NULL, 42, 'classification', true),
+            ((SELECT id FROM cbs_tables WHERE table_name = 'bkcli'), 'met', 'Metier', 'Metier', 'met', 'met', 'CHAR', 6, false, false, true, NULL, NULL, NULL, NULL, 43, 'classification', true),
+            ((SELECT id FROM cbs_tables WHERE table_name = 'bkcli'), 'smet', 'Sous-metier', 'Sous-metier', 'smet', 'smet', 'CHAR', 6, false, false, true, NULL, NULL, NULL, NULL, 44, 'classification', true),
+            ((SELECT id FROM cbs_tables WHERE table_name = 'bkcli'), 'cmc1', 'Commissaire comptes 1', 'Code du commissaire aux comptes', 'cmc1', 'cmc1', 'CHAR', 36, false, false, true, NULL, NULL, NULL, 'CORPORATE,INSTITUTIONAL', 45, 'enterprise', true),
+            ((SELECT id FROM cbs_tables WHERE table_name = 'bkcli'), 'cmc2', 'Commissaire comptes 2', 'Code du commissaire aux comptes', 'cmc2', 'cmc2', 'CHAR', 36, false, false, true, NULL, NULL, NULL, 'CORPORATE,INSTITUTIONAL', 46, 'enterprise', true),
+            ((SELECT id FROM cbs_tables WHERE table_name = 'bkcli'), 'age', 'Code agence', 'Code de l''agence', 'age', 'age', 'CHAR', 5, false, true, true, NULL, NULL, NULL, NULL, 47, 'management', true),
+            ((SELECT id FROM cbs_tables WHERE table_name = 'bkcli'), 'ges', 'Gestionnaire', 'Code du gestionnaire', 'ges', 'ges', 'CHAR', 3, false, false, true, '035', 'Gestionnaires', NULL, NULL, 48, 'management', true),
+            ((SELECT id FROM cbs_tables WHERE table_name = 'bkcli'), 'qua', 'Qualite client', 'Code qualite', 'qua', 'qua', 'CHAR', 2, false, false, true, '043', 'QualiteCli', NULL, NULL, 49, 'classification', true),
+            ((SELECT id FROM cbs_tables WHERE table_name = 'bkcli'), 'tax', 'Client taxable', 'Client taxable (O/N)', 'tax', 'tax', 'CHAR', 1, false, false, true, NULL, NULL, '{"O":"Oui","N":"Non"}', NULL, 50, 'classification', true),
+            ((SELECT id FROM cbs_tables WHERE table_name = 'bkcli'), 'catl', 'Categorie interne', 'Code de la categorie interne', 'catl', 'catl', 'CHAR', 1, false, false, true, '041', 'CategInternes', NULL, NULL, 51, 'classification', true),
+            ((SELECT id FROM cbs_tables WHERE table_name = 'bkcli'), 'seg', 'Segment', 'Segment', 'seg', 'seg', 'CHAR', 3, false, false, true, NULL, NULL, NULL, NULL, 52, 'classification', true),
+            ((SELECT id FROM cbs_tables WHERE table_name = 'bkcli'), 'nst', 'Numero statistique', 'Numero statistique', 'nst', 'nst', 'CHAR', 20, false, false, true, NULL, NULL, NULL, NULL, 53, 'classification', true),
+            ((SELECT id FROM cbs_tables WHERE table_name = 'bkcli'), 'clipar', 'Client parrainage', 'Code du client de parrainage', 'clipar', 'clipar', 'CHAR', 15, false, false, true, NULL, NULL, NULL, NULL, 54, 'management', true),
+            ((SELECT id FROM cbs_tables WHERE table_name = 'bkcli'), 'chl1', 'Champ libre 1', 'Code champ libre 1', 'chl1', 'chl1', 'CHAR', 10, false, false, true, '063', 'ChampLibr1Cli', NULL, NULL, 55, 'custom', true),
+            ((SELECT id FROM cbs_tables WHERE table_name = 'bkcli'), 'chl2', 'Champ libre 2', 'Code champ libre 2', 'chl2', 'chl2', 'CHAR', 10, false, false, true, '064', 'ChampLibr2Cli', NULL, NULL, 56, 'custom', true),
+            ((SELECT id FROM cbs_tables WHERE table_name = 'bkcli'), 'chl3', 'Champ libre 3', 'Code champ libre 3', 'chl3', 'chl3', 'CHAR', 10, false, false, true, '065', 'ChampLibr3Cli', NULL, NULL, 57, 'custom', true),
+            ((SELECT id FROM cbs_tables WHERE table_name = 'bkcli'), 'lter', 'Territorialite FICOBA', 'Code territorialite (FICOBA)', 'lter', 'lter', 'CHAR', 1, false, false, true, NULL, NULL, NULL, NULL, 58, 'regulatory', true),
+            ((SELECT id FROM cbs_tables WHERE table_name = 'bkcli'), 'lterc', 'Territorialite conjoint', 'Code territorialite conjoint', 'lterc', 'lterc', 'CHAR', 1, false, false, true, NULL, NULL, NULL, NULL, 59, 'regulatory', true),
+            ((SELECT id FROM cbs_tables WHERE table_name = 'bkcli'), 'resd', 'Residence declaration', 'Residence de declaration', 'resd', 'resd', 'CHAR', 3, false, false, true, NULL, NULL, NULL, NULL, 60, 'regulatory', true),
+            ((SELECT id FROM cbs_tables WHERE table_name = 'bkcli'), 'catn', 'Categorie Banque Centrale', 'Code de la categorie de la Banque Centrale', 'catn', 'catn', 'CHAR', 6, false, false, true, '042', 'CategBqeCentr', NULL, NULL, 61, 'regulatory', true),
+            ((SELECT id FROM cbs_tables WHERE table_name = 'bkcli'), 'sec', 'Secteur activite', 'Code du secteur d''activite', 'sec', 'sec', 'CHAR', 5, false, false, true, '071', 'SectActivCli', NULL, NULL, 62, 'classification', true),
+            ((SELECT id FROM cbs_tables WHERE table_name = 'bkcli'), 'lienbq', 'Lien avec la banque', 'Lien d''apparente avec la banque', 'lienbq', 'lienbq', 'CHAR', 3, false, false, true, NULL, NULL, NULL, NULL, 63, 'classification', true),
+            ((SELECT id FROM cbs_tables WHERE table_name = 'bkcli'), 'aclas', 'Accord classement', 'Accord de classement', 'aclas', 'aclas', 'CHAR', 1, false, false, true, NULL, NULL, NULL, NULL, 64, 'regulatory', true),
+            ((SELECT id FROM cbs_tables WHERE table_name = 'bkcli'), 'maclas', 'Montant accord classement', 'Montant de l''accord de classement', 'maclas', 'maclas', 'DECIMAL', NULL, false, false, true, NULL, NULL, NULL, NULL, 65, 'regulatory', true),
+            ((SELECT id FROM cbs_tables WHERE table_name = 'bkcli'), 'emtit', 'Emetteur titres', 'Emetteur de titres', 'emtit', 'emtit', 'CHAR', 1, false, false, true, NULL, NULL, NULL, NULL, 66, 'regulatory', true),
+            ((SELECT id FROM cbs_tables WHERE table_name = 'bkcli'), 'nicr', 'Numero Centrale Risques', 'Numero d''immatriculation a la Centrale des Risques', 'nicr', 'nicr', 'CHAR', 20, false, false, true, NULL, NULL, NULL, NULL, 67, 'regulatory', true),
+            ((SELECT id FROM cbs_tables WHERE table_name = 'bkcli'), 'ced', 'Code edition', 'Code edition', 'ced', 'ced', 'CHAR', 1, false, false, true, NULL, NULL, NULL, NULL, 68, 'audit', true),
+            ((SELECT id FROM cbs_tables WHERE table_name = 'bkcli'), 'clcr', 'Cle Centrale Risques', 'Cle de la Centrale des Risques', 'clcr', 'clcr', 'CHAR', 1, false, false, true, NULL, NULL, NULL, NULL, 69, 'regulatory', true),
+            ((SELECT id FROM cbs_tables WHERE table_name = 'bkcli'), 'nmer', 'Nom de la mere', 'Nom de la mere du titulaire', 'nmer', 'nmer', 'CHAR', 36, false, false, true, NULL, NULL, NULL, 'INDIVIDUAL', 70, 'identity', true),
+            ((SELECT id FROM cbs_tables WHERE table_name = 'bkcli'), 'lang', 'Code langue', 'Code langue', 'lang', 'lang', 'CHAR', 3, false, false, true, NULL, NULL, NULL, NULL, 71, 'classification', true),
+            ((SELECT id FROM cbs_tables WHERE table_name = 'bkcli'), 'nat', 'Nationalite', 'Code de la nationalite', 'nat', 'nationality', 'CHAR', 3, false, true, true, '033', 'Nationalites', NULL, NULL, 72, 'identity', true),
+            ((SELECT id FROM cbs_tables WHERE table_name = 'bkcli'), 'res', 'Pays de residence', 'Code du pays de residence', 'res', 'res', 'CHAR', 3, false, false, true, '040', 'PaysResid', NULL, NULL, 73, 'identity', true),
+            ((SELECT id FROM cbs_tables WHERE table_name = 'bkcli'), 'ichq', 'Interdiction chequier', 'Interdiction de chequier (O/N)', 'ichq', 'ichq', 'CHAR', 1, false, false, true, NULL, NULL, '{"O":"Oui","N":"Non"}', NULL, 74, 'restrictions', true),
+            ((SELECT id FROM cbs_tables WHERE table_name = 'bkcli'), 'dichq', 'Date interdiction chequier', 'Date de remise en interdiction de chequier', 'dichq', 'dichq', 'DATE', NULL, false, false, true, NULL, NULL, NULL, NULL, 75, 'restrictions', true),
+            ((SELECT id FROM cbs_tables WHERE table_name = 'bkcli'), 'icb', 'Interdiction carte bancaire', 'Interdiction de la carte bancaire', 'icb', 'icb', 'CHAR', 1, false, false, true, NULL, NULL, NULL, NULL, 76, 'restrictions', true),
+            ((SELECT id FROM cbs_tables WHERE table_name = 'bkcli'), 'dicb', 'Date interdiction carte', 'Date d''interdiction de carte bancaire', 'dicb', 'dicb', 'DATE', NULL, false, false, true, NULL, NULL, NULL, NULL, 77, 'restrictions', true),
+            ((SELECT id FROM cbs_tables WHERE table_name = 'bkcli'), 'epu', 'Epuration', 'Code de l''epuration (O/N)', 'epu', 'epu', 'CHAR', 1, false, false, true, NULL, NULL, '{"O":"Oui","N":"Non"}', NULL, 78, 'audit', true),
+            ((SELECT id FROM cbs_tables WHERE table_name = 'bkcli'), 'utic', 'Utilisateur creation', 'Code de l''utilisateur ayant cree', 'utic', 'utic', 'CHAR', 10, false, false, false, NULL, NULL, NULL, NULL, 79, 'audit', true),
+            ((SELECT id FROM cbs_tables WHERE table_name = 'bkcli'), 'uti', 'Utilisateur modification', 'Code de l''utilisateur ayant initie', 'uti', 'uti', 'CHAR', 10, false, false, false, NULL, NULL, NULL, NULL, 80, 'audit', true),
+            ((SELECT id FROM cbs_tables WHERE table_name = 'bkcli'), 'dou', 'Date creation', 'Date de creation', 'dou', 'dou', 'DATE', NULL, false, false, false, NULL, NULL, NULL, NULL, 81, 'audit', true),
+            ((SELECT id FROM cbs_tables WHERE table_name = 'bkcli'), 'dmo', 'Date modification', 'Date de derniere modification', 'dmo', 'dmo', 'DATE', NULL, false, false, false, NULL, NULL, NULL, NULL, 82, 'audit', true),
+            ((SELECT id FROM cbs_tables WHERE table_name = 'bkcli'), 'ord', 'Numero fiche modification', 'Numero de fiche de modification', 'ord', 'ord', 'DECIMAL', NULL, false, false, false, NULL, NULL, NULL, NULL, 83, 'audit', true),
+            ((SELECT id FROM cbs_tables WHERE table_name = 'bkcli'), 'catr', 'Transfert temps reel', 'Code du transfert en temps reel', 'catr', 'catr', 'CHAR', 1, false, false, true, NULL, NULL, NULL, NULL, 84, 'audit', true),
+            ((SELECT id FROM cbs_tables WHERE table_name = 'bkcli'), 'midname', 'Deuxieme prenom', 'Deuxieme prenom', 'midname', 'midname', 'CHAR', 30, false, false, true, NULL, NULL, NULL, 'INDIVIDUAL', 85, 'identity', true),
+            ((SELECT id FROM cbs_tables WHERE table_name = 'bkcli'), 'nomrest', 'Nom a restituer', 'Nom a restituer', 'nomrest', 'nomrest', 'CHAR', 67, false, false, true, NULL, NULL, NULL, NULL, 86, 'identity', true),
+            ((SELECT id FROM cbs_tables WHERE table_name = 'bkcli'), 'drc', 'Date delivrance RC', 'Date de delivrance du registre de commerce', 'drc', 'drc', 'DATE', NULL, false, false, true, NULL, NULL, NULL, 'CORPORATE,INSTITUTIONAL', 87, 'enterprise', true),
+            ((SELECT id FROM cbs_tables WHERE table_name = 'bkcli'), 'lrc', 'Lieu delivrance RC', 'Lieu de delivrance du registre de commerce', 'lrc', 'lrc', 'CHAR', 30, false, false, true, NULL, NULL, NULL, 'CORPORATE,INSTITUTIONAL', 88, 'enterprise', true),
+            ((SELECT id FROM cbs_tables WHERE table_name = 'bkcli'), 'rso2', 'Raison sociale 2', 'Seconde raison sociale de declaration', 'rso2', 'rso2', 'CHAR', 65, false, false, true, NULL, NULL, NULL, 'CORPORATE,INSTITUTIONAL', 89, 'enterprise', true),
+            ((SELECT id FROM cbs_tables WHERE table_name = 'bkcli'), 'regn', 'Region de naissance', 'Region de naissance', 'regn', 'regn', 'CHAR', 50, false, false, true, NULL, NULL, NULL, 'INDIVIDUAL', 90, 'identity', true),
+            ((SELECT id FROM cbs_tables WHERE table_name = 'bkcli'), 'rrc', 'Risque relation client', 'Risque relation client', 'rrc', 'rrc', 'CHAR', 1, false, false, true, NULL, NULL, NULL, NULL, 91, 'regulatory', true),
+            ((SELECT id FROM cbs_tables WHERE table_name = 'bkcli'), 'dvrrc', 'Date validation risque', 'Date de validation risque relation client', 'dvrrc', 'dvrrc', 'DATE', NULL, false, false, true, NULL, NULL, NULL, NULL, 92, 'regulatory', true),
+            ((SELECT id FROM cbs_tables WHERE table_name = 'bkcli'), 'uti_vrrc', 'Utilisateur validation risque', 'Code de l''utilisateur ayant valide le risque relation client', 'utiVrrc', 'uti_vrrc', 'CHAR', 10, false, false, false, NULL, NULL, NULL, NULL, 93, 'audit', true);
+        </sql>
+    </changeSet>
+
+    <!-- Seed bknom fields -->
+    <changeSet id="pg-002-53-seed-bknom-fields" author="bsic">
+        <sql>
+            INSERT INTO cbs_fields (cbs_table_id, column_name, display_label, description, java_field_name, query_alias, data_type, max_length, precision_value, scale_value, is_primary_key, is_required, is_updatable, display_order, field_group, active) VALUES
+            ((SELECT id FROM cbs_tables WHERE table_name = 'bknom'), 'ctab', 'Numero de table', 'Numero de table', 'ctab', 'ctab', 'CHAR', 3, NULL, NULL, true, true, false, 1, 'key', true),
+            ((SELECT id FROM cbs_tables WHERE table_name = 'bknom'), 'cacc', 'Cle d''acces', 'Cle d''acces', 'cacc', 'cacc', 'CHAR', 10, NULL, NULL, true, true, false, 2, 'key', true),
+            ((SELECT id FROM cbs_tables WHERE table_name = 'bknom'), 'age', 'Agence', 'Agence', 'age', 'age', 'CHAR', 5, NULL, NULL, true, false, false, 3, 'key', true),
+            ((SELECT id FROM cbs_tables WHERE table_name = 'bknom'), 'lib1', 'Libelle 1', 'Libelle 1', 'lib1', 'lib1', 'CHAR', 30, NULL, NULL, false, false, true, 4, 'label', true),
+            ((SELECT id FROM cbs_tables WHERE table_name = 'bknom'), 'lib2', 'Libelle 2', 'Libelle 2', 'lib2', 'lib2', 'CHAR', 30, NULL, NULL, false, false, true, 5, 'label', true),
+            ((SELECT id FROM cbs_tables WHERE table_name = 'bknom'), 'lib3', 'Libelle 3', 'Libelle 3', 'lib3', 'lib3', 'CHAR', 30, NULL, NULL, false, false, true, 6, 'label', true),
+            ((SELECT id FROM cbs_tables WHERE table_name = 'bknom'), 'lib4', 'Libelle 4', 'Libelle 4', 'lib4', 'lib4', 'CHAR', 30, NULL, NULL, false, false, true, 7, 'label', true),
+            ((SELECT id FROM cbs_tables WHERE table_name = 'bknom'), 'lib5', 'Libelle 5', 'Libelle 5', 'lib5', 'lib5', 'CHAR', 30, NULL, NULL, false, false, true, 8, 'label', true),
+            ((SELECT id FROM cbs_tables WHERE table_name = 'bknom'), 'mnt1', 'Montant 1', 'Montant 1', 'mnt1', 'mnt1', 'DECIMAL', NULL, 15, 0, false, false, true, 9, 'amount', true),
+            ((SELECT id FROM cbs_tables WHERE table_name = 'bknom'), 'mnt2', 'Montant 2', 'Montant 2', 'mnt2', 'mnt2', 'DECIMAL', NULL, 15, 0, false, false, true, 10, 'amount', true),
+            ((SELECT id FROM cbs_tables WHERE table_name = 'bknom'), 'mnt3', 'Montant 3', 'Montant 3', 'mnt3', 'mnt3', 'DECIMAL', NULL, 15, 0, false, false, true, 11, 'amount', true),
+            ((SELECT id FROM cbs_tables WHERE table_name = 'bknom'), 'mnt4', 'Montant 4', 'Montant 4', 'mnt4', 'mnt4', 'DECIMAL', NULL, 15, 0, false, false, true, 12, 'amount', true),
+            ((SELECT id FROM cbs_tables WHERE table_name = 'bknom'), 'mnt5', 'Montant 5', 'Montant 5', 'mnt5', 'mnt5', 'DECIMAL', NULL, 15, 0, false, false, true, 13, 'amount', true),
+            ((SELECT id FROM cbs_tables WHERE table_name = 'bknom'), 'mnt6', 'Montant 6', 'Montant 6', 'mnt6', 'mnt6', 'DECIMAL', NULL, 15, 0, false, false, true, 14, 'amount', true),
+            ((SELECT id FROM cbs_tables WHERE table_name = 'bknom'), 'mnt7', 'Montant 7', 'Montant 7', 'mnt7', 'mnt7', 'DECIMAL', NULL, 15, 0, false, false, true, 15, 'amount', true),
+            ((SELECT id FROM cbs_tables WHERE table_name = 'bknom'), 'mnt8', 'Montant 8', 'Montant 8', 'mnt8', 'mnt8', 'DECIMAL', NULL, 15, 0, false, false, true, 16, 'amount', true),
+            ((SELECT id FROM cbs_tables WHERE table_name = 'bknom'), 'tau1', 'Taux 1', 'Taux 1', 'tau1', 'tau1', 'DECIMAL', NULL, 15, 7, false, false, true, 17, 'rate', true),
+            ((SELECT id FROM cbs_tables WHERE table_name = 'bknom'), 'tau2', 'Taux 2', 'Taux 2', 'tau2', 'tau2', 'DECIMAL', NULL, 15, 7, false, false, true, 18, 'rate', true),
+            ((SELECT id FROM cbs_tables WHERE table_name = 'bknom'), 'tau3', 'Taux 3', 'Taux 3', 'tau3', 'tau3', 'DECIMAL', NULL, 15, 7, false, false, true, 19, 'rate', true),
+            ((SELECT id FROM cbs_tables WHERE table_name = 'bknom'), 'tau4', 'Taux 4', 'Taux 4', 'tau4', 'tau4', 'DECIMAL', NULL, 15, 7, false, false, true, 20, 'rate', true),
+            ((SELECT id FROM cbs_tables WHERE table_name = 'bknom'), 'tau5', 'Taux 5', 'Taux 5', 'tau5', 'tau5', 'DECIMAL', NULL, 15, 7, false, false, true, 21, 'rate', true),
+            ((SELECT id FROM cbs_tables WHERE table_name = 'bknom'), 'duti', 'Dernier utilisateur', 'Dernier utilisateur', 'duti', 'duti', 'CHAR', 10, NULL, NULL, false, false, false, 22, 'audit', true),
+            ((SELECT id FROM cbs_tables WHERE table_name = 'bknom'), 'ddou', 'Date de creation', 'Date de creation', 'ddou', 'ddou', 'DATE', NULL, NULL, NULL, false, false, false, 23, 'audit', true),
+            ((SELECT id FROM cbs_tables WHERE table_name = 'bknom'), 'ddmo', 'Date derniere modification', 'Date de derniere modification', 'ddmo', 'ddmo', 'DATE', NULL, NULL, NULL, false, false, false, 24, 'audit', true);
+        </sql>
+    </changeSet>
+
+
+</databaseChangeLog>

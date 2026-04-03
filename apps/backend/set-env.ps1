@@ -1,5 +1,5 @@
-# Variables d'environnement pour MySQL
-$env:DB_URL = "jdbc:mysql://localhost:3306/bdqm?useSSL=false&allowPublicKeyRetrieval=true&serverTimezone=UTC"
+# Variables d'environnement pour PostgreSQL
+$env:DB_URL = "jdbc:postgresql://localhost:5432/bdqm"
 $env:DB_USER = "bdqm"
 $env:DB_PASSWORD = "bdqm"
 
@@ -16,7 +16,7 @@ $env:SPRING_PROFILES_ACTIVE = "local"
 
 Write-Host "Variables d'environnement configurees avec succes!" -ForegroundColor Green
 Write-Host ""
-Write-Host "MySQL:" -ForegroundColor Cyan
+Write-Host "PostgreSQL:" -ForegroundColor Cyan
 Write-Host "  URL: $env:DB_URL"
 Write-Host "  User: $env:DB_USER"
 Write-Host "  Password: ****"

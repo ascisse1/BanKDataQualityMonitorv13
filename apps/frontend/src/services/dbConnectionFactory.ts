@@ -29,8 +29,8 @@ abstract class BaseConnection implements DatabaseConnection {
   }
 }
 
-// Implémentation pour MySQL
-class MySQLConnection extends BaseConnection {
+// Implémentation pour PostgreSQL
+class PostgreSQLConnection extends BaseConnection {
   private pool: any;
 
   constructor(config: DatabaseConfig) {
@@ -39,33 +39,30 @@ class MySQLConnection extends BaseConnection {
 
   async connect(): Promise<boolean> {
     try {
-      // Importation dynamique pour éviter les problèmes avec Vite
-      // Note: This import is only for backend/server usage, not for browser
-      const mysql2 = await import('mysql2/promise');
+      const pg = await import('pg');
 
-      this.pool = mysql2.createPool({
+      this.pool = new pg.Pool({
         host: this.config.host,
         port: this.config.port,
         database: this.config.database,
         user: this.config.username,
         password: this.config.password,
-        connectionLimit: this.config.connectionLimit
+        max: this.config.connectionLimit
       });
 
       // Test de connexion
-      const connection = await this.pool.getConnection();
-      connection.release();
+      const client = await this.pool.connect();
+      client.release();
 
       this.connected = true;
-      log.info('database', 'MySQL connection established', {
+      log.info('database', 'PostgreSQL connection established', {
         host: this.config.host,
         database: this.config.database
       });
 
       return true;
     } catch (error) {
-      log.error('database', 'MySQL connection failed', { error });
-      log.error('database', 'MySQL connection failed', { error });
+      log.error('database', 'PostgreSQL connection failed', { error });
       this.connected = false;
       return false;
     }
@@ -75,7 +72,7 @@ class MySQLConnection extends BaseConnection {
     if (this.pool) {
       await this.pool.end();
       this.connected = false;
-      log.info('database', 'MySQL connection closed');
+      log.info('database', 'PostgreSQL connection closed');
     }
   }
 
@@ -85,13 +82,10 @@ class MySQLConnection extends BaseConnection {
     }
 
     try {
-      const connection = await this.pool.getConnection();
-      const [rows] = await connection.query(sql, params);
-      connection.release();
-      return rows;
+      const result = await this.pool.query(sql, params);
+      return result.rows;
     } catch (error) {
-      log.error('database', 'MySQL query failed', { error, sql });
-      log.error('database', 'MySQL query failed', { error, sql });
+      log.error('database', 'PostgreSQL query failed', { error, sql });
       throw error;
     }
   }
@@ -102,13 +96,10 @@ class MySQLConnection extends BaseConnection {
     }
 
     try {
-      const connection = await this.pool.getConnection();
-      const [result] = await connection.execute(sql, params);
-      connection.release();
+      const result = await this.pool.query(sql, params);
       return result;
     } catch (error) {
-      log.error('database', 'MySQL execute failed', { error, sql });
-      log.error('database', 'MySQL execute failed', { error, sql });
+      log.error('database', 'PostgreSQL execute failed', { error, sql });
       throw error;
     }
   }
@@ -120,11 +111,11 @@ export class DatabaseConnectionFactory {
     const config = getDatabaseConfig();
 
     switch (config.type) {
-      case 'mysql':
-        return new MySQLConnection(config);
+      case 'postgresql':
+        return new PostgreSQLConnection(config);
       default:
-        log.warning('database', `Unknown database type: ${config.type}, using MySQL as default`);
-        return new MySQLConnection(config);
+        log.warning('database', `Unknown database type: ${config.type}, using PostgreSQL as default`);
+        return new PostgreSQLConnection(config);
     }
   }
 }

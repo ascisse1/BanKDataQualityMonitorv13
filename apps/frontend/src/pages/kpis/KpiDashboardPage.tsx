@@ -3,14 +3,22 @@ import { TrendingUp, TrendingDown, Target, Clock, CheckCircle, XCircle, RefreshC
 import Card from '../../components/ui/Card';
 import Button from '../../components/ui/Button';
 import { kpiService, type DashboardMetrics, type Kpi } from '../../services/kpiService';
+import { apiService } from '../../services/apiService';
 import { useAuth } from '../../context/AuthContext';
 import { log } from '../../services/log';
+
+interface Agency {
+  id: number;
+  code: string;
+  name: string;
+}
 
 export const KpiDashboardPage: React.FC = () => {
   const { user } = useAuth();
   const [metrics, setMetrics] = useState<DashboardMetrics | null>(null);
   const [historicalKpis, setHistoricalKpis] = useState<Kpi[]>([]);
   const [loading, setLoading] = useState(true);
+  const [agencies, setAgencies] = useState<Agency[]>([]);
   const [selectedAgency, setSelectedAgency] = useState<string>('');
   const [dateRange, setDateRange] = useState({
     startDate: new Date(Date.now() - 30 * 24 * 60 * 60 * 1000).toISOString().split('T')[0],
@@ -18,13 +26,28 @@ export const KpiDashboardPage: React.FC = () => {
   });
 
   useEffect(() => {
+    loadAgencies();
+  }, []);
+
+  useEffect(() => {
     loadDashboard();
   }, [selectedAgency]);
+
+  const loadAgencies = async () => {
+    try {
+      const response = await apiService.get<{ data: Agency[] }>('/structures');
+      if (response.data) {
+        setAgencies(Array.isArray(response.data) ? response.data : []);
+      }
+    } catch (error) {
+      log.error('api', 'Failed to load agencies', { error });
+    }
+  };
 
   const loadDashboard = async () => {
     try {
       setLoading(true);
-      const structureCode = selectedAgency  ;
+      const structureCode = selectedAgency;
 
       const dashboardData = await kpiService.getDashboardMetrics(structureCode);
       setMetrics(dashboardData);
@@ -93,6 +116,7 @@ export const KpiDashboardPage: React.FC = () => {
     const recentAvg = recent.reduce((sum, k) => sum + k.kpiValue, 0) / recent.length;
     const previousAvg = previous.reduce((sum, k) => sum + k.kpiValue, 0) / previous.length;
 
+    if (previousAvg === 0) return { value: 0, isPositive: true };
     const change = ((recentAvg - previousAvg) / previousAvg) * 100;
     const isPositive = kpiType === 'AVG_RESOLUTION_TIME' ? change < 0 : change > 0;
 
@@ -140,8 +164,11 @@ export const KpiDashboardPage: React.FC = () => {
               className="px-4 py-2 border border-gray-300 rounded-lg focus:ring-2 focus:ring-blue-500 focus:border-transparent"
             >
               <option value="">Toutes les agences</option>
-              <option value="AGE001">Agence 001</option>
-              <option value="AGE002">Agence 002</option>
+              {agencies.map((agency) => (
+                <option key={agency.code} value={agency.code}>
+                  {agency.name}
+                </option>
+              ))}
             </select>
           )}
           <Button onClick={loadDashboard} variant="outline">
@@ -331,7 +358,7 @@ export const KpiDashboardPage: React.FC = () => {
               <div className="flex items-center justify-between py-2 border-b border-gray-100">
                 <span className="text-sm text-gray-600">Taux de Succès</span>
                 <span className="text-sm font-semibold text-blue-600">
-                  {((metrics.ticketsClosed / metrics.ticketsTotal) * 100).toFixed(1)}%
+                  {metrics.ticketsTotal > 0 ? ((metrics.ticketsClosed / metrics.ticketsTotal) * 100).toFixed(1) : '0.0'}%
                 </span>
               </div>
               <div className="flex items-center justify-between py-2">

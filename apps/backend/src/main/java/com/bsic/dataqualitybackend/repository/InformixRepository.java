@@ -1,33 +1,44 @@
 package com.bsic.dataqualitybackend.repository;
 
+import com.bsic.dataqualitybackend.service.CbsColumnRegistry;
+import com.bsic.dataqualitybackend.service.DynamicCbsQueryService;
 import lombok.extern.slf4j.Slf4j;
 import org.springframework.beans.factory.annotation.Qualifier;
 import org.springframework.boot.autoconfigure.condition.ConditionalOnProperty;
 import org.springframework.jdbc.core.JdbcTemplate;
 import org.springframework.stereotype.Repository;
 
-import com.bsic.dataqualitybackend.service.CbsColumnRegistry;
-
+import java.util.Collections;
 import java.util.List;
 import java.util.Map;
+import java.util.Set;
 
+/**
+ * Repository for accessing Informix CBS data.
+ * Delegates dictionary-driven queries to DynamicCbsQueryService.
+ * Keeps business-specific queries (FATCA, anomalous, statistics) that have custom SQL.
+ */
 @Repository
 @Slf4j
 @ConditionalOnProperty(name = "app.features.informix-integration", havingValue = "true", matchIfMissing = false)
 public class InformixRepository {
 
     private final JdbcTemplate informixJdbcTemplate;
+    private final CbsColumnRegistry cbsColumnRegistry;
+    private final DynamicCbsQueryService dynamicCbsQueryService;
 
-    public InformixRepository(@Qualifier("informixJdbcTemplate") JdbcTemplate informixJdbcTemplate) {
+    public InformixRepository(@Qualifier("informixJdbcTemplate") JdbcTemplate informixJdbcTemplate,
+                              CbsColumnRegistry cbsColumnRegistry,
+                              DynamicCbsQueryService dynamicCbsQueryService) {
         this.informixJdbcTemplate = informixJdbcTemplate;
+        this.cbsColumnRegistry = cbsColumnRegistry;
+        this.dynamicCbsQueryService = dynamicCbsQueryService;
     }
 
     public boolean testConnection() {
         try {
             Integer result = informixJdbcTemplate.queryForObject(
-                    "SELECT FIRST 1 1 FROM systables",
-                    Integer.class
-            );
+                    "SELECT FIRST 1 1 FROM systables", Integer.class);
             log.info("Informix connection test successful");
             return result != null;
         } catch (Exception e) {
@@ -37,97 +48,54 @@ public class InformixRepository {
     }
 
     /**
-     * Fetches only specific fields for a client from CBS.
-     * Used by reconciliation to read only the corrected fields, not the entire row.
-     *
-     * @param clientId the client ID
-     * @param fields   CBS column names to fetch (e.g. "nom", "dna", "nid")
-     * @return map of alias → value for the requested fields
+     * Fetches specific fields for a client from CBS.
+     * Delegates to DynamicCbsQueryService for dictionary-driven field access.
      */
-    public Map<String, Object> getClientFields(String clientId, java.util.Set<String> fields) {
+    public Map<String, Object> getClientFields(String clientId, Set<String> fields) {
         if (fields == null || fields.isEmpty()) {
-            return java.util.Collections.emptyMap();
+            return Collections.emptyMap();
         }
-
-        // Build SELECT with only requested columns + their aliases
-        StringBuilder selectCols = new StringBuilder("cli as client_id");
-        for (String field : fields) {
-            if (CbsColumnRegistry.isAllowedColumn(field)) {
-                String alias = CbsColumnRegistry.toAlias(field);
-                selectCols.append(", ").append(field).append(" as ").append(alias);
-            }
-        }
-
-        String sql = "SELECT FIRST 1 " + selectCols + " FROM bkcli WHERE cli = ?";
-
-        try {
-            return informixJdbcTemplate.queryForMap(sql, clientId);
-        } catch (Exception e) {
-            log.error("Error fetching fields {} for client {} from CBS: {}", fields, clientId, e.getMessage());
-            throw new RuntimeException("Client not found in CBS", e);
-        }
+        return dynamicCbsQueryService.fetchFieldsFromCbs("bkcli", "cli", clientId, fields);
     }
 
+    /**
+     * Fetch a single client by ID. Dictionary-driven column list.
+     */
     public Map<String, Object> getClientById(String clientId) {
-        String sql = """
-            SELECT FIRST 1
-                cli as client_id,
-                nom as name,
-                pre as firstname,
-                adr as address,
-                vil as city,
-                cpo as postal_code,
-                tel as phone,
-                ema as email,
-                dna as birth_date,
-                nat as nationality,
-                tcli as client_type,
-                sta_fat as fatca_status
-            FROM bkcli
-            WHERE cli = ?
-        """;
-
-        try {
-            return informixJdbcTemplate.queryForMap(sql, clientId);
-        } catch (Exception e) {
-            log.error("Error fetching client {} from CBS: {}", clientId, e.getMessage());
-            throw new RuntimeException("Client not found in CBS", e);
-        }
+        return dynamicCbsQueryService.fetchByPk("bkcli", Map.of("cli", clientId));
     }
 
+    /**
+     * Fetch clients in batches. Dictionary-driven column list.
+     */
+    public List<Map<String, Object>> getClientsBatch(int offset, int limit) {
+        return dynamicCbsQueryService.fetchFromCbs("bkcli", offset, limit);
+    }
+
+    /**
+     * Search clients by name or ID (business-specific SQL).
+     */
     public List<Map<String, Object>> searchClients(String searchTerm, int limit) {
         String sql = """
             SELECT FIRST ?
-                cli as client_id,
-                nom as name,
-                pre as firstname,
-                adr as address,
-                tel as phone,
-                ema as email,
-                tcli as client_type
+                cli, nom, pre, tcli, age
             FROM bkcli
             WHERE nom LIKE ? OR pre LIKE ? OR cli LIKE ?
             ORDER BY nom, pre
         """;
-
         String pattern = "%" + searchTerm + "%";
         return informixJdbcTemplate.queryForList(sql, limit, pattern, pattern, pattern);
     }
 
     public Long getTotalClientsCount() {
-        String sql = "SELECT COUNT(*) FROM bkcli";
-        return informixJdbcTemplate.queryForObject(sql, Long.class);
+        return dynamicCbsQueryService.countCbsRecords("bkcli");
     }
 
+    /**
+     * Client statistics by type (business-specific aggregation).
+     */
     public Map<String, Long> getClientStatistics() {
-        String sql = """
-            SELECT
-                tcli as client_type,
-                COUNT(*) as count
-            FROM bkcli
-            GROUP BY tcli
-        """;
-
+        String sql = "SELECT tcli as client_type, COUNT(*) as count FROM bkcli GROUP BY tcli";
         List<Map<String, Object>> results = informixJdbcTemplate.queryForList(sql);
         return results.stream()
                 .collect(java.util.stream.Collectors.toMap(
@@ -136,84 +104,30 @@ public class InformixRepository {
                 ));
     }
 
+    /**
+     * Find clients with anomalous data (business-specific SQL).
+     */
     public List<Map<String, Object>> getAnomalousClients(int limit) {
         String sql = """
             SELECT FIRST ?
-                cli as client_id,
-                nom as name,
-                pre as firstname,
-                adr as address,
-                tcli as client_type,
+                cli, nom, pre, tcli,
                 CASE
                     WHEN nom IS NULL OR TRIM(nom) = '' THEN 'Nom manquant'
-                    WHEN pre IS NULL OR TRIM(pre) = '' THEN 'Prénom manquant'
-                    WHEN adr IS NULL OR TRIM(adr) = '' THEN 'Adresse manquante'
-                    WHEN tel IS NULL OR TRIM(tel) = '' THEN 'Téléphone manquant'
-                    WHEN ema IS NULL OR TRIM(ema) = '' THEN 'Email manquant'
+                    WHEN pre IS NULL OR TRIM(pre) = '' THEN 'Prenom manquant'
                     ELSE 'Autre anomalie'
                 END as anomaly_type
             FROM bkcli
-            WHERE
-                nom IS NULL OR TRIM(nom) = '' OR
-                pre IS NULL OR TRIM(pre) = '' OR
-                adr IS NULL OR TRIM(adr) = '' OR
-                tel IS NULL OR TRIM(tel) = '' OR
-                ema IS NULL OR TRIM(ema) = ''
+            WHERE nom IS NULL OR TRIM(nom) = '' OR pre IS NULL OR TRIM(pre) = ''
             ORDER BY cli
         """;
-
         return informixJdbcTemplate.queryForList(sql, limit);
     }
 
-    public List<Map<String, Object>> getFatcaClients(String status, int limit) {
-        String sql = """
-            SELECT FIRST ?
-                cli as client_id,
-                nom as name,
-                pre as firstname,
-                nat as nationality,
-                sta_fat as fatca_status,
-                dat_fat as fatca_date,
-                tcli as client_type
-            FROM bkcli
-            WHERE sta_fat = ?
-            ORDER BY dat_fat DESC
-        """;
-
-        return informixJdbcTemplate.queryForList(sql, limit, status);
-    }
-
+    /**
+     * Update client in CBS. Delegates to DynamicCbsQueryService.
+     */
     public boolean updateClient(String clientId, Map<String, Object> updates) {
-        try {
-            // Validate all column names against the whitelist before building SQL
-            for (String column : updates.keySet()) {
-                if (!CbsColumnRegistry.isAllowedColumn(column)) {
-                    throw new IllegalArgumentException("Invalid CBS column name: " + column);
-                }
-            }
-
-            StringBuilder sql = new StringBuilder("UPDATE bkcli SET ");
-            List<Object> params = new java.util.ArrayList<>();
-
-            boolean first = true;
-            for (Map.Entry<String, Object> entry : updates.entrySet()) {
-                if (!first) sql.append(", ");
-                sql.append(entry.getKey()).append(" = ?");
-                params.add(entry.getValue());
-                first = false;
-            }
-
-            sql.append(" WHERE cli = ?");
-            params.add(clientId);
-
-            int rowsAffected = informixJdbcTemplate.update(sql.toString(), params.toArray());
-            log.info("Updated client {} in CBS, rows affected: {}", clientId, rowsAffected);
-
-            return rowsAffected > 0;
-        } catch (Exception e) {
-            log.error("Error updating client {} in CBS: {}", clientId, e.getMessage());
-            throw new RuntimeException("Failed to update client in CBS", e);
-        }
+        return dynamicCbsQueryService.updateCbsRecord("bkcli", "cli", clientId, updates);
     }
 
     public Map<String, Object> executeCustomQuery(String sql, Object... params) {
@@ -231,257 +145,6 @@ public class InformixRepository {
         } catch (Exception e) {
             log.error("Error executing custom query: {}", e.getMessage());
             throw new RuntimeException("Query execution failed", e);
-        }
-    }
-
-    /**
-     * Fetch all clients from the Informix BKCLI table for sync to MySQL.
-     * Returns all fields needed for the Client entity.
-     */
-    public List<Map<String, Object>> getAllClients() {
-        String sql = """
-                select
-                cli,
-                nom,
-                tcli,
-                lib,
-                pre,
-                sext,
-                njf,
-                dna,
-                viln,
-                depn,
-                payn,
-                locn,
-                tid,
-                nid,
-                did,
-                lid,
-                oid,
-                vid,
-                sit,
-                reg,
-                capj,
-                dcapj,
-                sitj,
-                dsitj,
-                tconj,
-                conj,
-                nbenf,
-                clifam,
-                rso,
-                sig,
-                datc,
-                fju,
-                nrc,
-                vrc,
-                nchc,
-                npa,
-                vpa,
-                nidn,
-                nis,
-                nidf,
-                grp,
-                sgrp,
-                met,
-                smet,
-                cmc1,
-                cmc2,
-                age,
-                ges,
-                qua,
-                tax,
-                catl,
-                seg,
-                nst,
-                clipar,
-                chl1,
-                chl2,
-                chl3,
-                lter,
-                lterc,
-                resd,
-                catn,
-                sec,
-                lienbq,
-                aclas,
-                maclas,
-                emtit,
-                nicr,
-                ced,
-                clcr,
-                nmer,
-                lang,
-                nat,
-                res,
-                ichq,
-                dichq,
-                icb,
-                dicb,
-                epu,
-                utic,
-                uti,
-                dou,
-                dmo,
-                ord,
-                catr,
-                midname,
-                nomrest,
-                drc,
-                lrc,
-                rso2,
-                regn,
-                rrc,
-                dvrrc,
-                uti_vrrc
-        from bank.bkcli
-                limit 10
-        """;
-
-        try {
-            log.info("Fetching all clients from Informix CBS...");
-            List<Map<String, Object>> clients = informixJdbcTemplate.queryForList(sql);
-            log.info("Fetched {} clients from Informix CBS", clients.size());
-            return clients;
-        } catch (Exception e) {
-            log.error("Error fetching all clients from CBS: {}", e.getMessage());
-            throw new RuntimeException("Failed to fetch clients from CBS", e);
-        }
-    }
-
-    /**
-     * Fetch clients from Informix BKCLI table in batches for large datasets.
-     * @param offset Starting row offset
-     * @param limit Maximum number of rows to fetch
-     */
-    public List<Map<String, Object>> getClientsBatch(int offset, int limit) {
-        String sql = """
-                select
-                cli,
-                nom,
-                tcli,
-                lib,
-                pre,
-                sext,
-                njf,
-                dna,
-                viln,
-                depn,
-                payn,
-                locn,
-                tid,
-                nid,
-                did,
-                lid,
-                oid,
-                vid,
-                sit,
-                reg,
-                capj,
-                dcapj,
-                sitj,
-                dsitj,
-                tconj,
-                conj,
-                nbenf,
-                clifam,
-                rso,
-                sig,
-                datc,
-                fju,
-                nrc,
-                vrc,
-                nchc,
-                npa,
-                vpa,
-                nidn,
-                nis,
-                nidf,
-                grp,
-                sgrp,
-                met,
-                smet,
-                cmc1,
-                cmc2,
-                age,
-                ges,
-                qua,
-                tax,
-                catl,
-                seg,
-                nst,
-                clipar,
-                chl1,
-                chl2,
-                chl3,
-                lter,
-                lterc,
-                resd,
-                catn,
-                sec,
-                lienbq,
-                aclas,
-                maclas,
-                emtit,
-                nicr,
-                ced,
-                clcr,
-                nmer,
-                lang,
-                nat,
-                res,
-                ichq,
-                dichq,
-                icb,
-                dicb,
-                epu,
-                utic,
-                uti,
-                dou,
-                dmo,
-                ord,
-                catr,
-                midname,
-                nomrest,
-                drc,
-                lrc,
-                rso2,
-                regn,
-                rrc,
-                dvrrc,
-                uti_vrrc
-        from bkcli
-                limit 10
-        """;
-
-
-        try {
-            return informixJdbcTemplate.queryForList(sql, offset, limit);
-        } catch (Exception e) {
-            log.error("Error fetching clients batch (offset={}, limit={}): {}", offset, limit, e.getMessage());
-            throw new RuntimeException("Failed to fetch clients batch from CBS", e);
-        }
-    }
-
-    /**
-     * Fetch all agencies from Informix BKAGE table for sync to MySQL.
-     */
-    public List<Map<String, Object>> getAllAgencies() {
-        String sql = """
-            SELECT
-                age as code,
-                lib as name
-            FROM bkage
-        """;
-
-        try {
-            log.info("Fetching all agencies from Informix CBS...");
-            List<Map<String, Object>> agencies = informixJdbcTemplate.queryForList(sql);
-            log.info("Fetched {} agencies from Informix CBS", agencies.size());
-            return agencies;
-        } catch (Exception e) {
-            log.error("Error fetching all agencies from CBS: {}", e.getMessage());
-            throw new RuntimeException("Failed to fetch agencies from CBS", e);
         }
     }
 }

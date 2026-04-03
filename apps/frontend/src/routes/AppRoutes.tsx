@@ -24,6 +24,7 @@ import ValidationPage from '../pages/validation/ValidationPage';
 import DuplicatesPage from '../pages/duplicates/DuplicatesPage';
 import ReconciliationPage from '../pages/reconciliation/ReconciliationPage';
 import UserAccessPage from '../pages/admin/UserAccessPage';
+import DataDictionaryPage from '../pages/admin/DataDictionaryPage';
 
 const AppRoutes = () => {
   const { isAuthenticated, user } = useAuth();
@@ -64,6 +65,7 @@ const AppRoutes = () => {
             <Route path="/users" element={<UsersPage />} />
             <Route path="/user-access" element={<UserAccessPage />} />
             <Route path="/corebanking-config" element={<CoreBankingConfigPage />} />
+            <Route path="/data-dictionary" element={<DataDictionaryPage />} />
           </Route>
         </Route>
       </Route>

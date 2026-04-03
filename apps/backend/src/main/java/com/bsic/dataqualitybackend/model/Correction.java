@@ -9,7 +9,7 @@ import lombok.NoArgsConstructor;
 import java.time.LocalDateTime;
 
 @Entity
-@Table(name = "corrections", indexes = {
+@Table(schema = "public",name = "corrections", indexes = {
     @Index(name = "idx_corrections_ticket_id", columnList = "ticket_id")
 }, uniqueConstraints = {
     @UniqueConstraint(name = "uk_corrections_ticket_field", columnNames = {"ticket_id", "field_name"})

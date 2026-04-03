@@ -244,7 +244,7 @@ function ConfigPage() {
 
                 <div className="bg-gray-50 p-3 rounded-md">
                   <p className="text-sm text-gray-500">Stratégie de base de données</p>
-                  <p className="font-medium">Backend API (MySQL/Informix)</p>
+                  <p className="font-medium">Backend API (PostgreSQL/Informix)</p>
                 </div>
               </div>
             </div>

@@ -1,7 +1,10 @@
 package com.bsic.dataqualitybackend.model.enums;
 
+import lombok.Getter;
+
 import java.util.Arrays;
 
+@Getter
 public enum ClientType {
     INDIVIDUAL("1"),
     CORPORATE("2"),
@@ -11,10 +14,6 @@ public enum ClientType {
 
     ClientType(String code) {
         this.code = code;
-    }
-
-    public String getCode() {
-        return code;
     }
 
     public static ClientType fromCode(String code) {

@@ -122,10 +122,10 @@ const DatabaseConfigPanel: React.FC<DatabaseConfigPanelProps> = ({ onConfigChang
             </label>
             <select
               className="w-full rounded-md border-gray-300 shadow-sm focus:border-primary-500 focus:ring-primary-500"
-              value="mysql"
+              value="postgresql"
               disabled={true}
             >
-              <option value="mysql">MySQL (via Backend API)</option>
+              <option value="postgresql">PostgreSQL (via Backend API)</option>
             </select>
             <p className="mt-1 text-xs text-gray-600">
               All database operations are handled by the backend API
@@ -180,7 +180,7 @@ const DatabaseConfigPanel: React.FC<DatabaseConfigPanelProps> = ({ onConfigChang
                 <ul className="mt-2 text-sm text-primary-700 space-y-1">
                   <li>All data operations are handled by the backend API</li>
                   <li>Database configuration is managed via environment variables</li>
-                  <li>The backend supports MySQL/MariaDB and Informix CBS</li>
+                  <li>The backend supports PostgreSQL and Informix CBS</li>
                 </ul>
                 <p className="mt-2 text-sm text-primary-700">
                   To modify configuration, update the <code>.env</code> file and restart the backend server.

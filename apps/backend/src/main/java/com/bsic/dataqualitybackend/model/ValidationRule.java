@@ -14,14 +14,16 @@ import lombok.Data;
 import lombok.NoArgsConstructor;
 import lombok.extern.slf4j.Slf4j;
 import org.hibernate.annotations.CreationTimestamp;
+import org.hibernate.annotations.JdbcTypeCode;
 import org.hibernate.annotations.UpdateTimestamp;
+import org.hibernate.type.SqlTypes;
 
 import java.time.LocalDateTime;
 import java.util.Collections;
 import java.util.List;
 
 @Entity
-@Table(name = "validation_rules", indexes = {
+@Table(schema = "public",name = "validation_rules", indexes = {
     @Index(name = "idx_rule_type", columnList = "rule_type"),
     @Index(name = "idx_rule_client_type", columnList = "client_type"),
     @Index(name = "idx_rule_active", columnList = "active")
@@ -38,6 +40,10 @@ public class ValidationRule {
     @Id
     @GeneratedValue(strategy = GenerationType.IDENTITY)
     private Long id;
+
+    @Column(name = "table_name", length = 30)
+    @Builder.Default
+    private String tableName = "bkcli";
 
     @Column(name = "rule_name", nullable = false)
     private String ruleName;
@@ -66,7 +72,8 @@ public class ValidationRule {
      * Natural language rule definition in JSON format.
      * Example: [{"type": "required"}, {"type": "minLength", "value": 8}]
      */
-    @Column(name = "rule_definition", columnDefinition = "JSON")
+    @JdbcTypeCode(SqlTypes.JSON)
+    @Column(name = "rule_definition", columnDefinition = "JSONB")
     private String ruleDefinition;
 
     @Column(name = "error_message", columnDefinition = "TEXT")

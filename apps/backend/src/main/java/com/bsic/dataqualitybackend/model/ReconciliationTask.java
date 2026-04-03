@@ -12,7 +12,7 @@ import java.util.ArrayList;
 import java.util.List;
 
 @Entity
-@Table(name = "reconciliation_tasks", indexes = {
+@Table(schema = "public",name = "reconciliation_tasks", indexes = {
     @Index(name = "idx_recon_tasks_ticket_id", columnList = "ticket_id"),
     @Index(name = "idx_recon_tasks_client_id", columnList = "client_id"),
     @Index(name = "idx_recon_tasks_status", columnList = "status"),

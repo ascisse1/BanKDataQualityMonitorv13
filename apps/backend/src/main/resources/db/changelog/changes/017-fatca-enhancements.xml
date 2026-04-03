@@ -1,0 +1,50 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<databaseChangeLog
+    xmlns="http://www.liquibase.org/xml/ns/dbchangelog"
+    xmlns:xsi="http://www.w3.org/2001/XMLSchema-instance"
+    xsi:schemaLocation="http://www.liquibase.org/xml/ns/dbchangelog
+        http://www.liquibase.org/xml/ns/dbchangelog/dbchangelog-latest.xsd">
+
+    <!-- Add W-9/W-8 document tracking date fields to fatca_clients -->
+    <changeSet id="017-01" author="bsic">
+        <addColumn tableName="fatca_clients">
+            <column name="w9_received_date" type="DATE">
+                <constraints nullable="true"/>
+            </column>
+            <column name="w8_received_date" type="DATE">
+                <constraints nullable="true"/>
+            </column>
+            <column name="w9_expiry_date" type="DATE">
+                <constraints nullable="true"/>
+            </column>
+            <column name="w8_expiry_date" type="DATE">
+                <constraints nullable="true"/>
+            </column>
+            <column name="document_status" type="VARCHAR(30)">
+                <constraints nullable="true"/>
+            </column>
+            <column name="document_notes" type="TEXT">
+                <constraints nullable="true"/>
+            </column>
+        </addColumn>
+    </changeSet>
+
+    <!-- Add indicia tracking fields for automated screening -->
+    <changeSet id="017-02" author="bsic">
+        <addColumn tableName="fatca_clients">
+            <column name="indicia_types" type="VARCHAR(255)">
+                <constraints nullable="true"/>
+            </column>
+            <column name="indicia_count" type="INT" defaultValueNumeric="0">
+                <constraints nullable="true"/>
+            </column>
+            <column name="last_screening_date" type="TIMESTAMP">
+                <constraints nullable="true"/>
+            </column>
+            <column name="detection_source" type="VARCHAR(30)" defaultValue="MANUAL">
+                <constraints nullable="true"/>
+            </column>
+        </addColumn>
+    </changeSet>
+
+</databaseChangeLog>

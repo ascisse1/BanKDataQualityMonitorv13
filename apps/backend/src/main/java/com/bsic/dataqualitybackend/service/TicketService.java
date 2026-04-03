@@ -8,6 +8,8 @@ import com.bsic.dataqualitybackend.repository.*;
 import com.bsic.dataqualitybackend.security.StructureSecurityService;
 import lombok.RequiredArgsConstructor;
 import lombok.extern.slf4j.Slf4j;
+import org.jooq.DSLContext;
+import org.jooq.impl.DSL;
 import org.springframework.data.domain.Page;
 import org.springframework.data.domain.Pageable;
 import org.springframework.stereotype.Service;
@@ -15,6 +17,7 @@ import org.springframework.transaction.annotation.Transactional;
 
 import java.time.LocalDateTime;
 import java.util.List;
+import java.util.Map;
 import java.util.Optional;
 
 @Slf4j
@@ -26,7 +29,7 @@ public class TicketService {
     private final TicketIncidentRepository incidentRepository;
     private final TicketCommentRepository commentRepository;
     private final TicketHistoryRepository historyRepository;
-    private final ClientRepository clientRepository;
+    private final DSLContext primaryDsl;
     private final UserRepository userRepository;
     private final BusinessMetricsConfig metricsConfig;
     private final StructureSecurityService structureSecurityService;
@@ -38,11 +41,20 @@ public class TicketService {
         String ticketNumber = generateTicketNumber();
         ticket.setTicketNumber(ticketNumber);
 
-        Client client = clientRepository.findById(ticket.getCli())
-                .orElseThrow(() -> new IllegalArgumentException("Client not found: " + ticket.getCli()));
+        // Look up the client name from the bkcli mirror via jOOQ
+        Map<String, Object> clientData = primaryDsl.select(DSL.field("nom"), DSL.field("pre"), DSL.field("tcli"))
+                .from(DSL.table("cbs.bkcli"))
+                .where(DSL.field("cli").eq(ticket.getCli()))
+                .fetchOneMap();
 
-        ticket.setClientName(client.getNom() + " " + (client.getPre() != null ? client.getPre() : ""));
-        ticket.setClientType(client.getTcli());
+        if (clientData == null) {
+            throw new IllegalArgumentException("Client not found: " + ticket.getCli());
+        }
+
+        String nom = clientData.get("nom") != null ? clientData.get("nom").toString().trim() : "";
+        String pre = clientData.get("pre") != null ? clientData.get("pre").toString().trim() : "";
+        ticket.setClientName((nom + " " + pre).trim());
+        ticket.setClientType(clientData.get("tcli") != null ? clientData.get("tcli").toString().trim() : null);
 
         LocalDateTime slaDeadline = calculateSlaDeadline(ticket.getPriority());
         ticket.setSlaDeadline(slaDeadline);

@@ -20,7 +20,7 @@ import javax.sql.DataSource;
 public class DataSourceConfig {
 
     /**
-     * Primary MySQL DataSource with HikariCP.
+     * Primary PostgreSQL DataSource with HikariCP.
      * Configuration properties from spring.datasource.primary.*
      */
     @Primary

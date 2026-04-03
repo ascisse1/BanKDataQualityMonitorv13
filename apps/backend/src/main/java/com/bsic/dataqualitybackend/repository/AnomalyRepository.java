@@ -111,6 +111,12 @@ public interface AnomalyRepository extends JpaRepository<Anomaly, Long> {
 
     List<Anomaly> findTop10ByOrderByCreatedAtDesc();
 
+    @Query("SELECT COUNT(a) FROM Anomaly a WHERE a.createdAt >= :since")
+    long countCreatedAfter(@Param("since") LocalDateTime since);
+
+    @Query("SELECT COUNT(a) FROM Anomaly a WHERE a.status = :status AND a.updatedAt >= :since")
+    long countByStatusUpdatedAfter(@Param("status") AnomalyStatus status, @Param("since") LocalDateTime since);
+
     /**
      * Check if an open anomaly exists for a client and field.
      * Used to avoid creating duplicate anomalies during sync validation.

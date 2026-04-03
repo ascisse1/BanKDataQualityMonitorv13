@@ -11,7 +11,7 @@ import org.hibernate.annotations.CreationTimestamp;
 import java.time.LocalDateTime;
 
 @Entity
-@Table(name = "data_load_history", indexes = {
+@Table(schema = "public",name = "data_load_history", indexes = {
     @Index(name = "idx_load_status", columnList = "status"),
     @Index(name = "idx_load_date", columnList = "load_date")
 })

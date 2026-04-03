@@ -1,7 +1,7 @@
 import { useState, useEffect } from 'react';
 import Card from '../../components/ui/Card';
 import { Tabs, TabList, Tab, TabPanel } from '../../components/ui/Tabs';
-import { BarChart, PieChart, TrendingUp, Users, AlertTriangle, Building, UserCheck, Upload, RefreshCw, Flag, Database, History } from 'lucide-react';
+import { BarChart, PieChart, TrendingUp, Users, AlertTriangle, Building, UserCheck, Upload, RefreshCw, Flag, Database, History, CheckCircle, Clock, Shield, Activity } from 'lucide-react';
 import StatsCard from './components/StatsCard';
 import ClientTypeChart from './components/ClientTypeChart';
 import AnomalyTrendChart from './components/AnomalyTrendChart';
@@ -35,6 +35,11 @@ interface Stats {
   pendingTickets: number;
   resolvedTickets: number;
   correctionRate: number;
+  overallQualityScore: number;
+  ticketsUnder24h: number;
+  tickets24to48h: number;
+  ticketsOver48h: number;
+  periodCorrectionRate: number;
 }
 
 interface ApiResponse<T> {
@@ -122,6 +127,8 @@ const DashboardPage = () => {
   const renderStatCards = () => {
     if (!stats) return [];
 
+    const correctionTrend = stats.periodCorrectionRate > stats.correctionRate ? 'up' : stats.periodCorrectionRate < stats.correctionRate ? 'down' : 'neutral';
+
     return [
       {
         title: 'Total Clients',
@@ -129,19 +136,31 @@ const DashboardPage = () => {
         icon: <Users className="h-6 w-6 text-primary-600" />,
       },
       {
-        title: 'Clients Particuliers',
-        value: (stats.individual ?? 0).toLocaleString('fr-FR'),
-        icon: <UserCheck className="h-6 w-6 text-success-600" />,
-      },
-      {
-        title: 'Clients Entreprises',
-        value: (stats.corporate ?? 0).toLocaleString('fr-FR'),
-        icon: <Building className="h-6 w-6 text-secondary-600" />,
-      },
-      {
-        title: 'Anomalies Détectées',
+        title: 'Anomalies Detectees',
         value: (stats.anomalies ?? 0).toLocaleString('fr-FR'),
         icon: <AlertTriangle className="h-6 w-6 text-warning-600" />,
+      },
+      {
+        title: 'Tickets en Attente',
+        value: (stats.pendingTickets ?? 0).toLocaleString('fr-FR'),
+        icon: <Clock className="h-6 w-6 text-orange-600" />,
+      },
+      {
+        title: 'Tickets Resolus',
+        value: (stats.resolvedTickets ?? 0).toLocaleString('fr-FR'),
+        icon: <CheckCircle className="h-6 w-6 text-success-600" />,
+      },
+      {
+        title: 'Taux de Correction',
+        value: `${(stats.periodCorrectionRate ?? 0).toFixed(1)}%`,
+        icon: <Activity className="h-6 w-6 text-blue-600" />,
+        change: `${(stats.periodCorrectionRate ?? 0).toFixed(1)}% (30j)`,
+        trend: correctionTrend,
+      },
+      {
+        title: 'FATCA',
+        value: (stats.fatca ?? 0).toLocaleString('fr-FR'),
+        icon: <Flag className="h-6 w-6 text-red-600" />,
       },
     ];
   };
@@ -231,13 +250,98 @@ const DashboardPage = () => {
         </div>
       </div>
 
-      <div className="grid grid-cols-1 gap-6 sm:grid-cols-2 lg:grid-cols-4">
+      {/* Hero Quality Score + Ticket Aging */}
+      {stats && (
+        <div className="grid grid-cols-1 lg:grid-cols-3 gap-6">
+          {/* Overall Quality Score */}
+          <div className="lg:col-span-2 bg-gradient-to-br from-primary-600 to-primary-800 rounded-xl p-6 text-white shadow-lg">
+            <div className="flex items-center justify-between">
+              <div>
+                <p className="text-sm font-medium text-primary-100">Score de Qualite Global</p>
+                <p className="mt-2 text-5xl font-bold">
+                  {(stats.overallQualityScore ?? 0).toFixed(1)}%
+                </p>
+                <p className="mt-2 text-sm text-primary-200">
+                  Base sur {(stats.total ?? 0).toLocaleString('fr-FR')} clients
+                  ({(stats.anomalies ?? 0).toLocaleString('fr-FR')} anomalies ouvertes)
+                </p>
+              </div>
+              <div className="hidden sm:block">
+                <Shield className="h-20 w-20 text-primary-300 opacity-50" />
+              </div>
+            </div>
+            <div className="mt-4">
+              <div className="w-full bg-primary-900 bg-opacity-30 rounded-full h-3">
+                <div
+                  className={`h-3 rounded-full transition-all duration-500 ${
+                    (stats.overallQualityScore ?? 0) >= 90
+                      ? 'bg-green-400'
+                      : (stats.overallQualityScore ?? 0) >= 70
+                      ? 'bg-yellow-400'
+                      : 'bg-red-400'
+                  }`}
+                  style={{ width: `${Math.min(100, Math.max(0, stats.overallQualityScore ?? 0))}%` }}
+                />
+              </div>
+            </div>
+          </div>
+
+          {/* Ticket Aging */}
+          <Card>
+            <div className="p-2">
+              <h3 className="text-sm font-medium text-gray-500 mb-4">Anciennete des Tickets en Attente</h3>
+              <div className="space-y-3">
+                <div className="flex items-center justify-between">
+                  <div className="flex items-center gap-2">
+                    <div className="w-3 h-3 rounded-full bg-green-500"></div>
+                    <span className="text-sm text-gray-700">&lt; 24h</span>
+                  </div>
+                  <span className="text-sm font-semibold text-gray-900">
+                    {(stats.ticketsUnder24h ?? 0).toLocaleString('fr-FR')}
+                  </span>
+                </div>
+                <div className="flex items-center justify-between">
+                  <div className="flex items-center gap-2">
+                    <div className="w-3 h-3 rounded-full bg-yellow-500"></div>
+                    <span className="text-sm text-gray-700">24h - 48h</span>
+                  </div>
+                  <span className="text-sm font-semibold text-gray-900">
+                    {(stats.tickets24to48h ?? 0).toLocaleString('fr-FR')}
+                  </span>
+                </div>
+                <div className="flex items-center justify-between">
+                  <div className="flex items-center gap-2">
+                    <div className="w-3 h-3 rounded-full bg-red-500"></div>
+                    <span className="text-sm text-gray-700">&gt; 48h</span>
+                  </div>
+                  <span className="text-sm font-semibold text-red-600 font-bold">
+                    {(stats.ticketsOver48h ?? 0).toLocaleString('fr-FR')}
+                  </span>
+                </div>
+              </div>
+              {(stats.pendingTickets ?? 0) > 0 && (
+                <div className="mt-4 pt-3 border-t border-gray-100">
+                  <div className="flex h-2 rounded-full overflow-hidden bg-gray-200">
+                    <div className="bg-green-500" style={{ width: `${(stats.ticketsUnder24h / stats.pendingTickets) * 100}%` }} />
+                    <div className="bg-yellow-500" style={{ width: `${(stats.tickets24to48h / stats.pendingTickets) * 100}%` }} />
+                    <div className="bg-red-500" style={{ width: `${(stats.ticketsOver48h / stats.pendingTickets) * 100}%` }} />
+                  </div>
+                </div>
+              )}
+            </div>
+          </Card>
+        </div>
+      )}
+
+      <div className="grid grid-cols-1 gap-6 sm:grid-cols-2 lg:grid-cols-3 xl:grid-cols-6">
         {stats && renderStatCards().map((stat) => (
           <StatsCard
             key={stat.title}
             title={stat.title}
             value={stat.value}
             icon={stat.icon}
+            change={(stat as any).change}
+            trend={(stat as any).trend}
             isLoading={isLoading}
           />
         ))}

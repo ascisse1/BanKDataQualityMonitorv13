@@ -15,7 +15,7 @@ import java.time.LocalDateTime;
 
 @Entity
 @Filter(name = "structureFilter", condition = "structure_code IN (:codes)")
-@Table(name = "anomalies", indexes = {
+@Table(schema = "public",name = "anomalies", indexes = {
     @Index(name = "idx_anomaly_client_type", columnList = "client_type"),
     @Index(name = "idx_anomaly_status", columnList = "status"),
     @Index(name = "idx_anomaly_agency", columnList = "structure_code"),

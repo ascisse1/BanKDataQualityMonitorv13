@@ -23,7 +23,7 @@ import java.util.List;
 @NoArgsConstructor
 @AllArgsConstructor
 @Entity
-@Table(name = "users")
+@Table(schema = "public",name = "users")
 @EntityListeners(AuditingEntityListener.class)
 public class User implements UserDetails {
 

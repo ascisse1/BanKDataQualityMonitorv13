@@ -19,7 +19,7 @@ public interface TicketRepository extends JpaRepository<Ticket, Long> {
 
     Optional<Ticket> findByTicketNumber(String ticketNumber);
 
-    @Query(value = "SELECT MAX(ticket_number) FROM tickets", nativeQuery = true)
+    @Query(value = "SELECT MAX(ticket_number) FROM public.tickets", nativeQuery = true)
     Optional<String> findMaxTicketNumber();
 
     List<Ticket> findByCli(String cli);
@@ -63,6 +63,21 @@ public interface TicketRepository extends JpaRepository<Ticket, Long> {
 
     @Query("SELECT COUNT(t) FROM Ticket t WHERE t.status = :status ")
     long countByStatus(@Param("status") TicketStatus status);
+
+    @Query("SELECT COUNT(t) FROM Ticket t WHERE t.status NOT IN ('CLOSED', 'REJECTED') AND t.createdAt >= :since")
+    long countPendingTicketsCreatedAfter(@Param("since") LocalDateTime since);
+
+    @Query("SELECT COUNT(t) FROM Ticket t WHERE t.status NOT IN ('CLOSED', 'REJECTED') AND t.createdAt < :before AND t.createdAt >= :after")
+    long countPendingTicketsBetween(@Param("after") LocalDateTime after, @Param("before") LocalDateTime before);
+
+    @Query("SELECT COUNT(t) FROM Ticket t WHERE t.status NOT IN ('CLOSED', 'REJECTED') AND t.createdAt < :before")
+    long countPendingTicketsCreatedBefore(@Param("before") LocalDateTime before);
+
+    @Query("SELECT t FROM Ticket t WHERE t.status = 'CLOSED' AND t.closedAt BETWEEN :startDate AND :endDate")
+    List<Ticket> findTicketsClosedBetween(@Param("startDate") LocalDateTime startDate, @Param("endDate") LocalDateTime endDate);
+
+    @Query("SELECT t FROM Ticket t WHERE (t.status = 'CLOSED' AND t.closedAt BETWEEN :startDate AND :endDate) OR (t.status != 'CLOSED' AND t.createdAt <= :endDate AND (t.closedAt IS NULL OR t.closedAt >= :startDate))")
+    List<Ticket> findTicketsActiveInPeriod(@Param("startDate") LocalDateTime startDate, @Param("endDate") LocalDateTime endDate);
 
     // Multi-agency (IN clause) variants
     Page<Ticket> findByStructureCodeIn(List<String> structureCodes, Pageable pageable);

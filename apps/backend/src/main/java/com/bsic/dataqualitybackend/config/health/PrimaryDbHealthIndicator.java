@@ -12,32 +12,32 @@ import java.sql.ResultSet;
 import java.sql.Statement;
 
 /**
- * Custom health indicator for MySQL primary database with connection pool details.
+ * Custom health indicator for PostgreSQL primary database with connection pool details.
  */
 @Slf4j
-@Component("mysqlPrimary")
-public class MySqlHealthIndicator implements HealthIndicator {
+@Component("primaryDatabase")
+public class PrimaryDbHealthIndicator implements HealthIndicator {
 
     private final HikariDataSource primaryDataSource;
 
-    public MySqlHealthIndicator(@Qualifier("primaryDataSource") HikariDataSource primaryDataSource) {
+    public PrimaryDbHealthIndicator(@Qualifier("primaryDataSource") HikariDataSource primaryDataSource) {
         this.primaryDataSource = primaryDataSource;
     }
 
     @Override
     public Health health() {
         try {
-            return checkMySqlConnection();
+            return checkConnection();
         } catch (Exception e) {
-            log.error("MySQL health check failed", e);
+            log.error("Primary database health check failed", e);
             return Health.down()
                     .withDetail("error", e.getMessage())
-                    .withDetail("database", "MySQL Primary")
+                    .withDetail("database", "PostgreSQL Primary")
                     .build();
         }
     }
 
-    private Health checkMySqlConnection() {
+    private Health checkConnection() {
         long startTime = System.currentTimeMillis();
 
         try (Connection connection = primaryDataSource.getConnection();
@@ -48,7 +48,7 @@ public class MySqlHealthIndicator implements HealthIndicator {
 
             if (resultSet.next()) {
                 return Health.up()
-                        .withDetail("database", "MySQL Primary")
+                        .withDetail("database", "PostgreSQL Primary")
                         .withDetail("pool", primaryDataSource.getPoolName())
                         .withDetail("activeConnections", primaryDataSource.getHikariPoolMXBean().getActiveConnections())
                         .withDetail("idleConnections", primaryDataSource.getHikariPoolMXBean().getIdleConnections())
@@ -59,14 +59,14 @@ public class MySqlHealthIndicator implements HealthIndicator {
                         .build();
             } else {
                 return Health.down()
-                        .withDetail("database", "MySQL Primary")
+                        .withDetail("database", "PostgreSQL Primary")
                         .withDetail("error", "Query returned no results")
                         .build();
             }
         } catch (Exception e) {
-            log.error("Failed to connect to MySQL", e);
+            log.error("Failed to connect to PostgreSQL", e);
             return Health.down()
-                    .withDetail("database", "MySQL Primary")
+                    .withDetail("database", "PostgreSQL Primary")
                     .withDetail("error", e.getMessage())
                     .withDetail("pool", primaryDataSource.getPoolName())
                     .build();

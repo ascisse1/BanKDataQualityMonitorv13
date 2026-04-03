@@ -32,6 +32,8 @@ public class ReconciliationService {
     @Autowired(required = false)
     private InformixRepository informixRepository;
 
+    private final CbsColumnRegistry cbsColumnRegistry;
+
     // ──────────────────────────────────────────────
     //  Core reconciliation
     // ──────────────────────────────────────────────
@@ -80,7 +82,7 @@ public class ReconciliationService {
 
             Set<String> fieldsToCheck = corrections.stream()
                     .map(Correction::getFieldName)
-                    .filter(CbsColumnRegistry::isAllowedColumn)
+                    .filter(cbsColumnRegistry::isAllowedColumn)
                     .collect(Collectors.toSet());
 
             Map<String, Object> cbsData = informixRepository.getClientFields(task.getClientId(), fieldsToCheck);
@@ -98,7 +100,7 @@ public class ReconciliationService {
             int matchedFields = 0;
 
             for (Correction correction : corrections) {
-                String cbsColumn = CbsColumnRegistry.toAlias(correction.getFieldName());
+                String cbsColumn = cbsColumnRegistry.toAlias(correction.getFieldName());
                 Object cbsValueObj = cbsData.get(cbsColumn);
                 String cbsValue = cbsValueObj != null ? cbsValueObj.toString().trim() : "";
 

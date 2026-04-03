@@ -1,0 +1,19 @@
+name: bdqm
+services:
+  postgres:
+    image: postgres:17.4
+    # volumes:
+    #   - ~/volumes/jhipster/centralReporting/postgresql/:/var/lib/postgresql/data/
+    environment:
+      - POSTGRES_USER=centralReporting
+      - POSTGRES_USER=bdqm
+      - POSTGRES_PASSWORD=bdqm
+      - POSTGRES_DB=bdqm
+    healthcheck:
+      test: ['CMD-SHELL', 'pg_isready -U $${POSTGRES_USER}']
+      interval: 5s
+      timeout: 5s
+      retries: 10
+    ports:
+      - '5432:5432'
+

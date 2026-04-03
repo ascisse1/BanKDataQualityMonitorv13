@@ -31,32 +31,11 @@ export interface ConnectionTestResult {
   responseTime?: number;
   error?: string;
 }
-
-export interface ConnectionLog {
-  id: string;
-  configId: string;
-  testDate: string;
-  testResult: 'success' | 'failed';
-  responseTime?: number;
-  errorMessage?: string;
-}
-
 class CoreBankingConfigService {
   async getAllConfigs(): Promise<CoreBankingConfig[]> {
     const response = await axios.get(`${API_URL}/api/corebanking/configs`);
     return response.data;
   }
-
-  async getConfigById(id: string): Promise<CoreBankingConfig> {
-    const response = await axios.get(`${API_URL}/api/corebanking/configs/${id}`);
-    return response.data;
-  }
-
-  async getDefaultConfig(): Promise<CoreBankingConfig | null> {
-    const response = await axios.get(`${API_URL}/api/corebanking/configs/default`);
-    return response.data;
-  }
-
   async createConfig(config: Omit<CoreBankingConfig, 'id'>): Promise<CoreBankingConfig> {
     const response = await axios.post(`${API_URL}/api/corebanking/configs`, config);
     return response.data;
@@ -75,23 +54,9 @@ class CoreBankingConfigService {
     const response = await axios.post(`${API_URL}/api/corebanking/test-connection`, config);
     return response.data;
   }
-
-  async testConnectionById(id: string): Promise<ConnectionTestResult> {
-    const response = await axios.post(`${API_URL}/api/corebanking/test-connection/${id}`);
-    return response.data;
-  }
-
   async setDefaultConfig(id: string): Promise<void> {
     await axios.post(`${API_URL}/api/corebanking/configs/${id}/set-default`);
   }
-
-  async getConnectionLogs(configId: string, limit: number = 20): Promise<ConnectionLog[]> {
-    const response = await axios.get(`${API_URL}/api/corebanking/configs/${configId}/logs`, {
-      params: { limit }
-    });
-    return response.data;
-  }
-
   buildJdbcUrl(config: Partial<CoreBankingConfig>): string {
     const { dbType, host, port, databaseName, additionalParams } = config;
 

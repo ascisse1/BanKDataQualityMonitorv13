@@ -18,7 +18,7 @@ import java.time.LocalDateTime;
 @NoArgsConstructor
 @AllArgsConstructor
 @Entity
-@Table(name = "user_profile",
+@Table(schema = "public",name = "user_profile",
     uniqueConstraints = @UniqueConstraint(
         name = "uk_user_profile_assignment",
         columnNames = {"user_id", "structure_id", "profile_id", "date_from"}

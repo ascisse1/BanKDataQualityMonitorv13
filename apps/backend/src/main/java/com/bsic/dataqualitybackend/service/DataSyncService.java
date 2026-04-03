@@ -1,12 +1,9 @@
 package com.bsic.dataqualitybackend.service;
 
 import com.bsic.dataqualitybackend.config.metrics.BusinessMetricsConfig;
-import com.bsic.dataqualitybackend.model.Agency;
-import com.bsic.dataqualitybackend.model.Client;
+import com.bsic.dataqualitybackend.model.CbsTable;
 import com.bsic.dataqualitybackend.model.Structure;
-import com.bsic.dataqualitybackend.repository.AgencyRepository;
-import com.bsic.dataqualitybackend.repository.ClientRepository;
-import com.bsic.dataqualitybackend.repository.InformixRepository;
+import com.bsic.dataqualitybackend.repository.CbsTableRepository;
 import com.bsic.dataqualitybackend.repository.StructureRepository;
 import lombok.RequiredArgsConstructor;
 import lombok.extern.slf4j.Slf4j;
@@ -14,19 +11,15 @@ import org.springframework.boot.autoconfigure.condition.ConditionalOnProperty;
 import org.springframework.stereotype.Service;
 import org.springframework.transaction.annotation.Transactional;
 
-import java.math.BigDecimal;
-import java.sql.Date;
-import java.time.LocalDate;
 import java.time.LocalDateTime;
 import java.util.ArrayList;
 import java.util.List;
 import java.util.Map;
-import java.util.Optional;
 
 /**
- * Service for synchronizing data from Informix CBS to MySQL.
- * Handles BKCLI (clients) and BKAGE (agencies) sync operations.
- * After sync, validates clients and creates anomalies for validation failures.
+ * Dictionary-driven data sync service.
+ * Syncs all CBS tables that have syncEnabled=true in the data dictionary,
+ * ordered by syncOrder. No hardcoded table names.
  */
 @Service
 @Slf4j
@@ -34,427 +27,216 @@ import java.util.Optional;
 @ConditionalOnProperty(name = "app.features.informix-integration", havingValue = "true", matchIfMissing = false)
 public class DataSyncService {
 
-    private final InformixRepository informixRepository;
-    private final ClientRepository clientRepository;
-    private final AgencyRepository agencyRepository;
+    private final DynamicCbsQueryService dynamicCbsQueryService;
+    private final CbsTableRepository cbsTableRepository;
+    private final CbsDataDictionaryService dataDictionaryService;
     private final StructureRepository structureRepository;
-    private final ClientValidationService clientValidationService;
+    private final CbsValidationService cbsValidationService;
     private final BusinessMetricsConfig metricsConfig;
 
     private static final int BATCH_SIZE = 1000;
 
     /**
-     * Synchronize all clients from Informix BKCLI to MySQL bkcli table.
-     * Uses upsert logic: insert new records, update existing ones.
-     * After sync, validates clients and creates anomalies.
+     * Sync ALL enabled CBS tables from Informix to PostgreSQL mirror.
+     * Tables are determined by cbs_tables where sync_enabled=true, ordered by sync_order.
      *
-     * @return SyncResult containing statistics
+     * @return list of SyncResult, one per table
      */
     @Transactional
-    public SyncResult syncClients() {
-        log.info("Starting BKCLI sync from Informix to MySQL...");
-        LocalDateTime startTime = LocalDateTime.now();
+    public List<SyncResult> syncAll() {
+        List<CbsTable> tables = cbsTableRepository.findBySyncEnabledTrueAndActiveTrueOrderBySyncOrderAsc();
+        log.info("Starting dictionary-driven sync for {} enabled tables", tables.size());
 
-        int inserted = 0;
-        int updated = 0;
-        int errors = 0;
-        List<Client> syncedClients = new ArrayList<>();
+        List<SyncResult> results = new ArrayList<>();
 
-        try {
-            List<Map<String, Object>> informixClients = informixRepository.getAllClients();
-            log.info("Retrieved {} clients from Informix CBS", informixClients.size());
+        for (CbsTable table : tables) {
+            try {
+                SyncResult result = syncTable(table.getTableName());
+                results.add(result);
 
-            for (Map<String, Object> row : informixClients) {
-                try {
-                    String cli = getStringValue(row, "cli");
-                    if (cli == null || cli.isBlank()) {
-                        log.warn("Skipping client with null/empty cli");
-                        errors++;
-                        continue;
-                    }
+                // Post-sync hooks per table
+                runPostSyncHooks(table.getTableName(), result);
 
-                    Optional<Client> existingClient = clientRepository.findById(cli);
-                    Client client = existingClient.orElse(new Client());
-                    boolean isNew = existingClient.isEmpty();
-
-                    mapInformixToClient(row, client);
-
-                    if (isNew) {
-                        client.setCreatedAt(LocalDateTime.now());
-                        inserted++;
-                    } else {
-                        updated++;
-                    }
-                    client.setUpdatedAt(LocalDateTime.now());
-
-                    Client savedClient = clientRepository.save(client);
-                    syncedClients.add(savedClient);
-
-                } catch (Exception e) {
-                    log.error("Error syncing client: {}", e.getMessage());
-                    errors++;
-                }
+            } catch (Exception e) {
+                log.error("Sync failed for table {}: {}", table.getTableName(), e.getMessage(), e);
+                results.add(new SyncResult(table.getTableName(), 0, 0,
+                        1, LocalDateTime.now(), LocalDateTime.now()));
             }
-
-            log.info("BKCLI sync completed. Inserted: {}, Updated: {}, Errors: {}", inserted, updated, errors);
-
-            // Run validation on synced clients and create anomalies
-            if (!syncedClients.isEmpty()) {
-                log.info("Starting validation for {} synced clients...", syncedClients.size());
-                try {
-                    ClientValidationService.ValidationResult validationResult =
-                            clientValidationService.validateClientsAndCreateAnomalies(syncedClients);
-                    log.info("Validation completed. Anomalies created: {}, Duplicates skipped: {}, Errors: {}",
-                            validationResult.anomaliesCreated(),
-                            validationResult.duplicatesSkipped(),
-                            validationResult.errors());
-                } catch (Exception e) {
-                    log.error("Error during client validation: {}", e.getMessage(), e);
-                }
-            }
-
-            metricsConfig.recordDataSyncSuccess();
-            return new SyncResult("BKCLI", inserted, updated, errors, startTime, LocalDateTime.now());
-
-        } catch (Exception e) {
-            log.error("Failed to sync BKCLI: {}", e.getMessage(), e);
-            metricsConfig.recordDataSyncFailure();
-            throw new RuntimeException("BKCLI sync failed", e);
         }
+
+        log.info("Full sync completed: {} tables processed", results.size());
+        metricsConfig.recordDataSyncSuccess();
+        return results;
     }
 
     /**
-     * Synchronize all agencies from Informix BKAGE to MySQL bkage table.
-     * Uses upsert logic: insert new records, update existing ones.
-     *
-     * @return SyncResult containing statistics
+     * Sync a single CBS table by name.
+     * Dictionary-driven: columns determined by cbs_fields metadata.
      */
     @Transactional
-    public SyncResult syncAgencies() {
-        log.info("Starting BKAGE (agencies) sync from Informix to MySQL...");
+    public SyncResult syncTable(String tableName) {
+        log.info("Starting sync for table '{}' from Informix to PostgreSQL...", tableName);
         LocalDateTime startTime = LocalDateTime.now();
 
-        int inserted = 0;
-        int updated = 0;
-        int errors = 0;
-
-        try {
-            List<Map<String, Object>> informixAgencies = informixRepository.getAllAgencies();
-            log.info("Retrieved {} agencies from Informix CBS", informixAgencies.size());
-
-            for (Map<String, Object> row : informixAgencies) {
-                try {
-                    String age = getStringValue(row, "code");
-                    if (age == null || age.isBlank()) {
-                        log.warn("Skipping agency with null/empty age code");
-                        errors++;
-                        continue;
-                    }
-
-                    Optional<Agency> existingAgency = agencyRepository.findByAge(age);
-                    Agency agency = existingAgency.orElse(new Agency());
-                    boolean isNew = existingAgency.isEmpty();
-
-                    mapInformixToAgency(row, agency);
-
-                    if (isNew) {
-                        inserted++;
-                    } else {
-                        updated++;
-                    }
-
-                    Agency savedAgency = agencyRepository.save(agency);
-
-                    // Auto-create Structure if not exists, and link to Agency
-                    if (savedAgency.getStructure() == null) {
-                        Structure structure = structureRepository.findByCode(age)
-                            .orElseGet(() -> {
-                                Structure s = Structure.builder()
-                                    .code(age)
-                                    .name(savedAgency.getLib() != null ? savedAgency.getLib() : age)
-                                    .type("AGENCY")
-                                    .status("ACTIVE")
-                                    .build();
-                                log.info("Auto-created structure for agency: {}", age);
-                                return structureRepository.save(s);
-                            });
-                        savedAgency.setStructure(structure);
-                        agencyRepository.save(savedAgency);
-                    }
-
-                } catch (Exception e) {
-                    log.error("Error syncing agency: {}", e.getMessage());
-                    errors++;
-                }
-            }
-
-            log.info("BKAGE sync completed. Inserted: {}, Updated: {}, Errors: {}", inserted, updated, errors);
-            return new SyncResult("BKAGE", inserted, updated, errors, startTime, LocalDateTime.now());
-
-        } catch (Exception e) {
-            log.error("Failed to sync BKAGE: {}", e.getMessage(), e);
-            throw new RuntimeException("BKAGE sync failed", e);
-        }
-    }
-
-    /**
-     * Synchronize clients in batches for very large datasets.
-     * Useful when memory is limited or to reduce transaction size.
-     */
-    @Transactional
-    public SyncResult syncClientsBatch() {
-        log.info("Starting batched BKCLI sync from Informix to MySQL...");
-        LocalDateTime startTime = LocalDateTime.now();
-
-        int inserted = 0;
-        int updated = 0;
+        int upserted = 0;
         int errors = 0;
         int offset = 0;
 
         try {
-            Long totalCount = informixRepository.getTotalClientsCount();
-            log.info("Total clients to sync: {}", totalCount);
+            // Ensure mirror table schema matches dictionary
+            dynamicCbsQueryService.ensureMirrorSchema(tableName);
+
+            long totalCount = dynamicCbsQueryService.countCbsRecords(tableName);
+            log.info("Table '{}': {} records to sync", tableName, totalCount);
 
             while (offset < totalCount) {
-                List<Map<String, Object>> batch = informixRepository.getClientsBatch(offset, BATCH_SIZE);
-                log.info("Processing batch: offset={}, size={}", offset, batch.size());
+                List<Map<String, Object>> batch = dynamicCbsQueryService.fetchFromCbs(tableName, offset, BATCH_SIZE);
+                if (batch.isEmpty()) break;
 
-                for (Map<String, Object> row : batch) {
-                    try {
-                        String cli = getStringValue(row, "cli");
-                        if (cli == null || cli.isBlank()) {
-                            errors++;
-                            continue;
-                        }
+                log.debug("Table '{}': processing batch offset={}, size={}", tableName, offset, batch.size());
 
-                        Optional<Client> existingClient = clientRepository.findById(cli);
-                        Client client = existingClient.orElse(new Client());
-                        boolean isNew = existingClient.isEmpty();
-
-                        mapInformixToClient(row, client);
-
-                        if (isNew) {
-                            client.setCreatedAt(LocalDateTime.now());
-                            inserted++;
-                        } else {
-                            updated++;
-                        }
-                        client.setUpdatedAt(LocalDateTime.now());
-
-                        clientRepository.save(client);
-
-                    } catch (Exception e) {
-                        log.error("Error syncing client in batch: {}", e.getMessage());
-                        errors++;
-                    }
-                }
+                int batchUpserted = dynamicCbsQueryService.upsertToMirror(tableName, batch);
+                upserted += batchUpserted;
 
                 offset += BATCH_SIZE;
+                if (batch.size() < BATCH_SIZE) break;
+            }
 
-                if (batch.size() < BATCH_SIZE) {
-                    break; // Last batch
+            log.info("Sync completed for '{}'. Upserted: {}, Errors: {}", tableName, upserted, errors);
+            return new SyncResult(tableName, upserted, 0, errors, startTime, LocalDateTime.now());
+
+        } catch (Exception e) {
+            log.error("Failed to sync table '{}': {}", tableName, e.getMessage(), e);
+            metricsConfig.recordDataSyncFailure();
+            throw new RuntimeException("Sync failed for table " + tableName, e);
+        }
+    }
+
+    /**
+     * Post-sync hooks for specific tables.
+     * - bkcli: run validation + auto-resolve anomalies
+     * - bkage: auto-create Structure entities
+     */
+    private void runPostSyncHooks(String tableName, SyncResult result) {
+        // Dictionary-driven validation for any table with validationEnabled=true
+        try {
+            var tableConfig = dataDictionaryService.getTableByName(tableName);
+            if (Boolean.TRUE.equals(tableConfig.getValidationEnabled())) {
+                runValidation(tableName);
+            }
+        } catch (Exception e) {
+            log.warn("Could not check validation config for '{}': {}", tableName, e.getMessage());
+        }
+
+        // bkage-specific: auto-create Structure entities
+        if ("bkage".equals(tableName)) {
+            syncStructuresFromAgencies();
+        }
+    }
+
+    private void runValidation(String tableName) {
+        log.info("Running post-sync validation for table '{}'...", tableName);
+        try {
+            List<Map<String, Object>> allRecords = new ArrayList<>();
+            int offset = 0;
+            while (true) {
+                List<Map<String, Object>> batch = dynamicCbsQueryService.fetchFromCbs(tableName, offset, BATCH_SIZE);
+                if (batch.isEmpty()) break;
+                allRecords.addAll(batch);
+                offset += BATCH_SIZE;
+                if (batch.size() < BATCH_SIZE) break;
+            }
+
+            if (!allRecords.isEmpty()) {
+                CbsValidationService.ValidationResult validationResult =
+                        cbsValidationService.validateRecords(tableName, allRecords);
+                log.info("Validation for '{}': anomalies={}, auto-resolved={}, skipped={}, errors={}",
+                        tableName,
+                        validationResult.anomaliesCreated(),
+                        validationResult.autoResolved(),
+                        validationResult.duplicatesSkipped(),
+                        validationResult.errors());
+            }
+        } catch (Exception e) {
+            log.error("Post-sync validation failed for '{}': {}", tableName, e.getMessage(), e);
+        }
+    }
+
+    /**
+     * Auto-create Structure entities for agencies that don't have one.
+     * Links cbs.bkage to public.structure by convention: structure.code = bkage.age
+     */
+    private void syncStructuresFromAgencies() {
+        log.info("Syncing structures from agencies...");
+        try {
+            List<Map<String, Object>> agencies = dynamicCbsQueryService.fetchFromCbs("bkage", 0, 10000);
+
+            int created = 0;
+            for (Map<String, Object> row : agencies) {
+                String age = getString(row, "age");
+                String lib = getString(row, "lib");
+                if (age == null || age.isBlank()) continue;
+
+                boolean exists = structureRepository.findByCode(age).isPresent();
+                if (!exists) {
+                    Structure s = Structure.builder()
+                        .code(age)
+                        .name(lib != null ? lib : age)
+                        .type("AGENCY")
+                        .status("ACTIVE")
+                        .build();
+                    structureRepository.save(s);
+                    created++;
                 }
             }
 
-            log.info("Batched BKCLI sync completed. Inserted: {}, Updated: {}, Errors: {}", inserted, updated, errors);
-            return new SyncResult("BKCLI", inserted, updated, errors, startTime, LocalDateTime.now());
-
+            if (created > 0) {
+                log.info("Created {} new structures from agencies", created);
+            }
         } catch (Exception e) {
-            log.error("Failed to sync BKCLI in batches: {}", e.getMessage(), e);
-            throw new RuntimeException("BKCLI batch sync failed", e);
+            log.error("Structure sync from agencies failed: {}", e.getMessage(), e);
         }
     }
 
-    /**
-     * Map Informix row data to Client entity.
-     * Maps all fields from bkcli table.
-     */
-    private void mapInformixToClient(Map<String, Object> row, Client client) {
-        client.setCli(getStringValue(row, "cli"));
-        client.setNom(getStringValue(row, "nom"));
-        client.setTcli(getStringValue(row, "tcli"));
-        client.setLib(getStringValue(row, "lib"));
-        client.setPre(getStringValue(row, "pre"));
-        client.setSext(getStringValue(row, "sext"));
-        client.setNjf(getStringValue(row, "njf"));
-        client.setDna(getLocalDateValue(row, "dna"));
-        client.setViln(getStringValue(row, "viln"));
-        client.setDepn(getStringValue(row, "depn"));
-        client.setPayn(getStringValue(row, "payn"));
-        client.setLocn(getStringValue(row, "locn"));
-        client.setTid(getStringValue(row, "tid"));
-        client.setNid(getStringValue(row, "nid"));
-        client.setDid(getLocalDateValue(row, "did"));
-        client.setLid(getStringValue(row, "lid"));
-        client.setOid(getStringValue(row, "oid"));
-        client.setVid(getLocalDateValue(row, "vid"));
-        client.setSit(getStringValue(row, "sit"));
-        client.setReg(getStringValue(row, "reg"));
-        client.setCapj(getStringValue(row, "capj"));
-        client.setDcapj(getLocalDateValue(row, "dcapj"));
-        client.setSitj(getStringValue(row, "sitj"));
-        client.setDsitj(getLocalDateValue(row, "dsitj"));
-        client.setTconj(getStringValue(row, "tconj"));
-        client.setConj(getStringValue(row, "conj"));
-        client.setNbenf(getShortValue(row, "nbenf"));
-        client.setClifam(getStringValue(row, "clifam"));
-        client.setRso(getStringValue(row, "rso"));
-        client.setSig(getStringValue(row, "sig"));
-        client.setDatc(getLocalDateValue(row, "datc"));
-        client.setFju(getStringValue(row, "fju"));
-        client.setNrc(getStringValue(row, "nrc"));
-        client.setVrc(getLocalDateValue(row, "vrc"));
-        client.setNchc(getStringValue(row, "nchc"));
-        client.setNpa(getStringValue(row, "npa"));
-        client.setVpa(getLocalDateValue(row, "vpa"));
-        client.setNidn(getStringValue(row, "nidn"));
-        client.setNis(getStringValue(row, "nis"));
-        client.setNidf(getStringValue(row, "nidf"));
-        client.setGrp(getStringValue(row, "grp"));
-        client.setSgrp(getStringValue(row, "sgrp"));
-        client.setMet(getStringValue(row, "met"));
-        client.setSmet(getStringValue(row, "smet"));
-        client.setCmc1(getStringValue(row, "cmc1"));
-        client.setCmc2(getStringValue(row, "cmc2"));
-        client.setAge(getStringValue(row, "age"));
-        client.setGes(getStringValue(row, "ges"));
-        client.setQua(getStringValue(row, "qua"));
-        client.setTax(getStringValue(row, "tax"));
-        client.setCatl(getStringValue(row, "catl"));
-        client.setSeg(getStringValue(row, "seg"));
-        client.setNst(getStringValue(row, "nst"));
-        client.setClipar(getStringValue(row, "clipar"));
-        client.setChl1(getStringValue(row, "chl1"));
-        client.setChl2(getStringValue(row, "chl2"));
-        client.setChl3(getStringValue(row, "chl3"));
-        client.setLter(getStringValue(row, "lter"));
-        client.setLterc(getStringValue(row, "lterc"));
-        client.setResd(getStringValue(row, "resd"));
-        client.setCatn(getStringValue(row, "catn"));
-        client.setSec(getStringValue(row, "sec"));
-        client.setLienbq(getStringValue(row, "lienbq"));
-        client.setAclas(getStringValue(row, "aclas"));
-        client.setMaclas(getBigDecimalValue(row, "maclas"));
-        client.setEmtit(getStringValue(row, "emtit"));
-        client.setNicr(getStringValue(row, "nicr"));
-        client.setCed(getStringValue(row, "ced"));
-        client.setClcr(getStringValue(row, "clcr"));
-        client.setNmer(getStringValue(row, "nmer"));
-        client.setLang(getStringValue(row, "lang"));
-        client.setNat(getStringValue(row, "nat"));
-        client.setRes(getStringValue(row, "res"));
-        client.setIchq(getStringValue(row, "ichq"));
-        client.setDichq(getLocalDateValue(row, "dichq"));
-        client.setIcb(getStringValue(row, "icb"));
-        client.setDicb(getLocalDateValue(row, "dicb"));
-        client.setEpu(getStringValue(row, "epu"));
-        client.setUtic(getStringValue(row, "utic"));
-        client.setUti(getStringValue(row, "uti"));
-        client.setDou(getLocalDateValue(row, "dou"));
-        client.setDmo(getLocalDateValue(row, "dmo"));
-        client.setOrd(getBigDecimalValue(row, "ord"));
-        client.setCatr(getStringValue(row, "catr"));
-        client.setMidname(getStringValue(row, "midname"));
-        client.setNomrest(getStringValue(row, "nomrest"));
-        client.setDrc(getLocalDateValue(row, "drc"));
-        client.setLrc(getStringValue(row, "lrc"));
-        client.setRso2(getStringValue(row, "rso2"));
-        client.setRegn(getStringValue(row, "regn"));
-        client.setRrc(getStringValue(row, "rrc"));
-        client.setDvrrc(getLocalDateValue(row, "dvrrc"));
-        client.setUtiVrrc(getStringValue(row, "uti_vrrc"));
+    // ===== Legacy methods (kept for backward compatibility with scheduler/controller) =====
+
+    /** @deprecated Use {@link #syncAll()} or {@link #syncTable(String)} instead */
+    @Deprecated
+    @Transactional
+    public SyncResult syncClients() {
+        return syncTable("bkcli");
     }
 
-    /**
-     * Map Informix row data to Agency entity.
-     */
-    private void mapInformixToAgency(Map<String, Object> row, Agency agency) {
-        agency.setAge(getStringValue(row, "code"));
-        agency.setLib(getStringValue(row, "name"));
+    /** @deprecated Use {@link #syncAll()} or {@link #syncTable(String)} instead */
+    @Deprecated
+    @Transactional
+    public SyncResult syncAgencies() {
+        return syncTable("bkage");
     }
 
-    /**
-     * Safely extract String value from row map.
-     */
-    private String getStringValue(Map<String, Object> row, String key) {
+    /** @deprecated Use {@link #syncAll()} instead */
+    @Deprecated
+    @Transactional
+    public SyncResult syncClientsBatch() {
+        return syncTable("bkcli");
+    }
+
+    // ===== Helpers =====
+
+    private String getString(Map<String, Object> row, String key) {
         Object value = row.get(key);
-        if (value == null) {
-            return null;
-        }
+        if (value == null) return null;
         String strValue = value.toString().trim();
         return strValue.isEmpty() ? null : strValue;
     }
 
-    /**
-     * Safely extract LocalDate value from row map.
-     * Handles both java.sql.Date and java.util.Date.
-     */
-    private LocalDate getLocalDateValue(Map<String, Object> row, String key) {
-        Object value = row.get(key);
-        if (value == null) {
-            return null;
-        }
-        if (value instanceof LocalDate localDate) {
-            return localDate;
-        }
-        if (value instanceof Date sqlDate) {
-            return sqlDate.toLocalDate();
-        }
-        if (value instanceof java.util.Date utilDate) {
-            return new Date(utilDate.getTime()).toLocalDate();
-        }
-        return null;
-    }
-
-    /**
-     * Safely extract Short value from row map.
-     */
-    private Short getShortValue(Map<String, Object> row, String key) {
-        Object value = row.get(key);
-        if (value == null) {
-            return null;
-        }
-        if (value instanceof Short shortVal) {
-            return shortVal;
-        }
-        if (value instanceof Number number) {
-            return number.shortValue();
-        }
-        return null;
-    }
-
-    /**
-     * Safely extract BigDecimal value from row map.
-     */
-    private BigDecimal getBigDecimalValue(Map<String, Object> row, String key) {
-        Object value = row.get(key);
-        if (value == null) {
-            return null;
-        }
-        if (value instanceof BigDecimal bigDecimal) {
-            return bigDecimal;
-        }
-        if (value instanceof Number number) {
-            return BigDecimal.valueOf(number.doubleValue());
-        }
-        return null;
-    }
-
-    /**
-     * Result class for sync operations.
-     */
     public record SyncResult(
-            String entity,
-            int inserted,
-            int updated,
-            int errors,
-            LocalDateTime startTime,
-            LocalDateTime endTime
+            String entity, int inserted, int updated, int errors,
+            LocalDateTime startTime, LocalDateTime endTime
     ) {
         public long durationSeconds() {
             return java.time.Duration.between(startTime, endTime).getSeconds();
         }
-
         public int totalProcessed() {
             return inserted + updated + errors;
         }

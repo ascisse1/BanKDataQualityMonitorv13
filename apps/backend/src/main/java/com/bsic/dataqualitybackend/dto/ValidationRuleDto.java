@@ -15,6 +15,7 @@ import java.time.LocalDateTime;
 @AllArgsConstructor
 public class ValidationRuleDto {
     private Long id;
+    private String tableName;
     private String ruleName;
     private String description;
     private RuleType ruleType;

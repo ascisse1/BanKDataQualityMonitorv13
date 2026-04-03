@@ -283,12 +283,12 @@
         "gridPos": {"h": 8, "w": 12, "x": 0, "y": 28},
         "targets": [
           {
-            "expr": "hikaricp_connections_active{pool=\"MySQLPool\"}",
-            "legendFormat": "MySQL Active"
+            "expr": "hikaricp_connections_active{pool=\"PrimaryPool\"}",
+            "legendFormat": "Primary Active"
           },
           {
-            "expr": "hikaricp_connections_idle{pool=\"MySQLPool\"}",
-            "legendFormat": "MySQL Idle"
+            "expr": "hikaricp_connections_idle{pool=\"PrimaryPool\"}",
+            "legendFormat": "Primary Idle"
           },
           {
             "expr": "hikaricp_connections_active{pool=\"InformixPool\"}",

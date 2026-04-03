@@ -37,6 +37,16 @@ public class FatcaClientDto {
     private LocalDate declarationDate;
     private String notes;
     private Boolean reportingRequired;
+    private LocalDate w9ReceivedDate;
+    private LocalDate w8ReceivedDate;
+    private LocalDate w9ExpiryDate;
+    private LocalDate w8ExpiryDate;
+    private String documentStatus;
+    private String documentNotes;
+    private String indiciaTypes;
+    private Integer indiciaCount;
+    private LocalDateTime lastScreeningDate;
+    private String detectionSource;
     private LocalDateTime createdAt;
     private LocalDateTime updatedAt;
 }

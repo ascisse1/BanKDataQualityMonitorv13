@@ -1,0 +1,185 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<databaseChangeLog
+    xmlns="http://www.liquibase.org/xml/ns/dbchangelog"
+    xmlns:xsi="http://www.w3.org/2001/XMLSchema-instance"
+    xsi:schemaLocation="http://www.liquibase.org/xml/ns/dbchangelog
+        http://www.liquibase.org/xml/ns/dbchangelog/dbchangelog-latest.xsd">
+
+    <!-- =====================================================
+         CBS Data Dictionary Schema
+         Metadata tables for dynamic CBS table management
+         ===================================================== -->
+
+    <!-- 1. CBS Tables catalog -->
+    <changeSet id="002-01-create-cbs-tables" author="bdqm">
+        <createTable schemaName="public" tableName="cbs_tables">
+            <column name="id" type="BIGINT" autoIncrement="true">
+                <constraints primaryKey="true" nullable="false"/>
+            </column>
+            <column name="table_name" type="VARCHAR(30)">
+                <constraints nullable="false" unique="true" uniqueConstraintName="uk_cbs_table_name"/>
+            </column>
+            <column name="display_name" type="VARCHAR(100)"/>
+            <column name="description" type="TEXT"/>
+            <column name="schema_name" type="VARCHAR(30)"/>
+            <column name="cbs_version" type="VARCHAR(30)"/>
+            <column name="primary_key_columns" type="VARCHAR(100)"/>
+            <column name="sync_enabled" type="BOOLEAN" defaultValueBoolean="false"/>
+            <column name="sync_order" type="INT"/>
+            <column name="active" type="BOOLEAN" defaultValueBoolean="true">
+                <constraints nullable="false"/>
+            </column>
+            <!-- Validation config (from 019) -->
+            <column name="validation_enabled" type="BOOLEAN" defaultValueBoolean="false"/>
+            <column name="pk_field" type="VARCHAR(30)"/>
+            <column name="label_field" type="VARCHAR(100)"/>
+            <column name="label_field_corporate" type="VARCHAR(100)"/>
+            <column name="structure_field" type="VARCHAR(30)"/>
+            <column name="type_field" type="VARCHAR(30)"/>
+            <column name="created_at" type="TIMESTAMP" defaultValueComputed="CURRENT_TIMESTAMP">
+                <constraints nullable="false"/>
+            </column>
+            <column name="updated_at" type="TIMESTAMP" defaultValueComputed="CURRENT_TIMESTAMP"/>
+        </createTable>
+    </changeSet>
+
+    <!-- 2. CBS Fields catalog (NO java_field_name, NO java_entity_class) -->
+    <changeSet id="002-02-create-cbs-fields" author="bdqm">
+        <createTable schemaName="public" tableName="cbs_fields">
+            <column name="id" type="BIGINT" autoIncrement="true">
+                <constraints primaryKey="true" nullable="false"/>
+            </column>
+            <column name="cbs_table_id" type="BIGINT">
+                <constraints nullable="false"/>
+            </column>
+            <column name="column_name" type="VARCHAR(30)">
+                <constraints nullable="false"/>
+            </column>
+            <column name="display_label" type="VARCHAR(100)"/>
+            <column name="description" type="TEXT"/>
+            <column name="query_alias" type="VARCHAR(50)"/>
+            <column name="data_type" type="VARCHAR(20)">
+                <constraints nullable="false"/>
+            </column>
+            <column name="max_length" type="INT"/>
+            <column name="precision_value" type="INT"/>
+            <column name="scale_value" type="INT"/>
+            <column name="is_primary_key" type="BOOLEAN" defaultValueBoolean="false"/>
+            <column name="is_required" type="BOOLEAN" defaultValueBoolean="false"/>
+            <column name="is_updatable" type="BOOLEAN" defaultValueBoolean="true"/>
+            <column name="nomenclature_ctab" type="VARCHAR(3)"/>
+            <column name="nomenclature_description" type="VARCHAR(100)"/>
+            <column name="enum_values" type="JSONB"/>
+            <column name="applicable_client_types" type="VARCHAR(50)"/>
+            <column name="display_order" type="INT"/>
+            <column name="field_group" type="VARCHAR(50)"/>
+            <column name="active" type="BOOLEAN" defaultValueBoolean="true">
+                <constraints nullable="false"/>
+            </column>
+            <column name="created_at" type="TIMESTAMP" defaultValueComputed="CURRENT_TIMESTAMP">
+                <constraints nullable="false"/>
+            </column>
+            <column name="updated_at" type="TIMESTAMP" defaultValueComputed="CURRENT_TIMESTAMP"/>
+        </createTable>
+        <addForeignKeyConstraint
+            baseTableName="cbs_fields" baseColumnNames="cbs_table_id"
+            referencedTableName="cbs_tables" referencedColumnNames="id"
+            constraintName="fk_cbs_field_table"/>
+        <addUniqueConstraint schemaName="public" tableName="cbs_fields"
+            columnNames="cbs_table_id,column_name"
+            constraintName="uk_cbs_field_table_column"/>
+        <createIndex schemaName="public" tableName="cbs_fields" indexName="idx_cbs_field_table">
+            <column name="cbs_table_id"/>
+        </createIndex>
+        <createIndex schemaName="public" tableName="cbs_fields" indexName="idx_cbs_field_nomenclature">
+            <column name="nomenclature_ctab"/>
+        </createIndex>
+    </changeSet>
+
+    <!-- 3. Nomenclature Types -->
+    <changeSet id="002-03-create-nomenclature-types" author="bdqm">
+        <createTable schemaName="public" tableName="nomenclature_types">
+            <column name="id" type="BIGINT" autoIncrement="true">
+                <constraints primaryKey="true" nullable="false"/>
+            </column>
+            <column name="ctab" type="VARCHAR(3)">
+                <constraints nullable="false" unique="true" uniqueConstraintName="uk_nomenclature_type_ctab"/>
+            </column>
+            <column name="name" type="VARCHAR(100)">
+                <constraints nullable="false"/>
+            </column>
+            <column name="display_name" type="VARCHAR(100)"/>
+            <column name="description" type="TEXT"/>
+            <column name="sync_enabled" type="BOOLEAN" defaultValueBoolean="true"/>
+            <column name="active" type="BOOLEAN" defaultValueBoolean="true">
+                <constraints nullable="false"/>
+            </column>
+            <column name="entry_count" type="INT"/>
+            <column name="last_synced_at" type="TIMESTAMP"/>
+            <column name="created_at" type="TIMESTAMP" defaultValueComputed="CURRENT_TIMESTAMP">
+                <constraints nullable="false"/>
+            </column>
+            <column name="updated_at" type="TIMESTAMP" defaultValueComputed="CURRENT_TIMESTAMP"/>
+        </createTable>
+    </changeSet>
+
+    <!-- 4. Nomenclature Entries -->
+    <changeSet id="002-04-create-nomenclature-entries" author="bdqm">
+        <createTable schemaName="public" tableName="nomenclature_entries">
+            <column name="id" type="BIGINT" autoIncrement="true">
+                <constraints primaryKey="true" nullable="false"/>
+            </column>
+            <column name="nomenclature_type_id" type="BIGINT">
+                <constraints nullable="false"/>
+            </column>
+            <column name="ctab" type="VARCHAR(3)">
+                <constraints nullable="false"/>
+            </column>
+            <column name="cacc" type="VARCHAR(10)">
+                <constraints nullable="false"/>
+            </column>
+            <column name="age" type="VARCHAR(5)"/>
+            <column name="lib1" type="VARCHAR(30)"/>
+            <column name="lib2" type="VARCHAR(30)"/>
+            <column name="lib3" type="VARCHAR(30)"/>
+            <column name="lib4" type="VARCHAR(30)"/>
+            <column name="lib5" type="VARCHAR(30)"/>
+            <column name="mnt1" type="DECIMAL(15,0)"/>
+            <column name="mnt2" type="DECIMAL(15,0)"/>
+            <column name="mnt3" type="DECIMAL(15,0)"/>
+            <column name="mnt4" type="DECIMAL(15,0)"/>
+            <column name="mnt5" type="DECIMAL(15,0)"/>
+            <column name="mnt6" type="DECIMAL(15,0)"/>
+            <column name="mnt7" type="DECIMAL(15,0)"/>
+            <column name="mnt8" type="DECIMAL(15,0)"/>
+            <column name="tau1" type="DECIMAL(15,7)"/>
+            <column name="tau2" type="DECIMAL(15,7)"/>
+            <column name="tau3" type="DECIMAL(15,7)"/>
+            <column name="tau4" type="DECIMAL(15,7)"/>
+            <column name="tau5" type="DECIMAL(15,7)"/>
+            <column name="active" type="BOOLEAN" defaultValueBoolean="true">
+                <constraints nullable="false"/>
+            </column>
+            <column name="last_synced_at" type="TIMESTAMP"/>
+            <column name="created_at" type="TIMESTAMP" defaultValueComputed="CURRENT_TIMESTAMP">
+                <constraints nullable="false"/>
+            </column>
+            <column name="updated_at" type="TIMESTAMP" defaultValueComputed="CURRENT_TIMESTAMP"/>
+        </createTable>
+        <addForeignKeyConstraint
+            baseTableName="nomenclature_entries" baseColumnNames="nomenclature_type_id"
+            referencedTableName="nomenclature_types" referencedColumnNames="id"
+            constraintName="fk_nom_entry_type"/>
+        <addUniqueConstraint schemaName="public" tableName="nomenclature_entries"
+            columnNames="ctab,cacc,age"
+            constraintName="uk_nom_entry_ctab_cacc_age"/>
+        <createIndex schemaName="public" tableName="nomenclature_entries" indexName="idx_nom_entry_type">
+            <column name="nomenclature_type_id"/>
+        </createIndex>
+        <createIndex schemaName="public" tableName="nomenclature_entries" indexName="idx_nom_entry_ctab_cacc">
+            <column name="ctab"/>
+            <column name="cacc"/>
+        </createIndex>
+    </changeSet>
+
+</databaseChangeLog>

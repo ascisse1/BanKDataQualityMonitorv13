@@ -300,9 +300,14 @@ const ValidationSummary = ({ isLoading = false }) => {
           </div>
           <div>
             <div className="text-lg font-semibold text-secondary-800">
-              {(metrics.reduce((sum, m) => sum + m.quality_score, 0) / metrics.length).toFixed(1)}%
+              {(() => {
+                const totalRecords = metrics.reduce((sum, m) => sum + m.total_records, 0);
+                if (totalRecords === 0) return '0.0';
+                const weightedScore = metrics.reduce((sum, m) => sum + m.quality_score * m.total_records, 0) / totalRecords;
+                return weightedScore.toFixed(1);
+              })()}%
             </div>
-            <div className="text-sm text-secondary-600">Qualité moyenne</div>
+            <div className="text-sm text-secondary-600">Qualite moyenne ponderee</div>
           </div>
         </div>
       </div>

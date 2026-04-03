@@ -436,7 +436,7 @@ add_text_box(slide, Inches(1.1), Inches(1.9), Inches(5), Inches(0.4),
 
 systems = [
     ("Core Banking Informix (BSIC)", "Connexion JDBC directe — clients, comptes, adresses, contacts", ORANGE),
-    ("Base de Donnees MySQL", "Donnees qualite, anomalies, tickets, FATCA, journaux d'audit", ACCENT_BLUE),
+    ("Base de Donnees PostgreSQL", "Donnees qualite, anomalies, tickets, FATCA, journaux d'audit", ACCENT_BLUE),
     ("Keycloak SSO", "Authentification OAuth2 — connexion unique entreprise", ACCENT_TEAL),
     ("Flowable BPMN", "Moteur d'automatisation de workflows standard", RGBColor(0x6C, 0x5C, 0xE7)),
     ("UiPath RPA", "Automatisation robotique des processus de correction", GOLD),

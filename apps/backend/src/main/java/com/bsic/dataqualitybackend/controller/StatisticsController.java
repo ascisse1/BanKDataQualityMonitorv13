@@ -1,6 +1,8 @@
 package com.bsic.dataqualitybackend.controller;
 
 import com.bsic.dataqualitybackend.dto.*;
+import com.bsic.dataqualitybackend.model.Structure;
+import com.bsic.dataqualitybackend.repository.StructureRepository;
 import com.bsic.dataqualitybackend.service.StatisticsService;
 import com.bsic.dataqualitybackend.service.StatsService;
 import lombok.RequiredArgsConstructor;
@@ -23,6 +25,7 @@ public class StatisticsController {
 
     private final StatisticsService statisticsService;
     private final StatsService statsService;
+    private final StructureRepository structureRepository;
 
     @GetMapping("/clients")
     public ResponseEntity<ApiResponse<DashboardStatsDto>> getClientStats() {
@@ -90,5 +93,24 @@ public class StatisticsController {
         log.info("API: Getting {} recent anomalies", limit);
         List<AnomalyDto> anomalies = statsService.getRecentAnomalies(limit);
         return ResponseEntity.ok(ApiResponse.success(anomalies));
+    }
+
+    /**
+     * Get quality trends data for charts.
+     */
+    @GetMapping("/quality-trends")
+    public ResponseEntity<ApiResponse<List<Map<String, Object>>>> getQualityTrends(
+            @RequestParam(defaultValue = "6") int months) {
+        List<Map<String, Object>> trends = statsService.getQualityTrends(months);
+        return ResponseEntity.ok(ApiResponse.success(trends));
+    }
+
+    /**
+     * Get all agencies/structures for dropdown filters.
+     */
+    @GetMapping("/agencies")
+    public ResponseEntity<ApiResponse<List<Structure>>> getAgencies() {
+        List<Structure> agencies = structureRepository.findAll();
+        return ResponseEntity.ok(ApiResponse.success(agencies));
     }
 }

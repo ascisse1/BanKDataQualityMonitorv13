@@ -1,0 +1,19 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<databaseChangeLog
+    xmlns="http://www.liquibase.org/xml/ns/dbchangelog"
+    xmlns:xsi="http://www.w3.org/2001/XMLSchema-instance"
+    xsi:schemaLocation="http://www.liquibase.org/xml/ns/dbchangelog
+        http://www.liquibase.org/xml/ns/dbchangelog/dbchangelog-latest.xsd">
+
+    <!-- BSIC Data Quality Monitor - PostgreSQL Database Migrations -->
+
+    <!-- Baseline: Full schema for PostgreSQL (consolidated from legacy changelogs 001-017) -->
+    <include file="db/changelog/changes/pg-001-baseline.xml"/>
+
+    <!-- Seed: Validation rules + Data dictionary -->
+    <include file="db/changelog/changes/pg-002-seed-data.xml"/>
+
+    <!-- Validation parametrable: add metadata columns to cbs_tables + table_name to validation_rules -->
+    <include file="db/changelog/changes/019-validation-parametrable.xml"/>
+
+</databaseChangeLog>

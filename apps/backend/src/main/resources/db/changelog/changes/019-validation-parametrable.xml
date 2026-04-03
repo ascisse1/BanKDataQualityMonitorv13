@@ -1,0 +1,57 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<databaseChangeLog
+    xmlns="http://www.liquibase.org/xml/ns/dbchangelog"
+    xmlns:xsi="http://www.w3.org/2001/XMLSchema-instance"
+    xsi:schemaLocation="http://www.liquibase.org/xml/ns/dbchangelog
+        http://www.liquibase.org/xml/ns/dbchangelog/dbchangelog-latest.xsd">
+
+    <!-- Add validation metadata columns to cbs_tables -->
+    <changeSet id="019-1-add-validation-columns-to-cbs-tables" author="bdqm">
+        <addColumn schemaName="public" tableName="cbs_tables">
+            <column name="validation_enabled" type="BOOLEAN" defaultValueBoolean="false"/>
+            <column name="pk_field" type="VARCHAR(30)"/>
+            <column name="label_field" type="VARCHAR(100)"/>
+            <column name="label_field_corporate" type="VARCHAR(100)"/>
+            <column name="structure_field" type="VARCHAR(30)"/>
+            <column name="type_field" type="VARCHAR(30)"/>
+        </addColumn>
+    </changeSet>
+
+    <!-- Seed validation config for existing tables -->
+    <changeSet id="019-2-seed-validation-config" author="bdqm">
+        <sql>
+            UPDATE public.cbs_tables SET
+                validation_enabled = true,
+                pk_field = 'cli',
+                label_field = 'nom,pre',
+                label_field_corporate = 'rso',
+                structure_field = 'age',
+                type_field = 'tcli'
+            WHERE table_name = 'bkcli';
+        </sql>
+        <sql>
+            UPDATE public.cbs_tables SET
+                pk_field = 'age',
+                label_field = 'lib',
+                structure_field = 'age'
+            WHERE table_name = 'bkage';
+        </sql>
+        <sql>
+            UPDATE public.cbs_tables SET
+                pk_field = 'ctab,cacc,age',
+                label_field = 'lib1'
+            WHERE table_name = 'bknom';
+        </sql>
+    </changeSet>
+
+    <!-- Add table_name column to validation_rules -->
+    <changeSet id="019-3-add-table-name-to-validation-rules" author="bdqm">
+        <addColumn schemaName="public" tableName="validation_rules">
+            <column name="table_name" type="VARCHAR(30)" defaultValue="bkcli"/>
+        </addColumn>
+        <createIndex schemaName="public" tableName="validation_rules" indexName="idx_rule_table_name">
+            <column name="table_name"/>
+        </createIndex>
+    </changeSet>
+
+</databaseChangeLog>

@@ -67,7 +67,7 @@ const GlobalTrackingPage: React.FC = () => {
 
   const fetchAgencies = async () => {
     try {
-      const response = await fetch('/api/agencies');
+      const response = await fetch('/api/structures');
       if (response.ok) {
         const json = await response.json();
         setAgencies(json.data ?? json);

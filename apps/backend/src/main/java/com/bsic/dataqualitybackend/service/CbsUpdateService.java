@@ -1,18 +1,11 @@
 package com.bsic.dataqualitybackend.service;
 
-import com.bsic.dataqualitybackend.model.Ticket;
-import com.bsic.dataqualitybackend.model.TicketIncident;
-import com.bsic.dataqualitybackend.model.User;
+import com.bsic.dataqualitybackend.model.*;
 import com.bsic.dataqualitybackend.model.enums.TicketStatus;
-import com.bsic.dataqualitybackend.repository.InformixRepository;
-import com.bsic.dataqualitybackend.repository.TicketIncidentRepository;
-import com.bsic.dataqualitybackend.repository.TicketRepository;
-import com.bsic.dataqualitybackend.repository.UserRepository;
+import com.bsic.dataqualitybackend.repository.*;
 import com.bsic.dataqualitybackend.security.SecurityUtils;
 import lombok.extern.slf4j.Slf4j;
-import org.springframework.beans.factory.annotation.Qualifier;
 import org.springframework.boot.autoconfigure.condition.ConditionalOnProperty;
-import org.springframework.jdbc.core.JdbcTemplate;
 import org.springframework.stereotype.Service;
 import org.springframework.transaction.annotation.Transactional;
 
@@ -40,7 +33,8 @@ public class CbsUpdateService {
     private final TicketIncidentRepository ticketIncidentRepository;
     private final TicketService ticketService;
     private final UserRepository userRepository;
-    private final JdbcTemplate mysqlJdbcTemplate;
+    private final ReconciliationTaskRepository reconciliationTaskRepository;
+    private final CorrectionRepository correctionRepository;
 
     public CbsUpdateService(
             InformixRepository informixRepository,
@@ -48,13 +42,15 @@ public class CbsUpdateService {
             TicketIncidentRepository ticketIncidentRepository,
             TicketService ticketService,
             UserRepository userRepository,
-            @Qualifier("primaryJdbcTemplate") JdbcTemplate mysqlJdbcTemplate) {
+            ReconciliationTaskRepository reconciliationTaskRepository,
+            CorrectionRepository correctionRepository) {
         this.informixRepository = informixRepository;
         this.ticketRepository = ticketRepository;
         this.ticketIncidentRepository = ticketIncidentRepository;
         this.ticketService = ticketService;
         this.userRepository = userRepository;
-        this.mysqlJdbcTemplate = mysqlJdbcTemplate;
+        this.reconciliationTaskRepository = reconciliationTaskRepository;
+        this.correctionRepository = correctionRepository;
     }
 
     /**
@@ -151,22 +147,24 @@ public class CbsUpdateService {
      */
     private void createReconciliationTask(Ticket ticket, List<TicketIncident> incidents) {
         try {
-            // Insert reconciliation task
-            mysqlJdbcTemplate.update(
-                "INSERT INTO reconciliation_tasks (ticket_id, client_id, status, attempts, created_at) VALUES (?, ?, 'pending', 0, NOW())",
-                ticket.getTicketNumber(), ticket.getCli()
-            );
+            ReconciliationTask task = ReconciliationTask.builder()
+                    .ticketId(ticket.getTicketNumber())
+                    .clientId(ticket.getCli())
+                    .status("pending")
+                    .attempts(0)
+                    .build();
+            reconciliationTaskRepository.save(task);
 
-            // Insert correction entries for each corrected field
             for (TicketIncident incident : incidents) {
-                mysqlJdbcTemplate.update(
-                    "INSERT INTO corrections (ticket_id, field_name, field_label, old_value, new_value, is_matched) VALUES (?, ?, ?, ?, ?, false)",
-                    ticket.getTicketNumber(),
-                    incident.getFieldName(),
-                    incident.getFieldName(), // field_label defaults to field_name
-                    incident.getOldValue(),
-                    incident.getNewValue()
-                );
+                Correction correction = Correction.builder()
+                        .ticketId(ticket.getTicketNumber())
+                        .fieldName(incident.getFieldName())
+                        .fieldLabel(incident.getFieldName())
+                        .oldValue(incident.getOldValue())
+                        .newValue(incident.getNewValue())
+                        .isMatched(false)
+                        .build();
+                correctionRepository.save(correction);
             }
 
             log.info("Reconciliation task created for ticket {} with {} corrections",

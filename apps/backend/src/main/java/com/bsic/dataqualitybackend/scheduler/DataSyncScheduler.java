@@ -7,11 +7,11 @@ import org.springframework.boot.autoconfigure.condition.ConditionalOnProperty;
 import org.springframework.scheduling.annotation.Scheduled;
 import org.springframework.stereotype.Component;
 
+import java.util.List;
+
 /**
- * Scheduler for synchronizing data from Informix CBS to MySQL.
- * Runs cron jobs for BKCLI (clients) and BKAGE (agencies) sync.
- *
- * Only active when informix-integration feature is enabled.
+ * Scheduler for dictionary-driven CBS data sync.
+ * Syncs all enabled tables from cbs_tables (sync_enabled=true, ordered by sync_order).
  */
 @Slf4j
 @Component
@@ -31,95 +31,71 @@ public class DataSyncScheduler {
     }
 
     /**
-     * Sync BKCLI (clients) from Informix to MySQL.
-     * Default schedule: Daily at 2:00 AM.
-     * Configurable via app.scheduling.bkcli-sync-cron property.
+     * Scheduled sync of all enabled CBS tables.
+     * Default: Daily at 2:00 AM. Configurable via app.scheduling.cbs-sync-cron.
      */
-    @Scheduled(cron = "${app.scheduling.bkcli-sync-cron:0 0 2 * * ?}")
-    public void syncClients() {
-        log.info("=== Starting scheduled BKCLI sync job ===");
+    @Scheduled(cron = "${app.scheduling.cbs-sync-cron:0 0 2 * * ?}")
+    public void syncAll() {
+        log.info("=== Starting scheduled CBS sync (dictionary-driven) ===");
 
         if (dataSyncService == null) {
-            log.warn("DataSyncService not available - skipping BKCLI sync");
+            log.warn("DataSyncService not available - skipping sync");
             return;
         }
 
         try {
-            DataSyncService.SyncResult result = dataSyncService.syncClients();
+            List<DataSyncService.SyncResult> results = dataSyncService.syncAll();
 
-            log.info("=== BKCLI sync job completed ===");
-            log.info("Results: Inserted={}, Updated={}, Errors={}, Duration={}s",
-                    result.inserted(),
-                    result.updated(),
-                    result.errors(),
-                    result.durationSeconds());
+            for (DataSyncService.SyncResult r : results) {
+                log.info("  Table '{}': upserted={}, errors={}, duration={}s",
+                        r.entity(), r.inserted(), r.errors(), r.durationSeconds());
+            }
 
+            log.info("=== CBS sync completed: {} tables synced ===", results.size());
         } catch (Exception e) {
-            log.error("=== BKCLI sync job FAILED ===");
-            log.error("Error: {}", e.getMessage(), e);
+            log.error("=== CBS sync FAILED ===: {}", e.getMessage(), e);
         }
     }
 
     /**
-     * Sync BKAGE (agencies) from Informix to MySQL.
-     * Default schedule: Daily at 2:30 AM.
-     * Configurable via app.scheduling.agency-sync-cron property.
+     * Manual trigger: sync all enabled tables.
      */
-    @Scheduled(cron = "${app.scheduling.agency-sync-cron:0 30 2 * * ?}")
-    public void syncAgencies() {
-        log.info("=== Starting scheduled BKAGE (agencies) sync job ===");
-
+    public List<DataSyncService.SyncResult> triggerSyncAll() {
         if (dataSyncService == null) {
-            log.warn("DataSyncService not available - skipping BKAGE sync");
-            return;
+            throw new IllegalStateException("DataSyncService not available");
         }
-
-        try {
-            DataSyncService.SyncResult result = dataSyncService.syncAgencies();
-
-            log.info("=== BKAGE sync job completed ===");
-            log.info("Results: Inserted={}, Updated={}, Errors={}, Duration={}s",
-                    result.inserted(),
-                    result.updated(),
-                    result.errors(),
-                    result.durationSeconds());
-
-        } catch (Exception e) {
-            log.error("=== BKAGE sync job FAILED ===");
-            log.error("Error: {}", e.getMessage(), e);
-        }
+        log.info("Manual full CBS sync triggered");
+        return dataSyncService.syncAll();
     }
 
     /**
-     * Manual trigger for BKCLI sync (can be called from controller).
+     * Manual trigger: sync a specific table.
      */
+    public DataSyncService.SyncResult triggerSyncTable(String tableName) {
+        if (dataSyncService == null) {
+            throw new IllegalStateException("DataSyncService not available");
+        }
+        log.info("Manual sync triggered for table '{}'", tableName);
+        return dataSyncService.syncTable(tableName);
+    }
+
+    // ===== Legacy methods (backward compatibility) =====
+
+    /** @deprecated Use {@link #triggerSyncAll()} */
+    @Deprecated
     public DataSyncService.SyncResult triggerClientSync() {
-        if (dataSyncService == null) {
-            throw new IllegalStateException("DataSyncService not available");
-        }
-        log.info("Manual BKCLI sync triggered");
-        return dataSyncService.syncClients();
+        return triggerSyncTable("bkcli");
     }
 
-    /**
-     * Manual trigger for agencies sync (can be called from controller).
-     */
+    /** @deprecated Use {@link #triggerSyncAll()} */
+    @Deprecated
     public DataSyncService.SyncResult triggerAgencySync() {
-        if (dataSyncService == null) {
-            throw new IllegalStateException("DataSyncService not available");
-        }
-        log.info("Manual agencies sync triggered");
-        return dataSyncService.syncAgencies();
+        return triggerSyncTable("bkage");
     }
 
-    /**
-     * Manual trigger for batched BKCLI sync (for very large datasets).
-     */
+    /** @deprecated Use {@link #triggerSyncAll()} */
+    @Deprecated
     public DataSyncService.SyncResult triggerClientSyncBatch() {
-        if (dataSyncService == null) {
-            throw new IllegalStateException("DataSyncService not available");
-        }
-        log.info("Manual batched BKCLI sync triggered");
-        return dataSyncService.syncClientsBatch();
+        return triggerSyncTable("bkcli");
     }
 }

@@ -1,25 +1,37 @@
 package com.bsic.dataqualitybackend.service;
 
+import jakarta.annotation.PostConstruct;
+import lombok.extern.slf4j.Slf4j;
+import org.springframework.context.event.EventListener;
+import org.springframework.stereotype.Component;
+
+import java.util.Collections;
 import java.util.Map;
 import java.util.Set;
 
 /**
  * Central registry of allowed CBS (Informix bkcli) column names.
+ * Now backed by the CBS Data Dictionary (cbs_fields table).
+ * Falls back to a static map if the data dictionary is not yet populated.
+ *
  * Used to:
  * 1. Whitelist columns before dynamic SQL (prevents injection)
  * 2. Map CBS columns to the aliases returned by InformixRepository.getClientById()
  *    so that reconciliation can compare expected vs actual values.
  */
-public final class CbsColumnRegistry {
+@Component
+@Slf4j
+public class CbsColumnRegistry {
 
-    private CbsColumnRegistry() {}
+    private final CbsDataDictionaryService dataDictionaryService;
+
+    private volatile Set<String> allowedColumns;
+    private volatile Map<String, String> cbsToAlias;
 
     /**
-     * Allowed CBS columns that can be updated via CbsUpdateService.
-     * Keys = CBS column names (used in fieldName throughout the app).
-     * Values = aliases returned by InformixRepository.getClientById().
+     * Static fallback for backward compatibility during migration.
      */
-    private static final Map<String, String> CBS_TO_ALIAS = Map.ofEntries(
+    private static final Map<String, String> FALLBACK_CBS_TO_ALIAS = Map.ofEntries(
             Map.entry("nom", "name"),
             Map.entry("pre", "firstname"),
             Map.entry("adr", "address"),
@@ -46,29 +58,65 @@ public final class CbsColumnRegistry {
             Map.entry("sec", "sec"),
             Map.entry("catn", "catn"),
             Map.entry("lienbq", "lienbq"),
-            Map.entry("age", "age")
+            Map.entry("age", "age"),
+            Map.entry("res", "residence_country"),
+            Map.entry("dat_fat", "fatca_date")
     );
 
-    /**
-     * Set of CBS column names that are allowed in UPDATE statements.
-     */
-    public static final Set<String> ALLOWED_COLUMNS = CBS_TO_ALIAS.keySet();
+    public CbsColumnRegistry(CbsDataDictionaryService dataDictionaryService) {
+        this.dataDictionaryService = dataDictionaryService;
+    }
+
+    @PostConstruct
+    public void refresh() {
+        try {
+            Set<String> dbColumns = dataDictionaryService.getUpdatableColumns("bkcli");
+            Map<String, String> dbAliases = dataDictionaryService.getColumnAliasMap("bkcli");
+
+            if (!dbColumns.isEmpty()) {
+                this.allowedColumns = dbColumns;
+                this.cbsToAlias = dbAliases;
+                log.info("CbsColumnRegistry loaded from data dictionary: {} columns", allowedColumns.size());
+            } else {
+                useFallback();
+            }
+        } catch (Exception e) {
+            log.warn("Failed to load CbsColumnRegistry from data dictionary, using fallback: {}", e.getMessage());
+            useFallback();
+        }
+    }
+
+    private void useFallback() {
+        this.cbsToAlias = FALLBACK_CBS_TO_ALIAS;
+        this.allowedColumns = FALLBACK_CBS_TO_ALIAS.keySet();
+        log.info("CbsColumnRegistry using static fallback: {} columns", allowedColumns.size());
+    }
+
+    @EventListener(DataDictionaryChangedEvent.class)
+    public void onDictionaryChanged() {
+        log.info("Data dictionary changed, refreshing CbsColumnRegistry...");
+        refresh();
+    }
 
     /**
      * Returns true if the given field name is a valid CBS column.
      */
-    public static boolean isAllowedColumn(String fieldName) {
-        return fieldName != null && ALLOWED_COLUMNS.contains(fieldName.toLowerCase());
+    public boolean isAllowedColumn(String fieldName) {
+        return fieldName != null && allowedColumns.contains(fieldName.toLowerCase());
     }
 
     /**
      * Maps a CBS column name to the alias returned by InformixRepository.getClientById().
-     * Used by ReconciliationService to look up values in the CBS result map.
-     *
-     * @return the alias, or the fieldName itself if no alias is defined
      */
-    public static String toAlias(String cbsColumn) {
+    public String toAlias(String cbsColumn) {
         if (cbsColumn == null) return null;
-        return CBS_TO_ALIAS.getOrDefault(cbsColumn.toLowerCase(), cbsColumn);
+        return cbsToAlias.getOrDefault(cbsColumn.toLowerCase(), cbsColumn);
+    }
+
+    /**
+     * Returns the set of allowed CBS column names.
+     */
+    public Set<String> getAllowedColumns() {
+        return Collections.unmodifiableSet(allowedColumns);
     }
 }

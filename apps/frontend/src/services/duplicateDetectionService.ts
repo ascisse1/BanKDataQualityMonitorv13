@@ -76,7 +76,7 @@ class DuplicateDetectionService {
       if (filters?.min_score) params.append('min_score', filters.min_score.toString());
 
       const response = await apiService.get<DuplicateCandidate[]>(
-        `/api/duplicates/detect?${params.toString()}`
+        `/duplicates/detect?${params.toString()}`
       );
       return response;
     } catch (error) {
@@ -93,7 +93,7 @@ class DuplicateDetectionService {
       if (filters?.client_type) params.append('client_type', filters.client_type);
 
       const response = await apiService.get<DuplicateCandidate[]>(
-        `/api/duplicates/pending?${params.toString()}`
+        `/duplicates/pending?${params.toString()}`
       );
       return response;
     } catch (error) {
@@ -104,7 +104,7 @@ class DuplicateDetectionService {
 
   async getDuplicateDetail(duplicateId: string): Promise<DuplicateDetail | null> {
     try {
-      return await apiService.get<DuplicateDetail>(`/api/duplicates/${duplicateId}`);
+      return await apiService.get<DuplicateDetail>(`/duplicates/${duplicateId}`);
     } catch (error) {
       log.error('api', 'Error fetching duplicate detail', { error });
       return null;
@@ -113,7 +113,7 @@ class DuplicateDetectionService {
 
   async confirmDuplicate(duplicateId: string, userId: string, comments: string): Promise<boolean> {
     try {
-      await apiService.post(`/api/duplicates/${duplicateId}/confirm`, {
+      await apiService.post(`/duplicates/${duplicateId}/confirm`, {
         user_id: userId,
         comments,
       });
@@ -126,7 +126,7 @@ class DuplicateDetectionService {
 
   async rejectDuplicate(duplicateId: string, userId: string, reason: string): Promise<boolean> {
     try {
-      await apiService.post(`/api/duplicates/${duplicateId}/reject`, {
+      await apiService.post(`/duplicates/${duplicateId}/reject`, {
         user_id: userId,
         reason,
       });
@@ -145,7 +145,7 @@ class DuplicateDetectionService {
     comments: string
   ): Promise<boolean> {
     try {
-      await apiService.post(`/api/duplicates/${duplicateId}/merge`, {
+      await apiService.post(`/duplicates/${duplicateId}/merge`, {
         keep_client_id: keepClientId,
         merge_client_id: mergeClientId,
         user_id: userId,
@@ -160,7 +160,7 @@ class DuplicateDetectionService {
 
   async getDuplicateStats(): Promise<DuplicateStats | null> {
     try {
-      return await apiService.get<DuplicateStats>('/api/duplicates/stats');
+      return await apiService.get<DuplicateStats>('/duplicates/stats');
     } catch (error) {
       log.error('api', 'Error fetching duplicate stats', { error });
       return null;
@@ -283,7 +283,7 @@ class DuplicateDetectionService {
   ): Promise<{ detected: number; processed: number }> {
     try {
       const response = await apiService.post<{ detected: number; processed: number }>(
-        '/api/duplicates/run-detection',
+        '/duplicates/run-detection',
         {
           client_type: clientType,
           batch_size: batchSize,

@@ -25,4 +25,15 @@ public class DashboardStatsDto {
     private long pendingTickets;
     private long resolvedTickets;
     private double correctionRate;
+
+    // Overall quality score (weighted by record count across categories)
+    private double overallQualityScore;
+
+    // Ticket aging buckets (pending tickets by age)
+    private long ticketsUnder24h;
+    private long tickets24to48h;
+    private long ticketsOver48h;
+
+    // Period-based correction rate (last 30 days)
+    private double periodCorrectionRate;
 }

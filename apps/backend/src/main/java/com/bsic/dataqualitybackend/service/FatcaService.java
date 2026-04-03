@@ -26,6 +26,7 @@ import java.util.stream.Collectors;
 public class FatcaService {
 
     private final FatcaClientRepository fatcaClientRepository;
+    private final FatcaAuditService fatcaAuditService;
 
     public Page<FatcaClientDto> getFatcaClients(int page, int size) {
         Pageable pageable = PageRequest.of(page, size, Sort.by("createdAt").descending());
@@ -121,6 +122,10 @@ public class FatcaService {
         FatcaClient fatcaClient = mapToEntity(dto);
         FatcaClient saved = fatcaClientRepository.save(fatcaClient);
         log.info("Created FATCA client with ID: {}", saved.getId());
+        fatcaAuditService.logStatusChange(
+            saved.getClientNumber(), null,
+            saved.getFatcaStatus() != null ? saved.getFatcaStatus().name() : null,
+            "ADMIN", "Client FATCA créé");
         return mapToDto(saved);
     }
 
@@ -128,6 +133,8 @@ public class FatcaService {
     public FatcaClientDto updateFatcaClient(Long id, FatcaClientDto dto) {
         FatcaClient fatcaClient = fatcaClientRepository.findById(id)
             .orElseThrow(() -> new RuntimeException("FATCA client not found with id: " + id));
+
+        String previousStatus = fatcaClient.getFatcaStatus() != null ? fatcaClient.getFatcaStatus().name() : null;
 
         fatcaClient.setFatcaStatus(dto.getFatcaStatus());
         fatcaClient.setRiskLevel(dto.getRiskLevel());
@@ -137,6 +144,14 @@ public class FatcaService {
 
         FatcaClient updated = fatcaClientRepository.save(fatcaClient);
         log.info("Updated FATCA client with ID: {}", updated.getId());
+
+        String newStatus = updated.getFatcaStatus() != null ? updated.getFatcaStatus().name() : null;
+        if (previousStatus == null || !previousStatus.equals(newStatus)) {
+            fatcaAuditService.logStatusChange(
+                updated.getClientNumber(), previousStatus, newStatus,
+                "USER", dto.getNotes());
+        }
+
         return mapToDto(updated);
     }
 
@@ -164,6 +179,16 @@ public class FatcaService {
             .declarationDate(fatcaClient.getDeclarationDate())
             .notes(fatcaClient.getNotes())
             .reportingRequired(fatcaClient.getReportingRequired())
+            .w9ReceivedDate(fatcaClient.getW9ReceivedDate())
+            .w8ReceivedDate(fatcaClient.getW8ReceivedDate())
+            .w9ExpiryDate(fatcaClient.getW9ExpiryDate())
+            .w8ExpiryDate(fatcaClient.getW8ExpiryDate())
+            .documentStatus(fatcaClient.getDocumentStatus())
+            .documentNotes(fatcaClient.getDocumentNotes())
+            .indiciaTypes(fatcaClient.getIndiciaTypes())
+            .indiciaCount(fatcaClient.getIndiciaCount())
+            .lastScreeningDate(fatcaClient.getLastScreeningDate())
+            .detectionSource(fatcaClient.getDetectionSource())
             .createdAt(fatcaClient.getCreatedAt())
             .updatedAt(fatcaClient.getUpdatedAt())
             .build();
@@ -192,6 +217,12 @@ public class FatcaService {
             .declarationDate(dto.getDeclarationDate())
             .notes(dto.getNotes())
             .reportingRequired(dto.getReportingRequired())
+            .w9ReceivedDate(dto.getW9ReceivedDate())
+            .w8ReceivedDate(dto.getW8ReceivedDate())
+            .w9ExpiryDate(dto.getW9ExpiryDate())
+            .w8ExpiryDate(dto.getW8ExpiryDate())
+            .documentStatus(dto.getDocumentStatus())
+            .documentNotes(dto.getDocumentNotes())
             .build();
     }
 }

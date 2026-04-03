@@ -1,0 +1,317 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<databaseChangeLog
+    xmlns="http://www.liquibase.org/xml/ns/dbchangelog"
+    xmlns:xsi="http://www.w3.org/2001/XMLSchema-instance"
+    xsi:schemaLocation="http://www.liquibase.org/xml/ns/dbchangelog
+        http://www.liquibase.org/xml/ns/dbchangelog/dbchangelog-latest.xsd">
+
+    <!-- Seed CBS Tables -->
+    <changeSet id="016-1-seed-cbs-tables" author="bdqm">
+        <insert tableName="cbs_tables">
+            <column name="table_name" value="bkcli"/>
+            <column name="display_name" value="Clients"/>
+            <column name="description" value="Table principale des clients CBS"/>
+            <column name="schema_name" value="bank"/>
+            <column name="cbs_version" value="DELTA-BANK V10.0"/>
+            <column name="primary_key_columns" value="cli"/>
+            <column name="sync_enabled" valueBoolean="true"/>
+            <column name="sync_order" valueNumeric="2"/>
+            <column name="active" valueBoolean="true"/>
+        </insert>
+        <insert tableName="cbs_tables">
+            <column name="table_name" value="bknom"/>
+            <column name="display_name" value="Nomenclatures"/>
+            <column name="description" value="Referentiel transverse / Parametrage transverse CBS"/>
+            <column name="schema_name" value="bank"/>
+            <column name="cbs_version" value="AMPLITUDE V11.3.6"/>
+            <column name="primary_key_columns" value="ctab,cacc,age"/>
+            <column name="sync_enabled" valueBoolean="false"/>
+            <column name="sync_order" valueNumeric="0"/>
+            <column name="active" valueBoolean="true"/>
+        </insert>
+        <insert tableName="cbs_tables">
+            <column name="table_name" value="bkage"/>
+            <column name="display_name" value="Agences"/>
+            <column name="description" value="Table des agences CBS"/>
+            <column name="schema_name" value="bank"/>
+            <column name="primary_key_columns" value="age"/>
+            <column name="sync_enabled" valueBoolean="true"/>
+            <column name="sync_order" valueNumeric="1"/>
+            <column name="active" valueBoolean="true"/>
+        </insert>
+    </changeSet>
+
+    <!-- Seed Nomenclature Types (ctab values referenced by bkcli fields) -->
+    <changeSet id="016-2-seed-nomenclature-types" author="bdqm">
+        <insert tableName="nomenclature_types">
+            <column name="ctab" value="033"/>
+            <column name="name" value="Nationalites"/>
+            <column name="display_name" value="Nationalites"/>
+            <column name="description" value="Table des nationalites"/>
+            <column name="sync_enabled" valueBoolean="true"/>
+            <column name="active" valueBoolean="true"/>
+        </insert>
+        <insert tableName="nomenclature_types">
+            <column name="ctab" value="035"/>
+            <column name="name" value="Gestionnaires"/>
+            <column name="display_name" value="Gestionnaires"/>
+            <column name="description" value="Table des gestionnaires"/>
+            <column name="sync_enabled" valueBoolean="true"/>
+            <column name="active" valueBoolean="true"/>
+        </insert>
+        <insert tableName="nomenclature_types">
+            <column name="ctab" value="036"/>
+            <column name="name" value="CodeIntitules"/>
+            <column name="display_name" value="Intitules"/>
+            <column name="description" value="Table des codes intitules (Monsieur, Madame...)"/>
+            <column name="sync_enabled" valueBoolean="true"/>
+            <column name="active" valueBoolean="true"/>
+        </insert>
+        <insert tableName="nomenclature_types">
+            <column name="ctab" value="040"/>
+            <column name="name" value="PaysResid"/>
+            <column name="display_name" value="Pays de residence"/>
+            <column name="description" value="Table des pays de residence"/>
+            <column name="sync_enabled" valueBoolean="true"/>
+            <column name="active" valueBoolean="true"/>
+        </insert>
+        <insert tableName="nomenclature_types">
+            <column name="ctab" value="041"/>
+            <column name="name" value="CategInternes"/>
+            <column name="display_name" value="Categories internes"/>
+            <column name="description" value="Table des categories internes clients"/>
+            <column name="sync_enabled" valueBoolean="true"/>
+            <column name="active" valueBoolean="true"/>
+        </insert>
+        <insert tableName="nomenclature_types">
+            <column name="ctab" value="042"/>
+            <column name="name" value="CategBqeCentr"/>
+            <column name="display_name" value="Categories Banque Centrale"/>
+            <column name="description" value="Table des categories de la Banque Centrale"/>
+            <column name="sync_enabled" valueBoolean="true"/>
+            <column name="active" valueBoolean="true"/>
+        </insert>
+        <insert tableName="nomenclature_types">
+            <column name="ctab" value="043"/>
+            <column name="name" value="QualiteCli"/>
+            <column name="display_name" value="Qualite client"/>
+            <column name="description" value="Table des codes qualite client"/>
+            <column name="sync_enabled" valueBoolean="true"/>
+            <column name="active" valueBoolean="true"/>
+        </insert>
+        <insert tableName="nomenclature_types">
+            <column name="ctab" value="047"/>
+            <column name="name" value="SituFamille"/>
+            <column name="display_name" value="Situation familiale"/>
+            <column name="description" value="Table des situations de famille"/>
+            <column name="sync_enabled" valueBoolean="true"/>
+            <column name="active" valueBoolean="true"/>
+        </insert>
+        <insert tableName="nomenclature_types">
+            <column name="ctab" value="048"/>
+            <column name="name" value="RegimMatrim"/>
+            <column name="display_name" value="Regime matrimonial"/>
+            <column name="description" value="Table des regimes matrimoniaux"/>
+            <column name="sync_enabled" valueBoolean="true"/>
+            <column name="active" valueBoolean="true"/>
+        </insert>
+        <insert tableName="nomenclature_types">
+            <column name="ctab" value="049"/>
+            <column name="name" value="FormeJurid"/>
+            <column name="display_name" value="Formes juridiques"/>
+            <column name="description" value="Table des formes juridiques"/>
+            <column name="sync_enabled" valueBoolean="true"/>
+            <column name="active" valueBoolean="true"/>
+        </insert>
+        <insert tableName="nomenclature_types">
+            <column name="ctab" value="063"/>
+            <column name="name" value="ChampLibr1Cli"/>
+            <column name="display_name" value="Champ libre 1 client"/>
+            <column name="description" value="Table des valeurs du champ libre 1 client"/>
+            <column name="sync_enabled" valueBoolean="true"/>
+            <column name="active" valueBoolean="true"/>
+        </insert>
+        <insert tableName="nomenclature_types">
+            <column name="ctab" value="064"/>
+            <column name="name" value="ChampLibr2Cli"/>
+            <column name="display_name" value="Champ libre 2 client"/>
+            <column name="description" value="Table des valeurs du champ libre 2 client"/>
+            <column name="sync_enabled" valueBoolean="true"/>
+            <column name="active" valueBoolean="true"/>
+        </insert>
+        <insert tableName="nomenclature_types">
+            <column name="ctab" value="065"/>
+            <column name="name" value="ChampLibr3Cli"/>
+            <column name="display_name" value="Champ libre 3 client"/>
+            <column name="description" value="Table des valeurs du champ libre 3 client"/>
+            <column name="sync_enabled" valueBoolean="true"/>
+            <column name="active" valueBoolean="true"/>
+        </insert>
+        <insert tableName="nomenclature_types">
+            <column name="ctab" value="071"/>
+            <column name="name" value="SectActivCli"/>
+            <column name="display_name" value="Secteurs d'activite"/>
+            <column name="description" value="Table des secteurs d'activite clients"/>
+            <column name="sync_enabled" valueBoolean="true"/>
+            <column name="active" valueBoolean="true"/>
+        </insert>
+        <insert tableName="nomenclature_types">
+            <column name="ctab" value="077"/>
+            <column name="name" value="ChbCom"/>
+            <column name="display_name" value="Chambre de Commerce"/>
+            <column name="description" value="Table des chambres de commerce"/>
+            <column name="sync_enabled" valueBoolean="true"/>
+            <column name="active" valueBoolean="true"/>
+        </insert>
+        <insert tableName="nomenclature_types">
+            <column name="ctab" value="172"/>
+            <column name="name" value="CapJuridiq"/>
+            <column name="display_name" value="Capacite juridique"/>
+            <column name="description" value="Table des capacites juridiques"/>
+            <column name="sync_enabled" valueBoolean="true"/>
+            <column name="active" valueBoolean="true"/>
+        </insert>
+        <insert tableName="nomenclature_types">
+            <column name="ctab" value="185"/>
+            <column name="name" value="SitJuridiques"/>
+            <column name="display_name" value="Situations juridiques"/>
+            <column name="description" value="Table des situations juridiques"/>
+            <column name="sync_enabled" valueBoolean="true"/>
+            <column name="active" valueBoolean="true"/>
+        </insert>
+    </changeSet>
+
+    <!-- Seed bkcli fields (all ~80 fields from DELTA-BANK V10.0 data dictionary) -->
+    <changeSet id="016-3-seed-bkcli-fields" author="bdqm">
+        <sql>SET @bkcli_id = (SELECT id FROM cbs_tables WHERE table_name = 'bkcli');</sql>
+        <sql>
+            INSERT INTO cbs_fields (cbs_table_id, column_name, display_label, description, query_alias, data_type, max_length, is_primary_key, is_required, is_updatable, nomenclature_ctab, nomenclature_description, enum_values, applicable_client_types, display_order, field_group, active) VALUES
+            (@bkcli_id, 'cli', 'Code client', 'Code du client', 'client_code', 'CHAR', 15, true, true, false, NULL, NULL, NULL, NULL, 1, 'identity', true),
+            (@bkcli_id, 'nom', 'Nom', 'Nom du client', 'name', 'CHAR', 36, false, true, true, NULL, NULL, NULL, NULL, 2, 'identity', true),
+            (@bkcli_id, 'tcli', 'Type client', 'Type de client', 'client_type', 'CHAR', 1, false, true, true, NULL, NULL, '{"1":"Particulier","2":"Societe","3":"Entreprise individuelle"}', NULL, 3, 'identity', true),
+            (@bkcli_id, 'lib', 'Intitule', 'Code intitule (Monsieur, Madame...)', 'lib', 'CHAR', 2, false, false, true, '036', 'CodeIntitules', NULL, NULL, 4, 'identity', true),
+            (@bkcli_id, 'pre', 'Prenom', 'Prenom du client', 'firstname', 'CHAR', 30, false, true, true, NULL, NULL, NULL, 'INDIVIDUAL', 5, 'identity', true),
+            (@bkcli_id, 'sext', 'Sexe', 'Sexe du titulaire (M=Masculin, F=Feminin)', 'sext', 'CHAR', 1, false, true, true, NULL, NULL, '{"M":"Masculin","F":"Feminin"}', 'INDIVIDUAL', 6, 'identity', true),
+            (@bkcli_id, 'njf', 'Nom de jeune fille', 'Nom de jeune fille (conjoint)', 'njf', 'CHAR', 36, false, false, true, NULL, NULL, NULL, 'INDIVIDUAL', 7, 'identity', true),
+            (@bkcli_id, 'dna', 'Date de naissance', 'Date de naissance', 'birth_date', 'DATE', NULL, false, true, true, NULL, NULL, NULL, 'INDIVIDUAL', 8, 'identity', true),
+            (@bkcli_id, 'viln', 'Ville de naissance', 'Ville de naissance', 'viln', 'CHAR', 30, false, false, true, NULL, NULL, NULL, 'INDIVIDUAL', 9, 'identity', true),
+            (@bkcli_id, 'depn', 'Departement de naissance', 'Departement de naissance', 'depn', 'CHAR', 30, false, false, true, NULL, NULL, NULL, 'INDIVIDUAL', 10, 'identity', true),
+            (@bkcli_id, 'payn', 'Pays de naissance', 'Pays de naissance', 'payn', 'CHAR', 3, false, false, true, '040', 'PaysResid', NULL, 'INDIVIDUAL', 11, 'identity', true),
+            (@bkcli_id, 'locn', 'Localite de naissance', 'Code de la localite de naissance', 'locn', 'CHAR', 6, false, false, true, NULL, NULL, NULL, 'INDIVIDUAL', 12, 'identity', true),
+            (@bkcli_id, 'tid', 'Type piece identite', 'Type de piece d''identite', 'tid', 'CHAR', 5, false, true, true, NULL, NULL, NULL, NULL, 13, 'document', true),
+            (@bkcli_id, 'nid', 'Numero identite', 'Numero de piece d''identite', 'nid', 'CHAR', 20, false, true, true, NULL, NULL, NULL, NULL, 14, 'document', true),
+            (@bkcli_id, 'did', 'Date delivrance piece', 'Date de delivrance de la piece d''identite', 'did', 'DATE', NULL, false, false, true, NULL, NULL, NULL, NULL, 15, 'document', true),
+            (@bkcli_id, 'lid', 'Lieu delivrance piece', 'Lieu de delivrance de la piece d''identite', 'lid', 'CHAR', 30, false, false, true, NULL, NULL, NULL, NULL, 16, 'document', true),
+            (@bkcli_id, 'oid', 'Organisme delivrance', 'Organisme ayant delivre la piece d''identite', 'oid', 'CHAR', 30, false, false, true, NULL, NULL, NULL, NULL, 17, 'document', true),
+            (@bkcli_id, 'vid', 'Validite piece identite', 'Date de validite de la piece d''identite', 'vid', 'DATE', NULL, false, false, true, NULL, NULL, NULL, NULL, 18, 'document', true),
+            (@bkcli_id, 'sit', 'Situation familiale', 'Code de la situation de famille', 'sit', 'CHAR', 1, false, false, true, '047', 'SituFamille', NULL, 'INDIVIDUAL', 19, 'family', true),
+            (@bkcli_id, 'reg', 'Regime matrimonial', 'Code du regime matrimonial', 'reg', 'CHAR', 1, false, false, true, '048', 'RegimMatrim', NULL, 'INDIVIDUAL', 20, 'family', true),
+            (@bkcli_id, 'capj', 'Capacite juridique', 'Capacite juridique du titulaire', 'capj', 'CHAR', 1, false, false, true, '172', 'CapJuridiq', NULL, NULL, 21, 'legal', true),
+            (@bkcli_id, 'dcapj', 'Date capacite juridique', 'Date d''application de la capacite juridique', 'dcapj', 'DATE', NULL, false, false, true, NULL, NULL, NULL, NULL, 22, 'legal', true),
+            (@bkcli_id, 'sitj', 'Situation juridique', 'Situation juridique', 'sitj', 'CHAR', 3, false, false, true, '185', 'SitJuridiques', NULL, NULL, 23, 'legal', true),
+            (@bkcli_id, 'dsitj', 'Date situation juridique', 'Date d''application de la situation juridique', 'dsitj', 'DATE', NULL, false, false, true, NULL, NULL, NULL, NULL, 24, 'legal', true),
+            (@bkcli_id, 'tconj', 'Type conjoint', 'Type de conjoint', 'tconj', 'CHAR', 1, false, false, true, NULL, NULL, NULL, 'INDIVIDUAL', 25, 'family', true),
+            (@bkcli_id, 'conj', 'Code conjoint', 'Code du conjoint', 'conj', 'CHAR', 15, false, false, true, NULL, NULL, NULL, 'INDIVIDUAL', 26, 'family', true),
+            (@bkcli_id, 'nbenf', 'Nombre enfants', 'Nombre d''enfants', 'nbenf', 'SMALLINT', NULL, false, false, true, NULL, NULL, NULL, 'INDIVIDUAL', 27, 'family', true),
+            (@bkcli_id, 'clifam', 'Client rattachement familial', 'Code du client de rattachement familial', 'clifam', 'CHAR', 15, false, false, true, NULL, NULL, NULL, 'INDIVIDUAL', 28, 'family', true),
+            (@bkcli_id, 'rso', 'Raison sociale', 'Raison sociale de declaration', 'rso', 'CHAR', 65, false, true, true, NULL, NULL, NULL, 'CORPORATE,INSTITUTIONAL', 29, 'enterprise', true),
+            (@bkcli_id, 'sig', 'Sigle', 'Sigle', 'sig', 'CHAR', 20, false, false, true, NULL, NULL, NULL, 'CORPORATE,INSTITUTIONAL', 30, 'enterprise', true),
+            (@bkcli_id, 'datc', 'Date creation entreprise', 'Date de creation entreprise', 'datc', 'DATE', NULL, false, false, true, NULL, NULL, NULL, 'CORPORATE,INSTITUTIONAL', 31, 'enterprise', true),
+            (@bkcli_id, 'fju', 'Forme juridique', 'Code de la forme juridique', 'fju', 'CHAR', 2, false, true, true, '049', 'FormeJurid', NULL, 'CORPORATE,INSTITUTIONAL', 32, 'enterprise', true),
+            (@bkcli_id, 'nrc', 'Numero registre commerce', 'Numero du registre du commerce', 'nrc', 'CHAR', 20, false, false, true, NULL, NULL, NULL, 'CORPORATE,INSTITUTIONAL', 33, 'enterprise', true),
+            (@bkcli_id, 'vrc', 'Validite registre commerce', 'Date de validite du registre du commerce', 'vrc', 'DATE', NULL, false, false, true, NULL, NULL, NULL, 'CORPORATE,INSTITUTIONAL', 34, 'enterprise', true),
+            (@bkcli_id, 'nchc', 'Chambre de commerce', 'Code de la chambre de commerce', 'nchc', 'CHAR', 3, false, false, true, '077', 'ChbCom', NULL, 'CORPORATE,INSTITUTIONAL', 35, 'enterprise', true),
+            (@bkcli_id, 'npa', 'Numero patente', 'Numero de patente', 'npa', 'CHAR', 20, false, false, true, NULL, NULL, NULL, 'CORPORATE,INSTITUTIONAL', 36, 'enterprise', true),
+            (@bkcli_id, 'vpa', 'Validite patente', 'Date de validite de la patente', 'vpa', 'DATE', NULL, false, false, true, NULL, NULL, NULL, 'CORPORATE,INSTITUTIONAL', 37, 'enterprise', true),
+            (@bkcli_id, 'nidn', 'Identite nationale', 'Numero d''identite nationale', 'nidn', 'CHAR', 20, false, false, true, NULL, NULL, NULL, NULL, 38, 'enterprise', true),
+            (@bkcli_id, 'nis', 'Identite sociale', 'Numero d''identite sociale', 'nis', 'CHAR', 20, false, false, true, NULL, NULL, NULL, NULL, 39, 'enterprise', true),
+            (@bkcli_id, 'nidf', 'Identite fiscale', 'Numero d''identite fiscale', 'nidf', 'CHAR', 20, false, false, true, NULL, NULL, NULL, NULL, 40, 'enterprise', true),
+            (@bkcli_id, 'grp', 'Code groupe', 'Code groupe', 'grp', 'CHAR', 6, false, false, true, NULL, NULL, NULL, NULL, 41, 'classification', true),
+            (@bkcli_id, 'sgrp', 'Sous-groupe', 'Sous-groupe', 'sgrp', 'CHAR', 6, false, false, true, NULL, NULL, NULL, NULL, 42, 'classification', true),
+            (@bkcli_id, 'met', 'Metier', 'Metier', 'met', 'CHAR', 6, false, false, true, NULL, NULL, NULL, NULL, 43, 'classification', true),
+            (@bkcli_id, 'smet', 'Sous-metier', 'Sous-metier', 'smet', 'CHAR', 6, false, false, true, NULL, NULL, NULL, NULL, 44, 'classification', true),
+            (@bkcli_id, 'cmc1', 'Commissaire comptes 1', 'Code du commissaire aux comptes', 'cmc1', 'CHAR', 36, false, false, true, NULL, NULL, NULL, 'CORPORATE,INSTITUTIONAL', 45, 'enterprise', true),
+            (@bkcli_id, 'cmc2', 'Commissaire comptes 2', 'Code du commissaire aux comptes', 'cmc2', 'CHAR', 36, false, false, true, NULL, NULL, NULL, 'CORPORATE,INSTITUTIONAL', 46, 'enterprise', true),
+            (@bkcli_id, 'age', 'Code agence', 'Code de l''agence', 'age', 'CHAR', 5, false, true, true, NULL, NULL, NULL, NULL, 47, 'management', true),
+            (@bkcli_id, 'ges', 'Gestionnaire', 'Code du gestionnaire', 'ges', 'CHAR', 3, false, false, true, '035', 'Gestionnaires', NULL, NULL, 48, 'management', true),
+            (@bkcli_id, 'qua', 'Qualite client', 'Code qualite', 'qua', 'CHAR', 2, false, false, true, '043', 'QualiteCli', NULL, NULL, 49, 'classification', true),
+            (@bkcli_id, 'tax', 'Client taxable', 'Client taxable (O/N)', 'tax', 'CHAR', 1, false, false, true, NULL, NULL, '{"O":"Oui","N":"Non"}', NULL, 50, 'classification', true),
+            (@bkcli_id, 'catl', 'Categorie interne', 'Code de la categorie interne', 'catl', 'CHAR', 1, false, false, true, '041', 'CategInternes', NULL, NULL, 51, 'classification', true),
+            (@bkcli_id, 'seg', 'Segment', 'Segment', 'seg', 'CHAR', 3, false, false, true, NULL, NULL, NULL, NULL, 52, 'classification', true),
+            (@bkcli_id, 'nst', 'Numero statistique', 'Numero statistique', 'nst', 'CHAR', 20, false, false, true, NULL, NULL, NULL, NULL, 53, 'classification', true),
+            (@bkcli_id, 'clipar', 'Client parrainage', 'Code du client de parrainage', 'clipar', 'CHAR', 15, false, false, true, NULL, NULL, NULL, NULL, 54, 'management', true),
+            (@bkcli_id, 'chl1', 'Champ libre 1', 'Code champ libre 1', 'chl1', 'CHAR', 10, false, false, true, '063', 'ChampLibr1Cli', NULL, NULL, 55, 'custom', true),
+            (@bkcli_id, 'chl2', 'Champ libre 2', 'Code champ libre 2', 'chl2', 'CHAR', 10, false, false, true, '064', 'ChampLibr2Cli', NULL, NULL, 56, 'custom', true),
+            (@bkcli_id, 'chl3', 'Champ libre 3', 'Code champ libre 3', 'chl3', 'CHAR', 10, false, false, true, '065', 'ChampLibr3Cli', NULL, NULL, 57, 'custom', true),
+            (@bkcli_id, 'lter', 'Territorialite FICOBA', 'Code territorialite (FICOBA)', 'lter', 'CHAR', 1, false, false, true, NULL, NULL, NULL, NULL, 58, 'regulatory', true),
+            (@bkcli_id, 'lterc', 'Territorialite conjoint', 'Code territorialite conjoint', 'lterc', 'CHAR', 1, false, false, true, NULL, NULL, NULL, NULL, 59, 'regulatory', true),
+            (@bkcli_id, 'resd', 'Residence declaration', 'Residence de declaration', 'resd', 'CHAR', 3, false, false, true, NULL, NULL, NULL, NULL, 60, 'regulatory', true),
+            (@bkcli_id, 'catn', 'Categorie Banque Centrale', 'Code de la categorie de la Banque Centrale', 'catn', 'CHAR', 6, false, false, true, '042', 'CategBqeCentr', NULL, NULL, 61, 'regulatory', true),
+            (@bkcli_id, 'sec', 'Secteur activite', 'Code du secteur d''activite', 'sec', 'CHAR', 5, false, false, true, '071', 'SectActivCli', NULL, NULL, 62, 'classification', true),
+            (@bkcli_id, 'lienbq', 'Lien avec la banque', 'Lien d''apparente avec la banque', 'lienbq', 'CHAR', 3, false, false, true, NULL, NULL, NULL, NULL, 63, 'classification', true),
+            (@bkcli_id, 'aclas', 'Accord classement', 'Accord de classement', 'aclas', 'CHAR', 1, false, false, true, NULL, NULL, NULL, NULL, 64, 'regulatory', true),
+            (@bkcli_id, 'maclas', 'Montant accord classement', 'Montant de l''accord de classement', 'maclas', 'DECIMAL', NULL, false, false, true, NULL, NULL, NULL, NULL, 65, 'regulatory', true),
+            (@bkcli_id, 'emtit', 'Emetteur titres', 'Emetteur de titres', 'emtit', 'CHAR', 1, false, false, true, NULL, NULL, NULL, NULL, 66, 'regulatory', true),
+            (@bkcli_id, 'nicr', 'Numero Centrale Risques', 'Numero d''immatriculation a la Centrale des Risques', 'nicr', 'CHAR', 20, false, false, true, NULL, NULL, NULL, NULL, 67, 'regulatory', true),
+            (@bkcli_id, 'ced', 'Code edition', 'Code edition', 'ced', 'CHAR', 1, false, false, true, NULL, NULL, NULL, NULL, 68, 'audit', true),
+            (@bkcli_id, 'clcr', 'Cle Centrale Risques', 'Cle de la Centrale des Risques', 'clcr', 'CHAR', 1, false, false, true, NULL, NULL, NULL, NULL, 69, 'regulatory', true),
+            (@bkcli_id, 'nmer', 'Nom de la mere', 'Nom de la mere du titulaire', 'nmer', 'CHAR', 36, false, false, true, NULL, NULL, NULL, 'INDIVIDUAL', 70, 'identity', true),
+            (@bkcli_id, 'lang', 'Code langue', 'Code langue', 'lang', 'CHAR', 3, false, false, true, NULL, NULL, NULL, NULL, 71, 'classification', true),
+            (@bkcli_id, 'nat', 'Nationalite', 'Code de la nationalite', 'nat', 'CHAR', 3, false, true, true, '033', 'Nationalites', NULL, NULL, 72, 'identity', true),
+            (@bkcli_id, 'res', 'Pays de residence', 'Code du pays de residence', 'res', 'CHAR', 3, false, false, true, '040', 'PaysResid', NULL, NULL, 73, 'identity', true),
+            (@bkcli_id, 'ichq', 'Interdiction chequier', 'Interdiction de chequier (O/N)', 'ichq', 'CHAR', 1, false, false, true, NULL, NULL, '{"O":"Oui","N":"Non"}', NULL, 74, 'restrictions', true),
+            (@bkcli_id, 'dichq', 'Date interdiction chequier', 'Date de remise en interdiction de chequier', 'dichq', 'DATE', NULL, false, false, true, NULL, NULL, NULL, NULL, 75, 'restrictions', true),
+            (@bkcli_id, 'icb', 'Interdiction carte bancaire', 'Interdiction de la carte bancaire', 'icb', 'CHAR', 1, false, false, true, NULL, NULL, NULL, NULL, 76, 'restrictions', true),
+            (@bkcli_id, 'dicb', 'Date interdiction carte', 'Date d''interdiction de carte bancaire', 'dicb', 'DATE', NULL, false, false, true, NULL, NULL, NULL, NULL, 77, 'restrictions', true),
+            (@bkcli_id, 'epu', 'Epuration', 'Code de l''epuration (O/N)', 'epu', 'CHAR', 1, false, false, true, NULL, NULL, '{"O":"Oui","N":"Non"}', NULL, 78, 'audit', true),
+            (@bkcli_id, 'utic', 'Utilisateur creation', 'Code de l''utilisateur ayant cree', 'utic', 'CHAR', 10, false, false, false, NULL, NULL, NULL, NULL, 79, 'audit', true),
+            (@bkcli_id, 'uti', 'Utilisateur modification', 'Code de l''utilisateur ayant initie', 'uti', 'CHAR', 10, false, false, false, NULL, NULL, NULL, NULL, 80, 'audit', true),
+            (@bkcli_id, 'dou', 'Date creation', 'Date de creation', 'dou', 'DATE', NULL, false, false, false, NULL, NULL, NULL, NULL, 81, 'audit', true),
+            (@bkcli_id, 'dmo', 'Date modification', 'Date de derniere modification', 'dmo', 'DATE', NULL, false, false, false, NULL, NULL, NULL, NULL, 82, 'audit', true),
+            (@bkcli_id, 'ord', 'Numero fiche modification', 'Numero de fiche de modification', 'ord', 'DECIMAL', NULL, false, false, false, NULL, NULL, NULL, NULL, 83, 'audit', true),
+            (@bkcli_id, 'catr', 'Transfert temps reel', 'Code du transfert en temps reel', 'catr', 'CHAR', 1, false, false, true, NULL, NULL, NULL, NULL, 84, 'audit', true),
+            (@bkcli_id, 'midname', 'Deuxieme prenom', 'Deuxieme prenom', 'midname', 'CHAR', 30, false, false, true, NULL, NULL, NULL, 'INDIVIDUAL', 85, 'identity', true),
+            (@bkcli_id, 'nomrest', 'Nom a restituer', 'Nom a restituer', 'nomrest', 'CHAR', 67, false, false, true, NULL, NULL, NULL, NULL, 86, 'identity', true),
+            (@bkcli_id, 'drc', 'Date delivrance RC', 'Date de delivrance du registre de commerce', 'drc', 'DATE', NULL, false, false, true, NULL, NULL, NULL, 'CORPORATE,INSTITUTIONAL', 87, 'enterprise', true),
+            (@bkcli_id, 'lrc', 'Lieu delivrance RC', 'Lieu de delivrance du registre de commerce', 'lrc', 'CHAR', 30, false, false, true, NULL, NULL, NULL, 'CORPORATE,INSTITUTIONAL', 88, 'enterprise', true),
+            (@bkcli_id, 'rso2', 'Raison sociale 2', 'Seconde raison sociale de declaration', 'rso2', 'CHAR', 65, false, false, true, NULL, NULL, NULL, 'CORPORATE,INSTITUTIONAL', 89, 'enterprise', true),
+            (@bkcli_id, 'regn', 'Region de naissance', 'Region de naissance', 'regn', 'CHAR', 50, false, false, true, NULL, NULL, NULL, 'INDIVIDUAL', 90, 'identity', true),
+            (@bkcli_id, 'rrc', 'Risque relation client', 'Risque relation client', 'rrc', 'CHAR', 1, false, false, true, NULL, NULL, NULL, NULL, 91, 'regulatory', true),
+            (@bkcli_id, 'dvrrc', 'Date validation risque', 'Date de validation risque relation client', 'dvrrc', 'DATE', NULL, false, false, true, NULL, NULL, NULL, NULL, 92, 'regulatory', true),
+            (@bkcli_id, 'uti_vrrc', 'Utilisateur validation risque', 'Code de l''utilisateur ayant valide le risque relation client', 'uti_vrrc', 'CHAR', 10, false, false, false, NULL, NULL, NULL, NULL, 93, 'audit', true);
+        </sql>
+    </changeSet>
+
+    <!-- Seed bknom fields (from AMPLITUDE V11.3.6 data dictionary) -->
+    <changeSet id="016-4-seed-bknom-fields" author="bdqm">
+        <sql>SET @bknom_id = (SELECT id FROM cbs_tables WHERE table_name = 'bknom');</sql>
+        <sql>
+            INSERT INTO cbs_fields (cbs_table_id, column_name, display_label, description, query_alias, data_type, max_length, precision_value, scale_value, is_primary_key, is_required, is_updatable, display_order, field_group, active) VALUES
+            (@bknom_id, 'ctab', 'Numero de table', 'Numero de table', 'ctab', 'CHAR', 3, NULL, NULL, true, true, false, 1, 'key', true),
+            (@bknom_id, 'cacc', 'Cle d''acces', 'Cle d''acces', 'cacc', 'CHAR', 10, NULL, NULL, true, true, false, 2, 'key', true),
+            (@bknom_id, 'age', 'Agence', 'Agence', 'age', 'CHAR', 5, NULL, NULL, true, false, false, 3, 'key', true),
+            (@bknom_id, 'lib1', 'Libelle 1', 'Libelle 1', 'lib1', 'CHAR', 30, NULL, NULL, false, false, true, 4, 'label', true),
+            (@bknom_id, 'lib2', 'Libelle 2', 'Libelle 2', 'lib2', 'CHAR', 30, NULL, NULL, false, false, true, 5, 'label', true),
+            (@bknom_id, 'lib3', 'Libelle 3', 'Libelle 3', 'lib3', 'CHAR', 30, NULL, NULL, false, false, true, 6, 'label', true),
+            (@bknom_id, 'lib4', 'Libelle 4', 'Libelle 4', 'lib4', 'CHAR', 30, NULL, NULL, false, false, true, 7, 'label', true),
+            (@bknom_id, 'lib5', 'Libelle 5', 'Libelle 5', 'lib5', 'CHAR', 30, NULL, NULL, false, false, true, 8, 'label', true),
+            (@bknom_id, 'mnt1', 'Montant 1', 'Montant 1', 'mnt1', 'DECIMAL', NULL, 15, 0, false, false, true, 9, 'amount', true),
+            (@bknom_id, 'mnt2', 'Montant 2', 'Montant 2', 'mnt2', 'DECIMAL', NULL, 15, 0, false, false, true, 10, 'amount', true),
+            (@bknom_id, 'mnt3', 'Montant 3', 'Montant 3', 'mnt3', 'DECIMAL', NULL, 15, 0, false, false, true, 11, 'amount', true),
+            (@bknom_id, 'mnt4', 'Montant 4', 'Montant 4', 'mnt4', 'DECIMAL', NULL, 15, 0, false, false, true, 12, 'amount', true),
+            (@bknom_id, 'mnt5', 'Montant 5', 'Montant 5', 'mnt5', 'DECIMAL', NULL, 15, 0, false, false, true, 13, 'amount', true),
+            (@bknom_id, 'mnt6', 'Montant 6', 'Montant 6', 'mnt6', 'DECIMAL', NULL, 15, 0, false, false, true, 14, 'amount', true),
+            (@bknom_id, 'mnt7', 'Montant 7', 'Montant 7', 'mnt7', 'DECIMAL', NULL, 15, 0, false, false, true, 15, 'amount', true),
+            (@bknom_id, 'mnt8', 'Montant 8', 'Montant 8', 'mnt8', 'DECIMAL', NULL, 15, 0, false, false, true, 16, 'amount', true),
+            (@bknom_id, 'tau1', 'Taux 1', 'Taux 1', 'tau1', 'DECIMAL', NULL, 15, 7, false, false, true, 17, 'rate', true),
+            (@bknom_id, 'tau2', 'Taux 2', 'Taux 2', 'tau2', 'DECIMAL', NULL, 15, 7, false, false, true, 18, 'rate', true),
+            (@bknom_id, 'tau3', 'Taux 3', 'Taux 3', 'tau3', 'DECIMAL', NULL, 15, 7, false, false, true, 19, 'rate', true),
+            (@bknom_id, 'tau4', 'Taux 4', 'Taux 4', 'tau4', 'DECIMAL', NULL, 15, 7, false, false, true, 20, 'rate', true),
+            (@bknom_id, 'tau5', 'Taux 5', 'Taux 5', 'tau5', 'DECIMAL', NULL, 15, 7, false, false, true, 21, 'rate', true),
+            (@bknom_id, 'duti', 'Dernier utilisateur', 'Dernier utilisateur', 'duti', 'CHAR', 10, NULL, NULL, false, false, false, 22, 'audit', true),
+            (@bknom_id, 'ddou', 'Date de creation', 'Date de creation', 'ddou', 'DATE', NULL, NULL, NULL, false, false, false, 23, 'audit', true),
+            (@bknom_id, 'ddmo', 'Date derniere modification', 'Date de derniere modification', 'ddmo', 'DATE', NULL, NULL, NULL, false, false, false, 24, 'audit', true);
+        </sql>
+    </changeSet>
+
+</databaseChangeLog>

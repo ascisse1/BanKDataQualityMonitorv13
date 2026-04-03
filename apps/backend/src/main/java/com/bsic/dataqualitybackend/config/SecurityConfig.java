@@ -73,6 +73,7 @@ public class SecurityConfig {
                 .csrf(csrf -> csrf
                         .csrfTokenRepository(CookieCsrfTokenRepository.withHttpOnlyFalse())
                         .csrfTokenRequestHandler(new CsrfTokenRequestAttributeHandler())
+                        .ignoringRequestMatchers("/api/monitoring/**")
                 )
                 .cors(cors -> cors.configurationSource(corsConfigurationSource))
                 .addFilterAfter(new SpaWebFilter(), BasicAuthenticationFilter.class)

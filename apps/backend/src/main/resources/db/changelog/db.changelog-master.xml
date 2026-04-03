@@ -5,42 +5,15 @@
     xsi:schemaLocation="http://www.liquibase.org/xml/ns/dbchangelog
         http://www.liquibase.org/xml/ns/dbchangelog/dbchangelog-latest.xsd">
 
-    <!-- BSIC Data Quality Monitor - Database Migrations -->
+    <!-- BDQM - Consolidated Database Migrations (PostgreSQL) -->
 
-    <!-- V1: Initial Schema - Core banking tables, users, FATCA -->
-    <include file="db/changelog/changes/001-initial-schema.xml"/>
+    <!-- Application schema: users, tickets, anomalies, FATCA, reconciliation, tenancy -->
+    <include file="db/changelog/changes/001-app-schema.xml"/>
 
-    <!-- V2: Ticket System - 4 Eyes validation workflow -->
-    <include file="db/changelog/changes/002-ticket-system.xml"/>
+    <!-- CBS data dictionary: cbs_tables, cbs_fields, nomenclature_types, nomenclature_entries -->
+    <include file="db/changelog/changes/002-data-dictionary-schema.xml"/>
 
-    <!-- V4: KPIs - Performance metrics tracking -->
-    <include file="db/changelog/changes/004-kpis.xml"/>
-
-    <!-- V5: Data Quality Tables - Anomalies, agencies, validation rules -->
-    <include file="db/changelog/changes/005-data-quality-tables.xml"/>
-
-    <!-- V7: Natural Language Rules Seed Data -->
-    <include file="db/changelog/changes/007-natural-rules-seed.xml"/>
-
-    <!-- V8: Add process_instance_id to tickets for workflow tracking -->
-    <include file="db/changelog/changes/008-add-process-instance-id.xml"/>
-
-    <!-- V9: Keycloak user sync - add keycloak_id, make password_hash nullable -->
-    <include file="db/changelog/changes/009-user-keycloak-sync.xml"/>
-
-    <!-- V10: Remove LDAP integration -->
-    <include file="db/changelog/changes/010-remove-ldap.xml"/>
-
-    <!-- V11: Reconciliation tables for CBS update verification -->
-    <include file="db/changelog/changes/011-reconciliation-tables.xml"/>
-
-    <!-- V12: Tenancy tables - Structure, AppProfile, UserProfile -->
-    <include file="db/changelog/changes/012-tenancy-tables.xml"/>
-
-    <!-- V13: Profile permissions + Keycloak group sync -->
-    <include file="db/changelog/changes/013-profile-permissions.xml"/>
-
-    <!-- V14: Reconciliation improvements - audit trail, abandon support -->
-    <include file="db/changelog/changes/014-reconciliation-improvements.xml"/>
+    <!-- Seed data: CBS table catalog, nomenclature types, field definitions, validation rules -->
+    <include file="db/changelog/changes/003-seed-data.xml"/>
 
 </databaseChangeLog>

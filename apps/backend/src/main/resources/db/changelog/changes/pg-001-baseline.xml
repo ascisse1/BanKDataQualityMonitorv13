@@ -1,0 +1,1377 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<databaseChangeLog
+    xmlns="http://www.liquibase.org/xml/ns/dbchangelog"
+    xmlns:xsi="http://www.w3.org/2001/XMLSchema-instance"
+    xsi:schemaLocation="http://www.liquibase.org/xml/ns/dbchangelog
+        http://www.liquibase.org/xml/ns/dbchangelog/dbchangelog-latest.xsd">
+
+    <!-- =====================================================
+         PostgreSQL Baseline Schema for BSIC Data Quality Monitor
+         Consolidated from legacy changelogs 001-017
+         ===================================================== -->
+  <changeSet id="00000000000000-1" author="abocoum">
+    <sql>
+      drop schema if exists workflow cascade;
+      create schema if not exists workflow;
+    </sql>
+  </changeSet>
+    <!-- =====================================================
+         1. USERS TABLE
+         ===================================================== -->
+
+    <changeSet id="pg-001-01-create-users" author="bsic">
+        <createTable tableName="users">
+            <column name="id" type="INT" autoIncrement="true">
+                <constraints primaryKey="true" nullable="false"/>
+            </column>
+            <column name="username" type="VARCHAR(50)">
+                <constraints unique="true" uniqueConstraintName="username" nullable="false"/>
+            </column>
+            <column name="email" type="VARCHAR(100)">
+                <constraints unique="true" uniqueConstraintName="email" nullable="false"/>
+            </column>
+            <column name="password_hash" type="VARCHAR(255)"/>
+            <column name="full_name" type="VARCHAR(100)"/>
+            <column name="role" type="VARCHAR(50)">
+                <constraints nullable="false"/>
+            </column>
+            <column name="department" type="VARCHAR(50)"/>
+            <column name="status" type="VARCHAR(50)">
+                <constraints nullable="false"/>
+            </column>
+            <column name="last_login" type="TIMESTAMP"/>
+            <column name="failed_login_attempts" type="INT" defaultValueNumeric="0"/>
+            <column name="created_at" type="TIMESTAMP" defaultValueComputed="CURRENT_TIMESTAMP"/>
+            <column name="updated_at" type="TIMESTAMP" defaultValueComputed="CURRENT_TIMESTAMP"/>
+            <column name="keycloak_id" type="VARCHAR(255)">
+                <constraints nullable="true" unique="true" uniqueConstraintName="uk_users_keycloak_id"/>
+            </column>
+        </createTable>
+        <createIndex tableName="users" indexName="idx_users_username">
+            <column name="username"/>
+        </createIndex>
+        <createIndex tableName="users" indexName="idx_users_email">
+            <column name="email"/>
+        </createIndex>
+        <createIndex tableName="users" indexName="idx_users_role">
+            <column name="role"/>
+        </createIndex>
+        <createIndex tableName="users" indexName="idx_users_keycloak_id">
+            <column name="keycloak_id"/>
+        </createIndex>
+    </changeSet>
+
+    <!-- =====================================================
+         2. MAIN BANKING TABLES
+         ===================================================== -->
+
+    <changeSet id="pg-001-02-create-bkage" author="bsic">
+        <createTable tableName="bkage">
+            <column name="age" type="CHAR(5)">
+                <constraints primaryKey="true" nullable="false"/>
+            </column>
+            <column name="lib" type="VARCHAR(30)"/>
+            <column name="id_structure" type="BIGINT"/>
+            <column name="created_at" type="TIMESTAMP" defaultValueComputed="CURRENT_TIMESTAMP"/>
+            <column name="updated_at" type="TIMESTAMP" defaultValueComputed="CURRENT_TIMESTAMP"/>
+        </createTable>
+    </changeSet>
+
+    <changeSet id="pg-001-03-create-bkcli" author="bsic">
+        <createTable tableName="bkcli">
+            <column name="cli" type="CHAR(15)">
+                <constraints primaryKey="true" nullable="false"/>
+            </column>
+            <column name="nom" type="CHAR(36)"/>
+            <column name="tcli" type="CHAR(1)"/>
+            <column name="lib" type="CHAR(2)"/>
+            <column name="pre" type="CHAR(30)"/>
+            <column name="sext" type="CHAR(1)"/>
+            <column name="njf" type="CHAR(36)"/>
+            <column name="dna" type="DATE"/>
+            <column name="viln" type="CHAR(30)"/>
+            <column name="depn" type="CHAR(30)"/>
+            <column name="payn" type="CHAR(3)"/>
+            <column name="locn" type="CHAR(6)"/>
+            <column name="tid" type="CHAR(5)"/>
+            <column name="nid" type="CHAR(20)"/>
+            <column name="did" type="DATE"/>
+            <column name="lid" type="CHAR(30)"/>
+            <column name="oid" type="CHAR(30)"/>
+            <column name="vid" type="DATE"/>
+            <column name="sit" type="CHAR(1)"/>
+            <column name="reg" type="CHAR(1)"/>
+            <column name="capj" type="CHAR(1)"/>
+            <column name="dcapj" type="DATE"/>
+            <column name="sitj" type="CHAR(3)"/>
+            <column name="dsitj" type="DATE"/>
+            <column name="tconj" type="CHAR(1)"/>
+            <column name="conj" type="CHAR(15)"/>
+            <column name="nbenf" type="SMALLINT"/>
+            <column name="clifam" type="CHAR(15)"/>
+            <column name="rso" type="CHAR(65)"/>
+            <column name="sig" type="CHAR(20)"/>
+            <column name="datc" type="DATE"/>
+            <column name="fju" type="CHAR(2)"/>
+            <column name="nrc" type="CHAR(20)"/>
+            <column name="vrc" type="DATE"/>
+            <column name="nchc" type="CHAR(3)"/>
+            <column name="npa" type="CHAR(20)"/>
+            <column name="vpa" type="DATE"/>
+            <column name="nidn" type="CHAR(20)"/>
+            <column name="nis" type="CHAR(20)"/>
+            <column name="nidf" type="CHAR(20)"/>
+            <column name="grp" type="CHAR(6)"/>
+            <column name="sgrp" type="CHAR(6)"/>
+            <column name="met" type="CHAR(6)"/>
+            <column name="smet" type="CHAR(6)"/>
+            <column name="cmc1" type="CHAR(36)"/>
+            <column name="cmc2" type="CHAR(36)"/>
+            <column name="age" type="CHAR(5)"/>
+            <column name="ges" type="CHAR(3)"/>
+            <column name="qua" type="CHAR(2)"/>
+            <column name="tax" type="CHAR(1)"/>
+            <column name="catl" type="CHAR(1)"/>
+            <column name="seg" type="CHAR(3)"/>
+            <column name="nst" type="CHAR(20)"/>
+            <column name="clipar" type="CHAR(15)"/>
+            <column name="chl1" type="CHAR(10)"/>
+            <column name="chl2" type="CHAR(10)"/>
+            <column name="chl3" type="CHAR(10)"/>
+            <column name="lter" type="CHAR(1)"/>
+            <column name="lterc" type="CHAR(1)"/>
+            <column name="resd" type="CHAR(3)"/>
+            <column name="catn" type="CHAR(6)"/>
+            <column name="sec" type="CHAR(5)"/>
+            <column name="lienbq" type="CHAR(3)"/>
+            <column name="aclas" type="CHAR(1)"/>
+            <column name="maclas" type="DECIMAL(19,4)"/>
+            <column name="emtit" type="CHAR(1)"/>
+            <column name="nicr" type="CHAR(20)"/>
+            <column name="ced" type="CHAR(1)"/>
+            <column name="clcr" type="CHAR(1)"/>
+            <column name="nmer" type="CHAR(36)"/>
+            <column name="lang" type="CHAR(3)"/>
+            <column name="nat" type="CHAR(3)"/>
+            <column name="res" type="CHAR(3)"/>
+            <column name="ichq" type="CHAR(1)"/>
+            <column name="dichq" type="DATE"/>
+            <column name="icb" type="CHAR(1)"/>
+            <column name="dicb" type="DATE"/>
+            <column name="epu" type="CHAR(1)"/>
+            <column name="utic" type="CHAR(10)"/>
+            <column name="uti" type="CHAR(10)"/>
+            <column name="dou" type="DATE"/>
+            <column name="dmo" type="DATE"/>
+            <column name="ord" type="DECIMAL(4,0)"/>
+            <column name="catr" type="CHAR(1)"/>
+            <column name="midname" type="CHAR(30)"/>
+            <column name="nomrest" type="CHAR(67)"/>
+            <column name="drc" type="DATE"/>
+            <column name="lrc" type="CHAR(30)"/>
+            <column name="rso2" type="CHAR(65)"/>
+            <column name="regn" type="CHAR(50)"/>
+            <column name="rrc" type="CHAR(1)"/>
+            <column name="dvrrc" type="DATE"/>
+            <column name="uti_vrrc" type="CHAR(10)"/>
+            <column name="created_at" type="TIMESTAMP" defaultValueComputed="CURRENT_TIMESTAMP"/>
+            <column name="updated_at" type="TIMESTAMP" defaultValueComputed="CURRENT_TIMESTAMP"/>
+        </createTable>
+        <createIndex tableName="bkcli" indexName="idx_bkcli_tcli">
+            <column name="tcli"/>
+        </createIndex>
+        <createIndex tableName="bkcli" indexName="idx_bkcli_age">
+            <column name="age"/>
+        </createIndex>
+        <createIndex tableName="bkcli" indexName="idx_bkcli_nat">
+            <column name="nat"/>
+        </createIndex>
+        <createIndex tableName="bkcli" indexName="idx_bkcli_payn">
+            <column name="payn"/>
+        </createIndex>
+        <createIndex tableName="bkcli" indexName="idx_bkcli_ges">
+            <column name="ges"/>
+        </createIndex>
+        <createIndex tableName="bkcli" indexName="idx_bkcli_seg">
+            <column name="seg"/>
+        </createIndex>
+        <createIndex tableName="bkcli" indexName="idx_bkcli_grp">
+            <column name="grp"/>
+        </createIndex>
+        <createIndex tableName="bkcli" indexName="idx_bkcli_met">
+            <column name="met"/>
+        </createIndex>
+        <createIndex tableName="bkcli" indexName="idx_bkcli_res">
+            <column name="res"/>
+        </createIndex>
+    </changeSet>
+
+    <changeSet id="pg-001-04-create-bkcom" author="bsic">
+        <createTable tableName="bkcom">
+            <column name="cli" type="CHAR(15)">
+                <constraints nullable="false"/>
+            </column>
+            <column name="cha" type="CHAR(6)">
+                <constraints nullable="false"/>
+            </column>
+            <column name="dev" type="CHAR(3)">
+                <constraints nullable="false"/>
+            </column>
+            <column name="age" type="CHAR(5)">
+                <constraints nullable="false"/>
+            </column>
+            <column name="ncp" type="CHAR(11)">
+                <constraints nullable="false"/>
+            </column>
+            <column name="cfe" type="CHAR(1)"/>
+        </createTable>
+        <addPrimaryKey tableName="bkcom" columnNames="cli,cha,dev,age,ncp" constraintName="pk_bkcom"/>
+        <addForeignKeyConstraint baseTableName="bkcom" baseColumnNames="cli"
+                                 referencedTableName="bkcli" referencedColumnNames="cli"
+                                 constraintName="bkcom_ibfk_1"/>
+        <createIndex tableName="bkcom" indexName="idx_bkcom_cli">
+            <column name="cli"/>
+        </createIndex>
+        <createIndex tableName="bkcom" indexName="idx_bkcom_cha">
+            <column name="cha"/>
+        </createIndex>
+    </changeSet>
+
+    <changeSet id="pg-001-05-create-bkadcli" author="bsic">
+        <createTable tableName="bkadcli">
+            <column name="cli" type="CHAR(15)">
+                <constraints nullable="false"/>
+            </column>
+            <column name="typ" type="CHAR(2)">
+                <constraints nullable="false"/>
+            </column>
+            <column name="adr1" type="VARCHAR(100)"/>
+            <column name="adr2" type="VARCHAR(100)"/>
+            <column name="adr3" type="VARCHAR(100)"/>
+            <column name="ville" type="VARCHAR(50)"/>
+            <column name="cpay" type="CHAR(3)"/>
+        </createTable>
+        <addPrimaryKey tableName="bkadcli" columnNames="cli,typ" constraintName="pk_bkadcli"/>
+        <addForeignKeyConstraint baseTableName="bkadcli" baseColumnNames="cli"
+                                 referencedTableName="bkcli" referencedColumnNames="cli"
+                                 constraintName="bkadcli_ibfk_1"/>
+        <createIndex tableName="bkadcli" indexName="idx_bkadcli_cli">
+            <column name="cli"/>
+        </createIndex>
+        <createIndex tableName="bkadcli" indexName="idx_bkadcli_cpay">
+            <column name="cpay"/>
+        </createIndex>
+    </changeSet>
+
+    <changeSet id="pg-001-06-create-bktelcli" author="bsic">
+        <createTable tableName="bktelcli">
+            <column name="cli" type="CHAR(15)">
+                <constraints nullable="false"/>
+            </column>
+            <column name="typ" type="CHAR(3)">
+                <constraints nullable="false"/>
+            </column>
+            <column name="num" type="VARCHAR(30)"/>
+        </createTable>
+        <addPrimaryKey tableName="bktelcli" columnNames="cli,typ" constraintName="pk_bktelcli"/>
+        <addForeignKeyConstraint baseTableName="bktelcli" baseColumnNames="cli"
+                                 referencedTableName="bkcli" referencedColumnNames="cli"
+                                 constraintName="bktelcli_ibfk_1"/>
+        <createIndex tableName="bktelcli" indexName="idx_bktelcli_cli">
+            <column name="cli"/>
+        </createIndex>
+        <createIndex tableName="bktelcli" indexName="idx_bktelcli_num">
+            <column name="num"/>
+        </createIndex>
+    </changeSet>
+
+    <changeSet id="pg-001-07-create-bkemacli" author="bsic">
+        <createTable tableName="bkemacli">
+            <column name="cli" type="CHAR(15)">
+                <constraints nullable="false"/>
+            </column>
+            <column name="email" type="VARCHAR(100)">
+                <constraints nullable="false"/>
+            </column>
+        </createTable>
+        <addPrimaryKey tableName="bkemacli" columnNames="cli,email" constraintName="pk_bkemacli"/>
+        <addForeignKeyConstraint baseTableName="bkemacli" baseColumnNames="cli"
+                                 referencedTableName="bkcli" referencedColumnNames="cli"
+                                 constraintName="bkemacli_ibfk_1"/>
+        <createIndex tableName="bkemacli" indexName="idx_bkemacli_cli">
+            <column name="cli"/>
+        </createIndex>
+    </changeSet>
+
+    <changeSet id="pg-001-08-create-bkcoj" author="bsic">
+        <createTable tableName="bkcoj">
+            <column name="clip" type="CHAR(15)">
+                <constraints nullable="false"/>
+            </column>
+            <column name="ord" type="INT">
+                <constraints nullable="false"/>
+            </column>
+            <column name="cli" type="CHAR(15)"/>
+            <column name="nom" type="VARCHAR(100)"/>
+            <column name="pre" type="VARCHAR(100)"/>
+        </createTable>
+        <addPrimaryKey tableName="bkcoj" columnNames="clip,ord" constraintName="pk_bkcoj"/>
+        <addForeignKeyConstraint baseTableName="bkcoj" baseColumnNames="clip"
+                                 referencedTableName="bkcli" referencedColumnNames="cli"
+                                 constraintName="bkcoj_ibfk_1"/>
+        <createIndex tableName="bkcoj" indexName="idx_bkcoj_clip">
+            <column name="clip"/>
+        </createIndex>
+        <createIndex tableName="bkcoj" indexName="idx_bkcoj_cli">
+            <column name="cli"/>
+        </createIndex>
+    </changeSet>
+
+    <changeSet id="pg-001-09-create-bkpscm" author="bsic">
+        <createTable tableName="bkpscm">
+            <column name="cli" type="CHAR(15)">
+                <constraints nullable="false"/>
+            </column>
+            <column name="ord" type="INT">
+                <constraints nullable="false"/>
+            </column>
+            <column name="clim" type="CHAR(15)"/>
+            <column name="nom" type="VARCHAR(100)"/>
+            <column name="pre" type="VARCHAR(100)"/>
+        </createTable>
+        <addPrimaryKey tableName="bkpscm" columnNames="cli,ord" constraintName="pk_bkpscm"/>
+        <addForeignKeyConstraint baseTableName="bkpscm" baseColumnNames="cli"
+                                 referencedTableName="bkcli" referencedColumnNames="cli"
+                                 constraintName="bkpscm_ibfk_1"/>
+        <createIndex tableName="bkpscm" indexName="idx_bkpscm_cli">
+            <column name="cli"/>
+        </createIndex>
+        <createIndex tableName="bkpscm" indexName="idx_bkpscm_clim">
+            <column name="clim"/>
+        </createIndex>
+    </changeSet>
+
+    <!-- =====================================================
+         3. USER AUDIT LOG
+         ===================================================== -->
+
+    <changeSet id="pg-001-10-create-user-audit-log" author="bsic">
+        <createTable tableName="user_audit_log">
+            <column name="id" type="INT" autoIncrement="true">
+                <constraints primaryKey="true" nullable="false"/>
+            </column>
+            <column name="user_id" type="INT">
+                <constraints nullable="false"/>
+            </column>
+            <column name="action" type="VARCHAR(100)">
+                <constraints nullable="false"/>
+            </column>
+            <column name="details" type="TEXT"/>
+            <column name="ip_address" type="VARCHAR(45)"/>
+            <column name="user_agent" type="TEXT"/>
+            <column name="created_at" type="TIMESTAMP" defaultValueComputed="CURRENT_TIMESTAMP"/>
+        </createTable>
+        <addForeignKeyConstraint baseTableName="user_audit_log" baseColumnNames="user_id"
+                                 referencedTableName="users" referencedColumnNames="id"
+                                 constraintName="user_audit_log_ibfk_1" onDelete="CASCADE"/>
+        <createIndex tableName="user_audit_log" indexName="idx_user_audit_user_id">
+            <column name="user_id"/>
+        </createIndex>
+        <createIndex tableName="user_audit_log" indexName="idx_user_audit_created_at">
+            <column name="created_at"/>
+        </createIndex>
+    </changeSet>
+
+    <!-- =====================================================
+         4. AGENCY CORRECTION STATS
+         ===================================================== -->
+
+    <changeSet id="pg-001-11-create-agency-correction-stats" author="bsic">
+        <createTable tableName="agency_correction_stats">
+            <column name="structure_code" type="CHAR(5)">
+                <constraints primaryKey="true" nullable="false"/>
+            </column>
+            <column name="structure_name" type="VARCHAR(100)"/>
+            <column name="total_anomalies" type="INT" defaultValueNumeric="0"/>
+            <column name="fixed_anomalies" type="INT" defaultValueNumeric="0"/>
+            <column name="in_review_anomalies" type="INT" defaultValueNumeric="0"/>
+            <column name="rejected_anomalies" type="INT" defaultValueNumeric="0"/>
+            <column name="correction_rate" type="DECIMAL(5,2)" defaultValueNumeric="0.00"/>
+            <column name="last_updated" type="TIMESTAMP" defaultValueComputed="CURRENT_TIMESTAMP"/>
+        </createTable>
+        <createIndex tableName="agency_correction_stats" indexName="idx_agency_stats_code">
+            <column name="structure_code"/>
+        </createIndex>
+        <createIndex tableName="agency_correction_stats" indexName="idx_agency_stats_rate">
+            <column name="correction_rate"/>
+        </createIndex>
+    </changeSet>
+
+    <!-- =====================================================
+         5. ANOMALY HISTORY
+         ===================================================== -->
+
+    <changeSet id="pg-001-12-create-anomaly-history" author="bsic">
+        <createTable tableName="anomaly_history">
+            <column name="id" type="INT" autoIncrement="true">
+                <constraints primaryKey="true" nullable="false"/>
+            </column>
+            <column name="cli" type="CHAR(15)">
+                <constraints nullable="false"/>
+            </column>
+            <column name="field" type="VARCHAR(50)">
+                <constraints nullable="false"/>
+            </column>
+            <column name="old_value" type="TEXT"/>
+            <column name="new_value" type="TEXT"/>
+            <column name="status" type="VARCHAR(20)" defaultValue="detected"/>
+            <column name="structure_code" type="CHAR(5)"/>
+            <column name="user_id" type="INT"/>
+            <column name="notes" type="TEXT"/>
+            <column name="created_at" type="TIMESTAMP" defaultValueComputed="CURRENT_TIMESTAMP"/>
+            <column name="updated_at" type="TIMESTAMP" defaultValueComputed="CURRENT_TIMESTAMP"/>
+        </createTable>
+        <addForeignKeyConstraint baseTableName="anomaly_history" baseColumnNames="user_id"
+                                 referencedTableName="users" referencedColumnNames="id"
+                                 constraintName="anomaly_history_ibfk_1" onDelete="SET NULL"/>
+        <createIndex tableName="anomaly_history" indexName="idx_anomaly_history_cli">
+            <column name="cli"/>
+        </createIndex>
+        <createIndex tableName="anomaly_history" indexName="idx_anomaly_history_status">
+            <column name="status"/>
+        </createIndex>
+        <createIndex tableName="anomaly_history" indexName="idx_anomaly_history_structure_code">
+            <column name="structure_code"/>
+        </createIndex>
+        <createIndex tableName="anomaly_history" indexName="idx_anomaly_history_created_at">
+            <column name="created_at"/>
+        </createIndex>
+    </changeSet>
+
+    <!-- =====================================================
+         6. FATCA AUDIT LOG
+         ===================================================== -->
+
+    <changeSet id="pg-001-13-create-fatca-audit-log" author="bsic">
+        <createTable tableName="fatca_audit_log">
+            <column name="id" type="INT" autoIncrement="true">
+                <constraints primaryKey="true" nullable="false"/>
+            </column>
+            <column name="cli" type="CHAR(15)">
+                <constraints nullable="false"/>
+            </column>
+            <column name="action" type="VARCHAR(50)">
+                <constraints nullable="false"/>
+            </column>
+            <column name="previous_status" type="VARCHAR(20)"/>
+            <column name="new_status" type="VARCHAR(20)"/>
+            <column name="performed_by" type="VARCHAR(50)"/>
+            <column name="notes" type="TEXT"/>
+            <column name="created_at" type="TIMESTAMP" defaultValueComputed="CURRENT_TIMESTAMP"/>
+        </createTable>
+        <createIndex tableName="fatca_audit_log" indexName="idx_fatca_audit_log_cli">
+            <column name="cli"/>
+        </createIndex>
+        <createIndex tableName="fatca_audit_log" indexName="idx_fatca_audit_log_created_at">
+            <column name="created_at"/>
+        </createIndex>
+    </changeSet>
+
+    <!-- =====================================================
+         7. TICKET SYSTEM (from 002)
+         ===================================================== -->
+
+    <changeSet id="pg-001-14-create-tickets" author="bsic">
+        <createTable tableName="tickets">
+            <column name="id" type="BIGINT" autoIncrement="true">
+                <constraints primaryKey="true" nullable="false"/>
+            </column>
+            <column name="ticket_number" type="VARCHAR(50)">
+                <constraints unique="true" uniqueConstraintName="UK_4ks48wgrew48dpkh0wd1rbe2b" nullable="false"/>
+            </column>
+            <column name="cli" type="VARCHAR(15)">
+                <constraints nullable="false"/>
+            </column>
+            <column name="client_name" type="VARCHAR(200)"/>
+            <column name="client_type" type="VARCHAR(1)"/>
+            <column name="structure_code" type="VARCHAR(5)">
+                <constraints nullable="false"/>
+            </column>
+            <column name="status" type="VARCHAR(30)">
+                <constraints nullable="false"/>
+            </column>
+            <column name="priority" type="VARCHAR(20)">
+                <constraints nullable="false"/>
+            </column>
+            <column name="assigned_to" type="INT"/>
+            <column name="assigned_by" type="INT"/>
+            <column name="assigned_at" type="TIMESTAMP(6)"/>
+            <column name="validated_by" type="INT"/>
+            <column name="validated_at" type="TIMESTAMP(6)"/>
+            <column name="closed_by" type="INT"/>
+            <column name="closed_at" type="TIMESTAMP(6)"/>
+            <column name="sla_deadline" type="TIMESTAMP(6)"/>
+            <column name="sla_breached" type="BOOLEAN"/>
+            <column name="total_incidents" type="INT"/>
+            <column name="resolved_incidents" type="INT"/>
+            <column name="process_instance_id" type="VARCHAR(64)"/>
+            <column name="created_at" type="TIMESTAMP(6)">
+                <constraints nullable="false"/>
+            </column>
+            <column name="updated_at" type="TIMESTAMP(6)"/>
+        </createTable>
+        <addForeignKeyConstraint baseTableName="tickets" baseColumnNames="assigned_to"
+                                 referencedTableName="users" referencedColumnNames="id"
+                                 constraintName="FKmwsov8q6vll6krbx1co2ifp6t"/>
+        <addForeignKeyConstraint baseTableName="tickets" baseColumnNames="assigned_by"
+                                 referencedTableName="users" referencedColumnNames="id"
+                                 constraintName="FKe8sjfncw99u9isfyab3xlk499"/>
+        <addForeignKeyConstraint baseTableName="tickets" baseColumnNames="validated_by"
+                                 referencedTableName="users" referencedColumnNames="id"
+                                 constraintName="FK66yo3vj7xegxqxa9l31ucfyta"/>
+        <addForeignKeyConstraint baseTableName="tickets" baseColumnNames="closed_by"
+                                 referencedTableName="users" referencedColumnNames="id"
+                                 constraintName="FKb5og2vu5sundwphri47gb6qcd"/>
+    </changeSet>
+
+    <changeSet id="pg-001-15-create-ticket-incidents" author="bsic">
+        <createTable tableName="ticket_incidents">
+            <column name="id" type="BIGINT" autoIncrement="true">
+                <constraints primaryKey="true" nullable="false"/>
+            </column>
+            <column name="ticket_id" type="BIGINT">
+                <constraints nullable="false"/>
+            </column>
+            <column name="incident_type" type="VARCHAR(50)">
+                <constraints nullable="false"/>
+            </column>
+            <column name="category" type="VARCHAR(50)">
+                <constraints nullable="false"/>
+            </column>
+            <column name="field_name" type="VARCHAR(50)">
+                <constraints nullable="false"/>
+            </column>
+            <column name="field_label" type="VARCHAR(100)"/>
+            <column name="old_value" type="TEXT"/>
+            <column name="new_value" type="TEXT"/>
+            <column name="status" type="VARCHAR(20)"/>
+            <column name="resolved" type="BOOLEAN">
+                <constraints nullable="false"/>
+            </column>
+            <column name="resolved_at" type="TIMESTAMP(6)"/>
+            <column name="notes" type="TEXT"/>
+            <column name="created_at" type="TIMESTAMP(6)">
+                <constraints nullable="false"/>
+            </column>
+            <column name="updated_at" type="TIMESTAMP(6)"/>
+        </createTable>
+        <addForeignKeyConstraint baseTableName="ticket_incidents" baseColumnNames="ticket_id"
+                                 referencedTableName="tickets" referencedColumnNames="id"
+                                 constraintName="FKe4pown0wlaj02039c9lvsbejw"/>
+    </changeSet>
+
+    <changeSet id="pg-001-16-create-ticket-comments" author="bsic">
+        <createTable tableName="ticket_comments">
+            <column name="id" type="BIGINT" autoIncrement="true">
+                <constraints primaryKey="true" nullable="false"/>
+            </column>
+            <column name="ticket_id" type="BIGINT">
+                <constraints nullable="false"/>
+            </column>
+            <column name="user_id" type="INT">
+                <constraints nullable="false"/>
+            </column>
+            <column name="comment" type="TEXT">
+                <constraints nullable="false"/>
+            </column>
+            <column name="comment_type" type="VARCHAR(20)"/>
+            <column name="is_internal" type="BOOLEAN"/>
+            <column name="created_at" type="TIMESTAMP(6)">
+                <constraints nullable="false"/>
+            </column>
+        </createTable>
+        <addForeignKeyConstraint baseTableName="ticket_comments" baseColumnNames="ticket_id"
+                                 referencedTableName="tickets" referencedColumnNames="id"
+                                 constraintName="FKdoce3fj1osdn71h25dhfs160v"/>
+        <addForeignKeyConstraint baseTableName="ticket_comments" baseColumnNames="user_id"
+                                 referencedTableName="users" referencedColumnNames="id"
+                                 constraintName="FKqstmdduoeqr1bm2lj8r5tmhl2"/>
+    </changeSet>
+
+    <changeSet id="pg-001-17-create-ticket-documents" author="bsic">
+        <createTable tableName="ticket_documents">
+            <column name="id" type="BIGINT" autoIncrement="true">
+                <constraints primaryKey="true" nullable="false"/>
+            </column>
+            <column name="ticket_id" type="BIGINT">
+                <constraints nullable="false"/>
+            </column>
+            <column name="document_name" type="VARCHAR(255)">
+                <constraints nullable="false"/>
+            </column>
+            <column name="document_path" type="VARCHAR(500)">
+                <constraints nullable="false"/>
+            </column>
+            <column name="document_type" type="VARCHAR(50)"/>
+            <column name="file_size" type="INT"/>
+            <column name="mime_type" type="VARCHAR(100)"/>
+            <column name="uploaded_by" type="INT">
+                <constraints nullable="false"/>
+            </column>
+            <column name="uploaded_at" type="TIMESTAMP(6)">
+                <constraints nullable="false"/>
+            </column>
+        </createTable>
+        <addForeignKeyConstraint baseTableName="ticket_documents" baseColumnNames="ticket_id"
+                                 referencedTableName="tickets" referencedColumnNames="id"
+                                 constraintName="FKfyeobg7t725e0dqgyht1ghujs"/>
+        <addForeignKeyConstraint baseTableName="ticket_documents" baseColumnNames="uploaded_by"
+                                 referencedTableName="users" referencedColumnNames="id"
+                                 constraintName="FK5vahcw98gtjdhm4l2xlaon12b"/>
+    </changeSet>
+
+    <changeSet id="pg-001-18-create-ticket-history" author="bsic">
+        <createTable tableName="ticket_history">
+            <column name="id" type="BIGINT" autoIncrement="true">
+                <constraints primaryKey="true" nullable="false"/>
+            </column>
+            <column name="ticket_id" type="BIGINT">
+                <constraints nullable="false"/>
+            </column>
+            <column name="action" type="VARCHAR(100)">
+                <constraints nullable="false"/>
+            </column>
+            <column name="previous_status" type="VARCHAR(30)"/>
+            <column name="new_status" type="VARCHAR(30)"/>
+            <column name="previous_value" type="TEXT"/>
+            <column name="new_value" type="TEXT"/>
+            <column name="performed_by" type="INT">
+                <constraints nullable="false"/>
+            </column>
+            <column name="notes" type="TEXT"/>
+            <column name="timestamp" type="TIMESTAMP(6)">
+                <constraints nullable="false"/>
+            </column>
+        </createTable>
+        <addForeignKeyConstraint baseTableName="ticket_history" baseColumnNames="ticket_id"
+                                 referencedTableName="tickets" referencedColumnNames="id"
+                                 constraintName="FKkkhg6aquudxfcbofalx8rtc6v"/>
+        <addForeignKeyConstraint baseTableName="ticket_history" baseColumnNames="performed_by"
+                                 referencedTableName="users" referencedColumnNames="id"
+                                 constraintName="FKfiow7btiippxhu969xdwmfuou"/>
+    </changeSet>
+
+    <!-- =====================================================
+         8. KPIs (from 004)
+         ===================================================== -->
+
+    <changeSet id="pg-001-19-create-kpis" author="bsic">
+        <createTable tableName="kpis">
+            <column name="id" type="BIGINT" autoIncrement="true">
+                <constraints primaryKey="true" nullable="false"/>
+            </column>
+            <column name="period_date" type="DATE">
+                <constraints nullable="false"/>
+            </column>
+            <column name="structure_code" type="VARCHAR(255)"/>
+            <column name="kpi_type" type="VARCHAR(255)">
+                <constraints nullable="false"/>
+            </column>
+            <column name="kpi_value" type="DOUBLE">
+                <constraints nullable="false"/>
+            </column>
+            <column name="target_value" type="DOUBLE"/>
+            <column name="tickets_total" type="INT"/>
+            <column name="tickets_closed" type="INT"/>
+            <column name="tickets_sla_respected" type="INT"/>
+            <column name="tickets_sla_breached" type="INT"/>
+            <column name="avg_resolution_time_hours" type="DOUBLE"/>
+            <column name="created_at" type="TIMESTAMP(6)"/>
+            <column name="updated_at" type="TIMESTAMP(6)"/>
+        </createTable>
+    </changeSet>
+
+    <!-- =====================================================
+         9. DATA QUALITY TABLES (from 005)
+         ===================================================== -->
+
+    <changeSet id="pg-001-20-create-anomalies" author="bsic">
+        <createTable tableName="anomalies">
+            <column name="id" type="BIGINT" autoIncrement="true">
+                <constraints primaryKey="true" nullable="false"/>
+            </column>
+            <column name="client_number" type="VARCHAR(255)">
+                <constraints nullable="false"/>
+            </column>
+            <column name="client_name" type="VARCHAR(255)">
+                <constraints nullable="false"/>
+            </column>
+            <column name="client_type" type="VARCHAR(50)">
+                <constraints nullable="false"/>
+            </column>
+            <column name="structure_code" type="VARCHAR(255)">
+                <constraints nullable="false"/>
+            </column>
+            <column name="structure_name" type="VARCHAR(255)"/>
+            <column name="field_name" type="VARCHAR(255)">
+                <constraints nullable="false"/>
+            </column>
+            <column name="field_label" type="VARCHAR(255)"/>
+            <column name="current_value" type="TEXT"/>
+            <column name="expected_value" type="TEXT"/>
+            <column name="error_type" type="VARCHAR(255)"/>
+            <column name="error_message" type="TEXT"/>
+            <column name="status" type="VARCHAR(50)">
+                <constraints nullable="false"/>
+            </column>
+            <column name="correction_value" type="TEXT"/>
+            <column name="corrected_by" type="VARCHAR(255)"/>
+            <column name="corrected_at" type="TIMESTAMP(6)"/>
+            <column name="validation_comment" type="TEXT"/>
+            <column name="validated_by" type="VARCHAR(255)"/>
+            <column name="validated_at" type="TIMESTAMP(6)"/>
+            <column name="ticket_id" type="BIGINT"/>
+            <column name="severity" type="VARCHAR(255)"/>
+            <column name="data_source" type="VARCHAR(255)"/>
+            <column name="created_at" type="TIMESTAMP(6)">
+                <constraints nullable="false"/>
+            </column>
+            <column name="updated_at" type="TIMESTAMP(6)"/>
+        </createTable>
+        <createIndex tableName="anomalies" indexName="idx_anomaly_client_type">
+            <column name="client_type"/>
+        </createIndex>
+        <createIndex tableName="anomalies" indexName="idx_anomaly_status">
+            <column name="status"/>
+        </createIndex>
+        <createIndex tableName="anomalies" indexName="idx_anomaly_structure">
+            <column name="structure_code"/>
+        </createIndex>
+        <createIndex tableName="anomalies" indexName="idx_anomaly_created">
+            <column name="created_at"/>
+        </createIndex>
+    </changeSet>
+
+    <changeSet id="pg-001-21-create-fatca-clients" author="bsic">
+        <createTable tableName="fatca_clients">
+            <column name="id" type="BIGINT" autoIncrement="true">
+                <constraints primaryKey="true" nullable="false"/>
+            </column>
+            <column name="cli" type="CHAR(15)">
+                <constraints unique="true" uniqueConstraintName="cli" nullable="false"/>
+            </column>
+            <column name="nom" type="VARCHAR(100)"/>
+            <column name="date_entree_relation" type="DATE"/>
+            <column name="status_client" type="VARCHAR(20)"/>
+            <column name="pays_naissance" type="CHAR(3)"/>
+            <column name="nationalite" type="CHAR(3)"/>
+            <column name="adresse" type="TEXT"/>
+            <column name="pays_adresse" type="CHAR(3)"/>
+            <column name="telephone" type="VARCHAR(30)"/>
+            <column name="relation_client" type="CHAR(15)"/>
+            <column name="type_relation" type="VARCHAR(20)"/>
+            <column name="fatca_status" type="VARCHAR(50)">
+                <constraints nullable="false"/>
+            </column>
+            <column name="fatca_date" type="DATE"/>
+            <column name="fatca_uti" type="VARCHAR(50)"/>
+            <column name="notes" type="TEXT"/>
+            <column name="created_at" type="TIMESTAMP" defaultValueComputed="CURRENT_TIMESTAMP"/>
+            <column name="updated_at" type="TIMESTAMP" defaultValueComputed="CURRENT_TIMESTAMP"/>
+            <column name="client_number" type="VARCHAR(255)">
+                <constraints nullable="false"/>
+            </column>
+            <column name="client_name" type="VARCHAR(255)">
+                <constraints nullable="false"/>
+            </column>
+            <column name="client_type" type="VARCHAR(50)">
+                <constraints nullable="false"/>
+            </column>
+            <column name="structure_code" type="VARCHAR(255)">
+                <constraints nullable="false"/>
+            </column>
+            <column name="structure_name" type="VARCHAR(255)"/>
+            <column name="birth_place" type="VARCHAR(255)"/>
+            <column name="birth_country" type="VARCHAR(255)"/>
+            <column name="tax_residence_country" type="VARCHAR(255)"/>
+            <column name="us_person" type="BOOLEAN"/>
+            <column name="us_tin" type="VARCHAR(255)"/>
+            <column name="w9_form_received" type="BOOLEAN"/>
+            <column name="w8_form_received" type="BOOLEAN"/>
+            <column name="us_address" type="BOOLEAN"/>
+            <column name="us_phone" type="BOOLEAN"/>
+            <column name="risk_level" type="VARCHAR(255)"/>
+            <column name="last_review_date" type="DATE"/>
+            <column name="next_review_date" type="DATE"/>
+            <column name="declaration_date" type="DATE"/>
+            <column name="reporting_required" type="BOOLEAN"/>
+            <!-- FATCA enhancements (from 017) -->
+            <column name="w9_received_date" type="DATE"/>
+            <column name="w8_received_date" type="DATE"/>
+            <column name="w9_expiry_date" type="DATE"/>
+            <column name="w8_expiry_date" type="DATE"/>
+            <column name="document_status" type="VARCHAR(30)"/>
+            <column name="document_notes" type="TEXT"/>
+            <column name="indicia_types" type="VARCHAR(255)"/>
+            <column name="indicia_count" type="INT" defaultValueNumeric="0"/>
+            <column name="last_screening_date" type="TIMESTAMP"/>
+            <column name="detection_source" type="VARCHAR(30)" defaultValue="MANUAL"/>
+        </createTable>
+        <createIndex tableName="fatca_clients" indexName="idx_fatca_clients_cli">
+            <column name="cli"/>
+        </createIndex>
+        <createIndex tableName="fatca_clients" indexName="idx_fatca_clients_status">
+            <column name="fatca_status"/>
+        </createIndex>
+        <createIndex tableName="fatca_clients" indexName="idx_fatca_clients_pays_naissance">
+            <column name="pays_naissance"/>
+        </createIndex>
+        <createIndex tableName="fatca_clients" indexName="idx_fatca_clients_nationalite">
+            <column name="nationalite"/>
+        </createIndex>
+        <createIndex tableName="fatca_clients" indexName="idx_fatca_clients_pays_adresse">
+            <column name="pays_adresse"/>
+        </createIndex>
+        <createIndex tableName="fatca_clients" indexName="idx_fatca_client_type">
+            <column name="client_type"/>
+        </createIndex>
+        <createIndex tableName="fatca_clients" indexName="idx_fatca_status">
+            <column name="fatca_status"/>
+        </createIndex>
+        <createIndex tableName="fatca_clients" indexName="idx_fatca_structure">
+            <column name="structure_code"/>
+        </createIndex>
+        <createIndex tableName="fatca_clients" indexName="idx_fatca_risk_level">
+            <column name="risk_level"/>
+        </createIndex>
+    </changeSet>
+
+    <changeSet id="pg-001-22-create-validation-rules" author="bsic">
+        <createTable tableName="validation_rules">
+            <column name="id" type="BIGINT" autoIncrement="true">
+                <constraints primaryKey="true" nullable="false"/>
+            </column>
+            <column name="rule_name" type="VARCHAR(255)">
+                <constraints nullable="false"/>
+            </column>
+            <column name="description" type="TEXT"/>
+            <column name="rule_type" type="VARCHAR(50)">
+                <constraints nullable="false"/>
+            </column>
+            <column name="client_type" type="VARCHAR(50)"/>
+            <column name="field_name" type="VARCHAR(255)">
+                <constraints nullable="false"/>
+            </column>
+            <column name="field_label" type="VARCHAR(100)"/>
+            <column name="rule_definition" type="JSONB"/>
+            <column name="error_message" type="TEXT"/>
+            <column name="severity" type="VARCHAR(255)"/>
+            <column name="active" type="BOOLEAN"/>
+            <column name="priority" type="INT"/>
+            <column name="created_by" type="VARCHAR(255)"/>
+            <column name="created_at" type="TIMESTAMP(6)">
+                <constraints nullable="false"/>
+            </column>
+            <column name="updated_at" type="TIMESTAMP(6)"/>
+        </createTable>
+        <createIndex tableName="validation_rules" indexName="idx_rule_type">
+            <column name="rule_type"/>
+        </createIndex>
+        <createIndex tableName="validation_rules" indexName="idx_rule_client_type">
+            <column name="client_type"/>
+        </createIndex>
+        <createIndex tableName="validation_rules" indexName="idx_rule_active">
+            <column name="active"/>
+        </createIndex>
+    </changeSet>
+
+    <changeSet id="pg-001-23-create-data-load-history" author="bsic">
+        <createTable tableName="data_load_history">
+            <column name="id" type="BIGINT" autoIncrement="true">
+                <constraints primaryKey="true" nullable="false"/>
+            </column>
+            <column name="file_name" type="VARCHAR(255)">
+                <constraints nullable="false"/>
+            </column>
+            <column name="table_name" type="VARCHAR(50)">
+                <constraints nullable="false"/>
+            </column>
+            <column name="file_type" type="VARCHAR(255)"/>
+            <column name="file_size" type="BIGINT"/>
+            <column name="records_total" type="INT"/>
+            <column name="records_processed" type="INT"/>
+            <column name="records_success" type="INT"/>
+            <column name="records_failed" type="INT"/>
+            <column name="records_count" type="INT" defaultValueNumeric="0"/>
+            <column name="anomalies_detected" type="INT"/>
+            <column name="status" type="VARCHAR(50)">
+                <constraints nullable="false"/>
+            </column>
+            <column name="load_status" type="VARCHAR(20)" defaultValue="success"/>
+            <column name="error_message" type="TEXT"/>
+            <column name="uploaded_by" type="VARCHAR(255)"/>
+            <column name="loaded_by" type="VARCHAR(50)"/>
+            <column name="processing_time_ms" type="BIGINT"/>
+            <column name="execution_time_ms" type="INT"/>
+            <column name="load_date" type="TIMESTAMP" defaultValueComputed="CURRENT_TIMESTAMP"/>
+        </createTable>
+        <createIndex tableName="data_load_history" indexName="idx_data_load_table">
+            <column name="table_name"/>
+        </createIndex>
+        <createIndex tableName="data_load_history" indexName="idx_data_load_date">
+            <column name="load_date"/>
+        </createIndex>
+        <createIndex tableName="data_load_history" indexName="idx_data_load_status">
+            <column name="load_status"/>
+        </createIndex>
+        <createIndex tableName="data_load_history" indexName="idx_load_status">
+            <column name="status"/>
+        </createIndex>
+        <createIndex tableName="data_load_history" indexName="idx_load_date">
+            <column name="load_date"/>
+        </createIndex>
+    </changeSet>
+
+    <changeSet id="pg-001-24-create-correction-stats" author="bsic">
+        <createTable tableName="correction_stats">
+            <column name="id" type="BIGINT" autoIncrement="true">
+                <constraints primaryKey="true" nullable="false"/>
+            </column>
+            <column name="structure_code" type="VARCHAR(255)">
+                <constraints nullable="false"/>
+            </column>
+            <column name="structure_name" type="VARCHAR(255)"/>
+            <column name="stats_date" type="DATE">
+                <constraints nullable="false"/>
+            </column>
+            <column name="week_number" type="INT"/>
+            <column name="month_number" type="INT"/>
+            <column name="year_number" type="INT"/>
+            <column name="total_anomalies" type="INT"/>
+            <column name="corrected_anomalies" type="INT"/>
+            <column name="validated_anomalies" type="INT"/>
+            <column name="pending_anomalies" type="INT"/>
+            <column name="correction_rate" type="DOUBLE"/>
+            <column name="avg_correction_time_hours" type="DOUBLE"/>
+            <column name="created_at" type="TIMESTAMP(6)">
+                <constraints nullable="false"/>
+            </column>
+        </createTable>
+        <createIndex tableName="correction_stats" indexName="idx_stats_structure">
+            <column name="structure_code"/>
+        </createIndex>
+        <createIndex tableName="correction_stats" indexName="idx_stats_date">
+            <column name="stats_date"/>
+        </createIndex>
+    </changeSet>
+
+    <!-- =====================================================
+         10. RECONCILIATION TABLES (from 011, 014)
+         ===================================================== -->
+
+    <changeSet id="pg-001-25-create-reconciliation-tasks" author="bsic">
+        <createTable tableName="reconciliation_tasks">
+            <column name="id" type="BIGINT" autoIncrement="true">
+                <constraints primaryKey="true" nullable="false"/>
+            </column>
+            <column name="ticket_id" type="VARCHAR(30)">
+                <constraints nullable="false"/>
+            </column>
+            <column name="client_id" type="VARCHAR(15)">
+                <constraints nullable="false"/>
+            </column>
+            <column name="status" type="VARCHAR(20)" defaultValue="pending">
+                <constraints nullable="false"/>
+            </column>
+            <column name="attempts" type="INT" defaultValueNumeric="0">
+                <constraints nullable="false"/>
+            </column>
+            <column name="created_at" type="TIMESTAMP" defaultValueComputed="CURRENT_TIMESTAMP">
+                <constraints nullable="false"/>
+            </column>
+            <column name="reconciled_at" type="TIMESTAMP"/>
+            <column name="last_attempt_at" type="TIMESTAMP"/>
+            <column name="error_message" type="TEXT"/>
+            <column name="abandoned_at" type="TIMESTAMP"/>
+            <column name="abandoned_reason" type="TEXT"/>
+        </createTable>
+        <createIndex tableName="reconciliation_tasks" indexName="idx_recon_tasks_ticket_id">
+            <column name="ticket_id"/>
+        </createIndex>
+        <createIndex tableName="reconciliation_tasks" indexName="idx_recon_tasks_client_id">
+            <column name="client_id"/>
+        </createIndex>
+        <createIndex tableName="reconciliation_tasks" indexName="idx_recon_tasks_status">
+            <column name="status"/>
+        </createIndex>
+        <createIndex tableName="reconciliation_tasks" indexName="idx_recon_tasks_created_at">
+            <column name="created_at"/>
+        </createIndex>
+    </changeSet>
+
+    <changeSet id="pg-001-26-create-corrections" author="bsic">
+        <createTable tableName="corrections">
+            <column name="id" type="BIGINT" autoIncrement="true">
+                <constraints primaryKey="true" nullable="false"/>
+            </column>
+            <column name="ticket_id" type="VARCHAR(30)">
+                <constraints nullable="false"/>
+            </column>
+            <column name="field_name" type="VARCHAR(50)">
+                <constraints nullable="false"/>
+            </column>
+            <column name="field_label" type="VARCHAR(100)"/>
+            <column name="old_value" type="TEXT"/>
+            <column name="new_value" type="TEXT"/>
+            <column name="cbs_value" type="TEXT"/>
+            <column name="is_matched" type="BOOLEAN" defaultValueBoolean="false">
+                <constraints nullable="false"/>
+            </column>
+            <column name="last_checked_at" type="TIMESTAMP"/>
+        </createTable>
+        <createIndex tableName="corrections" indexName="idx_corrections_ticket_id">
+            <column name="ticket_id"/>
+        </createIndex>
+        <addUniqueConstraint tableName="corrections"
+            columnNames="ticket_id,field_name"
+            constraintName="uk_corrections_ticket_field"/>
+    </changeSet>
+
+    <changeSet id="pg-001-27-create-reconciliation-attempts" author="bsic">
+        <createTable tableName="reconciliation_attempts">
+            <column name="id" type="BIGINT" autoIncrement="true">
+                <constraints primaryKey="true" nullable="false"/>
+            </column>
+            <column name="task_id" type="BIGINT">
+                <constraints nullable="false"/>
+            </column>
+            <column name="attempt_number" type="INT">
+                <constraints nullable="false"/>
+            </column>
+            <column name="status" type="VARCHAR(20)">
+                <constraints nullable="false"/>
+            </column>
+            <column name="matched_fields" type="INT" defaultValueNumeric="0"/>
+            <column name="total_fields" type="INT" defaultValueNumeric="0"/>
+            <column name="error_message" type="TEXT"/>
+            <column name="duration_ms" type="BIGINT"/>
+            <column name="attempted_at" type="TIMESTAMP" defaultValueComputed="CURRENT_TIMESTAMP">
+                <constraints nullable="false"/>
+            </column>
+        </createTable>
+        <createIndex tableName="reconciliation_attempts" indexName="idx_recon_attempts_task_id">
+            <column name="task_id"/>
+        </createIndex>
+    </changeSet>
+
+    <!-- =====================================================
+         11. TENANCY TABLES (from 012, 013)
+         ===================================================== -->
+
+    <changeSet id="pg-001-28-create-structure" author="bsic">
+        <createTable tableName="structure">
+            <column name="id" type="BIGINT" autoIncrement="true">
+                <constraints primaryKey="true" nullable="false"/>
+            </column>
+            <column name="code" type="VARCHAR(10)">
+                <constraints nullable="false" unique="true" uniqueConstraintName="uk_structure_code"/>
+            </column>
+            <column name="name" type="VARCHAR(100)">
+                <constraints nullable="false"/>
+            </column>
+            <column name="type" type="VARCHAR(50)" defaultValue="AGENCY"/>
+            <column name="parent_id" type="BIGINT"/>
+            <column name="status" type="VARCHAR(20)" defaultValue="ACTIVE">
+                <constraints nullable="false"/>
+            </column>
+            <column name="created_at" type="TIMESTAMP" defaultValueComputed="CURRENT_TIMESTAMP">
+                <constraints nullable="false"/>
+            </column>
+            <column name="updated_at" type="TIMESTAMP" defaultValueComputed="CURRENT_TIMESTAMP"/>
+        </createTable>
+        <addForeignKeyConstraint
+            baseTableName="structure" baseColumnNames="parent_id"
+            referencedTableName="structure" referencedColumnNames="id"
+            constraintName="fk_structure_parent"/>
+        <createIndex tableName="structure" indexName="idx_structure_type">
+            <column name="type"/>
+        </createIndex>
+        <createIndex tableName="structure" indexName="idx_structure_status">
+            <column name="status"/>
+        </createIndex>
+    </changeSet>
+
+    <changeSet id="pg-001-29-create-app-profile" author="bsic">
+        <createTable tableName="app_profile">
+            <column name="id" type="BIGINT" autoIncrement="true">
+                <constraints primaryKey="true" nullable="false"/>
+            </column>
+            <column name="code" type="VARCHAR(50)">
+                <constraints nullable="false" unique="true" uniqueConstraintName="uk_app_profile_code"/>
+            </column>
+            <column name="name" type="VARCHAR(100)">
+                <constraints nullable="false"/>
+            </column>
+            <column name="description" type="VARCHAR(255)"/>
+            <column name="status" type="VARCHAR(20)" defaultValue="ACTIVE">
+                <constraints nullable="false"/>
+            </column>
+            <column name="keycloak_group_id" type="VARCHAR(255)"/>
+            <column name="created_at" type="TIMESTAMP" defaultValueComputed="CURRENT_TIMESTAMP">
+                <constraints nullable="false"/>
+            </column>
+            <column name="updated_at" type="TIMESTAMP" defaultValueComputed="CURRENT_TIMESTAMP"/>
+        </createTable>
+    </changeSet>
+
+    <changeSet id="pg-001-30-create-user-profile" author="bsic">
+        <createTable tableName="user_profile">
+            <column name="id" type="BIGINT" autoIncrement="true">
+                <constraints primaryKey="true" nullable="false"/>
+            </column>
+            <column name="date_from" type="DATE">
+                <constraints nullable="false"/>
+            </column>
+            <column name="date_to" type="DATE"/>
+            <column name="status" type="VARCHAR(20)">
+                <constraints nullable="false"/>
+            </column>
+            <column name="user_id" type="INT">
+                <constraints nullable="false"/>
+            </column>
+            <column name="profile_id" type="BIGINT"/>
+            <column name="structure_id" type="BIGINT">
+                <constraints nullable="false"/>
+            </column>
+            <column name="created_at" type="TIMESTAMP" defaultValueComputed="CURRENT_TIMESTAMP">
+                <constraints nullable="false"/>
+            </column>
+            <column name="updated_at" type="TIMESTAMP" defaultValueComputed="CURRENT_TIMESTAMP"/>
+        </createTable>
+        <addForeignKeyConstraint
+            baseTableName="user_profile" baseColumnNames="user_id"
+            referencedTableName="users" referencedColumnNames="id"
+            constraintName="fk_user_profile_user"/>
+        <addForeignKeyConstraint
+            baseTableName="user_profile" baseColumnNames="profile_id"
+            referencedTableName="app_profile" referencedColumnNames="id"
+            constraintName="fk_user_profile_app_profile"/>
+        <addForeignKeyConstraint
+            baseTableName="user_profile" baseColumnNames="structure_id"
+            referencedTableName="structure" referencedColumnNames="id"
+            constraintName="fk_user_profile_structure"/>
+        <addUniqueConstraint tableName="user_profile"
+            columnNames="user_id,structure_id,profile_id,date_from"
+            constraintName="uk_user_profile_assignment"/>
+        <createIndex tableName="user_profile" indexName="idx_user_profile_user_status">
+            <column name="user_id"/>
+            <column name="status"/>
+        </createIndex>
+        <createIndex tableName="user_profile" indexName="idx_user_profile_structure">
+            <column name="structure_id"/>
+        </createIndex>
+    </changeSet>
+
+    <!-- Add FK from bkage to structure -->
+    <changeSet id="pg-001-31-bkage-structure-fk" author="bsic">
+        <addForeignKeyConstraint
+            baseTableName="bkage" baseColumnNames="id_structure"
+            referencedTableName="structure" referencedColumnNames="id"
+            constraintName="fk_bkage_structure"/>
+    </changeSet>
+
+    <!-- =====================================================
+         12. CBS DATA DICTIONARY TABLES (from 015)
+         ===================================================== -->
+
+    <changeSet id="pg-001-32-create-cbs-tables" author="bsic">
+        <createTable tableName="cbs_tables">
+            <column name="id" type="BIGINT" autoIncrement="true">
+                <constraints primaryKey="true" nullable="false"/>
+            </column>
+            <column name="table_name" type="VARCHAR(30)">
+                <constraints nullable="false" unique="true" uniqueConstraintName="uk_cbs_table_name"/>
+            </column>
+            <column name="display_name" type="VARCHAR(100)"/>
+            <column name="description" type="TEXT"/>
+            <column name="schema_name" type="VARCHAR(30)"/>
+            <column name="cbs_version" type="VARCHAR(30)"/>
+            <column name="primary_key_columns" type="VARCHAR(100)"/>
+            <column name="java_entity_class" type="VARCHAR(100)"/>
+            <column name="sync_enabled" type="BOOLEAN" defaultValueBoolean="false"/>
+            <column name="sync_order" type="INT"/>
+            <column name="active" type="BOOLEAN" defaultValueBoolean="true">
+                <constraints nullable="false"/>
+            </column>
+            <column name="created_at" type="TIMESTAMP" defaultValueComputed="CURRENT_TIMESTAMP">
+                <constraints nullable="false"/>
+            </column>
+            <column name="updated_at" type="TIMESTAMP" defaultValueComputed="CURRENT_TIMESTAMP"/>
+        </createTable>
+    </changeSet>
+
+    <changeSet id="pg-001-33-create-cbs-fields" author="bsic">
+        <createTable tableName="cbs_fields">
+            <column name="id" type="BIGINT" autoIncrement="true">
+                <constraints primaryKey="true" nullable="false"/>
+            </column>
+            <column name="cbs_table_id" type="BIGINT">
+                <constraints nullable="false"/>
+            </column>
+            <column name="column_name" type="VARCHAR(30)">
+                <constraints nullable="false"/>
+            </column>
+            <column name="display_label" type="VARCHAR(100)"/>
+            <column name="description" type="TEXT"/>
+            <column name="java_field_name" type="VARCHAR(50)"/>
+            <column name="query_alias" type="VARCHAR(50)"/>
+            <column name="data_type" type="VARCHAR(20)">
+                <constraints nullable="false"/>
+            </column>
+            <column name="max_length" type="INT"/>
+            <column name="precision_value" type="INT"/>
+            <column name="scale_value" type="INT"/>
+            <column name="is_primary_key" type="BOOLEAN" defaultValueBoolean="false"/>
+            <column name="is_required" type="BOOLEAN" defaultValueBoolean="false"/>
+            <column name="is_updatable" type="BOOLEAN" defaultValueBoolean="true"/>
+            <column name="nomenclature_ctab" type="VARCHAR(3)"/>
+            <column name="nomenclature_description" type="VARCHAR(100)"/>
+            <column name="enum_values" type="JSONB"/>
+            <column name="applicable_client_types" type="VARCHAR(50)"/>
+            <column name="display_order" type="INT"/>
+            <column name="field_group" type="VARCHAR(50)"/>
+            <column name="active" type="BOOLEAN" defaultValueBoolean="true">
+                <constraints nullable="false"/>
+            </column>
+            <column name="created_at" type="TIMESTAMP" defaultValueComputed="CURRENT_TIMESTAMP">
+                <constraints nullable="false"/>
+            </column>
+            <column name="updated_at" type="TIMESTAMP" defaultValueComputed="CURRENT_TIMESTAMP"/>
+        </createTable>
+        <addForeignKeyConstraint
+            baseTableName="cbs_fields" baseColumnNames="cbs_table_id"
+            referencedTableName="cbs_tables" referencedColumnNames="id"
+            constraintName="fk_cbs_field_table"/>
+        <addUniqueConstraint tableName="cbs_fields"
+            columnNames="cbs_table_id,column_name"
+            constraintName="uk_cbs_field_table_column"/>
+        <createIndex tableName="cbs_fields" indexName="idx_cbs_field_table">
+            <column name="cbs_table_id"/>
+        </createIndex>
+        <createIndex tableName="cbs_fields" indexName="idx_cbs_field_nomenclature">
+            <column name="nomenclature_ctab"/>
+        </createIndex>
+    </changeSet>
+
+    <changeSet id="pg-001-34-create-nomenclature-types" author="bsic">
+        <createTable tableName="nomenclature_types">
+            <column name="id" type="BIGINT" autoIncrement="true">
+                <constraints primaryKey="true" nullable="false"/>
+            </column>
+            <column name="ctab" type="VARCHAR(3)">
+                <constraints nullable="false" unique="true" uniqueConstraintName="uk_nomenclature_type_ctab"/>
+            </column>
+            <column name="name" type="VARCHAR(100)">
+                <constraints nullable="false"/>
+            </column>
+            <column name="display_name" type="VARCHAR(100)"/>
+            <column name="description" type="TEXT"/>
+            <column name="sync_enabled" type="BOOLEAN" defaultValueBoolean="true"/>
+            <column name="active" type="BOOLEAN" defaultValueBoolean="true">
+                <constraints nullable="false"/>
+            </column>
+            <column name="entry_count" type="INT"/>
+            <column name="last_synced_at" type="TIMESTAMP"/>
+            <column name="created_at" type="TIMESTAMP" defaultValueComputed="CURRENT_TIMESTAMP">
+                <constraints nullable="false"/>
+            </column>
+            <column name="updated_at" type="TIMESTAMP" defaultValueComputed="CURRENT_TIMESTAMP"/>
+        </createTable>
+    </changeSet>
+
+    <changeSet id="pg-001-35-create-nomenclature-entries" author="bsic">
+        <createTable tableName="nomenclature_entries">
+            <column name="id" type="BIGINT" autoIncrement="true">
+                <constraints primaryKey="true" nullable="false"/>
+            </column>
+            <column name="nomenclature_type_id" type="BIGINT">
+                <constraints nullable="false"/>
+            </column>
+            <column name="ctab" type="VARCHAR(3)">
+                <constraints nullable="false"/>
+            </column>
+            <column name="cacc" type="VARCHAR(10)">
+                <constraints nullable="false"/>
+            </column>
+            <column name="age" type="VARCHAR(5)"/>
+            <column name="lib1" type="VARCHAR(30)"/>
+            <column name="lib2" type="VARCHAR(30)"/>
+            <column name="lib3" type="VARCHAR(30)"/>
+            <column name="lib4" type="VARCHAR(30)"/>
+            <column name="lib5" type="VARCHAR(30)"/>
+            <column name="mnt1" type="DECIMAL(15,0)"/>
+            <column name="mnt2" type="DECIMAL(15,0)"/>
+            <column name="mnt3" type="DECIMAL(15,0)"/>
+            <column name="mnt4" type="DECIMAL(15,0)"/>
+            <column name="mnt5" type="DECIMAL(15,0)"/>
+            <column name="mnt6" type="DECIMAL(15,0)"/>
+            <column name="mnt7" type="DECIMAL(15,0)"/>
+            <column name="mnt8" type="DECIMAL(15,0)"/>
+            <column name="tau1" type="DECIMAL(15,7)"/>
+            <column name="tau2" type="DECIMAL(15,7)"/>
+            <column name="tau3" type="DECIMAL(15,7)"/>
+            <column name="tau4" type="DECIMAL(15,7)"/>
+            <column name="tau5" type="DECIMAL(15,7)"/>
+            <column name="active" type="BOOLEAN" defaultValueBoolean="true">
+                <constraints nullable="false"/>
+            </column>
+            <column name="last_synced_at" type="TIMESTAMP"/>
+            <column name="created_at" type="TIMESTAMP" defaultValueComputed="CURRENT_TIMESTAMP">
+                <constraints nullable="false"/>
+            </column>
+            <column name="updated_at" type="TIMESTAMP" defaultValueComputed="CURRENT_TIMESTAMP"/>
+        </createTable>
+        <addForeignKeyConstraint
+            baseTableName="nomenclature_entries" baseColumnNames="nomenclature_type_id"
+            referencedTableName="nomenclature_types" referencedColumnNames="id"
+            constraintName="fk_nom_entry_type"/>
+        <addUniqueConstraint tableName="nomenclature_entries"
+            columnNames="ctab,cacc,age"
+            constraintName="uk_nom_entry_ctab_cacc_age"/>
+        <createIndex tableName="nomenclature_entries" indexName="idx_nom_entry_type">
+            <column name="nomenclature_type_id"/>
+        </createIndex>
+        <createIndex tableName="nomenclature_entries" indexName="idx_nom_entry_ctab_cacc">
+            <column name="ctab"/>
+            <column name="cacc"/>
+        </createIndex>
+    </changeSet>
+
+    <!-- =====================================================
+         13. SEED STRUCTURE AND PROFILES (from 012)
+         ===================================================== -->
+
+    <changeSet id="pg-001-36-seed-structure-from-agencies" author="bsic">
+        <sql>
+            INSERT INTO structure (code, name, type, status, created_at, updated_at)
+            SELECT age, lib, 'AGENCY', 'ACTIVE', NOW(), NOW()
+            FROM bkage
+        </sql>
+    </changeSet>
+
+    <changeSet id="pg-001-37-seed-default-app-profile" author="bsic">
+        <insert tableName="app_profile">
+            <column name="code" value="DEFAULT"/>
+            <column name="name" value="Default"/>
+            <column name="description" value="Default application profile"/>
+            <column name="status" value="ACTIVE"/>
+        </insert>
+    </changeSet>
+
+    <changeSet id="pg-001-38-link-bkage-structure" author="bsic">
+        <sql>
+            UPDATE bkage SET id_structure = s.id FROM structure s WHERE s.code = bkage.age
+        </sql>
+    </changeSet>
+
+</databaseChangeLog>

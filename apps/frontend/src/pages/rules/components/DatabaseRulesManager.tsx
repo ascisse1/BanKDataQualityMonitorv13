@@ -235,7 +235,7 @@ const DatabaseRulesManager: React.FC<DatabaseRulesManagerProps> = ({ onRulesUpda
         <div>
           <h2 className="text-xl font-semibold text-gray-900">Règles de Contrôle Base de Données</h2>
           <p className="mt-1 text-sm text-gray-500">
-            Gérez les règles de validation pour les tables MySQL
+            Gérez les règles de validation pour les tables de la base de données
           </p>
         </div>
         

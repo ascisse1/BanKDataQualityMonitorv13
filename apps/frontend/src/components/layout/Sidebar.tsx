@@ -26,6 +26,7 @@ import {
   ChevronRight,
   Command,
   Shield,
+  BookOpen,
   type LucideIcon,
 } from 'lucide-react';
 
@@ -106,6 +107,7 @@ const Sidebar = ({ isMobile, isOpen, onClose }: SidebarProps) => {
   const adminNavigation: NavItemDef[] = [
     { name: 'Utilisateurs', icon: Users, path: '/users' },
     { name: 'Gestion des acces', icon: Shield, path: '/user-access' },
+    { name: 'Dictionnaire CBS', icon: BookOpen, path: '/data-dictionary' },
   ];
 
   const navigationGroups = [

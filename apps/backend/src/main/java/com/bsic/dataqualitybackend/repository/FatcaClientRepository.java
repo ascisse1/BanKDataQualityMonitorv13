@@ -18,6 +18,9 @@ public interface FatcaClientRepository extends JpaRepository<FatcaClient, Long> 
 
     Optional<FatcaClient> findByClientNumber(String clientNumber);
 
+    @Query("SELECT f FROM FatcaClient f WHERE f.clientNumber IN :clientNumbers")
+    List<FatcaClient> findByClientNumberIn(@Param("clientNumbers") java.util.Collection<String> clientNumbers);
+
     Page<FatcaClient> findByClientType(ClientType clientType, Pageable pageable);
 
     Page<FatcaClient> findByFatcaStatus(FatcaStatus fatcaStatus, Pageable pageable);

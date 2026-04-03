@@ -612,6 +612,38 @@ class DatabaseService {
     }
   }
 
+  public async getFatcaConfig(): Promise<any> {
+    try {
+      return await this.fetchApi<any>('/fatca/config');
+    } catch (error) {
+      log.error('database', 'Failed to get FATCA config', { error });
+      return { giin: 'XXXXXX.XXXXX.XX.XXX', reportingCountry: 'BJ', fiName: 'BSIC Bénin', fiAddress: '', filerCategory: 'FATCA601', screeningEnabled: true };
+    }
+  }
+
+  public async triggerFatcaScreening(): Promise<any> {
+    try {
+      log.info('database', 'Triggering FATCA screening');
+      const result = await this.fetchApi<any>('/fatca/screen', { method: 'POST' });
+      log.info('database', 'FATCA screening completed', result);
+      return result;
+    } catch (error) {
+      log.error('database', 'Failed to trigger FATCA screening', { error });
+      throw error;
+    }
+  }
+
+  public async getFatcaAuditHistory(cli: string, page = 1, limit = 50): Promise<PaginatedResponse<any>> {
+    try {
+      const params = { page: Math.max(0, page - 1), size: limit };
+      const result = await this.fetchApi<any>(`/fatca/audit/${cli}`, {}, params);
+      return toPagedResponse<any>(result);
+    } catch (error) {
+      log.error('database', 'Failed to get FATCA audit history', { error, cli });
+      return { data: [], page, limit, total: 0 };
+    }
+  }
+
   public async getAllAnomalies(page = 1, limit = this.DEFAULT_LIMIT, forExport = false, params: Record<string, any> = {}): Promise<PaginatedResponse<any>> {
     try {
       log.info('database', 'Getting all anomalies', { page, limit, forExport, ...params });
@@ -925,8 +957,8 @@ class DatabaseService {
     try {
       log.info('database', 'Getting agencies');
 
-      // Use /agencies/ordered endpoint for sorted agency list
-      const data = await this.fetchApi<any[]>('/agencies/ordered');
+      // Use /structures/ordered endpoint for sorted agency list
+      const data = await this.fetchApi<any[]>('/structures/ordered');
       log.info('database', 'Agencies retrieved successfully', { count: data?.length || 0 });
 
       // Map backend AgencyDto format to frontend format

@@ -120,7 +120,7 @@ const UsersPage = () => {
 
   const loadAgencies = async () => {
     try {
-      const response = await fetch('/api/agencies');
+      const response = await fetch('/api/structures');
       if (response.ok) {
         const data = await response.json();
         setAgencies(data);

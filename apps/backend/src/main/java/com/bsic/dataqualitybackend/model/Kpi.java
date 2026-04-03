@@ -16,7 +16,7 @@ import java.time.LocalDateTime;
 @AllArgsConstructor
 @Entity
 @Filter(name = "structureFilter", condition = "structure_code IN (:codes)")
-@Table(name = "kpis")
+@Table(schema = "public",name = "kpis")
 public class Kpi {
 
     @Id

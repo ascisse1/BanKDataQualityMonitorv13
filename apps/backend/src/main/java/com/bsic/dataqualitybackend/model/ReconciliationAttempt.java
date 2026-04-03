@@ -10,7 +10,7 @@ import org.hibernate.annotations.CreationTimestamp;
 import java.time.LocalDateTime;
 
 @Entity
-@Table(name = "reconciliation_attempts", indexes = {
+@Table(schema = "public",name = "reconciliation_attempts", indexes = {
     @Index(name = "idx_recon_attempts_task_id", columnList = "task_id")
 })
 @Data

@@ -34,4 +34,6 @@ public interface ValidationRuleRepository extends JpaRepository<ValidationRule, 
      * Find active rules where clientType is null (applies to all).
      */
     List<ValidationRule> findByActiveAndClientTypeIsNullOrderByPriorityDesc(Boolean active);
+
+    List<ValidationRule> findByActiveAndTableNameOrderByPriorityDesc(Boolean active, String tableName);
 }

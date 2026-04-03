@@ -31,10 +31,11 @@ public class KpiService {
     public void calculateDailyKpis(LocalDate date) {
         log.info("Calculating KPIs for date: {}", date);
 
-        LocalDateTime startOfDay = date.atStartOfDay();
         LocalDateTime endOfDay = date.plusDays(1).atStartOfDay();
+        // Use a trailing 30-day window to capture tickets active during the period
+        LocalDateTime startOfWindow = date.minusDays(29).atStartOfDay();
 
-        List<Ticket> tickets = ticketRepository.findTicketsCreatedBetween(startOfDay, endOfDay);
+        List<Ticket> tickets = ticketRepository.findTicketsActiveInPeriod(startOfWindow, endOfDay);
 
         Map<String, List<Ticket>> ticketsByAgency = tickets.stream()
             .collect(Collectors.groupingBy(Ticket::getStructureCode));
@@ -48,7 +49,7 @@ public class KpiService {
 
         calculateGlobalKpis(date, tickets);
 
-        log.info("KPIs calculated for {} agencies", ticketsByAgency.size());
+        log.info("KPIs calculated for {} agencies over 30-day trailing window", ticketsByAgency.size());
     }
 
     private void calculateAgencyKpis(LocalDate date, String structureCode, List<Ticket> tickets) {
