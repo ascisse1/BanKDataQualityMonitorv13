@@ -122,7 +122,15 @@
       "Bash(find apps/backend/src/main/java/com/adakalgroup -name \"*.java\" -exec sed -i 's/com\\\\.bsic\\\\.dataqualitybackend/com.adakalgroup.dataqualitybackend/g' {} +)",
       "Bash(find apps/backend/src/test/java/com/adakalgroup -name \"*.java\" -exec sed -i 's/com\\\\.bsic\\\\.dataqualitybackend/com.adakalgroup.dataqualitybackend/g' {} +)",
       "Bash(rm -rf apps/backend/src/main/java/com/bsic)",
-      "Bash(rm -rf apps/backend/src/test/java/com/bsic)"
+      "Bash(rm -rf apps/backend/src/test/java/com/bsic)",
+      "WebFetch(domain:github.com)",
+      "WebFetch(domain:mvnrepository.com)",
+      "WebFetch(domain:central.sonatype.com)",
+      "Bash(mvn dependency:copy -Dartifact=tools.jackson.core:jackson-core:3.1.0 -DoutputDirectory=./target/deps -q)",
+      "Bash(mvn dependency:copy -Dartifact=org.springframework.ai:spring-ai-starter-model-ollama:2.0.0-M3 -DoutputDirectory=./target/deps -q)",
+      "Bash(mvn dependency:copy -Dartifact=org.springframework.ai:spring-ai-autoconfigure-model-ollama:2.0.0-M3 -DoutputDirectory=./target/deps -q)",
+      "Bash(javap -cp ./target/deps/spring-ai-autoconfigure-model-ollama-2.0.0-M3.jar -p org.springframework.ai.model.ollama.autoconfigure.OllamaChatAutoConfiguration)",
+      "Bash(mvn clean:*)"
     ]
   }
 }
