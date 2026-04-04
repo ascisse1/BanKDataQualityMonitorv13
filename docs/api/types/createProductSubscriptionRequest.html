@@ -1,0 +1,1131 @@
+<!DOCTYPE html >
+<html>
+<head>
+	<link rel="stylesheet" href="../resources/styleDocu.css" />
+  <link rel="stylesheet" href="../resources/font-awesome/css/font-awesome.min.css" />
+	<title>Documentation Xsd</title>
+	<meta charset="UTF-8" />
+</head>
+
+<body>
+  <div class="document">
+	<div class="header">
+		
+	</div>
+
+  <div class="tabs">
+    <div class="tabs-wrapper" onclick="window.open('../liste-ressources.html', '_self');">
+      <div class="tabs-left-content">
+        Liste des ressources
+      </div>
+    </div>
+    <div class="tabs-wrapper" onclick="window.open('../liste-services.html', '_self');">
+      <div class="tabs-left-content" >
+        Liste des services  
+      </div>
+    </div>
+    <div class="tabs-wrapper-selected" onclick="window.open('../liste-types.html', '_self');">
+      <div class="tabs-right-content">
+        Liste des types
+      </div>
+    </div>
+  </div>
+
+	
+
+	<div class="contenu">
+      <div class="breadcrumb"> 
+        <ul class="breadcrumb">
+           <li> <a href="../index.html"> Accueil </a></li>
+           <li> > </li>
+           <li> <a href="../liste-types.html"> Liste des types </a></li>
+           <li> > </li>
+           <li> createProductSubscriptionRequest </li>
+        </ul>                    
+      </div>                    
+      
+     
+      <div class="summary">
+			<div class="mock-list">
+				<b>Nom : </b>createProductSubscriptionRequest
+			</div>
+			<div class="mock-list">
+				<b> Description : </b>Requête de création d'une souscription.
+			</div>
+        
+        <div> </div>
+        <div class="mock-list"> Choix : Non</div>
+        
+      </div>
+                        
+      <div class="column-content">
+        <div class="detail-column">
+          <div class="tree"> 
+<ul>
+	<li>
+<i class="fa fa-caret-down fa-fw" onclick="expand_or_collapse(this)">
+</i>		createProductSubscriptionRequest		<ul style="display:block">
+			<li>
+<i class="fa fa-fw">
+</i><i class="fa fa-key fa-fw">
+</i><span class="selectable" id="e0"> customerCode : customerCode
+</span>
+			</li>
+			<li>
+<i class="fa fa-fw">
+</i><span class="selectable" id="e1"> packageCode : packageCode
+</span>
+			</li>
+			<li>
+<i class="fa fa-fw">
+</i><span class="selectable" id="e2"> packageSubscriptionReference : subscriptionReference
+</span>
+			</li>
+			<li>
+<i class="fa fa-fw">
+</i><i class="fa fa-key fa-fw">
+</i><span class="selectable" id="e3"> productCode : productCode
+</span>
+			</li>
+			<li>
+<i class="fa fa-fw">
+</i><span class="selectable" id="e4"> productSubscriptionReference : subscriptionReference
+</span>
+			</li>
+			<li>
+<i class="fa fa-fw">
+</i><span class="selectable" id="e5"> fileType : char3
+</span>
+			</li>
+			<li>
+<i class="fa fa-fw">
+</i><span class="selectable" id="e6"> fileNumber : charMax15
+</span>
+			</li>
+			<li>
+<i class="fa fa-caret-down fa-fw" onclick="expand_or_collapse(this)">
+</i><span class="selectable" id="e7"> mainAccount : internalAccountKey
+</span>				<ul style="display:block">
+					<li>
+<i class="fa fa-fw">
+</i><i class="fa fa-key fa-fw">
+</i><span class="selectable" id="e8"> branch : char5
+</span>
+					</li>
+					<li>
+<i class="fa fa-fw">
+</i><i class="fa fa-key fa-fw">
+</i><span class="selectable" id="e9"> currency : currencyCode
+</span>
+					</li>
+					<li>
+<i class="fa fa-fw">
+</i><i class="fa fa-key fa-fw">
+</i><span class="selectable" id="e10"> account : charMax11
+</span>
+					</li>
+					<li>
+<i class="fa fa-fw">
+</i><span class="selectable" id="e11"> suffix : charMax2
+</span>
+					</li>
+
+				</ul>
+
+			</li>
+			<li>
+<i class="fa fa-fw">
+</i><span class="selectable" id="e12"> subscriptionEndDate : date
+</span>
+			</li>
+			<li>
+<i class="fa fa-caret-down fa-fw" onclick="expand_or_collapse(this)">
+</i><span class="selectable" id="e13"> prices : productPrices
+</span>				<ul style="display:block">
+					<li>
+<i class="fa fa-fw">
+</i><span class="selectable" id="e14"> pricingCode : pricingCode
+</span>
+					</li>
+					<li>
+<i class="fa fa-fw">
+</i><span class="selectable" id="e15"> pricingType : pricingType
+</span>
+					</li>
+					<li>
+<i class="fa fa-caret-down fa-fw" onclick="expand_or_collapse(this)">
+</i><span class="selectable" id="e16"> billingAccount : internalAccountKey
+</span>						<ul style="display:block">
+							<li>
+<i class="fa fa-fw">
+</i><i class="fa fa-key fa-fw">
+</i><span class="selectable" id="e17"> branch : char5
+</span>
+							</li>
+							<li>
+<i class="fa fa-fw">
+</i><i class="fa fa-key fa-fw">
+</i><span class="selectable" id="e18"> currency : currencyCode
+</span>
+							</li>
+							<li>
+<i class="fa fa-fw">
+</i><i class="fa fa-key fa-fw">
+</i><span class="selectable" id="e19"> account : charMax11
+</span>
+							</li>
+							<li>
+<i class="fa fa-fw">
+</i><span class="selectable" id="e20"> suffix : charMax2
+</span>
+							</li>
+
+						</ul>
+
+					</li>
+					<li>
+<i class="fa fa-fw">
+</i><span class="selectable" id="e21"> quantityOfSubscribedProducts : integer
+</span>
+					</li>
+					<li>
+<i class="fa fa-fw">
+</i><span class="selectable" id="e22"> billingCharges : boolean
+</span>
+					</li>
+					<li>
+<i class="fa fa-fw">
+</i><span class="selectable" id="e23"> dutyAmountToTheEstablishment : decimal19_4
+</span>
+					</li>
+
+				</ul>
+
+			</li>
+			<li>
+<i class="fa fa-fw">
+</i><span class="selectable" id="e24"> observation : charMax40
+</span>
+			</li>
+			<li>
+<i class="fa fa-fw">
+</i><i class="fa fa-key fa-fw">
+</i><span class="selectable" id="e25"> subscriptionState : productSubscriptionState
+</span>
+			</li>
+			<li>
+<i class="fa fa-fw">
+</i><span class="selectable" id="e26"> recoveryOfUnpaidSolelyOnTheBillingAccount : boolean
+</span>
+			</li>
+
+		</ul>
+
+	</li>
+
+</ul>
+          </div>
+          
+          <div class="detail">
+				<p align="left">
+					Légende :<br />
+				</p>
+            <ul>
+               <li align="left">
+                  <i class="fa fa-key fa-fw">
+                  </i>
+                  = Elément obligatoire en saisie.
+               </li>
+               <li align="left">
+                  <span style="font-weight:bold"> [M]
+                  </span>
+                  = Elément multiple (0 à n occurrences).
+               </li>
+               <li align="left">
+                  <span style="font-weight:bold"> [C]
+                  </span>
+                  = Elément composé d'un choix à effectuer. Un seul choix autorisé.
+               </li>
+            </ul>
+            <p align="left">
+               Remarque : Un même élément peut regrouper plusieurs caractéristiques
+            </p>          
+          </div>
+          
+        </div>
+<div class="detail-column" id="d0" style="display:none">
+	<div class="detail">
+			<div class="mock-list">
+				<b>Nom : </b>customerCode
+			</div>
+			<div class="mock-list">
+				<b>Description : </b>Code client.
+			</div>
+			<div class="mock-list">
+				<b>Commentaire : </b><p>La fiche client doit &ecirc;tre valide&nbsp;: le code client doit exister dans la table des clients et ne pr&eacute;senter aucun risque de relation client.La fiche client doit &ecirc;tre valide&nbsp;: le code client doit exister dans la table des clients et ne pr&eacute;senter aucun risque de relation client.</p>
+
+			</div>
+
+	</div>
+	<div class="detail">
+			<div class="mock-list">
+				<b>Nom : </b> <a href="../types/customerCode.html">customerCode</a>
+			</div>
+			<div class="mock-list">
+				<b> Description : </b>Code client.
+			</div>
+			<div class="mock-list">
+				<b>Format : </b>string
+			</div>
+			<div class="mock-list">
+				<b>Longueur mini-maxi : </b>1 - 15
+			</div>
+
+	</div>
+
+</div>
+<div class="detail-column" id="d1" style="display:none">
+	<div class="detail">
+			<div class="mock-list">
+				<b>Nom : </b>packageCode
+			</div>
+			<div class="mock-list">
+				<b>Description : </b>Code package.
+			</div>
+			<div class="mock-list">
+				<b>Commentaire : </b><p>Si le code package est renseign&eacute;, cela implique que le client a d&eacute;j&agrave; souscrit au package. Cette donn&eacute;e ne s&#39;applique pas pour les tarifications pr&eacute;f&eacute;rentielles d&#39;un produit hors package. Le service ne permet pas la souscription &agrave; un package.</p>
+
+<p>Les v&eacute;rifications suivantes sont effectu&eacute;es sur le code du package&nbsp;:</p>
+
+<ul>
+	<li>Le produit fait partie du package.</li>
+	<li>Le produit &agrave; souscrire n&#39;est pas d&eacute;j&agrave; souscrit s&#39;il est limit&eacute; en nombre.</li>
+</ul>
+
+			</div>
+
+	</div>
+	<div class="detail">
+			<div class="mock-list">
+				<b>Nom : </b> <a href="../types/packageCode.html">packageCode</a>
+			</div>
+			<div class="mock-list">
+				<b> Description : </b>Code package.
+			</div>
+			<div class="mock-list">
+				<b>Format : </b>string
+			</div>
+			<div class="mock-list">
+				<b>Longueur fixe : </b>6
+			</div>
+
+	</div>
+
+</div>
+<div class="detail-column" id="d2" style="display:none">
+	<div class="detail">
+			<div class="mock-list">
+				<b>Nom : </b>packageSubscriptionReference
+			</div>
+			<div class="mock-list">
+				<b>Description : </b>Référence de souscription du package.
+			</div>
+			<div class="mock-list">
+				<b>Commentaire : </b><p>La r&eacute;f&eacute;rence de souscription du package ne peut &ecirc;tre renseign&eacute;e que si le code du package est renseign&eacute;.</p>
+
+<p>La r&eacute;f&eacute;rence de souscription du package doit d&eacute;j&agrave; exister pour le package.</p>
+
+			</div>
+
+	</div>
+	<div class="detail">
+			<div class="mock-list">
+				<b>Nom : </b> <a href="../types/subscriptionReference.html">subscriptionReference</a>
+			</div>
+			<div class="mock-list">
+				<b> Description : </b>Référence d'une souscription.
+			</div>
+			<div class="mock-list">
+				<b>Format : </b>string
+			</div>
+			<div class="mock-list">
+				<b>Longueur mini-maxi : </b>1 - 25
+			</div>
+
+	</div>
+
+</div>
+<div class="detail-column" id="d3" style="display:none">
+	<div class="detail">
+			<div class="mock-list">
+				<b>Nom : </b>productCode
+			</div>
+			<div class="mock-list">
+				<b>Description : </b>Code produit.
+			</div>
+			<div class="mock-list">
+				<b>Commentaire : </b><p>Les v&eacute;rifications suivantes sont effectu&eacute;es sur le code produit&nbsp;:</p>
+
+<ul>
+	<li>Le produit existe et est toujours propos&eacute; &agrave; la vente.</li>
+	<li>Le produit est configur&eacute; pour la vente en produit unitaire.</li>
+	<li>Il s&#39;agit d&#39;un produit divers (attribut du produit &agrave; <strong>91</strong>) et hors gestion par dossier (gestion par dossier &agrave; <strong>N</strong>).</li>
+	<li>Le produit peut &ecirc;tre int&eacute;gr&eacute; au package si le code package est renseign&eacute; (composant possible d&rsquo;un package &agrave; <strong>O</strong>).</li>
+	<li>Si le param&egrave;tre FATCA existe en nomenclature 098, Le client ne peut pas souscrire un produit (ou un package) si son status FATCA n&rsquo;est pas renseign&eacute; (<em>NouB(bkcli.fatca_status</em>) ou si ce statut est bloquant (lib2&nbsp;!= &quot;O&quot; en nomenclature 072 pour le code statut)</li>
+	<li>Si le param&egrave;tre FATCA existe en nomenclature 098, Le client ne peut pas souscrire un produit (ou un package) si son status CRS n&rsquo;est pas renseign&eacute; (<em>NouB(bkcli.crs_status</em>) ou si ce statut est bloquant (lib2&nbsp;!= &quot;O&quot; en nomenclature 072 pour le code statut)</li>
+	<li>Le produit est &eacute;ligible pour le client&nbsp;: pour les particuliers, le type de client&egrave;le &eacute;ligible doit &ecirc;tre &agrave; <strong>1</strong>, <strong>5</strong> ou <strong>6</strong>&nbsp;; pour les soci&eacute;t&eacute;s, le type de client&egrave;le &eacute;ligible doit &ecirc;tre &agrave; <strong>2</strong>, <strong>4</strong> ou <strong>5</strong>&nbsp;; pour les entreprises individuelles, le type de client&egrave;le &eacute;ligible doit &ecirc;tre &agrave; <strong>3</strong>, <strong>4</strong>, <strong>5</strong> ou <strong>6</strong>.</li>
+</ul>
+
+<p>Les valeurs du type de client&egrave;le sont&nbsp;:</p>
+
+<ul style="list-style-type:square">
+	<li><strong>1</strong> = Particuliers</li>
+	<li><strong>2</strong> = Soci&eacute;t&eacute;</li>
+	<li><strong>3</strong> = Entreprise individuelle</li>
+	<li><strong>4</strong> = Soci&eacute;t&eacute; et entreprise individuelle</li>
+	<li><strong>5</strong> = Tous clients</li>
+	<li><strong>6</strong> = Particulier et entreprise individuelle
+	<ul>
+		<li>Le client peut pr&eacute;tendre au produit si :</li>
+		<li>son &acirc;ge est dans la tranche d&eacute;finie pour le produit.</li>
+		<li>la quantit&eacute; totale souscrite (par package ou produit unitaire) par le client ne d&eacute;passe pas la quantit&eacute; maximum autoris&eacute;e pour ce produit</li>
+	</ul>
+	</li>
+</ul>
+
+			</div>
+
+	</div>
+	<div class="detail">
+			<div class="mock-list">
+				<b>Nom : </b> <a href="../types/productCode.html">productCode</a>
+			</div>
+			<div class="mock-list">
+				<b> Description : </b>Code produit.
+			</div>
+			<div class="mock-list">
+				<b>Format : </b>string
+			</div>
+			<div class="mock-list">
+				<b>Longueur fixe : </b>3
+			</div>
+
+	</div>
+
+</div>
+<div class="detail-column" id="d4" style="display:none">
+	<div class="detail">
+			<div class="mock-list">
+				<b>Nom : </b>productSubscriptionReference
+			</div>
+			<div class="mock-list">
+				<b>Description : </b>Référence de souscription du produit.
+			</div>
+			<div class="mock-list">
+				<b>Commentaire : </b><p>Si renseign&eacute;e, la r&eacute;f&eacute;rence ne doit pas d&eacute;j&agrave; exister.</p>
+
+			</div>
+
+	</div>
+	<div class="detail">
+			<div class="mock-list">
+				<b>Nom : </b> <a href="../types/subscriptionReference.html">subscriptionReference</a>
+			</div>
+			<div class="mock-list">
+				<b> Description : </b>Référence d'une souscription.
+			</div>
+			<div class="mock-list">
+				<b>Format : </b>string
+			</div>
+			<div class="mock-list">
+				<b>Longueur mini-maxi : </b>1 - 25
+			</div>
+
+	</div>
+
+</div>
+<div class="detail-column" id="d5" style="display:none">
+	<div class="detail">
+			<div class="mock-list">
+				<b>Nom : </b>fileType
+			</div>
+			<div class="mock-list">
+				<b>Description : </b>Type de dossier.
+			</div>
+
+	</div>
+	<div class="detail">
+			<div class="mock-list">
+				<b>Nom : </b> <a href="../types/char3.html">char3</a>
+			</div>
+			<div class="mock-list">
+				<b> Description : </b>Type avec un nombre de caractères égal à 3.
+			</div>
+			<div class="mock-list">
+				<b>Format : </b>string
+			</div>
+			<div class="mock-list">
+				<b>Longueur fixe : </b>3
+			</div>
+
+	</div>
+
+</div>
+<div class="detail-column" id="d6" style="display:none">
+	<div class="detail">
+			<div class="mock-list">
+				<b>Nom : </b>fileNumber
+			</div>
+			<div class="mock-list">
+				<b>Description : </b>Numéro de dossier.
+			</div>
+
+	</div>
+	<div class="detail">
+			<div class="mock-list">
+				<b>Nom : </b> <a href="../types/charMax15.html">charMax15</a>
+			</div>
+			<div class="mock-list">
+				<b> Description : </b>Chaîne composée d'au plus 15 caractères.
+			</div>
+			<div class="mock-list">
+				<b>Format : </b>string
+			</div>
+			<div class="mock-list">
+				<b>Longueur mini-maxi : </b>1 - 15
+			</div>
+
+	</div>
+
+</div>
+<div class="detail-column" id="d7" style="display:none">
+	<div class="detail">
+			<div class="mock-list">
+				<b>Nom : </b>mainAccount
+			</div>
+			<div class="mock-list">
+				<b>Description : </b>Compte principal.
+			</div>
+			<div class="mock-list">
+				<b>Commentaire : </b><p>Le compte doit exister et &ecirc;tre ouvert.</p>
+
+			</div>
+
+	</div>
+	<div class="detail">
+			<div class="mock-list">
+				<b>Nom : </b> <a href="../types/internalAccountKey.html">internalAccountKey</a>
+			</div>
+			<div class="mock-list">
+				<b> Description : </b>Identifiant de compte au format interne.
+			</div>
+
+	</div>
+
+</div>
+<div class="detail-column" id="d8" style="display:none">
+	<div class="detail">
+			<div class="mock-list">
+				<b>Nom : </b>branch
+			</div>
+			<div class="mock-list">
+				<b>Description : </b>Agence du compte.
+			</div>
+			<div class="mock-list">
+				<b>Commentaire : </b><p>Les agences sont d&eacute;finies dans la nomenclature <strong>001</strong>.</p>
+
+			</div>
+
+	</div>
+	<div class="detail">
+			<div class="mock-list">
+				<b>Nom : </b> <a href="../types/char5.html">char5</a>
+			</div>
+			<div class="mock-list">
+				<b> Description : </b>Type avec un nombre de caractères égal à 5.
+			</div>
+			<div class="mock-list">
+				<b>Format : </b>string
+			</div>
+			<div class="mock-list">
+				<b>Longueur fixe : </b>5
+			</div>
+
+	</div>
+
+</div>
+<div class="detail-column" id="d9" style="display:none">
+	<div class="detail">
+			<div class="mock-list">
+				<b>Nom : </b>currency
+			</div>
+			<div class="mock-list">
+				<b>Description : </b>Devise du compte.
+			</div>
+			<div class="mock-list">
+				<b>Commentaire : </b><p>Les devises sont d&eacute;finies dans les nomenclatures <strong>002</strong> (devises alphanum&eacute;riques) et <strong>005</strong> (devises num&eacute;riques).</p>
+
+			</div>
+
+	</div>
+	<div class="detail">
+			<div class="mock-list">
+				<b>Nom : </b> <a href="../types/currencyCode.html">currencyCode</a>
+			</div>
+			<div class="mock-list">
+				<b> Description : </b>Code devise.
+			</div>
+			<div class="mock-list">
+				<b>Format : </b>string
+			</div>
+			<div class="mock-list">
+				<b>Longueur fixe : </b>3
+			</div>
+
+	</div>
+
+</div>
+<div class="detail-column" id="d10" style="display:none">
+	<div class="detail">
+			<div class="mock-list">
+				<b>Nom : </b>account
+			</div>
+			<div class="mock-list">
+				<b>Description : </b>Numéro du compte.
+			</div>
+
+	</div>
+	<div class="detail">
+			<div class="mock-list">
+				<b>Nom : </b> <a href="../types/charMax11.html">charMax11</a>
+			</div>
+			<div class="mock-list">
+				<b> Description : </b>Chaîne composée d'au plus 11 caractères.
+			</div>
+			<div class="mock-list">
+				<b>Format : </b>string
+			</div>
+			<div class="mock-list">
+				<b>Longueur mini-maxi : </b>1 - 11
+			</div>
+
+	</div>
+
+</div>
+<div class="detail-column" id="d11" style="display:none">
+	<div class="detail">
+			<div class="mock-list">
+				<b>Nom : </b>suffix
+			</div>
+			<div class="mock-list">
+				<b>Description : </b>Suffixe du compte.
+			</div>
+
+	</div>
+	<div class="detail">
+			<div class="mock-list">
+				<b>Nom : </b> <a href="../types/charMax2.html">charMax2</a>
+			</div>
+			<div class="mock-list">
+				<b> Description : </b>Chaîne composée d'au plus 2 caractères.
+			</div>
+			<div class="mock-list">
+				<b>Format : </b>string
+			</div>
+			<div class="mock-list">
+				<b>Longueur mini-maxi : </b>1 - 2
+			</div>
+
+	</div>
+
+</div>
+<div class="detail-column" id="d12" style="display:none">
+	<div class="detail">
+			<div class="mock-list">
+				<b>Nom : </b>subscriptionEndDate
+			</div>
+			<div class="mock-list">
+				<b>Description : </b>Date de fin de souscription.
+			</div>
+			<div class="mock-list">
+				<b>Commentaire : </b><p>Les v&eacute;rifications suivantes sont effectu&eacute;es sur la date de fin de souscription&nbsp;:</p>
+
+<ul>
+	<li>La date doit &ecirc;tre sup&eacute;rieure ou &eacute;gale &agrave; la date de d&eacute;but de souscription.</li>
+	<li>Elle est obligatoire si le produit impose une date de fin de souscription.</li>
+	<li>La date doit &ecirc;tre inf&eacute;rieure ou &eacute;gale &agrave; la date comptable additionn&eacute;e au nombre de jours limite de la date de souscription, param&eacute;tr&eacute; en nomenclature <strong>098</strong> dans le param&egrave;tre <strong>VTEPRODUIT.</strong></li>
+</ul>
+
+<p>La date ne doit pas &ecirc;tre renseign&eacute;e si le produit n&rsquo;impose pas de date de fin de souscription et le niveau de for&ccedil;age de l&rsquo;utilisateur est inf&eacute;rieur au niveau de for&ccedil;age &eacute;ventuellement &eacute;tabli en nomenclature <strong>099</strong> pour la cl&eacute; <strong>PPSAIDFIN</strong>.</p>
+
+			</div>
+
+	</div>
+	<div class="detail">
+			<div class="mock-list">
+				<b>Nom : </b> <a href="../types/date.html">date</a>
+			</div>
+
+	</div>
+
+</div>
+<div class="detail-column" id="d13" style="display:none">
+	<div class="detail">
+			<div class="mock-list">
+				<b>Nom : </b>prices
+			</div>
+			<div class="mock-list">
+				<b>Description : </b>Tarification du produit.
+			</div>
+
+	</div>
+	<div class="detail">
+			<div class="mock-list">
+				<b>Nom : </b> <a href="../types/productPrices.html">productPrices</a>
+			</div>
+			<div class="mock-list">
+				<b> Description : </b>Identifiant de la tarification d'un produit.
+			</div>
+
+	</div>
+
+</div>
+<div class="detail-column" id="d14" style="display:none">
+	<div class="detail">
+			<div class="mock-list">
+				<b>Nom : </b>pricingCode
+			</div>
+			<div class="mock-list">
+				<b>Description : </b>Code tarification.
+			</div>
+			<div class="mock-list">
+				<b>Commentaire : </b><p>Le code de tarification ne doit pas &ecirc;tre renseign&eacute; si le produit n&#39;est pas facturable.</p>
+
+<p>Un produit seul est d&eacute;fini comme facturable si le produit est param&eacute;tr&eacute; comme facturable.</p>
+
+<p>Un produit souscrit dans le cadre d&#39;un package est d&eacute;fini comme facturable selon les caract&eacute;ristiques du produit dans le package.</p>
+
+<p>Si le produit est facturable&nbsp;:</p>
+
+<ul>
+	<li>Si le code de tarification est renseign&eacute;&nbsp;: dans le cas d&rsquo;une tarification pr&eacute;f&eacute;rentielle hors package, le client doit poss&eacute;der un package donnant lieu &agrave; une tarification pr&eacute;f&eacute;rentielle, sinon dans les autres cas, le code de tarification doit exister et &ecirc;tre applicable &agrave; la date comptable.</li>
+	<li>Si le code de tarification n&#39;est pas renseign&eacute;, alors le tarif &agrave; appliquer est s&eacute;lectionn&eacute; suivant les cas et par ordre de priorit&eacute; suivant&nbsp;:
+	<ul>
+		<li>Le code package est renseign&eacute; et il existe une tarification pr&eacute;f&eacute;rentielle pour le produit.</li>
+		<li>Le code package n&rsquo;est pas renseign&eacute;&nbsp;:
+		<ul>
+			<li>Il existe une tarification pr&eacute;f&eacute;rentielle pour le produit si le client poss&egrave;de un certain package, applicable &agrave; la date comptable</li>
+			<li>Il existe une tarification de pr&eacute;f&eacute;rence pour le produit, applicable &agrave; la date comptable</li>
+			<li>Il existe au moins une tarification pour le produit, applicable &agrave; la date comptable.</li>
+		</ul>
+		</li>
+	</ul>
+	</li>
+</ul>
+
+<p>Dans le cas o&ugrave; aucune tarification n&#39;est trouv&eacute;e, alors la souscription est rejet&eacute;e.</p>
+
+			</div>
+
+	</div>
+	<div class="detail">
+			<div class="mock-list">
+				<b>Nom : </b> <a href="../types/pricingCode.html">pricingCode</a>
+			</div>
+			<div class="mock-list">
+				<b> Description : </b>Code tarification.
+			</div>
+			<div class="mock-list">
+				<b>Format : </b>string
+			</div>
+			<div class="mock-list">
+				<b>Longueur fixe : </b>3
+			</div>
+
+	</div>
+
+</div>
+<div class="detail-column" id="d15" style="display:none">
+	<div class="detail">
+			<div class="mock-list">
+				<b>Nom : </b>pricingType
+			</div>
+			<div class="mock-list">
+				<b>Description : </b>Type de tarification.
+			</div>
+			<div class="mock-list">
+				<b>Commentaire : </b><p>Contr&ocirc;le effectu&eacute; avec le code de tarification.</p>
+
+			</div>
+
+	</div>
+	<div class="detail">
+			<div class="mock-list">
+				<b>Nom : </b> <a href="../types/pricingType.html">pricingType</a>
+			</div>
+			<div class="mock-list">
+				<b> Description : </b>Type de tarification.
+			</div>
+			<div class="mock-list">
+				<b>Format : </b>string
+			</div>
+			<div class="mock-list">
+				<b>Valeurs possibles : </b>					<table class="table_enum" class="table_enum" class="table_enum" class="table_enum">
+						<tr>
+						<td> 1
+						</td>						<td class="td_right"> Tarification produit
+						</td>
+						</tr>
+						<tr>
+						<td> 2
+						</td>						<td class="td_right"> Tarification package
+						</td>
+						</tr>
+						<tr>
+						<td> 3
+						</td>						<td class="td_right"> Tarification préférentielle d'un produit hors package
+						</td>
+						</tr>
+						<tr>
+						<td> 4
+						</td>						<td class="td_right"> Tarification préférentielle d'un produit dans un package
+						</td>
+						</tr>
+
+					</table>
+
+			</div>
+
+	</div>
+
+</div>
+<div class="detail-column" id="d16" style="display:none">
+	<div class="detail">
+			<div class="mock-list">
+				<b>Nom : </b>billingAccount
+			</div>
+			<div class="mock-list">
+				<b>Description : </b>Compte de facturation.
+			</div>
+			<div class="mock-list">
+				<b>Commentaire : </b><p>Le compte de facturation ne peut &ecirc;tre renseign&eacute; que si le produit est facturable.</p>
+
+<p>Si non renseign&eacute;, le compte est initialis&eacute; avec un compte du client correspondant au param&eacute;trage de la nature de compte du code de tarification.</p>
+
+<p>Si renseign&eacute;, le compte doit exister, &ecirc;tre ouvert et correspondre au param&eacute;trage de la nature de compte du code de tarification.</p>
+
+<p>La devise du compte de facturation doit &ecirc;tre en ad&eacute;quation avec le type de contr&ocirc;le de la devise de facturation du produit (si le type est &agrave; <strong>2</strong>, la devise du compte de facturation doit &ecirc;tre en devise nationale&nbsp;; si le type est &agrave; <strong>3</strong>, la devise du compte de facturation doit &ecirc;tre en devise &eacute;trang&egrave;re).</p>
+
+			</div>
+
+	</div>
+	<div class="detail">
+			<div class="mock-list">
+				<b>Nom : </b> <a href="../types/internalAccountKey.html">internalAccountKey</a>
+			</div>
+			<div class="mock-list">
+				<b> Description : </b>Identifiant de compte au format interne.
+			</div>
+
+	</div>
+
+</div>
+<div class="detail-column" id="d17" style="display:none">
+	<div class="detail">
+			<div class="mock-list">
+				<b>Nom : </b>branch
+			</div>
+			<div class="mock-list">
+				<b>Description : </b>Agence du compte.
+			</div>
+			<div class="mock-list">
+				<b>Commentaire : </b><p>Les agences sont d&eacute;finies dans la nomenclature <strong>001</strong>.</p>
+
+			</div>
+
+	</div>
+	<div class="detail">
+			<div class="mock-list">
+				<b>Nom : </b> <a href="../types/char5.html">char5</a>
+			</div>
+			<div class="mock-list">
+				<b> Description : </b>Type avec un nombre de caractères égal à 5.
+			</div>
+			<div class="mock-list">
+				<b>Format : </b>string
+			</div>
+			<div class="mock-list">
+				<b>Longueur fixe : </b>5
+			</div>
+
+	</div>
+
+</div>
+<div class="detail-column" id="d18" style="display:none">
+	<div class="detail">
+			<div class="mock-list">
+				<b>Nom : </b>currency
+			</div>
+			<div class="mock-list">
+				<b>Description : </b>Devise du compte.
+			</div>
+			<div class="mock-list">
+				<b>Commentaire : </b><p>Les devises sont d&eacute;finies dans les nomenclatures <strong>002</strong> (devises alphanum&eacute;riques) et <strong>005</strong> (devises num&eacute;riques).</p>
+
+			</div>
+
+	</div>
+	<div class="detail">
+			<div class="mock-list">
+				<b>Nom : </b> <a href="../types/currencyCode.html">currencyCode</a>
+			</div>
+			<div class="mock-list">
+				<b> Description : </b>Code devise.
+			</div>
+			<div class="mock-list">
+				<b>Format : </b>string
+			</div>
+			<div class="mock-list">
+				<b>Longueur fixe : </b>3
+			</div>
+
+	</div>
+
+</div>
+<div class="detail-column" id="d19" style="display:none">
+	<div class="detail">
+			<div class="mock-list">
+				<b>Nom : </b>account
+			</div>
+			<div class="mock-list">
+				<b>Description : </b>Numéro du compte.
+			</div>
+
+	</div>
+	<div class="detail">
+			<div class="mock-list">
+				<b>Nom : </b> <a href="../types/charMax11.html">charMax11</a>
+			</div>
+			<div class="mock-list">
+				<b> Description : </b>Chaîne composée d'au plus 11 caractères.
+			</div>
+			<div class="mock-list">
+				<b>Format : </b>string
+			</div>
+			<div class="mock-list">
+				<b>Longueur mini-maxi : </b>1 - 11
+			</div>
+
+	</div>
+
+</div>
+<div class="detail-column" id="d20" style="display:none">
+	<div class="detail">
+			<div class="mock-list">
+				<b>Nom : </b>suffix
+			</div>
+			<div class="mock-list">
+				<b>Description : </b>Suffixe du compte.
+			</div>
+
+	</div>
+	<div class="detail">
+			<div class="mock-list">
+				<b>Nom : </b> <a href="../types/charMax2.html">charMax2</a>
+			</div>
+			<div class="mock-list">
+				<b> Description : </b>Chaîne composée d'au plus 2 caractères.
+			</div>
+			<div class="mock-list">
+				<b>Format : </b>string
+			</div>
+			<div class="mock-list">
+				<b>Longueur mini-maxi : </b>1 - 2
+			</div>
+
+	</div>
+
+</div>
+<div class="detail-column" id="d21" style="display:none">
+	<div class="detail">
+			<div class="mock-list">
+				<b>Nom : </b>quantityOfSubscribedProducts
+			</div>
+			<div class="mock-list">
+				<b>Description : </b>Quantité de produits souscrits.
+			</div>
+			<div class="mock-list">
+				<b>Commentaire : </b><p>La quantit&eacute; de produits souscrits ne peut &ecirc;tre renseign&eacute;e que si le produit est facturable et que la tarification est param&eacute;tr&eacute;e selon le type quantitatif et manuel.</p>
+
+<p>La quantit&eacute; doit respecter le param&eacute;trage &eacute;tabli par les conditions <strong>PRQMIN</strong> et <strong>PRQMAX</strong>.</p>
+
+<p>Une valeur par d&eacute;faut est utilis&eacute;e si la quantit&eacute; de produits n&#39;est pas renseign&eacute;e et que la condition <strong>PRQDEF</strong> est renseign&eacute;e.</p>
+
+			</div>
+
+	</div>
+	<div class="detail">
+			<div class="mock-list">
+				<b>Nom : </b> <a href="../types/integer.html">integer</a>
+			</div>
+
+	</div>
+
+</div>
+<div class="detail-column" id="d22" style="display:none">
+	<div class="detail">
+			<div class="mock-list">
+				<b>Nom : </b>billingCharges
+			</div>
+			<div class="mock-list">
+				<b>Description : </b>Facturation des frais de mise en place.
+			</div>
+			<div class="mock-list">
+				<b>Commentaire : </b><p>L&#39;option &quot;facturation des frais de mise en place&quot; ne peut &ecirc;tre activ&eacute;e que si le produit est facturable.</p>
+
+<p>Si le produit est facturable et qu&#39;aucune valeur n&#39;est renseign&eacute;e pour l&#39;option de facturation des frais, alors les frais de mise en place sont calcul&eacute;s en fonction des conditions param&eacute;tr&eacute;es.</p>
+
+			</div>
+
+	</div>
+	<div class="detail">
+			<div class="mock-list">
+				<b>Nom : </b> <a href="../types/boolean.html">boolean</a>
+			</div>
+
+	</div>
+
+</div>
+<div class="detail-column" id="d23" style="display:none">
+	<div class="detail">
+			<div class="mock-list">
+				<b>Nom : </b>dutyAmountToTheEstablishment
+			</div>
+			<div class="mock-list">
+				<b>Description : </b>Montant hors taxe à la mise en place.
+			</div>
+			<div class="mock-list">
+				<b>Commentaire : </b><p>Le montant ne peut &ecirc;tre renseign&eacute; que si le produit est facturable et qu&#39;il permet la facturation de frais de mise en place.</p>
+
+			</div>
+
+	</div>
+	<div class="detail">
+			<div class="mock-list">
+				<b>Nom : </b> <a href="../types/decimal19_4.html">decimal19_4</a>
+			</div>
+			<div class="mock-list">
+				<b> Description : </b>Type décimal à 19 chiffres dont 4 décimales.
+			</div>
+			<div class="mock-list">
+				<b>Format : </b>decimal
+			</div>
+			<div class="mock-list">
+				<b>Nombre total de chiffres : </b>19
+			</div>
+
+	</div>
+
+</div>
+<div class="detail-column" id="d24" style="display:none">
+	<div class="detail">
+			<div class="mock-list">
+				<b>Nom : </b>observation
+			</div>
+			<div class="mock-list">
+				<b>Description : </b>Commentaire.
+			</div>
+
+	</div>
+	<div class="detail">
+			<div class="mock-list">
+				<b>Nom : </b> <a href="../types/charMax40.html">charMax40</a>
+			</div>
+			<div class="mock-list">
+				<b> Description : </b>Chaîne composée d'au plus 40 caractères.
+			</div>
+			<div class="mock-list">
+				<b>Format : </b>string
+			</div>
+			<div class="mock-list">
+				<b>Longueur mini-maxi : </b>1 - 40
+			</div>
+
+	</div>
+
+</div>
+<div class="detail-column" id="d25" style="display:none">
+	<div class="detail">
+			<div class="mock-list">
+				<b>Nom : </b>subscriptionState
+			</div>
+			<div class="mock-list">
+				<b>Description : </b>Etat de la souscription.
+			</div>
+			<div class="mock-list">
+				<b>Commentaire : </b><p>La souscription doit &ecirc;tre en attente (<strong>AT</strong>) ou valid&eacute;e (<strong>VA</strong>).</p>
+
+			</div>
+
+	</div>
+	<div class="detail">
+			<div class="mock-list">
+				<b>Nom : </b> <a href="../types/productSubscriptionState.html">productSubscriptionState</a>
+			</div>
+			<div class="mock-list">
+				<b> Description : </b>Etat de la souscription.
+			</div>
+			<div class="mock-list">
+				<b>Format : </b>string
+			</div>
+			<div class="mock-list">
+				<b>Valeurs possibles : </b>					<table class="table_enum" class="table_enum" class="table_enum">
+						<tr>
+						<td> VE
+						</td>						<td class="td_right"> Vente
+						</td>
+						</tr>
+						<tr>
+						<td> AT
+						</td>						<td class="td_right"> En attente
+						</td>
+						</tr>
+						<tr>
+						<td> VA
+						</td>						<td class="td_right"> Validé
+						</td>
+						</tr>
+
+					</table>
+
+			</div>
+
+	</div>
+
+</div>
+<div class="detail-column" id="d26" style="display:none">
+	<div class="detail">
+			<div class="mock-list">
+				<b>Nom : </b>recoveryOfUnpaidSolelyOnTheBillingAccount
+			</div>
+			<div class="mock-list">
+				<b>Description : </b>Recouvrement d'impayé
+			</div>
+
+	</div>
+	<div class="detail">
+			<div class="mock-list">
+				<b>Nom : </b> <a href="../types/boolean.html">boolean</a>
+			</div>
+
+	</div>
+
+</div>
+      </div> 
+  </div>
+
+  
+  <script src="../resources/jquery.js"></script>
+  <script src="../resources/doc.js"></script>
+</body>
+</html>

@@ -1,0 +1,458 @@
+<!DOCTYPE html >
+<html>
+<head>
+	<link rel="stylesheet" href="../resources/styleDocu.css" />
+  <link rel="stylesheet" href="../resources/font-awesome/css/font-awesome.min.css" />
+	<title>Documentation Xsd</title>
+	<meta charset="UTF-8" />
+</head>
+
+<body>
+  <div class="document">
+	<div class="header">
+		
+	</div>
+
+  <div class="tabs">
+    <div class="tabs-wrapper" onclick="window.open('../liste-ressources.html', '_self');">
+      <div class="tabs-left-content">
+        Liste des ressources
+      </div>
+    </div>
+    <div class="tabs-wrapper" onclick="window.open('../liste-services.html', '_self');">
+      <div class="tabs-left-content" >
+        Liste des services  
+      </div>
+    </div>
+    <div class="tabs-wrapper-selected" onclick="window.open('../liste-types.html', '_self');">
+      <div class="tabs-right-content">
+        Liste des types
+      </div>
+    </div>
+  </div>
+
+	
+
+	<div class="contenu">
+      <div class="breadcrumb"> 
+        <ul class="breadcrumb">
+           <li> <a href="../index.html"> Accueil </a></li>
+           <li> > </li>
+           <li> <a href="../liste-types.html"> Liste des types </a></li>
+           <li> > </li>
+           <li> modifyCustomerFreeAttributeRequest </li>
+        </ul>                    
+      </div>                    
+      
+     
+      <div class="summary">
+			<div class="mock-list">
+				<b>Nom : </b>modifyCustomerFreeAttributeRequest
+			</div>
+			<div class="mock-list">
+				<b> Description : </b>Requête de modification d'une donnée complémentaire d'un client.
+			</div>
+        
+        <div> </div>
+        <div class="mock-list"> Choix : Non</div>
+        
+      </div>
+                        
+      <div class="column-content">
+        <div class="detail-column">
+          <div class="tree"> 
+<ul>
+	<li>
+<i class="fa fa-caret-down fa-fw" onclick="expand_or_collapse(this)">
+</i>		modifyCustomerFreeAttributeRequest		<ul style="display:block">
+			<li>
+<i class="fa fa-caret-down fa-fw" onclick="expand_or_collapse(this)">
+</i><i class="fa fa-key fa-fw">
+</i><span class="selectable" id="e0"> customerFreeAttribute : createCustomerFreeAttributeRequest
+</span>				<ul style="display:block">
+					<li>
+<i class="fa fa-fw">
+</i><span class="selectable" id="e1"> customerCode : customerCode
+</span>
+					</li>
+					<li>
+<i class="fa fa-caret-down fa-fw" onclick="expand_or_collapse(this)">
+</i><i class="fa fa-key fa-fw">
+</i><span class="selectable" id="e2"> additionalData : additionalData
+</span>						<ul style="display:block">
+							<li>
+<i class="fa fa-fw">
+</i><i class="fa fa-key fa-fw">
+</i><span class="selectable" id="e3"> identifier : charMax10
+</span>
+							</li>
+							<li>
+<i class="fa fa-caret-down fa-fw" onclick="expand_or_collapse(this)">
+</i><span style="font-weight:bold"> [C]
+</span><span class="selectable" id="e4"> value : additionalDataValue
+</span>								<ul style="display:block">
+									<li>
+<i class="fa fa-fw">
+</i><span class="selectable" id="e5"> alphanumeric : charMax40
+</span>
+									</li>
+									<li>
+<i class="fa fa-fw">
+</i><span class="selectable" id="e6"> amountOrRate : decimal22_7
+</span>
+									</li>
+									<li>
+<i class="fa fa-fw">
+</i><span class="selectable" id="e7"> date : date
+</span>
+									</li>
+
+								</ul>
+
+							</li>
+
+						</ul>
+
+					</li>
+					<li>
+<i class="fa fa-fw">
+</i><span class="selectable" id="e8"> freeText : charMax255
+</span>
+					</li>
+
+				</ul>
+
+			</li>
+
+		</ul>
+
+	</li>
+
+</ul>
+          </div>
+          
+          <div class="detail">
+				<p align="left">
+					Légende :<br />
+				</p>
+            <ul>
+               <li align="left">
+                  <i class="fa fa-key fa-fw">
+                  </i>
+                  = Elément obligatoire en saisie.
+               </li>
+               <li align="left">
+                  <span style="font-weight:bold"> [M]
+                  </span>
+                  = Elément multiple (0 à n occurrences).
+               </li>
+               <li align="left">
+                  <span style="font-weight:bold"> [C]
+                  </span>
+                  = Elément composé d'un choix à effectuer. Un seul choix autorisé.
+               </li>
+            </ul>
+            <p align="left">
+               Remarque : Un même élément peut regrouper plusieurs caractéristiques
+            </p>          
+          </div>
+          
+        </div>
+<div class="detail-column" id="d0" style="display:none">
+	<div class="detail">
+			<div class="mock-list">
+				<b>Nom : </b>customerFreeAttribute
+			</div>
+			<div class="mock-list">
+				<b>Description : </b>Attribut libre d'un client.
+			</div>
+
+	</div>
+	<div class="detail">
+			<div class="mock-list">
+				<b>Nom : </b> <a href="../types/createCustomerFreeAttributeRequest.html">createCustomerFreeAttributeRequest</a>
+			</div>
+			<div class="mock-list">
+				<b> Description : </b>Requête de création d'une donnée complémentaire du client.
+			</div>
+
+	</div>
+
+</div>
+<div class="detail-column" id="d1" style="display:none">
+	<div class="detail">
+			<div class="mock-list">
+				<b>Nom : </b>customerCode
+			</div>
+			<div class="mock-list">
+				<b>Description : </b>Code du client.
+			</div>
+			<div class="mock-list">
+				<b>Commentaire : </b><p>Le code client n&#39;est pas obligatoire si le service de cr&eacute;ation d&rsquo;une donn&eacute;e compl&eacute;mentaire d&#39;un client est appel&eacute; par le service <strong>createCustomer</strong>, et est obligatoire dans tous les autres cas.</p>
+
+<p>S&#39;il est renseign&eacute;, le code client doit exister dans la table des clients.</p>
+
+<p>Si le contr&ocirc;le sur le contentieux est demand&eacute; dans le <strong>Montant 1</strong> (&eacute;gal &agrave; <strong>1</strong>) du param&egrave;tre <strong>AWMH</strong> dans la nomenclature <strong>098 </strong>ou si le param&egrave;tre <strong>AWMH</strong> n&#39;existe pas dans la nomenclature <strong>098</strong>, alors le client ne doit pas &ecirc;tre pr&eacute;sent dans la table des clients en contentieux.</p>
+
+			</div>
+
+	</div>
+	<div class="detail">
+			<div class="mock-list">
+				<b>Nom : </b> <a href="../types/customerCode.html">customerCode</a>
+			</div>
+			<div class="mock-list">
+				<b> Description : </b>Code client.
+			</div>
+			<div class="mock-list">
+				<b>Format : </b>string
+			</div>
+			<div class="mock-list">
+				<b>Longueur mini-maxi : </b>1 - 15
+			</div>
+
+	</div>
+
+</div>
+<div class="detail-column" id="d2" style="display:none">
+	<div class="detail">
+			<div class="mock-list">
+				<b>Nom : </b>additionalData
+			</div>
+			<div class="mock-list">
+				<b>Description : </b>Donnée complémentaire du client.
+			</div>
+			<div class="mock-list">
+				<b>Commentaire : </b><p>L&#39;identifiant de la donn&eacute;e compl&eacute;mentaire doit&nbsp;:</p>
+
+<ul>
+	<li>Exister en nomenclature <strong>171</strong>,</li>
+	<li>Correspondre &agrave; une donn&eacute;e compl&eacute;mentaire saisissable (<strong>Montant 2 </strong>diff&eacute;rent de <strong>2</strong>)</li>
+	<li>Etre autoris&eacute; pour le type de client (<strong>Libell&eacute; 4 </strong>valoris&eacute; &agrave; <strong>P</strong> ou <strong>S</strong>)</li>
+	<li>Etre unique pour le client</li>
+</ul>
+
+<p>Valeur par d&eacute;faut de l&rsquo;identifiant&nbsp;: <strong>zone </strong>r&eacute;cup&eacute;r&eacute;e dans la table des valeurs par d&eacute;faut pour l&#39;identifiant de la donn&eacute;e compl&eacute;mentaire et le type de client.</p>
+
+<p>La valeur de la donn&eacute;e compl&eacute;mentaire renseign&eacute;e doit&nbsp;:</p>
+
+<ul>
+	<li>Correspondre au format pr&eacute;vu dans le <strong>Libell&eacute; 5</strong>,</li>
+	<li>Si son format est num&eacute;rique, avoir un nombre de d&eacute;cimales inf&eacute;rieur ou &eacute;gal au <strong>Montant&nbsp;4</strong>,</li>
+	<li>Si son format est alphanum&eacute;rique, avoir une longueur inf&eacute;rieure strictement au <strong>Montant 3</strong>, et exister dans la nomenclature dont le num&eacute;ro est indiqu&eacute; dans le <strong>Montant 6</strong>,</li>
+	<li>Si son format est de type date, &ecirc;tre comprise entre la date calcul&eacute;e &agrave; partir de la date comptable moins le nombre d&rsquo;ann&eacute;es contenu dans le <strong>Montant 8 </strong>et la date calcul&eacute;e &agrave; partir de la date comptable plus le nombre d&rsquo;ann&eacute;es contenu dans le <strong>Montant 7.</strong></li>
+</ul>
+
+<p>Le type de la donn&eacute;e compl&eacute;mentaire renseign&eacute;e doit&nbsp;:</p>
+
+<ul>
+	<li>Correspondre au type pr&eacute;vu dans le <strong>Libell&eacute; 3</strong></li>
+</ul>
+
+<p>Le texte libre de la donn&eacute;e compl&eacute;mentaire renseign&eacute;e est autoris&eacute; si le <strong>Taux 3 </strong>n&#39;est pas assign&eacute; &agrave; <strong>0</strong>, et est obligatoire si le <strong>Taux 3 </strong>est assign&eacute; &agrave; <strong>2</strong>.</p>
+
+<p>La cr&eacute;ation des donn&eacute;es compl&eacute;mentaires segment BHFM (<strong>SEG</strong>) et du flag prudentiel (<strong>FPR</strong>) n&#39;est autoris&eacute;e que si la gestion des segments et flag prudentiel BHFM est autoris&eacute;e dans le <strong>Taux&nbsp;1</strong> (diff&eacute;rent de <strong>1</strong>) de la nomenclature <strong>098</strong> pour le param&egrave;tre <strong>BHFM</strong>. La valeur alphanum&eacute;rique de ces donn&eacute;es compl&eacute;mentaires doit exister dans la nomenclature <strong>708</strong>.</p>
+
+<p>Si le client appartient &agrave; un groupe, le flag prudentiel sera forc&eacute; &agrave; celui du groupe.</p>
+
+<p>Sinon, si la gestion des donn&eacute;es externes BHFM est activ&eacute;e dans le <strong>Taux 2</strong> (&agrave; <strong>1</strong>) de la nomenclature <strong>098</strong> pour le param&egrave;tre <strong>BHFM</strong>, alors la valeur du flag prudentiel sera aliment&eacute;e avec le flag prudentiel de la maison m&egrave;re si elle existe avec une date valide (ant&eacute;rieure &agrave; la date comptable) dans la table <strong>sghrefcli </strong>(pour les donn&eacute;es externes<strong> RFPEMM </strong>et<strong> NUPERS</strong>). Si la maison m&egrave;re existe mais n&rsquo;a pas de flag prudentiel, le flag prudentiel du client est forc&eacute; &agrave; <strong>PME</strong> (<strong>P</strong>).</p>
+
+<p>Liste des valeurs possibles pour la donn&eacute;e compl&eacute;mentaire flag prudentiel&nbsp;:</p>
+
+<ul>
+	<li><strong>R</strong> = Retail</li>
+	<li><strong>P</strong> = PME</li>
+	<li><strong>G</strong> = Grande entreprise</li>
+</ul>
+
+<p>La cr&eacute;ation des donn&eacute;es compl&eacute;mentaires li&eacute;es &agrave; la cotation client FSC2 n&#39;est autoris&eacute;e que si le <strong>Libell&eacute; 3</strong> de la nomenclature <strong>098</strong> pour le param&egrave;tre <strong>FSC2-SG </strong>existe en nomenclature <strong>171</strong> avec un <strong>Montant 2 </strong>&eacute;gal &agrave; <strong>2</strong> (donn&eacute;e compl&eacute;mentaire non saisissable et g&eacute;n&eacute;r&eacute;e automatiquement) et un <strong>Libell&eacute; 5 </strong>&eacute;gal &agrave; <strong>D</strong> (Date).</p>
+
+<p>Ces donn&eacute;es compl&eacute;mentaires sont&nbsp;:</p>
+
+<ul>
+	<li>La donn&eacute;e compl&eacute;mentaire Date de cotation qui est param&eacute;tr&eacute;e dans ce <strong>Libell&eacute;&nbsp;3</strong>.</li>
+	<li>La donn&eacute;e compl&eacute;mentaire Date de classement en douteux si elle est param&eacute;tr&eacute;e dans le <strong>Libell&eacute; 1</strong> de la nomenclature <strong>098</strong> pour le param&egrave;tre <strong>FSC2GE2-SG </strong>et qui doit exister en nomenclature <strong>171</strong> avec le <strong>Libell&eacute; 5</strong> &eacute;gal &agrave; <strong>D</strong>.</li>
+	<li>La donn&eacute;e compl&eacute;mentaire Date de classement en douteux compromis si elle est param&eacute;tr&eacute;e dans le <strong>Libell&eacute; 5</strong> de la nomenclature <strong>098</strong> pour le param&egrave;tre <strong>FSC2GE2-SG </strong>et qui doit exister en nomenclature <strong>171</strong> avec le <strong>Libell&eacute; 5</strong> &eacute;gal &agrave; <strong>D</strong>.</li>
+</ul>
+
+<p>Si le service de cr&eacute;ation d&#39;une donn&eacute;e compl&eacute;mentaire d&#39;un client est appel&eacute; par le service <strong>modifyCustomer </strong>et qu&#39;il y a changement de code qualit&eacute;, alors la valeur de ces donn&eacute;es compl&eacute;mentaires est modifi&eacute;e avec la date comptable.</p>
+
+			</div>
+
+	</div>
+	<div class="detail">
+			<div class="mock-list">
+				<b>Nom : </b> <a href="../types/additionalData.html">additionalData</a>
+			</div>
+			<div class="mock-list">
+				<b> Description : </b>Donnée complémentaire.
+			</div>
+
+	</div>
+
+</div>
+<div class="detail-column" id="d3" style="display:none">
+	<div class="detail">
+			<div class="mock-list">
+				<b>Nom : </b>identifier
+			</div>
+			<div class="mock-list">
+				<b>Description : </b>Identifiant de la donnée complémentaire.
+			</div>
+			<div class="mock-list">
+				<b>Commentaire : </b><p>Les donn&eacute;es compl&eacute;mentaires sont param&eacute;tr&eacute;es en nomenclatures, chaque module ayant une nomenclature sp&eacute;cifique d&eacute;di&eacute;e.</p>
+
+			</div>
+
+	</div>
+	<div class="detail">
+			<div class="mock-list">
+				<b>Nom : </b> <a href="../types/charMax10.html">charMax10</a>
+			</div>
+			<div class="mock-list">
+				<b> Description : </b>Chaîne composée d'au plus 10 caractères.
+			</div>
+			<div class="mock-list">
+				<b>Format : </b>string
+			</div>
+			<div class="mock-list">
+				<b>Longueur mini-maxi : </b>1 - 10
+			</div>
+
+	</div>
+
+</div>
+<div class="detail-column" id="d4" style="display:none">
+	<div class="detail">
+			<div class="mock-list">
+				<b>Nom : </b>value
+			</div>
+			<div class="mock-list">
+				<b>Description : </b>Valeur de la donnée complémentaire.
+			</div>
+			<div class="mock-list">
+				<b>Commentaire : </b><p>La valeur de la donn&eacute;e compl&eacute;mentaire peut &ecirc;tre une donn&eacute;e textuelle, une donn&eacute;e num&eacute;rique ou bien une date.</p>
+
+<p>Un contr&ocirc;le de saisie obligatoire est effectu&eacute; selon le contexte d&rsquo;utilisation du type &quot;additionalData&quot;.</p>
+
+			</div>
+
+	</div>
+	<div class="detail">
+			<div class="mock-list">
+				<b>Nom : </b> <a href="../types/additionalDataValue.html">additionalDataValue</a>
+			</div>
+			<div class="mock-list">
+				<b> Description : </b>Valeur d'une donnée complémentaire.
+			</div>
+
+	</div>
+
+</div>
+<div class="detail-column" id="d5" style="display:none">
+	<div class="detail">
+			<div class="mock-list">
+				<b>Nom : </b>alphanumeric
+			</div>
+			<div class="mock-list">
+				<b>Description : </b>Valeur alphanumérique.
+			</div>
+
+	</div>
+	<div class="detail">
+			<div class="mock-list">
+				<b>Nom : </b> <a href="../types/charMax40.html">charMax40</a>
+			</div>
+			<div class="mock-list">
+				<b> Description : </b>Chaîne composée d'au plus 40 caractères.
+			</div>
+			<div class="mock-list">
+				<b>Format : </b>string
+			</div>
+			<div class="mock-list">
+				<b>Longueur mini-maxi : </b>1 - 40
+			</div>
+
+	</div>
+
+</div>
+<div class="detail-column" id="d6" style="display:none">
+	<div class="detail">
+			<div class="mock-list">
+				<b>Nom : </b>amountOrRate
+			</div>
+			<div class="mock-list">
+				<b>Description : </b>Valeur numérique (montant ou taux).
+			</div>
+
+	</div>
+	<div class="detail">
+			<div class="mock-list">
+				<b>Nom : </b> <a href="../types/decimal22_7.html">decimal22_7</a>
+			</div>
+			<div class="mock-list">
+				<b> Description : </b>Type décimal à 22 chiffres dont 7 décimales.
+			</div>
+			<div class="mock-list">
+				<b>Format : </b>decimal
+			</div>
+			<div class="mock-list">
+				<b>Nombre total de chiffres : </b>22
+			</div>
+
+	</div>
+
+</div>
+<div class="detail-column" id="d7" style="display:none">
+	<div class="detail">
+			<div class="mock-list">
+				<b>Nom : </b>date
+			</div>
+			<div class="mock-list">
+				<b>Description : </b>Date.
+			</div>
+
+	</div>
+	<div class="detail">
+			<div class="mock-list">
+				<b>Nom : </b> <a href="../types/date.html">date</a>
+			</div>
+
+	</div>
+
+</div>
+<div class="detail-column" id="d8" style="display:none">
+	<div class="detail">
+			<div class="mock-list">
+				<b>Nom : </b>freeText
+			</div>
+			<div class="mock-list">
+				<b>Description : </b>Texte libre.
+			</div>
+
+	</div>
+	<div class="detail">
+			<div class="mock-list">
+				<b>Nom : </b> <a href="../types/charMax255.html">charMax255</a>
+			</div>
+			<div class="mock-list">
+				<b> Description : </b>Chaîne composée d'au plus 255 caractères.
+			</div>
+			<div class="mock-list">
+				<b>Format : </b>string
+			</div>
+			<div class="mock-list">
+				<b>Longueur mini-maxi : </b>1 - 255
+			</div>
+
+	</div>
+
+</div>
+      </div> 
+  </div>
+
+  
+  <script src="../resources/jquery.js"></script>
+  <script src="../resources/doc.js"></script>
+</body>
+</html>

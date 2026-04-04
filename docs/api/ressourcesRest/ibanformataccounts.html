@@ -1,0 +1,561 @@
+<!DOCTYPE html>
+<html>
+<head>
+	<link rel="stylesheet" href="../resources/styleDocu.css" />
+    <link rel="stylesheet" href="../resources/font-awesome/css/font-awesome.min.css" />
+	<title>Documentation Xsd</title>
+	<meta charset="UTF-8" />
+</head>
+
+<body>
+  <div class="document">
+	<div class="header">		
+	</div>
+
+    <div class="tabs">
+        <div class="tabs-wrapper-selected" onclick="window.open('../liste-ressources.html', '_self');">
+            <div class="tabs-left-content" >Liste des ressources</div>
+        </div>
+        <div class="tabs-wrapper" onclick="window.open('../liste-services.html', '_self');">
+            <div class="tabs-left-content">Liste des services</div>
+        </div>
+        <div class="tabs-wrapper" onclick="window.open('../liste-types.html', '_self');">
+            <div class="tabs-right-content">Liste des types</div>
+        </div>
+    </div>
+
+	<div class="contenu">
+      <div class="breadcrumb"> 
+        <ul class="breadcrumb">
+           <li> <a href="../index.html"> Accueil </a></li>
+           <li> > </li>
+           <li> <a href="../liste-ressources.html"> Liste des ressources </a></li>
+           <li> > </li>
+           <li> ibanformataccounts </li>
+        </ul>                    
+      </div>                    
+      
+      <div class="summary">
+        <div class="mock-list"> Nom ressource REST : ibanformataccounts </div>
+        <div class="mock-list"> Programme Amplitude : cbwribanformataccounts </div>
+        <div class="mock-list"> Email : support@soprabanking.com </div>        
+        <br/>
+            <div class="mock-list"> Accounts identified by an iban number</div>
+      </div>
+      
+      <div class="column-content" style="width:93%">
+        <div class="detail-column" style="width: 35%">
+          <div class="tree"> 
+<ul style="padding:0">
+	<li>
+<i class="fa fa-caret-down fa-fw" onclick="expand_or_collapse(this)">
+</i>		ibanformataccounts		<ul>
+			<li>
+<i class="fa fa-caret-down fa-fw" onclick="expand_or_collapse(this)">
+</i>				v1				<ul>
+					<li>
+<i class="fa fa-caret-down fa-fw" onclick="expand_or_collapse(this)">
+</i><span class="selectable" id="e0"> addresses
+</span>						<ul>
+							<li>
+<i class="fa fa-fw">
+</i><span class="selectable" id="e1"> GETLIST
+</span>
+							</li>
+
+						</ul>
+
+					</li>
+					<li>
+<i class="fa fa-caret-down fa-fw" onclick="expand_or_collapse(this)">
+</i><span class="selectable" id="e2"> contacts
+</span>						<ul>
+							<li>
+<i class="fa fa-fw">
+</i><span class="selectable" id="e3"> GETLIST
+</span>
+							</li>
+
+						</ul>
+
+					</li>
+					<li>
+<i class="fa fa-caret-down fa-fw" onclick="expand_or_collapse(this)">
+</i><span class="selectable" id="e4"> emailaddresses
+</span>						<ul>
+							<li>
+<i class="fa fa-fw">
+</i><span class="selectable" id="e5"> GETLIST
+</span>
+							</li>
+							<li>
+<i class="fa fa-fw">
+</i><span class="selectable" id="e6"> GET
+</span>
+							</li>
+
+						</ul>
+
+					</li>
+					<li>
+<i class="fa fa-caret-down fa-fw" onclick="expand_or_collapse(this)">
+</i><span class="selectable" id="e7"> phonenumbers
+</span>						<ul>
+							<li>
+<i class="fa fa-fw">
+</i><span class="selectable" id="e8"> GET
+</span>
+							</li>
+							<li>
+<i class="fa fa-fw">
+</i><span class="selectable" id="e9"> GETLIST
+</span>
+							</li>
+
+						</ul>
+
+					</li>
+
+				</ul>
+
+			</li>
+
+		</ul>
+
+	</li>
+
+</ul>
+          </div>
+        </div>
+                 
+        
+<div class="detail-column" id="d0" style="display:none; width: 65%">
+	<div class="detail">
+		<div class="mock-list">
+			<b>Description : </b>Addresses
+		</div>
+
+	</div>
+
+</div>
+<div class="detail-column" id="d1" style="display:none; width: 65%">
+	<div class="detail">
+		<div class="mock-list">
+			<b>Service SOAP : </b> <a href="../services/getAccountAddressDetail.html">getAccountAddressDetail</a>
+		</div>
+		<div class="mock-list">
+			<b>Code retour succes : </b>200 - OK
+		</div>
+		<div class="mock-list">
+			<b>Uri : </b>http://soprabanking.com/amplitude/ibanformataccounts/v1/{ibanId}/addresses
+		</div>
+		<div class="mock-list">
+			<b>Description : </b>The service getAccountAddressDetail allows getting detailed information on all addresses of an account corresponding to a unique identifier received.
+		</div>
+		<br>
+
+		</br>
+		<div class="mock-list">
+			<b>Identifiants : </b>			<table class="table_param">
+				<tr>
+				<td> 0
+				</td>				<td title="getAccountAddressDetailRequest.accountIdentifier.ibanFormatAccount.value"> <a href="../types/charMax34.html">value</a><br>Valeur de l'IBAN.
+				</td>
+				</tr>
+
+			</table>
+
+		</div>
+		<br>
+
+		</br>
+		<div class="mock-list">
+			<b>Codes Erreur : </b>			<table>
+				<tr>
+				<td> 400
+				</td>				<td> Bad Request
+				</td>
+				</tr>
+
+			</table>
+
+		</div>
+
+	</div>
+
+</div>
+<div class="detail-column" id="d2" style="display:none; width: 65%">
+	<div class="detail">
+		<div class="mock-list">
+			<b>Description : </b>Contacts
+		</div>
+
+	</div>
+
+</div>
+<div class="detail-column" id="d3" style="display:none; width: 65%">
+	<div class="detail">
+		<div class="mock-list">
+			<b>Service SOAP : </b> <a href="../services/getAccountContactList.html">getAccountContactList</a>
+		</div>
+		<div class="mock-list">
+			<b>Code retour succes : </b>200 - OK
+		</div>
+		<div class="mock-list">
+			<b>Uri : </b>http://soprabanking.com/amplitude/ibanformataccounts/v1/{ibanId}/contacts
+		</div>
+		<div class="mock-list">
+			<b>Description : </b>The service getAccountContactList allows returning the list of contact persons of an account
+
+The search is based on the mandatory criterion below:
+- the customer code.
+
+For each contact person returned, all data used in the search criteria will be indicated as well as:
+- the last name,
+- the first name,
+- the telephone number,
+- the email address.
+		</div>
+		<br>
+
+		</br>
+		<div class="mock-list">
+			<b>Identifiants : </b>			<table class="table_param">
+				<tr>
+				<td> 0
+				</td>				<td title="getAccountContactListRequest.account.ibanFormatAccount.value"> <a href="../types/charMax34.html">value</a><br>Valeur de l'IBAN.
+				</td>
+				</tr>
+
+			</table>
+
+		</div>
+		<br>
+
+		</br>
+		<div class="mock-list">
+			<b>Codes Erreur : </b>			<table>
+				<tr>
+				<td> 400
+				</td>				<td> Bad Request
+				</td>
+				</tr>
+
+			</table>
+
+		</div>
+
+	</div>
+
+</div>
+<div class="detail-column" id="d4" style="display:none; width: 65%">
+	<div class="detail">
+		<div class="mock-list">
+			<b>Description : </b>Email addresses
+		</div>
+
+	</div>
+
+</div>
+<div class="detail-column" id="d5" style="display:none; width: 65%">
+	<div class="detail">
+		<div class="mock-list">
+			<b>Service SOAP : </b> <a href="../services/getAccountEmailAddressList.html">getAccountEmailAddressList</a>
+		</div>
+		<div class="mock-list">
+			<b>Code retour succes : </b>200 - OK
+		</div>
+		<div class="mock-list">
+			<b>Uri : </b>http://soprabanking.com/amplitude/ibanformataccounts/v1/{ibanId}/emailaddresses
+		</div>
+		<div class="mock-list">
+			<b>Description : </b>The service getAccountEmailAddressList allows returning a list of email addresses of account matching the search criteria received.
+
+The search is based on the optional criteria below:
+- limited customer information (code and/or name to be displayed),
+- the email type (code and/or designation).
+
+For each email address returned, all data used in the search criteria will be indicated as well as:
+- the email address.
+		</div>
+		<br>
+
+		</br>
+		<div class="mock-list">
+			<b>Identifiants : </b>			<table class="table_param">
+				<tr>
+				<td> 0
+				</td>				<td title="getAccountEmailAddressListRequest.account.ibanFormatAccount.value"> <a href="../types/charMax34.html">value</a><br>Valeur de l'IBAN.
+				</td>
+				</tr>
+
+			</table>
+
+		</div>
+		<br>
+
+		</br>
+		<div class="mock-list">
+			<b>Parametres : </b>			<table class="table_param">
+				<tr>
+				<td>
+				</td>				<td title="getAccountEmailAddressListRequest.mailType.code"> <a href="../types/charMax3.html">X-SBS-code</a><br>Code du type.
+				</td>				<td> Header
+				</td>
+				</tr>
+				<tr>
+				<td>
+				</td>				<td title="getAccountEmailAddressListRequest.mailType.designation"> <a href="../types/charMax30.html">X-SBS-designation</a><br>Désignation.
+				</td>				<td> Header
+				</td>
+				</tr>
+
+			</table>
+
+		</div>
+		<br>
+
+		</br>
+		<div class="mock-list">
+			<b>Codes Erreur : </b>			<table>
+				<tr>
+				<td> 400
+				</td>				<td> Bad Request
+				</td>
+				</tr>
+
+			</table>
+
+		</div>
+
+	</div>
+
+</div>
+<div class="detail-column" id="d6" style="display:none; width: 65%">
+	<div class="detail">
+		<div class="mock-list">
+			<b>Service SOAP : </b> <a href="../services/getAccountEmailAddressList.html">getAccountEmailAddressList</a>
+		</div>
+		<div class="mock-list">
+			<b>Code retour succes : </b>200 - OK
+		</div>
+		<div class="mock-list">
+			<b>Uri : </b>http://soprabanking.com/amplitude/ibanformataccounts/v1/{ibanId}/emailaddresses/{emailAddressId}
+		</div>
+		<div class="mock-list">
+			<b>Description : </b>The service getAccountEmailAddressList allows returning a list of email addresses of account matching the search criteria received.
+
+The search is based on the optional criteria below:
+- limited customer information (code and/or name to be displayed),
+- the email type (code and/or designation).
+
+For each email address returned, all data used in the search criteria will be indicated as well as:
+- the email address.
+		</div>
+		<br>
+
+		</br>
+		<div class="mock-list">
+			<b>Identifiants : </b>			<table class="table_param">
+				<tr>
+				<td> 0
+				</td>				<td title="getAccountEmailAddressListRequest.account.ibanFormatAccount.value"> <a href="../types/charMax34.html">value</a><br>Valeur de l'IBAN.
+				</td>
+				</tr>
+
+			</table>
+
+		</div>
+		<br>
+
+		</br>
+		<div class="mock-list">
+			<b>Sous Identifiants : </b>			<table class="table_param">
+				<tr>
+				<td> 0
+				</td>				<td title="getAccountEmailAddressListRequest.mailType.code"> <a href="../types/charMax3.html">code</a><br>Code du type.
+				</td>
+				</tr>
+
+			</table>
+
+		</div>
+		<br>
+
+		</br>
+		<div class="mock-list">
+			<b>Codes Erreur : </b>			<table>
+				<tr>
+				<td> 400
+				</td>				<td> Bad Request
+				</td>
+				</tr>
+
+			</table>
+
+		</div>
+
+	</div>
+
+</div>
+<div class="detail-column" id="d7" style="display:none; width: 65%">
+	<div class="detail">
+		<div class="mock-list">
+			<b>Description : </b>Phone numbers
+		</div>
+
+	</div>
+
+</div>
+<div class="detail-column" id="d8" style="display:none; width: 65%">
+	<div class="detail">
+		<div class="mock-list">
+			<b>Service SOAP : </b> <a href="../services/getAccountPhoneNumberList.html">getAccountPhoneNumberList</a>
+		</div>
+		<div class="mock-list">
+			<b>Code retour succes : </b>200 - OK
+		</div>
+		<div class="mock-list">
+			<b>Uri : </b>http://soprabanking.com/amplitude/ibanformataccounts/v1/{ibanId}/phonenumbers/{phoneNumberId}
+		</div>
+		<div class="mock-list">
+			<b>Description : </b>The service getAccountPhoneNumberList allows returning a list of telephone numbers of account matching the search criteria received.
+
+The search is based on the optional criteria below:
+- limited customer information (code and/or name to be displayed),
+- the phone type (code and/or designation).
+
+For each telephone number returned, all data used in the search criteria will be indicated as well as:
+- the telephone number,
+- the telephone number format (code and designation).
+		</div>
+		<br>
+
+		</br>
+		<div class="mock-list">
+			<b>Identifiants : </b>			<table class="table_param">
+				<tr>
+				<td> 0
+				</td>				<td title="getAccountPhoneNumberListRequest.account.ibanFormatAccount.value"> <a href="../types/charMax34.html">value</a><br>Valeur de l'IBAN.
+				</td>
+				</tr>
+
+			</table>
+
+		</div>
+		<br>
+
+		</br>
+		<div class="mock-list">
+			<b>Sous Identifiants : </b>			<table class="table_param">
+				<tr>
+				<td> 0
+				</td>				<td title="getAccountPhoneNumberListRequest.phoneType.code"> <a href="../types/charMax3.html">code</a><br>Code type.
+				</td>
+				</tr>
+
+			</table>
+
+		</div>
+		<br>
+
+		</br>
+		<div class="mock-list">
+			<b>Codes Erreur : </b>			<table>
+				<tr>
+				<td> 400
+				</td>				<td> Bad Request
+				</td>
+				</tr>
+
+			</table>
+
+		</div>
+
+	</div>
+
+</div>
+<div class="detail-column" id="d9" style="display:none; width: 65%">
+	<div class="detail">
+		<div class="mock-list">
+			<b>Service SOAP : </b> <a href="../services/getAccountPhoneNumberList.html">getAccountPhoneNumberList</a>
+		</div>
+		<div class="mock-list">
+			<b>Code retour succes : </b>200 - OK
+		</div>
+		<div class="mock-list">
+			<b>Uri : </b>http://soprabanking.com/amplitude/ibanformataccounts/v1/{ibanId}/phonenumbers
+		</div>
+		<div class="mock-list">
+			<b>Description : </b>The service getAccountPhoneNumberList allows returning a list of telephone numbers of account matching the search criteria received.
+
+The search is based on the optional criteria below:
+- limited customer information (code and/or name to be displayed),
+- the phone type (code and/or designation).
+
+For each telephone number returned, all data used in the search criteria will be indicated as well as:
+- the telephone number,
+- the telephone number format (code and designation).
+		</div>
+		<br>
+
+		</br>
+		<div class="mock-list">
+			<b>Identifiants : </b>			<table class="table_param">
+				<tr>
+				<td> 0
+				</td>				<td title="getAccountPhoneNumberListRequest.account.ibanFormatAccount.value"> <a href="../types/charMax34.html">value</a><br>Valeur de l'IBAN.
+				</td>
+				</tr>
+
+			</table>
+
+		</div>
+		<br>
+
+		</br>
+		<div class="mock-list">
+			<b>Parametres : </b>			<table class="table_param">
+				<tr>
+				<td>
+				</td>				<td title="getAccountPhoneNumberListRequest.phoneType.code"> <a href="../types/charMax3.html">X-SBS-code</a><br>Code type.
+				</td>				<td> Header
+				</td>
+				</tr>
+				<tr>
+				<td>
+				</td>				<td title="getAccountPhoneNumberListRequest.phoneType.designation"> <a href="../types/charMax30.html">X-SBS-designation</a><br>Désignation.
+				</td>				<td> Header
+				</td>
+				</tr>
+
+			</table>
+
+		</div>
+		<br>
+
+		</br>
+		<div class="mock-list">
+			<b>Codes Erreur : </b>			<table>
+				<tr>
+				<td> 400
+				</td>				<td> Bad Request
+				</td>
+				</tr>
+
+			</table>
+
+		</div>
+
+	</div>
+
+</div>
+     </div> 
+  </div>
+  </div>
+
+  
+  <script src="../resources/jquery.js"></script>
+  <script src="../resources/doc.js"></script>
+</body>
+</html>

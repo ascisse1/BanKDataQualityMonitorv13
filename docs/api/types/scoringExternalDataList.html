@@ -1,0 +1,299 @@
+<!DOCTYPE html >
+<html>
+<head>
+	<link rel="stylesheet" href="../resources/styleDocu.css" />
+  <link rel="stylesheet" href="../resources/font-awesome/css/font-awesome.min.css" />
+	<title>Documentation Xsd</title>
+	<meta charset="UTF-8" />
+</head>
+
+<body>
+  <div class="document">
+	<div class="header">
+		
+	</div>
+
+  <div class="tabs">
+    <div class="tabs-wrapper" onclick="window.open('../liste-ressources.html', '_self');">
+      <div class="tabs-left-content">
+        Liste des ressources
+      </div>
+    </div>
+    <div class="tabs-wrapper" onclick="window.open('../liste-services.html', '_self');">
+      <div class="tabs-left-content" >
+        Liste des services  
+      </div>
+    </div>
+    <div class="tabs-wrapper-selected" onclick="window.open('../liste-types.html', '_self');">
+      <div class="tabs-right-content">
+        Liste des types
+      </div>
+    </div>
+  </div>
+
+	
+
+	<div class="contenu">
+      <div class="breadcrumb"> 
+        <ul class="breadcrumb">
+           <li> <a href="../index.html"> Accueil </a></li>
+           <li> > </li>
+           <li> <a href="../liste-types.html"> Liste des types </a></li>
+           <li> > </li>
+           <li> scoringExternalDataList </li>
+        </ul>                    
+      </div>                    
+      
+     
+      <div class="summary">
+			<div class="mock-list">
+				<b>Nom : </b>scoringExternalDataList
+			</div>
+			<div class="mock-list">
+				<b> Description : </b>Liste de données externes.
+			</div>
+        
+        <div> </div>
+        <div class="mock-list"> Choix : Non</div>
+        
+      </div>
+                        
+      <div class="column-content">
+        <div class="detail-column">
+          <div class="tree"> 
+<ul>
+	<li>
+<i class="fa fa-caret-down fa-fw" onclick="expand_or_collapse(this)">
+</i>		scoringExternalDataList		<ul style="display:block">
+			<li>
+<i class="fa fa-caret-down fa-fw" onclick="expand_or_collapse(this)">
+</i><i class="fa fa-key fa-fw">
+</i><span style="font-weight:bold"> [M]
+</span><span class="selectable" id="e0"> externalData : scoringExternalData
+</span>				<ul style="display:block">
+					<li>
+<i class="fa fa-fw">
+</i><i class="fa fa-key fa-fw">
+</i><span class="selectable" id="e1"> identifier : charMax10
+</span>
+					</li>
+					<li>
+<i class="fa fa-caret-down fa-fw" onclick="expand_or_collapse(this)">
+</i><i class="fa fa-key fa-fw">
+</i><span style="font-weight:bold"> [C]
+</span><span class="selectable" id="e2"> value : scoringExternalDataValue
+</span>						<ul style="display:block">
+							<li>
+<i class="fa fa-fw">
+</i><span class="selectable" id="e3"> alphanumeric : charMax30
+</span>
+							</li>
+							<li>
+<i class="fa fa-fw">
+</i><span class="selectable" id="e4"> amountOrRate : decimal19_4
+</span>
+							</li>
+							<li>
+<i class="fa fa-fw">
+</i><span class="selectable" id="e5"> date : date
+</span>
+							</li>
+
+						</ul>
+
+					</li>
+
+				</ul>
+
+			</li>
+
+		</ul>
+
+	</li>
+
+</ul>
+          </div>
+          
+          <div class="detail">
+				<p align="left">
+					Légende :<br />
+				</p>
+            <ul>
+               <li align="left">
+                  <i class="fa fa-key fa-fw">
+                  </i>
+                  = Elément obligatoire en saisie.
+               </li>
+               <li align="left">
+                  <span style="font-weight:bold"> [M]
+                  </span>
+                  = Elément multiple (0 à n occurrences).
+               </li>
+               <li align="left">
+                  <span style="font-weight:bold"> [C]
+                  </span>
+                  = Elément composé d'un choix à effectuer. Un seul choix autorisé.
+               </li>
+            </ul>
+            <p align="left">
+               Remarque : Un même élément peut regrouper plusieurs caractéristiques
+            </p>          
+          </div>
+          
+        </div>
+<div class="detail-column" id="d0" style="display:none">
+	<div class="detail">
+			<div class="mock-list">
+				<b>Nom : </b>externalData
+			</div>
+			<div class="mock-list">
+				<b>Description : </b>Donnée externe.
+			</div>
+			<div class="mock-list">
+				<b>Limite du nombre d'occurences mini-maxi : </b>aucune aucune
+			</div>
+
+	</div>
+	<div class="detail">
+			<div class="mock-list">
+				<b>Nom : </b> <a href="../types/scoringExternalData.html">scoringExternalData</a>
+			</div>
+			<div class="mock-list">
+				<b> Description : </b>Donnée externe.
+			</div>
+
+	</div>
+
+</div>
+<div class="detail-column" id="d1" style="display:none">
+	<div class="detail">
+			<div class="mock-list">
+				<b>Nom : </b>identifier
+			</div>
+			<div class="mock-list">
+				<b>Description : </b>Identifiant de la donnée.
+			</div>
+			<div class="mock-list">
+				<b>Commentaire : </b><p>Les identifiants de donn&eacute;es externes sont d&eacute;finis dans la nomenclature <strong>955</strong>.</p>
+
+			</div>
+
+	</div>
+	<div class="detail">
+			<div class="mock-list">
+				<b>Nom : </b> <a href="../types/charMax10.html">charMax10</a>
+			</div>
+			<div class="mock-list">
+				<b> Description : </b>Chaîne composée d'au plus 10 caractères.
+			</div>
+			<div class="mock-list">
+				<b>Format : </b>string
+			</div>
+			<div class="mock-list">
+				<b>Longueur mini-maxi : </b>1 - 10
+			</div>
+
+	</div>
+
+</div>
+<div class="detail-column" id="d2" style="display:none">
+	<div class="detail">
+			<div class="mock-list">
+				<b>Nom : </b>value
+			</div>
+			<div class="mock-list">
+				<b>Description : </b>Valeur de la donnée.
+			</div>
+
+	</div>
+	<div class="detail">
+			<div class="mock-list">
+				<b>Nom : </b> <a href="../types/scoringExternalDataValue.html">scoringExternalDataValue</a>
+			</div>
+			<div class="mock-list">
+				<b> Description : </b>Valeur d¿une donnée externe.
+			</div>
+
+	</div>
+
+</div>
+<div class="detail-column" id="d3" style="display:none">
+	<div class="detail">
+			<div class="mock-list">
+				<b>Nom : </b>alphanumeric
+			</div>
+			<div class="mock-list">
+				<b>Description : </b>Donnée alphanumérique.
+			</div>
+
+	</div>
+	<div class="detail">
+			<div class="mock-list">
+				<b>Nom : </b> <a href="../types/charMax30.html">charMax30</a>
+			</div>
+			<div class="mock-list">
+				<b> Description : </b>Chaîne composée d'au plus 30 caractères.
+			</div>
+			<div class="mock-list">
+				<b>Format : </b>string
+			</div>
+			<div class="mock-list">
+				<b>Longueur mini-maxi : </b>1 - 30
+			</div>
+
+	</div>
+
+</div>
+<div class="detail-column" id="d4" style="display:none">
+	<div class="detail">
+			<div class="mock-list">
+				<b>Nom : </b>amountOrRate
+			</div>
+			<div class="mock-list">
+				<b>Description : </b>Donnée numérique.
+			</div>
+
+	</div>
+	<div class="detail">
+			<div class="mock-list">
+				<b>Nom : </b> <a href="../types/decimal19_4.html">decimal19_4</a>
+			</div>
+			<div class="mock-list">
+				<b> Description : </b>Type décimal à 19 chiffres dont 4 décimales.
+			</div>
+			<div class="mock-list">
+				<b>Format : </b>decimal
+			</div>
+			<div class="mock-list">
+				<b>Nombre total de chiffres : </b>19
+			</div>
+
+	</div>
+
+</div>
+<div class="detail-column" id="d5" style="display:none">
+	<div class="detail">
+			<div class="mock-list">
+				<b>Nom : </b>date
+			</div>
+			<div class="mock-list">
+				<b>Description : </b>Donnée de type date.
+			</div>
+
+	</div>
+	<div class="detail">
+			<div class="mock-list">
+				<b>Nom : </b> <a href="../types/date.html">date</a>
+			</div>
+
+	</div>
+
+</div>
+      </div> 
+  </div>
+
+  
+  <script src="../resources/jquery.js"></script>
+  <script src="../resources/doc.js"></script>
+</body>
+</html>

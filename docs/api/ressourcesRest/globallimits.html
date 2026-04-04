@@ -1,0 +1,359 @@
+<!DOCTYPE html>
+<html>
+<head>
+	<link rel="stylesheet" href="../resources/styleDocu.css" />
+    <link rel="stylesheet" href="../resources/font-awesome/css/font-awesome.min.css" />
+	<title>Documentation Xsd</title>
+	<meta charset="UTF-8" />
+</head>
+
+<body>
+  <div class="document">
+	<div class="header">		
+	</div>
+
+    <div class="tabs">
+        <div class="tabs-wrapper-selected" onclick="window.open('../liste-ressources.html', '_self');">
+            <div class="tabs-left-content" >Liste des ressources</div>
+        </div>
+        <div class="tabs-wrapper" onclick="window.open('../liste-services.html', '_self');">
+            <div class="tabs-left-content">Liste des services</div>
+        </div>
+        <div class="tabs-wrapper" onclick="window.open('../liste-types.html', '_self');">
+            <div class="tabs-right-content">Liste des types</div>
+        </div>
+    </div>
+
+	<div class="contenu">
+      <div class="breadcrumb"> 
+        <ul class="breadcrumb">
+           <li> <a href="../index.html"> Accueil </a></li>
+           <li> > </li>
+           <li> <a href="../liste-ressources.html"> Liste des ressources </a></li>
+           <li> > </li>
+           <li> globallimits </li>
+        </ul>                    
+      </div>                    
+      
+      <div class="summary">
+        <div class="mock-list"> Nom ressource REST : globallimits </div>
+        <div class="mock-list"> Programme Amplitude : cbwrgloballimits </div>
+        <div class="mock-list"> Email : support@soprabanking.com </div>        
+        <br/>
+            <div class="mock-list"> Overdraft limits (single and multiple)</div>
+      </div>
+      
+      <div class="column-content" style="width:93%">
+        <div class="detail-column" style="width: 35%">
+          <div class="tree"> 
+<ul style="padding:0">
+	<li>
+<i class="fa fa-caret-down fa-fw" onclick="expand_or_collapse(this)">
+</i>		globallimits		<ul>
+			<li>
+<i class="fa fa-caret-down fa-fw" onclick="expand_or_collapse(this)">
+</i>				v1				<ul>
+					<li>
+<i class="fa fa-fw">
+</i><span class="selectable" id="e0"> GETLIST
+</span>
+					</li>
+
+				</ul>
+
+			</li>
+
+		</ul>
+
+	</li>
+
+</ul>
+          </div>
+        </div>
+                 
+        
+<div class="detail-column" id="d0" style="display:none; width: 65%">
+	<div class="detail">
+		<div class="mock-list">
+			<b>Service SOAP : </b> <a href="../services/getGlobalLimitList.html">getGlobalLimitList</a>
+		</div>
+		<div class="mock-list">
+			<b>Code retour succes : </b>200 - OK
+		</div>
+		<div class="mock-list">
+			<b>Uri : </b>http://soprabanking.com/amplitude/globallimits/v1/
+		</div>
+		<div class="mock-list">
+			<b>Description : </b>The service getGlobalLimitList allows returning a list of limits and ceilings matching the search criteria received.
+
+The search is based on the optional criteria below:
+- the customer: code and/or name to be displayed, type, profile (code and/or designation), national identifier, account officer (code and/or name), additional information (identifier and/or value (or value range) and/or designation), external reference,
+- the global line identifier (reference and/or designation),
+- the global line type (code and/or designation),
+- the customer global line indicator,
+- the account linking,
+- the start date (or a date range),
+- the expiry date (or a date range),
+- the amount (or an amount range),
+- the balance merge indicator.
+
+For each global line returned, all data used in the search criteria will be indicated.
+		</div>
+		<br>
+
+		</br>
+		<div class="mock-list">
+			<b>Parametres : </b>			<table class="table_param">
+				<tr>
+				<td>
+				</td>				<td title="getGlobalLimitListRequest.customer.activeProfile.code"> <a href="../types/charMax3.html">X-SBS-activeProfileCode</a><br>Code profil.
+				</td>				<td> Header
+				</td>
+				</tr>
+				<tr>
+				<td>
+				</td>				<td title="getGlobalLimitListRequest.customer.activeProfile.designation"> <a href="../types/charMax30.html">X-SBS-activeProfileDesignation</a><br>Désignation du profil.
+				</td>				<td> Header
+				</td>
+				</tr>
+				<tr>
+				<td>
+				</td>				<td title="getGlobalLimitListRequest.amount.amount1"> <a href="../types/decimal19_4.html">X-SBS-amount1</a><br>1er montant.
+				</td>				<td> Header
+				</td>
+				</tr>
+				<tr>
+				<td>
+				</td>				<td title="getGlobalLimitListRequest.amount.amount2"> <a href="../types/decimal19_4.html">X-SBS-amount2</a><br>2ème montant.
+				</td>				<td> Header
+				</td>
+				</tr>
+				<tr>
+				<td>
+				</td>				<td title="getGlobalLimitListRequest.amount.comparator"> <a href="../types/comparator.html">X-SBS-amountComparator</a><br>Opérateur de comparaison.
+				</td>				<td> Header
+				</td>
+				</tr>
+				<tr>
+				<td>
+				</td>				<td title="getGlobalLimitListRequest.amount.currency.currency.alphaCode"> <a href="../types/char3.html">X-SBS-amountCurrencyAlphaCode</a><br>Code devise alphanumérique.
+				</td>				<td> Header
+				</td>
+				</tr>
+				<tr>
+				<td>
+				</td>				<td title="getGlobalLimitListRequest.amount.currency.currency.numericCode"> <a href="../types/char3.html">X-SBS-amountCurrencyNumericCode</a><br>Code devise numérique.
+				</td>				<td> Header
+				</td>
+				</tr>
+				<tr>
+				<td>
+				</td>				<td title="getGlobalLimitListRequest.authorization.designation"> <a href="../types/charMax30.html">X-SBS-authorizationDesignation</a><br>Désignation.
+				</td>				<td> Header
+				</td>
+				</tr>
+				<tr>
+				<td>
+				</td>				<td title="getGlobalLimitListRequest.authorization.reference"> <a href="../types/char8.html">X-SBS-authorizationReference</a><br>Référence de l¿autorisation.
+				</td>				<td> Header
+				</td>
+				</tr>
+				<tr>
+				<td>
+				</td>				<td title="getGlobalLimitListRequest.authorizationType.code"> <a href="../types/char3.html">X-SBS-authorizationTypeCode</a><br>Code.
+				</td>				<td> Header
+				</td>
+				</tr>
+				<tr>
+				<td>
+				</td>				<td title="getGlobalLimitListRequest.authorizationType.designation"> <a href="../types/charMax30.html">X-SBS-authorizationTypeDesignation</a><br>Désignation.
+				</td>				<td> Header
+				</td>
+				</tr>
+				<tr>
+				<td>
+				</td>				<td title="getGlobalLimitListRequest.customer.additionalInformation.designation"> <a href="../types/charMax30.html">X-SBS-customerAdditionalInformationDesignation</a><br>Désignation.
+				</td>				<td> Header
+				</td>
+				</tr>
+				<tr>
+				<td>
+				</td>				<td title="getGlobalLimitListRequest.customer.additionalInformation.complementaryInformation.value.alphanumeric.comparisonOperator"> <a href="../types/comparisonOperator.html">X-SBS-customerComplementaryInformationAlphanumericComparisonOperator</a><br>Opérateur de comparaison.
+				</td>				<td> Header
+				</td>
+				</tr>
+				<tr>
+				<td>
+				</td>				<td title="getGlobalLimitListRequest.customer.additionalInformation.complementaryInformation.value.alphanumeric.value"> <a href="../types/string.html">X-SBS-customerComplementaryInformationAlphanumericValue</a><br>Valeur de la désignation.
+				</td>				<td> Header
+				</td>
+				</tr>
+				<tr>
+				<td>
+				</td>				<td title="getGlobalLimitListRequest.customer.additionalInformation.complementaryInformation.value.date.date1"> <a href="../types/date.html">X-SBS-customerComplementaryInformationDate1</a><br>1ère date.
+				</td>				<td> Header
+				</td>
+				</tr>
+				<tr>
+				<td>
+				</td>				<td title="getGlobalLimitListRequest.customer.additionalInformation.complementaryInformation.value.date.date2"> <a href="../types/date.html">X-SBS-customerComplementaryInformationDate2</a><br>2ème date.
+				</td>				<td> Header
+				</td>
+				</tr>
+				<tr>
+				<td>
+				</td>				<td title="getGlobalLimitListRequest.customer.additionalInformation.complementaryInformation.value.date.comparator"> <a href="../types/comparator.html">X-SBS-customerComplementaryInformationDateComparator</a><br>Opérateur de comparaison.
+				</td>				<td> Header
+				</td>
+				</tr>
+				<tr>
+				<td>
+				</td>				<td title="getGlobalLimitListRequest.customer.additionalInformation.complementaryInformation.value.amountOrRate.decimal1"> <a href="../types/decimal32_16.html">X-SBS-customerComplementaryInformationDecimal1</a><br>1ère décimale.
+				</td>				<td> Header
+				</td>
+				</tr>
+				<tr>
+				<td>
+				</td>				<td title="getGlobalLimitListRequest.customer.additionalInformation.complementaryInformation.value.amountOrRate.comparator"> <a href="../types/comparator.html">X-SBS-customerComplementaryInformationDecimal1Comparator</a><br>Opérateur de comparaison.
+				</td>				<td> Header
+				</td>
+				</tr>
+				<tr>
+				<td>
+				</td>				<td title="getGlobalLimitListRequest.customer.additionalInformation.complementaryInformation.value.amountOrRate.decimal2"> <a href="../types/decimal32_16.html">X-SBS-customerComplementaryInformationDecimal2</a><br>2ème décimale.
+				</td>				<td> Header
+				</td>
+				</tr>
+				<tr>
+				<td>
+				</td>				<td title="getGlobalLimitListRequest.customer.additionalInformation.complementaryInformation.identifier"> <a href="../types/charMax10.html">X-SBS-customerComplementaryInformationIdentifier</a><br>Identifiant de la donnée complémentaire.
+				</td>				<td> Header
+				</td>
+				</tr>
+				<tr>
+				<td>
+				</td>				<td title="getGlobalLimitListRequest.customer.customer.displayedName"> <a href="../types/charMax67.html">X-SBS-customerDisplayedName</a><br>Nom de restitution du client.
+				</td>				<td> Header
+				</td>
+				</tr>
+				<tr>
+				<td>
+				</td>				<td title="getGlobalLimitListRequest.customer.externalReference"> <a href="../types/charMax25.html">X-SBS-customerExternalReference</a><br>Référence externe.
+				</td>				<td> Header
+				</td>
+				</tr>
+				<tr>
+				<td>
+				</td>				<td title="getGlobalLimitListRequest.customer.customer.customerNumber"> <a href="../types/charMax15.html">X-SBS-customerNumber</a><br>Code du client.
+				</td>				<td> Header
+				</td>
+				</tr>
+				<tr>
+				<td>
+				</td>				<td title="getGlobalLimitListRequest.customer.customerOfficer.code"> <a href="../types/charMax3.html">X-SBS-customerOfficerCode</a><br>Code gestionnaire.
+				</td>				<td> Header
+				</td>
+				</tr>
+				<tr>
+				<td>
+				</td>				<td title="getGlobalLimitListRequest.customer.customerOfficer.name"> <a href="../types/charMax30.html">X-SBS-customerOfficerName</a><br>Nom du gestionnaire.
+				</td>				<td> Header
+				</td>
+				</tr>
+				<tr>
+				<td>
+				</td>				<td title="getGlobalLimitListRequest.customer.customerType"> <a href="../types/customerType.html">X-SBS-customerType</a><br>Type de client.
+				</td>				<td> Header
+				</td>
+				</tr>
+				<tr>
+				<td>
+				</td>				<td title="getGlobalLimitListRequest.fusionBalances"> <a href="../types/boolean.html">X-SBS-fusionBalances</a><br>Fusion des soldes.
+				</td>				<td> Header
+				</td>
+				</tr>
+				<tr>
+				<td>
+				</td>				<td title="getGlobalLimitListRequest.installmentDate.date1"> <a href="../types/date.html">X-SBS-installmentDate1</a><br>1ère date.
+				</td>				<td> Header
+				</td>
+				</tr>
+				<tr>
+				<td>
+				</td>				<td title="getGlobalLimitListRequest.installmentDate.date2"> <a href="../types/date.html">X-SBS-installmentDate2</a><br>2ème date.
+				</td>				<td> Header
+				</td>
+				</tr>
+				<tr>
+				<td>
+				</td>				<td title="getGlobalLimitListRequest.installmentDate.comparator"> <a href="../types/comparator.html">X-SBS-installmentDateComparator</a><br>Opérateur de comparaison.
+				</td>				<td> Header
+				</td>
+				</tr>
+				<tr>
+				<td>
+				</td>				<td title="getGlobalLimitListRequest.linkingAccounts"> <a href="../types/linkingAccounts.html">X-SBS-linkingAccounts</a><br>Rattachement des comptes.
+				</td>				<td> Header
+				</td>
+				</tr>
+				<tr>
+				<td>
+				</td>				<td title="getGlobalLimitListRequest.customer.nationalIdentifier"> <a href="../types/charMax20.html">X-SBS-nationalIdentifier</a><br>Identifiant national.
+				</td>				<td> Header
+				</td>
+				</tr>
+				<tr>
+				<td>
+				</td>				<td title="getGlobalLimitListRequest.overallCustomerAuthorization"> <a href="../types/boolean.html">X-SBS-overallCustomerAuthorization</a><br>Autorisation globale client.
+				</td>				<td> Header
+				</td>
+				</tr>
+				<tr>
+				<td>
+				</td>				<td title="getGlobalLimitListRequest.startDate.date1"> <a href="../types/date.html">X-SBS-startDate1</a><br>1ère date.
+				</td>				<td> Header
+				</td>
+				</tr>
+				<tr>
+				<td>
+				</td>				<td title="getGlobalLimitListRequest.startDate.date2"> <a href="../types/date.html">X-SBS-startDate2</a><br>2ème date.
+				</td>				<td> Header
+				</td>
+				</tr>
+				<tr>
+				<td>
+				</td>				<td title="getGlobalLimitListRequest.startDate.comparator"> <a href="../types/comparator.html">X-SBS-startDateComparator</a><br>Opérateur de comparaison.
+				</td>				<td> Header
+				</td>
+				</tr>
+
+			</table>
+
+		</div>
+		<br>
+
+		</br>
+		<div class="mock-list">
+			<b>Codes Erreur : </b>			<table>
+				<tr>
+				<td> 400
+				</td>				<td> Bad Request
+				</td>
+				</tr>
+
+			</table>
+
+		</div>
+
+	</div>
+
+</div>
+     </div> 
+  </div>
+  </div>
+
+  
+  <script src="../resources/jquery.js"></script>
+  <script src="../resources/doc.js"></script>
+</body>
+</html>

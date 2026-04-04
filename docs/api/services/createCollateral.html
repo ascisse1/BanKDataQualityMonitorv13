@@ -1,0 +1,5125 @@
+<!DOCTYPE html>
+<html>
+<head>
+	<link rel="stylesheet" href="../resources/styleDocu.css" />
+  <link rel="stylesheet" href="../resources/font-awesome/css/font-awesome.min.css" />
+	<title>Documentation Xsd</title>
+	<meta charset="UTF-8" />
+</head>
+
+<body>
+  <div class="document">
+	<div class="header">
+		
+	</div>
+
+  <div class="tabs">
+    <div class="tabs-wrapper" onclick="window.open('../liste-ressources.html', '_self');">
+      <div class="tabs-left-content">
+        Liste des ressources
+      </div>
+    </div>
+    <div class="tabs-wrapper-selected" onclick="window.open('../liste-services.html', '_self');">
+      <div class="tabs-left-content" >
+        Liste des services  
+      </div>
+    </div>
+    <div class="tabs-wrapper" onclick="window.open('../liste-types.html', '_self');">
+      <div class="tabs-right-content">
+        Liste des types
+      </div>
+    </div>
+  </div>
+
+	
+
+	<div class="contenu">
+      <div class="breadcrumb"> 
+        <ul class="breadcrumb">
+           <li> <a href="../index.html"> Accueil </a></li>
+           <li> > </li>
+           <li> <a href="../liste-services.html"> Liste des services </a></li>
+           <li> > </li>
+           <li> createCollateral </li>
+        </ul>                    
+      </div>                    
+      
+      <div class="summary">
+       
+            <div class="mock-list"> Programme Amplitude : gawgarc </div>
+            <div class="mock-list"> Service générique : createCollateral </div>
+        
+        <br/>
+            <div class="mock-list">  </div>
+        <br/>
+            <div class="mock-list"> Service de création d'une garantie.</div>
+        <br/>
+            <div> <p>&nbsp;</p>
+
+<p><span style="color:#3498db"><em>Concernant le traitement fonctionnel et les r&egrave;gles de gestion, se r&eacute;f&eacute;rer aux documents utilisateurs :</em></span></p>
+
+<p><span style="color:#3498db"><em>0405-1-11.XGaranties</em></span></p>
+
+<p><span style="color:#3498db"><em>0405-2-11.XGaranties</em></span></p>
+
+<p><span style="color:#3498db"><em>0405-3-11.XGaranties</em></span></p>
+
+<p><span style="color:#3498db"><em>0405-5-11.XGaranties</em></span></p>
+
+<p><span style="color:#3498db"><em>X : version mineure correspondant &agrave; la documentation.</em></span></p>
+</div>
+      </div>
+      
+      <div class="column-content">
+        <div class="detail-column">
+          <div class="tree"> 
+<ul>
+	<li>
+<i class="fa fa-caret-down fa-fw" onclick="expand_or_collapse(this)">
+</i>		createCollateral		<ul style="display:block">
+			<li>
+<i class="fa fa-caret-down fa-fw" onclick="expand_or_collapse(this)">
+</i>				CollateralRequest				<ul style="display:block">
+					<li>
+<i class="fa fa-caret-down fa-fw" onclick="expand_or_collapse(this)">
+</i><i class="fa fa-key fa-fw">
+</i><span class="selectable" id="e0"> requestHeader
+</span>						<ul style="display:block">
+							<li>
+<i class="fa fa-caret-down fa-fw" onclick="expand_or_collapse(this)">
+</i><i class="fa fa-key fa-fw">
+</i><span class="selectable" id="e1"> requestId1
+</span>								<ul style="display:block">
+									<li>
+<i class="fa fa-fw">
+</i><i class="fa fa-key fa-fw">
+</i><span class="selectable" id="e2"> requestId : charMax50
+</span>
+									</li>
+
+								</ul>
+
+							</li>
+							<li>
+<i class="fa fa-fw">
+</i><i class="fa fa-key fa-fw">
+</i><span class="selectable" id="e3"> serviceName : charMax50
+</span>
+							</li>
+							<li>
+<i class="fa fa-fw">
+</i><i class="fa fa-key fa-fw">
+</i><span class="selectable" id="e4"> timestamp : dateTime
+</span>
+							</li>
+							<li>
+<i class="fa fa-fw">
+</i><span class="selectable" id="e5"> originalName : charMax50
+</span>
+							</li>
+							<li>
+<i class="fa fa-fw">
+</i><span class="selectable" id="e6"> originalId : charMax50
+</span>
+							</li>
+							<li>
+<i class="fa fa-fw">
+</i><span class="selectable" id="e7"> originalTimestamp : dateTime
+</span>
+							</li>
+							<li>
+<i class="fa fa-fw">
+</i><span class="selectable" id="e8"> languageCode : languageCode
+</span>
+							</li>
+							<li>
+<i class="fa fa-fw">
+</i><i class="fa fa-key fa-fw">
+</i><span class="selectable" id="e9"> userCode : charMax10
+</span>
+							</li>
+							<li>
+<i class="fa fa-fw">
+</i><span class="selectable" id="e10"> channelCode : channelCode
+</span>
+							</li>
+
+						</ul>
+
+					</li>
+					<li>
+<i class="fa fa-caret-down fa-fw" onclick="expand_or_collapse(this)">
+</i><i class="fa fa-key fa-fw">
+</i><span class="selectable" id="e11"> createCollateralRequest : createCollateralRequest
+</span>						<ul style="display:block">
+							<li>
+<i class="fa fa-caret-down fa-fw" onclick="expand_or_collapse(this)">
+</i><i class="fa fa-key fa-fw">
+</i><span class="selectable" id="e12"> identifier : collateralCreateIdentifier
+</span>								<ul style="display:block">
+									<li>
+<i class="fa fa-fw">
+</i><i class="fa fa-key fa-fw">
+</i><span class="selectable" id="e13"> branchCode : branchCode
+</span>
+									</li>
+									<li>
+<i class="fa fa-fw">
+</i><i class="fa fa-key fa-fw">
+</i><span class="selectable" id="e14"> natureNumber : collateralNatureCode
+</span>
+									</li>
+
+								</ul>
+
+							</li>
+							<li>
+<i class="fa fa-caret-down fa-fw" onclick="expand_or_collapse(this)">
+</i><i class="fa fa-key fa-fw">
+</i><span class="selectable" id="e15"> globalFeatures : collateralGlobalFeatures
+</span>								<ul style="display:block">
+									<li>
+<i class="fa fa-fw">
+</i><span class="selectable" id="e16"> collateralFileType : collateralFileTypeCode
+</span>
+									</li>
+									<li>
+<i class="fa fa-fw">
+</i><span class="selectable" id="e17"> collateralReference : charMax15
+</span>
+									</li>
+									<li>
+<i class="fa fa-caret-down fa-fw" onclick="expand_or_collapse(this)">
+</i><i class="fa fa-key fa-fw">
+</i><span class="selectable" id="e18"> scopeInformation : collateralScopeInformation
+</span>										<ul style="display:block">
+											<li>
+<i class="fa fa-fw">
+</i><i class="fa fa-key fa-fw">
+</i><span class="selectable" id="e19"> scope : collateralScope
+</span>
+											</li>
+											<li>
+<i class="fa fa-caret-down fa-fw" onclick="expand_or_collapse(this)">
+</i><span class="selectable" id="e20"> scopeOption : collateralScopeOption
+</span>												<ul style="display:block">
+													<li>
+<i class="fa fa-fw">
+</i><span class="selectable" id="e21"> coverExtensionToNewCommitments : boolean
+</span>
+													</li>
+													<li>
+<i class="fa fa-fw">
+</i><span class="selectable" id="e22"> collateralBranchLimitedExtension : boolean
+</span>
+													</li>
+
+												</ul>
+
+											</li>
+
+										</ul>
+
+									</li>
+									<li>
+<i class="fa fa-fw">
+</i><span class="selectable" id="e23"> coverType : collateralCoverType
+</span>
+									</li>
+									<li>
+<i class="fa fa-fw">
+</i><i class="fa fa-key fa-fw">
+</i><span class="selectable" id="e24"> fixedCoveredAmount : fixedCoveredAmount
+</span>
+									</li>
+									<li>
+<i class="fa fa-caret-down fa-fw" onclick="expand_or_collapse(this)">
+</i><i class="fa fa-key fa-fw">
+</i><span class="selectable" id="e25"> apportionment : collateralApportionment
+</span>										<ul style="display:block">
+											<li>
+<i class="fa fa-fw">
+</i><i class="fa fa-key fa-fw">
+</i><span class="selectable" id="e26"> automaticApportionment : boolean
+</span>
+											</li>
+											<li>
+<i class="fa fa-fw">
+</i><span class="selectable" id="e27"> apportionmentMethod : char3
+</span>
+											</li>
+
+										</ul>
+
+									</li>
+									<li>
+<i class="fa fa-fw">
+</i><i class="fa fa-key fa-fw">
+</i><span class="selectable" id="e28"> collateralCurrency : currencyCode
+</span>
+									</li>
+									<li>
+<i class="fa fa-fw">
+</i><span class="selectable" id="e29"> collateralAmount : decimal19_4
+</span>
+									</li>
+									<li>
+<i class="fa fa-fw">
+</i><span class="selectable" id="e30"> collateralCeilingAmount : decimal19_4
+</span>
+									</li>
+									<li>
+<i class="fa fa-fw">
+</i><span class="selectable" id="e31"> mainCustomer : customerCode
+</span>
+									</li>
+									<li>
+<i class="fa fa-caret-down fa-fw" onclick="expand_or_collapse(this)">
+</i><span class="selectable" id="e32"> collateralAccountingAccount : internalAccountKey
+</span>										<ul style="display:block">
+											<li>
+<i class="fa fa-fw">
+</i><i class="fa fa-key fa-fw">
+</i><span class="selectable" id="e33"> branch : char5
+</span>
+											</li>
+											<li>
+<i class="fa fa-fw">
+</i><i class="fa fa-key fa-fw">
+</i><span class="selectable" id="e34"> currency : currencyCode
+</span>
+											</li>
+											<li>
+<i class="fa fa-fw">
+</i><i class="fa fa-key fa-fw">
+</i><span class="selectable" id="e35"> account : charMax11
+</span>
+											</li>
+											<li>
+<i class="fa fa-fw">
+</i><span class="selectable" id="e36"> suffix : charMax2
+</span>
+											</li>
+
+										</ul>
+
+									</li>
+									<li>
+<i class="fa fa-fw">
+</i><span class="selectable" id="e37"> collateralOverallPercentage : decimal5_2
+</span>
+									</li>
+									<li>
+<i class="fa fa-fw">
+</i><span class="selectable" id="e38"> commitmentAutomaticRenewal : boolean
+</span>
+									</li>
+									<li>
+<i class="fa fa-fw">
+</i><span class="selectable" id="e39"> materialValuePercentage : decimal5_2
+</span>
+									</li>
+									<li>
+<i class="fa fa-fw">
+</i><span class="selectable" id="e40"> collateralPriorityCharges : decimal19_4
+</span>
+									</li>
+									<li>
+<i class="fa fa-fw">
+</i><span class="selectable" id="e41"> implementationDate : date
+</span>
+									</li>
+									<li>
+<i class="fa fa-fw">
+</i><span class="selectable" id="e42"> maturityDate : date
+</span>
+									</li>
+									<li>
+<i class="fa fa-fw">
+</i><i class="fa fa-key fa-fw">
+</i><span class="selectable" id="e43"> collateralType : collateralType
+</span>
+									</li>
+									<li>
+<i class="fa fa-fw">
+</i><span class="selectable" id="e44"> collateralQualityCode : collateralQualityCode
+</span>
+									</li>
+									<li>
+<i class="fa fa-fw">
+</i><span class="selectable" id="e45"> externalRank : collateralRank
+</span>
+									</li>
+									<li>
+<i class="fa fa-caret-down fa-fw" onclick="expand_or_collapse(this)">
+</i><span class="selectable" id="e46"> collateralRenewal : collateralRenewal
+</span>										<ul style="display:block">
+											<li>
+<i class="fa fa-fw">
+</i><span class="selectable" id="e47"> collateralAutomaticRenewal : boolean
+</span>
+											</li>
+											<li>
+<i class="fa fa-fw">
+</i><span class="selectable" id="e48"> collateralRenewalDuration : decimal5_0
+</span>
+											</li>
+
+										</ul>
+
+									</li>
+
+								</ul>
+
+							</li>
+							<li>
+<i class="fa fa-caret-down fa-fw" onclick="expand_or_collapse(this)">
+</i><span class="selectable" id="e49"> configurableComments : collateralConfigurableComments
+</span>								<ul style="display:block">
+									<li>
+<i class="fa fa-caret-down fa-fw" onclick="expand_or_collapse(this)">
+</i><span style="font-weight:bold"> [M]
+</span><span class="selectable" id="e50"> configuredComment : collateralConfiguredComment
+</span>										<ul style="display:block">
+											<li>
+<i class="fa fa-fw">
+</i><i class="fa fa-key fa-fw">
+</i><span class="selectable" id="e51"> commentCode : char3
+</span>
+											</li>
+											<li>
+<i class="fa fa-fw">
+</i><i class="fa fa-key fa-fw">
+</i><span class="selectable" id="e52"> commentValue : string
+</span>
+											</li>
+
+										</ul>
+
+									</li>
+
+								</ul>
+
+							</li>
+							<li>
+<i class="fa fa-caret-down fa-fw" onclick="expand_or_collapse(this)">
+</i><span class="selectable" id="e53"> additionalDataList : collateralAdditionalData
+</span>								<ul style="display:block">
+									<li>
+<i class="fa fa-caret-down fa-fw" onclick="expand_or_collapse(this)">
+</i><span style="font-weight:bold"> [M]
+</span><span class="selectable" id="e54"> additionalDataDetails : collateralAdditionalDataDetails
+</span>										<ul style="display:block">
+											<li>
+<i class="fa fa-fw">
+</i><i class="fa fa-key fa-fw">
+</i><span class="selectable" id="e55"> additionalDataIdentifier : char5
+</span>
+											</li>
+											<li>
+<i class="fa fa-fw">
+</i><span class="selectable" id="e56"> additionalDataValue : charMax40
+</span>
+											</li>
+
+										</ul>
+
+									</li>
+
+								</ul>
+
+							</li>
+							<li>
+<i class="fa fa-caret-down fa-fw" onclick="expand_or_collapse(this)">
+</i><span class="selectable" id="e57"> documentsList : collateralDocuments
+</span>								<ul style="display:block">
+									<li>
+<i class="fa fa-caret-down fa-fw" onclick="expand_or_collapse(this)">
+</i><span style="font-weight:bold"> [M]
+</span><span class="selectable" id="e58"> document : collateralDocument
+</span>										<ul style="display:block">
+											<li>
+<i class="fa fa-fw">
+</i><i class="fa fa-key fa-fw">
+</i><span class="selectable" id="e59"> documentCode : char6
+</span>
+											</li>
+											<li>
+<i class="fa fa-fw">
+</i><span class="selectable" id="e60"> documentReference : charMax15
+</span>
+											</li>
+											<li>
+<i class="fa fa-fw">
+</i><span class="selectable" id="e61"> receiptDate : date
+</span>
+											</li>
+											<li>
+<i class="fa fa-fw">
+</i><span class="selectable" id="e62"> receiptLimitDate : date
+</span>
+											</li>
+											<li>
+<i class="fa fa-fw">
+</i><span class="selectable" id="e63"> archiveType : collateralArchiveType
+</span>
+											</li>
+											<li>
+<i class="fa fa-fw">
+</i><span class="selectable" id="e64"> archiveLocation : charMax30
+</span>
+											</li>
+
+										</ul>
+
+									</li>
+
+								</ul>
+
+							</li>
+							<li>
+<i class="fa fa-caret-down fa-fw" onclick="expand_or_collapse(this)">
+</i><span class="selectable" id="e65"> collateralComments : collateralComments
+</span>								<ul style="display:block">
+									<li>
+<i class="fa fa-fw">
+</i><span style="font-weight:bold"> [M]
+</span><span class="selectable" id="e66"> commentValue : charmax75
+</span>
+									</li>
+
+								</ul>
+
+							</li>
+							<li>
+<i class="fa fa-caret-down fa-fw" onclick="expand_or_collapse(this)">
+</i><span class="selectable" id="e67"> guarantorsList : collateralGuarantors
+</span>								<ul style="display:block">
+									<li>
+<i class="fa fa-caret-down fa-fw" onclick="expand_or_collapse(this)">
+</i><span style="font-weight:bold"> [M]
+</span><span class="selectable" id="e68"> guarantor : collateralGuarantor
+</span>										<ul style="display:block">
+											<li>
+<i class="fa fa-caret-down fa-fw" onclick="expand_or_collapse(this)">
+</i><i class="fa fa-key fa-fw">
+</i><span style="font-weight:bold"> [C]
+</span><span class="selectable" id="e69"> guarantorCode : customerOrThirdPartyCode
+</span>												<ul style="display:block">
+													<li>
+<i class="fa fa-fw">
+</i><span class="selectable" id="e70"> customerCode : customerCode
+</span>
+													</li>
+													<li>
+<i class="fa fa-fw">
+</i><span class="selectable" id="e71"> thirdPartyCode : customerCode
+</span>
+													</li>
+
+												</ul>
+
+											</li>
+											<li>
+<i class="fa fa-fw">
+</i><span class="selectable" id="e72"> guarantorPercentage : decimal5_2
+</span>
+											</li>
+
+										</ul>
+
+									</li>
+
+								</ul>
+
+							</li>
+							<li>
+<i class="fa fa-caret-down fa-fw" onclick="expand_or_collapse(this)">
+</i><span style="font-weight:bold"> [C]
+</span><span class="selectable" id="e73"> internalFolders : collateralInternalFolders
+</span>								<ul style="display:block">
+									<li>
+<i class="fa fa-caret-down fa-fw" onclick="expand_or_collapse(this)">
+</i><span class="selectable" id="e74"> tdInternalFolders : collateralTdInternalFolders
+</span>										<ul style="display:block">
+											<li>
+<i class="fa fa-caret-down fa-fw" onclick="expand_or_collapse(this)">
+</i><span style="font-weight:bold"> [M]
+</span><span class="selectable" id="e75"> tdInternalFolder : collateralTdInternalFolder
+</span>												<ul style="display:block">
+													<li>
+<i class="fa fa-caret-down fa-fw" onclick="expand_or_collapse(this)">
+</i><i class="fa fa-key fa-fw">
+</i><span class="selectable" id="e76"> tdIdentifier : tdDetailIdentifier
+</span>														<ul style="display:block">
+															<li>
+<i class="fa fa-fw">
+</i><i class="fa fa-key fa-fw">
+</i><span class="selectable" id="e77"> branchCode : branchCode
+</span>
+															</li>
+															<li>
+<i class="fa fa-fw">
+</i><i class="fa fa-key fa-fw">
+</i><span class="selectable" id="e78"> tdNumber : eventNumber
+</span>
+															</li>
+
+														</ul>
+
+													</li>
+													<li>
+<i class="fa fa-fw">
+</i><i class="fa fa-key fa-fw">
+</i><span class="selectable" id="e79"> index : decimal6_0
+</span>
+													</li>
+
+												</ul>
+
+											</li>
+
+										</ul>
+
+									</li>
+									<li>
+<i class="fa fa-caret-down fa-fw" onclick="expand_or_collapse(this)">
+</i><span class="selectable" id="e80"> codInternalFolders : collateralCodInternalFolders
+</span>										<ul style="display:block">
+											<li>
+<i class="fa fa-caret-down fa-fw" onclick="expand_or_collapse(this)">
+</i><span style="font-weight:bold"> [M]
+</span><span class="selectable" id="e81"> codInternalFolder : collateralCodInternalFolder
+</span>												<ul style="display:block">
+													<li>
+<i class="fa fa-caret-down fa-fw" onclick="expand_or_collapse(this)">
+</i><i class="fa fa-key fa-fw">
+</i><span class="selectable" id="e82"> codIdentifier : coDDetailIdentifier
+</span>														<ul style="display:block">
+															<li>
+<i class="fa fa-fw">
+</i><i class="fa fa-key fa-fw">
+</i><span class="selectable" id="e83"> branchCode : branchCode
+</span>
+															</li>
+															<li>
+<i class="fa fa-fw">
+</i><i class="fa fa-key fa-fw">
+</i><span class="selectable" id="e84"> coDNumber : eventNumber
+</span>
+															</li>
+															<li>
+<i class="fa fa-fw">
+</i><i class="fa fa-key fa-fw">
+</i><span class="selectable" id="e85"> subscriptionNumber : eventNumber
+</span>
+															</li>
+
+														</ul>
+
+													</li>
+													<li>
+<i class="fa fa-fw">
+</i><i class="fa fa-key fa-fw">
+</i><span class="selectable" id="e86"> index : decimal19_4
+</span>
+													</li>
+
+												</ul>
+
+											</li>
+
+										</ul>
+
+									</li>
+									<li>
+<i class="fa fa-caret-down fa-fw" onclick="expand_or_collapse(this)">
+</i><span class="selectable" id="e87"> isdInternalFolders : collateralIsdInternalFolders
+</span>										<ul style="display:block">
+											<li>
+<i class="fa fa-caret-down fa-fw" onclick="expand_or_collapse(this)">
+</i><span style="font-weight:bold"> [M]
+</span><span class="selectable" id="e88"> isdInternalFolder : collateralIsdInternalFolder
+</span>												<ul style="display:block">
+													<li>
+<i class="fa fa-caret-down fa-fw" onclick="expand_or_collapse(this)">
+</i><i class="fa fa-key fa-fw">
+</i><span class="selectable" id="e89"> isdIdentifier : isdDetailIdentifier
+</span>														<ul style="display:block">
+															<li>
+<i class="fa fa-fw">
+</i><i class="fa fa-key fa-fw">
+</i><span class="selectable" id="e90"> branchCode : branchCode
+</span>
+															</li>
+															<li>
+<i class="fa fa-fw">
+</i><i class="fa fa-key fa-fw">
+</i><span class="selectable" id="e91"> isdNumber : eventNumber
+</span>
+															</li>
+
+														</ul>
+
+													</li>
+													<li>
+<i class="fa fa-fw">
+</i><i class="fa fa-key fa-fw">
+</i><span class="selectable" id="e92"> index : decimal19_4
+</span>
+													</li>
+
+												</ul>
+
+											</li>
+
+										</ul>
+
+									</li>
+									<li>
+<i class="fa fa-caret-down fa-fw" onclick="expand_or_collapse(this)">
+</i><span class="selectable" id="e93"> depositAccountInternalFolders : collateralDepositAccountInternalFolders
+</span>										<ul style="display:block">
+											<li>
+<i class="fa fa-caret-down fa-fw" onclick="expand_or_collapse(this)">
+</i><span style="font-weight:bold"> [M]
+</span><span class="selectable" id="e94"> depositAccountInternalFolder : collateralDepositAccountInternalFolder
+</span>												<ul style="display:block">
+													<li>
+<i class="fa fa-caret-down fa-fw" onclick="expand_or_collapse(this)">
+</i><i class="fa fa-key fa-fw">
+</i><span class="selectable" id="e95"> depositAccountIdentifier : internalAccountKey
+</span>														<ul style="display:block">
+															<li>
+<i class="fa fa-fw">
+</i><i class="fa fa-key fa-fw">
+</i><span class="selectable" id="e96"> branch : char5
+</span>
+															</li>
+															<li>
+<i class="fa fa-fw">
+</i><i class="fa fa-key fa-fw">
+</i><span class="selectable" id="e97"> currency : currencyCode
+</span>
+															</li>
+															<li>
+<i class="fa fa-fw">
+</i><i class="fa fa-key fa-fw">
+</i><span class="selectable" id="e98"> account : charMax11
+</span>
+															</li>
+															<li>
+<i class="fa fa-fw">
+</i><span class="selectable" id="e99"> suffix : charMax2
+</span>
+															</li>
+
+														</ul>
+
+													</li>
+													<li>
+<i class="fa fa-fw">
+</i><i class="fa fa-key fa-fw">
+</i><span class="selectable" id="e100"> index : decimal19_4
+</span>
+													</li>
+
+												</ul>
+
+											</li>
+
+										</ul>
+
+									</li>
+									<li>
+<i class="fa fa-caret-down fa-fw" onclick="expand_or_collapse(this)">
+</i><span class="selectable" id="e101"> securityInternalFolders : collateralSecurityInternalFolders
+</span>										<ul style="display:block">
+											<li>
+<i class="fa fa-caret-down fa-fw" onclick="expand_or_collapse(this)">
+</i><span style="font-weight:bold"> [M]
+</span><span class="selectable" id="e102"> securityInternalFolder : collateralSecurityInternalFolder
+</span>												<ul style="display:block">
+													<li>
+<i class="fa fa-caret-down fa-fw" onclick="expand_or_collapse(this)">
+</i><i class="fa fa-key fa-fw">
+</i><span class="selectable" id="e103"> securityIdentifier : securityDetailIdentifier
+</span>														<ul style="display:block">
+															<li>
+<i class="fa fa-fw">
+</i><i class="fa fa-key fa-fw">
+</i><span class="selectable" id="e104"> securityType : char3
+</span>
+															</li>
+															<li>
+<i class="fa fa-fw">
+</i><i class="fa fa-key fa-fw">
+</i><span class="selectable" id="e105"> securityAccount : char11
+</span>
+															</li>
+															<li>
+<i class="fa fa-fw">
+</i><i class="fa fa-key fa-fw">
+</i><span class="selectable" id="e106"> securityInstrumentCode : char12
+</span>
+															</li>
+
+														</ul>
+
+													</li>
+													<li>
+<i class="fa fa-fw">
+</i><i class="fa fa-key fa-fw">
+</i><span class="selectable" id="e107"> securitiesNumber : decimal19_4
+</span>
+													</li>
+
+												</ul>
+
+											</li>
+
+										</ul>
+
+									</li>
+
+								</ul>
+
+							</li>
+							<li>
+<i class="fa fa-caret-down fa-fw" onclick="expand_or_collapse(this)">
+</i><span style="font-weight:bold"> [C]
+</span><span class="selectable" id="e108"> assestsValuation : collateralAssessments
+</span>								<ul style="display:block">
+									<li>
+<i class="fa fa-caret-down fa-fw" onclick="expand_or_collapse(this)">
+</i><span class="selectable" id="e109"> collateralTraditionalAssessments : collateralTraditionalAssessments
+</span>										<ul style="display:block">
+											<li>
+<i class="fa fa-caret-down fa-fw" onclick="expand_or_collapse(this)">
+</i><span style="font-weight:bold"> [M]
+</span><span class="selectable" id="e110"> traditionalAssessment : collateralTraditionalAssessment
+</span>												<ul style="display:block">
+													<li>
+<i class="fa fa-fw">
+</i><i class="fa fa-key fa-fw">
+</i><span class="selectable" id="e111"> assessmentAmount : decimal19_4
+</span>
+													</li>
+													<li>
+<i class="fa fa-fw">
+</i><i class="fa fa-key fa-fw">
+</i><span class="selectable" id="e112"> assessmentCurrency : currencyCode
+</span>
+													</li>
+													<li>
+<i class="fa fa-fw">
+</i><i class="fa fa-key fa-fw">
+</i><span class="selectable" id="e113"> assessmentDate : date
+</span>
+													</li>
+													<li>
+<i class="fa fa-fw">
+</i><i class="fa fa-key fa-fw">
+</i><span class="selectable" id="e114"> assessmentCharacteristic : collateralAssessmentCharacteristic
+</span>
+													</li>
+													<li>
+<i class="fa fa-fw">
+</i><i class="fa fa-key fa-fw">
+</i><span class="selectable" id="e115"> valuedGood : boolean
+</span>
+													</li>
+													<li>
+<i class="fa fa-fw">
+</i><i class="fa fa-key fa-fw">
+</i><span class="selectable" id="e116"> nextAssessmentDate : date
+</span>
+													</li>
+
+												</ul>
+
+											</li>
+
+										</ul>
+
+									</li>
+									<li>
+<i class="fa fa-caret-down fa-fw" onclick="expand_or_collapse(this)">
+</i><span class="selectable" id="e117"> collateralAdvancedAssessments : collateralAdvancedAssessments
+</span>										<ul style="display:block">
+											<li>
+<i class="fa fa-fw">
+</i><span class="selectable" id="e118"> valuationDiscount : decimal5_2
+</span>
+											</li>
+											<li>
+<i class="fa fa-fw">
+</i><span class="selectable" id="e119"> revaluationFrequency : decimal5_2
+</span>
+											</li>
+											<li>
+<i class="fa fa-caret-down fa-fw" onclick="expand_or_collapse(this)">
+</i><span class="selectable" id="e120"> advancedAssessmentList : advancedAssessmentsList
+</span>												<ul style="display:block">
+													<li>
+<i class="fa fa-caret-down fa-fw" onclick="expand_or_collapse(this)">
+</i><span style="font-weight:bold"> [M]
+</span><span class="selectable" id="e121"> advancedAssessment : collateralAdvancedAssessment
+</span>														<ul style="display:block">
+															<li>
+<i class="fa fa-fw">
+</i><i class="fa fa-key fa-fw">
+</i><span class="selectable" id="e122"> assessmentMethod : char3
+</span>
+															</li>
+															<li>
+<i class="fa fa-fw">
+</i><span class="selectable" id="e123"> externalExpert : charMax255
+</span>
+															</li>
+															<li>
+<i class="fa fa-fw">
+</i><span class="selectable" id="e124"> expertiseCompany : charMax255
+</span>
+															</li>
+															<li>
+<i class="fa fa-fw">
+</i><i class="fa fa-key fa-fw">
+</i><span class="selectable" id="e125"> assessmentDate : date
+</span>
+															</li>
+															<li>
+<i class="fa fa-fw">
+</i><i class="fa fa-key fa-fw">
+</i><span class="selectable" id="e126"> assessmentAmount : decimal19_4
+</span>
+															</li>
+															<li>
+<i class="fa fa-fw">
+</i><i class="fa fa-key fa-fw">
+</i><span class="selectable" id="e127"> assessmentCurrency : currencyCode
+</span>
+															</li>
+															<li>
+<i class="fa fa-fw">
+</i><i class="fa fa-key fa-fw">
+</i><span class="selectable" id="e128"> assessmentCharacteristic : collateralAssessmentCharacteristic
+</span>
+															</li>
+															<li>
+<i class="fa fa-fw">
+</i><span class="selectable" id="e129"> nextAssessmentDate : date
+</span>
+															</li>
+															<li>
+<i class="fa fa-fw">
+</i><span class="selectable" id="e130"> internalExpert : charMax255
+</span>
+															</li>
+															<li>
+<i class="fa fa-fw">
+</i><span class="selectable" id="e131"> internalAssessmentDate : date
+</span>
+															</li>
+															<li>
+<i class="fa fa-fw">
+</i><span class="selectable" id="e132"> adjustedAmount : decimal19_4
+</span>
+															</li>
+															<li>
+<i class="fa fa-fw">
+</i><span class="selectable" id="e133"> adjustedAmountCurrency : currencyCode
+</span>
+															</li>
+															<li>
+<i class="fa fa-fw">
+</i><span class="selectable" id="e134"> internalAssessmentCharacteristic : collateralAssessmentCharacteristic
+</span>
+															</li>
+															<li>
+<i class="fa fa-fw">
+</i><span class="selectable" id="e135"> collateralAssessmentComment : string
+</span>
+															</li>
+
+														</ul>
+
+													</li>
+
+												</ul>
+
+											</li>
+
+										</ul>
+
+									</li>
+
+								</ul>
+
+							</li>
+
+						</ul>
+
+					</li>
+
+				</ul>
+
+			</li>
+			<li>
+<i class="fa fa-caret-down fa-fw" onclick="expand_or_collapse(this)">
+</i>				CollateralResponse				<ul style="display:block">
+					<li>
+<i class="fa fa-caret-down fa-fw" onclick="expand_or_collapse(this)">
+</i><i class="fa fa-key fa-fw">
+</i><span class="selectable" id="e136"> responseHeader
+</span>						<ul style="display:block">
+							<li>
+<i class="fa fa-caret-down fa-fw" onclick="expand_or_collapse(this)">
+</i><i class="fa fa-key fa-fw">
+</i><span class="selectable" id="e137"> requestId1
+</span>								<ul style="display:block">
+									<li>
+<i class="fa fa-fw">
+</i><i class="fa fa-key fa-fw">
+</i><span class="selectable" id="e138"> requestId : charMax50
+</span>
+									</li>
+
+								</ul>
+
+							</li>
+							<li>
+<i class="fa fa-fw">
+</i><i class="fa fa-key fa-fw">
+</i><span class="selectable" id="e139"> responseId : charMax50
+</span>
+							</li>
+							<li>
+<i class="fa fa-fw">
+</i><i class="fa fa-key fa-fw">
+</i><span class="selectable" id="e140"> timestamp : dateTime
+</span>
+							</li>
+							<li>
+<i class="fa fa-fw">
+</i><i class="fa fa-key fa-fw">
+</i><span class="selectable" id="e141"> serviceVersion : charMax10
+</span>
+							</li>
+							<li>
+<i class="fa fa-caret-down fa-fw" onclick="expand_or_collapse(this)">
+</i><span class="selectable" id="e142"> language : language
+</span>								<ul style="display:block">
+									<li>
+<i class="fa fa-fw">
+</i><span class="selectable" id="e143"> code : char3
+</span>
+									</li>
+									<li>
+<i class="fa fa-fw">
+</i><span class="selectable" id="e144"> designation : charMax30
+</span>
+									</li>
+
+								</ul>
+
+							</li>
+
+						</ul>
+
+					</li>
+					<li>
+<i class="fa fa-caret-down fa-fw" onclick="expand_or_collapse(this)">
+</i><i class="fa fa-key fa-fw">
+</i><span class="selectable" id="e145"> responseStatus
+</span>						<ul style="display:block">
+							<li>
+<i class="fa fa-fw">
+</i><i class="fa fa-key fa-fw">
+</i><span class="selectable" id="e146"> statusCode : statusCodeType
+</span>
+							</li>
+							<li>
+<i class="fa fa-caret-down fa-fw" onclick="expand_or_collapse(this)">
+</i><span class="selectable" id="e147"> messages : responseStatusMessages
+</span>								<ul style="display:block">
+									<li>
+<i class="fa fa-caret-down fa-fw" onclick="expand_or_collapse(this)">
+</i><i class="fa fa-key fa-fw">
+</i><span style="font-weight:bold"> [M]
+</span><span class="selectable" id="e148"> message : responseStatusMessage
+</span>										<ul style="display:block">
+											<li>
+<i class="fa fa-fw">
+</i><i class="fa fa-key fa-fw">
+</i><span class="selectable" id="e149"> nature : responseMessageNature
+</span>
+											</li>
+											<li>
+<i class="fa fa-fw">
+</i><i class="fa fa-key fa-fw">
+</i><span class="selectable" id="e150"> code : char6
+</span>
+											</li>
+											<li>
+<i class="fa fa-fw">
+</i><i class="fa fa-key fa-fw">
+</i><span style="font-weight:bold"> [M]
+</span><span class="selectable" id="e151"> line : string
+</span>
+											</li>
+											<li>
+<i class="fa fa-caret-down fa-fw" onclick="expand_or_collapse(this)">
+</i><span class="selectable" id="e152"> errorInformation : errorInformation
+</span>												<ul style="display:block">
+													<li>
+<i class="fa fa-fw">
+</i><span class="selectable" id="e153"> errorCode : string
+</span>
+													</li>
+													<li>
+<i class="fa fa-fw">
+</i><span class="selectable" id="e154"> convertedCode : string
+</span>
+													</li>
+													<li>
+<i class="fa fa-fw">
+</i><span class="selectable" id="e155"> errorMessage : string
+</span>
+													</li>
+
+												</ul>
+
+											</li>
+
+										</ul>
+
+									</li>
+
+								</ul>
+
+							</li>
+
+						</ul>
+
+					</li>
+					<li>
+<i class="fa fa-caret-down fa-fw" onclick="expand_or_collapse(this)">
+</i><span class="selectable" id="e156"> createCollateralResponse : createCollateralResponse
+</span>						<ul style="display:block">
+							<li>
+<i class="fa fa-caret-down fa-fw" onclick="expand_or_collapse(this)">
+</i><i class="fa fa-key fa-fw">
+</i><span class="selectable" id="e157"> collateralIdentifier : collateralIdentifier
+</span>								<ul style="display:block">
+									<li>
+<i class="fa fa-fw">
+</i><i class="fa fa-key fa-fw">
+</i><span class="selectable" id="e158"> branchCode : branchCode
+</span>
+									</li>
+									<li>
+<i class="fa fa-fw">
+</i><i class="fa fa-key fa-fw">
+</i><span class="selectable" id="e159"> collateralNumber : char6
+</span>
+									</li>
+
+								</ul>
+
+							</li>
+
+						</ul>
+
+					</li>
+
+				</ul>
+
+			</li>
+
+		</ul>
+
+	</li>
+
+</ul>
+          </div>
+          
+          <div class="detail">
+				<p align="left">
+					Légende :<br />
+				</p>
+            <ul>
+               <li align="left">
+                  <i class="fa fa-key fa-fw">
+                  </i>
+                  = Elément obligatoire en saisie.
+               </li>
+               <li align="left">
+                  <span style="font-weight:bold"> [M]
+                  </span>
+                  = Elément multiple (0 à n occurrences).
+               </li>
+               <li align="left">
+                  <span style="font-weight:bold"> [C]
+                  </span>
+                  = Elément composé d'un choix à effectuer. Un seul choix autorisé.
+               </li>
+            </ul>
+            <p align="left">
+               Remarque : Un même élément peut regrouper plusieurs caractéristiques
+            </p>          
+          </div>
+          
+        </div>
+<div class="detail-column" id="d0" style="display:none">
+	<div class="detail">
+			<div class="mock-list">
+				<b>Nom : </b>requestHeader
+			</div>
+			<div class="mock-list">
+				<b>Description : </b>Elément à inclure en en-tête de chaque requête
+			</div>
+
+	</div>
+
+</div>
+<div class="detail-column" id="d1" style="display:none">
+	<div class="detail">
+			<div class="mock-list">
+				<b>Nom : </b>requestId1
+			</div>
+			<div class="mock-list">
+				<b>Description : </b>Identifiant de la requête.
+			</div>
+
+	</div>
+
+</div>
+<div class="detail-column" id="d2" style="display:none">
+	<div class="detail">
+			<div class="mock-list">
+				<b>Nom : </b>requestId
+			</div>
+			<div class="mock-list">
+				<b>Description : </b>Identifiant de requête et de réponse
+			</div>
+
+	</div>
+	<div class="detail">
+			<div class="mock-list">
+				<b>Nom : </b> <a href="../types/charMax50.html">charMax50</a>
+			</div>
+			<div class="mock-list">
+				<b> Description : </b>Chaîne composée d'au plus 50 caractères.
+			</div>
+			<div class="mock-list">
+				<b>Format : </b>string
+			</div>
+			<div class="mock-list">
+				<b>Longueur mini-maxi : </b>1 - 50
+			</div>
+
+	</div>
+
+</div>
+<div class="detail-column" id="d3" style="display:none">
+	<div class="detail">
+			<div class="mock-list">
+				<b>Nom : </b>serviceName
+			</div>
+			<div class="mock-list">
+				<b>Description : </b>Nom du service invoqué.
+			</div>
+
+	</div>
+	<div class="detail">
+			<div class="mock-list">
+				<b>Nom : </b> <a href="../types/charMax50.html">charMax50</a>
+			</div>
+			<div class="mock-list">
+				<b> Description : </b>Chaîne composée d'au plus 50 caractères.
+			</div>
+			<div class="mock-list">
+				<b>Format : </b>string
+			</div>
+			<div class="mock-list">
+				<b>Longueur mini-maxi : </b>1 - 50
+			</div>
+
+	</div>
+
+</div>
+<div class="detail-column" id="d4" style="display:none">
+	<div class="detail">
+			<div class="mock-list">
+				<b>Nom : </b>timestamp
+			</div>
+			<div class="mock-list">
+				<b>Description : </b>Date et heure de lancement du service.
+			</div>
+
+	</div>
+	<div class="detail">
+			<div class="mock-list">
+				<b>Nom : </b> <a href="../types/dateTime.html">dateTime</a>
+			</div>
+
+	</div>
+
+</div>
+<div class="detail-column" id="d5" style="display:none">
+	<div class="detail">
+			<div class="mock-list">
+				<b>Nom : </b>originalName
+			</div>
+			<div class="mock-list">
+				<b>Description : </b>Nom de l'application à l'origine de la requête.
+			</div>
+
+	</div>
+	<div class="detail">
+			<div class="mock-list">
+				<b>Nom : </b> <a href="../types/charMax50.html">charMax50</a>
+			</div>
+			<div class="mock-list">
+				<b> Description : </b>Chaîne composée d'au plus 50 caractères.
+			</div>
+			<div class="mock-list">
+				<b>Format : </b>string
+			</div>
+			<div class="mock-list">
+				<b>Longueur mini-maxi : </b>1 - 50
+			</div>
+
+	</div>
+
+</div>
+<div class="detail-column" id="d6" style="display:none">
+	<div class="detail">
+			<div class="mock-list">
+				<b>Nom : </b>originalId
+			</div>
+			<div class="mock-list">
+				<b>Description : </b>Identifiant de la requête d'origine (dans le cas où le service courant est appelé par un autre service).
+			</div>
+
+	</div>
+	<div class="detail">
+			<div class="mock-list">
+				<b>Nom : </b> <a href="../types/charMax50.html">charMax50</a>
+			</div>
+			<div class="mock-list">
+				<b> Description : </b>Chaîne composée d'au plus 50 caractères.
+			</div>
+			<div class="mock-list">
+				<b>Format : </b>string
+			</div>
+			<div class="mock-list">
+				<b>Longueur mini-maxi : </b>1 - 50
+			</div>
+
+	</div>
+
+</div>
+<div class="detail-column" id="d7" style="display:none">
+	<div class="detail">
+			<div class="mock-list">
+				<b>Nom : </b>originalTimestamp
+			</div>
+			<div class="mock-list">
+				<b>Description : </b>Date et heure de lancement du service d'origine (dans le cas où le service courant est appelé par un autre service).
+			</div>
+
+	</div>
+	<div class="detail">
+			<div class="mock-list">
+				<b>Nom : </b> <a href="../types/dateTime.html">dateTime</a>
+			</div>
+
+	</div>
+
+</div>
+<div class="detail-column" id="d8" style="display:none">
+	<div class="detail">
+			<div class="mock-list">
+				<b>Nom : </b>languageCode
+			</div>
+			<div class="mock-list">
+				<b>Description : </b>Code permettant de forcer la langue de restitution des informations pouvant être traduites (messages, libellés, nom d'un client ...).
+Le code langue doit exister en nomenclature 190. Si ce n'est pas le cas, il est ignoré.
+			</div>
+
+	</div>
+	<div class="detail">
+			<div class="mock-list">
+				<b>Nom : </b> <a href="../types/languageCode.html">languageCode</a>
+			</div>
+			<div class="mock-list">
+				<b> Description : </b>Code langue.
+			</div>
+			<div class="mock-list">
+				<b>Format : </b>string
+			</div>
+			<div class="mock-list">
+				<b>Longueur fixe : </b>3
+			</div>
+
+	</div>
+
+</div>
+<div class="detail-column" id="d9" style="display:none">
+	<div class="detail">
+			<div class="mock-list">
+				<b>Nom : </b>userCode
+			</div>
+			<div class="mock-list">
+				<b>Description : </b>Code utilisateur à considérer pour le traitement de la requête.
+			</div>
+
+	</div>
+	<div class="detail">
+			<div class="mock-list">
+				<b>Nom : </b> <a href="../types/charMax10.html">charMax10</a>
+			</div>
+			<div class="mock-list">
+				<b> Description : </b>Chaîne composée d'au plus 10 caractères.
+			</div>
+			<div class="mock-list">
+				<b>Format : </b>string
+			</div>
+			<div class="mock-list">
+				<b>Longueur mini-maxi : </b>1 - 10
+			</div>
+
+	</div>
+
+</div>
+<div class="detail-column" id="d10" style="display:none">
+	<div class="detail">
+			<div class="mock-list">
+				<b>Nom : </b>channelCode
+			</div>
+			<div class="mock-list">
+				<b>Description : </b>Code canal.
+Le canal est paramétré dans le programme de gestion des canaux.
+			</div>
+
+	</div>
+	<div class="detail">
+			<div class="mock-list">
+				<b>Nom : </b> <a href="../types/channelCode.html">channelCode</a>
+			</div>
+			<div class="mock-list">
+				<b> Description : </b>Code d'un canal.
+			</div>
+			<div class="mock-list">
+				<b>Format : </b>string
+			</div>
+			<div class="mock-list">
+				<b>Longueur mini-maxi : </b>0 - 6
+			</div>
+
+	</div>
+
+</div>
+<div class="detail-column" id="d11" style="display:none">
+	<div class="detail">
+			<div class="mock-list">
+				<b>Nom : </b>createCollateralRequest
+			</div>
+
+	</div>
+	<div class="detail">
+			<div class="mock-list">
+				<b>Nom : </b> <a href="../types/createCollateralRequest.html">createCollateralRequest</a>
+			</div>
+			<div class="mock-list">
+				<b> Description : </b>Requête d'une création de garantie.
+			</div>
+
+	</div>
+
+</div>
+<div class="detail-column" id="d12" style="display:none">
+	<div class="detail">
+			<div class="mock-list">
+				<b>Nom : </b>identifier
+			</div>
+			<div class="mock-list">
+				<b>Description : </b>Identifiant: Agence et code nature de la garantie.
+			</div>
+
+	</div>
+	<div class="detail">
+			<div class="mock-list">
+				<b>Nom : </b> <a href="../types/collateralCreateIdentifier.html">collateralCreateIdentifier</a>
+			</div>
+			<div class="mock-list">
+				<b> Description : </b>Identifiant d'une garantie.
+			</div>
+
+	</div>
+
+</div>
+<div class="detail-column" id="d13" style="display:none">
+	<div class="detail">
+			<div class="mock-list">
+				<b>Nom : </b>branchCode
+			</div>
+			<div class="mock-list">
+				<b>Description : </b>Agence de la garantie.
+			</div>
+
+	</div>
+	<div class="detail">
+			<div class="mock-list">
+				<b>Nom : </b> <a href="../types/branchCode.html">branchCode</a>
+			</div>
+			<div class="mock-list">
+				<b> Description : </b>Code d'une agence.
+			</div>
+			<div class="mock-list">
+				<b>Format : </b>string
+			</div>
+			<div class="mock-list">
+				<b>Longueur fixe : </b>5
+			</div>
+
+	</div>
+
+</div>
+<div class="detail-column" id="d14" style="display:none">
+	<div class="detail">
+			<div class="mock-list">
+				<b>Nom : </b>natureNumber
+			</div>
+			<div class="mock-list">
+				<b>Description : </b>Nature de la garantie.
+			</div>
+
+	</div>
+	<div class="detail">
+			<div class="mock-list">
+				<b>Nom : </b> <a href="../types/collateralNatureCode.html">collateralNatureCode</a>
+			</div>
+			<div class="mock-list">
+				<b> Description : </b>Code nature de garantie.
+			</div>
+			<div class="mock-list">
+				<b>Format : </b>string
+			</div>
+			<div class="mock-list">
+				<b>Longueur fixe : </b>3
+			</div>
+
+	</div>
+
+</div>
+<div class="detail-column" id="d15" style="display:none">
+	<div class="detail">
+			<div class="mock-list">
+				<b>Nom : </b>globalFeatures
+			</div>
+			<div class="mock-list">
+				<b>Description : </b>Caractéristiques globales de la garantie.
+			</div>
+
+	</div>
+	<div class="detail">
+			<div class="mock-list">
+				<b>Nom : </b> <a href="../types/collateralGlobalFeatures.html">collateralGlobalFeatures</a>
+			</div>
+			<div class="mock-list">
+				<b> Description : </b>Caractéristiques de la garantie.
+			</div>
+
+	</div>
+
+</div>
+<div class="detail-column" id="d16" style="display:none">
+	<div class="detail">
+			<div class="mock-list">
+				<b>Nom : </b>collateralFileType
+			</div>
+			<div class="mock-list">
+				<b>Description : </b>Type de dossier.
+			</div>
+
+	</div>
+	<div class="detail">
+			<div class="mock-list">
+				<b>Nom : </b> <a href="../types/collateralFileTypeCode.html">collateralFileTypeCode</a>
+			</div>
+			<div class="mock-list">
+				<b> Description : </b>Type de dossier.
+			</div>
+			<div class="mock-list">
+				<b>Format : </b>string
+			</div>
+			<div class="mock-list">
+				<b>Longueur fixe : </b>3
+			</div>
+
+	</div>
+
+</div>
+<div class="detail-column" id="d17" style="display:none">
+	<div class="detail">
+			<div class="mock-list">
+				<b>Nom : </b>collateralReference
+			</div>
+			<div class="mock-list">
+				<b>Description : </b>Référence.
+			</div>
+
+	</div>
+	<div class="detail">
+			<div class="mock-list">
+				<b>Nom : </b> <a href="../types/charMax15.html">charMax15</a>
+			</div>
+			<div class="mock-list">
+				<b> Description : </b>Chaîne composée d'au plus 15 caractères.
+			</div>
+			<div class="mock-list">
+				<b>Format : </b>string
+			</div>
+			<div class="mock-list">
+				<b>Longueur mini-maxi : </b>1 - 15
+			</div>
+
+	</div>
+
+</div>
+<div class="detail-column" id="d18" style="display:none">
+	<div class="detail">
+			<div class="mock-list">
+				<b>Nom : </b>scopeInformation
+			</div>
+			<div class="mock-list">
+				<b>Description : </b>Information du champ porté et les champs liés.
+			</div>
+
+	</div>
+	<div class="detail">
+			<div class="mock-list">
+				<b>Nom : </b> <a href="../types/collateralScopeInformation.html">collateralScopeInformation</a>
+			</div>
+			<div class="mock-list">
+				<b> Description : </b>Informations liées à la portée d'une garantie.
+			</div>
+
+	</div>
+
+</div>
+<div class="detail-column" id="d19" style="display:none">
+	<div class="detail">
+			<div class="mock-list">
+				<b>Nom : </b>scope
+			</div>
+			<div class="mock-list">
+				<b>Description : </b>Portée de la garantie.
+			</div>
+
+	</div>
+	<div class="detail">
+			<div class="mock-list">
+				<b>Nom : </b> <a href="../types/collateralScope.html">collateralScope</a>
+			</div>
+			<div class="mock-list">
+				<b> Description : </b>Portée de la garantie.
+			</div>
+			<div class="mock-list">
+				<b>Format : </b>string
+			</div>
+			<div class="mock-list">
+				<b>Valeurs possibles : </b>					<table class="table_enum" class="table_enum">
+						<tr>
+						<td> S
+						</td>						<td class="td_right"> Spécifique
+						</td>
+						</tr>
+						<tr>
+						<td> G
+						</td>						<td class="td_right"> Globale
+						</td>
+						</tr>
+
+					</table>
+
+			</div>
+
+	</div>
+
+</div>
+<div class="detail-column" id="d20" style="display:none">
+	<div class="detail">
+			<div class="mock-list">
+				<b>Nom : </b>scopeOption
+			</div>
+			<div class="mock-list">
+				<b>Description : </b>Informations liées à l'ajout des nouveaux engagements à la garantie.
+			</div>
+
+	</div>
+	<div class="detail">
+			<div class="mock-list">
+				<b>Nom : </b> <a href="../types/collateralScopeOption.html">collateralScopeOption</a>
+			</div>
+			<div class="mock-list">
+				<b> Description : </b>Informations liées à l'ajout des nouveaux engagements à la garantie.
+			</div>
+
+	</div>
+
+</div>
+<div class="detail-column" id="d21" style="display:none">
+	<div class="detail">
+			<div class="mock-list">
+				<b>Nom : </b>coverExtensionToNewCommitments
+			</div>
+			<div class="mock-list">
+				<b>Description : </b>Ajout des nouveaux engagements à la garantie.
+			</div>
+
+	</div>
+	<div class="detail">
+			<div class="mock-list">
+				<b>Nom : </b> <a href="../types/boolean.html">boolean</a>
+			</div>
+
+	</div>
+
+</div>
+<div class="detail-column" id="d22" style="display:none">
+	<div class="detail">
+			<div class="mock-list">
+				<b>Nom : </b>collateralBranchLimitedExtension
+			</div>
+			<div class="mock-list">
+				<b>Description : </b>Les nouveaux engagements doivent être sur l'agence de la garantie.
+			</div>
+
+	</div>
+	<div class="detail">
+			<div class="mock-list">
+				<b>Nom : </b> <a href="../types/boolean.html">boolean</a>
+			</div>
+
+	</div>
+
+</div>
+<div class="detail-column" id="d23" style="display:none">
+	<div class="detail">
+			<div class="mock-list">
+				<b>Nom : </b>coverType
+			</div>
+			<div class="mock-list">
+				<b>Description : </b>Type de couverture.
+			</div>
+
+	</div>
+	<div class="detail">
+			<div class="mock-list">
+				<b>Nom : </b> <a href="../types/collateralCoverType.html">collateralCoverType</a>
+			</div>
+			<div class="mock-list">
+				<b> Description : </b>Assiette de couverture.
+			</div>
+			<div class="mock-list">
+				<b>Format : </b>string
+			</div>
+			<div class="mock-list">
+				<b>Longueur fixe : </b>3
+			</div>
+
+	</div>
+
+</div>
+<div class="detail-column" id="d24" style="display:none">
+	<div class="detail">
+			<div class="mock-list">
+				<b>Nom : </b>fixedCoveredAmount
+			</div>
+			<div class="mock-list">
+				<b>Description : </b>Montant de couvert fixe ou proportionnel.
+			</div>
+
+	</div>
+	<div class="detail">
+			<div class="mock-list">
+				<b>Nom : </b> <a href="../types/fixedCoveredAmount.html">fixedCoveredAmount</a>
+			</div>
+			<div class="mock-list">
+				<b> Description : </b>Montant couvert fixe ou proportionnel.
+			</div>
+			<div class="mock-list">
+				<b>Format : </b>string
+			</div>
+			<div class="mock-list">
+				<b>Valeurs possibles : </b>					<table class="table_enum" class="table_enum">
+						<tr>
+						<td> N
+						</td>						<td class="td_right"> Proportionnelle
+						</td>
+						</tr>
+						<tr>
+						<td> O
+						</td>						<td class="td_right"> Fixe
+						</td>
+						</tr>
+
+					</table>
+
+			</div>
+
+	</div>
+
+</div>
+<div class="detail-column" id="d25" style="display:none">
+	<div class="detail">
+			<div class="mock-list">
+				<b>Nom : </b>apportionment
+			</div>
+			<div class="mock-list">
+				<b>Description : </b>Méthode de ventilation.
+			</div>
+
+	</div>
+	<div class="detail">
+			<div class="mock-list">
+				<b>Nom : </b> <a href="../types/collateralApportionment.html">collateralApportionment</a>
+			</div>
+			<div class="mock-list">
+				<b> Description : </b>Informations liées à la ventilation des engagements.
+			</div>
+
+	</div>
+
+</div>
+<div class="detail-column" id="d26" style="display:none">
+	<div class="detail">
+			<div class="mock-list">
+				<b>Nom : </b>automaticApportionment
+			</div>
+			<div class="mock-list">
+				<b>Description : </b>Ventilation automatique.
+			</div>
+
+	</div>
+	<div class="detail">
+			<div class="mock-list">
+				<b>Nom : </b> <a href="../types/boolean.html">boolean</a>
+			</div>
+
+	</div>
+
+</div>
+<div class="detail-column" id="d27" style="display:none">
+	<div class="detail">
+			<div class="mock-list">
+				<b>Nom : </b>apportionmentMethod
+			</div>
+			<div class="mock-list">
+				<b>Description : </b>Méthode de ventilation.
+			</div>
+
+	</div>
+	<div class="detail">
+			<div class="mock-list">
+				<b>Nom : </b> <a href="../types/char3.html">char3</a>
+			</div>
+			<div class="mock-list">
+				<b> Description : </b>Type avec un nombre de caractères égal à 3.
+			</div>
+			<div class="mock-list">
+				<b>Format : </b>string
+			</div>
+			<div class="mock-list">
+				<b>Longueur fixe : </b>3
+			</div>
+
+	</div>
+
+</div>
+<div class="detail-column" id="d28" style="display:none">
+	<div class="detail">
+			<div class="mock-list">
+				<b>Nom : </b>collateralCurrency
+			</div>
+			<div class="mock-list">
+				<b>Description : </b>Devise de la garantie.
+			</div>
+
+	</div>
+	<div class="detail">
+			<div class="mock-list">
+				<b>Nom : </b> <a href="../types/currencyCode.html">currencyCode</a>
+			</div>
+			<div class="mock-list">
+				<b> Description : </b>Code devise.
+			</div>
+			<div class="mock-list">
+				<b>Format : </b>string
+			</div>
+			<div class="mock-list">
+				<b>Longueur fixe : </b>3
+			</div>
+
+	</div>
+
+</div>
+<div class="detail-column" id="d29" style="display:none">
+	<div class="detail">
+			<div class="mock-list">
+				<b>Nom : </b>collateralAmount
+			</div>
+			<div class="mock-list">
+				<b>Description : </b>Montant total de la garantie.
+			</div>
+
+	</div>
+	<div class="detail">
+			<div class="mock-list">
+				<b>Nom : </b> <a href="../types/decimal19_4.html">decimal19_4</a>
+			</div>
+			<div class="mock-list">
+				<b> Description : </b>Type décimal à 19 chiffres dont 4 décimales.
+			</div>
+			<div class="mock-list">
+				<b>Format : </b>decimal
+			</div>
+			<div class="mock-list">
+				<b>Nombre total de chiffres : </b>19
+			</div>
+
+	</div>
+
+</div>
+<div class="detail-column" id="d30" style="display:none">
+	<div class="detail">
+			<div class="mock-list">
+				<b>Nom : </b>collateralCeilingAmount
+			</div>
+			<div class="mock-list">
+				<b>Description : </b>Montant du plafond de la garantie.
+			</div>
+
+	</div>
+	<div class="detail">
+			<div class="mock-list">
+				<b>Nom : </b> <a href="../types/decimal19_4.html">decimal19_4</a>
+			</div>
+			<div class="mock-list">
+				<b> Description : </b>Type décimal à 19 chiffres dont 4 décimales.
+			</div>
+			<div class="mock-list">
+				<b>Format : </b>decimal
+			</div>
+			<div class="mock-list">
+				<b>Nombre total de chiffres : </b>19
+			</div>
+
+	</div>
+
+</div>
+<div class="detail-column" id="d31" style="display:none">
+	<div class="detail">
+			<div class="mock-list">
+				<b>Nom : </b>mainCustomer
+			</div>
+			<div class="mock-list">
+				<b>Description : </b>Client principal de la garantie.
+			</div>
+
+	</div>
+	<div class="detail">
+			<div class="mock-list">
+				<b>Nom : </b> <a href="../types/customerCode.html">customerCode</a>
+			</div>
+			<div class="mock-list">
+				<b> Description : </b>Code client.
+			</div>
+			<div class="mock-list">
+				<b>Format : </b>string
+			</div>
+			<div class="mock-list">
+				<b>Longueur mini-maxi : </b>1 - 15
+			</div>
+
+	</div>
+
+</div>
+<div class="detail-column" id="d32" style="display:none">
+	<div class="detail">
+			<div class="mock-list">
+				<b>Nom : </b>collateralAccountingAccount
+			</div>
+			<div class="mock-list">
+				<b>Description : </b>Identifiant d'un compte de comptabilisation dans le cas d'une comptabilisation par montant de garantie.
+			</div>
+
+	</div>
+	<div class="detail">
+			<div class="mock-list">
+				<b>Nom : </b> <a href="../types/internalAccountKey.html">internalAccountKey</a>
+			</div>
+			<div class="mock-list">
+				<b> Description : </b>Identifiant de compte au format interne.
+			</div>
+
+	</div>
+
+</div>
+<div class="detail-column" id="d33" style="display:none">
+	<div class="detail">
+			<div class="mock-list">
+				<b>Nom : </b>branch
+			</div>
+			<div class="mock-list">
+				<b>Description : </b>Agence du compte.
+			</div>
+			<div class="mock-list">
+				<b>Commentaire : </b><p>Les agences sont d&eacute;finies dans la nomenclature <strong>001</strong>.</p>
+
+			</div>
+
+	</div>
+	<div class="detail">
+			<div class="mock-list">
+				<b>Nom : </b> <a href="../types/char5.html">char5</a>
+			</div>
+			<div class="mock-list">
+				<b> Description : </b>Type avec un nombre de caractères égal à 5.
+			</div>
+			<div class="mock-list">
+				<b>Format : </b>string
+			</div>
+			<div class="mock-list">
+				<b>Longueur fixe : </b>5
+			</div>
+
+	</div>
+
+</div>
+<div class="detail-column" id="d34" style="display:none">
+	<div class="detail">
+			<div class="mock-list">
+				<b>Nom : </b>currency
+			</div>
+			<div class="mock-list">
+				<b>Description : </b>Devise du compte.
+			</div>
+			<div class="mock-list">
+				<b>Commentaire : </b><p>Les devises sont d&eacute;finies dans les nomenclatures <strong>002</strong> (devises alphanum&eacute;riques) et <strong>005</strong> (devises num&eacute;riques).</p>
+
+			</div>
+
+	</div>
+	<div class="detail">
+			<div class="mock-list">
+				<b>Nom : </b> <a href="../types/currencyCode.html">currencyCode</a>
+			</div>
+			<div class="mock-list">
+				<b> Description : </b>Code devise.
+			</div>
+			<div class="mock-list">
+				<b>Format : </b>string
+			</div>
+			<div class="mock-list">
+				<b>Longueur fixe : </b>3
+			</div>
+
+	</div>
+
+</div>
+<div class="detail-column" id="d35" style="display:none">
+	<div class="detail">
+			<div class="mock-list">
+				<b>Nom : </b>account
+			</div>
+			<div class="mock-list">
+				<b>Description : </b>Numéro du compte.
+			</div>
+
+	</div>
+	<div class="detail">
+			<div class="mock-list">
+				<b>Nom : </b> <a href="../types/charMax11.html">charMax11</a>
+			</div>
+			<div class="mock-list">
+				<b> Description : </b>Chaîne composée d'au plus 11 caractères.
+			</div>
+			<div class="mock-list">
+				<b>Format : </b>string
+			</div>
+			<div class="mock-list">
+				<b>Longueur mini-maxi : </b>1 - 11
+			</div>
+
+	</div>
+
+</div>
+<div class="detail-column" id="d36" style="display:none">
+	<div class="detail">
+			<div class="mock-list">
+				<b>Nom : </b>suffix
+			</div>
+			<div class="mock-list">
+				<b>Description : </b>Suffixe du compte.
+			</div>
+
+	</div>
+	<div class="detail">
+			<div class="mock-list">
+				<b>Nom : </b> <a href="../types/charMax2.html">charMax2</a>
+			</div>
+			<div class="mock-list">
+				<b> Description : </b>Chaîne composée d'au plus 2 caractères.
+			</div>
+			<div class="mock-list">
+				<b>Format : </b>string
+			</div>
+			<div class="mock-list">
+				<b>Longueur mini-maxi : </b>1 - 2
+			</div>
+
+	</div>
+
+</div>
+<div class="detail-column" id="d37" style="display:none">
+	<div class="detail">
+			<div class="mock-list">
+				<b>Nom : </b>collateralOverallPercentage
+			</div>
+			<div class="mock-list">
+				<b>Description : </b>Pourcentage globale.
+			</div>
+
+	</div>
+	<div class="detail">
+			<div class="mock-list">
+				<b>Nom : </b> <a href="../types/decimal5_2.html">decimal5_2</a>
+			</div>
+			<div class="mock-list">
+				<b> Description : </b>Type décimal à 5 chiffres dont 2 décimales.
+			</div>
+			<div class="mock-list">
+				<b>Format : </b>decimal
+			</div>
+			<div class="mock-list">
+				<b>Nombre total de chiffres : </b>5
+			</div>
+
+	</div>
+
+</div>
+<div class="detail-column" id="d38" style="display:none">
+	<div class="detail">
+			<div class="mock-list">
+				<b>Nom : </b>commitmentAutomaticRenewal
+			</div>
+			<div class="mock-list">
+				<b>Description : </b>Renouvellement automatique de l'engagement.
+			</div>
+
+	</div>
+	<div class="detail">
+			<div class="mock-list">
+				<b>Nom : </b> <a href="../types/boolean.html">boolean</a>
+			</div>
+
+	</div>
+
+</div>
+<div class="detail-column" id="d39" style="display:none">
+	<div class="detail">
+			<div class="mock-list">
+				<b>Nom : </b>materialValuePercentage
+			</div>
+			<div class="mock-list">
+				<b>Description : </b>Pourcentage de la valeur globale pour la valeur matérielle.
+			</div>
+
+	</div>
+	<div class="detail">
+			<div class="mock-list">
+				<b>Nom : </b> <a href="../types/decimal5_2.html">decimal5_2</a>
+			</div>
+			<div class="mock-list">
+				<b> Description : </b>Type décimal à 5 chiffres dont 2 décimales.
+			</div>
+			<div class="mock-list">
+				<b>Format : </b>decimal
+			</div>
+			<div class="mock-list">
+				<b>Nombre total de chiffres : </b>5
+			</div>
+
+	</div>
+
+</div>
+<div class="detail-column" id="d40" style="display:none">
+	<div class="detail">
+			<div class="mock-list">
+				<b>Nom : </b>collateralPriorityCharges
+			</div>
+			<div class="mock-list">
+				<b>Description : </b>Charges prioritaires.
+			</div>
+
+	</div>
+	<div class="detail">
+			<div class="mock-list">
+				<b>Nom : </b> <a href="../types/decimal19_4.html">decimal19_4</a>
+			</div>
+			<div class="mock-list">
+				<b> Description : </b>Type décimal à 19 chiffres dont 4 décimales.
+			</div>
+			<div class="mock-list">
+				<b>Format : </b>decimal
+			</div>
+			<div class="mock-list">
+				<b>Nombre total de chiffres : </b>19
+			</div>
+
+	</div>
+
+</div>
+<div class="detail-column" id="d41" style="display:none">
+	<div class="detail">
+			<div class="mock-list">
+				<b>Nom : </b>implementationDate
+			</div>
+			<div class="mock-list">
+				<b>Description : </b>Date de début de la garantie.
+			</div>
+
+	</div>
+	<div class="detail">
+			<div class="mock-list">
+				<b>Nom : </b> <a href="../types/date.html">date</a>
+			</div>
+
+	</div>
+
+</div>
+<div class="detail-column" id="d42" style="display:none">
+	<div class="detail">
+			<div class="mock-list">
+				<b>Nom : </b>maturityDate
+			</div>
+			<div class="mock-list">
+				<b>Description : </b>Date d'échéance.
+			</div>
+
+	</div>
+	<div class="detail">
+			<div class="mock-list">
+				<b>Nom : </b> <a href="../types/date.html">date</a>
+			</div>
+
+	</div>
+
+</div>
+<div class="detail-column" id="d43" style="display:none">
+	<div class="detail">
+			<div class="mock-list">
+				<b>Nom : </b>collateralType
+			</div>
+			<div class="mock-list">
+				<b>Description : </b>Type de la garantie.
+			</div>
+
+	</div>
+	<div class="detail">
+			<div class="mock-list">
+				<b>Nom : </b> <a href="../types/collateralType.html">collateralType</a>
+			</div>
+			<div class="mock-list">
+				<b> Description : </b>Type de la garantie.
+			</div>
+			<div class="mock-list">
+				<b>Format : </b>string
+			</div>
+			<div class="mock-list">
+				<b>Valeurs possibles : </b>					<table class="table_enum" class="table_enum">
+						<tr>
+						<td> O
+						</td>						<td class="td_right"> Nommée
+						</td>
+						</tr>
+						<tr>
+						<td> N
+						</td>						<td class="td_right"> Générale
+						</td>
+						</tr>
+
+					</table>
+
+			</div>
+
+	</div>
+
+</div>
+<div class="detail-column" id="d44" style="display:none">
+	<div class="detail">
+			<div class="mock-list">
+				<b>Nom : </b>collateralQualityCode
+			</div>
+			<div class="mock-list">
+				<b>Description : </b>Qualité de la garantie.
+			</div>
+
+	</div>
+	<div class="detail">
+			<div class="mock-list">
+				<b>Nom : </b> <a href="../types/collateralQualityCode.html">collateralQualityCode</a>
+			</div>
+			<div class="mock-list">
+				<b> Description : </b>Code qualité garantie.
+			</div>
+			<div class="mock-list">
+				<b>Format : </b>string
+			</div>
+			<div class="mock-list">
+				<b>Longueur fixe : </b>2
+			</div>
+
+	</div>
+
+</div>
+<div class="detail-column" id="d45" style="display:none">
+	<div class="detail">
+			<div class="mock-list">
+				<b>Nom : </b>externalRank
+			</div>
+			<div class="mock-list">
+				<b>Description : </b>Rang de la garantie.
+			</div>
+
+	</div>
+	<div class="detail">
+			<div class="mock-list">
+				<b>Nom : </b> <a href="../types/collateralRank.html">collateralRank</a>
+			</div>
+			<div class="mock-list">
+				<b> Description : </b>Rang de la garantie.
+			</div>
+			<div class="mock-list">
+				<b>Format : </b>string
+			</div>
+			<div class="mock-list">
+				<b>Valeurs possibles : </b>					<table class="table_enum" class="table_enum" class="table_enum" class="table_enum" class="table_enum" class="table_enum" class="table_enum" class="table_enum" class="table_enum" class="table_enum" class="table_enum" class="table_enum">
+						<tr>
+						<td> 0
+						</td>						<td class="td_right"> 0
+						</td>
+						</tr>
+						<tr>
+						<td> 1
+						</td>						<td class="td_right"> 1
+						</td>
+						</tr>
+						<tr>
+						<td> 2
+						</td>						<td class="td_right"> 2
+						</td>
+						</tr>
+						<tr>
+						<td> 3
+						</td>						<td class="td_right"> 3
+						</td>
+						</tr>
+						<tr>
+						<td> 4
+						</td>						<td class="td_right"> 4
+						</td>
+						</tr>
+						<tr>
+						<td> 5
+						</td>						<td class="td_right"> 5
+						</td>
+						</tr>
+						<tr>
+						<td> U
+						</td>						<td class="td_right"> U
+						</td>
+						</tr>
+						<tr>
+						<td> 6
+						</td>						<td class="td_right"> 6
+						</td>
+						</tr>
+						<tr>
+						<td> 7
+						</td>						<td class="td_right"> 7
+						</td>
+						</tr>
+						<tr>
+						<td> 8
+						</td>						<td class="td_right"> 8
+						</td>
+						</tr>
+						<tr>
+						<td> 9
+						</td>						<td class="td_right"> 9
+						</td>
+						</tr>
+						<tr>
+						<td>  
+						</td>						<td class="td_right">  
+						</td>
+						</tr>
+
+					</table>
+
+			</div>
+
+	</div>
+
+</div>
+<div class="detail-column" id="d46" style="display:none">
+	<div class="detail">
+			<div class="mock-list">
+				<b>Nom : </b>collateralRenewal
+			</div>
+			<div class="mock-list">
+				<b>Description : </b>Renouvellement automatique de la garantie.
+			</div>
+
+	</div>
+	<div class="detail">
+			<div class="mock-list">
+				<b>Nom : </b> <a href="../types/collateralRenewal.html">collateralRenewal</a>
+			</div>
+			<div class="mock-list">
+				<b> Description : </b>Informations liées au renouvellement automatique de la garantie.
+			</div>
+
+	</div>
+
+</div>
+<div class="detail-column" id="d47" style="display:none">
+	<div class="detail">
+			<div class="mock-list">
+				<b>Nom : </b>collateralAutomaticRenewal
+			</div>
+			<div class="mock-list">
+				<b>Description : </b>Renouvellement automatique de la garantie.
+			</div>
+
+	</div>
+	<div class="detail">
+			<div class="mock-list">
+				<b>Nom : </b> <a href="../types/boolean.html">boolean</a>
+			</div>
+
+	</div>
+
+</div>
+<div class="detail-column" id="d48" style="display:none">
+	<div class="detail">
+			<div class="mock-list">
+				<b>Nom : </b>collateralRenewalDuration
+			</div>
+			<div class="mock-list">
+				<b>Description : </b>Durée du renouvellement garantie.
+			</div>
+
+	</div>
+	<div class="detail">
+			<div class="mock-list">
+				<b>Nom : </b> <a href="../types/decimal5_0.html">decimal5_0</a>
+			</div>
+			<div class="mock-list">
+				<b> Description : </b>Type décimal à 5 chiffres dont 0 décimales.
+			</div>
+			<div class="mock-list">
+				<b>Format : </b>decimal
+			</div>
+			<div class="mock-list">
+				<b>Nombre total de chiffres : </b>5
+			</div>
+
+	</div>
+
+</div>
+<div class="detail-column" id="d49" style="display:none">
+	<div class="detail">
+			<div class="mock-list">
+				<b>Nom : </b>configurableComments
+			</div>
+			<div class="mock-list">
+				<b>Description : </b>Commentaires paramétrables.
+			</div>
+
+	</div>
+	<div class="detail">
+			<div class="mock-list">
+				<b>Nom : </b> <a href="../types/collateralConfigurableComments.html">collateralConfigurableComments</a>
+			</div>
+			<div class="mock-list">
+				<b> Description : </b>Contient des informations concernant les commentaires paramétrables d'une garantie
+			</div>
+
+	</div>
+
+</div>
+<div class="detail-column" id="d50" style="display:none">
+	<div class="detail">
+			<div class="mock-list">
+				<b>Nom : </b>configuredComment
+			</div>
+			<div class="mock-list">
+				<b>Description : </b>Commentaire paramétré pour une garantie
+			</div>
+			<div class="mock-list">
+				<b>Limite du nombre d'occurences mini-maxi : </b>aucune aucune
+			</div>
+
+	</div>
+	<div class="detail">
+			<div class="mock-list">
+				<b>Nom : </b> <a href="../types/collateralConfiguredComment.html">collateralConfiguredComment</a>
+			</div>
+			<div class="mock-list">
+				<b> Description : </b>Contient les informations concernant un commentaire paramétré pour une garantie
+			</div>
+
+	</div>
+
+</div>
+<div class="detail-column" id="d51" style="display:none">
+	<div class="detail">
+			<div class="mock-list">
+				<b>Nom : </b>commentCode
+			</div>
+			<div class="mock-list">
+				<b>Description : </b>Code du commentaire
+			</div>
+
+	</div>
+	<div class="detail">
+			<div class="mock-list">
+				<b>Nom : </b> <a href="../types/char3.html">char3</a>
+			</div>
+			<div class="mock-list">
+				<b> Description : </b>Type avec un nombre de caractères égal à 3.
+			</div>
+			<div class="mock-list">
+				<b>Format : </b>string
+			</div>
+			<div class="mock-list">
+				<b>Longueur fixe : </b>3
+			</div>
+
+	</div>
+
+</div>
+<div class="detail-column" id="d52" style="display:none">
+	<div class="detail">
+			<div class="mock-list">
+				<b>Nom : </b>commentValue
+			</div>
+			<div class="mock-list">
+				<b>Description : </b>Valeur du commentaire
+			</div>
+
+	</div>
+	<div class="detail">
+			<div class="mock-list">
+				<b>Nom : </b> <a href="../types/string.html">string</a>
+			</div>
+
+	</div>
+
+</div>
+<div class="detail-column" id="d53" style="display:none">
+	<div class="detail">
+			<div class="mock-list">
+				<b>Nom : </b>additionalDataList
+			</div>
+			<div class="mock-list">
+				<b>Description : </b>Données complémentaires.
+			</div>
+
+	</div>
+	<div class="detail">
+			<div class="mock-list">
+				<b>Nom : </b> <a href="../types/collateralAdditionalData.html">collateralAdditionalData</a>
+			</div>
+			<div class="mock-list">
+				<b> Description : </b>Contient des informations concernant les données complémentaires d'une garantie
+			</div>
+
+	</div>
+
+</div>
+<div class="detail-column" id="d54" style="display:none">
+	<div class="detail">
+			<div class="mock-list">
+				<b>Nom : </b>additionalDataDetails
+			</div>
+			<div class="mock-list">
+				<b>Description : </b>Donnée complémentaire
+			</div>
+			<div class="mock-list">
+				<b>Limite du nombre d'occurences mini-maxi : </b>aucune aucune
+			</div>
+
+	</div>
+	<div class="detail">
+			<div class="mock-list">
+				<b>Nom : </b> <a href="../types/collateralAdditionalDataDetails.html">collateralAdditionalDataDetails</a>
+			</div>
+			<div class="mock-list">
+				<b> Description : </b>Contient des informations concernant une donnée complémentaire d'une garantie
+			</div>
+
+	</div>
+
+</div>
+<div class="detail-column" id="d55" style="display:none">
+	<div class="detail">
+			<div class="mock-list">
+				<b>Nom : </b>additionalDataIdentifier
+			</div>
+			<div class="mock-list">
+				<b>Description : </b>Code de la donnée complémentaire
+			</div>
+
+	</div>
+	<div class="detail">
+			<div class="mock-list">
+				<b>Nom : </b> <a href="../types/char5.html">char5</a>
+			</div>
+			<div class="mock-list">
+				<b> Description : </b>Type avec un nombre de caractères égal à 5.
+			</div>
+			<div class="mock-list">
+				<b>Format : </b>string
+			</div>
+			<div class="mock-list">
+				<b>Longueur fixe : </b>5
+			</div>
+
+	</div>
+
+</div>
+<div class="detail-column" id="d56" style="display:none">
+	<div class="detail">
+			<div class="mock-list">
+				<b>Nom : </b>additionalDataValue
+			</div>
+			<div class="mock-list">
+				<b>Description : </b>Valeur de la donnée complémentaire
+			</div>
+
+	</div>
+	<div class="detail">
+			<div class="mock-list">
+				<b>Nom : </b> <a href="../types/charMax40.html">charMax40</a>
+			</div>
+			<div class="mock-list">
+				<b> Description : </b>Chaîne composée d'au plus 40 caractères.
+			</div>
+			<div class="mock-list">
+				<b>Format : </b>string
+			</div>
+			<div class="mock-list">
+				<b>Longueur mini-maxi : </b>1 - 40
+			</div>
+
+	</div>
+
+</div>
+<div class="detail-column" id="d57" style="display:none">
+	<div class="detail">
+			<div class="mock-list">
+				<b>Nom : </b>documentsList
+			</div>
+			<div class="mock-list">
+				<b>Description : </b>Liste des documents.
+			</div>
+
+	</div>
+	<div class="detail">
+			<div class="mock-list">
+				<b>Nom : </b> <a href="../types/collateralDocuments.html">collateralDocuments</a>
+			</div>
+			<div class="mock-list">
+				<b> Description : </b>Contient des informations concernant les documents d'une garantie
+			</div>
+
+	</div>
+
+</div>
+<div class="detail-column" id="d58" style="display:none">
+	<div class="detail">
+			<div class="mock-list">
+				<b>Nom : </b>document
+			</div>
+			<div class="mock-list">
+				<b>Description : </b>Document d'une garantie
+			</div>
+			<div class="mock-list">
+				<b>Limite du nombre d'occurences mini-maxi : </b>aucune aucune
+			</div>
+
+	</div>
+	<div class="detail">
+			<div class="mock-list">
+				<b>Nom : </b> <a href="../types/collateralDocument.html">collateralDocument</a>
+			</div>
+			<div class="mock-list">
+				<b> Description : </b>Contient des informations concernant un document d'une garantie
+			</div>
+
+	</div>
+
+</div>
+<div class="detail-column" id="d59" style="display:none">
+	<div class="detail">
+			<div class="mock-list">
+				<b>Nom : </b>documentCode
+			</div>
+			<div class="mock-list">
+				<b>Description : </b>Code du document
+			</div>
+
+	</div>
+	<div class="detail">
+			<div class="mock-list">
+				<b>Nom : </b> <a href="../types/char6.html">char6</a>
+			</div>
+			<div class="mock-list">
+				<b> Description : </b>Type avec un nombre de caractères égal à 6.
+			</div>
+			<div class="mock-list">
+				<b>Format : </b>string
+			</div>
+			<div class="mock-list">
+				<b>Longueur fixe : </b>6
+			</div>
+
+	</div>
+
+</div>
+<div class="detail-column" id="d60" style="display:none">
+	<div class="detail">
+			<div class="mock-list">
+				<b>Nom : </b>documentReference
+			</div>
+			<div class="mock-list">
+				<b>Description : </b>Référence du document
+			</div>
+
+	</div>
+	<div class="detail">
+			<div class="mock-list">
+				<b>Nom : </b> <a href="../types/charMax15.html">charMax15</a>
+			</div>
+			<div class="mock-list">
+				<b> Description : </b>Chaîne composée d'au plus 15 caractères.
+			</div>
+			<div class="mock-list">
+				<b>Format : </b>string
+			</div>
+			<div class="mock-list">
+				<b>Longueur mini-maxi : </b>1 - 15
+			</div>
+
+	</div>
+
+</div>
+<div class="detail-column" id="d61" style="display:none">
+	<div class="detail">
+			<div class="mock-list">
+				<b>Nom : </b>receiptDate
+			</div>
+			<div class="mock-list">
+				<b>Description : </b>Date de réception du document
+			</div>
+
+	</div>
+	<div class="detail">
+			<div class="mock-list">
+				<b>Nom : </b> <a href="../types/date.html">date</a>
+			</div>
+
+	</div>
+
+</div>
+<div class="detail-column" id="d62" style="display:none">
+	<div class="detail">
+			<div class="mock-list">
+				<b>Nom : </b>receiptLimitDate
+			</div>
+			<div class="mock-list">
+				<b>Description : </b>Date limite de réception du document
+			</div>
+
+	</div>
+	<div class="detail">
+			<div class="mock-list">
+				<b>Nom : </b> <a href="../types/date.html">date</a>
+			</div>
+
+	</div>
+
+</div>
+<div class="detail-column" id="d63" style="display:none">
+	<div class="detail">
+			<div class="mock-list">
+				<b>Nom : </b>archiveType
+			</div>
+			<div class="mock-list">
+				<b>Description : </b>Mode d'archivage
+			</div>
+
+	</div>
+	<div class="detail">
+			<div class="mock-list">
+				<b>Nom : </b> <a href="../types/collateralArchiveType.html">collateralArchiveType</a>
+			</div>
+			<div class="mock-list">
+				<b> Description : </b>Définit le type d'archivage d'un document de garantie
+			</div>
+			<div class="mock-list">
+				<b>Format : </b>string
+			</div>
+			<div class="mock-list">
+				<b>Valeurs possibles : </b>					<table class="table_enum" class="table_enum" class="table_enum">
+						<tr>
+						<td> P
+						</td>						<td class="td_right"> Physique
+						</td>
+						</tr>
+						<tr>
+						<td> A
+						</td>						<td class="td_right"> Autre
+						</td>
+						</tr>
+						<tr>
+						<td> E
+						</td>						<td class="td_right"> Electronique
+						</td>
+						</tr>
+
+					</table>
+
+			</div>
+
+	</div>
+
+</div>
+<div class="detail-column" id="d64" style="display:none">
+	<div class="detail">
+			<div class="mock-list">
+				<b>Nom : </b>archiveLocation
+			</div>
+			<div class="mock-list">
+				<b>Description : </b>Lieu d'archivage
+			</div>
+
+	</div>
+	<div class="detail">
+			<div class="mock-list">
+				<b>Nom : </b> <a href="../types/charMax30.html">charMax30</a>
+			</div>
+			<div class="mock-list">
+				<b> Description : </b>Chaîne composée d'au plus 30 caractères.
+			</div>
+			<div class="mock-list">
+				<b>Format : </b>string
+			</div>
+			<div class="mock-list">
+				<b>Longueur mini-maxi : </b>1 - 30
+			</div>
+
+	</div>
+
+</div>
+<div class="detail-column" id="d65" style="display:none">
+	<div class="detail">
+			<div class="mock-list">
+				<b>Nom : </b>collateralComments
+			</div>
+			<div class="mock-list">
+				<b>Description : </b>Commentaires.
+			</div>
+
+	</div>
+	<div class="detail">
+			<div class="mock-list">
+				<b>Nom : </b> <a href="../types/collateralComments.html">collateralComments</a>
+			</div>
+			<div class="mock-list">
+				<b> Description : </b>Commentaires d'une garantie.
+			</div>
+
+	</div>
+
+</div>
+<div class="detail-column" id="d66" style="display:none">
+	<div class="detail">
+			<div class="mock-list">
+				<b>Nom : </b>commentValue
+			</div>
+			<div class="mock-list">
+				<b>Description : </b>Valeur du commentaire
+			</div>
+			<div class="mock-list">
+				<b>Limite du nombre d'occurences mini-maxi : </b>aucune aucune
+			</div>
+
+	</div>
+	<div class="detail">
+			<div class="mock-list">
+				<b>Nom : </b> <a href="../types/charmax75.html">charmax75</a>
+			</div>
+			<div class="mock-list">
+				<b> Description : </b>Chaine de caractère de longueur max 75.
+			</div>
+			<div class="mock-list">
+				<b>Format : </b>string
+			</div>
+			<div class="mock-list">
+				<b>Longueur mini-maxi : </b>néant - 75
+			</div>
+
+	</div>
+
+</div>
+<div class="detail-column" id="d67" style="display:none">
+	<div class="detail">
+			<div class="mock-list">
+				<b>Nom : </b>guarantorsList
+			</div>
+			<div class="mock-list">
+				<b>Description : </b>Liste des garants.
+			</div>
+
+	</div>
+	<div class="detail">
+			<div class="mock-list">
+				<b>Nom : </b> <a href="../types/collateralGuarantors.html">collateralGuarantors</a>
+			</div>
+			<div class="mock-list">
+				<b> Description : </b>Contient des informations concernant les garants d'une garantie
+			</div>
+
+	</div>
+
+</div>
+<div class="detail-column" id="d68" style="display:none">
+	<div class="detail">
+			<div class="mock-list">
+				<b>Nom : </b>guarantor
+			</div>
+			<div class="mock-list">
+				<b>Description : </b>Information d'un garant
+			</div>
+			<div class="mock-list">
+				<b>Limite du nombre d'occurences mini-maxi : </b>aucune aucune
+			</div>
+
+	</div>
+	<div class="detail">
+			<div class="mock-list">
+				<b>Nom : </b> <a href="../types/collateralGuarantor.html">collateralGuarantor</a>
+			</div>
+			<div class="mock-list">
+				<b> Description : </b>Contient des informations concernant un garant d'une garantie
+			</div>
+
+	</div>
+
+</div>
+<div class="detail-column" id="d69" style="display:none">
+	<div class="detail">
+			<div class="mock-list">
+				<b>Nom : </b>guarantorCode
+			</div>
+			<div class="mock-list">
+				<b>Description : </b>Type de garant (Client ou Tiers) + code du garant
+			</div>
+
+	</div>
+	<div class="detail">
+			<div class="mock-list">
+				<b>Nom : </b> <a href="../types/customerOrThirdPartyCode.html">customerOrThirdPartyCode</a>
+			</div>
+			<div class="mock-list">
+				<b> Description : </b>Code du client/tiers.
+			</div>
+
+	</div>
+
+</div>
+<div class="detail-column" id="d70" style="display:none">
+	<div class="detail">
+			<div class="mock-list">
+				<b>Nom : </b>customerCode
+			</div>
+			<div class="mock-list">
+				<b>Description : </b>Code client.
+			</div>
+
+	</div>
+	<div class="detail">
+			<div class="mock-list">
+				<b>Nom : </b> <a href="../types/customerCode.html">customerCode</a>
+			</div>
+			<div class="mock-list">
+				<b> Description : </b>Code client.
+			</div>
+			<div class="mock-list">
+				<b>Format : </b>string
+			</div>
+			<div class="mock-list">
+				<b>Longueur mini-maxi : </b>1 - 15
+			</div>
+
+	</div>
+
+</div>
+<div class="detail-column" id="d71" style="display:none">
+	<div class="detail">
+			<div class="mock-list">
+				<b>Nom : </b>thirdPartyCode
+			</div>
+			<div class="mock-list">
+				<b>Description : </b>Code tiers.
+			</div>
+
+	</div>
+	<div class="detail">
+			<div class="mock-list">
+				<b>Nom : </b> <a href="../types/customerCode.html">customerCode</a>
+			</div>
+			<div class="mock-list">
+				<b> Description : </b>Code client.
+			</div>
+			<div class="mock-list">
+				<b>Format : </b>string
+			</div>
+			<div class="mock-list">
+				<b>Longueur mini-maxi : </b>1 - 15
+			</div>
+
+	</div>
+
+</div>
+<div class="detail-column" id="d72" style="display:none">
+	<div class="detail">
+			<div class="mock-list">
+				<b>Nom : </b>guarantorPercentage
+			</div>
+			<div class="mock-list">
+				<b>Description : </b>Pourcentage du garant
+			</div>
+
+	</div>
+	<div class="detail">
+			<div class="mock-list">
+				<b>Nom : </b> <a href="../types/decimal5_2.html">decimal5_2</a>
+			</div>
+			<div class="mock-list">
+				<b> Description : </b>Type décimal à 5 chiffres dont 2 décimales.
+			</div>
+			<div class="mock-list">
+				<b>Format : </b>decimal
+			</div>
+			<div class="mock-list">
+				<b>Nombre total de chiffres : </b>5
+			</div>
+
+	</div>
+
+</div>
+<div class="detail-column" id="d73" style="display:none">
+	<div class="detail">
+			<div class="mock-list">
+				<b>Nom : </b>internalFolders
+			</div>
+			<div class="mock-list">
+				<b>Description : </b>Dossiers internes.
+			</div>
+
+	</div>
+	<div class="detail">
+			<div class="mock-list">
+				<b>Nom : </b> <a href="../types/collateralInternalFolders.html">collateralInternalFolders</a>
+			</div>
+			<div class="mock-list">
+				<b> Description : </b>Dossiers interne d'une garantie.
+			</div>
+
+	</div>
+
+</div>
+<div class="detail-column" id="d74" style="display:none">
+	<div class="detail">
+			<div class="mock-list">
+				<b>Nom : </b>tdInternalFolders
+			</div>
+			<div class="mock-list">
+				<b>Description : </b>Liste des dossiers internes de type DAT d'une garantie.
+			</div>
+
+	</div>
+	<div class="detail">
+			<div class="mock-list">
+				<b>Nom : </b> <a href="../types/collateralTdInternalFolders.html">collateralTdInternalFolders</a>
+			</div>
+			<div class="mock-list">
+				<b> Description : </b>Liste des dossiers interne de type DAT d'une garantie.
+			</div>
+
+	</div>
+
+</div>
+<div class="detail-column" id="d75" style="display:none">
+	<div class="detail">
+			<div class="mock-list">
+				<b>Nom : </b>tdInternalFolder
+			</div>
+			<div class="mock-list">
+				<b>Description : </b>Dossier interne de type DAT.
+			</div>
+			<div class="mock-list">
+				<b>Limite du nombre d'occurences mini-maxi : </b>aucune aucune
+			</div>
+
+	</div>
+	<div class="detail">
+			<div class="mock-list">
+				<b>Nom : </b> <a href="../types/collateralTdInternalFolder.html">collateralTdInternalFolder</a>
+			</div>
+			<div class="mock-list">
+				<b> Description : </b>Dossier interne de type DAT d'une garantie.
+			</div>
+
+	</div>
+
+</div>
+<div class="detail-column" id="d76" style="display:none">
+	<div class="detail">
+			<div class="mock-list">
+				<b>Nom : </b>tdIdentifier
+			</div>
+			<div class="mock-list">
+				<b>Description : </b>Identifiant d'un DAT
+			</div>
+
+	</div>
+	<div class="detail">
+			<div class="mock-list">
+				<b>Nom : </b> <a href="../types/tdDetailIdentifier.html">tdDetailIdentifier</a>
+			</div>
+			<div class="mock-list">
+				<b> Description : </b>Identifiant d¿un DAT.
+			</div>
+
+	</div>
+
+</div>
+<div class="detail-column" id="d77" style="display:none">
+	<div class="detail">
+			<div class="mock-list">
+				<b>Nom : </b>branchCode
+			</div>
+			<div class="mock-list">
+				<b>Description : </b>Code agence.
+			</div>
+
+	</div>
+	<div class="detail">
+			<div class="mock-list">
+				<b>Nom : </b> <a href="../types/branchCode.html">branchCode</a>
+			</div>
+			<div class="mock-list">
+				<b> Description : </b>Code d'une agence.
+			</div>
+			<div class="mock-list">
+				<b>Format : </b>string
+			</div>
+			<div class="mock-list">
+				<b>Longueur fixe : </b>5
+			</div>
+
+	</div>
+
+</div>
+<div class="detail-column" id="d78" style="display:none">
+	<div class="detail">
+			<div class="mock-list">
+				<b>Nom : </b>tdNumber
+			</div>
+			<div class="mock-list">
+				<b>Description : </b>Numéro de DAT.
+			</div>
+
+	</div>
+	<div class="detail">
+			<div class="mock-list">
+				<b>Nom : </b> <a href="../types/eventNumber.html">eventNumber</a>
+			</div>
+			<div class="mock-list">
+				<b> Description : </b>Numéro d'événement.
+			</div>
+			<div class="mock-list">
+				<b>Format : </b>string
+			</div>
+			<div class="mock-list">
+				<b>Longueur fixe : </b>6
+			</div>
+
+	</div>
+
+</div>
+<div class="detail-column" id="d79" style="display:none">
+	<div class="detail">
+			<div class="mock-list">
+				<b>Nom : </b>index
+			</div>
+			<div class="mock-list">
+				<b>Description : </b>Indice lié au dossier.
+			</div>
+
+	</div>
+	<div class="detail">
+			<div class="mock-list">
+				<b>Nom : </b> <a href="../types/decimal6_0.html">decimal6_0</a>
+			</div>
+			<div class="mock-list">
+				<b> Description : </b>Type décimal à 6 chiffres dont 0 décimale.
+			</div>
+			<div class="mock-list">
+				<b>Format : </b>decimal
+			</div>
+			<div class="mock-list">
+				<b>Nombre total de chiffres : </b>6
+			</div>
+
+	</div>
+
+</div>
+<div class="detail-column" id="d80" style="display:none">
+	<div class="detail">
+			<div class="mock-list">
+				<b>Nom : </b>codInternalFolders
+			</div>
+			<div class="mock-list">
+				<b>Description : </b>Dossiers internes de type BDC d'une garantie.
+			</div>
+
+	</div>
+	<div class="detail">
+			<div class="mock-list">
+				<b>Nom : </b> <a href="../types/collateralCodInternalFolders.html">collateralCodInternalFolders</a>
+			</div>
+			<div class="mock-list">
+				<b> Description : </b>Liste des dossiers internes de type BDC d'une garantie.
+			</div>
+
+	</div>
+
+</div>
+<div class="detail-column" id="d81" style="display:none">
+	<div class="detail">
+			<div class="mock-list">
+				<b>Nom : </b>codInternalFolder
+			</div>
+			<div class="mock-list">
+				<b>Description : </b>Dossier interne de type BDC d'une garantie.
+			</div>
+			<div class="mock-list">
+				<b>Limite du nombre d'occurences mini-maxi : </b>aucune aucune
+			</div>
+
+	</div>
+	<div class="detail">
+			<div class="mock-list">
+				<b>Nom : </b> <a href="../types/collateralCodInternalFolder.html">collateralCodInternalFolder</a>
+			</div>
+			<div class="mock-list">
+				<b> Description : </b>Dossier interne de type BDC d'une garantie.
+			</div>
+
+	</div>
+
+</div>
+<div class="detail-column" id="d82" style="display:none">
+	<div class="detail">
+			<div class="mock-list">
+				<b>Nom : </b>codIdentifier
+			</div>
+			<div class="mock-list">
+				<b>Description : </b>Identifiant d'un BDC.
+			</div>
+
+	</div>
+	<div class="detail">
+			<div class="mock-list">
+				<b>Nom : </b> <a href="../types/coDDetailIdentifier.html">coDDetailIdentifier</a>
+			</div>
+			<div class="mock-list">
+				<b> Description : </b>Identifiant d¿un bon de caisse.
+			</div>
+
+	</div>
+
+</div>
+<div class="detail-column" id="d83" style="display:none">
+	<div class="detail">
+			<div class="mock-list">
+				<b>Nom : </b>branchCode
+			</div>
+			<div class="mock-list">
+				<b>Description : </b>Code agence.
+			</div>
+
+	</div>
+	<div class="detail">
+			<div class="mock-list">
+				<b>Nom : </b> <a href="../types/branchCode.html">branchCode</a>
+			</div>
+			<div class="mock-list">
+				<b> Description : </b>Code d'une agence.
+			</div>
+			<div class="mock-list">
+				<b>Format : </b>string
+			</div>
+			<div class="mock-list">
+				<b>Longueur fixe : </b>5
+			</div>
+
+	</div>
+
+</div>
+<div class="detail-column" id="d84" style="display:none">
+	<div class="detail">
+			<div class="mock-list">
+				<b>Nom : </b>coDNumber
+			</div>
+			<div class="mock-list">
+				<b>Description : </b>Numéro de bon de caisse.
+			</div>
+
+	</div>
+	<div class="detail">
+			<div class="mock-list">
+				<b>Nom : </b> <a href="../types/eventNumber.html">eventNumber</a>
+			</div>
+			<div class="mock-list">
+				<b> Description : </b>Numéro d'événement.
+			</div>
+			<div class="mock-list">
+				<b>Format : </b>string
+			</div>
+			<div class="mock-list">
+				<b>Longueur fixe : </b>6
+			</div>
+
+	</div>
+
+</div>
+<div class="detail-column" id="d85" style="display:none">
+	<div class="detail">
+			<div class="mock-list">
+				<b>Nom : </b>subscriptionNumber
+			</div>
+			<div class="mock-list">
+				<b>Description : </b>Numéro de souscription.
+			</div>
+
+	</div>
+	<div class="detail">
+			<div class="mock-list">
+				<b>Nom : </b> <a href="../types/eventNumber.html">eventNumber</a>
+			</div>
+			<div class="mock-list">
+				<b> Description : </b>Numéro d'événement.
+			</div>
+			<div class="mock-list">
+				<b>Format : </b>string
+			</div>
+			<div class="mock-list">
+				<b>Longueur fixe : </b>6
+			</div>
+
+	</div>
+
+</div>
+<div class="detail-column" id="d86" style="display:none">
+	<div class="detail">
+			<div class="mock-list">
+				<b>Nom : </b>index
+			</div>
+			<div class="mock-list">
+				<b>Description : </b>Indice lié au dossier.
+			</div>
+
+	</div>
+	<div class="detail">
+			<div class="mock-list">
+				<b>Nom : </b> <a href="../types/decimal19_4.html">decimal19_4</a>
+			</div>
+			<div class="mock-list">
+				<b> Description : </b>Type décimal à 19 chiffres dont 4 décimales.
+			</div>
+			<div class="mock-list">
+				<b>Format : </b>decimal
+			</div>
+			<div class="mock-list">
+				<b>Nombre total de chiffres : </b>19
+			</div>
+
+	</div>
+
+</div>
+<div class="detail-column" id="d87" style="display:none">
+	<div class="detail">
+			<div class="mock-list">
+				<b>Nom : </b>isdInternalFolders
+			</div>
+			<div class="mock-list">
+				<b>Description : </b>Dossiers internes de type ISD d'une garantie.
+			</div>
+
+	</div>
+	<div class="detail">
+			<div class="mock-list">
+				<b>Nom : </b> <a href="../types/collateralIsdInternalFolders.html">collateralIsdInternalFolders</a>
+			</div>
+			<div class="mock-list">
+				<b> Description : </b>Liste des dossiers internes de type ISD d'une garantie.
+			</div>
+
+	</div>
+
+</div>
+<div class="detail-column" id="d88" style="display:none">
+	<div class="detail">
+			<div class="mock-list">
+				<b>Nom : </b>isdInternalFolder
+			</div>
+			<div class="mock-list">
+				<b>Description : </b>Dossier interne de type ISD.
+			</div>
+			<div class="mock-list">
+				<b>Limite du nombre d'occurences mini-maxi : </b>aucune aucune
+			</div>
+
+	</div>
+	<div class="detail">
+			<div class="mock-list">
+				<b>Nom : </b> <a href="../types/collateralIsdInternalFolder.html">collateralIsdInternalFolder</a>
+			</div>
+			<div class="mock-list">
+				<b> Description : </b>Dossier interne de type ISD d'une garantie.
+			</div>
+
+	</div>
+
+</div>
+<div class="detail-column" id="d89" style="display:none">
+	<div class="detail">
+			<div class="mock-list">
+				<b>Nom : </b>isdIdentifier
+			</div>
+			<div class="mock-list">
+				<b>Description : </b>Identifiant d'un ISD (dossier de type Dépots islamique).
+			</div>
+
+	</div>
+	<div class="detail">
+			<div class="mock-list">
+				<b>Nom : </b> <a href="../types/isdDetailIdentifier.html">isdDetailIdentifier</a>
+			</div>
+			<div class="mock-list">
+				<b> Description : </b>Identifiant d'un détail ISD.
+			</div>
+
+	</div>
+
+</div>
+<div class="detail-column" id="d90" style="display:none">
+	<div class="detail">
+			<div class="mock-list">
+				<b>Nom : </b>branchCode
+			</div>
+			<div class="mock-list">
+				<b>Description : </b>Code Agence.
+			</div>
+
+	</div>
+	<div class="detail">
+			<div class="mock-list">
+				<b>Nom : </b> <a href="../types/branchCode.html">branchCode</a>
+			</div>
+			<div class="mock-list">
+				<b> Description : </b>Code d'une agence.
+			</div>
+			<div class="mock-list">
+				<b>Format : </b>string
+			</div>
+			<div class="mock-list">
+				<b>Longueur fixe : </b>5
+			</div>
+
+	</div>
+
+</div>
+<div class="detail-column" id="d91" style="display:none">
+	<div class="detail">
+			<div class="mock-list">
+				<b>Nom : </b>isdNumber
+			</div>
+			<div class="mock-list">
+				<b>Description : </b>Numéro d'ISD.
+			</div>
+
+	</div>
+	<div class="detail">
+			<div class="mock-list">
+				<b>Nom : </b> <a href="../types/eventNumber.html">eventNumber</a>
+			</div>
+			<div class="mock-list">
+				<b> Description : </b>Numéro d'événement.
+			</div>
+			<div class="mock-list">
+				<b>Format : </b>string
+			</div>
+			<div class="mock-list">
+				<b>Longueur fixe : </b>6
+			</div>
+
+	</div>
+
+</div>
+<div class="detail-column" id="d92" style="display:none">
+	<div class="detail">
+			<div class="mock-list">
+				<b>Nom : </b>index
+			</div>
+			<div class="mock-list">
+				<b>Description : </b>Indice lié au dossier.
+			</div>
+
+	</div>
+	<div class="detail">
+			<div class="mock-list">
+				<b>Nom : </b> <a href="../types/decimal19_4.html">decimal19_4</a>
+			</div>
+			<div class="mock-list">
+				<b> Description : </b>Type décimal à 19 chiffres dont 4 décimales.
+			</div>
+			<div class="mock-list">
+				<b>Format : </b>decimal
+			</div>
+			<div class="mock-list">
+				<b>Nombre total de chiffres : </b>19
+			</div>
+
+	</div>
+
+</div>
+<div class="detail-column" id="d93" style="display:none">
+	<div class="detail">
+			<div class="mock-list">
+				<b>Nom : </b>depositAccountInternalFolders
+			</div>
+			<div class="mock-list">
+				<b>Description : </b>Dossiers internes de type DEP d'une garantie.
+			</div>
+
+	</div>
+	<div class="detail">
+			<div class="mock-list">
+				<b>Nom : </b> <a href="../types/collateralDepositAccountInternalFolders.html">collateralDepositAccountInternalFolders</a>
+			</div>
+			<div class="mock-list">
+				<b> Description : </b>Liste des dossiers internes de type DEP d'une garantie.
+			</div>
+
+	</div>
+
+</div>
+<div class="detail-column" id="d94" style="display:none">
+	<div class="detail">
+			<div class="mock-list">
+				<b>Nom : </b>depositAccountInternalFolder
+			</div>
+			<div class="mock-list">
+				<b>Description : </b>Dossier interne de type DEP.
+			</div>
+			<div class="mock-list">
+				<b>Limite du nombre d'occurences mini-maxi : </b>aucune aucune
+			</div>
+
+	</div>
+	<div class="detail">
+			<div class="mock-list">
+				<b>Nom : </b> <a href="../types/collateralDepositAccountInternalFolder.html">collateralDepositAccountInternalFolder</a>
+			</div>
+			<div class="mock-list">
+				<b> Description : </b>Dossier interne de type DEP d'une garantie.
+			</div>
+
+	</div>
+
+</div>
+<div class="detail-column" id="d95" style="display:none">
+	<div class="detail">
+			<div class="mock-list">
+				<b>Nom : </b>depositAccountIdentifier
+			</div>
+			<div class="mock-list">
+				<b>Description : </b>Identifiant d'un compte de dépôt.
+			</div>
+
+	</div>
+	<div class="detail">
+			<div class="mock-list">
+				<b>Nom : </b> <a href="../types/internalAccountKey.html">internalAccountKey</a>
+			</div>
+			<div class="mock-list">
+				<b> Description : </b>Identifiant de compte au format interne.
+			</div>
+
+	</div>
+
+</div>
+<div class="detail-column" id="d96" style="display:none">
+	<div class="detail">
+			<div class="mock-list">
+				<b>Nom : </b>branch
+			</div>
+			<div class="mock-list">
+				<b>Description : </b>Agence du compte.
+			</div>
+			<div class="mock-list">
+				<b>Commentaire : </b><p>Les agences sont d&eacute;finies dans la nomenclature <strong>001</strong>.</p>
+
+			</div>
+
+	</div>
+	<div class="detail">
+			<div class="mock-list">
+				<b>Nom : </b> <a href="../types/char5.html">char5</a>
+			</div>
+			<div class="mock-list">
+				<b> Description : </b>Type avec un nombre de caractères égal à 5.
+			</div>
+			<div class="mock-list">
+				<b>Format : </b>string
+			</div>
+			<div class="mock-list">
+				<b>Longueur fixe : </b>5
+			</div>
+
+	</div>
+
+</div>
+<div class="detail-column" id="d97" style="display:none">
+	<div class="detail">
+			<div class="mock-list">
+				<b>Nom : </b>currency
+			</div>
+			<div class="mock-list">
+				<b>Description : </b>Devise du compte.
+			</div>
+			<div class="mock-list">
+				<b>Commentaire : </b><p>Les devises sont d&eacute;finies dans les nomenclatures <strong>002</strong> (devises alphanum&eacute;riques) et <strong>005</strong> (devises num&eacute;riques).</p>
+
+			</div>
+
+	</div>
+	<div class="detail">
+			<div class="mock-list">
+				<b>Nom : </b> <a href="../types/currencyCode.html">currencyCode</a>
+			</div>
+			<div class="mock-list">
+				<b> Description : </b>Code devise.
+			</div>
+			<div class="mock-list">
+				<b>Format : </b>string
+			</div>
+			<div class="mock-list">
+				<b>Longueur fixe : </b>3
+			</div>
+
+	</div>
+
+</div>
+<div class="detail-column" id="d98" style="display:none">
+	<div class="detail">
+			<div class="mock-list">
+				<b>Nom : </b>account
+			</div>
+			<div class="mock-list">
+				<b>Description : </b>Numéro du compte.
+			</div>
+
+	</div>
+	<div class="detail">
+			<div class="mock-list">
+				<b>Nom : </b> <a href="../types/charMax11.html">charMax11</a>
+			</div>
+			<div class="mock-list">
+				<b> Description : </b>Chaîne composée d'au plus 11 caractères.
+			</div>
+			<div class="mock-list">
+				<b>Format : </b>string
+			</div>
+			<div class="mock-list">
+				<b>Longueur mini-maxi : </b>1 - 11
+			</div>
+
+	</div>
+
+</div>
+<div class="detail-column" id="d99" style="display:none">
+	<div class="detail">
+			<div class="mock-list">
+				<b>Nom : </b>suffix
+			</div>
+			<div class="mock-list">
+				<b>Description : </b>Suffixe du compte.
+			</div>
+
+	</div>
+	<div class="detail">
+			<div class="mock-list">
+				<b>Nom : </b> <a href="../types/charMax2.html">charMax2</a>
+			</div>
+			<div class="mock-list">
+				<b> Description : </b>Chaîne composée d'au plus 2 caractères.
+			</div>
+			<div class="mock-list">
+				<b>Format : </b>string
+			</div>
+			<div class="mock-list">
+				<b>Longueur mini-maxi : </b>1 - 2
+			</div>
+
+	</div>
+
+</div>
+<div class="detail-column" id="d100" style="display:none">
+	<div class="detail">
+			<div class="mock-list">
+				<b>Nom : </b>index
+			</div>
+			<div class="mock-list">
+				<b>Description : </b>Indice lié au dossier.
+			</div>
+
+	</div>
+	<div class="detail">
+			<div class="mock-list">
+				<b>Nom : </b> <a href="../types/decimal19_4.html">decimal19_4</a>
+			</div>
+			<div class="mock-list">
+				<b> Description : </b>Type décimal à 19 chiffres dont 4 décimales.
+			</div>
+			<div class="mock-list">
+				<b>Format : </b>decimal
+			</div>
+			<div class="mock-list">
+				<b>Nombre total de chiffres : </b>19
+			</div>
+
+	</div>
+
+</div>
+<div class="detail-column" id="d101" style="display:none">
+	<div class="detail">
+			<div class="mock-list">
+				<b>Nom : </b>securityInternalFolders
+			</div>
+			<div class="mock-list">
+				<b>Description : </b>Dossiers internes de type TIT d'une garantie.
+			</div>
+
+	</div>
+	<div class="detail">
+			<div class="mock-list">
+				<b>Nom : </b> <a href="../types/collateralSecurityInternalFolders.html">collateralSecurityInternalFolders</a>
+			</div>
+			<div class="mock-list">
+				<b> Description : </b>Liste des dossiers internes de type TIT d'une garantie.
+			</div>
+
+	</div>
+
+</div>
+<div class="detail-column" id="d102" style="display:none">
+	<div class="detail">
+			<div class="mock-list">
+				<b>Nom : </b>securityInternalFolder
+			</div>
+			<div class="mock-list">
+				<b>Description : </b>Dossiers interne de type TIT d'une garantie.
+			</div>
+			<div class="mock-list">
+				<b>Limite du nombre d'occurences mini-maxi : </b>aucune aucune
+			</div>
+
+	</div>
+	<div class="detail">
+			<div class="mock-list">
+				<b>Nom : </b> <a href="../types/collateralSecurityInternalFolder.html">collateralSecurityInternalFolder</a>
+			</div>
+			<div class="mock-list">
+				<b> Description : </b>Dossier interne de type TIT d'une garantie.
+			</div>
+
+	</div>
+
+</div>
+<div class="detail-column" id="d103" style="display:none">
+	<div class="detail">
+			<div class="mock-list">
+				<b>Nom : </b>securityIdentifier
+			</div>
+			<div class="mock-list">
+				<b>Description : </b>Identifiant d'un titre.
+			</div>
+
+	</div>
+	<div class="detail">
+			<div class="mock-list">
+				<b>Nom : </b> <a href="../types/securityDetailIdentifier.html">securityDetailIdentifier</a>
+			</div>
+			<div class="mock-list">
+				<b> Description : </b>Identifiant d'un titre.
+			</div>
+
+	</div>
+
+</div>
+<div class="detail-column" id="d104" style="display:none">
+	<div class="detail">
+			<div class="mock-list">
+				<b>Nom : </b>securityType
+			</div>
+			<div class="mock-list">
+				<b>Description : </b>Type d'un titre.
+			</div>
+
+	</div>
+	<div class="detail">
+			<div class="mock-list">
+				<b>Nom : </b> <a href="../types/char3.html">char3</a>
+			</div>
+			<div class="mock-list">
+				<b> Description : </b>Type avec un nombre de caractères égal à 3.
+			</div>
+			<div class="mock-list">
+				<b>Format : </b>string
+			</div>
+			<div class="mock-list">
+				<b>Longueur fixe : </b>3
+			</div>
+
+	</div>
+
+</div>
+<div class="detail-column" id="d105" style="display:none">
+	<div class="detail">
+			<div class="mock-list">
+				<b>Nom : </b>securityAccount
+			</div>
+			<div class="mock-list">
+				<b>Description : </b>Compte de titres.
+			</div>
+
+	</div>
+	<div class="detail">
+			<div class="mock-list">
+				<b>Nom : </b> <a href="../types/char11.html">char11</a>
+			</div>
+			<div class="mock-list">
+				<b> Description : </b>Type avec un nombre de caractères égal à 11.
+			</div>
+			<div class="mock-list">
+				<b>Format : </b>string
+			</div>
+			<div class="mock-list">
+				<b>Longueur fixe : </b>11
+			</div>
+
+	</div>
+
+</div>
+<div class="detail-column" id="d106" style="display:none">
+	<div class="detail">
+			<div class="mock-list">
+				<b>Nom : </b>securityInstrumentCode
+			</div>
+			<div class="mock-list">
+				<b>Description : </b>Code valeur.
+			</div>
+
+	</div>
+	<div class="detail">
+			<div class="mock-list">
+				<b>Nom : </b> <a href="../types/char12.html">char12</a>
+			</div>
+			<div class="mock-list">
+				<b> Description : </b>Chaîne composée de 12 caractères.
+			</div>
+			<div class="mock-list">
+				<b>Format : </b>string
+			</div>
+			<div class="mock-list">
+				<b>Longueur fixe : </b>12
+			</div>
+
+	</div>
+
+</div>
+<div class="detail-column" id="d107" style="display:none">
+	<div class="detail">
+			<div class="mock-list">
+				<b>Nom : </b>securitiesNumber
+			</div>
+			<div class="mock-list">
+				<b>Description : </b>Nombre de titre à nantir.
+			</div>
+
+	</div>
+	<div class="detail">
+			<div class="mock-list">
+				<b>Nom : </b> <a href="../types/decimal19_4.html">decimal19_4</a>
+			</div>
+			<div class="mock-list">
+				<b> Description : </b>Type décimal à 19 chiffres dont 4 décimales.
+			</div>
+			<div class="mock-list">
+				<b>Format : </b>decimal
+			</div>
+			<div class="mock-list">
+				<b>Nombre total de chiffres : </b>19
+			</div>
+
+	</div>
+
+</div>
+<div class="detail-column" id="d108" style="display:none">
+	<div class="detail">
+			<div class="mock-list">
+				<b>Nom : </b>assestsValuation
+			</div>
+			<div class="mock-list">
+				<b>Description : </b>Estimation des biens.
+			</div>
+
+	</div>
+	<div class="detail">
+			<div class="mock-list">
+				<b>Nom : </b> <a href="../types/collateralAssessments.html">collateralAssessments</a>
+			</div>
+			<div class="mock-list">
+				<b> Description : </b>Evaluations d'une garantie.
+			</div>
+
+	</div>
+
+</div>
+<div class="detail-column" id="d109" style="display:none">
+	<div class="detail">
+			<div class="mock-list">
+				<b>Nom : </b>collateralTraditionalAssessments
+			</div>
+			<div class="mock-list">
+				<b>Description : </b>Evaluation des biens.
+			</div>
+
+	</div>
+	<div class="detail">
+			<div class="mock-list">
+				<b>Nom : </b> <a href="../types/collateralTraditionalAssessments.html">collateralTraditionalAssessments</a>
+			</div>
+			<div class="mock-list">
+				<b> Description : </b>Liste des évaluations traditionnelles d'une garantie.
+			</div>
+
+	</div>
+
+</div>
+<div class="detail-column" id="d110" style="display:none">
+	<div class="detail">
+			<div class="mock-list">
+				<b>Nom : </b>traditionalAssessment
+			</div>
+			<div class="mock-list">
+				<b>Description : </b>Estimation de garantie.
+			</div>
+			<div class="mock-list">
+				<b>Limite du nombre d'occurences mini-maxi : </b>aucune aucune
+			</div>
+
+	</div>
+	<div class="detail">
+			<div class="mock-list">
+				<b>Nom : </b> <a href="../types/collateralTraditionalAssessment.html">collateralTraditionalAssessment</a>
+			</div>
+			<div class="mock-list">
+				<b> Description : </b>Estimation de garantie.
+			</div>
+
+	</div>
+
+</div>
+<div class="detail-column" id="d111" style="display:none">
+	<div class="detail">
+			<div class="mock-list">
+				<b>Nom : </b>assessmentAmount
+			</div>
+			<div class="mock-list">
+				<b>Description : </b>Montant de l'estimation.
+			</div>
+
+	</div>
+	<div class="detail">
+			<div class="mock-list">
+				<b>Nom : </b> <a href="../types/decimal19_4.html">decimal19_4</a>
+			</div>
+			<div class="mock-list">
+				<b> Description : </b>Type décimal à 19 chiffres dont 4 décimales.
+			</div>
+			<div class="mock-list">
+				<b>Format : </b>decimal
+			</div>
+			<div class="mock-list">
+				<b>Nombre total de chiffres : </b>19
+			</div>
+
+	</div>
+
+</div>
+<div class="detail-column" id="d112" style="display:none">
+	<div class="detail">
+			<div class="mock-list">
+				<b>Nom : </b>assessmentCurrency
+			</div>
+			<div class="mock-list">
+				<b>Description : </b>Devise de l'estimation.
+			</div>
+
+	</div>
+	<div class="detail">
+			<div class="mock-list">
+				<b>Nom : </b> <a href="../types/currencyCode.html">currencyCode</a>
+			</div>
+			<div class="mock-list">
+				<b> Description : </b>Code devise.
+			</div>
+			<div class="mock-list">
+				<b>Format : </b>string
+			</div>
+			<div class="mock-list">
+				<b>Longueur fixe : </b>3
+			</div>
+
+	</div>
+
+</div>
+<div class="detail-column" id="d113" style="display:none">
+	<div class="detail">
+			<div class="mock-list">
+				<b>Nom : </b>assessmentDate
+			</div>
+			<div class="mock-list">
+				<b>Description : </b>date de l'estimation.
+			</div>
+
+	</div>
+	<div class="detail">
+			<div class="mock-list">
+				<b>Nom : </b> <a href="../types/date.html">date</a>
+			</div>
+
+	</div>
+
+</div>
+<div class="detail-column" id="d114" style="display:none">
+	<div class="detail">
+			<div class="mock-list">
+				<b>Nom : </b>assessmentCharacteristic
+			</div>
+			<div class="mock-list">
+				<b>Description : </b>Caractéristique liquide ou revendable.
+			</div>
+
+	</div>
+	<div class="detail">
+			<div class="mock-list">
+				<b>Nom : </b> <a href="../types/collateralAssessmentCharacteristic.html">collateralAssessmentCharacteristic</a>
+			</div>
+			<div class="mock-list">
+				<b> Description : </b>Caractère liquide ou revendable.
+			</div>
+			<div class="mock-list">
+				<b>Format : </b>string
+			</div>
+			<div class="mock-list">
+				<b>Longueur fixe : </b>3
+			</div>
+
+	</div>
+
+</div>
+<div class="detail-column" id="d115" style="display:none">
+	<div class="detail">
+			<div class="mock-list">
+				<b>Nom : </b>valuedGood
+			</div>
+			<div class="mock-list">
+				<b>Description : </b>Bien expertisé.
+			</div>
+
+	</div>
+	<div class="detail">
+			<div class="mock-list">
+				<b>Nom : </b> <a href="../types/boolean.html">boolean</a>
+			</div>
+
+	</div>
+
+</div>
+<div class="detail-column" id="d116" style="display:none">
+	<div class="detail">
+			<div class="mock-list">
+				<b>Nom : </b>nextAssessmentDate
+			</div>
+			<div class="mock-list">
+				<b>Description : </b>Date de la prochaine estimation.
+			</div>
+
+	</div>
+	<div class="detail">
+			<div class="mock-list">
+				<b>Nom : </b> <a href="../types/date.html">date</a>
+			</div>
+
+	</div>
+
+</div>
+<div class="detail-column" id="d117" style="display:none">
+	<div class="detail">
+			<div class="mock-list">
+				<b>Nom : </b>collateralAdvancedAssessments
+			</div>
+			<div class="mock-list">
+				<b>Description : </b>Evaluations améliorées d'une garantie.
+			</div>
+
+	</div>
+	<div class="detail">
+			<div class="mock-list">
+				<b>Nom : </b> <a href="../types/collateralAdvancedAssessments.html">collateralAdvancedAssessments</a>
+			</div>
+			<div class="mock-list">
+				<b> Description : </b>Evaluations améliorées d'une garantie.
+			</div>
+
+	</div>
+
+</div>
+<div class="detail-column" id="d118" style="display:none">
+	<div class="detail">
+			<div class="mock-list">
+				<b>Nom : </b>valuationDiscount
+			</div>
+			<div class="mock-list">
+				<b>Description : </b>Décote de la garantie.
+			</div>
+
+	</div>
+	<div class="detail">
+			<div class="mock-list">
+				<b>Nom : </b> <a href="../types/decimal5_2.html">decimal5_2</a>
+			</div>
+			<div class="mock-list">
+				<b> Description : </b>Type décimal à 5 chiffres dont 2 décimales.
+			</div>
+			<div class="mock-list">
+				<b>Format : </b>decimal
+			</div>
+			<div class="mock-list">
+				<b>Nombre total de chiffres : </b>5
+			</div>
+
+	</div>
+
+</div>
+<div class="detail-column" id="d119" style="display:none">
+	<div class="detail">
+			<div class="mock-list">
+				<b>Nom : </b>revaluationFrequency
+			</div>
+			<div class="mock-list">
+				<b>Description : </b>Code fréquence de réévaluation.
+			</div>
+
+	</div>
+	<div class="detail">
+			<div class="mock-list">
+				<b>Nom : </b> <a href="../types/decimal5_2.html">decimal5_2</a>
+			</div>
+			<div class="mock-list">
+				<b> Description : </b>Type décimal à 5 chiffres dont 2 décimales.
+			</div>
+			<div class="mock-list">
+				<b>Format : </b>decimal
+			</div>
+			<div class="mock-list">
+				<b>Nombre total de chiffres : </b>5
+			</div>
+
+	</div>
+
+</div>
+<div class="detail-column" id="d120" style="display:none">
+	<div class="detail">
+			<div class="mock-list">
+				<b>Nom : </b>advancedAssessmentList
+			</div>
+			<div class="mock-list">
+				<b>Description : </b>Liste des évaluations améliorées d'une garantie.
+			</div>
+
+	</div>
+	<div class="detail">
+			<div class="mock-list">
+				<b>Nom : </b> <a href="../types/advancedAssessmentsList.html">advancedAssessmentsList</a>
+			</div>
+			<div class="mock-list">
+				<b> Description : </b>Liste des évaluations améliorées d'une garantie.
+			</div>
+
+	</div>
+
+</div>
+<div class="detail-column" id="d121" style="display:none">
+	<div class="detail">
+			<div class="mock-list">
+				<b>Nom : </b>advancedAssessment
+			</div>
+			<div class="mock-list">
+				<b>Description : </b>Estimation de garantie (nouveau format).
+			</div>
+			<div class="mock-list">
+				<b>Limite du nombre d'occurences mini-maxi : </b>aucune aucune
+			</div>
+
+	</div>
+	<div class="detail">
+			<div class="mock-list">
+				<b>Nom : </b> <a href="../types/collateralAdvancedAssessment.html">collateralAdvancedAssessment</a>
+			</div>
+			<div class="mock-list">
+				<b> Description : </b>Estimation de garantie (nouveau format).
+			</div>
+
+	</div>
+
+</div>
+<div class="detail-column" id="d122" style="display:none">
+	<div class="detail">
+			<div class="mock-list">
+				<b>Nom : </b>assessmentMethod
+			</div>
+			<div class="mock-list">
+				<b>Description : </b>Méthode d'évaluation.
+			</div>
+
+	</div>
+	<div class="detail">
+			<div class="mock-list">
+				<b>Nom : </b> <a href="../types/char3.html">char3</a>
+			</div>
+			<div class="mock-list">
+				<b> Description : </b>Type avec un nombre de caractères égal à 3.
+			</div>
+			<div class="mock-list">
+				<b>Format : </b>string
+			</div>
+			<div class="mock-list">
+				<b>Longueur fixe : </b>3
+			</div>
+
+	</div>
+
+</div>
+<div class="detail-column" id="d123" style="display:none">
+	<div class="detail">
+			<div class="mock-list">
+				<b>Nom : </b>externalExpert
+			</div>
+			<div class="mock-list">
+				<b>Description : </b>Nom de l'expert externe.
+			</div>
+
+	</div>
+	<div class="detail">
+			<div class="mock-list">
+				<b>Nom : </b> <a href="../types/charMax255.html">charMax255</a>
+			</div>
+			<div class="mock-list">
+				<b> Description : </b>Chaîne composée d'au plus 255 caractères.
+			</div>
+			<div class="mock-list">
+				<b>Format : </b>string
+			</div>
+			<div class="mock-list">
+				<b>Longueur mini-maxi : </b>1 - 255
+			</div>
+
+	</div>
+
+</div>
+<div class="detail-column" id="d124" style="display:none">
+	<div class="detail">
+			<div class="mock-list">
+				<b>Nom : </b>expertiseCompany
+			</div>
+			<div class="mock-list">
+				<b>Description : </b>Société d'expertise.
+			</div>
+
+	</div>
+	<div class="detail">
+			<div class="mock-list">
+				<b>Nom : </b> <a href="../types/charMax255.html">charMax255</a>
+			</div>
+			<div class="mock-list">
+				<b> Description : </b>Chaîne composée d'au plus 255 caractères.
+			</div>
+			<div class="mock-list">
+				<b>Format : </b>string
+			</div>
+			<div class="mock-list">
+				<b>Longueur mini-maxi : </b>1 - 255
+			</div>
+
+	</div>
+
+</div>
+<div class="detail-column" id="d125" style="display:none">
+	<div class="detail">
+			<div class="mock-list">
+				<b>Nom : </b>assessmentDate
+			</div>
+			<div class="mock-list">
+				<b>Description : </b>Date de l'estimation.
+			</div>
+
+	</div>
+	<div class="detail">
+			<div class="mock-list">
+				<b>Nom : </b> <a href="../types/date.html">date</a>
+			</div>
+
+	</div>
+
+</div>
+<div class="detail-column" id="d126" style="display:none">
+	<div class="detail">
+			<div class="mock-list">
+				<b>Nom : </b>assessmentAmount
+			</div>
+			<div class="mock-list">
+				<b>Description : </b>Montant de l'actif.
+			</div>
+
+	</div>
+	<div class="detail">
+			<div class="mock-list">
+				<b>Nom : </b> <a href="../types/decimal19_4.html">decimal19_4</a>
+			</div>
+			<div class="mock-list">
+				<b> Description : </b>Type décimal à 19 chiffres dont 4 décimales.
+			</div>
+			<div class="mock-list">
+				<b>Format : </b>decimal
+			</div>
+			<div class="mock-list">
+				<b>Nombre total de chiffres : </b>19
+			</div>
+
+	</div>
+
+</div>
+<div class="detail-column" id="d127" style="display:none">
+	<div class="detail">
+			<div class="mock-list">
+				<b>Nom : </b>assessmentCurrency
+			</div>
+			<div class="mock-list">
+				<b>Description : </b>Devise de l'actif.
+			</div>
+
+	</div>
+	<div class="detail">
+			<div class="mock-list">
+				<b>Nom : </b> <a href="../types/currencyCode.html">currencyCode</a>
+			</div>
+			<div class="mock-list">
+				<b> Description : </b>Code devise.
+			</div>
+			<div class="mock-list">
+				<b>Format : </b>string
+			</div>
+			<div class="mock-list">
+				<b>Longueur fixe : </b>3
+			</div>
+
+	</div>
+
+</div>
+<div class="detail-column" id="d128" style="display:none">
+	<div class="detail">
+			<div class="mock-list">
+				<b>Nom : </b>assessmentCharacteristic
+			</div>
+			<div class="mock-list">
+				<b>Description : </b>Caractéristique liquide ou revendable.
+			</div>
+
+	</div>
+	<div class="detail">
+			<div class="mock-list">
+				<b>Nom : </b> <a href="../types/collateralAssessmentCharacteristic.html">collateralAssessmentCharacteristic</a>
+			</div>
+			<div class="mock-list">
+				<b> Description : </b>Caractère liquide ou revendable.
+			</div>
+			<div class="mock-list">
+				<b>Format : </b>string
+			</div>
+			<div class="mock-list">
+				<b>Longueur fixe : </b>3
+			</div>
+
+	</div>
+
+</div>
+<div class="detail-column" id="d129" style="display:none">
+	<div class="detail">
+			<div class="mock-list">
+				<b>Nom : </b>nextAssessmentDate
+			</div>
+			<div class="mock-list">
+				<b>Description : </b>Date de prochaine estimation.
+			</div>
+
+	</div>
+	<div class="detail">
+			<div class="mock-list">
+				<b>Nom : </b> <a href="../types/date.html">date</a>
+			</div>
+
+	</div>
+
+</div>
+<div class="detail-column" id="d130" style="display:none">
+	<div class="detail">
+			<div class="mock-list">
+				<b>Nom : </b>internalExpert
+			</div>
+			<div class="mock-list">
+				<b>Description : </b>Nom de l'expert interne.
+			</div>
+
+	</div>
+	<div class="detail">
+			<div class="mock-list">
+				<b>Nom : </b> <a href="../types/charMax255.html">charMax255</a>
+			</div>
+			<div class="mock-list">
+				<b> Description : </b>Chaîne composée d'au plus 255 caractères.
+			</div>
+			<div class="mock-list">
+				<b>Format : </b>string
+			</div>
+			<div class="mock-list">
+				<b>Longueur mini-maxi : </b>1 - 255
+			</div>
+
+	</div>
+
+</div>
+<div class="detail-column" id="d131" style="display:none">
+	<div class="detail">
+			<div class="mock-list">
+				<b>Nom : </b>internalAssessmentDate
+			</div>
+			<div class="mock-list">
+				<b>Description : </b>Date de l'estimation interne.
+			</div>
+
+	</div>
+	<div class="detail">
+			<div class="mock-list">
+				<b>Nom : </b> <a href="../types/date.html">date</a>
+			</div>
+
+	</div>
+
+</div>
+<div class="detail-column" id="d132" style="display:none">
+	<div class="detail">
+			<div class="mock-list">
+				<b>Nom : </b>adjustedAmount
+			</div>
+			<div class="mock-list">
+				<b>Description : </b>Montant de l'actif réajusté.
+			</div>
+
+	</div>
+	<div class="detail">
+			<div class="mock-list">
+				<b>Nom : </b> <a href="../types/decimal19_4.html">decimal19_4</a>
+			</div>
+			<div class="mock-list">
+				<b> Description : </b>Type décimal à 19 chiffres dont 4 décimales.
+			</div>
+			<div class="mock-list">
+				<b>Format : </b>decimal
+			</div>
+			<div class="mock-list">
+				<b>Nombre total de chiffres : </b>19
+			</div>
+
+	</div>
+
+</div>
+<div class="detail-column" id="d133" style="display:none">
+	<div class="detail">
+			<div class="mock-list">
+				<b>Nom : </b>adjustedAmountCurrency
+			</div>
+			<div class="mock-list">
+				<b>Description : </b>Devise de l'actif réajusté.
+			</div>
+
+	</div>
+	<div class="detail">
+			<div class="mock-list">
+				<b>Nom : </b> <a href="../types/currencyCode.html">currencyCode</a>
+			</div>
+			<div class="mock-list">
+				<b> Description : </b>Code devise.
+			</div>
+			<div class="mock-list">
+				<b>Format : </b>string
+			</div>
+			<div class="mock-list">
+				<b>Longueur fixe : </b>3
+			</div>
+
+	</div>
+
+</div>
+<div class="detail-column" id="d134" style="display:none">
+	<div class="detail">
+			<div class="mock-list">
+				<b>Nom : </b>internalAssessmentCharacteristic
+			</div>
+			<div class="mock-list">
+				<b>Description : </b>Caractéristique liquide ou revendable (expertise interne).
+			</div>
+
+	</div>
+	<div class="detail">
+			<div class="mock-list">
+				<b>Nom : </b> <a href="../types/collateralAssessmentCharacteristic.html">collateralAssessmentCharacteristic</a>
+			</div>
+			<div class="mock-list">
+				<b> Description : </b>Caractère liquide ou revendable.
+			</div>
+			<div class="mock-list">
+				<b>Format : </b>string
+			</div>
+			<div class="mock-list">
+				<b>Longueur fixe : </b>3
+			</div>
+
+	</div>
+
+</div>
+<div class="detail-column" id="d135" style="display:none">
+	<div class="detail">
+			<div class="mock-list">
+				<b>Nom : </b>collateralAssessmentComment
+			</div>
+			<div class="mock-list">
+				<b>Description : </b>Commentaire.
+			</div>
+
+	</div>
+	<div class="detail">
+			<div class="mock-list">
+				<b>Nom : </b> <a href="../types/string.html">string</a>
+			</div>
+
+	</div>
+
+</div>
+<div class="detail-column" id="d136" style="display:none">
+	<div class="detail">
+			<div class="mock-list">
+				<b>Nom : </b>responseHeader
+			</div>
+			<div class="mock-list">
+				<b>Description : </b>Elément à inclure en en-tête de chaque réponse
+			</div>
+
+	</div>
+
+</div>
+<div class="detail-column" id="d137" style="display:none">
+	<div class="detail">
+			<div class="mock-list">
+				<b>Nom : </b>requestId1
+			</div>
+			<div class="mock-list">
+				<b>Description : </b>Identifiant de la requête.
+			</div>
+
+	</div>
+
+</div>
+<div class="detail-column" id="d138" style="display:none">
+	<div class="detail">
+			<div class="mock-list">
+				<b>Nom : </b>requestId
+			</div>
+			<div class="mock-list">
+				<b>Description : </b>Identifiant de requête et de réponse
+			</div>
+
+	</div>
+	<div class="detail">
+			<div class="mock-list">
+				<b>Nom : </b> <a href="../types/charMax50.html">charMax50</a>
+			</div>
+			<div class="mock-list">
+				<b> Description : </b>Chaîne composée d'au plus 50 caractères.
+			</div>
+			<div class="mock-list">
+				<b>Format : </b>string
+			</div>
+			<div class="mock-list">
+				<b>Longueur mini-maxi : </b>1 - 50
+			</div>
+
+	</div>
+
+</div>
+<div class="detail-column" id="d139" style="display:none">
+	<div class="detail">
+			<div class="mock-list">
+				<b>Nom : </b>responseId
+			</div>
+			<div class="mock-list">
+				<b>Description : </b>Identifiant de la réponse.
+			</div>
+
+	</div>
+	<div class="detail">
+			<div class="mock-list">
+				<b>Nom : </b> <a href="../types/charMax50.html">charMax50</a>
+			</div>
+			<div class="mock-list">
+				<b> Description : </b>Chaîne composée d'au plus 50 caractères.
+			</div>
+			<div class="mock-list">
+				<b>Format : </b>string
+			</div>
+			<div class="mock-list">
+				<b>Longueur mini-maxi : </b>1 - 50
+			</div>
+
+	</div>
+
+</div>
+<div class="detail-column" id="d140" style="display:none">
+	<div class="detail">
+			<div class="mock-list">
+				<b>Nom : </b>timestamp
+			</div>
+			<div class="mock-list">
+				<b>Description : </b>Date et heure de la réponse.
+			</div>
+
+	</div>
+	<div class="detail">
+			<div class="mock-list">
+				<b>Nom : </b> <a href="../types/dateTime.html">dateTime</a>
+			</div>
+
+	</div>
+
+</div>
+<div class="detail-column" id="d141" style="display:none">
+	<div class="detail">
+			<div class="mock-list">
+				<b>Nom : </b>serviceVersion
+			</div>
+			<div class="mock-list">
+				<b>Description : </b>Version du service invoqué.
+			</div>
+
+	</div>
+	<div class="detail">
+			<div class="mock-list">
+				<b>Nom : </b> <a href="../types/charMax10.html">charMax10</a>
+			</div>
+			<div class="mock-list">
+				<b> Description : </b>Chaîne composée d'au plus 10 caractères.
+			</div>
+			<div class="mock-list">
+				<b>Format : </b>string
+			</div>
+			<div class="mock-list">
+				<b>Longueur mini-maxi : </b>1 - 10
+			</div>
+
+	</div>
+
+</div>
+<div class="detail-column" id="d142" style="display:none">
+	<div class="detail">
+			<div class="mock-list">
+				<b>Nom : </b>language
+			</div>
+			<div class="mock-list">
+				<b>Description : </b>Langue considérée pour la restitution des informations.
+			</div>
+
+	</div>
+	<div class="detail">
+			<div class="mock-list">
+				<b>Nom : </b> <a href="../types/language.html">language</a>
+			</div>
+			<div class="mock-list">
+				<b> Description : </b>Langue.
+			</div>
+
+	</div>
+
+</div>
+<div class="detail-column" id="d143" style="display:none">
+	<div class="detail">
+			<div class="mock-list">
+				<b>Nom : </b>code
+			</div>
+			<div class="mock-list">
+				<b>Description : </b>Code langue.
+			</div>
+
+	</div>
+	<div class="detail">
+			<div class="mock-list">
+				<b>Nom : </b> <a href="../types/char3.html">char3</a>
+			</div>
+			<div class="mock-list">
+				<b> Description : </b>Type avec un nombre de caractères égal à 3.
+			</div>
+			<div class="mock-list">
+				<b>Format : </b>string
+			</div>
+			<div class="mock-list">
+				<b>Longueur fixe : </b>3
+			</div>
+
+	</div>
+
+</div>
+<div class="detail-column" id="d144" style="display:none">
+	<div class="detail">
+			<div class="mock-list">
+				<b>Nom : </b>designation
+			</div>
+			<div class="mock-list">
+				<b>Description : </b>Intitulé de la langue.
+			</div>
+
+	</div>
+	<div class="detail">
+			<div class="mock-list">
+				<b>Nom : </b> <a href="../types/charMax30.html">charMax30</a>
+			</div>
+			<div class="mock-list">
+				<b> Description : </b>Chaîne composée d'au plus 30 caractères.
+			</div>
+			<div class="mock-list">
+				<b>Format : </b>string
+			</div>
+			<div class="mock-list">
+				<b>Longueur mini-maxi : </b>1 - 30
+			</div>
+
+	</div>
+
+</div>
+<div class="detail-column" id="d145" style="display:none">
+	<div class="detail">
+			<div class="mock-list">
+				<b>Nom : </b>responseStatus
+			</div>
+			<div class="mock-list">
+				<b>Description : </b>Element de réponse à inclure dans chaque réponse
+			</div>
+
+	</div>
+
+</div>
+<div class="detail-column" id="d146" style="display:none">
+	<div class="detail">
+			<div class="mock-list">
+				<b>Nom : </b>statusCode
+			</div>
+
+	</div>
+	<div class="detail">
+			<div class="mock-list">
+				<b>Nom : </b> <a href="../types/statusCodeType.html">statusCodeType</a>
+			</div>
+			<div class="mock-list">
+				<b>Format : </b>string
+			</div>
+			<div class="mock-list">
+				<b>Valeurs possibles : </b>					<table class="table_enum" class="table_enum" class="table_enum">
+						<tr>
+						<td> -1
+						</td>						<td class="td_right"> Traitement en erreur
+						</td>
+						</tr>
+						<tr>
+						<td> 0
+						</td>						<td class="td_right"> Traitement correct
+						</td>
+						</tr>
+						<tr>
+						<td> 1
+						</td>						<td class="td_right"> Traitement correct avec avertissement
+						</td>
+						</tr>
+
+					</table>
+
+			</div>
+
+	</div>
+
+</div>
+<div class="detail-column" id="d147" style="display:none">
+	<div class="detail">
+			<div class="mock-list">
+				<b>Nom : </b>messages
+			</div>
+
+	</div>
+	<div class="detail">
+			<div class="mock-list">
+				<b>Nom : </b> <a href="../types/responseStatusMessages.html">responseStatusMessages</a>
+			</div>
+
+	</div>
+
+</div>
+<div class="detail-column" id="d148" style="display:none">
+	<div class="detail">
+			<div class="mock-list">
+				<b>Nom : </b>message
+			</div>
+			<div class="mock-list">
+				<b>Limite du nombre d'occurences mini-maxi : </b>0 aucune
+			</div>
+
+	</div>
+	<div class="detail">
+			<div class="mock-list">
+				<b>Nom : </b> <a href="../types/responseStatusMessage.html">responseStatusMessage</a>
+			</div>
+
+	</div>
+
+</div>
+<div class="detail-column" id="d149" style="display:none">
+	<div class="detail">
+			<div class="mock-list">
+				<b>Nom : </b>nature
+			</div>
+
+	</div>
+	<div class="detail">
+			<div class="mock-list">
+				<b>Nom : </b> <a href="../types/responseMessageNature.html">responseMessageNature</a>
+			</div>
+			<div class="mock-list">
+				<b>Format : </b>string
+			</div>
+			<div class="mock-list">
+				<b>Valeurs possibles : </b>					<table class="table_enum" class="table_enum" class="table_enum">
+						<tr>
+						<td> WARNING
+						</td>						<td class="td_right"> Avertissement
+						</td>
+						</tr>
+						<tr>
+						<td> INFO
+						</td>						<td class="td_right"> Information
+						</td>
+						</tr>
+						<tr>
+						<td> ERROR
+						</td>						<td class="td_right"> Erreur
+						</td>
+						</tr>
+
+					</table>
+
+			</div>
+
+	</div>
+
+</div>
+<div class="detail-column" id="d150" style="display:none">
+	<div class="detail">
+			<div class="mock-list">
+				<b>Nom : </b>code
+			</div>
+			<div class="mock-list">
+				<b>Description : </b>Code du message restitué dans la réponse.
+			</div>
+
+	</div>
+	<div class="detail">
+			<div class="mock-list">
+				<b>Nom : </b> <a href="../types/char6.html">char6</a>
+			</div>
+			<div class="mock-list">
+				<b> Description : </b>Type avec un nombre de caractères égal à 6.
+			</div>
+			<div class="mock-list">
+				<b>Format : </b>string
+			</div>
+			<div class="mock-list">
+				<b>Longueur fixe : </b>6
+			</div>
+
+	</div>
+
+</div>
+<div class="detail-column" id="d151" style="display:none">
+	<div class="detail">
+			<div class="mock-list">
+				<b>Nom : </b>line
+			</div>
+			<div class="mock-list">
+				<b>Limite du nombre d'occurences mini-maxi : </b>0 aucune
+			</div>
+
+	</div>
+	<div class="detail">
+			<div class="mock-list">
+				<b>Nom : </b> <a href="../types/string.html">string</a>
+			</div>
+
+	</div>
+
+</div>
+<div class="detail-column" id="d152" style="display:none">
+	<div class="detail">
+			<div class="mock-list">
+				<b>Nom : </b>errorInformation
+			</div>
+			<div class="mock-list">
+				<b>Description : </b>Informations sur l'erreur rencontrée.
+			</div>
+
+	</div>
+	<div class="detail">
+			<div class="mock-list">
+				<b>Nom : </b> <a href="../types/errorInformation.html">errorInformation</a>
+			</div>
+			<div class="mock-list">
+				<b> Description : </b>Informations sur l'erreur rencontrée, ne sont présentes que pour les messages d'erreur (nature = "ERROR").
+			</div>
+
+	</div>
+
+</div>
+<div class="detail-column" id="d153" style="display:none">
+	<div class="detail">
+			<div class="mock-list">
+				<b>Nom : </b>errorCode
+			</div>
+			<div class="mock-list">
+				<b>Description : </b>Code original de l'erreur, provenant du SGBD (Informix, Oracle) ou de Genero.
+			</div>
+			<div class="mock-list">
+				<b>Commentaire : </b><p>Ce code correspond au code de l&#39;erreur technique retourn&eacute;e par le test de connexion.</p>
+
+			</div>
+
+	</div>
+	<div class="detail">
+			<div class="mock-list">
+				<b>Nom : </b> <a href="../types/string.html">string</a>
+			</div>
+
+	</div>
+
+</div>
+<div class="detail-column" id="d154" style="display:none">
+	<div class="detail">
+			<div class="mock-list">
+				<b>Nom : </b>convertedCode
+			</div>
+			<div class="mock-list">
+				<b>Description : </b>Code de l'erreur converti pour homogénéiser les codes erreurs entre les SGBD Informix et Oracle.
+			</div>
+
+	</div>
+	<div class="detail">
+			<div class="mock-list">
+				<b>Nom : </b> <a href="../types/string.html">string</a>
+			</div>
+
+	</div>
+
+</div>
+<div class="detail-column" id="d155" style="display:none">
+	<div class="detail">
+			<div class="mock-list">
+				<b>Nom : </b>errorMessage
+			</div>
+			<div class="mock-list">
+				<b>Description : </b>Message de l'erreur originale provenant du SGBD ou de Genero.
+			</div>
+
+	</div>
+	<div class="detail">
+			<div class="mock-list">
+				<b>Nom : </b> <a href="../types/string.html">string</a>
+			</div>
+
+	</div>
+
+</div>
+<div class="detail-column" id="d156" style="display:none">
+	<div class="detail">
+			<div class="mock-list">
+				<b>Nom : </b>createCollateralResponse
+			</div>
+			<div class="mock-list">
+				<b>Description : </b>Création de garantie.
+			</div>
+
+	</div>
+	<div class="detail">
+			<div class="mock-list">
+				<b>Nom : </b> <a href="../types/createCollateralResponse.html">createCollateralResponse</a>
+			</div>
+			<div class="mock-list">
+				<b> Description : </b>Réponse d'une création de garantie.
+			</div>
+
+	</div>
+
+</div>
+<div class="detail-column" id="d157" style="display:none">
+	<div class="detail">
+			<div class="mock-list">
+				<b>Nom : </b>collateralIdentifier
+			</div>
+			<div class="mock-list">
+				<b>Description : </b>Identifiant de la garantie.
+			</div>
+
+	</div>
+	<div class="detail">
+			<div class="mock-list">
+				<b>Nom : </b> <a href="../types/collateralIdentifier.html">collateralIdentifier</a>
+			</div>
+			<div class="mock-list">
+				<b> Description : </b>Identifiant de la garantie.
+			</div>
+
+	</div>
+
+</div>
+<div class="detail-column" id="d158" style="display:none">
+	<div class="detail">
+			<div class="mock-list">
+				<b>Nom : </b>branchCode
+			</div>
+			<div class="mock-list">
+				<b>Description : </b>Numéro d'agence.
+			</div>
+
+	</div>
+	<div class="detail">
+			<div class="mock-list">
+				<b>Nom : </b> <a href="../types/branchCode.html">branchCode</a>
+			</div>
+			<div class="mock-list">
+				<b> Description : </b>Code d'une agence.
+			</div>
+			<div class="mock-list">
+				<b>Format : </b>string
+			</div>
+			<div class="mock-list">
+				<b>Longueur fixe : </b>5
+			</div>
+
+	</div>
+
+</div>
+<div class="detail-column" id="d159" style="display:none">
+	<div class="detail">
+			<div class="mock-list">
+				<b>Nom : </b>collateralNumber
+			</div>
+			<div class="mock-list">
+				<b>Description : </b>Numéro de garantie.
+			</div>
+
+	</div>
+	<div class="detail">
+			<div class="mock-list">
+				<b>Nom : </b> <a href="../types/char6.html">char6</a>
+			</div>
+			<div class="mock-list">
+				<b> Description : </b>Type avec un nombre de caractères égal à 6.
+			</div>
+			<div class="mock-list">
+				<b>Format : </b>string
+			</div>
+			<div class="mock-list">
+				<b>Longueur fixe : </b>6
+			</div>
+
+	</div>
+
+</div>
+     </div> 
+  </div>
+  </div>
+
+  
+  <script src="../resources/jquery.js"></script>
+  <script src="../resources/doc.js"></script>
+</body>
+</html>

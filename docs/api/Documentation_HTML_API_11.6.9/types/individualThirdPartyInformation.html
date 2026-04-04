@@ -1,0 +1,1249 @@
+<!DOCTYPE html >
+<html>
+<head>
+	<link rel="stylesheet" href="../resources/styleDocu.css" />
+  <link rel="stylesheet" href="../resources/font-awesome/css/font-awesome.min.css" />
+	<title>Documentation Xsd</title>
+	<meta charset="UTF-8" />
+</head>
+
+<body>
+  <div class="document">
+	<div class="header">
+		
+	</div>
+
+  <div class="tabs">
+    <div class="tabs-wrapper" onclick="window.open('../liste-ressources.html', '_self');">
+      <div class="tabs-left-content">
+        Liste des ressources
+      </div>
+    </div>
+    <div class="tabs-wrapper" onclick="window.open('../liste-services.html', '_self');">
+      <div class="tabs-left-content" >
+        Liste des services  
+      </div>
+    </div>
+    <div class="tabs-wrapper-selected" onclick="window.open('../liste-types.html', '_self');">
+      <div class="tabs-right-content">
+        Liste des types
+      </div>
+    </div>
+  </div>
+
+	
+
+	<div class="contenu">
+      <div class="breadcrumb"> 
+        <ul class="breadcrumb">
+           <li> <a href="../index.html"> Accueil </a></li>
+           <li> > </li>
+           <li> <a href="../liste-types.html"> Liste des types </a></li>
+           <li> > </li>
+           <li> individualThirdPartyInformation </li>
+        </ul>                    
+      </div>                    
+      
+     
+      <div class="summary">
+			<div class="mock-list">
+				<b>Nom : </b>individualThirdPartyInformation
+			</div>
+			<div class="mock-list">
+				<b> Description : </b>Informations sur un tiers particulier.
+			</div>
+        
+        <div> </div>
+        <div class="mock-list"> Choix : Non</div>
+        
+      </div>
+                        
+      <div class="column-content">
+        <div class="detail-column">
+          <div class="tree"> 
+<ul>
+	<li>
+<i class="fa fa-caret-down fa-fw" onclick="expand_or_collapse(this)">
+</i>		individualThirdPartyInformation		<ul style="display:block">
+			<li>
+<i class="fa fa-fw">
+</i><span class="selectable" id="e0"> firstName : charMax30
+</span>
+			</li>
+			<li>
+<i class="fa fa-fw">
+</i><span class="selectable" id="e1"> middleName : charMax30
+</span>
+			</li>
+			<li>
+<i class="fa fa-fw">
+</i><span class="selectable" id="e2"> thirdName : charMax30
+</span>
+			</li>
+			<li>
+<i class="fa fa-caret-down fa-fw" onclick="expand_or_collapse(this)">
+</i><span class="selectable" id="e3"> birthInformation : thirdPartyBirthInformation
+</span>				<ul style="display:block">
+					<li>
+<i class="fa fa-fw">
+</i><span class="selectable" id="e4"> holderSex : sex
+</span>
+					</li>
+					<li>
+<i class="fa fa-fw">
+</i><span class="selectable" id="e5"> maidenName : charMax36
+</span>
+					</li>
+					<li>
+<i class="fa fa-fw">
+</i><span class="selectable" id="e6"> birthDate : date
+</span>
+					</li>
+					<li>
+<i class="fa fa-fw">
+</i><span class="selectable" id="e7"> birthCity : charMax30
+</span>
+					</li>
+					<li>
+<i class="fa fa-fw">
+</i><span class="selectable" id="e8"> birthCounty : charMax30
+</span>
+					</li>
+					<li>
+<i class="fa fa-caret-down fa-fw" onclick="expand_or_collapse(this)">
+</i><span class="selectable" id="e9"> birthCountry : country
+</span>						<ul style="display:block">
+							<li>
+<i class="fa fa-fw">
+</i><span class="selectable" id="e10"> code : charMax3
+</span>
+							</li>
+							<li>
+<i class="fa fa-fw">
+</i><span class="selectable" id="e11"> designation : charMax30
+</span>
+							</li>
+
+						</ul>
+
+					</li>
+					<li>
+<i class="fa fa-fw">
+</i><span class="selectable" id="e12"> holderMotherName : charMax67
+</span>
+					</li>
+
+				</ul>
+
+			</li>
+			<li>
+<i class="fa fa-caret-down fa-fw" onclick="expand_or_collapse(this)">
+</i><span class="selectable" id="e13"> idPaperInformation : thirdPartyIdPaper
+</span>				<ul style="display:block">
+					<li>
+<i class="fa fa-caret-down fa-fw" onclick="expand_or_collapse(this)">
+</i><span class="selectable" id="e14"> type : idPaperType
+</span>						<ul style="display:block">
+							<li>
+<i class="fa fa-fw">
+</i><span class="selectable" id="e15"> code : charMax5
+</span>
+							</li>
+							<li>
+<i class="fa fa-fw">
+</i><span class="selectable" id="e16"> designation : charMax30
+</span>
+							</li>
+
+						</ul>
+
+					</li>
+					<li>
+<i class="fa fa-fw">
+</i><span class="selectable" id="e17"> idPaperNumber : charMax20
+</span>
+					</li>
+					<li>
+<i class="fa fa-fw">
+</i><span class="selectable" id="e18"> idPaperDeliveryDate : date
+</span>
+					</li>
+					<li>
+<i class="fa fa-fw">
+</i><span class="selectable" id="e19"> idPaperDeliveryPlace : charMax30
+</span>
+					</li>
+					<li>
+<i class="fa fa-fw">
+</i><span class="selectable" id="e20"> organisationWhichDeliver : charMax30
+</span>
+					</li>
+					<li>
+<i class="fa fa-fw">
+</i><span class="selectable" id="e21"> idPaperValidityDate : date
+</span>
+					</li>
+					<li>
+<i class="fa fa-fw">
+</i><span class="selectable" id="e22"> nationalIdentifier : charMax20
+</span>
+					</li>
+
+				</ul>
+
+			</li>
+			<li>
+<i class="fa fa-caret-down fa-fw" onclick="expand_or_collapse(this)">
+</i><span class="selectable" id="e23"> situationInformation : thirdPartyIndividualSituation
+</span>				<ul style="display:block">
+					<li>
+<i class="fa fa-caret-down fa-fw" onclick="expand_or_collapse(this)">
+</i><span class="selectable" id="e24"> familyStatus : familyStatus
+</span>						<ul style="display:block">
+							<li>
+<i class="fa fa-fw">
+</i><span class="selectable" id="e25"> code : char1
+</span>
+							</li>
+							<li>
+<i class="fa fa-fw">
+</i><span class="selectable" id="e26"> designation : charMax30
+</span>
+							</li>
+
+						</ul>
+
+					</li>
+					<li>
+<i class="fa fa-caret-down fa-fw" onclick="expand_or_collapse(this)">
+</i><span class="selectable" id="e27"> marriageSettlement : marriageSettlement
+</span>						<ul style="display:block">
+							<li>
+<i class="fa fa-fw">
+</i><span class="selectable" id="e28"> code : char1
+</span>
+							</li>
+							<li>
+<i class="fa fa-fw">
+</i><span class="selectable" id="e29"> designation : charMax30
+</span>
+							</li>
+
+						</ul>
+
+					</li>
+					<li>
+<i class="fa fa-caret-down fa-fw" onclick="expand_or_collapse(this)">
+</i><span class="selectable" id="e30"> holderLegalCapacity : legalCapacity
+</span>						<ul style="display:block">
+							<li>
+<i class="fa fa-fw">
+</i><span class="selectable" id="e31"> code : char1
+</span>
+							</li>
+							<li>
+<i class="fa fa-fw">
+</i><span class="selectable" id="e32"> designation : charMax30
+</span>
+							</li>
+
+						</ul>
+
+					</li>
+					<li>
+<i class="fa fa-fw">
+</i><span class="selectable" id="e33"> applicationDateOfLegalCapacity : date
+</span>
+					</li>
+					<li>
+<i class="fa fa-caret-down fa-fw" onclick="expand_or_collapse(this)">
+</i><span class="selectable" id="e34"> realEstateSituation : customerRealEstateSituation
+</span>						<ul style="display:block">
+							<li>
+<i class="fa fa-fw">
+</i><span class="selectable" id="e35"> code : charMax3
+</span>
+							</li>
+							<li>
+<i class="fa fa-fw">
+</i><span class="selectable" id="e36"> designation : charMax30
+</span>
+							</li>
+
+						</ul>
+
+					</li>
+
+				</ul>
+
+			</li>
+
+		</ul>
+
+	</li>
+
+</ul>
+          </div>
+          
+          <div class="detail">
+				<p align="left">
+					Légende :<br />
+				</p>
+            <ul>
+               <li align="left">
+                  <i class="fa fa-key fa-fw">
+                  </i>
+                  = Elément obligatoire en saisie.
+               </li>
+               <li align="left">
+                  <span style="font-weight:bold"> [M]
+                  </span>
+                  = Elément multiple (0 à n occurrences).
+               </li>
+               <li align="left">
+                  <span style="font-weight:bold"> [C]
+                  </span>
+                  = Elément composé d'un choix à effectuer. Un seul choix autorisé.
+               </li>
+            </ul>
+            <p align="left">
+               Remarque : Un même élément peut regrouper plusieurs caractéristiques
+            </p>          
+          </div>
+          
+        </div>
+<div class="detail-column" id="d0" style="display:none">
+	<div class="detail">
+			<div class="mock-list">
+				<b>Nom : </b>firstName
+			</div>
+			<div class="mock-list">
+				<b>Description : </b>Prénom.
+			</div>
+
+	</div>
+	<div class="detail">
+			<div class="mock-list">
+				<b>Nom : </b> <a href="../types/charMax30.html">charMax30</a>
+			</div>
+			<div class="mock-list">
+				<b> Description : </b>Chaîne composée d'au plus 30 caractères.
+			</div>
+			<div class="mock-list">
+				<b>Format : </b>string
+			</div>
+			<div class="mock-list">
+				<b>Longueur mini-maxi : </b>1 - 30
+			</div>
+
+	</div>
+
+</div>
+<div class="detail-column" id="d1" style="display:none">
+	<div class="detail">
+			<div class="mock-list">
+				<b>Nom : </b>middleName
+			</div>
+			<div class="mock-list">
+				<b>Description : </b>Surnom.
+			</div>
+
+	</div>
+	<div class="detail">
+			<div class="mock-list">
+				<b>Nom : </b> <a href="../types/charMax30.html">charMax30</a>
+			</div>
+			<div class="mock-list">
+				<b> Description : </b>Chaîne composée d'au plus 30 caractères.
+			</div>
+			<div class="mock-list">
+				<b>Format : </b>string
+			</div>
+			<div class="mock-list">
+				<b>Longueur mini-maxi : </b>1 - 30
+			</div>
+
+	</div>
+
+</div>
+<div class="detail-column" id="d2" style="display:none">
+	<div class="detail">
+			<div class="mock-list">
+				<b>Nom : </b>thirdName
+			</div>
+			<div class="mock-list">
+				<b>Description : </b>Troisième Prénom.
+			</div>
+
+	</div>
+	<div class="detail">
+			<div class="mock-list">
+				<b>Nom : </b> <a href="../types/charMax30.html">charMax30</a>
+			</div>
+			<div class="mock-list">
+				<b> Description : </b>Chaîne composée d'au plus 30 caractères.
+			</div>
+			<div class="mock-list">
+				<b>Format : </b>string
+			</div>
+			<div class="mock-list">
+				<b>Longueur mini-maxi : </b>1 - 30
+			</div>
+
+	</div>
+
+</div>
+<div class="detail-column" id="d3" style="display:none">
+	<div class="detail">
+			<div class="mock-list">
+				<b>Nom : </b>birthInformation
+			</div>
+			<div class="mock-list">
+				<b>Description : </b>Informations sur la naissance du tiers.
+			</div>
+
+	</div>
+	<div class="detail">
+			<div class="mock-list">
+				<b>Nom : </b> <a href="../types/thirdPartyBirthInformation.html">thirdPartyBirthInformation</a>
+			</div>
+			<div class="mock-list">
+				<b> Description : </b>Informations sur la naissance d'un tiers
+			</div>
+
+	</div>
+
+</div>
+<div class="detail-column" id="d4" style="display:none">
+	<div class="detail">
+			<div class="mock-list">
+				<b>Nom : </b>holderSex
+			</div>
+			<div class="mock-list">
+				<b>Description : </b>Sexe du titulaire
+			</div>
+
+	</div>
+	<div class="detail">
+			<div class="mock-list">
+				<b>Nom : </b> <a href="../types/sex.html">sex</a>
+			</div>
+			<div class="mock-list">
+				<b> Description : </b>Sexe.
+			</div>
+			<div class="mock-list">
+				<b>Format : </b>string
+			</div>
+			<div class="mock-list">
+				<b>Valeurs possibles : </b>					<table class="table_enum" class="table_enum" class="table_enum">
+						<tr>
+						<td> F
+						</td>						<td class="td_right"> Féminin
+						</td>
+						</tr>
+						<tr>
+						<td> M
+						</td>						<td class="td_right"> Masculin
+						</td>
+						</tr>
+						<tr>
+						<td>  
+						</td>						<td class="td_right"> Non précisé
+						</td>
+						</tr>
+
+					</table>
+
+			</div>
+
+	</div>
+
+</div>
+<div class="detail-column" id="d5" style="display:none">
+	<div class="detail">
+			<div class="mock-list">
+				<b>Nom : </b>maidenName
+			</div>
+			<div class="mock-list">
+				<b>Description : </b>Nom de jeune fille
+			</div>
+
+	</div>
+	<div class="detail">
+			<div class="mock-list">
+				<b>Nom : </b> <a href="../types/charMax36.html">charMax36</a>
+			</div>
+			<div class="mock-list">
+				<b> Description : </b>Chaîne composée d'au plus 36 caractères.
+			</div>
+			<div class="mock-list">
+				<b>Format : </b>string
+			</div>
+			<div class="mock-list">
+				<b>Longueur mini-maxi : </b>1 - 36
+			</div>
+
+	</div>
+
+</div>
+<div class="detail-column" id="d6" style="display:none">
+	<div class="detail">
+			<div class="mock-list">
+				<b>Nom : </b>birthDate
+			</div>
+			<div class="mock-list">
+				<b>Description : </b>Date de naissance
+			</div>
+
+	</div>
+	<div class="detail">
+			<div class="mock-list">
+				<b>Nom : </b> <a href="../types/date.html">date</a>
+			</div>
+
+	</div>
+
+</div>
+<div class="detail-column" id="d7" style="display:none">
+	<div class="detail">
+			<div class="mock-list">
+				<b>Nom : </b>birthCity
+			</div>
+			<div class="mock-list">
+				<b>Description : </b>Ville de naissance
+			</div>
+
+	</div>
+	<div class="detail">
+			<div class="mock-list">
+				<b>Nom : </b> <a href="../types/charMax30.html">charMax30</a>
+			</div>
+			<div class="mock-list">
+				<b> Description : </b>Chaîne composée d'au plus 30 caractères.
+			</div>
+			<div class="mock-list">
+				<b>Format : </b>string
+			</div>
+			<div class="mock-list">
+				<b>Longueur mini-maxi : </b>1 - 30
+			</div>
+
+	</div>
+
+</div>
+<div class="detail-column" id="d8" style="display:none">
+	<div class="detail">
+			<div class="mock-list">
+				<b>Nom : </b>birthCounty
+			</div>
+			<div class="mock-list">
+				<b>Description : </b>Département de naissance
+			</div>
+
+	</div>
+	<div class="detail">
+			<div class="mock-list">
+				<b>Nom : </b> <a href="../types/charMax30.html">charMax30</a>
+			</div>
+			<div class="mock-list">
+				<b> Description : </b>Chaîne composée d'au plus 30 caractères.
+			</div>
+			<div class="mock-list">
+				<b>Format : </b>string
+			</div>
+			<div class="mock-list">
+				<b>Longueur mini-maxi : </b>1 - 30
+			</div>
+
+	</div>
+
+</div>
+<div class="detail-column" id="d9" style="display:none">
+	<div class="detail">
+			<div class="mock-list">
+				<b>Nom : </b>birthCountry
+			</div>
+			<div class="mock-list">
+				<b>Description : </b>Pays de naissance
+			</div>
+
+	</div>
+	<div class="detail">
+			<div class="mock-list">
+				<b>Nom : </b> <a href="../types/country.html">country</a>
+			</div>
+			<div class="mock-list">
+				<b> Description : </b>Pays.
+			</div>
+
+	</div>
+
+</div>
+<div class="detail-column" id="d10" style="display:none">
+	<div class="detail">
+			<div class="mock-list">
+				<b>Nom : </b>code
+			</div>
+			<div class="mock-list">
+				<b>Description : </b>Code pays.
+			</div>
+
+	</div>
+	<div class="detail">
+			<div class="mock-list">
+				<b>Nom : </b> <a href="../types/charMax3.html">charMax3</a>
+			</div>
+			<div class="mock-list">
+				<b> Description : </b>Chaîne composée d'au plus 3 caractères.
+			</div>
+			<div class="mock-list">
+				<b>Format : </b>string
+			</div>
+			<div class="mock-list">
+				<b>Longueur mini-maxi : </b>1 - 3
+			</div>
+
+	</div>
+
+</div>
+<div class="detail-column" id="d11" style="display:none">
+	<div class="detail">
+			<div class="mock-list">
+				<b>Nom : </b>designation
+			</div>
+			<div class="mock-list">
+				<b>Description : </b>Désignation.
+			</div>
+
+	</div>
+	<div class="detail">
+			<div class="mock-list">
+				<b>Nom : </b> <a href="../types/charMax30.html">charMax30</a>
+			</div>
+			<div class="mock-list">
+				<b> Description : </b>Chaîne composée d'au plus 30 caractères.
+			</div>
+			<div class="mock-list">
+				<b>Format : </b>string
+			</div>
+			<div class="mock-list">
+				<b>Longueur mini-maxi : </b>1 - 30
+			</div>
+
+	</div>
+
+</div>
+<div class="detail-column" id="d12" style="display:none">
+	<div class="detail">
+			<div class="mock-list">
+				<b>Nom : </b>holderMotherName
+			</div>
+			<div class="mock-list">
+				<b>Description : </b>Nom de la mère du titulaire
+			</div>
+
+	</div>
+	<div class="detail">
+			<div class="mock-list">
+				<b>Nom : </b> <a href="../types/charMax67.html">charMax67</a>
+			</div>
+			<div class="mock-list">
+				<b> Description : </b>Chaîne composée d'au plus 67 caractères.
+			</div>
+			<div class="mock-list">
+				<b>Format : </b>string
+			</div>
+			<div class="mock-list">
+				<b>Longueur mini-maxi : </b>1 - 67
+			</div>
+
+	</div>
+
+</div>
+<div class="detail-column" id="d13" style="display:none">
+	<div class="detail">
+			<div class="mock-list">
+				<b>Nom : </b>idPaperInformation
+			</div>
+			<div class="mock-list">
+				<b>Description : </b>Informations sur la pièce d'identité principale du tiers.
+			</div>
+
+	</div>
+	<div class="detail">
+			<div class="mock-list">
+				<b>Nom : </b> <a href="../types/thirdPartyIdPaper.html">thirdPartyIdPaper</a>
+			</div>
+			<div class="mock-list">
+				<b> Description : </b>Informations sur la pièce d'identité principale d'un tiers
+			</div>
+
+	</div>
+
+</div>
+<div class="detail-column" id="d14" style="display:none">
+	<div class="detail">
+			<div class="mock-list">
+				<b>Nom : </b>type
+			</div>
+			<div class="mock-list">
+				<b>Description : </b>Type de pièce d'identité
+			</div>
+
+	</div>
+	<div class="detail">
+			<div class="mock-list">
+				<b>Nom : </b> <a href="../types/idPaperType.html">idPaperType</a>
+			</div>
+			<div class="mock-list">
+				<b> Description : </b>Type de pièce d'identité.
+			</div>
+
+	</div>
+
+</div>
+<div class="detail-column" id="d15" style="display:none">
+	<div class="detail">
+			<div class="mock-list">
+				<b>Nom : </b>code
+			</div>
+			<div class="mock-list">
+				<b>Description : </b>Code du type.
+			</div>
+
+	</div>
+	<div class="detail">
+			<div class="mock-list">
+				<b>Nom : </b> <a href="../types/charMax5.html">charMax5</a>
+			</div>
+			<div class="mock-list">
+				<b> Description : </b>Chaîne composée d'au plus 5 caractères.
+			</div>
+			<div class="mock-list">
+				<b>Format : </b>string
+			</div>
+			<div class="mock-list">
+				<b>Longueur mini-maxi : </b>1 - 5
+			</div>
+
+	</div>
+
+</div>
+<div class="detail-column" id="d16" style="display:none">
+	<div class="detail">
+			<div class="mock-list">
+				<b>Nom : </b>designation
+			</div>
+			<div class="mock-list">
+				<b>Description : </b>Désignation.
+			</div>
+
+	</div>
+	<div class="detail">
+			<div class="mock-list">
+				<b>Nom : </b> <a href="../types/charMax30.html">charMax30</a>
+			</div>
+			<div class="mock-list">
+				<b> Description : </b>Chaîne composée d'au plus 30 caractères.
+			</div>
+			<div class="mock-list">
+				<b>Format : </b>string
+			</div>
+			<div class="mock-list">
+				<b>Longueur mini-maxi : </b>1 - 30
+			</div>
+
+	</div>
+
+</div>
+<div class="detail-column" id="d17" style="display:none">
+	<div class="detail">
+			<div class="mock-list">
+				<b>Nom : </b>idPaperNumber
+			</div>
+			<div class="mock-list">
+				<b>Description : </b>Numéro de pièce d'identité
+			</div>
+
+	</div>
+	<div class="detail">
+			<div class="mock-list">
+				<b>Nom : </b> <a href="../types/charMax20.html">charMax20</a>
+			</div>
+			<div class="mock-list">
+				<b> Description : </b>Chaîne composée d'au plus 20 caractères.
+			</div>
+			<div class="mock-list">
+				<b>Format : </b>string
+			</div>
+			<div class="mock-list">
+				<b>Longueur mini-maxi : </b>1 - 20
+			</div>
+
+	</div>
+
+</div>
+<div class="detail-column" id="d18" style="display:none">
+	<div class="detail">
+			<div class="mock-list">
+				<b>Nom : </b>idPaperDeliveryDate
+			</div>
+			<div class="mock-list">
+				<b>Description : </b>Date de délivrance de la pièce d'identité
+			</div>
+
+	</div>
+	<div class="detail">
+			<div class="mock-list">
+				<b>Nom : </b> <a href="../types/date.html">date</a>
+			</div>
+
+	</div>
+
+</div>
+<div class="detail-column" id="d19" style="display:none">
+	<div class="detail">
+			<div class="mock-list">
+				<b>Nom : </b>idPaperDeliveryPlace
+			</div>
+			<div class="mock-list">
+				<b>Description : </b>Lieu de délivrance de la pièce d'identité
+			</div>
+
+	</div>
+	<div class="detail">
+			<div class="mock-list">
+				<b>Nom : </b> <a href="../types/charMax30.html">charMax30</a>
+			</div>
+			<div class="mock-list">
+				<b> Description : </b>Chaîne composée d'au plus 30 caractères.
+			</div>
+			<div class="mock-list">
+				<b>Format : </b>string
+			</div>
+			<div class="mock-list">
+				<b>Longueur mini-maxi : </b>1 - 30
+			</div>
+
+	</div>
+
+</div>
+<div class="detail-column" id="d20" style="display:none">
+	<div class="detail">
+			<div class="mock-list">
+				<b>Nom : </b>organisationWhichDeliver
+			</div>
+			<div class="mock-list">
+				<b>Description : </b>Organisme ayant délivré la pièce d'identité
+			</div>
+
+	</div>
+	<div class="detail">
+			<div class="mock-list">
+				<b>Nom : </b> <a href="../types/charMax30.html">charMax30</a>
+			</div>
+			<div class="mock-list">
+				<b> Description : </b>Chaîne composée d'au plus 30 caractères.
+			</div>
+			<div class="mock-list">
+				<b>Format : </b>string
+			</div>
+			<div class="mock-list">
+				<b>Longueur mini-maxi : </b>1 - 30
+			</div>
+
+	</div>
+
+</div>
+<div class="detail-column" id="d21" style="display:none">
+	<div class="detail">
+			<div class="mock-list">
+				<b>Nom : </b>idPaperValidityDate
+			</div>
+			<div class="mock-list">
+				<b>Description : </b>Date de validité de la pièce d'identité
+			</div>
+
+	</div>
+	<div class="detail">
+			<div class="mock-list">
+				<b>Nom : </b> <a href="../types/date.html">date</a>
+			</div>
+
+	</div>
+
+</div>
+<div class="detail-column" id="d22" style="display:none">
+	<div class="detail">
+			<div class="mock-list">
+				<b>Nom : </b>nationalIdentifier
+			</div>
+			<div class="mock-list">
+				<b>Description : </b>Numéro d'identité nationale
+			</div>
+
+	</div>
+	<div class="detail">
+			<div class="mock-list">
+				<b>Nom : </b> <a href="../types/charMax20.html">charMax20</a>
+			</div>
+			<div class="mock-list">
+				<b> Description : </b>Chaîne composée d'au plus 20 caractères.
+			</div>
+			<div class="mock-list">
+				<b>Format : </b>string
+			</div>
+			<div class="mock-list">
+				<b>Longueur mini-maxi : </b>1 - 20
+			</div>
+
+	</div>
+
+</div>
+<div class="detail-column" id="d23" style="display:none">
+	<div class="detail">
+			<div class="mock-list">
+				<b>Nom : </b>situationInformation
+			</div>
+			<div class="mock-list">
+				<b>Description : </b>Informations sur la situation du tiers particulier.
+			</div>
+
+	</div>
+	<div class="detail">
+			<div class="mock-list">
+				<b>Nom : </b> <a href="../types/thirdPartyIndividualSituation.html">thirdPartyIndividualSituation</a>
+			</div>
+			<div class="mock-list">
+				<b> Description : </b>Informations sur la situation d'un tiers particulier
+			</div>
+
+	</div>
+
+</div>
+<div class="detail-column" id="d24" style="display:none">
+	<div class="detail">
+			<div class="mock-list">
+				<b>Nom : </b>familyStatus
+			</div>
+			<div class="mock-list">
+				<b>Description : </b>Situation de famille
+			</div>
+
+	</div>
+	<div class="detail">
+			<div class="mock-list">
+				<b>Nom : </b> <a href="../types/familyStatus.html">familyStatus</a>
+			</div>
+			<div class="mock-list">
+				<b> Description : </b>Situation de famille.
+			</div>
+
+	</div>
+
+</div>
+<div class="detail-column" id="d25" style="display:none">
+	<div class="detail">
+			<div class="mock-list">
+				<b>Nom : </b>code
+			</div>
+			<div class="mock-list">
+				<b>Description : </b>Code.
+			</div>
+
+	</div>
+	<div class="detail">
+			<div class="mock-list">
+				<b>Nom : </b> <a href="../types/char1.html">char1</a>
+			</div>
+			<div class="mock-list">
+				<b> Description : </b>Type avec un nombre de caractères égal à 1.
+			</div>
+			<div class="mock-list">
+				<b>Format : </b>string
+			</div>
+			<div class="mock-list">
+				<b>Longueur fixe : </b>1
+			</div>
+
+	</div>
+
+</div>
+<div class="detail-column" id="d26" style="display:none">
+	<div class="detail">
+			<div class="mock-list">
+				<b>Nom : </b>designation
+			</div>
+			<div class="mock-list">
+				<b>Description : </b>Désignation.
+			</div>
+
+	</div>
+	<div class="detail">
+			<div class="mock-list">
+				<b>Nom : </b> <a href="../types/charMax30.html">charMax30</a>
+			</div>
+			<div class="mock-list">
+				<b> Description : </b>Chaîne composée d'au plus 30 caractères.
+			</div>
+			<div class="mock-list">
+				<b>Format : </b>string
+			</div>
+			<div class="mock-list">
+				<b>Longueur mini-maxi : </b>1 - 30
+			</div>
+
+	</div>
+
+</div>
+<div class="detail-column" id="d27" style="display:none">
+	<div class="detail">
+			<div class="mock-list">
+				<b>Nom : </b>marriageSettlement
+			</div>
+			<div class="mock-list">
+				<b>Description : </b>Régime matrimonial
+			</div>
+
+	</div>
+	<div class="detail">
+			<div class="mock-list">
+				<b>Nom : </b> <a href="../types/marriageSettlement.html">marriageSettlement</a>
+			</div>
+			<div class="mock-list">
+				<b> Description : </b>Régime matrimonial.
+			</div>
+
+	</div>
+
+</div>
+<div class="detail-column" id="d28" style="display:none">
+	<div class="detail">
+			<div class="mock-list">
+				<b>Nom : </b>code
+			</div>
+			<div class="mock-list">
+				<b>Description : </b>Code.
+			</div>
+
+	</div>
+	<div class="detail">
+			<div class="mock-list">
+				<b>Nom : </b> <a href="../types/char1.html">char1</a>
+			</div>
+			<div class="mock-list">
+				<b> Description : </b>Type avec un nombre de caractères égal à 1.
+			</div>
+			<div class="mock-list">
+				<b>Format : </b>string
+			</div>
+			<div class="mock-list">
+				<b>Longueur fixe : </b>1
+			</div>
+
+	</div>
+
+</div>
+<div class="detail-column" id="d29" style="display:none">
+	<div class="detail">
+			<div class="mock-list">
+				<b>Nom : </b>designation
+			</div>
+			<div class="mock-list">
+				<b>Description : </b>Désignation.
+			</div>
+
+	</div>
+	<div class="detail">
+			<div class="mock-list">
+				<b>Nom : </b> <a href="../types/charMax30.html">charMax30</a>
+			</div>
+			<div class="mock-list">
+				<b> Description : </b>Chaîne composée d'au plus 30 caractères.
+			</div>
+			<div class="mock-list">
+				<b>Format : </b>string
+			</div>
+			<div class="mock-list">
+				<b>Longueur mini-maxi : </b>1 - 30
+			</div>
+
+	</div>
+
+</div>
+<div class="detail-column" id="d30" style="display:none">
+	<div class="detail">
+			<div class="mock-list">
+				<b>Nom : </b>holderLegalCapacity
+			</div>
+			<div class="mock-list">
+				<b>Description : </b>Capacité juridique
+			</div>
+
+	</div>
+	<div class="detail">
+			<div class="mock-list">
+				<b>Nom : </b> <a href="../types/legalCapacity.html">legalCapacity</a>
+			</div>
+			<div class="mock-list">
+				<b> Description : </b>Capacité juridique.
+			</div>
+
+	</div>
+
+</div>
+<div class="detail-column" id="d31" style="display:none">
+	<div class="detail">
+			<div class="mock-list">
+				<b>Nom : </b>code
+			</div>
+			<div class="mock-list">
+				<b>Description : </b>Code.
+			</div>
+
+	</div>
+	<div class="detail">
+			<div class="mock-list">
+				<b>Nom : </b> <a href="../types/char1.html">char1</a>
+			</div>
+			<div class="mock-list">
+				<b> Description : </b>Type avec un nombre de caractères égal à 1.
+			</div>
+			<div class="mock-list">
+				<b>Format : </b>string
+			</div>
+			<div class="mock-list">
+				<b>Longueur fixe : </b>1
+			</div>
+
+	</div>
+
+</div>
+<div class="detail-column" id="d32" style="display:none">
+	<div class="detail">
+			<div class="mock-list">
+				<b>Nom : </b>designation
+			</div>
+			<div class="mock-list">
+				<b>Description : </b>Désignation.
+			</div>
+
+	</div>
+	<div class="detail">
+			<div class="mock-list">
+				<b>Nom : </b> <a href="../types/charMax30.html">charMax30</a>
+			</div>
+			<div class="mock-list">
+				<b> Description : </b>Chaîne composée d'au plus 30 caractères.
+			</div>
+			<div class="mock-list">
+				<b>Format : </b>string
+			</div>
+			<div class="mock-list">
+				<b>Longueur mini-maxi : </b>1 - 30
+			</div>
+
+	</div>
+
+</div>
+<div class="detail-column" id="d33" style="display:none">
+	<div class="detail">
+			<div class="mock-list">
+				<b>Nom : </b>applicationDateOfLegalCapacity
+			</div>
+			<div class="mock-list">
+				<b>Description : </b>Date d'application de la capacité juridique
+			</div>
+
+	</div>
+	<div class="detail">
+			<div class="mock-list">
+				<b>Nom : </b> <a href="../types/date.html">date</a>
+			</div>
+
+	</div>
+
+</div>
+<div class="detail-column" id="d34" style="display:none">
+	<div class="detail">
+			<div class="mock-list">
+				<b>Nom : </b>realEstateSituation
+			</div>
+			<div class="mock-list">
+				<b>Description : </b>Situation immobilière du tiers
+			</div>
+
+	</div>
+	<div class="detail">
+			<div class="mock-list">
+				<b>Nom : </b> <a href="../types/customerRealEstateSituation.html">customerRealEstateSituation</a>
+			</div>
+			<div class="mock-list">
+				<b> Description : </b>Situation immobilière d'un client/tiers.
+			</div>
+
+	</div>
+
+</div>
+<div class="detail-column" id="d35" style="display:none">
+	<div class="detail">
+			<div class="mock-list">
+				<b>Nom : </b>code
+			</div>
+			<div class="mock-list">
+				<b>Description : </b>Code de la situation immobilière.
+			</div>
+
+	</div>
+	<div class="detail">
+			<div class="mock-list">
+				<b>Nom : </b> <a href="../types/charMax3.html">charMax3</a>
+			</div>
+			<div class="mock-list">
+				<b> Description : </b>Chaîne composée d'au plus 3 caractères.
+			</div>
+			<div class="mock-list">
+				<b>Format : </b>string
+			</div>
+			<div class="mock-list">
+				<b>Longueur mini-maxi : </b>1 - 3
+			</div>
+
+	</div>
+
+</div>
+<div class="detail-column" id="d36" style="display:none">
+	<div class="detail">
+			<div class="mock-list">
+				<b>Nom : </b>designation
+			</div>
+			<div class="mock-list">
+				<b>Description : </b>Désignation de la situation immobilière.
+			</div>
+
+	</div>
+	<div class="detail">
+			<div class="mock-list">
+				<b>Nom : </b> <a href="../types/charMax30.html">charMax30</a>
+			</div>
+			<div class="mock-list">
+				<b> Description : </b>Chaîne composée d'au plus 30 caractères.
+			</div>
+			<div class="mock-list">
+				<b>Format : </b>string
+			</div>
+			<div class="mock-list">
+				<b>Longueur mini-maxi : </b>1 - 30
+			</div>
+
+	</div>
+
+</div>
+      </div> 
+  </div>
+
+  
+  <script src="../resources/jquery.js"></script>
+  <script src="../resources/doc.js"></script>
+</body>
+</html>

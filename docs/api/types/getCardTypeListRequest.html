@@ -1,0 +1,391 @@
+<!DOCTYPE html >
+<html>
+<head>
+	<link rel="stylesheet" href="../resources/styleDocu.css" />
+  <link rel="stylesheet" href="../resources/font-awesome/css/font-awesome.min.css" />
+	<title>Documentation Xsd</title>
+	<meta charset="UTF-8" />
+</head>
+
+<body>
+  <div class="document">
+	<div class="header">
+		
+	</div>
+
+  <div class="tabs">
+    <div class="tabs-wrapper" onclick="window.open('../liste-ressources.html', '_self');">
+      <div class="tabs-left-content">
+        Liste des ressources
+      </div>
+    </div>
+    <div class="tabs-wrapper" onclick="window.open('../liste-services.html', '_self');">
+      <div class="tabs-left-content" >
+        Liste des services  
+      </div>
+    </div>
+    <div class="tabs-wrapper-selected" onclick="window.open('../liste-types.html', '_self');">
+      <div class="tabs-right-content">
+        Liste des types
+      </div>
+    </div>
+  </div>
+
+	
+
+	<div class="contenu">
+      <div class="breadcrumb"> 
+        <ul class="breadcrumb">
+           <li> <a href="../index.html"> Accueil </a></li>
+           <li> > </li>
+           <li> <a href="../liste-types.html"> Liste des types </a></li>
+           <li> > </li>
+           <li> getCardTypeListRequest </li>
+        </ul>                    
+      </div>                    
+      
+     
+      <div class="summary">
+			<div class="mock-list">
+				<b>Nom : </b>getCardTypeListRequest
+			</div>
+			<div class="mock-list">
+				<b> Description : </b>Requête pour obtenir une liste de types de carte selon critères.
+			</div>
+        
+        <div> </div>
+        <div class="mock-list"> Choix : Non</div>
+        
+      </div>
+                        
+      <div class="column-content">
+        <div class="detail-column">
+          <div class="tree"> 
+<ul>
+	<li>
+<i class="fa fa-caret-down fa-fw" onclick="expand_or_collapse(this)">
+</i>		getCardTypeListRequest		<ul style="display:block">
+			<li>
+<i class="fa fa-caret-down fa-fw" onclick="expand_or_collapse(this)">
+</i><span class="selectable" id="e0"> cardType : cardType
+</span>				<ul style="display:block">
+					<li>
+<i class="fa fa-fw">
+</i><span class="selectable" id="e1"> code : char3
+</span>
+					</li>
+					<li>
+<i class="fa fa-fw">
+</i><span class="selectable" id="e2"> designation : charMax30
+</span>
+					</li>
+
+				</ul>
+
+			</li>
+			<li>
+<i class="fa fa-caret-down fa-fw" onclick="expand_or_collapse(this)">
+</i><span class="selectable" id="e3"> product : product
+</span>				<ul style="display:block">
+					<li>
+<i class="fa fa-fw">
+</i><span class="selectable" id="e4"> code : char3
+</span>
+					</li>
+					<li>
+<i class="fa fa-fw">
+</i><span class="selectable" id="e5"> designation : charMax30
+</span>
+					</li>
+					<li>
+<i class="fa fa-fw">
+</i><span class="selectable" id="e6"> productAttribute : productAttribute
+</span>
+					</li>
+
+				</ul>
+
+			</li>
+			<li>
+<i class="fa fa-fw">
+</i><span class="selectable" id="e7"> processorCode : char3
+</span>
+			</li>
+
+		</ul>
+
+	</li>
+
+</ul>
+          </div>
+          
+          <div class="detail">
+				<p align="left">
+					Légende :<br />
+				</p>
+            <ul>
+               <li align="left">
+                  <i class="fa fa-key fa-fw">
+                  </i>
+                  = Elément obligatoire en saisie.
+               </li>
+               <li align="left">
+                  <span style="font-weight:bold"> [M]
+                  </span>
+                  = Elément multiple (0 à n occurrences).
+               </li>
+               <li align="left">
+                  <span style="font-weight:bold"> [C]
+                  </span>
+                  = Elément composé d'un choix à effectuer. Un seul choix autorisé.
+               </li>
+            </ul>
+            <p align="left">
+               Remarque : Un même élément peut regrouper plusieurs caractéristiques
+            </p>          
+          </div>
+          
+        </div>
+<div class="detail-column" id="d0" style="display:none">
+	<div class="detail">
+			<div class="mock-list">
+				<b>Nom : </b>cardType
+			</div>
+			<div class="mock-list">
+				<b>Description : </b>Type de carte.
+			</div>
+
+	</div>
+	<div class="detail">
+			<div class="mock-list">
+				<b>Nom : </b> <a href="../types/cardType.html">cardType</a>
+			</div>
+			<div class="mock-list">
+				<b> Description : </b>Informations sur le type de carte.
+			</div>
+
+	</div>
+
+</div>
+<div class="detail-column" id="d1" style="display:none">
+	<div class="detail">
+			<div class="mock-list">
+				<b>Nom : </b>code
+			</div>
+			<div class="mock-list">
+				<b>Description : </b>Code du type de carte.
+			</div>
+
+	</div>
+	<div class="detail">
+			<div class="mock-list">
+				<b>Nom : </b> <a href="../types/char3.html">char3</a>
+			</div>
+			<div class="mock-list">
+				<b> Description : </b>Type avec un nombre de caractères égal à 3.
+			</div>
+			<div class="mock-list">
+				<b>Format : </b>string
+			</div>
+			<div class="mock-list">
+				<b>Longueur fixe : </b>3
+			</div>
+
+	</div>
+
+</div>
+<div class="detail-column" id="d2" style="display:none">
+	<div class="detail">
+			<div class="mock-list">
+				<b>Nom : </b>designation
+			</div>
+			<div class="mock-list">
+				<b>Description : </b>Description du type de carte.
+			</div>
+
+	</div>
+	<div class="detail">
+			<div class="mock-list">
+				<b>Nom : </b> <a href="../types/charMax30.html">charMax30</a>
+			</div>
+			<div class="mock-list">
+				<b> Description : </b>Chaîne composée d'au plus 30 caractères.
+			</div>
+			<div class="mock-list">
+				<b>Format : </b>string
+			</div>
+			<div class="mock-list">
+				<b>Longueur mini-maxi : </b>1 - 30
+			</div>
+
+	</div>
+
+</div>
+<div class="detail-column" id="d3" style="display:none">
+	<div class="detail">
+			<div class="mock-list">
+				<b>Nom : </b>product
+			</div>
+			<div class="mock-list">
+				<b>Description : </b>Produit.
+			</div>
+
+	</div>
+	<div class="detail">
+			<div class="mock-list">
+				<b>Nom : </b> <a href="../types/product.html">product</a>
+			</div>
+			<div class="mock-list">
+				<b> Description : </b>Produit.
+			</div>
+
+	</div>
+
+</div>
+<div class="detail-column" id="d4" style="display:none">
+	<div class="detail">
+			<div class="mock-list">
+				<b>Nom : </b>code
+			</div>
+			<div class="mock-list">
+				<b>Description : </b>Code du produit.
+			</div>
+
+	</div>
+	<div class="detail">
+			<div class="mock-list">
+				<b>Nom : </b> <a href="../types/char3.html">char3</a>
+			</div>
+			<div class="mock-list">
+				<b> Description : </b>Type avec un nombre de caractères égal à 3.
+			</div>
+			<div class="mock-list">
+				<b>Format : </b>string
+			</div>
+			<div class="mock-list">
+				<b>Longueur fixe : </b>3
+			</div>
+
+	</div>
+
+</div>
+<div class="detail-column" id="d5" style="display:none">
+	<div class="detail">
+			<div class="mock-list">
+				<b>Nom : </b>designation
+			</div>
+			<div class="mock-list">
+				<b>Description : </b>Désignation du produit.
+			</div>
+
+	</div>
+	<div class="detail">
+			<div class="mock-list">
+				<b>Nom : </b> <a href="../types/charMax30.html">charMax30</a>
+			</div>
+			<div class="mock-list">
+				<b> Description : </b>Chaîne composée d'au plus 30 caractères.
+			</div>
+			<div class="mock-list">
+				<b>Format : </b>string
+			</div>
+			<div class="mock-list">
+				<b>Longueur mini-maxi : </b>1 - 30
+			</div>
+
+	</div>
+
+</div>
+<div class="detail-column" id="d6" style="display:none">
+	<div class="detail">
+			<div class="mock-list">
+				<b>Nom : </b>productAttribute
+			</div>
+			<div class="mock-list">
+				<b>Description : </b>Attribut produit.
+			</div>
+			<div class="mock-list">
+				<b>Commentaire : </b><p>la valeur de l&rsquo;&eacute;l&eacute;ment, la s&eacute;lection sur le produit sera diff&eacute;rente :</p>
+
+<ul>
+	<li>Si l&rsquo;&eacute;l&eacute;ment vaut <strong>SERVICE PRODUCT </strong>: seuls les produits v&eacute;rifiant <strong>bkprod.att </strong>diff&eacute;rent de <strong>01</strong> seront s&eacute;lectionn&eacute;s.</li>
+	<li>Si l&rsquo;&eacute;l&eacute;ment vaut <strong>ACCOUNT PRODUCT </strong>: seuls les produits v&eacute;rifiant <strong>bkprod.att </strong>&eacute;gal&nbsp;&agrave; <strong>01</strong> seront s&eacute;lectionn&eacute;s.</li>
+	<li>Si l&rsquo;&eacute;l&eacute;ment vaut <strong>FILE PRODUCT </strong>: seuls les produits v&eacute;rifiant <strong>bkprod.dos </strong>&eacute;gal&nbsp;&agrave; <strong>O</strong> seront s&eacute;lectionn&eacute;s.</li>
+</ul>
+
+<p><br />
+&nbsp;</p>
+
+			</div>
+
+	</div>
+	<div class="detail">
+			<div class="mock-list">
+				<b>Nom : </b> <a href="../types/productAttribute.html">productAttribute</a>
+			</div>
+			<div class="mock-list">
+				<b> Description : </b>Type de produit
+			</div>
+			<div class="mock-list">
+				<b>Format : </b>string
+			</div>
+			<div class="mock-list">
+				<b>Valeurs possibles : </b>					<table class="table_enum" class="table_enum" class="table_enum">
+						<tr>
+						<td> ACCOUNT PRODUCT
+						</td>						<td class="td_right"> Produit compte
+						</td>
+						</tr>
+						<tr>
+						<td> SERVICE PRODUCT
+						</td>						<td class="td_right"> Produit service
+						</td>
+						</tr>
+						<tr>
+						<td> FILE PRODUCT
+						</td>						<td class="td_right"> Produit géré par dossier
+						</td>
+						</tr>
+
+					</table>
+
+			</div>
+
+	</div>
+
+</div>
+<div class="detail-column" id="d7" style="display:none">
+	<div class="detail">
+			<div class="mock-list">
+				<b>Nom : </b>processorCode
+			</div>
+			<div class="mock-list">
+				<b>Description : </b>Code processeur.
+			</div>
+
+	</div>
+	<div class="detail">
+			<div class="mock-list">
+				<b>Nom : </b> <a href="../types/char3.html">char3</a>
+			</div>
+			<div class="mock-list">
+				<b> Description : </b>Type avec un nombre de caractères égal à 3.
+			</div>
+			<div class="mock-list">
+				<b>Format : </b>string
+			</div>
+			<div class="mock-list">
+				<b>Longueur fixe : </b>3
+			</div>
+
+	</div>
+
+</div>
+      </div> 
+  </div>
+
+  
+  <script src="../resources/jquery.js"></script>
+  <script src="../resources/doc.js"></script>
+</body>
+</html>

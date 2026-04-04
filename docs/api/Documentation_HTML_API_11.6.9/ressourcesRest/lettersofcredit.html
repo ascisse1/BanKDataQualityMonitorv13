@@ -1,0 +1,894 @@
+<!DOCTYPE html>
+<html>
+<head>
+	<link rel="stylesheet" href="../resources/styleDocu.css" />
+    <link rel="stylesheet" href="../resources/font-awesome/css/font-awesome.min.css" />
+	<title>Documentation Xsd</title>
+	<meta charset="UTF-8" />
+</head>
+
+<body>
+  <div class="document">
+	<div class="header">		
+	</div>
+
+    <div class="tabs">
+        <div class="tabs-wrapper-selected" onclick="window.open('../liste-ressources.html', '_self');">
+            <div class="tabs-left-content" >Liste des ressources</div>
+        </div>
+        <div class="tabs-wrapper" onclick="window.open('../liste-services.html', '_self');">
+            <div class="tabs-left-content">Liste des services</div>
+        </div>
+        <div class="tabs-wrapper" onclick="window.open('../liste-types.html', '_self');">
+            <div class="tabs-right-content">Liste des types</div>
+        </div>
+    </div>
+
+	<div class="contenu">
+      <div class="breadcrumb"> 
+        <ul class="breadcrumb">
+           <li> <a href="../index.html"> Accueil </a></li>
+           <li> > </li>
+           <li> <a href="../liste-ressources.html"> Liste des ressources </a></li>
+           <li> > </li>
+           <li> lettersofcredit </li>
+        </ul>                    
+      </div>                    
+      
+      <div class="summary">
+        <div class="mock-list"> Nom ressource REST : lettersofcredit </div>
+        <div class="mock-list"> Programme Amplitude : cdwrlettersofcredit </div>
+        <div class="mock-list"> Email : support@soprabanking.com </div>        
+        <br/>
+            <div class="mock-list"> Letters of credit</div>
+      </div>
+      
+      <div class="column-content" style="width:93%">
+        <div class="detail-column" style="width: 35%">
+          <div class="tree"> 
+<ul style="padding:0">
+	<li>
+<i class="fa fa-caret-down fa-fw" onclick="expand_or_collapse(this)">
+</i>		lettersofcredit		<ul>
+			<li>
+<i class="fa fa-caret-down fa-fw" onclick="expand_or_collapse(this)">
+</i>				v1				<ul>
+					<li>
+<i class="fa fa-fw">
+</i><span class="selectable" id="e0"> GETLIST
+</span>
+					</li>
+					<li>
+<i class="fa fa-fw">
+</i><span class="selectable" id="e1"> GET
+</span>
+					</li>
+
+				</ul>
+
+			</li>
+
+		</ul>
+		<ul>
+			<li>
+<i class="fa fa-caret-down fa-fw" onclick="expand_or_collapse(this)">
+</i>				v2				<ul>
+					<li>
+<i class="fa fa-fw">
+</i><span class="selectable" id="e2"> GET
+</span>
+					</li>
+
+				</ul>
+
+			</li>
+
+		</ul>
+
+	</li>
+
+</ul>
+          </div>
+        </div>
+                 
+        
+<div class="detail-column" id="d0" style="display:none; width: 65%">
+	<div class="detail">
+		<div class="mock-list">
+			<b>Service SOAP : </b> <a href="../services/getDocumentaryCreditList.html">getDocumentaryCreditList</a>
+		</div>
+		<div class="mock-list">
+			<b>Code retour succes : </b>200 - OK
+		</div>
+		<div class="mock-list">
+			<b>Uri : </b>http://soprabanking.com/amplitude/lettersofcredit/v1/
+		</div>
+		<div class="mock-list">
+			<b>Description : </b>The service getDocumentaryCreditList allows returning a list of letters of credit (L/C) matching the search criteria received.
+
+The search is based on the optional criteria below:
+- the L/C identifier: branch (code and/or designation), module, L/C type (code and/or designation), file number,
+- the internal reference,
+- the L/C availability mode (code and/or designation),
+- the currency: alphanumeric code and/or digital code and/or designation,
+- the file account: number (internal and/or IBAN and/or external format) and/or class and/or customer and/or additional information (identifier and/or value (or value range) and/or designation),
+- the customer: code and/or name to be displayed, type, profile (code and/or designation), national identifier, account officer (code and/or name), additional information (identifier and/or value (or value range) and/or designation), external reference,
+- the customer name,
+- the situation,
+- the opening date (of a date range),
+- the validity date (or a date range),
+- the amount (or an amount range),
+- the L/C status,
+- the transferable credit flag,
+- the revocable credit flag,
+- the standby flag,
+- the confirmed credit flag,
+- the issuing mode,
+- the interface code,
+- the L/C reference,
+- the irregularity flag,
+- the payment flag,
+- the last bank comment flag.
+
+For each L/C returned, all data used in the search criteria will be indicated.
+		</div>
+		<br>
+
+		</br>
+		<div class="mock-list">
+			<b>Parametres : </b>			<table class="table_param">
+				<tr>
+				<td>
+				</td>				<td title="getDocumentaryCreditListRequest.account.additionalInformation.designation"> <a href="../types/charMax30.html">X-SBS-accountAdditionalInformationDesignation</a><br>Désignation.
+				</td>				<td> Header
+				</td>
+				</tr>
+				<tr>
+				<td>
+				</td>				<td title="getDocumentaryCreditListRequest.account.accountNumber.internalFormatAccountOurBranch.branch.code"> <a href="../types/char5.html">X-SBS-accountBranchCode</a><br>Code de l'agence.
+				</td>				<td> Header
+				</td>
+				</tr>
+				<tr>
+				<td>
+				</td>				<td title="getDocumentaryCreditListRequest.account.accountNumber.internalFormatAccountOurBranch.branch.designation"> <a href="../types/charMax30.html">X-SBS-accountBranchDesignation</a><br>Désignation de l'agence.
+				</td>				<td> Header
+				</td>
+				</tr>
+				<tr>
+				<td>
+				</td>				<td title="getDocumentaryCreditListRequest.account.accountClass.comparisonOperator"> <a href="../types/comparisonOperator.html">X-SBS-accountClassComparisonOperator</a><br>Opérateur de comparaison.
+				</td>				<td> Header
+				</td>
+				</tr>
+				<tr>
+				<td>
+				</td>				<td title="getDocumentaryCreditListRequest.account.accountClass.value"> <a href="../types/string.html">X-SBS-accountClassValue</a><br>Valeur de la désignation.
+				</td>				<td> Header
+				</td>
+				</tr>
+				<tr>
+				<td>
+				</td>				<td title="getDocumentaryCreditListRequest.account.additionalInformation.complementaryInformation.value.alphanumeric.comparisonOperator"> <a href="../types/comparisonOperator.html">X-SBS-accountComplementaryInformationAlphanumericComparisonOperator</a><br>Opérateur de comparaison.
+				</td>				<td> Header
+				</td>
+				</tr>
+				<tr>
+				<td>
+				</td>				<td title="getDocumentaryCreditListRequest.account.additionalInformation.complementaryInformation.value.alphanumeric.value"> <a href="../types/string.html">X-SBS-accountComplementaryInformationAlphanumericValue</a><br>Valeur de la désignation.
+				</td>				<td> Header
+				</td>
+				</tr>
+				<tr>
+				<td>
+				</td>				<td title="getDocumentaryCreditListRequest.account.additionalInformation.complementaryInformation.value.date.date1"> <a href="../types/date.html">X-SBS-accountComplementaryInformationDate1</a><br>1ère date.
+				</td>				<td> Header
+				</td>
+				</tr>
+				<tr>
+				<td>
+				</td>				<td title="getDocumentaryCreditListRequest.account.additionalInformation.complementaryInformation.value.date.date2"> <a href="../types/date.html">X-SBS-accountComplementaryInformationDate2</a><br>2ème date.
+				</td>				<td> Header
+				</td>
+				</tr>
+				<tr>
+				<td>
+				</td>				<td title="getDocumentaryCreditListRequest.account.additionalInformation.complementaryInformation.value.date.comparator"> <a href="../types/comparator.html">X-SBS-accountComplementaryInformationDateComparator</a><br>Opérateur de comparaison.
+				</td>				<td> Header
+				</td>
+				</tr>
+				<tr>
+				<td>
+				</td>				<td title="getDocumentaryCreditListRequest.account.additionalInformation.complementaryInformation.value.amountOrRate.decimal1"> <a href="../types/decimal32_16.html">X-SBS-accountComplementaryInformationDecimal1</a><br>1ère décimale.
+				</td>				<td> Header
+				</td>
+				</tr>
+				<tr>
+				<td>
+				</td>				<td title="getDocumentaryCreditListRequest.account.additionalInformation.complementaryInformation.value.amountOrRate.comparator"> <a href="../types/comparator.html">X-SBS-accountComplementaryInformationDecimal1Comparator</a><br>Opérateur de comparaison.
+				</td>				<td> Header
+				</td>
+				</tr>
+				<tr>
+				<td>
+				</td>				<td title="getDocumentaryCreditListRequest.account.additionalInformation.complementaryInformation.value.amountOrRate.decimal2"> <a href="../types/decimal32_16.html">X-SBS-accountComplementaryInformationDecimal2</a><br>2ème décimale.
+				</td>				<td> Header
+				</td>
+				</tr>
+				<tr>
+				<td>
+				</td>				<td title="getDocumentaryCreditListRequest.account.additionalInformation.complementaryInformation.identifier"> <a href="../types/charMax10.html">X-SBS-accountComplementaryInformationIdentifier</a><br>Identifiant de la donnée complémentaire.
+				</td>				<td> Header
+				</td>
+				</tr>
+				<tr>
+				<td>
+				</td>				<td title="getDocumentaryCreditListRequest.account.accountNumber.internalFormatAccountOurBranch.currency.alphaCode"> <a href="../types/char3.html">X-SBS-accountCurrencyAlphaCode</a><br>Code devise alphanumérique.
+				</td>				<td> Header
+				</td>
+				</tr>
+				<tr>
+				<td>
+				</td>				<td title="getDocumentaryCreditListRequest.account.accountNumber.internalFormatAccountOurBranch.currency.numericCode"> <a href="../types/char3.html">X-SBS-accountCurrencyNumericCode</a><br>Code devise numérique.
+				</td>				<td> Header
+				</td>
+				</tr>
+				<tr>
+				<td>
+				</td>				<td title="getDocumentaryCreditListRequest.account.customer.activeProfile.code"> <a href="../types/charMax3.html">X-SBS-accountCustomerActiveProfileCode</a><br>Code profil.
+				</td>				<td> Header
+				</td>
+				</tr>
+				<tr>
+				<td>
+				</td>				<td title="getDocumentaryCreditListRequest.account.customer.activeProfile.designation"> <a href="../types/charMax30.html">X-SBS-accountCustomerActiveProfileDesignation</a><br>Désignation du profil.
+				</td>				<td> Header
+				</td>
+				</tr>
+				<tr>
+				<td>
+				</td>				<td title="getDocumentaryCreditListRequest.account.customer.additionalInformation.designation"> <a href="../types/charMax30.html">X-SBS-accountCustomerAdditionalInformationDesignation</a><br>Désignation.
+				</td>				<td> Header
+				</td>
+				</tr>
+				<tr>
+				<td>
+				</td>				<td title="getDocumentaryCreditListRequest.account.customer.additionalInformation.complementaryInformation.value.alphanumeric.comparisonOperator"> <a href="../types/comparisonOperator.html">X-SBS-accountCustomerComplementaryInformationAlphanumericComparisonOperator</a><br>Opérateur de comparaison.
+				</td>				<td> Header
+				</td>
+				</tr>
+				<tr>
+				<td>
+				</td>				<td title="getDocumentaryCreditListRequest.account.customer.additionalInformation.complementaryInformation.value.alphanumeric.value"> <a href="../types/string.html">X-SBS-accountCustomerComplementaryInformationAlphanumericValue</a><br>Valeur de la désignation.
+				</td>				<td> Header
+				</td>
+				</tr>
+				<tr>
+				<td>
+				</td>				<td title="getDocumentaryCreditListRequest.account.customer.additionalInformation.complementaryInformation.value.date.date1"> <a href="../types/date.html">X-SBS-accountCustomerComplementaryInformationDate1</a><br>1ère date.
+				</td>				<td> Header
+				</td>
+				</tr>
+				<tr>
+				<td>
+				</td>				<td title="getDocumentaryCreditListRequest.account.customer.additionalInformation.complementaryInformation.value.date.date2"> <a href="../types/date.html">X-SBS-accountCustomerComplementaryInformationDate2</a><br>2ème date.
+				</td>				<td> Header
+				</td>
+				</tr>
+				<tr>
+				<td>
+				</td>				<td title="getDocumentaryCreditListRequest.account.customer.additionalInformation.complementaryInformation.value.date.comparator"> <a href="../types/comparator.html">X-SBS-accountCustomerComplementaryInformationDateComparator</a><br>Opérateur de comparaison.
+				</td>				<td> Header
+				</td>
+				</tr>
+				<tr>
+				<td>
+				</td>				<td title="getDocumentaryCreditListRequest.account.customer.additionalInformation.complementaryInformation.value.amountOrRate.decimal1"> <a href="../types/decimal32_16.html">X-SBS-accountCustomerComplementaryInformationDecimal1</a><br>1ère décimale.
+				</td>				<td> Header
+				</td>
+				</tr>
+				<tr>
+				<td>
+				</td>				<td title="getDocumentaryCreditListRequest.account.customer.additionalInformation.complementaryInformation.value.amountOrRate.comparator"> <a href="../types/comparator.html">X-SBS-accountCustomerComplementaryInformationDecimal1Comparator</a><br>Opérateur de comparaison.
+				</td>				<td> Header
+				</td>
+				</tr>
+				<tr>
+				<td>
+				</td>				<td title="getDocumentaryCreditListRequest.account.customer.additionalInformation.complementaryInformation.value.amountOrRate.decimal2"> <a href="../types/decimal32_16.html">X-SBS-accountCustomerComplementaryInformationDecimal2</a><br>2ème décimale.
+				</td>				<td> Header
+				</td>
+				</tr>
+				<tr>
+				<td>
+				</td>				<td title="getDocumentaryCreditListRequest.account.customer.additionalInformation.complementaryInformation.identifier"> <a href="../types/charMax10.html">X-SBS-accountCustomerComplementaryInformationIdentifier</a><br>Identifiant de la donnée complémentaire.
+				</td>				<td> Header
+				</td>
+				</tr>
+				<tr>
+				<td>
+				</td>				<td title="getDocumentaryCreditListRequest.account.customer.customer.displayedName"> <a href="../types/charMax67.html">X-SBS-accountCustomerDisplayedName</a><br>Nom de restitution du client.
+				</td>				<td> Header
+				</td>
+				</tr>
+				<tr>
+				<td>
+				</td>				<td title="getDocumentaryCreditListRequest.account.customer.externalReference"> <a href="../types/charMax25.html">X-SBS-accountCustomerExternalReference</a><br>Référence externe.
+				</td>				<td> Header
+				</td>
+				</tr>
+				<tr>
+				<td>
+				</td>				<td title="getDocumentaryCreditListRequest.account.customer.nationalIdentifier"> <a href="../types/charMax20.html">X-SBS-accountCustomerNationalIdentifier</a><br>Identifiant national.
+				</td>				<td> Header
+				</td>
+				</tr>
+				<tr>
+				<td>
+				</td>				<td title="getDocumentaryCreditListRequest.account.customer.customer.customerNumber"> <a href="../types/charMax15.html">X-SBS-accountCustomerNumber</a><br>Code du client.
+				</td>				<td> Header
+				</td>
+				</tr>
+				<tr>
+				<td>
+				</td>				<td title="getDocumentaryCreditListRequest.account.customer.customerOfficer.code"> <a href="../types/charMax3.html">X-SBS-accountCustomerOfficerCode</a><br>Code gestionnaire.
+				</td>				<td> Header
+				</td>
+				</tr>
+				<tr>
+				<td>
+				</td>				<td title="getDocumentaryCreditListRequest.account.customer.customerOfficer.name"> <a href="../types/charMax30.html">X-SBS-accountCustomerOfficerName</a><br>Nom du gestionnaire.
+				</td>				<td> Header
+				</td>
+				</tr>
+				<tr>
+				<td>
+				</td>				<td title="getDocumentaryCreditListRequest.account.customer.customerType"> <a href="../types/customerType.html">X-SBS-accountCustomerType</a><br>Type de client.
+				</td>				<td> Header
+				</td>
+				</tr>
+				<tr>
+				<td>
+				</td>				<td title="getDocumentaryCreditListRequest.account.accountNumber.internalFormatAccountOurBranch.account"> <a href="../types/charMax11.html">X-SBS-accountNumber</a><br>Numéro du compte.
+				</td>				<td> Header
+				</td>
+				</tr>
+				<tr>
+				<td>
+				</td>				<td title="getDocumentaryCreditListRequest.account.accountNumber.internalFormatAccountOurBranch.suffix"> <a href="../types/charMax2.html">X-SBS-accountSuffix</a><br>Suffixe du compte.
+				</td>				<td> Header
+				</td>
+				</tr>
+				<tr>
+				<td>
+				</td>				<td title="getDocumentaryCreditListRequest.customer.activeProfile.code"> <a href="../types/charMax3.html">X-SBS-activeProfileCode</a><br>Code profil.
+				</td>				<td> Header
+				</td>
+				</tr>
+				<tr>
+				<td>
+				</td>				<td title="getDocumentaryCreditListRequest.customer.activeProfile.designation"> <a href="../types/charMax30.html">X-SBS-activeProfileDesignation</a><br>Désignation du profil.
+				</td>				<td> Header
+				</td>
+				</tr>
+				<tr>
+				<td>
+				</td>				<td title="getDocumentaryCreditListRequest.amount.amount1"> <a href="../types/decimal19_4.html">X-SBS-amount1</a><br>1er montant.
+				</td>				<td> Header
+				</td>
+				</tr>
+				<tr>
+				<td>
+				</td>				<td title="getDocumentaryCreditListRequest.amount.amount2"> <a href="../types/decimal19_4.html">X-SBS-amount2</a><br>2ème montant.
+				</td>				<td> Header
+				</td>
+				</tr>
+				<tr>
+				<td>
+				</td>				<td title="getDocumentaryCreditListRequest.amount.comparator"> <a href="../types/comparator.html">X-SBS-amountComparator</a><br>Opérateur de comparaison.
+				</td>				<td> Header
+				</td>
+				</tr>
+				<tr>
+				<td>
+				</td>				<td title="getDocumentaryCreditListRequest.amount.currency.currency.alphaCode"> <a href="../types/char3.html">X-SBS-amountCurrencyAlphaCode</a><br>Code devise alphanumérique.
+				</td>				<td> Header
+				</td>
+				</tr>
+				<tr>
+				<td>
+				</td>				<td title="getDocumentaryCreditListRequest.amount.currency.currency.numericCode"> <a href="../types/char3.html">X-SBS-amountCurrencyNumericCode</a><br>Code devise numérique.
+				</td>				<td> Header
+				</td>
+				</tr>
+				<tr>
+				<td>
+				</td>				<td title="getDocumentaryCreditListRequest.identifier.branch.code"> <a href="../types/char5.html">X-SBS-branchCode</a><br>Code de l'agence.
+				</td>				<td> Header
+				</td>
+				</tr>
+				<tr>
+				<td>
+				</td>				<td title="getDocumentaryCreditListRequest.confirmedCredit"> <a href="../types/confirmedCredit.html">X-SBS-confirmedCredit</a><br>Crédit confirmé.
+				</td>				<td> Header
+				</td>
+				</tr>
+				<tr>
+				<td>
+				</td>				<td title="getDocumentaryCreditListRequest.currency.alphaCode"> <a href="../types/char3.html">X-SBS-currencyAlphaCode</a><br>Code devise alphanumérique.
+				</td>				<td> Header
+				</td>
+				</tr>
+				<tr>
+				<td>
+				</td>				<td title="getDocumentaryCreditListRequest.currency.numericCode"> <a href="../types/char3.html">X-SBS-currencyNumericCode</a><br>Code devise numérique.
+				</td>				<td> Header
+				</td>
+				</tr>
+				<tr>
+				<td>
+				</td>				<td title="getDocumentaryCreditListRequest.customer.additionalInformation.designation"> <a href="../types/charMax30.html">X-SBS-customerAdditionalInformationDesignation</a><br>Désignation.
+				</td>				<td> Header
+				</td>
+				</tr>
+				<tr>
+				<td>
+				</td>				<td title="getDocumentaryCreditListRequest.customer.additionalInformation.complementaryInformation.value.alphanumeric.comparisonOperator"> <a href="../types/comparisonOperator.html">X-SBS-customerComplementaryInformationAlphanumericComparisonOperator</a><br>Opérateur de comparaison.
+				</td>				<td> Header
+				</td>
+				</tr>
+				<tr>
+				<td>
+				</td>				<td title="getDocumentaryCreditListRequest.customer.additionalInformation.complementaryInformation.value.alphanumeric.value"> <a href="../types/string.html">X-SBS-customerComplementaryInformationAlphanumericValue</a><br>Valeur de la désignation.
+				</td>				<td> Header
+				</td>
+				</tr>
+				<tr>
+				<td>
+				</td>				<td title="getDocumentaryCreditListRequest.customer.additionalInformation.complementaryInformation.value.date.date1"> <a href="../types/date.html">X-SBS-customerComplementaryInformationDate1</a><br>1ère date.
+				</td>				<td> Header
+				</td>
+				</tr>
+				<tr>
+				<td>
+				</td>				<td title="getDocumentaryCreditListRequest.customer.additionalInformation.complementaryInformation.value.date.date2"> <a href="../types/date.html">X-SBS-customerComplementaryInformationDate2</a><br>2ème date.
+				</td>				<td> Header
+				</td>
+				</tr>
+				<tr>
+				<td>
+				</td>				<td title="getDocumentaryCreditListRequest.customer.additionalInformation.complementaryInformation.value.date.comparator"> <a href="../types/comparator.html">X-SBS-customerComplementaryInformationDateComparator</a><br>Opérateur de comparaison.
+				</td>				<td> Header
+				</td>
+				</tr>
+				<tr>
+				<td>
+				</td>				<td title="getDocumentaryCreditListRequest.customer.additionalInformation.complementaryInformation.value.amountOrRate.decimal1"> <a href="../types/decimal32_16.html">X-SBS-customerComplementaryInformationDecimal1</a><br>1ère décimale.
+				</td>				<td> Header
+				</td>
+				</tr>
+				<tr>
+				<td>
+				</td>				<td title="getDocumentaryCreditListRequest.customer.additionalInformation.complementaryInformation.value.amountOrRate.comparator"> <a href="../types/comparator.html">X-SBS-customerComplementaryInformationDecimal1Comparator</a><br>Opérateur de comparaison.
+				</td>				<td> Header
+				</td>
+				</tr>
+				<tr>
+				<td>
+				</td>				<td title="getDocumentaryCreditListRequest.customer.additionalInformation.complementaryInformation.value.amountOrRate.decimal2"> <a href="../types/decimal32_16.html">X-SBS-customerComplementaryInformationDecimal2</a><br>2ème décimale.
+				</td>				<td> Header
+				</td>
+				</tr>
+				<tr>
+				<td>
+				</td>				<td title="getDocumentaryCreditListRequest.customer.additionalInformation.complementaryInformation.identifier"> <a href="../types/charMax10.html">X-SBS-customerComplementaryInformationIdentifier</a><br>Identifiant de la donnée complémentaire.
+				</td>				<td> Header
+				</td>
+				</tr>
+				<tr>
+				<td>
+				</td>				<td title="getDocumentaryCreditListRequest.customer.customer.displayedName"> <a href="../types/charMax67.html">X-SBS-customerDisplayedName</a><br>Nom de restitution du client.
+				</td>				<td> Header
+				</td>
+				</tr>
+				<tr>
+				<td>
+				</td>				<td title="getDocumentaryCreditListRequest.customer.externalReference"> <a href="../types/charMax25.html">X-SBS-customerExternalReference</a><br>Référence externe.
+				</td>				<td> Header
+				</td>
+				</tr>
+				<tr>
+				<td>
+				</td>				<td title="getDocumentaryCreditListRequest.customer.customer.customerNumber"> <a href="../types/charMax15.html">X-SBS-customerNumber</a><br>Code du client.
+				</td>				<td> Header
+				</td>
+				</tr>
+				<tr>
+				<td>
+				</td>				<td title="getDocumentaryCreditListRequest.customer.customerOfficer.code"> <a href="../types/charMax3.html">X-SBS-customerOfficerCode</a><br>Code gestionnaire.
+				</td>				<td> Header
+				</td>
+				</tr>
+				<tr>
+				<td>
+				</td>				<td title="getDocumentaryCreditListRequest.customer.customerOfficer.name"> <a href="../types/charMax30.html">X-SBS-customerOfficerName</a><br>Nom du gestionnaire.
+				</td>				<td> Header
+				</td>
+				</tr>
+				<tr>
+				<td>
+				</td>				<td title="getDocumentaryCreditListRequest.customer.customerType"> <a href="../types/customerType.html">X-SBS-customerType</a><br>Type de client.
+				</td>				<td> Header
+				</td>
+				</tr>
+				<tr>
+				<td>
+				</td>				<td title="getDocumentaryCreditListRequest.embodiment.embodiment"> <a href="../types/char3.html">X-SBS-embodiment</a><br>Mode de réalisation.
+				</td>				<td> Header
+				</td>
+				</tr>
+				<tr>
+				<td>
+				</td>				<td title="getDocumentaryCreditListRequest.embodiment.designation"> <a href="../types/charMax30.html">X-SBS-embodimentDesignation</a><br>Désignation.
+				</td>				<td> Header
+				</td>
+				</tr>
+				<tr>
+				<td>
+				</td>				<td title="getDocumentaryCreditListRequest.externalCustomerName"> <a href="../types/charMax35.html">X-SBS-externalCustomerName</a><br>Nom du client.
+				</td>				<td> Header
+				</td>
+				</tr>
+				<tr>
+				<td>
+				</td>				<td title="getDocumentaryCreditListRequest.account.accountNumber.externalFormatAccount.value"> <a href="../types/charMax34.html">X-SBS-externalFormatAccount</a><br>Valeur de l'identifiant externe du compte.
+				</td>				<td> Header
+				</td>
+				</tr>
+				<tr>
+				<td>
+				</td>				<td title="getDocumentaryCreditListRequest.identifier.fileNumber"> <a href="../types/char11.html">X-SBS-fileNumber</a><br>Numéro de dossier.
+				</td>				<td> Header
+				</td>
+				</tr>
+				<tr>
+				<td>
+				</td>				<td title="getDocumentaryCreditListRequest.fileStatus"> <a href="../types/documentaryCreditFileStatus.html">X-SBS-fileStatus</a><br>Etat du dossier.
+				</td>				<td> Header
+				</td>
+				</tr>
+				<tr>
+				<td>
+				</td>				<td title="getDocumentaryCreditListRequest.account.accountNumber.ibanFormatAccount.value"> <a href="../types/charMax34.html">X-SBS-ibanFormatAccount</a><br>Valeur de l'IBAN.
+				</td>				<td> Header
+				</td>
+				</tr>
+				<tr>
+				<td>
+				</td>				<td title="getDocumentaryCreditListRequest.interfaceCode"> <a href="../types/tradeFinanceInterfaceCode.html">X-SBS-interfaceCode</a><br>Code de l'interface.
+				</td>				<td> Header
+				</td>
+				</tr>
+				<tr>
+				<td>
+				</td>				<td title="getDocumentaryCreditListRequest.internalReference"> <a href="../types/charMax16.html">X-SBS-internalReference</a><br>Référence interne.
+				</td>				<td> Header
+				</td>
+				</tr>
+				<tr>
+				<td>
+				</td>				<td title="getDocumentaryCreditListRequest.issuingMode"> <a href="../types/creditIssuingMode.html">X-SBS-issuingMode</a><br>Mode d'émission.
+				</td>				<td> Header
+				</td>
+				</tr>
+				<tr>
+				<td>
+				</td>				<td title="getDocumentaryCreditListRequest.letterOfCreditReference.reference"> <a href="../types/charMax16.html">X-SBS-letterOfCreditReference</a><br>Référence.
+				</td>				<td> Header
+				</td>
+				</tr>
+				<tr>
+				<td>
+				</td>				<td title="getDocumentaryCreditListRequest.letterOfCreditReference.comparisonOperator"> <a href="../types/comparisonOperator.html">X-SBS-letterOfCreditReferenceComparisonOperator</a><br>Opérateur de comparaison.
+				</td>				<td> Header
+				</td>
+				</tr>
+				<tr>
+				<td>
+				</td>				<td title="getDocumentaryCreditListRequest.letterOfCreditSendingDate.date1"> <a href="../types/date.html">X-SBS-letterOfCreditSendingDate1</a><br>1ère date.
+				</td>				<td> Header
+				</td>
+				</tr>
+				<tr>
+				<td>
+				</td>				<td title="getDocumentaryCreditListRequest.letterOfCreditSendingDate.date2"> <a href="../types/date.html">X-SBS-letterOfCreditSendingDate2</a><br>2ème date.
+				</td>				<td> Header
+				</td>
+				</tr>
+				<tr>
+				<td>
+				</td>				<td title="getDocumentaryCreditListRequest.letterOfCreditSendingDate.comparator"> <a href="../types/comparator.html">X-SBS-letterOfCreditSendingDateComparator</a><br>Opérateur de comparaison.
+				</td>				<td> Header
+				</td>
+				</tr>
+				<tr>
+				<td>
+				</td>				<td title="getDocumentaryCreditListRequest.identifier.module.name"> <a href="../types/charMax30.html">X-SBS-moduleName</a><br>Désignation.
+				</td>				<td> Header
+				</td>
+				</tr>
+				<tr>
+				<td>
+				</td>				<td title="getDocumentaryCreditListRequest.customer.nationalIdentifier"> <a href="../types/charMax20.html">X-SBS-nationalIdentifier</a><br>Identifiant national.
+				</td>				<td> Header
+				</td>
+				</tr>
+				<tr>
+				<td>
+				</td>				<td title="getDocumentaryCreditListRequest.openingDate.date1"> <a href="../types/date.html">X-SBS-openingDate1</a><br>1ère date.
+				</td>				<td> Header
+				</td>
+				</tr>
+				<tr>
+				<td>
+				</td>				<td title="getDocumentaryCreditListRequest.openingDate.date2"> <a href="../types/date.html">X-SBS-openingDate2</a><br>2ème date.
+				</td>				<td> Header
+				</td>
+				</tr>
+				<tr>
+				<td>
+				</td>				<td title="getDocumentaryCreditListRequest.openingDate.comparator"> <a href="../types/comparator.html">X-SBS-openingDateComparator</a><br>Opérateur de comparaison.
+				</td>				<td> Header
+				</td>
+				</tr>
+				<tr>
+				<td>
+				</td>				<td title="getDocumentaryCreditListRequest.revocableCredit"> <a href="../types/boolean.html">X-SBS-revocableCredit</a><br>Crédit révocable.
+				</td>				<td> Header
+				</td>
+				</tr>
+				<tr>
+				<td>
+				</td>				<td title="getDocumentaryCreditListRequest.situation"> <a href="../types/documentaryCreditSituationType.html">X-SBS-situation</a><br>Situation.
+				</td>				<td> Header
+				</td>
+				</tr>
+				<tr>
+				<td>
+				</td>				<td title="getDocumentaryCreditListRequest.standby"> <a href="../types/boolean.html">X-SBS-standby</a><br>Crédit en standby.
+				</td>				<td> Header
+				</td>
+				</tr>
+				<tr>
+				<td>
+				</td>				<td title="getDocumentaryCreditListRequest.transferable"> <a href="../types/boolean.html">X-SBS-transferable</a><br>Crédit transférable.
+				</td>				<td> Header
+				</td>
+				</tr>
+				<tr>
+				<td>
+				</td>				<td title="getDocumentaryCreditListRequest.identifier.type.type"> <a href="../types/char3.html">X-SBS-type</a><br>Type du CREDOC.
+				</td>				<td> Header
+				</td>
+				</tr>
+				<tr>
+				<td>
+				</td>				<td title="getDocumentaryCreditListRequest.identifier.type.designation"> <a href="../types/charMax30.html">X-SBS-typeDesignation</a><br>Libellé du type.
+				</td>				<td> Header
+				</td>
+				</tr>
+				<tr>
+				<td>
+				</td>				<td title="getDocumentaryCreditListRequest.validityDate.date1"> <a href="../types/date.html">X-SBS-validityDate1</a><br>1ère date.
+				</td>				<td> Header
+				</td>
+				</tr>
+				<tr>
+				<td>
+				</td>				<td title="getDocumentaryCreditListRequest.validityDate.date2"> <a href="../types/date.html">X-SBS-validityDate2</a><br>2ème date.
+				</td>				<td> Header
+				</td>
+				</tr>
+				<tr>
+				<td>
+				</td>				<td title="getDocumentaryCreditListRequest.validityDate.comparator"> <a href="../types/comparator.html">X-SBS-validityDateComparator</a><br>Opérateur de comparaison.
+				</td>				<td> Header
+				</td>
+				</tr>
+				<tr>
+				<td>
+				</td>				<td title="getDocumentaryCreditListRequest.withIrregularity"> <a href="../types/boolean.html">X-SBS-withIrregularity</a><br>Avec irrégularité.
+				</td>				<td> Header
+				</td>
+				</tr>
+				<tr>
+				<td>
+				</td>				<td title="getDocumentaryCreditListRequest.withLastCommentFromBank"> <a href="../types/boolean.html">X-SBS-withLastCommentFromBank</a><br>Avec dernier commentaire de la banque.
+				</td>				<td> Header
+				</td>
+				</tr>
+				<tr>
+				<td>
+				</td>				<td title="getDocumentaryCreditListRequest.withPayment"> <a href="../types/boolean.html">X-SBS-withPayment</a><br>Avec règlement.
+				</td>				<td> Header
+				</td>
+				</tr>
+				<tr>
+				<td>
+				</td>				<td title="getDocumentaryCreditListRequest.identifier.module.code"> <a href="../types/charMax3.html">X-SBS-moduleCode</a><br>Code module.
+				</td>				<td> Header
+				</td>
+				</tr>
+
+			</table>
+
+		</div>
+		<br>
+
+		</br>
+		<div class="mock-list">
+			<b>Codes Erreur : </b>			<table>
+				<tr>
+				<td> 400
+				</td>				<td> Bad Request
+				</td>
+				</tr>
+
+			</table>
+
+		</div>
+
+	</div>
+
+</div>
+<div class="detail-column" id="d1" style="display:none; width: 65%">
+	<div class="detail">
+		<div class="mock-list">
+			<b>Service SOAP : </b> <a href="../services/getLetterOfCreditDetail.html">getLetterOfCreditDetail</a>
+		</div>
+		<div class="mock-list">
+			<b>Code retour succes : </b>200 - OK
+		</div>
+		<div class="mock-list">
+			<b>Uri : </b>http://soprabanking.com/amplitude/lettersofcredit/v1/{lettersOfCredit}
+		</div>
+		<div class="mock-list">
+			<b>Description : </b>Données d'un crédit documentaire.
+		</div>
+		<br>
+
+		</br>
+		<div class="mock-list">
+			<b>Identifiants : </b>			<table class="table_param">
+				<tr>
+				<td> 0
+				</td>				<td title="getLetterOfCreditDetailRequest.branchCode"> <a href="../types/branchCode.html">branchCode</a><br>Code de l¿agence.
+				</td>
+				</tr>
+				<tr>
+				<td> 1
+				</td>				<td title="getLetterOfCreditDetailRequest.letterOfCreditTypeCode"> <a href="../types/char3.html">letterOfCreditTypeCode</a><br>Type de credoc.
+				</td>
+				</tr>
+				<tr>
+				<td> 2
+				</td>				<td title="getLetterOfCreditDetailRequest.fileNumber"> <a href="../types/char11.html">fileNumber</a><br>Numéro de dossier.
+				</td>
+				</tr>
+
+			</table>
+
+		</div>
+		<br>
+
+		</br>
+		<div class="mock-list">
+			<b>Parametres : </b>			<table class="table_param">
+				<tr>
+				<td>
+				</td>				<td title="getLetterOfCreditDetailRequest.module"> <a href="../types/char3.html">X-SBS-module</a><br>Module.
+				</td>				<td> Header
+				</td>
+				</tr>
+
+			</table>
+
+		</div>
+		<br>
+
+		</br>
+		<div class="mock-list">
+			<b>Codes Erreur : </b>			<table>
+				<tr>
+				<td> 400
+				</td>				<td> Bad Request
+				</td>
+				</tr>
+
+			</table>
+
+		</div>
+
+	</div>
+
+</div>
+<div class="detail-column" id="d2" style="display:none; width: 65%">
+	<div class="detail">
+		<div class="mock-list">
+			<b>Service SOAP : </b> <a href="../services/getLetterOfCreditDetailV2.html">getLetterOfCreditDetailV2</a>
+		</div>
+		<div class="mock-list">
+			<b>Code retour succes : </b>200 - OK
+		</div>
+		<div class="mock-list">
+			<b>Uri : </b>http://soprabanking.com/amplitude/lettersofcredit/v2/{lettersOfCredit}
+		</div>
+		<div class="mock-list">
+			<b>Description : </b>Données d'un crédit documentaire.
+		</div>
+		<br>
+
+		</br>
+		<div class="mock-list">
+			<b>Identifiants : </b>			<table class="table_param">
+				<tr>
+				<td> 0
+				</td>				<td title="getLetterOfCreditDetailRequest.branchCode"> <a href="../types/branchCode.html">branchCode</a><br>Code de l¿agence.
+				</td>
+				</tr>
+				<tr>
+				<td> 1
+				</td>				<td title="getLetterOfCreditDetailRequest.letterOfCreditTypeCode"> <a href="../types/char3.html">letterOfCreditTypeCode</a><br>Type de credoc.
+				</td>
+				</tr>
+				<tr>
+				<td> 2
+				</td>				<td title="getLetterOfCreditDetailRequest.fileNumber"> <a href="../types/char11.html">fileNumber</a><br>Numéro de dossier.
+				</td>
+				</tr>
+
+			</table>
+
+		</div>
+		<br>
+
+		</br>
+		<div class="mock-list">
+			<b>Parametres : </b>			<table class="table_param">
+				<tr>
+				<td>
+				</td>				<td title="getLetterOfCreditDetailRequest.module"> <a href="../types/char3.html">X-SBS-module</a><br>Module.
+				</td>				<td> Header
+				</td>
+				</tr>
+
+			</table>
+
+		</div>
+		<br>
+
+		</br>
+		<div class="mock-list">
+			<b>Codes Erreur : </b>			<table>
+				<tr>
+				<td> 400
+				</td>				<td> Bad Request
+				</td>
+				</tr>
+
+			</table>
+
+		</div>
+
+	</div>
+
+</div>
+     </div> 
+  </div>
+  </div>
+
+  
+  <script src="../resources/jquery.js"></script>
+  <script src="../resources/doc.js"></script>
+</body>
+</html>

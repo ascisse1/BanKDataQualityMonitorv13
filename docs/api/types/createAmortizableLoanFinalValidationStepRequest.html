@@ -1,0 +1,1364 @@
+<!DOCTYPE html >
+<html>
+<head>
+	<link rel="stylesheet" href="../resources/styleDocu.css" />
+  <link rel="stylesheet" href="../resources/font-awesome/css/font-awesome.min.css" />
+	<title>Documentation Xsd</title>
+	<meta charset="UTF-8" />
+</head>
+
+<body>
+  <div class="document">
+	<div class="header">
+		
+	</div>
+
+  <div class="tabs">
+    <div class="tabs-wrapper" onclick="window.open('../liste-ressources.html', '_self');">
+      <div class="tabs-left-content">
+        Liste des ressources
+      </div>
+    </div>
+    <div class="tabs-wrapper" onclick="window.open('../liste-services.html', '_self');">
+      <div class="tabs-left-content" >
+        Liste des services  
+      </div>
+    </div>
+    <div class="tabs-wrapper-selected" onclick="window.open('../liste-types.html', '_self');">
+      <div class="tabs-right-content">
+        Liste des types
+      </div>
+    </div>
+  </div>
+
+	
+
+	<div class="contenu">
+      <div class="breadcrumb"> 
+        <ul class="breadcrumb">
+           <li> <a href="../index.html"> Accueil </a></li>
+           <li> > </li>
+           <li> <a href="../liste-types.html"> Liste des types </a></li>
+           <li> > </li>
+           <li> createAmortizableLoanFinalValidationStepRequest </li>
+        </ul>                    
+      </div>                    
+      
+     
+      <div class="summary">
+			<div class="mock-list">
+				<b>Nom : </b>createAmortizableLoanFinalValidationStepRequest
+			</div>
+			<div class="mock-list">
+				<b> Description : </b>Requête de validation finale d'un dossier de crédit amortissable.
+			</div>
+        
+        <div> </div>
+        <div class="mock-list"> Choix : Non</div>
+        
+      </div>
+                        
+      <div class="column-content">
+        <div class="detail-column">
+          <div class="tree"> 
+<ul>
+	<li>
+<i class="fa fa-caret-down fa-fw" onclick="expand_or_collapse(this)">
+</i>		createAmortizableLoanFinalValidationStepRequest		<ul style="display:block">
+			<li>
+<i class="fa fa-caret-down fa-fw" onclick="expand_or_collapse(this)">
+</i><i class="fa fa-key fa-fw">
+</i><span class="selectable" id="e0"> amortizableLoanIdentifier : amortizableLoanDetailIdentifier
+</span>				<ul style="display:block">
+					<li>
+<i class="fa fa-fw">
+</i><i class="fa fa-key fa-fw">
+</i><span class="selectable" id="e1"> branchCode : char5
+</span>
+					</li>
+					<li>
+<i class="fa fa-fw">
+</i><i class="fa fa-key fa-fw">
+</i><span class="selectable" id="e2"> fileNumber : char6
+</span>
+					</li>
+					<li>
+<i class="fa fa-fw">
+</i><i class="fa fa-key fa-fw">
+</i><span class="selectable" id="e3"> orderNumber : char3
+</span>
+					</li>
+					<li>
+<i class="fa fa-fw">
+</i><i class="fa fa-key fa-fw">
+</i><span class="selectable" id="e4"> amendmentNumber : decimal2_0
+</span>
+					</li>
+
+				</ul>
+
+			</li>
+			<li>
+<i class="fa fa-caret-down fa-fw" onclick="expand_or_collapse(this)">
+</i><span class="selectable" id="e5"> receiptOfDocuments : dosprtReceiptOfDocuments
+</span>				<ul style="display:block">
+					<li>
+<i class="fa fa-caret-down fa-fw" onclick="expand_or_collapse(this)">
+</i><i class="fa fa-key fa-fw">
+</i><span style="font-weight:bold"> [M]
+</span><span class="selectable" id="e6"> receiptOfDocument : dosprtReceiptOfDocument
+</span>						<ul style="display:block">
+							<li>
+<i class="fa fa-fw">
+</i><i class="fa fa-key fa-fw">
+</i><span class="selectable" id="e7"> documentIdentifier : dosprtDocumentCode
+</span>
+							</li>
+							<li>
+<i class="fa fa-fw">
+</i><i class="fa fa-key fa-fw">
+</i><span class="selectable" id="e8"> receiptDate : date
+</span>
+							</li>
+							<li>
+<i class="fa fa-fw">
+</i><span class="selectable" id="e9"> documentReference : charMax30
+</span>
+							</li>
+
+						</ul>
+
+					</li>
+
+				</ul>
+
+			</li>
+			<li>
+<i class="fa fa-fw">
+</i><span class="selectable" id="e10"> chargeRepaymentMethodAtImplementation : dosprtDetailRepaymentMethodType
+</span>
+			</li>
+			<li>
+<i class="fa fa-caret-down fa-fw" onclick="expand_or_collapse(this)">
+</i><span class="selectable" id="e11"> fundsReleaseMethodInformation : dosprtImplementationFundsReleaseMethodInformation
+</span>				<ul style="display:block">
+					<li>
+<i class="fa fa-fw">
+</i><span class="selectable" id="e12"> paymentMethod : dosprtDefaultFundsReleasePaymentMethod
+</span>
+					</li>
+					<li>
+<i class="fa fa-caret-down fa-fw" onclick="expand_or_collapse(this)">
+</i><span style="font-weight:bold"> [C]
+</span><span class="selectable" id="e13"> paymentInformation : dosprtFundsReleasePaymentInformation
+</span>						<ul style="display:block">
+							<li>
+<i class="fa fa-caret-down fa-fw" onclick="expand_or_collapse(this)">
+</i><span class="selectable" id="e14"> transferDomiciliation : accountIdentifierOtherBank
+</span>								<ul style="display:block">
+									<li>
+<i class="fa fa-caret-down fa-fw" onclick="expand_or_collapse(this)">
+</i><span class="selectable" id="e15"> internalFormatAccount : internalFormatAccountOtherBank
+</span>										<ul style="display:block">
+											<li>
+<i class="fa fa-fw">
+</i><i class="fa fa-key fa-fw">
+</i><span class="selectable" id="e16"> establishment : charMax10
+</span>
+											</li>
+											<li>
+<i class="fa fa-fw">
+</i><i class="fa fa-key fa-fw">
+</i><span class="selectable" id="e17"> cashDesk : char5
+</span>
+											</li>
+											<li>
+<i class="fa fa-fw">
+</i><i class="fa fa-key fa-fw">
+</i><span class="selectable" id="e18"> accountNumber : charMax25
+</span>
+											</li>
+
+										</ul>
+
+									</li>
+									<li>
+<i class="fa fa-caret-down fa-fw" onclick="expand_or_collapse(this)">
+</i><span class="selectable" id="e19"> ibanFormatAccount : ibanFormatAccount
+</span>										<ul style="display:block">
+											<li>
+<i class="fa fa-fw">
+</i><i class="fa fa-key fa-fw">
+</i><span class="selectable" id="e20"> value : charMax34
+</span>
+											</li>
+
+										</ul>
+
+									</li>
+
+								</ul>
+
+							</li>
+							<li>
+<i class="fa fa-caret-down fa-fw" onclick="expand_or_collapse(this)">
+</i><span class="selectable" id="e21"> otherAccount : internalAccountKey
+</span>								<ul style="display:block">
+									<li>
+<i class="fa fa-fw">
+</i><i class="fa fa-key fa-fw">
+</i><span class="selectable" id="e22"> branch : char5
+</span>
+									</li>
+									<li>
+<i class="fa fa-fw">
+</i><i class="fa fa-key fa-fw">
+</i><span class="selectable" id="e23"> currency : currencyCode
+</span>
+									</li>
+									<li>
+<i class="fa fa-fw">
+</i><i class="fa fa-key fa-fw">
+</i><span class="selectable" id="e24"> account : charMax11
+</span>
+									</li>
+									<li>
+<i class="fa fa-fw">
+</i><span class="selectable" id="e25"> suffix : charMax2
+</span>
+									</li>
+
+								</ul>
+
+							</li>
+
+						</ul>
+
+					</li>
+
+				</ul>
+
+			</li>
+			<li>
+<i class="fa fa-caret-down fa-fw" onclick="expand_or_collapse(this)">
+</i><span class="selectable" id="e26"> legalAttributes : legalAttributes
+</span>				<ul style="display:block">
+					<li>
+<i class="fa fa-caret-down fa-fw" onclick="expand_or_collapse(this)">
+</i><i class="fa fa-key fa-fw">
+</i><span style="font-weight:bold"> [M]
+</span><span class="selectable" id="e27"> legalAttribute : legalAttribute
+</span>						<ul style="display:block">
+							<li>
+<i class="fa fa-fw">
+</i><i class="fa fa-key fa-fw">
+</i><span class="selectable" id="e28"> identifier : char3
+</span>
+							</li>
+							<li>
+<i class="fa fa-fw">
+</i><i class="fa fa-key fa-fw">
+</i><span class="selectable" id="e29"> value : charMax10
+</span>
+							</li>
+
+						</ul>
+
+					</li>
+
+				</ul>
+
+			</li>
+			<li>
+<i class="fa fa-fw">
+</i><span class="selectable" id="e30"> customerStoppageOverride : boolean
+</span>
+			</li>
+			<li>
+<i class="fa fa-fw">
+</i><span class="selectable" id="e31"> startDateCalculCom : date
+</span>
+			</li>
+
+		</ul>
+
+	</li>
+
+</ul>
+          </div>
+          
+          <div class="detail">
+				<p align="left">
+					Légende :<br />
+				</p>
+            <ul>
+               <li align="left">
+                  <i class="fa fa-key fa-fw">
+                  </i>
+                  = Elément obligatoire en saisie.
+               </li>
+               <li align="left">
+                  <span style="font-weight:bold"> [M]
+                  </span>
+                  = Elément multiple (0 à n occurrences).
+               </li>
+               <li align="left">
+                  <span style="font-weight:bold"> [C]
+                  </span>
+                  = Elément composé d'un choix à effectuer. Un seul choix autorisé.
+               </li>
+            </ul>
+            <p align="left">
+               Remarque : Un même élément peut regrouper plusieurs caractéristiques
+            </p>          
+          </div>
+          
+        </div>
+<div class="detail-column" id="d0" style="display:none">
+	<div class="detail">
+			<div class="mock-list">
+				<b>Nom : </b>amortizableLoanIdentifier
+			</div>
+			<div class="mock-list">
+				<b>Description : </b>Identifiant d¿un crédit amortissable.
+			</div>
+			<div class="mock-list">
+				<b>Commentaire : </b><p>L&#39;identifiant du dossier de cr&eacute;dit amortissable doit exister dans la table des dossiers de cr&eacute;dits amortissables.</p>
+
+<p>Le dossier de cr&eacute;dit amortissable doit &ecirc;tre li&eacute; &agrave; un client existant dans la table des clients.</p>
+
+<p>La validation finale du dossier de cr&eacute;dit amortissable est interdite si le dossier n&rsquo;est ni &agrave; l&rsquo;&eacute;tat Dossier en cours d&rsquo;&eacute;tude (<strong>SI</strong>), ni &agrave; l&rsquo;&eacute;tat Dossier valid&eacute; par la banque (<strong>VB</strong>), ni &agrave; l&rsquo;&eacute;tat Dossier valid&eacute; par le client (<strong>VC</strong>). Il n&rsquo;est pas possible d&rsquo;effectuer plusieurs fois la validation finale du m&ecirc;me dossier.</p>
+
+<p>Si le dossier de cr&eacute;dit amortissable est &agrave; l&rsquo;&eacute;tat Dossier en cours d&rsquo;&eacute;tude (<strong>SI</strong>)&nbsp;:</p>
+
+<ul>
+	<li>Ni la validation banque, ni la validation client ne doivent &ecirc;tre demand&eacute;es pour le type de pr&ecirc;t,</li>
+	<li>Le dossier de cr&eacute;dit amortissable ne doit &ecirc;tre ni incomplet, ni rejet&eacute; par la banque, ni avec refus de financement (code traitement diff&eacute;rent de <strong>0</strong>,<strong> 2</strong> et<strong> 3</strong>).</li>
+</ul>
+
+<p>Si le dossier de cr&eacute;dit amortissable est &agrave; l&rsquo;&eacute;tat Dossier valid&eacute; par la banque (<strong>VB</strong>)&nbsp;:</p>
+
+<ul>
+	<li>La validation client ne doit pas demand&eacute;e pour le type de pr&ecirc;t,</li>
+	<li>Le dossier de cr&eacute;dit amortissable ne doit &ecirc;tre ni rejet&eacute; par la banque, ni avec refus de financement (code traitement diff&eacute;rent de <strong>2</strong> et <strong>3</strong>).</li>
+</ul>
+
+<p>Si le dossier de cr&eacute;dit amortissable est &agrave; l&rsquo;&eacute;tat Dossier valid&eacute; par le client (<strong>VC</strong>)&nbsp;alors le dossier de cr&eacute;dit amortissable ne doit pas &ecirc;tre rejet&eacute; par le client (code traitement diff&eacute;rent de <strong>2</strong>).</p>
+
+<p>A l&rsquo;issue de la validation finale, le dossier passe &agrave; l&rsquo;&eacute;tat Dossier valid&eacute; (<strong>VA</strong>) et en attente de mise en place (code traitement &eacute;gal &agrave; <strong>0</strong>).</p>
+
+<p>Un &eacute;v&eacute;nement <strong>DECCLI</strong> est ajout&eacute; &agrave; la table des &eacute;v&eacute;nements si l&#39;&eacute;tape de comptabilisation finale est param&eacute;tr&eacute;e au niveau du type de cr&eacute;dit et si l&#39;&eacute;tape de comptabilisation client n&#39;est pas param&eacute;tr&eacute;e au niveau du type de cr&eacute;dit.</p>
+
+<p>Dans ce cas&nbsp;:</p>
+
+<ul>
+	<li>Le solde indicatif du compte d&rsquo;engagement disponible (nature <strong>003</strong>) est mis &agrave; jour avec un d&eacute;bit du montant du pr&ecirc;t.</li>
+	<li>Le solde indicatif&nbsp; du compte&nbsp; d&rsquo;engagement pr&eacute;-autoris&eacute; (nature <strong>001</strong>) ou du compte d&rsquo;engagement autoris&eacute; (nature <strong>002</strong>) ou du compte param&eacute;tr&eacute; pour la source de financement du dossier est mis &agrave; jour avec un cr&eacute;dit du montant du pr&ecirc;t.</li>
+</ul>
+
+<p>Un &eacute;v&eacute;nement <strong>DBLPRT</strong> est ajout&eacute; &agrave; la table des &eacute;v&eacute;nements&nbsp;:</p>
+
+<ul>
+	<li>Si l&#39;&eacute;tape de comptabilisation &eacute;tude est param&eacute;tr&eacute;e au niveau du type de cr&eacute;dit et si l&#39;option de g&eacute;n&eacute;ration automatique d&#39;une autorisation de d&eacute;couvert pour la partie hors-bilan est active,</li>
+	<li>Ou si l&#39;&eacute;tape de comptabilisation banque est param&eacute;tr&eacute;e au niveau du type de cr&eacute;dit et si l&#39;option de g&eacute;n&eacute;ration automatique d&#39;une autorisation de d&eacute;couvert pour la partie hors-bilan est active,</li>
+	<li>Ou si l&#39;&eacute;tape de comptabilisation client est param&eacute;tr&eacute;e au niveau du type de cr&eacute;dit et si l&#39;option de g&eacute;n&eacute;ration automatique d&#39;une autorisation de d&eacute;couvert pour la partie hors-bilan est active.</li>
+</ul>
+
+<p>Dans ce cas, le solde indicatif&nbsp; du compte d&rsquo;engagement disponible (nature <strong>003</strong>) est mis &agrave; jour avec un cr&eacute;dit du montant du pr&ecirc;t.</p>
+
+<p>Si le mode de d&eacute;blocage du dossier est &agrave; la mise en place (<strong>M</strong>) et que le dossier est soumis &agrave; r&eacute;&eacute;valuation (<strong>O</strong>) alors le solde est enregistr&eacute; pour :</p>
+
+<ul>
+	<li>Le compte d&rsquo;engagement (nature <strong>004</strong>),</li>
+	<li>Le compte d&rsquo;impay&eacute; sur capital (nature <strong>006</strong>) et le compte d&rsquo;impay&eacute; sur autres postes (nature <strong>009</strong>), si le client est un client particulier et si la devise du dossier et la devise des comptes du dossiers sont en devise nationale.</li>
+</ul>
+
+<p>Les comptes suivants li&eacute;s au dossier de pr&ecirc;t sont cr&eacute;&eacute;s :</p>
+
+<ul>
+	<li>Le compte d&#39;engagement (nature <strong>004</strong>).</li>
+	<li>Le compte d&rsquo;engagement disponible (nature <strong>003</strong>) si le type de pr&ecirc;t n&rsquo;est pas autoris&eacute; &agrave; cr&eacute;er un compte d&rsquo;engagement ni un compte d&rsquo;engagement disponible, et s&rsquo;il n&rsquo;existe pas de comptabilisation lors de la validation client mais qu&rsquo;il existe une comptabilisation lors de la validation finale.</li>
+</ul>
+
+<p>Le cas &eacute;ch&eacute;ant, le compte d&rsquo;engagement disponible a d&eacute;j&agrave; &eacute;t&eacute; cr&eacute;&eacute; lors des &eacute;tapes pr&eacute;c&eacute;dentes. Son existence et son autorisation sont alors contr&ocirc;l&eacute;es.</p>
+
+<ul>
+	<li>Le compte d&#39;impay&eacute;s sur autres postes (nature <strong>008</strong>) si le <strong>Montant 2</strong> du param&egrave;tre <strong>RECOUVIMP</strong> en nomenclature <strong>098</strong> est &eacute;gal &agrave; <strong>1</strong>,<strong> 2 </strong>ou<strong> 3</strong>.</li>
+	<li>Le compte d&#39;impay&eacute;s sur poste d&rsquo;int&eacute;r&ecirc;ts (nature <strong>009</strong>) si le <strong>Montant 2</strong> du param&egrave;tre <strong>RECOUVIMP</strong> en nomenclature <strong>098</strong> est &eacute;gal &agrave; <strong>2 </strong>ou<strong> 3</strong>.</li>
+	<li>Les comptes de commission 1 impay&eacute;e (nature <strong>013</strong>), commission 2 impay&eacute;e (nature <strong>014</strong>) et commission 3 (nature <strong>015</strong>) impay&eacute;e si le <strong>Montant 2</strong> du param&egrave;tre <strong>RECOUVIMP</strong> en nomenclature <strong>098</strong> est &eacute;gal &agrave; <strong>3</strong>.</li>
+	<li>Le compte de taxe sur postes impay&eacute;s (nature <strong>016</strong>)&nbsp; uniquement si le <strong>Taux 3</strong> du param&egrave;tre <strong>RECOUVIMP</strong> en nomenclature <strong>098</strong> est &eacute;gal &agrave; <strong>1</strong>.</li>
+	<li>Le compte d&rsquo;impay&eacute;s sur les int&eacute;r&ecirc;ts (nature <strong>010</strong>)&nbsp; si le <strong>Montant 6</strong> du param&egrave;tre <strong>RECOUVIMP</strong> en nomenclature <strong>098</strong> est &eacute;gal &agrave; <strong>1</strong>.</li>
+	<li>Le compte d&rsquo;impay&eacute;s (nature <strong>006</strong>). La cr&eacute;ation de ce compte n&rsquo;est obligatoire que si le <strong>Taux 5</strong> du param&egrave;tre <strong>PRET</strong> en nomenclature <strong>098</strong> est &eacute;gal &agrave; <strong>2 </strong>ou<strong> 3</strong>.</li>
+	<li>Le compte d&rsquo;attente (nature <strong>007</strong>). La cr&eacute;ation de ce compte n&rsquo;est obligatoire que si le <strong>Taux 5</strong> du param&egrave;tre <strong>PRET</strong> en nomenclature <strong>098</strong> est &eacute;gal &agrave; <strong>1 </strong>ou<strong> 3</strong>.</li>
+	<li>Le compte de provisions d&rsquo;int&eacute;r&ecirc;ts (nature <strong>100</strong>)&nbsp; si le <strong>Montant 1</strong> du param&egrave;tre <strong>CDTPROV</strong> en nomenclature <strong>098</strong> est &eacute;gal &agrave; <strong>1</strong>.</li>
+	<li>Le compte de provisions d&rsquo;int&eacute;r&ecirc;ts hors-bilan (nature <strong>101</strong>)&nbsp; si le <strong>Montant 1</strong> du param&egrave;tre <strong>CDTPROV</strong> en nomenclature <strong>098</strong> est &eacute;gal &agrave; <strong>1</strong> et si le <strong>Libell&eacute; 2</strong> du param&egrave;tre <strong>CDTPROV2</strong> en nomenclature <strong>098</strong> est &eacute;gal &agrave; <strong>1</strong>,<strong> 2</strong>,<strong> 3</strong>,<strong> 4 </strong>ou<strong> 5.</strong></li>
+	<li>Le compte d&rsquo;impay&eacute;s d&rsquo;autres postes hors-bilan (nature <strong>108</strong>)&nbsp; si le <strong>Montant 1</strong> du param&egrave;tre <strong>CDTPROV</strong> en nomenclature <strong>098</strong> est &eacute;gal &agrave; <strong>1</strong>, si le <strong>Libell&eacute; 2</strong> du param&egrave;tre <strong>CDTPROV2</strong> en nomenclature <strong>098</strong> est &eacute;gal &agrave; <strong>1</strong>,<strong> 2</strong>,<strong> 3</strong>,<strong> 4 </strong>ou<strong> 5</strong> et si le <strong>Montant 2</strong> du param&egrave;tre <strong>RECOUVIMP</strong> en nomenclature <strong>098</strong> est &eacute;gal &agrave; <strong>1</strong>,<strong> 2 </strong>ou<strong> 3</strong>.</li>
+	<li>Le compte de remboursement des frais de mise en place en devise nationale (nature <strong>012</strong>)&nbsp; si le <strong>Montant 2</strong> du param&egrave;tre <strong>CDTPAR3</strong> en nomenclature <strong>098 </strong>est &eacute;gal &agrave;<strong> 1</strong>, si le dossier n&rsquo;est pas r&eacute;&eacute;valu&eacute;, si la devise des comptes du dossier n&rsquo;est pas la devise nationale et si le remboursement des &eacute;ch&eacute;ances du pr&ecirc;t ne se fait pas par pr&eacute;l&egrave;vement.</li>
+	<li>Le compte hors bilan pour la part non utilis&eacute;e en devise du dossier pour un pr&ecirc;t &agrave; court terme (nature <strong>090</strong>)&nbsp; si le <strong>Montant 4</strong> du param&egrave;tre <strong>CDTPAR</strong> en nomenclature <strong>098</strong> est &eacute;gal &agrave; <strong>3</strong>, si le type de pr&ecirc;t ne permet pas le contr&ocirc;le de l&rsquo;autorisation de d&eacute;couvert et si la dur&eacute;e du pr&ecirc;t est &agrave; court terme (le <strong>Montant 7</strong> du param&egrave;tre <strong>AUTORIS</strong> en nomenclature <strong>098</strong>, exprim&eacute; en nombre de mois, est sup&eacute;rieur ou &eacute;gal &agrave; la diff&eacute;rence de mois entre la mise en place et la derni&egrave;re &eacute;ch&eacute;ance du dossier).</li>
+	<li>Le compte hors bilan pour la part non utilis&eacute;e en devise du dossier pour un pr&ecirc;t &agrave; long terme (nature <strong>091</strong>)&nbsp; si le <strong>Montant 4</strong> du param&egrave;tre <strong>CDTPAR</strong> en nomenclature <strong>098</strong> est &eacute;gal &agrave; <strong>3</strong>, si le type de pr&ecirc;t ne permet pas le contr&ocirc;le de l&rsquo;autorisation de d&eacute;couvert et si la dur&eacute;e du pr&ecirc;t est &agrave; long terme (le <strong>Montant 7</strong> du param&egrave;tre <strong>AUTORIS</strong> en nomenclature <strong>098</strong>, exprim&eacute; en nombre de mois, est inf&eacute;rieur &agrave; la diff&eacute;rence de mois entre la mise en place et la derni&egrave;re &eacute;ch&eacute;ance du dossier).</li>
+	<li>Le compte de commission 1 provisionn&eacute;e (nature <strong>300</strong>)&nbsp; si le <strong>Montant 1</strong> du param&egrave;tre <strong>CDTPROV</strong> en nomenclature <strong>098</strong> est &eacute;gal &agrave; <strong>1</strong>, si le param&egrave;tre <strong>CCFD</strong> existe, si la commission 1 est param&eacute;tr&eacute;e hors assurance pour le type de pr&ecirc;t et si le mode de perception de la commission 1 du dossier de pr&ecirc;t est proportionnel ou r&eacute;parti.</li>
+	<li>Le compte de commission 2 provisionn&eacute;e (nature <strong>400</strong>)&nbsp; si le <strong>Montant 1</strong> du param&egrave;tre <strong>CDTPROV</strong> en nomenclature <strong>098</strong> est &eacute;gal &agrave; <strong>1</strong>, si le param&egrave;tre <strong>CCFD</strong> existe, si la commission 2 est param&eacute;tr&eacute;e hors assurance pour le type de pr&ecirc;t et si le mode de perception de la commission 2 du dossier de pr&ecirc;t est proportionnel ou r&eacute;parti.</li>
+	<li>Le compte de commission 3 provisionn&eacute;e (nature <strong>500</strong>)&nbsp; si le <strong>Montant 1</strong> du param&egrave;tre <strong>CDTPROV</strong> en nomenclature <strong>098</strong> est &eacute;gal &agrave; <strong>1</strong>, si le param&egrave;tre <strong>CCFD</strong> existe, si la commission 3 est param&eacute;tr&eacute;e hors assurance pour le type de pr&ecirc;t et si le mode de perception de la commission 3 du dossier de pr&ecirc;t est proportionnel ou r&eacute;parti.</li>
+	<li>Le compte d&rsquo;impay&eacute; II sur le capital (nature <strong>026</strong>)&nbsp; si la comptabilit&eacute; sp&eacute;cifique des pr&ecirc;ts gouvernementaux est activ&eacute;e pour le type de pr&ecirc;t.</li>
+	<li>Le compte d&rsquo;impay&eacute; II sur les int&eacute;r&ecirc;ts (nature <strong>029</strong>)&nbsp; si le <strong>Montant 2</strong> du param&egrave;tre <strong>RECOUVIMP</strong> en nomenclature <strong>098</strong> est &eacute;gal &agrave; <strong>2 </strong>ou<strong> 3 </strong>et si la comptabilit&eacute; sp&eacute;cifique des pr&ecirc;ts gouvernementaux est activ&eacute;e pour le type de pr&ecirc;t.</li>
+	<li>Le compte d&rsquo;impay&eacute; II sur les int&eacute;r&ecirc;ts d&rsquo;impay&eacute;s (nature <strong>030</strong>)&nbsp; si le <strong>Montant 6</strong> du param&egrave;tre <strong>RECOUVIMP</strong> en nomenclature <strong>098</strong> est &eacute;gal &agrave; <strong>1 </strong>et si la comptabilit&eacute; sp&eacute;cifique des pr&ecirc;ts gouvernementaux est activ&eacute;e pour le type de pr&ecirc;t.</li>
+	<li>Le compte des int&eacute;r&ecirc;ts sur capital impay&eacute; (nature <strong>020</strong>)&nbsp; si le <strong>Libell&eacute; 3 </strong>du param&egrave;tre <strong>CDTINTKIMP</strong> en nomenclature <strong>098</strong> est &eacute;gal &agrave; <strong>O </strong>et si la gestion des int&eacute;r&ecirc;ts sur capital impay&eacute; est activ&eacute;e pour le type de pr&ecirc;t.</li>
+</ul>
+
+<p>L&rsquo;autorisation du compte de remboursement (nature <strong>005</strong>) est &eacute;galement contr&ocirc;l&eacute;e.</p>
+
+<p>Dans le cas d&rsquo;un dossier de cr&eacute;dit &agrave; taux d&#39;int&eacute;r&ecirc;ts index&eacute;s ou r&eacute;visables (<strong>I</strong> ou <strong>R</strong>), les modifications de taux sont trac&eacute;es dans la table historique des taux d&#39;int&eacute;r&ecirc;ts d&rsquo;un dossier de cr&eacute;dit.</p>
+
+<p>Si au moins une police d&#39;assurance a &eacute;t&eacute; attach&eacute;e au dossier de cr&eacute;dit et si la cr&eacute;ation des comptes li&eacute;s &agrave; la police est param&eacute;tr&eacute;e comme automatique, (<strong>Libell&eacute; 2</strong> &agrave; <strong>O</strong> pour le param&egrave;tre <strong>ASSSURANCE</strong> en nomenclature <strong>098</strong>) alors les comptes suivants sont ajout&eacute;s dans la table de comptes li&eacute;s &agrave; la police d&rsquo;assurance&nbsp;:</p>
+
+<ul>
+	<li>Le compte d&rsquo;impay&eacute; (nature <strong>006</strong>),</li>
+	<li>Le compte d&rsquo;attente (nature <strong>007</strong>).</li>
+</ul>
+
+<p>Si le dossier de cr&eacute;dit amortissable est li&eacute; &agrave; une limite de march&eacute;, le lien est valid&eacute; avec la cr&eacute;ation d&rsquo;une autorisation plafonn&eacute;e.</p>
+
+			</div>
+
+	</div>
+	<div class="detail">
+			<div class="mock-list">
+				<b>Nom : </b> <a href="../types/amortizableLoanDetailIdentifier.html">amortizableLoanDetailIdentifier</a>
+			</div>
+			<div class="mock-list">
+				<b> Description : </b>Identifiant d'un crédit amortissable.
+			</div>
+
+	</div>
+
+</div>
+<div class="detail-column" id="d1" style="display:none">
+	<div class="detail">
+			<div class="mock-list">
+				<b>Nom : </b>branchCode
+			</div>
+			<div class="mock-list">
+				<b>Description : </b>Code agence.
+			</div>
+			<div class="mock-list">
+				<b>Commentaire : </b><p>Le code agence doit exister en nomenclature <strong>001</strong>.</p>
+
+			</div>
+
+	</div>
+	<div class="detail">
+			<div class="mock-list">
+				<b>Nom : </b> <a href="../types/char5.html">char5</a>
+			</div>
+			<div class="mock-list">
+				<b> Description : </b>Type avec un nombre de caractères égal à 5.
+			</div>
+			<div class="mock-list">
+				<b>Format : </b>string
+			</div>
+			<div class="mock-list">
+				<b>Longueur fixe : </b>5
+			</div>
+
+	</div>
+
+</div>
+<div class="detail-column" id="d2" style="display:none">
+	<div class="detail">
+			<div class="mock-list">
+				<b>Nom : </b>fileNumber
+			</div>
+			<div class="mock-list">
+				<b>Description : </b>Numéro de dossier.
+			</div>
+
+	</div>
+	<div class="detail">
+			<div class="mock-list">
+				<b>Nom : </b> <a href="../types/char6.html">char6</a>
+			</div>
+			<div class="mock-list">
+				<b> Description : </b>Type avec un nombre de caractères égal à 6.
+			</div>
+			<div class="mock-list">
+				<b>Format : </b>string
+			</div>
+			<div class="mock-list">
+				<b>Longueur fixe : </b>6
+			</div>
+
+	</div>
+
+</div>
+<div class="detail-column" id="d3" style="display:none">
+	<div class="detail">
+			<div class="mock-list">
+				<b>Nom : </b>orderNumber
+			</div>
+			<div class="mock-list">
+				<b>Description : </b>Numéro d'ordre.
+			</div>
+			<div class="mock-list">
+				<b>Commentaire : </b><p>Le num&eacute;ro d&rsquo;ordre doit &ecirc;tre renseign&eacute; &agrave; <strong>3 espaces</strong> dans le cas d&rsquo;un dossier initial (avant ren&eacute;gociation).</p>
+
+			</div>
+
+	</div>
+	<div class="detail">
+			<div class="mock-list">
+				<b>Nom : </b> <a href="../types/char3.html">char3</a>
+			</div>
+			<div class="mock-list">
+				<b> Description : </b>Type avec un nombre de caractères égal à 3.
+			</div>
+			<div class="mock-list">
+				<b>Format : </b>string
+			</div>
+			<div class="mock-list">
+				<b>Longueur fixe : </b>3
+			</div>
+
+	</div>
+
+</div>
+<div class="detail-column" id="d4" style="display:none">
+	<div class="detail">
+			<div class="mock-list">
+				<b>Nom : </b>amendmentNumber
+			</div>
+			<div class="mock-list">
+				<b>Description : </b>Numéro d'avenant.
+			</div>
+
+	</div>
+	<div class="detail">
+			<div class="mock-list">
+				<b>Nom : </b> <a href="../types/decimal2_0.html">decimal2_0</a>
+			</div>
+			<div class="mock-list">
+				<b> Description : </b>Type décimal à 2 chiffres dont 0 décimales.
+			</div>
+			<div class="mock-list">
+				<b>Format : </b>decimal
+			</div>
+			<div class="mock-list">
+				<b>Nombre total de chiffres : </b>2
+			</div>
+
+	</div>
+
+</div>
+<div class="detail-column" id="d5" style="display:none">
+	<div class="detail">
+			<div class="mock-list">
+				<b>Nom : </b>receiptOfDocuments
+			</div>
+			<div class="mock-list">
+				<b>Description : </b>Réception de documents.
+			</div>
+			<div class="mock-list">
+				<b>Commentaire : </b><p>La r&eacute;ception de documents est interdite si le dossier de pr&ecirc;t n&rsquo;a pas de document rattach&eacute;.</p>
+
+<p>En tenant compte de cette saisie, tous les documents du dossier param&eacute;tr&eacute;s comme obligatoires doivent avoir &eacute;t&eacute; re&ccedil;us.</p>
+
+			</div>
+
+	</div>
+	<div class="detail">
+			<div class="mock-list">
+				<b>Nom : </b> <a href="../types/dosprtReceiptOfDocuments.html">dosprtReceiptOfDocuments</a>
+			</div>
+			<div class="mock-list">
+				<b> Description : </b>Réception de documents.
+			</div>
+
+	</div>
+
+</div>
+<div class="detail-column" id="d6" style="display:none">
+	<div class="detail">
+			<div class="mock-list">
+				<b>Nom : </b>receiptOfDocument
+			</div>
+			<div class="mock-list">
+				<b>Description : </b>Réception d'un document.
+			</div>
+			<div class="mock-list">
+				<b>Limite du nombre d'occurences mini-maxi : </b>aucune aucune
+			</div>
+
+	</div>
+	<div class="detail">
+			<div class="mock-list">
+				<b>Nom : </b> <a href="../types/dosprtReceiptOfDocument.html">dosprtReceiptOfDocument</a>
+			</div>
+			<div class="mock-list">
+				<b> Description : </b>Réception d¿un document.
+			</div>
+
+	</div>
+
+</div>
+<div class="detail-column" id="d7" style="display:none">
+	<div class="detail">
+			<div class="mock-list">
+				<b>Nom : </b>documentIdentifier
+			</div>
+			<div class="mock-list">
+				<b>Description : </b>Identifiant du document.
+			</div>
+			<div class="mock-list">
+				<b>Commentaire : </b><p>L&rsquo;identifiant du document doit correspondre &agrave; un document du dossier de cr&eacute;dit.</p>
+
+			</div>
+
+	</div>
+	<div class="detail">
+			<div class="mock-list">
+				<b>Nom : </b> <a href="../types/dosprtDocumentCode.html">dosprtDocumentCode</a>
+			</div>
+			<div class="mock-list">
+				<b> Description : </b>Code document.
+			</div>
+			<div class="mock-list">
+				<b>Format : </b>string
+			</div>
+			<div class="mock-list">
+				<b>Longueur fixe : </b>3
+			</div>
+
+	</div>
+
+</div>
+<div class="detail-column" id="d8" style="display:none">
+	<div class="detail">
+			<div class="mock-list">
+				<b>Nom : </b>receiptDate
+			</div>
+			<div class="mock-list">
+				<b>Description : </b>Date de réception.
+			</div>
+
+	</div>
+	<div class="detail">
+			<div class="mock-list">
+				<b>Nom : </b> <a href="../types/date.html">date</a>
+			</div>
+
+	</div>
+
+</div>
+<div class="detail-column" id="d9" style="display:none">
+	<div class="detail">
+			<div class="mock-list">
+				<b>Nom : </b>documentReference
+			</div>
+			<div class="mock-list">
+				<b>Description : </b>Référence du document.
+			</div>
+
+	</div>
+	<div class="detail">
+			<div class="mock-list">
+				<b>Nom : </b> <a href="../types/charMax30.html">charMax30</a>
+			</div>
+			<div class="mock-list">
+				<b> Description : </b>Chaîne composée d'au plus 30 caractères.
+			</div>
+			<div class="mock-list">
+				<b>Format : </b>string
+			</div>
+			<div class="mock-list">
+				<b>Longueur mini-maxi : </b>1 - 30
+			</div>
+
+	</div>
+
+</div>
+<div class="detail-column" id="d10" style="display:none">
+	<div class="detail">
+			<div class="mock-list">
+				<b>Nom : </b>chargeRepaymentMethodAtImplementation
+			</div>
+			<div class="mock-list">
+				<b>Description : </b>Mode de remboursement des frais à la mise en place.
+			</div>
+			<div class="mock-list">
+				<b>Commentaire : </b><p>Si le dossier de cr&eacute;dit amortissable a une commission ou des frais avec perception &agrave; la mise en place ou s&rsquo;il y a prise de frais de timbre &agrave; la mise en place&nbsp;:</p>
+
+<ul>
+	<li>Si le remboursement des &eacute;ch&eacute;ances se fait par pr&eacute;l&egrave;vement&nbsp;: le remboursement des frais &agrave; la mise en place se fait sur un compte technique.</li>
+	<li>Si le remboursement des &eacute;ch&eacute;ances se fait par remboursement en devise nationale&nbsp;: le remboursement des frais &agrave; la mise en place se fait sur un compte en devise nationale.</li>
+	<li>Si le remboursement des &eacute;ch&eacute;ances se fait par remboursement hors devise nationale et si le <strong>Taux 3</strong> du param&egrave;tre <strong>CDTPAR</strong> en nomenclature <strong>098</strong> est diff&eacute;rent de <strong>1</strong>&nbsp;: le remboursement des frais &agrave; la mise en place se fait sur un compte de remboursement.</li>
+	<li>Dans les autres cas, la valeur saisie est prise en compte.</li>
+</ul>
+
+<p>Si le dossier de cr&eacute;dit amortissable n&rsquo;a pas de commission ou des frais avec perception &agrave; la mise en place et s&rsquo;il n&rsquo;y a pas de prise de frais de timbre &agrave; la mise en place&nbsp;: le remboursement des frais &agrave; la mise en place se fait sur un compte de remboursement.</p>
+
+			</div>
+
+	</div>
+	<div class="detail">
+			<div class="mock-list">
+				<b>Nom : </b> <a href="../types/dosprtDetailRepaymentMethodType.html">dosprtDetailRepaymentMethodType</a>
+			</div>
+			<div class="mock-list">
+				<b> Description : </b>Méthode de remboursement.
+			</div>
+			<div class="mock-list">
+				<b>Format : </b>string
+			</div>
+			<div class="mock-list">
+				<b>Valeurs possibles : </b>					<table class="table_enum" class="table_enum">
+						<tr>
+						<td> T
+						</td>						<td class="td_right"> Compte technique
+						</td>
+						</tr>
+						<tr>
+						<td> R
+						</td>						<td class="td_right"> Compte de remboursement
+						</td>
+						</tr>
+
+					</table>
+
+			</div>
+
+	</div>
+
+</div>
+<div class="detail-column" id="d11" style="display:none">
+	<div class="detail">
+			<div class="mock-list">
+				<b>Nom : </b>fundsReleaseMethodInformation
+			</div>
+			<div class="mock-list">
+				<b>Description : </b>Informations sur la méthode de déblocage des fonds à la mise en place.
+			</div>
+			<div class="mock-list">
+				<b>Commentaire : </b><p>Les informations sur le d&eacute;blocage de fonds ne sont autoris&eacute;es que si le mode de d&eacute;blocage de fonds pour le type de pr&ecirc;t est &agrave; la mise en place (<strong>M</strong>).</p>
+
+			</div>
+
+	</div>
+	<div class="detail">
+			<div class="mock-list">
+				<b>Nom : </b> <a href="../types/dosprtImplementationFundsReleaseMethodInformation.html">dosprtImplementationFundsReleaseMethodInformation</a>
+			</div>
+			<div class="mock-list">
+				<b> Description : </b>Informations sur la méthode de déblocage des fonds à la mise en place d'un dossier de crédit.
+			</div>
+
+	</div>
+
+</div>
+<div class="detail-column" id="d12" style="display:none">
+	<div class="detail">
+			<div class="mock-list">
+				<b>Nom : </b>paymentMethod
+			</div>
+			<div class="mock-list">
+				<b>Description : </b>Mode de règlement.
+			</div>
+			<div class="mock-list">
+				<b>Commentaire : </b><p>La m&eacute;thode de d&eacute;blocage des fonds n&rsquo;est autoris&eacute;e que si le dossier de pr&ecirc;t ne concerne pas un logement social.</p>
+
+<p>La m&eacute;thode de d&eacute;blocage des fonds par remboursement n&rsquo;est autoris&eacute;e que si le dossier de cr&eacute;dit amortissable a un remboursement des &eacute;ch&eacute;ances par remboursement.</p>
+
+<p>Si&nbsp;le mode de r&egrave;glement n&rsquo;est pas renseign&eacute;, alors il est aliment&eacute; avec&nbsp;:</p>
+
+<ul>
+	<li>Autre compte (<strong>A</strong>) si le dossier de pr&ecirc;t est un dossier de pr&ecirc;t pour logement social</li>
+	<li>Le <strong>Libell&eacute; 2</strong> du param&egrave;tre <strong>CDTMODREGL</strong> en nomenclature<strong> 098</strong>, ou par d&eacute;faut avec Esp&egrave;ces (<strong>E</strong>), sinon.</li>
+</ul>
+
+<p>L&rsquo;&eacute;tiquette comptable correspondante doit &ecirc;tre param&eacute;tr&eacute;e en nomenclature <strong>094</strong> pour la cl&eacute;&nbsp;:</p>
+
+<ul>
+	<li><strong>ESPPRETttt</strong> (avec <strong>ttt</strong> = type de pr&ecirc;t) si le mode de r&egrave;glement est Esp&egrave;ces (<strong>E</strong>),</li>
+	<li><strong>VRTPRETttt</strong> (avec <strong>ttt</strong> = type de pr&ecirc;t) si le mode de r&egrave;glement est Virement (<strong>V</strong>),</li>
+	<li><strong>CHQPRETttt </strong>(avec<strong> ttt </strong>= type de pr&ecirc;t) si le mode de r&egrave;glement est Ch&egrave;que (<strong>C</strong>).</li>
+</ul>
+
+			</div>
+
+	</div>
+	<div class="detail">
+			<div class="mock-list">
+				<b>Nom : </b> <a href="../types/dosprtDefaultFundsReleasePaymentMethod.html">dosprtDefaultFundsReleasePaymentMethod</a>
+			</div>
+			<div class="mock-list">
+				<b> Description : </b>Méthode de déblocage des fonds par défaut.
+			</div>
+			<div class="mock-list">
+				<b>Format : </b>string
+			</div>
+			<div class="mock-list">
+				<b>Valeurs possibles : </b>					<table class="table_enum" class="table_enum" class="table_enum" class="table_enum" class="table_enum">
+						<tr>
+						<td> E
+						</td>						<td class="td_right"> Espèces
+						</td>
+						</tr>
+						<tr>
+						<td> V
+						</td>						<td class="td_right"> Virement
+						</td>
+						</tr>
+						<tr>
+						<td> A
+						</td>						<td class="td_right"> Autre compte
+						</td>
+						</tr>
+						<tr>
+						<td> R
+						</td>						<td class="td_right"> Remboursement
+						</td>
+						</tr>
+						<tr>
+						<td> C
+						</td>						<td class="td_right"> Chèque
+						</td>
+						</tr>
+
+					</table>
+
+			</div>
+
+	</div>
+
+</div>
+<div class="detail-column" id="d13" style="display:none">
+	<div class="detail">
+			<div class="mock-list">
+				<b>Nom : </b>paymentInformation
+			</div>
+			<div class="mock-list">
+				<b>Description : </b>Informations nécessaires au paiement.
+			</div>
+
+	</div>
+	<div class="detail">
+			<div class="mock-list">
+				<b>Nom : </b> <a href="../types/dosprtFundsReleasePaymentInformation.html">dosprtFundsReleasePaymentInformation</a>
+			</div>
+			<div class="mock-list">
+				<b> Description : </b>Informations sur le paiement lors du déblocage des fonds d¿un dossier de crédit.
+			</div>
+
+	</div>
+
+</div>
+<div class="detail-column" id="d14" style="display:none">
+	<div class="detail">
+			<div class="mock-list">
+				<b>Nom : </b>transferDomiciliation
+			</div>
+			<div class="mock-list">
+				<b>Description : </b>Domiciliation du virement.
+			</div>
+			<div class="mock-list">
+				<b>Commentaire : </b><p>Les informations de domiciliation du virement ne sont prises en compte que pour un mode de r&egrave;glement par virement (<strong>V</strong>). Elles sont interdites le cas &eacute;ch&eacute;ant.</p>
+
+<p>Le code &eacute;tablissement et le code guichet doivent exister dans la table des banques pour le site central.</p>
+
+			</div>
+
+	</div>
+	<div class="detail">
+			<div class="mock-list">
+				<b>Nom : </b> <a href="../types/accountIdentifierOtherBank.html">accountIdentifierOtherBank</a>
+			</div>
+			<div class="mock-list">
+				<b> Description : </b>Compte autres banques.
+			</div>
+
+	</div>
+
+</div>
+<div class="detail-column" id="d15" style="display:none">
+	<div class="detail">
+			<div class="mock-list">
+				<b>Nom : </b>internalFormatAccount
+			</div>
+			<div class="mock-list">
+				<b>Description : </b>Compte autres banques au format Amplitude.
+			</div>
+
+	</div>
+	<div class="detail">
+			<div class="mock-list">
+				<b>Nom : </b> <a href="../types/internalFormatAccountOtherBank.html">internalFormatAccountOtherBank</a>
+			</div>
+			<div class="mock-list">
+				<b> Description : </b>Compte d'une autre banque.
+			</div>
+
+	</div>
+
+</div>
+<div class="detail-column" id="d16" style="display:none">
+	<div class="detail">
+			<div class="mock-list">
+				<b>Nom : </b>establishment
+			</div>
+			<div class="mock-list">
+				<b>Description : </b>Établissement bancaire.
+			</div>
+
+	</div>
+	<div class="detail">
+			<div class="mock-list">
+				<b>Nom : </b> <a href="../types/charMax10.html">charMax10</a>
+			</div>
+			<div class="mock-list">
+				<b> Description : </b>Chaîne composée d'au plus 10 caractères.
+			</div>
+			<div class="mock-list">
+				<b>Format : </b>string
+			</div>
+			<div class="mock-list">
+				<b>Longueur mini-maxi : </b>1 - 10
+			</div>
+
+	</div>
+
+</div>
+<div class="detail-column" id="d17" style="display:none">
+	<div class="detail">
+			<div class="mock-list">
+				<b>Nom : </b>cashDesk
+			</div>
+			<div class="mock-list">
+				<b>Description : </b>Guichet.
+			</div>
+
+	</div>
+	<div class="detail">
+			<div class="mock-list">
+				<b>Nom : </b> <a href="../types/char5.html">char5</a>
+			</div>
+			<div class="mock-list">
+				<b> Description : </b>Type avec un nombre de caractères égal à 5.
+			</div>
+			<div class="mock-list">
+				<b>Format : </b>string
+			</div>
+			<div class="mock-list">
+				<b>Longueur fixe : </b>5
+			</div>
+
+	</div>
+
+</div>
+<div class="detail-column" id="d18" style="display:none">
+	<div class="detail">
+			<div class="mock-list">
+				<b>Nom : </b>accountNumber
+			</div>
+			<div class="mock-list">
+				<b>Description : </b>Numéro de compte.
+			</div>
+
+	</div>
+	<div class="detail">
+			<div class="mock-list">
+				<b>Nom : </b> <a href="../types/charMax25.html">charMax25</a>
+			</div>
+			<div class="mock-list">
+				<b> Description : </b>Chaîne composée d'au plus 25 caractères.
+			</div>
+			<div class="mock-list">
+				<b>Format : </b>string
+			</div>
+			<div class="mock-list">
+				<b>Longueur mini-maxi : </b>1 - 25
+			</div>
+
+	</div>
+
+</div>
+<div class="detail-column" id="d19" style="display:none">
+	<div class="detail">
+			<div class="mock-list">
+				<b>Nom : </b>ibanFormatAccount
+			</div>
+			<div class="mock-list">
+				<b>Description : </b>Compte au format IBAN.
+			</div>
+
+	</div>
+	<div class="detail">
+			<div class="mock-list">
+				<b>Nom : </b> <a href="../types/ibanFormatAccount.html">ibanFormatAccount</a>
+			</div>
+			<div class="mock-list">
+				<b> Description : </b>Identifiant de compte au format IBAN.
+			</div>
+
+	</div>
+
+</div>
+<div class="detail-column" id="d20" style="display:none">
+	<div class="detail">
+			<div class="mock-list">
+				<b>Nom : </b>value
+			</div>
+			<div class="mock-list">
+				<b>Description : </b>Valeur de l'IBAN.
+			</div>
+
+	</div>
+	<div class="detail">
+			<div class="mock-list">
+				<b>Nom : </b> <a href="../types/charMax34.html">charMax34</a>
+			</div>
+			<div class="mock-list">
+				<b> Description : </b>Chaîne composée d'au plus 34 caractères.
+			</div>
+			<div class="mock-list">
+				<b>Format : </b>string
+			</div>
+			<div class="mock-list">
+				<b>Longueur mini-maxi : </b>1 - 34
+			</div>
+
+	</div>
+
+</div>
+<div class="detail-column" id="d21" style="display:none">
+	<div class="detail">
+			<div class="mock-list">
+				<b>Nom : </b>otherAccount
+			</div>
+			<div class="mock-list">
+				<b>Description : </b>Autre compte.
+			</div>
+			<div class="mock-list">
+				<b>Commentaire : </b><p>Les informations d&rsquo;un autre compte ne sont prises en compte que pour un mode de r&egrave;glement Autre compte (<strong>A</strong>). Elles sont interdites le cas &eacute;ch&eacute;ant.</p>
+
+<p>Le compte renseign&eacute;&nbsp;:</p>
+
+<ul>
+	<li>Doit exister,</li>
+	<li>Ne doit pas &ecirc;tre ferm&eacute; si le blocage sur compte ferm&eacute; est param&eacute;tr&eacute; (<strong>Montant 1</strong> &eacute;gal &agrave; <strong>1</strong> pour le param&egrave;tre <strong>DESACCORDS</strong> en nomenclature <strong>098</strong>),</li>
+	<li>Ne doit pas &ecirc;tre en instance de fermeture si le blocage sur compte en instance de fermeture est param&eacute;tr&eacute; (<strong>Montant 2</strong> &eacute;gal &agrave; <strong>1</strong> pour le param&egrave;tre <strong>DESACCORDS</strong> en nomenclature <strong>098</strong>),</li>
+	<li>Ne doit pas &ecirc;tre d&eacute;j&agrave; rattach&eacute; au dossier de pr&ecirc;t.</li>
+</ul>
+
+<p>Dans le cas d&rsquo;un dossier pour logement social, sont renseign&eacute;s&nbsp;par d&eacute;faut (et donc non saisissables) :</p>
+
+<ul>
+	<li>L&rsquo;agence avec l&rsquo;agence du dossier,</li>
+	<li>La devise avec la devise du dossier,</li>
+	<li>Le num&eacute;ro de compte et le suffixe &agrave; partir du&nbsp; <strong>Libell&eacute; 5</strong> du param&egrave;tre <strong>PSCPENGttt</strong> (avec <strong>ttt</strong> = type de pr&ecirc;t) en nomenclature <strong>094 </strong>(ou &nbsp;<strong>PSCPENGPRT</strong> par d&eacute;faut).</li>
+</ul>
+
+			</div>
+
+	</div>
+	<div class="detail">
+			<div class="mock-list">
+				<b>Nom : </b> <a href="../types/internalAccountKey.html">internalAccountKey</a>
+			</div>
+			<div class="mock-list">
+				<b> Description : </b>Identifiant de compte au format interne.
+			</div>
+
+	</div>
+
+</div>
+<div class="detail-column" id="d22" style="display:none">
+	<div class="detail">
+			<div class="mock-list">
+				<b>Nom : </b>branch
+			</div>
+			<div class="mock-list">
+				<b>Description : </b>Agence du compte.
+			</div>
+			<div class="mock-list">
+				<b>Commentaire : </b><p>Les agences sont d&eacute;finies dans la nomenclature <strong>001</strong>.</p>
+
+			</div>
+
+	</div>
+	<div class="detail">
+			<div class="mock-list">
+				<b>Nom : </b> <a href="../types/char5.html">char5</a>
+			</div>
+			<div class="mock-list">
+				<b> Description : </b>Type avec un nombre de caractères égal à 5.
+			</div>
+			<div class="mock-list">
+				<b>Format : </b>string
+			</div>
+			<div class="mock-list">
+				<b>Longueur fixe : </b>5
+			</div>
+
+	</div>
+
+</div>
+<div class="detail-column" id="d23" style="display:none">
+	<div class="detail">
+			<div class="mock-list">
+				<b>Nom : </b>currency
+			</div>
+			<div class="mock-list">
+				<b>Description : </b>Devise du compte.
+			</div>
+			<div class="mock-list">
+				<b>Commentaire : </b><p>Les devises sont d&eacute;finies dans les nomenclatures <strong>002</strong> (devises alphanum&eacute;riques) et <strong>005</strong> (devises num&eacute;riques).</p>
+
+			</div>
+
+	</div>
+	<div class="detail">
+			<div class="mock-list">
+				<b>Nom : </b> <a href="../types/currencyCode.html">currencyCode</a>
+			</div>
+			<div class="mock-list">
+				<b> Description : </b>Code devise.
+			</div>
+			<div class="mock-list">
+				<b>Format : </b>string
+			</div>
+			<div class="mock-list">
+				<b>Longueur fixe : </b>3
+			</div>
+
+	</div>
+
+</div>
+<div class="detail-column" id="d24" style="display:none">
+	<div class="detail">
+			<div class="mock-list">
+				<b>Nom : </b>account
+			</div>
+			<div class="mock-list">
+				<b>Description : </b>Numéro du compte.
+			</div>
+
+	</div>
+	<div class="detail">
+			<div class="mock-list">
+				<b>Nom : </b> <a href="../types/charMax11.html">charMax11</a>
+			</div>
+			<div class="mock-list">
+				<b> Description : </b>Chaîne composée d'au plus 11 caractères.
+			</div>
+			<div class="mock-list">
+				<b>Format : </b>string
+			</div>
+			<div class="mock-list">
+				<b>Longueur mini-maxi : </b>1 - 11
+			</div>
+
+	</div>
+
+</div>
+<div class="detail-column" id="d25" style="display:none">
+	<div class="detail">
+			<div class="mock-list">
+				<b>Nom : </b>suffix
+			</div>
+			<div class="mock-list">
+				<b>Description : </b>Suffixe du compte.
+			</div>
+
+	</div>
+	<div class="detail">
+			<div class="mock-list">
+				<b>Nom : </b> <a href="../types/charMax2.html">charMax2</a>
+			</div>
+			<div class="mock-list">
+				<b> Description : </b>Chaîne composée d'au plus 2 caractères.
+			</div>
+			<div class="mock-list">
+				<b>Format : </b>string
+			</div>
+			<div class="mock-list">
+				<b>Longueur mini-maxi : </b>1 - 2
+			</div>
+
+	</div>
+
+</div>
+<div class="detail-column" id="d26" style="display:none">
+	<div class="detail">
+			<div class="mock-list">
+				<b>Nom : </b>legalAttributes
+			</div>
+			<div class="mock-list">
+				<b>Description : </b>Attributs légaux.
+			</div>
+			<div class="mock-list">
+				<b>Commentaire : </b><p>La saisie d&rsquo;un attribut l&eacute;gal n&rsquo;est possible que si le type de pr&ecirc;t l&rsquo;autorise.</p>
+
+<p>Pour tous les attributs l&eacute;gaux param&eacute;tr&eacute;s pour le type de pr&ecirc;t, le code module <strong>CDT</strong> et l&rsquo;agence sont associ&eacute;s au dossier de pr&ecirc;t, avec la valeur re&ccedil;ue ou la valeur param&eacute;tr&eacute;e par d&eacute;faut.</p>
+
+<p>Un attribut l&eacute;gal ne peut &ecirc;tre pr&eacute;sent qu&rsquo;une seule fois dans la requ&ecirc;te.</p>
+
+<p>L&rsquo;identifiant de l&rsquo;attribut a pour valeurs possibles&nbsp;:</p>
+
+<ul>
+	<li><strong>801</strong></li>
+	<li><strong>802</strong></li>
+	<li><strong>803</strong></li>
+	<li><strong>804</strong></li>
+	<li><strong>805</strong></li>
+	<li><strong>806</strong></li>
+	<li><strong>807</strong></li>
+	<li><strong>808</strong></li>
+	<li><strong>809</strong></li>
+</ul>
+
+			</div>
+
+	</div>
+	<div class="detail">
+			<div class="mock-list">
+				<b>Nom : </b> <a href="../types/legalAttributes.html">legalAttributes</a>
+			</div>
+			<div class="mock-list">
+				<b> Description : </b>Attributs légaux.
+			</div>
+
+	</div>
+
+</div>
+<div class="detail-column" id="d27" style="display:none">
+	<div class="detail">
+			<div class="mock-list">
+				<b>Nom : </b>legalAttribute
+			</div>
+			<div class="mock-list">
+				<b>Description : </b>Attribut légal (de 1 à 8 occurrences).
+			</div>
+			<div class="mock-list">
+				<b>Limite du nombre d'occurences mini-maxi : </b>1 8
+			</div>
+
+	</div>
+	<div class="detail">
+			<div class="mock-list">
+				<b>Nom : </b> <a href="../types/legalAttribute.html">legalAttribute</a>
+			</div>
+			<div class="mock-list">
+				<b> Description : </b>Attribut légal.
+			</div>
+
+	</div>
+
+</div>
+<div class="detail-column" id="d28" style="display:none">
+	<div class="detail">
+			<div class="mock-list">
+				<b>Nom : </b>identifier
+			</div>
+			<div class="mock-list">
+				<b>Description : </b>Identifiant de l'attribut.
+			</div>
+
+	</div>
+	<div class="detail">
+			<div class="mock-list">
+				<b>Nom : </b> <a href="../types/char3.html">char3</a>
+			</div>
+			<div class="mock-list">
+				<b> Description : </b>Type avec un nombre de caractères égal à 3.
+			</div>
+			<div class="mock-list">
+				<b>Format : </b>string
+			</div>
+			<div class="mock-list">
+				<b>Longueur fixe : </b>3
+			</div>
+
+	</div>
+
+</div>
+<div class="detail-column" id="d29" style="display:none">
+	<div class="detail">
+			<div class="mock-list">
+				<b>Nom : </b>value
+			</div>
+			<div class="mock-list">
+				<b>Description : </b>Valeur de l'attribut.
+			</div>
+			<div class="mock-list">
+				<b>Commentaire : </b><p>La valeur de l&#39;attribut n&rsquo;est modifiable que si le param&eacute;trage l&rsquo;autorise.</p>
+
+<p>La valeur de l&#39;attribut doit exister dans la nomenclature dont le num&eacute;ro de table correspond &agrave; l&#39;identifiant de l&rsquo;attribut.</p>
+
+			</div>
+
+	</div>
+	<div class="detail">
+			<div class="mock-list">
+				<b>Nom : </b> <a href="../types/charMax10.html">charMax10</a>
+			</div>
+			<div class="mock-list">
+				<b> Description : </b>Chaîne composée d'au plus 10 caractères.
+			</div>
+			<div class="mock-list">
+				<b>Format : </b>string
+			</div>
+			<div class="mock-list">
+				<b>Longueur mini-maxi : </b>1 - 10
+			</div>
+
+	</div>
+
+</div>
+<div class="detail-column" id="d30" style="display:none">
+	<div class="detail">
+			<div class="mock-list">
+				<b>Nom : </b>customerStoppageOverride
+			</div>
+			<div class="mock-list">
+				<b>Description : </b>Forçage d'une opposition client.
+			</div>
+			<div class="mock-list">
+				<b>Commentaire : </b><p>Ce bool&eacute;en doit &ecirc;tre &agrave; <strong>FALSE</strong> s&rsquo;il existe une opposition sur le client devant bloquer la validation finale du dossier.</p>
+
+<p>Sinon, s&rsquo;il existe une opposition sur le client conduisant uniquement &agrave; un message d&rsquo;avertissement sans blocage de la validation finale du dossier, alors ce bool&eacute;en doit &ecirc;tre &agrave; <strong>TRUE</strong>.</p>
+
+			</div>
+
+	</div>
+	<div class="detail">
+			<div class="mock-list">
+				<b>Nom : </b> <a href="../types/boolean.html">boolean</a>
+			</div>
+
+	</div>
+
+</div>
+<div class="detail-column" id="d31" style="display:none">
+	<div class="detail">
+			<div class="mock-list">
+				<b>Nom : </b>startDateCalculCom
+			</div>
+			<div class="mock-list">
+				<b>Description : </b>Date de début de calcul de la commission d'engagement lors de l'étape de validation finale de la saisie d'un dossier de crédit.
+			</div>
+
+	</div>
+	<div class="detail">
+			<div class="mock-list">
+				<b>Nom : </b> <a href="../types/date.html">date</a>
+			</div>
+
+	</div>
+
+</div>
+      </div> 
+  </div>
+
+  
+  <script src="../resources/jquery.js"></script>
+  <script src="../resources/doc.js"></script>
+</body>
+</html>

@@ -1,0 +1,801 @@
+<!DOCTYPE html >
+<html>
+<head>
+	<link rel="stylesheet" href="../resources/styleDocu.css" />
+  <link rel="stylesheet" href="../resources/font-awesome/css/font-awesome.min.css" />
+	<title>Documentation Xsd</title>
+	<meta charset="UTF-8" />
+</head>
+
+<body>
+  <div class="document">
+	<div class="header">
+		
+	</div>
+
+  <div class="tabs">
+    <div class="tabs-wrapper" onclick="window.open('../liste-ressources.html', '_self');">
+      <div class="tabs-left-content">
+        Liste des ressources
+      </div>
+    </div>
+    <div class="tabs-wrapper" onclick="window.open('../liste-services.html', '_self');">
+      <div class="tabs-left-content" >
+        Liste des services  
+      </div>
+    </div>
+    <div class="tabs-wrapper-selected" onclick="window.open('../liste-types.html', '_self');">
+      <div class="tabs-right-content">
+        Liste des types
+      </div>
+    </div>
+  </div>
+
+	
+
+	<div class="contenu">
+      <div class="breadcrumb"> 
+        <ul class="breadcrumb">
+           <li> <a href="../index.html"> Accueil </a></li>
+           <li> > </li>
+           <li> <a href="../liste-types.html"> Liste des types </a></li>
+           <li> > </li>
+           <li> modifyCustomerBudgetRequest </li>
+        </ul>                    
+      </div>                    
+      
+     
+      <div class="summary">
+			<div class="mock-list">
+				<b>Nom : </b>modifyCustomerBudgetRequest
+			</div>
+			<div class="mock-list">
+				<b> Description : </b>Requête de modification du budget d'un client.
+			</div>
+        
+        <div> </div>
+        <div class="mock-list"> Choix : Non</div>
+        
+      </div>
+                        
+      <div class="column-content">
+        <div class="detail-column">
+          <div class="tree"> 
+<ul>
+	<li>
+<i class="fa fa-caret-down fa-fw" onclick="expand_or_collapse(this)">
+</i>		modifyCustomerBudgetRequest		<ul style="display:block">
+			<li>
+<i class="fa fa-caret-down fa-fw" onclick="expand_or_collapse(this)">
+</i><span class="selectable" id="e0"> customerBudget : modifyCustomerBudget
+</span>				<ul style="display:block">
+					<li>
+<i class="fa fa-fw">
+</i><span class="selectable" id="e1"> customerCode : customerCode
+</span>
+					</li>
+					<li>
+<i class="fa fa-fw">
+</i><span class="selectable" id="e2"> budgetReferenceYear : short
+</span>
+					</li>
+					<li>
+<i class="fa fa-fw">
+</i><span class="selectable" id="e3"> averageTaxRate : decimal15_7
+</span>
+					</li>
+
+				</ul>
+
+			</li>
+			<li>
+<i class="fa fa-caret-down fa-fw" onclick="expand_or_collapse(this)">
+</i><span class="selectable" id="e4"> customerIncomes : modifyCustomerIncomes
+</span>				<ul style="display:block">
+					<li>
+<i class="fa fa-caret-down fa-fw" onclick="expand_or_collapse(this)">
+</i><i class="fa fa-key fa-fw">
+</i><span style="font-weight:bold"> [M]
+</span><span class="selectable" id="e5"> customerIncome : modifyCustomerIncome
+</span>						<ul style="display:block">
+							<li>
+<i class="fa fa-fw">
+</i><span class="selectable" id="e6"> incomeCode : incomeCode
+</span>
+							</li>
+							<li>
+<i class="fa fa-fw">
+</i><span class="selectable" id="e7"> incomePeriodicityCode : periodicity
+</span>
+							</li>
+							<li>
+<i class="fa fa-fw">
+</i><span class="selectable" id="e8"> amount : decimal19_4
+</span>
+							</li>
+							<li>
+<i class="fa fa-fw">
+</i><span class="selectable" id="e9"> currency : currencyCode
+</span>
+							</li>
+
+						</ul>
+
+					</li>
+
+				</ul>
+
+			</li>
+			<li>
+<i class="fa fa-caret-down fa-fw" onclick="expand_or_collapse(this)">
+</i><span class="selectable" id="e10"> customerCharges : modifyCustomerCharges
+</span>				<ul style="display:block">
+					<li>
+<i class="fa fa-caret-down fa-fw" onclick="expand_or_collapse(this)">
+</i><i class="fa fa-key fa-fw">
+</i><span style="font-weight:bold"> [M]
+</span><span class="selectable" id="e11"> customerCharge : modifyCustomerCharge
+</span>						<ul style="display:block">
+							<li>
+<i class="fa fa-fw">
+</i><span class="selectable" id="e12"> chargeCode : chargeCode
+</span>
+							</li>
+							<li>
+<i class="fa fa-fw">
+</i><span class="selectable" id="e13"> periodicityCode : periodicity
+</span>
+							</li>
+							<li>
+<i class="fa fa-fw">
+</i><span class="selectable" id="e14"> amount : decimal19_4
+</span>
+							</li>
+							<li>
+<i class="fa fa-fw">
+</i><span class="selectable" id="e15"> initialAmount : decimal19_4
+</span>
+							</li>
+							<li>
+<i class="fa fa-fw">
+</i><span class="selectable" id="e16"> currency : currencyCode
+</span>
+							</li>
+							<li>
+<i class="fa fa-fw">
+</i><span class="selectable" id="e17"> maturityDate : date
+</span>
+							</li>
+							<li>
+<i class="fa fa-fw">
+</i><span class="selectable" id="e18"> organisation : charMax30
+</span>
+							</li>
+
+						</ul>
+
+					</li>
+
+				</ul>
+
+			</li>
+
+		</ul>
+
+	</li>
+
+</ul>
+          </div>
+          
+          <div class="detail">
+				<p align="left">
+					Légende :<br />
+				</p>
+            <ul>
+               <li align="left">
+                  <i class="fa fa-key fa-fw">
+                  </i>
+                  = Elément obligatoire en saisie.
+               </li>
+               <li align="left">
+                  <span style="font-weight:bold"> [M]
+                  </span>
+                  = Elément multiple (0 à n occurrences).
+               </li>
+               <li align="left">
+                  <span style="font-weight:bold"> [C]
+                  </span>
+                  = Elément composé d'un choix à effectuer. Un seul choix autorisé.
+               </li>
+            </ul>
+            <p align="left">
+               Remarque : Un même élément peut regrouper plusieurs caractéristiques
+            </p>          
+          </div>
+          
+        </div>
+<div class="detail-column" id="d0" style="display:none">
+	<div class="detail">
+			<div class="mock-list">
+				<b>Nom : </b>customerBudget
+			</div>
+			<div class="mock-list">
+				<b>Description : </b>Budget d'un client.
+			</div>
+
+	</div>
+	<div class="detail">
+			<div class="mock-list">
+				<b>Nom : </b> <a href="../types/modifyCustomerBudget.html">modifyCustomerBudget</a>
+			</div>
+			<div class="mock-list">
+				<b> Description : </b>Informations sur le budget d'un client.
+			</div>
+
+	</div>
+
+</div>
+<div class="detail-column" id="d1" style="display:none">
+	<div class="detail">
+			<div class="mock-list">
+				<b>Nom : </b>customerCode
+			</div>
+			<div class="mock-list">
+				<b>Description : </b>Code client.
+			</div>
+			<div class="mock-list">
+				<b>Commentaire : </b><p>Le code client n&rsquo;est pas obligatoire si le service de modification d&rsquo;un budget d&rsquo;un client est appel&eacute; par le service <strong>createCustomer</strong>, et est obligatoire dans tous les autres cas.</p>
+
+<p>Le client doit &ecirc;tre de type <strong>Particulier</strong> (<strong>1</strong>).</p>
+
+<p>Si le contr&ocirc;le sur le contentieux est demand&eacute; dans le <strong>Montant&nbsp;1</strong> (&eacute;gal &agrave; <strong>1</strong>) du param&egrave;tre <strong>AWMH</strong> dans la nomenclature <strong>098 </strong>ou si le param&egrave;tre <strong>AWMH</strong> n&rsquo;existe pas dans la nomenclature <strong>098</strong>, alors le client ne doit pas &ecirc;tre pr&eacute;sent dans la table des clients en contentieux.</p>
+
+			</div>
+
+	</div>
+	<div class="detail">
+			<div class="mock-list">
+				<b>Nom : </b> <a href="../types/customerCode.html">customerCode</a>
+			</div>
+			<div class="mock-list">
+				<b> Description : </b>Code client.
+			</div>
+			<div class="mock-list">
+				<b>Format : </b>string
+			</div>
+			<div class="mock-list">
+				<b>Longueur mini-maxi : </b>1 - 15
+			</div>
+
+	</div>
+
+</div>
+<div class="detail-column" id="d2" style="display:none">
+	<div class="detail">
+			<div class="mock-list">
+				<b>Nom : </b>budgetReferenceYear
+			</div>
+			<div class="mock-list">
+				<b>Description : </b>Année de référence du budget.
+			</div>
+			<div class="mock-list">
+				<b>Commentaire : </b><p>Valeur par d&eacute;faut&nbsp;: <strong>budg_annee</strong></p>
+
+			</div>
+
+	</div>
+	<div class="detail">
+			<div class="mock-list">
+				<b>Nom : </b> <a href="../types/short.html">short</a>
+			</div>
+
+	</div>
+
+</div>
+<div class="detail-column" id="d3" style="display:none">
+	<div class="detail">
+			<div class="mock-list">
+				<b>Nom : </b>averageTaxRate
+			</div>
+			<div class="mock-list">
+				<b>Description : </b>Taux moyen d'imposition.
+			</div>
+			<div class="mock-list">
+				<b>Commentaire : </b><p>Valeur par d&eacute;faut&nbsp;: <strong>budg_tximp</strong></p>
+
+			</div>
+
+	</div>
+	<div class="detail">
+			<div class="mock-list">
+				<b>Nom : </b> <a href="../types/decimal15_7.html">decimal15_7</a>
+			</div>
+			<div class="mock-list">
+				<b> Description : </b>Type décimal à 15 chiffres dont 7 décimales.
+			</div>
+			<div class="mock-list">
+				<b>Format : </b>decimal
+			</div>
+			<div class="mock-list">
+				<b>Nombre total de chiffres : </b>15
+			</div>
+
+	</div>
+
+</div>
+<div class="detail-column" id="d4" style="display:none">
+	<div class="detail">
+			<div class="mock-list">
+				<b>Nom : </b>customerIncomes
+			</div>
+			<div class="mock-list">
+				<b>Description : </b>Revenus d'un client.
+			</div>
+
+	</div>
+	<div class="detail">
+			<div class="mock-list">
+				<b>Nom : </b> <a href="../types/modifyCustomerIncomes.html">modifyCustomerIncomes</a>
+			</div>
+			<div class="mock-list">
+				<b> Description : </b>Modification des revenus d'un client.
+			</div>
+
+	</div>
+
+</div>
+<div class="detail-column" id="d5" style="display:none">
+	<div class="detail">
+			<div class="mock-list">
+				<b>Nom : </b>customerIncome
+			</div>
+			<div class="mock-list">
+				<b>Description : </b>Revenu d¿un client.
+			</div>
+			<div class="mock-list">
+				<b>Limite du nombre d'occurences mini-maxi : </b>aucune aucune
+			</div>
+
+	</div>
+	<div class="detail">
+			<div class="mock-list">
+				<b>Nom : </b> <a href="../types/modifyCustomerIncome.html">modifyCustomerIncome</a>
+			</div>
+			<div class="mock-list">
+				<b> Description : </b>Modification d'un revenu d'un client.
+			</div>
+
+	</div>
+
+</div>
+<div class="detail-column" id="d6" style="display:none">
+	<div class="detail">
+			<div class="mock-list">
+				<b>Nom : </b>incomeCode
+			</div>
+			<div class="mock-list">
+				<b>Description : </b>Code revenu.
+			</div>
+			<div class="mock-list">
+				<b>Commentaire : </b><p>Valeur par d&eacute;faut du libell&eacute; correspondant au code revenu&nbsp;: <strong>rev_typ</strong></p>
+
+			</div>
+
+	</div>
+	<div class="detail">
+			<div class="mock-list">
+				<b>Nom : </b> <a href="../types/incomeCode.html">incomeCode</a>
+			</div>
+			<div class="mock-list">
+				<b> Description : </b>Code revenu.
+			</div>
+			<div class="mock-list">
+				<b>Format : </b>string
+			</div>
+			<div class="mock-list">
+				<b>Longueur fixe : </b>3
+			</div>
+
+	</div>
+
+</div>
+<div class="detail-column" id="d7" style="display:none">
+	<div class="detail">
+			<div class="mock-list">
+				<b>Nom : </b>incomePeriodicityCode
+			</div>
+			<div class="mock-list">
+				<b>Description : </b>Code périodicité du revenu.
+			</div>
+			<div class="mock-list">
+				<b>Commentaire : </b><p>Valeur par d&eacute;faut&nbsp;: <strong>rev_per</strong></p>
+
+			</div>
+
+	</div>
+	<div class="detail">
+			<div class="mock-list">
+				<b>Nom : </b> <a href="../types/periodicity.html">periodicity</a>
+			</div>
+			<div class="mock-list">
+				<b> Description : </b>Périodicité.
+			</div>
+			<div class="mock-list">
+				<b>Format : </b>string
+			</div>
+			<div class="mock-list">
+				<b>Valeurs possibles : </b>					<table class="table_enum" class="table_enum" class="table_enum" class="table_enum">
+						<tr>
+						<td> M
+						</td>						<td class="td_right"> Mensuel
+						</td>
+						</tr>
+						<tr>
+						<td> S
+						</td>						<td class="td_right"> Semestriel
+						</td>
+						</tr>
+						<tr>
+						<td> T
+						</td>						<td class="td_right"> Trimestriel
+						</td>
+						</tr>
+						<tr>
+						<td> A
+						</td>						<td class="td_right"> Annuel
+						</td>
+						</tr>
+
+					</table>
+
+			</div>
+
+	</div>
+
+</div>
+<div class="detail-column" id="d8" style="display:none">
+	<div class="detail">
+			<div class="mock-list">
+				<b>Nom : </b>amount
+			</div>
+			<div class="mock-list">
+				<b>Description : </b>Montant du revenu.
+			</div>
+			<div class="mock-list">
+				<b>Commentaire : </b><p>Valeur par d&eacute;faut&nbsp;: <strong>rev_mon</strong></p>
+
+			</div>
+
+	</div>
+	<div class="detail">
+			<div class="mock-list">
+				<b>Nom : </b> <a href="../types/decimal19_4.html">decimal19_4</a>
+			</div>
+			<div class="mock-list">
+				<b> Description : </b>Type décimal à 19 chiffres dont 4 décimales.
+			</div>
+			<div class="mock-list">
+				<b>Format : </b>decimal
+			</div>
+			<div class="mock-list">
+				<b>Nombre total de chiffres : </b>19
+			</div>
+
+	</div>
+
+</div>
+<div class="detail-column" id="d9" style="display:none">
+	<div class="detail">
+			<div class="mock-list">
+				<b>Nom : </b>currency
+			</div>
+			<div class="mock-list">
+				<b>Description : </b>Devise.
+			</div>
+			<div class="mock-list">
+				<b>Commentaire : </b><p>Valeur par d&eacute;faut (de la devise alphanum&eacute;rique)&nbsp;: <strong>rev_dev</strong></p>
+
+			</div>
+
+	</div>
+	<div class="detail">
+			<div class="mock-list">
+				<b>Nom : </b> <a href="../types/currencyCode.html">currencyCode</a>
+			</div>
+			<div class="mock-list">
+				<b> Description : </b>Code devise.
+			</div>
+			<div class="mock-list">
+				<b>Format : </b>string
+			</div>
+			<div class="mock-list">
+				<b>Longueur fixe : </b>3
+			</div>
+
+	</div>
+
+</div>
+<div class="detail-column" id="d10" style="display:none">
+	<div class="detail">
+			<div class="mock-list">
+				<b>Nom : </b>customerCharges
+			</div>
+			<div class="mock-list">
+				<b>Description : </b>Charges d'un client.
+			</div>
+
+	</div>
+	<div class="detail">
+			<div class="mock-list">
+				<b>Nom : </b> <a href="../types/modifyCustomerCharges.html">modifyCustomerCharges</a>
+			</div>
+			<div class="mock-list">
+				<b> Description : </b>Modification des charges d'un client.
+			</div>
+
+	</div>
+
+</div>
+<div class="detail-column" id="d11" style="display:none">
+	<div class="detail">
+			<div class="mock-list">
+				<b>Nom : </b>customerCharge
+			</div>
+			<div class="mock-list">
+				<b>Description : </b>Charge d'un client.
+			</div>
+			<div class="mock-list">
+				<b>Limite du nombre d'occurences mini-maxi : </b>aucune aucune
+			</div>
+
+	</div>
+	<div class="detail">
+			<div class="mock-list">
+				<b>Nom : </b> <a href="../types/modifyCustomerCharge.html">modifyCustomerCharge</a>
+			</div>
+			<div class="mock-list">
+				<b> Description : </b>Modification d'une charge d'un client.
+			</div>
+
+	</div>
+
+</div>
+<div class="detail-column" id="d12" style="display:none">
+	<div class="detail">
+			<div class="mock-list">
+				<b>Nom : </b>chargeCode
+			</div>
+			<div class="mock-list">
+				<b>Description : </b>Code charge.
+			</div>
+			<div class="mock-list">
+				<b>Commentaire : </b><p>Valeur par d&eacute;faut du libell&eacute; correspondant au code charge&nbsp;: <strong>chrg_typ</strong></p>
+
+			</div>
+
+	</div>
+	<div class="detail">
+			<div class="mock-list">
+				<b>Nom : </b> <a href="../types/chargeCode.html">chargeCode</a>
+			</div>
+			<div class="mock-list">
+				<b> Description : </b>Code charge.
+			</div>
+			<div class="mock-list">
+				<b>Format : </b>string
+			</div>
+			<div class="mock-list">
+				<b>Longueur fixe : </b>3
+			</div>
+
+	</div>
+
+</div>
+<div class="detail-column" id="d13" style="display:none">
+	<div class="detail">
+			<div class="mock-list">
+				<b>Nom : </b>periodicityCode
+			</div>
+			<div class="mock-list">
+				<b>Description : </b>Code périodicité.
+			</div>
+			<div class="mock-list">
+				<b>Commentaire : </b><p>Valeur par d&eacute;faut&nbsp;: <strong>chrg_per</strong></p>
+
+			</div>
+
+	</div>
+	<div class="detail">
+			<div class="mock-list">
+				<b>Nom : </b> <a href="../types/periodicity.html">periodicity</a>
+			</div>
+			<div class="mock-list">
+				<b> Description : </b>Périodicité.
+			</div>
+			<div class="mock-list">
+				<b>Format : </b>string
+			</div>
+			<div class="mock-list">
+				<b>Valeurs possibles : </b>					<table class="table_enum" class="table_enum" class="table_enum" class="table_enum">
+						<tr>
+						<td> M
+						</td>						<td class="td_right"> Mensuel
+						</td>
+						</tr>
+						<tr>
+						<td> S
+						</td>						<td class="td_right"> Semestriel
+						</td>
+						</tr>
+						<tr>
+						<td> T
+						</td>						<td class="td_right"> Trimestriel
+						</td>
+						</tr>
+						<tr>
+						<td> A
+						</td>						<td class="td_right"> Annuel
+						</td>
+						</tr>
+
+					</table>
+
+			</div>
+
+	</div>
+
+</div>
+<div class="detail-column" id="d14" style="display:none">
+	<div class="detail">
+			<div class="mock-list">
+				<b>Nom : </b>amount
+			</div>
+			<div class="mock-list">
+				<b>Description : </b>Montant de la charge.
+			</div>
+			<div class="mock-list">
+				<b>Commentaire : </b><p>Valeur par d&eacute;faut&nbsp;: <strong>chrg_mon</strong></p>
+
+			</div>
+
+	</div>
+	<div class="detail">
+			<div class="mock-list">
+				<b>Nom : </b> <a href="../types/decimal19_4.html">decimal19_4</a>
+			</div>
+			<div class="mock-list">
+				<b> Description : </b>Type décimal à 19 chiffres dont 4 décimales.
+			</div>
+			<div class="mock-list">
+				<b>Format : </b>decimal
+			</div>
+			<div class="mock-list">
+				<b>Nombre total de chiffres : </b>19
+			</div>
+
+	</div>
+
+</div>
+<div class="detail-column" id="d15" style="display:none">
+	<div class="detail">
+			<div class="mock-list">
+				<b>Nom : </b>initialAmount
+			</div>
+			<div class="mock-list">
+				<b>Description : </b>Montant initial de la charge.
+			</div>
+			<div class="mock-list">
+				<b>Commentaire : </b><p>Valeur par d&eacute;faut&nbsp;: <strong>chrg_ini</strong></p>
+
+			</div>
+
+	</div>
+	<div class="detail">
+			<div class="mock-list">
+				<b>Nom : </b> <a href="../types/decimal19_4.html">decimal19_4</a>
+			</div>
+			<div class="mock-list">
+				<b> Description : </b>Type décimal à 19 chiffres dont 4 décimales.
+			</div>
+			<div class="mock-list">
+				<b>Format : </b>decimal
+			</div>
+			<div class="mock-list">
+				<b>Nombre total de chiffres : </b>19
+			</div>
+
+	</div>
+
+</div>
+<div class="detail-column" id="d16" style="display:none">
+	<div class="detail">
+			<div class="mock-list">
+				<b>Nom : </b>currency
+			</div>
+			<div class="mock-list">
+				<b>Description : </b>Devise.
+			</div>
+			<div class="mock-list">
+				<b>Commentaire : </b><p>Valeur par d&eacute;faut (de la devise alphanum&eacute;rique)&nbsp;: <strong>chrg_dev</strong></p>
+
+			</div>
+
+	</div>
+	<div class="detail">
+			<div class="mock-list">
+				<b>Nom : </b> <a href="../types/currencyCode.html">currencyCode</a>
+			</div>
+			<div class="mock-list">
+				<b> Description : </b>Code devise.
+			</div>
+			<div class="mock-list">
+				<b>Format : </b>string
+			</div>
+			<div class="mock-list">
+				<b>Longueur fixe : </b>3
+			</div>
+
+	</div>
+
+</div>
+<div class="detail-column" id="d17" style="display:none">
+	<div class="detail">
+			<div class="mock-list">
+				<b>Nom : </b>maturityDate
+			</div>
+			<div class="mock-list">
+				<b>Description : </b>Date d'échéance de la charge.
+			</div>
+			<div class="mock-list">
+				<b>Commentaire : </b><p>Valeur par d&eacute;faut&nbsp;: <strong>chrg_dech</strong></p>
+
+			</div>
+
+	</div>
+	<div class="detail">
+			<div class="mock-list">
+				<b>Nom : </b> <a href="../types/date.html">date</a>
+			</div>
+
+	</div>
+
+</div>
+<div class="detail-column" id="d18" style="display:none">
+	<div class="detail">
+			<div class="mock-list">
+				<b>Nom : </b>organisation
+			</div>
+			<div class="mock-list">
+				<b>Description : </b>Organisme.
+			</div>
+			<div class="mock-list">
+				<b>Commentaire : </b><p>Valeur par d&eacute;faut&nbsp;: <strong>chrg_org</strong></p>
+
+			</div>
+
+	</div>
+	<div class="detail">
+			<div class="mock-list">
+				<b>Nom : </b> <a href="../types/charMax30.html">charMax30</a>
+			</div>
+			<div class="mock-list">
+				<b> Description : </b>Chaîne composée d'au plus 30 caractères.
+			</div>
+			<div class="mock-list">
+				<b>Format : </b>string
+			</div>
+			<div class="mock-list">
+				<b>Longueur mini-maxi : </b>1 - 30
+			</div>
+
+	</div>
+
+</div>
+      </div> 
+  </div>
+
+  
+  <script src="../resources/jquery.js"></script>
+  <script src="../resources/doc.js"></script>
+</body>
+</html>

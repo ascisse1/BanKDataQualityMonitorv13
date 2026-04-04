@@ -1,0 +1,747 @@
+<!DOCTYPE html >
+<html>
+<head>
+	<link rel="stylesheet" href="../resources/styleDocu.css" />
+  <link rel="stylesheet" href="../resources/font-awesome/css/font-awesome.min.css" />
+	<title>Documentation Xsd</title>
+	<meta charset="UTF-8" />
+</head>
+
+<body>
+  <div class="document">
+	<div class="header">
+		
+	</div>
+
+  <div class="tabs">
+    <div class="tabs-wrapper" onclick="window.open('../liste-ressources.html', '_self');">
+      <div class="tabs-left-content">
+        Liste des ressources
+      </div>
+    </div>
+    <div class="tabs-wrapper" onclick="window.open('../liste-services.html', '_self');">
+      <div class="tabs-left-content" >
+        Liste des services  
+      </div>
+    </div>
+    <div class="tabs-wrapper-selected" onclick="window.open('../liste-types.html', '_self');">
+      <div class="tabs-right-content">
+        Liste des types
+      </div>
+    </div>
+  </div>
+
+	
+
+	<div class="contenu">
+      <div class="breadcrumb"> 
+        <ul class="breadcrumb">
+           <li> <a href="../index.html"> Accueil </a></li>
+           <li> > </li>
+           <li> <a href="../liste-types.html"> Liste des types </a></li>
+           <li> > </li>
+           <li> Party6Choice </li>
+        </ul>                    
+      </div>                    
+      
+     
+      <div class="summary">
+			<div class="mock-list">
+				<b>Nom : </b>Party6Choice
+			</div>
+			<div class="mock-list">
+				<b> Description : </b>Informations d'identification d'un organisme.
+			</div>
+        
+        <div> </div>
+        <div class="mock-list"> Choix : Oui</div>
+        
+      </div>
+                        
+      <div class="column-content">
+        <div class="detail-column">
+          <div class="tree"> 
+<ul>
+	<li>
+<i class="fa fa-caret-down fa-fw" onclick="expand_or_collapse(this)">
+</i>		Party6Choice		<ul style="display:block">
+			<li>
+<i class="fa fa-caret-down fa-fw" onclick="expand_or_collapse(this)">
+</i><i class="fa fa-key fa-fw">
+</i><span class="selectable" id="e0"> OrgId : OrganisationIdentification4
+</span>				<ul style="display:block">
+					<li>
+<i class="fa fa-fw">
+</i><span class="selectable" id="e1"> BICOrBEI : AnyBICIdentifier
+</span>
+					</li>
+					<li>
+<i class="fa fa-caret-down fa-fw" onclick="expand_or_collapse(this)">
+</i><span style="font-weight:bold"> [M]
+</span><span class="selectable" id="e2"> Othr : GenericOrganisationIdentification1
+</span>						<ul style="display:block">
+							<li>
+<i class="fa fa-fw">
+</i><i class="fa fa-key fa-fw">
+</i><span class="selectable" id="e3"> Id : Max35Text
+</span>
+							</li>
+							<li>
+<i class="fa fa-caret-down fa-fw" onclick="expand_or_collapse(this)">
+</i><span style="font-weight:bold"> [C]
+</span><span class="selectable" id="e4"> SchmeNm : OrganisationIdentificationSchemeName1Choice
+</span>								<ul style="display:block">
+									<li>
+<i class="fa fa-fw">
+</i><i class="fa fa-key fa-fw">
+</i><span class="selectable" id="e5"> Cd : ExternalOrganisationIdentification1Code
+</span>
+									</li>
+									<li>
+<i class="fa fa-fw">
+</i><i class="fa fa-key fa-fw">
+</i><span class="selectable" id="e6"> Prtry : Max35Text
+</span>
+									</li>
+
+								</ul>
+
+							</li>
+							<li>
+<i class="fa fa-fw">
+</i><span class="selectable" id="e7"> Issr : Max35Text
+</span>
+							</li>
+
+						</ul>
+
+					</li>
+
+				</ul>
+
+			</li>
+			<li>
+<i class="fa fa-caret-down fa-fw" onclick="expand_or_collapse(this)">
+</i><i class="fa fa-key fa-fw">
+</i><span class="selectable" id="e8"> PrvtId : PersonIdentification5
+</span>				<ul style="display:block">
+					<li>
+<i class="fa fa-caret-down fa-fw" onclick="expand_or_collapse(this)">
+</i><span class="selectable" id="e9"> DtAndPlcOfBirth : DateAndPlaceOfBirth
+</span>						<ul style="display:block">
+							<li>
+<i class="fa fa-fw">
+</i><i class="fa fa-key fa-fw">
+</i><span class="selectable" id="e10"> BirthDt : ISODate
+</span>
+							</li>
+							<li>
+<i class="fa fa-fw">
+</i><span class="selectable" id="e11"> PrvcOfBirth : Max35Text
+</span>
+							</li>
+							<li>
+<i class="fa fa-fw">
+</i><i class="fa fa-key fa-fw">
+</i><span class="selectable" id="e12"> CityOfBirth : Max35Text
+</span>
+							</li>
+							<li>
+<i class="fa fa-fw">
+</i><i class="fa fa-key fa-fw">
+</i><span class="selectable" id="e13"> CtryOfBirth : countryCode2
+</span>
+							</li>
+
+						</ul>
+
+					</li>
+					<li>
+<i class="fa fa-caret-down fa-fw" onclick="expand_or_collapse(this)">
+</i><span style="font-weight:bold"> [M]
+</span><span class="selectable" id="e14"> Othr : GenericPersonIdentification1
+</span>						<ul style="display:block">
+							<li>
+<i class="fa fa-fw">
+</i><i class="fa fa-key fa-fw">
+</i><span class="selectable" id="e15"> Id : Max35Text
+</span>
+							</li>
+							<li>
+<i class="fa fa-caret-down fa-fw" onclick="expand_or_collapse(this)">
+</i><span style="font-weight:bold"> [C]
+</span><span class="selectable" id="e16"> SchmeNm : PersonIdentificationSchemeName1Choice
+</span>								<ul style="display:block">
+									<li>
+<i class="fa fa-fw">
+</i><i class="fa fa-key fa-fw">
+</i><span class="selectable" id="e17"> Cd : ExternalPersonIdentification1Code
+</span>
+									</li>
+									<li>
+<i class="fa fa-fw">
+</i><i class="fa fa-key fa-fw">
+</i><span class="selectable" id="e18"> Prtry : Max35Text
+</span>
+									</li>
+
+								</ul>
+
+							</li>
+							<li>
+<i class="fa fa-fw">
+</i><span class="selectable" id="e19"> Issr : Max35Text
+</span>
+							</li>
+
+						</ul>
+
+					</li>
+
+				</ul>
+
+			</li>
+
+		</ul>
+
+	</li>
+
+</ul>
+          </div>
+          
+          <div class="detail">
+				<p align="left">
+					Légende :<br />
+				</p>
+            <ul>
+               <li align="left">
+                  <i class="fa fa-key fa-fw">
+                  </i>
+                  = Elément obligatoire en saisie.
+               </li>
+               <li align="left">
+                  <span style="font-weight:bold"> [M]
+                  </span>
+                  = Elément multiple (0 à n occurrences).
+               </li>
+               <li align="left">
+                  <span style="font-weight:bold"> [C]
+                  </span>
+                  = Elément composé d'un choix à effectuer. Un seul choix autorisé.
+               </li>
+            </ul>
+            <p align="left">
+               Remarque : Un même élément peut regrouper plusieurs caractéristiques
+            </p>          
+          </div>
+          
+        </div>
+<div class="detail-column" id="d0" style="display:none">
+	<div class="detail">
+			<div class="mock-list">
+				<b>Nom : </b>OrgId
+			</div>
+			<div class="mock-list">
+				<b>Description : </b>Identifiant unique d'un organisme.
+			</div>
+
+	</div>
+	<div class="detail">
+			<div class="mock-list">
+				<b>Nom : </b> <a href="../types/OrganisationIdentification4.html">OrganisationIdentification4</a>
+			</div>
+			<div class="mock-list">
+				<b> Description : </b>Informations sur l'identifiant d'un organisme financier.
+			</div>
+
+	</div>
+
+</div>
+<div class="detail-column" id="d1" style="display:none">
+	<div class="detail">
+			<div class="mock-list">
+				<b>Nom : </b>BICOrBEI
+			</div>
+			<div class="mock-list">
+				<b>Description : </b>Code BIC ou BEI d'un etablissement financier.
+			</div>
+
+	</div>
+	<div class="detail">
+			<div class="mock-list">
+				<b>Nom : </b> <a href="../types/AnyBICIdentifier.html">AnyBICIdentifier</a>
+			</div>
+			<div class="mock-list">
+				<b> Description : </b>Code BIC.
+			</div>
+			<div class="mock-list">
+				<b>Format : </b>string
+			</div>
+			<li class="mock-list">
+				<b>Expression régulière : </b>[A-Z]{6,6}[A-Z2-9][A-NP-Z0-9]([A-Z0-9]{3,3}){0,1}
+			</li>
+
+	</div>
+
+</div>
+<div class="detail-column" id="d2" style="display:none">
+	<div class="detail">
+			<div class="mock-list">
+				<b>Nom : </b>Othr
+			</div>
+			<div class="mock-list">
+				<b>Description : </b>Autre identification d'un etablissement financier.
+			</div>
+			<div class="mock-list">
+				<b>Limite du nombre d'occurences mini-maxi : </b>0 aucune
+			</div>
+
+	</div>
+	<div class="detail">
+			<div class="mock-list">
+				<b>Nom : </b> <a href="../types/GenericOrganisationIdentification1.html">GenericOrganisationIdentification1</a>
+			</div>
+			<div class="mock-list">
+				<b> Description : </b>Informations sur l'identification d'un organisme de paiement.
+			</div>
+
+	</div>
+
+</div>
+<div class="detail-column" id="d3" style="display:none">
+	<div class="detail">
+			<div class="mock-list">
+				<b>Nom : </b>Id
+			</div>
+			<div class="mock-list">
+				<b>Description : </b>Identifiant de l'institution.
+			</div>
+
+	</div>
+	<div class="detail">
+			<div class="mock-list">
+				<b>Nom : </b> <a href="../types/Max35Text.html">Max35Text</a>
+			</div>
+			<div class="mock-list">
+				<b> Description : </b>Identifiant unique pour le groupe message.
+			</div>
+			<div class="mock-list">
+				<b>Format : </b>string
+			</div>
+			<div class="mock-list">
+				<b>Longueur mini-maxi : </b>1 - 35
+			</div>
+
+	</div>
+
+</div>
+<div class="detail-column" id="d4" style="display:none">
+	<div class="detail">
+			<div class="mock-list">
+				<b>Nom : </b>SchmeNm
+			</div>
+			<div class="mock-list">
+				<b>Description : </b>Informations sur le nom de l'institution.
+			</div>
+
+	</div>
+	<div class="detail">
+			<div class="mock-list">
+				<b>Nom : </b> <a href="../types/OrganisationIdentificationSchemeName1Choice.html">OrganisationIdentificationSchemeName1Choice</a>
+			</div>
+			<div class="mock-list">
+				<b> Description : </b>Type de code pour le schéma d'identification.
+			</div>
+
+	</div>
+
+</div>
+<div class="detail-column" id="d5" style="display:none">
+	<div class="detail">
+			<div class="mock-list">
+				<b>Nom : </b>Cd
+			</div>
+			<div class="mock-list">
+				<b>Description : </b>Code ISO lié au schéma d'identification.
+			</div>
+
+	</div>
+	<div class="detail">
+			<div class="mock-list">
+				<b>Nom : </b> <a href="../types/ExternalOrganisationIdentification1Code.html">ExternalOrganisationIdentification1Code</a>
+			</div>
+			<div class="mock-list">
+				<b> Description : </b>Identifiant de l'organisme exterieur.
+			</div>
+			<div class="mock-list">
+				<b>Format : </b>string
+			</div>
+			<div class="mock-list">
+				<b>Longueur mini-maxi : </b>1 - 4
+			</div>
+
+	</div>
+
+</div>
+<div class="detail-column" id="d6" style="display:none">
+	<div class="detail">
+			<div class="mock-list">
+				<b>Nom : </b>Prtry
+			</div>
+			<div class="mock-list">
+				<b>Description : </b>Code propriétaire lié au schéma d'identification.
+			</div>
+
+	</div>
+	<div class="detail">
+			<div class="mock-list">
+				<b>Nom : </b> <a href="../types/Max35Text.html">Max35Text</a>
+			</div>
+			<div class="mock-list">
+				<b> Description : </b>Identifiant unique pour le groupe message.
+			</div>
+			<div class="mock-list">
+				<b>Format : </b>string
+			</div>
+			<div class="mock-list">
+				<b>Longueur mini-maxi : </b>1 - 35
+			</div>
+
+	</div>
+
+</div>
+<div class="detail-column" id="d7" style="display:none">
+	<div class="detail">
+			<div class="mock-list">
+				<b>Nom : </b>Issr
+			</div>
+			<div class="mock-list">
+				<b>Description : </b>Entité qui attribue l'identification.
+			</div>
+
+	</div>
+	<div class="detail">
+			<div class="mock-list">
+				<b>Nom : </b> <a href="../types/Max35Text.html">Max35Text</a>
+			</div>
+			<div class="mock-list">
+				<b> Description : </b>Identifiant unique pour le groupe message.
+			</div>
+			<div class="mock-list">
+				<b>Format : </b>string
+			</div>
+			<div class="mock-list">
+				<b>Longueur mini-maxi : </b>1 - 35
+			</div>
+
+	</div>
+
+</div>
+<div class="detail-column" id="d8" style="display:none">
+	<div class="detail">
+			<div class="mock-list">
+				<b>Nom : </b>PrvtId
+			</div>
+			<div class="mock-list">
+				<b>Description : </b>Idenfication unique d'une personne.
+			</div>
+
+	</div>
+	<div class="detail">
+			<div class="mock-list">
+				<b>Nom : </b> <a href="../types/PersonIdentification5.html">PersonIdentification5</a>
+			</div>
+			<div class="mock-list">
+				<b> Description : </b>Informations permettant d'identifier une personne.
+			</div>
+
+	</div>
+
+</div>
+<div class="detail-column" id="d9" style="display:none">
+	<div class="detail">
+			<div class="mock-list">
+				<b>Nom : </b>DtAndPlcOfBirth
+			</div>
+			<div class="mock-list">
+				<b>Description : </b>Date et lieu de naissance.
+			</div>
+
+	</div>
+	<div class="detail">
+			<div class="mock-list">
+				<b>Nom : </b> <a href="../types/DateAndPlaceOfBirth.html">DateAndPlaceOfBirth</a>
+			</div>
+			<div class="mock-list">
+				<b> Description : </b>Date et lieu de naissance.
+			</div>
+
+	</div>
+
+</div>
+<div class="detail-column" id="d10" style="display:none">
+	<div class="detail">
+			<div class="mock-list">
+				<b>Nom : </b>BirthDt
+			</div>
+			<div class="mock-list">
+				<b>Description : </b>Date de naissance.
+			</div>
+
+	</div>
+	<div class="detail">
+			<div class="mock-list">
+				<b>Nom : </b> <a href="../types/ISODate.html">ISODate</a>
+			</div>
+			<div class="mock-list">
+				<b> Description : </b>Format de date ISO.
+			</div>
+			<div class="mock-list">
+				<b>Format : </b>date
+			</div>
+
+	</div>
+
+</div>
+<div class="detail-column" id="d11" style="display:none">
+	<div class="detail">
+			<div class="mock-list">
+				<b>Nom : </b>PrvcOfBirth
+			</div>
+			<div class="mock-list">
+				<b>Description : </b>Région de naissance.
+			</div>
+
+	</div>
+	<div class="detail">
+			<div class="mock-list">
+				<b>Nom : </b> <a href="../types/Max35Text.html">Max35Text</a>
+			</div>
+			<div class="mock-list">
+				<b> Description : </b>Identifiant unique pour le groupe message.
+			</div>
+			<div class="mock-list">
+				<b>Format : </b>string
+			</div>
+			<div class="mock-list">
+				<b>Longueur mini-maxi : </b>1 - 35
+			</div>
+
+	</div>
+
+</div>
+<div class="detail-column" id="d12" style="display:none">
+	<div class="detail">
+			<div class="mock-list">
+				<b>Nom : </b>CityOfBirth
+			</div>
+			<div class="mock-list">
+				<b>Description : </b>Ville de naissance.
+			</div>
+
+	</div>
+	<div class="detail">
+			<div class="mock-list">
+				<b>Nom : </b> <a href="../types/Max35Text.html">Max35Text</a>
+			</div>
+			<div class="mock-list">
+				<b> Description : </b>Identifiant unique pour le groupe message.
+			</div>
+			<div class="mock-list">
+				<b>Format : </b>string
+			</div>
+			<div class="mock-list">
+				<b>Longueur mini-maxi : </b>1 - 35
+			</div>
+
+	</div>
+
+</div>
+<div class="detail-column" id="d13" style="display:none">
+	<div class="detail">
+			<div class="mock-list">
+				<b>Nom : </b>CtryOfBirth
+			</div>
+			<div class="mock-list">
+				<b>Description : </b>Pays de naissance.
+			</div>
+
+	</div>
+	<div class="detail">
+			<div class="mock-list">
+				<b>Nom : </b> <a href="../types/countryCode2.html">countryCode2</a>
+			</div>
+			<div class="mock-list">
+				<b> Description : </b>Code Pays.
+			</div>
+			<div class="mock-list">
+				<b>Format : </b>string
+			</div>
+			<li class="mock-list">
+				<b>Expression régulière : </b>[A-Z]{2,2}
+			</li>
+
+	</div>
+
+</div>
+<div class="detail-column" id="d14" style="display:none">
+	<div class="detail">
+			<div class="mock-list">
+				<b>Nom : </b>Othr
+			</div>
+			<div class="mock-list">
+				<b>Description : </b>Autres informations.
+			</div>
+			<div class="mock-list">
+				<b>Limite du nombre d'occurences mini-maxi : </b>0 aucune
+			</div>
+
+	</div>
+	<div class="detail">
+			<div class="mock-list">
+				<b>Nom : </b> <a href="../types/GenericPersonIdentification1.html">GenericPersonIdentification1</a>
+			</div>
+			<div class="mock-list">
+				<b> Description : </b>Identification générique d'une personne.
+			</div>
+
+	</div>
+
+</div>
+<div class="detail-column" id="d15" style="display:none">
+	<div class="detail">
+			<div class="mock-list">
+				<b>Nom : </b>Id
+			</div>
+			<div class="mock-list">
+				<b>Description : </b>Identifiant unique d'une personne.
+			</div>
+
+	</div>
+	<div class="detail">
+			<div class="mock-list">
+				<b>Nom : </b> <a href="../types/Max35Text.html">Max35Text</a>
+			</div>
+			<div class="mock-list">
+				<b> Description : </b>Identifiant unique pour le groupe message.
+			</div>
+			<div class="mock-list">
+				<b>Format : </b>string
+			</div>
+			<div class="mock-list">
+				<b>Longueur mini-maxi : </b>1 - 35
+			</div>
+
+	</div>
+
+</div>
+<div class="detail-column" id="d16" style="display:none">
+	<div class="detail">
+			<div class="mock-list">
+				<b>Nom : </b>SchmeNm
+			</div>
+			<div class="mock-list">
+				<b>Description : </b>Informations sur la personne.
+			</div>
+
+	</div>
+	<div class="detail">
+			<div class="mock-list">
+				<b>Nom : </b> <a href="../types/PersonIdentificationSchemeName1Choice.html">PersonIdentificationSchemeName1Choice</a>
+			</div>
+			<div class="mock-list">
+				<b> Description : </b>Code pour l'identification d'une personne.
+			</div>
+
+	</div>
+
+</div>
+<div class="detail-column" id="d17" style="display:none">
+	<div class="detail">
+			<div class="mock-list">
+				<b>Nom : </b>Cd
+			</div>
+			<div class="mock-list">
+				<b>Description : </b>Code ISO.
+			</div>
+
+	</div>
+	<div class="detail">
+			<div class="mock-list">
+				<b>Nom : </b> <a href="../types/ExternalPersonIdentification1Code.html">ExternalPersonIdentification1Code</a>
+			</div>
+			<div class="mock-list">
+				<b> Description : </b>Code d'identification d'une personne externe.
+			</div>
+			<div class="mock-list">
+				<b>Format : </b>string
+			</div>
+			<div class="mock-list">
+				<b>Longueur mini-maxi : </b>1 - 4
+			</div>
+
+	</div>
+
+</div>
+<div class="detail-column" id="d18" style="display:none">
+	<div class="detail">
+			<div class="mock-list">
+				<b>Nom : </b>Prtry
+			</div>
+			<div class="mock-list">
+				<b>Description : </b>Code Propriétaire.
+			</div>
+
+	</div>
+	<div class="detail">
+			<div class="mock-list">
+				<b>Nom : </b> <a href="../types/Max35Text.html">Max35Text</a>
+			</div>
+			<div class="mock-list">
+				<b> Description : </b>Identifiant unique pour le groupe message.
+			</div>
+			<div class="mock-list">
+				<b>Format : </b>string
+			</div>
+			<div class="mock-list">
+				<b>Longueur mini-maxi : </b>1 - 35
+			</div>
+
+	</div>
+
+</div>
+<div class="detail-column" id="d19" style="display:none">
+	<div class="detail">
+			<div class="mock-list">
+				<b>Nom : </b>Issr
+			</div>
+			<div class="mock-list">
+				<b>Description : </b>Emetteur.
+			</div>
+
+	</div>
+	<div class="detail">
+			<div class="mock-list">
+				<b>Nom : </b> <a href="../types/Max35Text.html">Max35Text</a>
+			</div>
+			<div class="mock-list">
+				<b> Description : </b>Identifiant unique pour le groupe message.
+			</div>
+			<div class="mock-list">
+				<b>Format : </b>string
+			</div>
+			<div class="mock-list">
+				<b>Longueur mini-maxi : </b>1 - 35
+			</div>
+
+	</div>
+
+</div>
+      </div> 
+  </div>
+
+  
+  <script src="../resources/jquery.js"></script>
+  <script src="../resources/doc.js"></script>
+</body>
+</html>

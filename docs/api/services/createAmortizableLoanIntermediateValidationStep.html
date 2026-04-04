@@ -1,0 +1,1630 @@
+<!DOCTYPE html>
+<html>
+<head>
+	<link rel="stylesheet" href="../resources/styleDocu.css" />
+  <link rel="stylesheet" href="../resources/font-awesome/css/font-awesome.min.css" />
+	<title>Documentation Xsd</title>
+	<meta charset="UTF-8" />
+</head>
+
+<body>
+  <div class="document">
+	<div class="header">
+		
+	</div>
+
+  <div class="tabs">
+    <div class="tabs-wrapper" onclick="window.open('../liste-ressources.html', '_self');">
+      <div class="tabs-left-content">
+        Liste des ressources
+      </div>
+    </div>
+    <div class="tabs-wrapper-selected" onclick="window.open('../liste-services.html', '_self');">
+      <div class="tabs-left-content" >
+        Liste des services  
+      </div>
+    </div>
+    <div class="tabs-wrapper" onclick="window.open('../liste-types.html', '_self');">
+      <div class="tabs-right-content">
+        Liste des types
+      </div>
+    </div>
+  </div>
+
+	
+
+	<div class="contenu">
+      <div class="breadcrumb"> 
+        <ul class="breadcrumb">
+           <li> <a href="../index.html"> Accueil </a></li>
+           <li> > </li>
+           <li> <a href="../liste-services.html"> Liste des services </a></li>
+           <li> > </li>
+           <li> createAmortizableLoanIntermediateValidationStep </li>
+        </ul>                    
+      </div>                    
+      
+      <div class="summary">
+       
+            <div class="mock-list"> Programme Amplitude : pswcdtdosv </div>
+            <div class="mock-list"> Service générique : createAmortizableLoanIntermediateValidationStep </div>
+        
+        <br/>
+            <div class="mock-list">  </div>
+        <br/>
+            <div class="mock-list"> Ce service permet de réaliser l'étape intermédiaire de validation banque ou client d'un dossier de crédit amortissable correspondant aux critères de sélection contenus dans le flux XML qu'il reçoit après avoir vérifié leur cohérence. Il permet également de tracer cette validation dans la table d'historique, selon son paramétrage, et d'envoyer des mouvements comptables via la table des événements, selon l'état à comptabiliser du dossier. </div>
+        <br/>
+            <div> <p>Ce service&nbsp;ajoute les intervenants d&rsquo;assurance li&eacute;s au dossier dans le cas o&ugrave; la cr&eacute;ation du dossier ne les aurait pas cr&eacute;&eacute;s (dans le cas d&rsquo;un dossier cr&eacute;&eacute; via une interface de type TRANSACT).</p>
+<p>&nbsp;</p>
+
+<p><span style="color:#3498db"><em>Concernant le traitement fonctionnel et les r&egrave;gles de gestion, se r&eacute;f&eacute;rer aux documents utilisateurs :</em></span></p>
+
+<p><span style="color:#3498db"><em>0406-2-11.XEnvironnement des cr&eacute;dits</em></span></p>
+
+<p><span style="color:#3498db"><em>0406-3-11.XEtude des dossiers</em></span></p>
+
+<p><span style="color:#3498db"><em>X : version mineure correspondant &agrave; la documentation.</em></span></p>
+</div>
+      </div>
+      
+      <div class="column-content">
+        <div class="detail-column">
+          <div class="tree"> 
+<ul>
+	<li>
+<i class="fa fa-caret-down fa-fw" onclick="expand_or_collapse(this)">
+</i>		createAmortizableLoanIntermediateValidationStep		<ul style="display:block">
+			<li>
+<i class="fa fa-caret-down fa-fw" onclick="expand_or_collapse(this)">
+</i>				AmortizableLoanIntermediateValidationStepRequest				<ul style="display:block">
+					<li>
+<i class="fa fa-caret-down fa-fw" onclick="expand_or_collapse(this)">
+</i><i class="fa fa-key fa-fw">
+</i><span class="selectable" id="e0"> requestHeader
+</span>						<ul style="display:block">
+							<li>
+<i class="fa fa-caret-down fa-fw" onclick="expand_or_collapse(this)">
+</i><i class="fa fa-key fa-fw">
+</i><span class="selectable" id="e1"> requestId1
+</span>								<ul style="display:block">
+									<li>
+<i class="fa fa-fw">
+</i><i class="fa fa-key fa-fw">
+</i><span class="selectable" id="e2"> requestId : charMax50
+</span>
+									</li>
+
+								</ul>
+
+							</li>
+							<li>
+<i class="fa fa-fw">
+</i><i class="fa fa-key fa-fw">
+</i><span class="selectable" id="e3"> serviceName : charMax50
+</span>
+							</li>
+							<li>
+<i class="fa fa-fw">
+</i><i class="fa fa-key fa-fw">
+</i><span class="selectable" id="e4"> timestamp : dateTime
+</span>
+							</li>
+							<li>
+<i class="fa fa-fw">
+</i><span class="selectable" id="e5"> originalName : charMax50
+</span>
+							</li>
+							<li>
+<i class="fa fa-fw">
+</i><span class="selectable" id="e6"> originalId : charMax50
+</span>
+							</li>
+							<li>
+<i class="fa fa-fw">
+</i><span class="selectable" id="e7"> originalTimestamp : dateTime
+</span>
+							</li>
+							<li>
+<i class="fa fa-fw">
+</i><span class="selectable" id="e8"> languageCode : languageCode
+</span>
+							</li>
+							<li>
+<i class="fa fa-fw">
+</i><i class="fa fa-key fa-fw">
+</i><span class="selectable" id="e9"> userCode : charMax10
+</span>
+							</li>
+							<li>
+<i class="fa fa-fw">
+</i><span class="selectable" id="e10"> channelCode : channelCode
+</span>
+							</li>
+
+						</ul>
+
+					</li>
+					<li>
+<i class="fa fa-caret-down fa-fw" onclick="expand_or_collapse(this)">
+</i><i class="fa fa-key fa-fw">
+</i><span class="selectable" id="e11"> createAmortizableLoanIntermediateValidationStepRequest : createAmortizableLoanIntermediateValidationStepRequest
+</span>						<ul style="display:block">
+							<li>
+<i class="fa fa-caret-down fa-fw" onclick="expand_or_collapse(this)">
+</i><i class="fa fa-key fa-fw">
+</i><span class="selectable" id="e12"> amortizableLoanIdentifier : amortizableLoanDetailIdentifier
+</span>								<ul style="display:block">
+									<li>
+<i class="fa fa-fw">
+</i><i class="fa fa-key fa-fw">
+</i><span class="selectable" id="e13"> branchCode : char5
+</span>
+									</li>
+									<li>
+<i class="fa fa-fw">
+</i><i class="fa fa-key fa-fw">
+</i><span class="selectable" id="e14"> fileNumber : char6
+</span>
+									</li>
+									<li>
+<i class="fa fa-fw">
+</i><i class="fa fa-key fa-fw">
+</i><span class="selectable" id="e15"> orderNumber : char3
+</span>
+									</li>
+									<li>
+<i class="fa fa-fw">
+</i><i class="fa fa-key fa-fw">
+</i><span class="selectable" id="e16"> amendmentNumber : decimal2_0
+</span>
+									</li>
+
+								</ul>
+
+							</li>
+							<li>
+<i class="fa fa-fw">
+</i><i class="fa fa-key fa-fw">
+</i><span class="selectable" id="e17"> validationType : amortizableLoanFileStatus
+</span>
+							</li>
+							<li>
+<i class="fa fa-caret-down fa-fw" onclick="expand_or_collapse(this)">
+</i><span class="selectable" id="e18"> loanFileCommitmentCommission : dosprtCreateLoanFileCommitmentCommission
+</span>								<ul style="display:block">
+									<li>
+<i class="fa fa-fw">
+</i><span class="selectable" id="e19"> calculationDate : date
+</span>
+									</li>
+									<li>
+<i class="fa fa-fw">
+</i><span class="selectable" id="e20"> commissionRate : decimal8_6
+</span>
+									</li>
+
+								</ul>
+
+							</li>
+							<li>
+<i class="fa fa-fw">
+</i><span class="selectable" id="e21"> signatureDate : date
+</span>
+							</li>
+
+						</ul>
+
+					</li>
+
+				</ul>
+
+			</li>
+			<li>
+<i class="fa fa-caret-down fa-fw" onclick="expand_or_collapse(this)">
+</i>				AmortizableLoanIntermediateValidationStepResponse				<ul style="display:block">
+					<li>
+<i class="fa fa-caret-down fa-fw" onclick="expand_or_collapse(this)">
+</i><i class="fa fa-key fa-fw">
+</i><span class="selectable" id="e22"> responseHeader
+</span>						<ul style="display:block">
+							<li>
+<i class="fa fa-caret-down fa-fw" onclick="expand_or_collapse(this)">
+</i><i class="fa fa-key fa-fw">
+</i><span class="selectable" id="e23"> requestId1
+</span>								<ul style="display:block">
+									<li>
+<i class="fa fa-fw">
+</i><i class="fa fa-key fa-fw">
+</i><span class="selectable" id="e24"> requestId : charMax50
+</span>
+									</li>
+
+								</ul>
+
+							</li>
+							<li>
+<i class="fa fa-fw">
+</i><i class="fa fa-key fa-fw">
+</i><span class="selectable" id="e25"> responseId : charMax50
+</span>
+							</li>
+							<li>
+<i class="fa fa-fw">
+</i><i class="fa fa-key fa-fw">
+</i><span class="selectable" id="e26"> timestamp : dateTime
+</span>
+							</li>
+							<li>
+<i class="fa fa-fw">
+</i><i class="fa fa-key fa-fw">
+</i><span class="selectable" id="e27"> serviceVersion : charMax10
+</span>
+							</li>
+							<li>
+<i class="fa fa-caret-down fa-fw" onclick="expand_or_collapse(this)">
+</i><span class="selectable" id="e28"> language : language
+</span>								<ul style="display:block">
+									<li>
+<i class="fa fa-fw">
+</i><span class="selectable" id="e29"> code : char3
+</span>
+									</li>
+									<li>
+<i class="fa fa-fw">
+</i><span class="selectable" id="e30"> designation : charMax30
+</span>
+									</li>
+
+								</ul>
+
+							</li>
+
+						</ul>
+
+					</li>
+					<li>
+<i class="fa fa-caret-down fa-fw" onclick="expand_or_collapse(this)">
+</i><i class="fa fa-key fa-fw">
+</i><span class="selectable" id="e31"> responseStatus
+</span>						<ul style="display:block">
+							<li>
+<i class="fa fa-fw">
+</i><i class="fa fa-key fa-fw">
+</i><span class="selectable" id="e32"> statusCode : statusCodeType
+</span>
+							</li>
+							<li>
+<i class="fa fa-caret-down fa-fw" onclick="expand_or_collapse(this)">
+</i><span class="selectable" id="e33"> messages : responseStatusMessages
+</span>								<ul style="display:block">
+									<li>
+<i class="fa fa-caret-down fa-fw" onclick="expand_or_collapse(this)">
+</i><i class="fa fa-key fa-fw">
+</i><span style="font-weight:bold"> [M]
+</span><span class="selectable" id="e34"> message : responseStatusMessage
+</span>										<ul style="display:block">
+											<li>
+<i class="fa fa-fw">
+</i><i class="fa fa-key fa-fw">
+</i><span class="selectable" id="e35"> nature : responseMessageNature
+</span>
+											</li>
+											<li>
+<i class="fa fa-fw">
+</i><i class="fa fa-key fa-fw">
+</i><span class="selectable" id="e36"> code : char6
+</span>
+											</li>
+											<li>
+<i class="fa fa-fw">
+</i><i class="fa fa-key fa-fw">
+</i><span style="font-weight:bold"> [M]
+</span><span class="selectable" id="e37"> line : string
+</span>
+											</li>
+											<li>
+<i class="fa fa-caret-down fa-fw" onclick="expand_or_collapse(this)">
+</i><span class="selectable" id="e38"> errorInformation : errorInformation
+</span>												<ul style="display:block">
+													<li>
+<i class="fa fa-fw">
+</i><span class="selectable" id="e39"> errorCode : string
+</span>
+													</li>
+													<li>
+<i class="fa fa-fw">
+</i><span class="selectable" id="e40"> convertedCode : string
+</span>
+													</li>
+													<li>
+<i class="fa fa-fw">
+</i><span class="selectable" id="e41"> errorMessage : string
+</span>
+													</li>
+
+												</ul>
+
+											</li>
+
+										</ul>
+
+									</li>
+
+								</ul>
+
+							</li>
+
+						</ul>
+
+					</li>
+					<li>
+<i class="fa fa-caret-down fa-fw" onclick="expand_or_collapse(this)">
+</i><span class="selectable" id="e42"> createAmortizableLoanIntermediateValidationStepResponse : createAmortizableLoanIntermediateValidationStepResponse
+</span>						<ul style="display:block">
+							<li>
+<i class="fa fa-caret-down fa-fw" onclick="expand_or_collapse(this)">
+</i><span class="selectable" id="e43"> disapprovals : disapprovals
+</span>								<ul style="display:block">
+									<li>
+<i class="fa fa-caret-down fa-fw" onclick="expand_or_collapse(this)">
+</i><span style="font-weight:bold"> [M]
+</span><span class="selectable" id="e44"> disapproval : disapproval
+</span>										<ul style="display:block">
+											<li>
+<i class="fa fa-fw">
+</i><span class="selectable" id="e45"> code : disapprovalCode
+</span>
+											</li>
+											<li>
+<i class="fa fa-fw">
+</i><span class="selectable" id="e46"> designation : charMax30
+</span>
+											</li>
+
+										</ul>
+
+									</li>
+
+								</ul>
+
+							</li>
+
+						</ul>
+
+					</li>
+
+				</ul>
+
+			</li>
+
+		</ul>
+
+	</li>
+
+</ul>
+          </div>
+          
+          <div class="detail">
+				<p align="left">
+					Légende :<br />
+				</p>
+            <ul>
+               <li align="left">
+                  <i class="fa fa-key fa-fw">
+                  </i>
+                  = Elément obligatoire en saisie.
+               </li>
+               <li align="left">
+                  <span style="font-weight:bold"> [M]
+                  </span>
+                  = Elément multiple (0 à n occurrences).
+               </li>
+               <li align="left">
+                  <span style="font-weight:bold"> [C]
+                  </span>
+                  = Elément composé d'un choix à effectuer. Un seul choix autorisé.
+               </li>
+            </ul>
+            <p align="left">
+               Remarque : Un même élément peut regrouper plusieurs caractéristiques
+            </p>          
+          </div>
+          
+        </div>
+<div class="detail-column" id="d0" style="display:none">
+	<div class="detail">
+			<div class="mock-list">
+				<b>Nom : </b>requestHeader
+			</div>
+			<div class="mock-list">
+				<b>Description : </b>Elément à inclure en en-tête de chaque requête
+			</div>
+
+	</div>
+
+</div>
+<div class="detail-column" id="d1" style="display:none">
+	<div class="detail">
+			<div class="mock-list">
+				<b>Nom : </b>requestId1
+			</div>
+			<div class="mock-list">
+				<b>Description : </b>Identifiant de la requête.
+			</div>
+
+	</div>
+
+</div>
+<div class="detail-column" id="d2" style="display:none">
+	<div class="detail">
+			<div class="mock-list">
+				<b>Nom : </b>requestId
+			</div>
+			<div class="mock-list">
+				<b>Description : </b>Identifiant de requête et de réponse
+			</div>
+
+	</div>
+	<div class="detail">
+			<div class="mock-list">
+				<b>Nom : </b> <a href="../types/charMax50.html">charMax50</a>
+			</div>
+			<div class="mock-list">
+				<b> Description : </b>Chaîne composée d'au plus 50 caractères.
+			</div>
+			<div class="mock-list">
+				<b>Format : </b>string
+			</div>
+			<div class="mock-list">
+				<b>Longueur mini-maxi : </b>1 - 50
+			</div>
+
+	</div>
+
+</div>
+<div class="detail-column" id="d3" style="display:none">
+	<div class="detail">
+			<div class="mock-list">
+				<b>Nom : </b>serviceName
+			</div>
+			<div class="mock-list">
+				<b>Description : </b>Nom du service invoqué.
+			</div>
+
+	</div>
+	<div class="detail">
+			<div class="mock-list">
+				<b>Nom : </b> <a href="../types/charMax50.html">charMax50</a>
+			</div>
+			<div class="mock-list">
+				<b> Description : </b>Chaîne composée d'au plus 50 caractères.
+			</div>
+			<div class="mock-list">
+				<b>Format : </b>string
+			</div>
+			<div class="mock-list">
+				<b>Longueur mini-maxi : </b>1 - 50
+			</div>
+
+	</div>
+
+</div>
+<div class="detail-column" id="d4" style="display:none">
+	<div class="detail">
+			<div class="mock-list">
+				<b>Nom : </b>timestamp
+			</div>
+			<div class="mock-list">
+				<b>Description : </b>Date et heure de lancement du service.
+			</div>
+
+	</div>
+	<div class="detail">
+			<div class="mock-list">
+				<b>Nom : </b> <a href="../types/dateTime.html">dateTime</a>
+			</div>
+
+	</div>
+
+</div>
+<div class="detail-column" id="d5" style="display:none">
+	<div class="detail">
+			<div class="mock-list">
+				<b>Nom : </b>originalName
+			</div>
+			<div class="mock-list">
+				<b>Description : </b>Nom de l'application à l'origine de la requête.
+			</div>
+
+	</div>
+	<div class="detail">
+			<div class="mock-list">
+				<b>Nom : </b> <a href="../types/charMax50.html">charMax50</a>
+			</div>
+			<div class="mock-list">
+				<b> Description : </b>Chaîne composée d'au plus 50 caractères.
+			</div>
+			<div class="mock-list">
+				<b>Format : </b>string
+			</div>
+			<div class="mock-list">
+				<b>Longueur mini-maxi : </b>1 - 50
+			</div>
+
+	</div>
+
+</div>
+<div class="detail-column" id="d6" style="display:none">
+	<div class="detail">
+			<div class="mock-list">
+				<b>Nom : </b>originalId
+			</div>
+			<div class="mock-list">
+				<b>Description : </b>Identifiant de la requête d'origine (dans le cas où le service courant est appelé par un autre service).
+			</div>
+
+	</div>
+	<div class="detail">
+			<div class="mock-list">
+				<b>Nom : </b> <a href="../types/charMax50.html">charMax50</a>
+			</div>
+			<div class="mock-list">
+				<b> Description : </b>Chaîne composée d'au plus 50 caractères.
+			</div>
+			<div class="mock-list">
+				<b>Format : </b>string
+			</div>
+			<div class="mock-list">
+				<b>Longueur mini-maxi : </b>1 - 50
+			</div>
+
+	</div>
+
+</div>
+<div class="detail-column" id="d7" style="display:none">
+	<div class="detail">
+			<div class="mock-list">
+				<b>Nom : </b>originalTimestamp
+			</div>
+			<div class="mock-list">
+				<b>Description : </b>Date et heure de lancement du service d'origine (dans le cas où le service courant est appelé par un autre service).
+			</div>
+
+	</div>
+	<div class="detail">
+			<div class="mock-list">
+				<b>Nom : </b> <a href="../types/dateTime.html">dateTime</a>
+			</div>
+
+	</div>
+
+</div>
+<div class="detail-column" id="d8" style="display:none">
+	<div class="detail">
+			<div class="mock-list">
+				<b>Nom : </b>languageCode
+			</div>
+			<div class="mock-list">
+				<b>Description : </b>Code permettant de forcer la langue de restitution des informations pouvant être traduites (messages, libellés, nom d'un client ...).
+Le code langue doit exister en nomenclature 190. Si ce n'est pas le cas, il est ignoré.
+			</div>
+
+	</div>
+	<div class="detail">
+			<div class="mock-list">
+				<b>Nom : </b> <a href="../types/languageCode.html">languageCode</a>
+			</div>
+			<div class="mock-list">
+				<b> Description : </b>Code langue.
+			</div>
+			<div class="mock-list">
+				<b>Format : </b>string
+			</div>
+			<div class="mock-list">
+				<b>Longueur fixe : </b>3
+			</div>
+
+	</div>
+
+</div>
+<div class="detail-column" id="d9" style="display:none">
+	<div class="detail">
+			<div class="mock-list">
+				<b>Nom : </b>userCode
+			</div>
+			<div class="mock-list">
+				<b>Description : </b>Code utilisateur à considérer pour le traitement de la requête.
+			</div>
+
+	</div>
+	<div class="detail">
+			<div class="mock-list">
+				<b>Nom : </b> <a href="../types/charMax10.html">charMax10</a>
+			</div>
+			<div class="mock-list">
+				<b> Description : </b>Chaîne composée d'au plus 10 caractères.
+			</div>
+			<div class="mock-list">
+				<b>Format : </b>string
+			</div>
+			<div class="mock-list">
+				<b>Longueur mini-maxi : </b>1 - 10
+			</div>
+
+	</div>
+
+</div>
+<div class="detail-column" id="d10" style="display:none">
+	<div class="detail">
+			<div class="mock-list">
+				<b>Nom : </b>channelCode
+			</div>
+			<div class="mock-list">
+				<b>Description : </b>Code canal.
+Le canal est paramétré dans le programme de gestion des canaux.
+			</div>
+
+	</div>
+	<div class="detail">
+			<div class="mock-list">
+				<b>Nom : </b> <a href="../types/channelCode.html">channelCode</a>
+			</div>
+			<div class="mock-list">
+				<b> Description : </b>Code d'un canal.
+			</div>
+			<div class="mock-list">
+				<b>Format : </b>string
+			</div>
+			<div class="mock-list">
+				<b>Longueur mini-maxi : </b>0 - 6
+			</div>
+
+	</div>
+
+</div>
+<div class="detail-column" id="d11" style="display:none">
+	<div class="detail">
+			<div class="mock-list">
+				<b>Nom : </b>createAmortizableLoanIntermediateValidationStepRequest
+			</div>
+			<div class="mock-list">
+				<b>Description : </b>Requête de validation intermédiaire d'un crédit amortissable.
+			</div>
+
+	</div>
+	<div class="detail">
+			<div class="mock-list">
+				<b>Nom : </b> <a href="../types/createAmortizableLoanIntermediateValidationStepRequest.html">createAmortizableLoanIntermediateValidationStepRequest</a>
+			</div>
+			<div class="mock-list">
+				<b> Description : </b>Requête de validation intermédiaire d¿un crédit amortissable.
+			</div>
+
+	</div>
+
+</div>
+<div class="detail-column" id="d12" style="display:none">
+	<div class="detail">
+			<div class="mock-list">
+				<b>Nom : </b>amortizableLoanIdentifier
+			</div>
+			<div class="mock-list">
+				<b>Description : </b>Identifiant d¿un crédit amortissable.
+			</div>
+			<div class="mock-list">
+				<b>Commentaire : </b><p>L&#39;identifiant du dossier de cr&eacute;dit amortissable doit exister dans la table des dossiers de cr&eacute;dit amortissable.</p>
+
+<p>Si la gestion de l&rsquo;historisation du type de cr&eacute;dit amortissable est activ&eacute;e, alors une &eacute;tape de validation est ins&eacute;r&eacute;e dans la table des historiques des cr&eacute;dits.</p>
+
+<p>Si l&rsquo;&eacute;tape de validation banque est &agrave; comptabiliser, alors&nbsp;:</p>
+
+<ul>
+	<li>Un compte d&#39;engagement autoris&eacute; (de nature <strong>CDT002</strong>) est cr&eacute;&eacute; dans la table des comptes d&rsquo;un cr&eacute;dit.</li>
+	<li>Un &eacute;v&eacute;nement <strong>DECBQE</strong> est ajout&eacute; &agrave; la table des &eacute;v&eacute;nements.</li>
+</ul>
+
+<p>Si l&rsquo;&eacute;tape de validation client est &agrave; comptabiliser, alors&nbsp;:</p>
+
+<ul>
+	<li>Un compte d&#39;engagement disponible (de nature <strong>CDT003</strong>) est cr&eacute;&eacute; dans la table des comptes d&rsquo;un cr&eacute;dit, s&rsquo;il n&rsquo;a pas d&eacute;j&agrave; &eacute;t&eacute; cr&eacute;&eacute; lors de la cr&eacute;ation du dossier de cr&eacute;dit (compte cr&eacute;&eacute; si le code autorisation associ&eacute; au type de dossier de cr&eacute;dit est &quot;gestion d&#39;une autorisation au niveau du compte de nature <strong>CDT003</strong> (<strong>O</strong>)&quot; ou &quot;gestion d&#39;une autorisation au niveau des comptes de natures <strong>CDT003</strong> et <strong>CDT004</strong> (<strong>A</strong>)&quot;.</li>
+	<li>Un &eacute;v&eacute;nement <strong>DECCLI</strong> est ajout&eacute; &agrave; la table des &eacute;v&eacute;nements.</li>
+</ul>
+
+<p>Dans le cas de la banque ATTIJARI (existence du param&egrave;tre <strong>ABT</strong> en nomenclature <strong>098</strong>), alors les assurances vie ou habitation sont obligatoires.</p>
+
+<p>Le nombre de cautions / co-emprunteurs renseign&eacute;s sur le dossier doit obligatoirement correspondre au nombre de cautions / co-emprunteurs enregistr&eacute;s dans la table des intervenants sur les dossiers.</p>
+
+<p>Le dossier de cr&eacute;dit ne doit pas poss&eacute;der de d&eacute;saccord bloquant sur le compte de remboursement.</p>
+
+			</div>
+
+	</div>
+	<div class="detail">
+			<div class="mock-list">
+				<b>Nom : </b> <a href="../types/amortizableLoanDetailIdentifier.html">amortizableLoanDetailIdentifier</a>
+			</div>
+			<div class="mock-list">
+				<b> Description : </b>Identifiant d'un crédit amortissable.
+			</div>
+
+	</div>
+
+</div>
+<div class="detail-column" id="d13" style="display:none">
+	<div class="detail">
+			<div class="mock-list">
+				<b>Nom : </b>branchCode
+			</div>
+			<div class="mock-list">
+				<b>Description : </b>Code agence.
+			</div>
+			<div class="mock-list">
+				<b>Commentaire : </b><p>Le code agence doit exister en nomenclature <strong>001</strong>.</p>
+
+			</div>
+
+	</div>
+	<div class="detail">
+			<div class="mock-list">
+				<b>Nom : </b> <a href="../types/char5.html">char5</a>
+			</div>
+			<div class="mock-list">
+				<b> Description : </b>Type avec un nombre de caractères égal à 5.
+			</div>
+			<div class="mock-list">
+				<b>Format : </b>string
+			</div>
+			<div class="mock-list">
+				<b>Longueur fixe : </b>5
+			</div>
+
+	</div>
+
+</div>
+<div class="detail-column" id="d14" style="display:none">
+	<div class="detail">
+			<div class="mock-list">
+				<b>Nom : </b>fileNumber
+			</div>
+			<div class="mock-list">
+				<b>Description : </b>Numéro de dossier.
+			</div>
+
+	</div>
+	<div class="detail">
+			<div class="mock-list">
+				<b>Nom : </b> <a href="../types/char6.html">char6</a>
+			</div>
+			<div class="mock-list">
+				<b> Description : </b>Type avec un nombre de caractères égal à 6.
+			</div>
+			<div class="mock-list">
+				<b>Format : </b>string
+			</div>
+			<div class="mock-list">
+				<b>Longueur fixe : </b>6
+			</div>
+
+	</div>
+
+</div>
+<div class="detail-column" id="d15" style="display:none">
+	<div class="detail">
+			<div class="mock-list">
+				<b>Nom : </b>orderNumber
+			</div>
+			<div class="mock-list">
+				<b>Description : </b>Numéro d'ordre.
+			</div>
+			<div class="mock-list">
+				<b>Commentaire : </b><p>Le num&eacute;ro d&rsquo;ordre doit &ecirc;tre renseign&eacute; &agrave; <strong>3 espaces</strong> dans le cas d&rsquo;un dossier initial (avant ren&eacute;gociation).</p>
+
+			</div>
+
+	</div>
+	<div class="detail">
+			<div class="mock-list">
+				<b>Nom : </b> <a href="../types/char3.html">char3</a>
+			</div>
+			<div class="mock-list">
+				<b> Description : </b>Type avec un nombre de caractères égal à 3.
+			</div>
+			<div class="mock-list">
+				<b>Format : </b>string
+			</div>
+			<div class="mock-list">
+				<b>Longueur fixe : </b>3
+			</div>
+
+	</div>
+
+</div>
+<div class="detail-column" id="d16" style="display:none">
+	<div class="detail">
+			<div class="mock-list">
+				<b>Nom : </b>amendmentNumber
+			</div>
+			<div class="mock-list">
+				<b>Description : </b>Numéro d'avenant.
+			</div>
+
+	</div>
+	<div class="detail">
+			<div class="mock-list">
+				<b>Nom : </b> <a href="../types/decimal2_0.html">decimal2_0</a>
+			</div>
+			<div class="mock-list">
+				<b> Description : </b>Type décimal à 2 chiffres dont 0 décimales.
+			</div>
+			<div class="mock-list">
+				<b>Format : </b>decimal
+			</div>
+			<div class="mock-list">
+				<b>Nombre total de chiffres : </b>2
+			</div>
+
+	</div>
+
+</div>
+<div class="detail-column" id="d17" style="display:none">
+	<div class="detail">
+			<div class="mock-list">
+				<b>Nom : </b>validationType
+			</div>
+			<div class="mock-list">
+				<b>Description : </b>Type de validation.
+			</div>
+			<div class="mock-list">
+				<b>Commentaire : </b><p>Le changement de type de validation n&rsquo;est autoris&eacute; que si le dossier est &agrave; l&rsquo;&eacute;tat Dossier en cours d&rsquo;&eacute;tude (<strong>SI</strong>) ou &agrave; l&rsquo;&eacute;tat Dossier valid&eacute; par la banque (<strong>VB</strong>).</p>
+
+<p>Si le dossier est en cours d&rsquo;&eacute;tude (<strong>SI</strong>), alors&nbsp;:</p>
+
+<ul>
+	<li>Le type de validation ne peut &ecirc;tre que Dossier valid&eacute; par la banque (<strong>VB</strong>) si la validation banque est demand&eacute;e pour le type de dossier de cr&eacute;dit.</li>
+	<li>Le changement du type de validation ne sera autoris&eacute; que si le dossier est complet (code traitement &agrave; <strong>1</strong>).</li>
+</ul>
+
+<p>Si le dossier est &agrave; l&rsquo;&eacute;tat Dossier valid&eacute; par la Banque (<strong>VB</strong>), alors&nbsp;:</p>
+
+<ul>
+	<li>Le type de validation ne peut &ecirc;tre que Dossier valid&eacute; par le client (<strong>VC</strong>) si la validation client est demand&eacute;e pour le type de dossier de cr&eacute;dit.</li>
+	<li>Le changement de type de validation ne sera autoris&eacute; que si le dossier est accept&eacute; par la banque (code traitement &agrave; <strong>1</strong>).</li>
+</ul>
+
+<p>Si le type de validation demand&eacute; est validation banque (<strong>VB</strong>) et que la banque poss&egrave;de une interface AIC (pr&eacute;sence du param&egrave;tre <strong>INTERFAIC</strong> en nomenclature <strong>098</strong>) alors les documents issus de l&rsquo;interface AIC sont obligatoires si la condition <strong>CDTAIC</strong> demande ce contr&ocirc;le.</p>
+
+<p>Si les documents sont g&eacute;r&eacute;s au niveau du type de pr&ecirc;t, alors tous les documents obligatoires doivent &ecirc;tre fournis</p>
+
+			</div>
+
+	</div>
+	<div class="detail">
+			<div class="mock-list">
+				<b>Nom : </b> <a href="../types/amortizableLoanFileStatus.html">amortizableLoanFileStatus</a>
+			</div>
+			<div class="mock-list">
+				<b> Description : </b>Etat d'un dossier de crédit.
+			</div>
+			<div class="mock-list">
+				<b>Format : </b>string
+			</div>
+			<div class="mock-list">
+				<b>Valeurs possibles : </b>					<table class="table_enum" class="table_enum" class="table_enum" class="table_enum" class="table_enum" class="table_enum" class="table_enum">
+						<tr>
+						<td> DE
+						</td>						<td class="td_right"> Déchéance du terme
+						</td>
+						</tr>
+						<tr>
+						<td> VD
+						</td>						<td class="td_right"> Dossier en validation intermédiaire
+						</td>
+						</tr>
+						<tr>
+						<td> SI
+						</td>						<td class="td_right"> Dossier en cours d'étude
+						</td>
+						</tr>
+						<tr>
+						<td> VA
+						</td>						<td class="td_right"> Dossier validé
+						</td>
+						</tr>
+						<tr>
+						<td> VB
+						</td>						<td class="td_right"> Dossier validé/rejeté par la banque
+						</td>
+						</tr>
+						<tr>
+						<td> VC
+						</td>						<td class="td_right"> Dossier validé/rejeté par le client
+						</td>
+						</tr>
+						<tr>
+						<td> TR
+						</td>						<td class="td_right"> Dossier transféré
+						</td>
+						</tr>
+
+					</table>
+
+			</div>
+
+	</div>
+
+</div>
+<div class="detail-column" id="d18" style="display:none">
+	<div class="detail">
+			<div class="mock-list">
+				<b>Nom : </b>loanFileCommitmentCommission
+			</div>
+			<div class="mock-list">
+				<b>Description : </b>Commission d'engagement.
+			</div>
+
+	</div>
+	<div class="detail">
+			<div class="mock-list">
+				<b>Nom : </b> <a href="../types/dosprtCreateLoanFileCommitmentCommission.html">dosprtCreateLoanFileCommitmentCommission</a>
+			</div>
+			<div class="mock-list">
+				<b> Description : </b>Commission d'engagement.
+			</div>
+
+	</div>
+
+</div>
+<div class="detail-column" id="d19" style="display:none">
+	<div class="detail">
+			<div class="mock-list">
+				<b>Nom : </b>calculationDate
+			</div>
+			<div class="mock-list">
+				<b>Description : </b>Date de début de calcul.
+			</div>
+			<div class="mock-list">
+				<b>Commentaire : </b><p>La date doit &ecirc;tre sup&eacute;rieure ou &eacute;gale &agrave; la date de mise en place du dossier.</p>
+
+<p>La date doit &ecirc;tre inf&eacute;rieure ou &eacute;gale &agrave; la date de derni&egrave;re &eacute;ch&eacute;ance du dossier.</p>
+
+			</div>
+
+	</div>
+	<div class="detail">
+			<div class="mock-list">
+				<b>Nom : </b> <a href="../types/date.html">date</a>
+			</div>
+
+	</div>
+
+</div>
+<div class="detail-column" id="d20" style="display:none">
+	<div class="detail">
+			<div class="mock-list">
+				<b>Nom : </b>commissionRate
+			</div>
+			<div class="mock-list">
+				<b>Description : </b>Taux de la commission d'engagement.
+			</div>
+			<div class="mock-list">
+				<b>Commentaire : </b><p>Par d&eacute;faut, le taux de la commission d&rsquo;engagement est affect&eacute;e avec le taux de&nbsp; la condition <strong>MOEPRT</strong> pour le code op&eacute;ration enregistr&eacute; au niveau du type de pr&ecirc;t.</p>
+
+<p>Les bornes minimale et maximale de la condition doivent &ecirc;tre respect&eacute;es.</p>
+
+<p>Si la commission est taxable et que le client de remboursement est&nbsp; taxable, alors le taux de cette taxe est affect&eacute; avec le taux de&nbsp; la condition <strong>TTAXEN</strong>.</p>
+
+			</div>
+
+	</div>
+	<div class="detail">
+			<div class="mock-list">
+				<b>Nom : </b> <a href="../types/decimal8_6.html">decimal8_6</a>
+			</div>
+			<div class="mock-list">
+				<b> Description : </b>Type décimal à 8 chiffres dont 6 décimales.
+			</div>
+			<div class="mock-list">
+				<b>Format : </b>decimal
+			</div>
+			<div class="mock-list">
+				<b>Nombre total de chiffres : </b>8
+			</div>
+
+	</div>
+
+</div>
+<div class="detail-column" id="d21" style="display:none">
+	<div class="detail">
+			<div class="mock-list">
+				<b>Nom : </b>signatureDate
+			</div>
+			<div class="mock-list">
+				<b>Description : </b>Date de signature.
+			</div>
+
+	</div>
+	<div class="detail">
+			<div class="mock-list">
+				<b>Nom : </b> <a href="../types/date.html">date</a>
+			</div>
+
+	</div>
+
+</div>
+<div class="detail-column" id="d22" style="display:none">
+	<div class="detail">
+			<div class="mock-list">
+				<b>Nom : </b>responseHeader
+			</div>
+			<div class="mock-list">
+				<b>Description : </b>Elément à inclure en en-tête de chaque réponse
+			</div>
+
+	</div>
+
+</div>
+<div class="detail-column" id="d23" style="display:none">
+	<div class="detail">
+			<div class="mock-list">
+				<b>Nom : </b>requestId1
+			</div>
+			<div class="mock-list">
+				<b>Description : </b>Identifiant de la requête.
+			</div>
+
+	</div>
+
+</div>
+<div class="detail-column" id="d24" style="display:none">
+	<div class="detail">
+			<div class="mock-list">
+				<b>Nom : </b>requestId
+			</div>
+			<div class="mock-list">
+				<b>Description : </b>Identifiant de requête et de réponse
+			</div>
+
+	</div>
+	<div class="detail">
+			<div class="mock-list">
+				<b>Nom : </b> <a href="../types/charMax50.html">charMax50</a>
+			</div>
+			<div class="mock-list">
+				<b> Description : </b>Chaîne composée d'au plus 50 caractères.
+			</div>
+			<div class="mock-list">
+				<b>Format : </b>string
+			</div>
+			<div class="mock-list">
+				<b>Longueur mini-maxi : </b>1 - 50
+			</div>
+
+	</div>
+
+</div>
+<div class="detail-column" id="d25" style="display:none">
+	<div class="detail">
+			<div class="mock-list">
+				<b>Nom : </b>responseId
+			</div>
+			<div class="mock-list">
+				<b>Description : </b>Identifiant de la réponse.
+			</div>
+
+	</div>
+	<div class="detail">
+			<div class="mock-list">
+				<b>Nom : </b> <a href="../types/charMax50.html">charMax50</a>
+			</div>
+			<div class="mock-list">
+				<b> Description : </b>Chaîne composée d'au plus 50 caractères.
+			</div>
+			<div class="mock-list">
+				<b>Format : </b>string
+			</div>
+			<div class="mock-list">
+				<b>Longueur mini-maxi : </b>1 - 50
+			</div>
+
+	</div>
+
+</div>
+<div class="detail-column" id="d26" style="display:none">
+	<div class="detail">
+			<div class="mock-list">
+				<b>Nom : </b>timestamp
+			</div>
+			<div class="mock-list">
+				<b>Description : </b>Date et heure de la réponse.
+			</div>
+
+	</div>
+	<div class="detail">
+			<div class="mock-list">
+				<b>Nom : </b> <a href="../types/dateTime.html">dateTime</a>
+			</div>
+
+	</div>
+
+</div>
+<div class="detail-column" id="d27" style="display:none">
+	<div class="detail">
+			<div class="mock-list">
+				<b>Nom : </b>serviceVersion
+			</div>
+			<div class="mock-list">
+				<b>Description : </b>Version du service invoqué.
+			</div>
+
+	</div>
+	<div class="detail">
+			<div class="mock-list">
+				<b>Nom : </b> <a href="../types/charMax10.html">charMax10</a>
+			</div>
+			<div class="mock-list">
+				<b> Description : </b>Chaîne composée d'au plus 10 caractères.
+			</div>
+			<div class="mock-list">
+				<b>Format : </b>string
+			</div>
+			<div class="mock-list">
+				<b>Longueur mini-maxi : </b>1 - 10
+			</div>
+
+	</div>
+
+</div>
+<div class="detail-column" id="d28" style="display:none">
+	<div class="detail">
+			<div class="mock-list">
+				<b>Nom : </b>language
+			</div>
+			<div class="mock-list">
+				<b>Description : </b>Langue considérée pour la restitution des informations.
+			</div>
+
+	</div>
+	<div class="detail">
+			<div class="mock-list">
+				<b>Nom : </b> <a href="../types/language.html">language</a>
+			</div>
+			<div class="mock-list">
+				<b> Description : </b>Langue.
+			</div>
+
+	</div>
+
+</div>
+<div class="detail-column" id="d29" style="display:none">
+	<div class="detail">
+			<div class="mock-list">
+				<b>Nom : </b>code
+			</div>
+			<div class="mock-list">
+				<b>Description : </b>Code langue.
+			</div>
+
+	</div>
+	<div class="detail">
+			<div class="mock-list">
+				<b>Nom : </b> <a href="../types/char3.html">char3</a>
+			</div>
+			<div class="mock-list">
+				<b> Description : </b>Type avec un nombre de caractères égal à 3.
+			</div>
+			<div class="mock-list">
+				<b>Format : </b>string
+			</div>
+			<div class="mock-list">
+				<b>Longueur fixe : </b>3
+			</div>
+
+	</div>
+
+</div>
+<div class="detail-column" id="d30" style="display:none">
+	<div class="detail">
+			<div class="mock-list">
+				<b>Nom : </b>designation
+			</div>
+			<div class="mock-list">
+				<b>Description : </b>Intitulé de la langue.
+			</div>
+
+	</div>
+	<div class="detail">
+			<div class="mock-list">
+				<b>Nom : </b> <a href="../types/charMax30.html">charMax30</a>
+			</div>
+			<div class="mock-list">
+				<b> Description : </b>Chaîne composée d'au plus 30 caractères.
+			</div>
+			<div class="mock-list">
+				<b>Format : </b>string
+			</div>
+			<div class="mock-list">
+				<b>Longueur mini-maxi : </b>1 - 30
+			</div>
+
+	</div>
+
+</div>
+<div class="detail-column" id="d31" style="display:none">
+	<div class="detail">
+			<div class="mock-list">
+				<b>Nom : </b>responseStatus
+			</div>
+			<div class="mock-list">
+				<b>Description : </b>Element de réponse à inclure dans chaque réponse
+			</div>
+
+	</div>
+
+</div>
+<div class="detail-column" id="d32" style="display:none">
+	<div class="detail">
+			<div class="mock-list">
+				<b>Nom : </b>statusCode
+			</div>
+
+	</div>
+	<div class="detail">
+			<div class="mock-list">
+				<b>Nom : </b> <a href="../types/statusCodeType.html">statusCodeType</a>
+			</div>
+			<div class="mock-list">
+				<b>Format : </b>string
+			</div>
+			<div class="mock-list">
+				<b>Valeurs possibles : </b>					<table class="table_enum" class="table_enum" class="table_enum">
+						<tr>
+						<td> -1
+						</td>						<td class="td_right"> Traitement en erreur
+						</td>
+						</tr>
+						<tr>
+						<td> 0
+						</td>						<td class="td_right"> Traitement correct
+						</td>
+						</tr>
+						<tr>
+						<td> 1
+						</td>						<td class="td_right"> Traitement correct avec avertissement
+						</td>
+						</tr>
+
+					</table>
+
+			</div>
+
+	</div>
+
+</div>
+<div class="detail-column" id="d33" style="display:none">
+	<div class="detail">
+			<div class="mock-list">
+				<b>Nom : </b>messages
+			</div>
+
+	</div>
+	<div class="detail">
+			<div class="mock-list">
+				<b>Nom : </b> <a href="../types/responseStatusMessages.html">responseStatusMessages</a>
+			</div>
+
+	</div>
+
+</div>
+<div class="detail-column" id="d34" style="display:none">
+	<div class="detail">
+			<div class="mock-list">
+				<b>Nom : </b>message
+			</div>
+			<div class="mock-list">
+				<b>Limite du nombre d'occurences mini-maxi : </b>0 aucune
+			</div>
+
+	</div>
+	<div class="detail">
+			<div class="mock-list">
+				<b>Nom : </b> <a href="../types/responseStatusMessage.html">responseStatusMessage</a>
+			</div>
+
+	</div>
+
+</div>
+<div class="detail-column" id="d35" style="display:none">
+	<div class="detail">
+			<div class="mock-list">
+				<b>Nom : </b>nature
+			</div>
+
+	</div>
+	<div class="detail">
+			<div class="mock-list">
+				<b>Nom : </b> <a href="../types/responseMessageNature.html">responseMessageNature</a>
+			</div>
+			<div class="mock-list">
+				<b>Format : </b>string
+			</div>
+			<div class="mock-list">
+				<b>Valeurs possibles : </b>					<table class="table_enum" class="table_enum" class="table_enum">
+						<tr>
+						<td> WARNING
+						</td>						<td class="td_right"> Avertissement
+						</td>
+						</tr>
+						<tr>
+						<td> INFO
+						</td>						<td class="td_right"> Information
+						</td>
+						</tr>
+						<tr>
+						<td> ERROR
+						</td>						<td class="td_right"> Erreur
+						</td>
+						</tr>
+
+					</table>
+
+			</div>
+
+	</div>
+
+</div>
+<div class="detail-column" id="d36" style="display:none">
+	<div class="detail">
+			<div class="mock-list">
+				<b>Nom : </b>code
+			</div>
+			<div class="mock-list">
+				<b>Description : </b>Code du message restitué dans la réponse.
+			</div>
+
+	</div>
+	<div class="detail">
+			<div class="mock-list">
+				<b>Nom : </b> <a href="../types/char6.html">char6</a>
+			</div>
+			<div class="mock-list">
+				<b> Description : </b>Type avec un nombre de caractères égal à 6.
+			</div>
+			<div class="mock-list">
+				<b>Format : </b>string
+			</div>
+			<div class="mock-list">
+				<b>Longueur fixe : </b>6
+			</div>
+
+	</div>
+
+</div>
+<div class="detail-column" id="d37" style="display:none">
+	<div class="detail">
+			<div class="mock-list">
+				<b>Nom : </b>line
+			</div>
+			<div class="mock-list">
+				<b>Limite du nombre d'occurences mini-maxi : </b>0 aucune
+			</div>
+
+	</div>
+	<div class="detail">
+			<div class="mock-list">
+				<b>Nom : </b> <a href="../types/string.html">string</a>
+			</div>
+
+	</div>
+
+</div>
+<div class="detail-column" id="d38" style="display:none">
+	<div class="detail">
+			<div class="mock-list">
+				<b>Nom : </b>errorInformation
+			</div>
+			<div class="mock-list">
+				<b>Description : </b>Informations sur l'erreur rencontrée.
+			</div>
+
+	</div>
+	<div class="detail">
+			<div class="mock-list">
+				<b>Nom : </b> <a href="../types/errorInformation.html">errorInformation</a>
+			</div>
+			<div class="mock-list">
+				<b> Description : </b>Informations sur l'erreur rencontrée, ne sont présentes que pour les messages d'erreur (nature = "ERROR").
+			</div>
+
+	</div>
+
+</div>
+<div class="detail-column" id="d39" style="display:none">
+	<div class="detail">
+			<div class="mock-list">
+				<b>Nom : </b>errorCode
+			</div>
+			<div class="mock-list">
+				<b>Description : </b>Code original de l'erreur, provenant du SGBD (Informix, Oracle) ou de Genero.
+			</div>
+			<div class="mock-list">
+				<b>Commentaire : </b><p>Ce code correspond au code de l&#39;erreur technique retourn&eacute;e par le test de connexion.</p>
+
+			</div>
+
+	</div>
+	<div class="detail">
+			<div class="mock-list">
+				<b>Nom : </b> <a href="../types/string.html">string</a>
+			</div>
+
+	</div>
+
+</div>
+<div class="detail-column" id="d40" style="display:none">
+	<div class="detail">
+			<div class="mock-list">
+				<b>Nom : </b>convertedCode
+			</div>
+			<div class="mock-list">
+				<b>Description : </b>Code de l'erreur converti pour homogénéiser les codes erreurs entre les SGBD Informix et Oracle.
+			</div>
+
+	</div>
+	<div class="detail">
+			<div class="mock-list">
+				<b>Nom : </b> <a href="../types/string.html">string</a>
+			</div>
+
+	</div>
+
+</div>
+<div class="detail-column" id="d41" style="display:none">
+	<div class="detail">
+			<div class="mock-list">
+				<b>Nom : </b>errorMessage
+			</div>
+			<div class="mock-list">
+				<b>Description : </b>Message de l'erreur originale provenant du SGBD ou de Genero.
+			</div>
+
+	</div>
+	<div class="detail">
+			<div class="mock-list">
+				<b>Nom : </b> <a href="../types/string.html">string</a>
+			</div>
+
+	</div>
+
+</div>
+<div class="detail-column" id="d42" style="display:none">
+	<div class="detail">
+			<div class="mock-list">
+				<b>Nom : </b>createAmortizableLoanIntermediateValidationStepResponse
+			</div>
+			<div class="mock-list">
+				<b>Description : </b>Réponse du service.
+			</div>
+
+	</div>
+	<div class="detail">
+			<div class="mock-list">
+				<b>Nom : </b> <a href="../types/createAmortizableLoanIntermediateValidationStepResponse.html">createAmortizableLoanIntermediateValidationStepResponse</a>
+			</div>
+			<div class="mock-list">
+				<b> Description : </b>Réponse de la validation intermédiaire d¿un crédit amortissable.
+			</div>
+
+	</div>
+
+</div>
+<div class="detail-column" id="d43" style="display:none">
+	<div class="detail">
+			<div class="mock-list">
+				<b>Nom : </b>disapprovals
+			</div>
+			<div class="mock-list">
+				<b>Description : </b>Désaccords rencontrés sur le compte de remboursement.
+			</div>
+
+	</div>
+	<div class="detail">
+			<div class="mock-list">
+				<b>Nom : </b> <a href="../types/disapprovals.html">disapprovals</a>
+			</div>
+			<div class="mock-list">
+				<b> Description : </b>Désaccords.
+			</div>
+
+	</div>
+
+</div>
+<div class="detail-column" id="d44" style="display:none">
+	<div class="detail">
+			<div class="mock-list">
+				<b>Nom : </b>disapproval
+			</div>
+			<div class="mock-list">
+				<b>Description : </b>Désaccord.
+			</div>
+			<div class="mock-list">
+				<b>Limite du nombre d'occurences mini-maxi : </b>aucune aucune
+			</div>
+
+	</div>
+	<div class="detail">
+			<div class="mock-list">
+				<b>Nom : </b> <a href="../types/disapproval.html">disapproval</a>
+			</div>
+			<div class="mock-list">
+				<b> Description : </b>Désaccord.
+			</div>
+
+	</div>
+
+</div>
+<div class="detail-column" id="d45" style="display:none">
+	<div class="detail">
+			<div class="mock-list">
+				<b>Nom : </b>code
+			</div>
+			<div class="mock-list">
+				<b>Description : </b>Code du désaccord.
+			</div>
+
+	</div>
+	<div class="detail">
+			<div class="mock-list">
+				<b>Nom : </b> <a href="../types/disapprovalCode.html">disapprovalCode</a>
+			</div>
+			<div class="mock-list">
+				<b> Description : </b>Code du désaccord.
+			</div>
+			<div class="mock-list">
+				<b>Format : </b>string
+			</div>
+			<div class="mock-list">
+				<b>Longueur mini-maxi : </b>1 - 4
+			</div>
+
+	</div>
+
+</div>
+<div class="detail-column" id="d46" style="display:none">
+	<div class="detail">
+			<div class="mock-list">
+				<b>Nom : </b>designation
+			</div>
+			<div class="mock-list">
+				<b>Description : </b>Désignation du désaccord.
+			</div>
+			<div class="mock-list">
+				<b>Commentaire : </b>bknom(058).lib
+			</div>
+
+	</div>
+	<div class="detail">
+			<div class="mock-list">
+				<b>Nom : </b> <a href="../types/charMax30.html">charMax30</a>
+			</div>
+			<div class="mock-list">
+				<b> Description : </b>Chaîne composée d'au plus 30 caractères.
+			</div>
+			<div class="mock-list">
+				<b>Format : </b>string
+			</div>
+			<div class="mock-list">
+				<b>Longueur mini-maxi : </b>1 - 30
+			</div>
+
+	</div>
+
+</div>
+     </div> 
+  </div>
+  </div>
+
+  
+  <script src="../resources/jquery.js"></script>
+  <script src="../resources/doc.js"></script>
+</body>
+</html>

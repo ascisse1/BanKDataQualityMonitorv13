@@ -1,0 +1,514 @@
+<!DOCTYPE html >
+<html>
+<head>
+	<link rel="stylesheet" href="../resources/styleDocu.css" />
+  <link rel="stylesheet" href="../resources/font-awesome/css/font-awesome.min.css" />
+	<title>Documentation Xsd</title>
+	<meta charset="UTF-8" />
+</head>
+
+<body>
+  <div class="document">
+	<div class="header">
+		
+	</div>
+
+  <div class="tabs">
+    <div class="tabs-wrapper" onclick="window.open('../liste-ressources.html', '_self');">
+      <div class="tabs-left-content">
+        Liste des ressources
+      </div>
+    </div>
+    <div class="tabs-wrapper" onclick="window.open('../liste-services.html', '_self');">
+      <div class="tabs-left-content" >
+        Liste des services  
+      </div>
+    </div>
+    <div class="tabs-wrapper-selected" onclick="window.open('../liste-types.html', '_self');">
+      <div class="tabs-right-content">
+        Liste des types
+      </div>
+    </div>
+  </div>
+
+	
+
+	<div class="contenu">
+      <div class="breadcrumb"> 
+        <ul class="breadcrumb">
+           <li> <a href="../index.html"> Accueil </a></li>
+           <li> > </li>
+           <li> <a href="../liste-types.html"> Liste des types </a></li>
+           <li> > </li>
+           <li> loanInstructionStepDecisionInformation </li>
+        </ul>                    
+      </div>                    
+      
+     
+      <div class="summary">
+			<div class="mock-list">
+				<b>Nom : </b>loanInstructionStepDecisionInformation
+			</div>
+			<div class="mock-list">
+				<b> Description : </b>Informations sur les décisions d'une étape de dossier IDC.
+			</div>
+        
+        <div> </div>
+        <div class="mock-list"> Choix : Non</div>
+        
+      </div>
+                        
+      <div class="column-content">
+        <div class="detail-column">
+          <div class="tree"> 
+<ul>
+	<li>
+<i class="fa fa-caret-down fa-fw" onclick="expand_or_collapse(this)">
+</i>		loanInstructionStepDecisionInformation		<ul style="display:block">
+			<li>
+<i class="fa fa-fw">
+</i><i class="fa fa-key fa-fw">
+</i><span class="selectable" id="e0"> possibleDecision : loanInstructionPossibleDecision
+</span>
+			</li>
+			<li>
+<i class="fa fa-fw">
+</i><span class="selectable" id="e1"> decisionNumber : decimal1_0
+</span>
+			</li>
+			<li>
+<i class="fa fa-caret-down fa-fw" onclick="expand_or_collapse(this)">
+</i><span class="selectable" id="e2"> decisionLevels : loanInstructionDecisionLevelDetails
+</span>				<ul style="display:block">
+					<li>
+<i class="fa fa-caret-down fa-fw" onclick="expand_or_collapse(this)">
+</i><span style="font-weight:bold"> [M]
+</span><span class="selectable" id="e3"> loanInstructionDecisionLevelDetail : loanInstructionDecisionLevelDetail
+</span>						<ul style="display:block">
+							<li>
+<i class="fa fa-fw">
+</i><i class="fa fa-key fa-fw">
+</i><span class="selectable" id="e4"> decisionLevel : decimal2_0
+</span>
+							</li>
+							<li>
+<i class="fa fa-fw">
+</i><i class="fa fa-key fa-fw">
+</i><span class="selectable" id="e5"> designation : charMax255
+</span>
+							</li>
+							<li>
+<i class="fa fa-fw">
+</i><i class="fa fa-key fa-fw">
+</i><span class="selectable" id="e6"> decisionMode : loanInstructionDecisionMode
+</span>
+							</li>
+							<li>
+<i class="fa fa-caret-down fa-fw" onclick="expand_or_collapse(this)">
+</i><span class="selectable" id="e7"> authorizedRolesToProcess : loanInstructionAuthorizedRolesToProcessDecision
+</span>								<ul style="display:block">
+									<li>
+<i class="fa fa-caret-down fa-fw" onclick="expand_or_collapse(this)">
+</i><span style="font-weight:bold"> [M]
+</span><span class="selectable" id="e8"> authorizedRoleToProcess : loanInstructionAuthorizedRoleToProcessDecision
+</span>										<ul style="display:block">
+											<li>
+<i class="fa fa-fw">
+</i><i class="fa fa-key fa-fw">
+</i><span class="selectable" id="e9"> authorizedRoleCode : char10
+</span>
+											</li>
+											<li>
+<i class="fa fa-fw">
+</i><i class="fa fa-key fa-fw">
+</i><span class="selectable" id="e10"> authorizedRoleDesignation : charMax30
+</span>
+											</li>
+
+										</ul>
+
+									</li>
+
+								</ul>
+
+							</li>
+
+						</ul>
+
+					</li>
+
+				</ul>
+
+			</li>
+
+		</ul>
+
+	</li>
+
+</ul>
+          </div>
+          
+          <div class="detail">
+				<p align="left">
+					Légende :<br />
+				</p>
+            <ul>
+               <li align="left">
+                  <i class="fa fa-key fa-fw">
+                  </i>
+                  = Elément obligatoire en saisie.
+               </li>
+               <li align="left">
+                  <span style="font-weight:bold"> [M]
+                  </span>
+                  = Elément multiple (0 à n occurrences).
+               </li>
+               <li align="left">
+                  <span style="font-weight:bold"> [C]
+                  </span>
+                  = Elément composé d'un choix à effectuer. Un seul choix autorisé.
+               </li>
+            </ul>
+            <p align="left">
+               Remarque : Un même élément peut regrouper plusieurs caractéristiques
+            </p>          
+          </div>
+          
+        </div>
+<div class="detail-column" id="d0" style="display:none">
+	<div class="detail">
+			<div class="mock-list">
+				<b>Nom : </b>possibleDecision
+			</div>
+			<div class="mock-list">
+				<b>Description : </b>Décision possible.
+			</div>
+
+	</div>
+	<div class="detail">
+			<div class="mock-list">
+				<b>Nom : </b> <a href="../types/loanInstructionPossibleDecision.html">loanInstructionPossibleDecision</a>
+			</div>
+			<div class="mock-list">
+				<b> Description : </b>Décision possible sur l'étape d'un dossier IDC.
+			</div>
+			<div class="mock-list">
+				<b>Format : </b>string
+			</div>
+			<div class="mock-list">
+				<b>Valeurs possibles : </b>					<table class="table_enum" class="table_enum" class="table_enum" class="table_enum" class="table_enum" class="table_enum">
+						<tr>
+						<td> C
+						</td>						<td class="td_right"> Décision avec condition
+						</td>
+						</tr>
+						<tr>
+						<td> D
+						</td>						<td class="td_right"> Décision
+						</td>
+						</tr>
+						<tr>
+						<td> E
+						</td>						<td class="td_right"> Acquittement par application externe
+						</td>
+						</tr>
+						<tr>
+						<td> F
+						</td>						<td class="td_right"> Décision par application externe
+						</td>
+						</tr>
+						<tr>
+						<td> A
+						</td>						<td class="td_right"> Acquittement
+						</td>
+						</tr>
+						<tr>
+						<td> N
+						</td>						<td class="td_right"> Aucune
+						</td>
+						</tr>
+
+					</table>
+
+			</div>
+
+	</div>
+
+</div>
+<div class="detail-column" id="d1" style="display:none">
+	<div class="detail">
+			<div class="mock-list">
+				<b>Nom : </b>decisionNumber
+			</div>
+			<div class="mock-list">
+				<b>Description : </b>Nombre de niveaux de décisions de l'étape.
+			</div>
+
+	</div>
+	<div class="detail">
+			<div class="mock-list">
+				<b>Nom : </b> <a href="../types/decimal1_0.html">decimal1_0</a>
+			</div>
+			<div class="mock-list">
+				<b> Description : </b>Type décimal à 1 chiffre dont 0 décimales.
+			</div>
+			<div class="mock-list">
+				<b>Format : </b>decimal
+			</div>
+			<div class="mock-list">
+				<b>Nombre total de chiffres : </b>1
+			</div>
+
+	</div>
+
+</div>
+<div class="detail-column" id="d2" style="display:none">
+	<div class="detail">
+			<div class="mock-list">
+				<b>Nom : </b>decisionLevels
+			</div>
+			<div class="mock-list">
+				<b>Description : </b>Détail des niveaux de décision de l¿étape
+			</div>
+
+	</div>
+	<div class="detail">
+			<div class="mock-list">
+				<b>Nom : </b> <a href="../types/loanInstructionDecisionLevelDetails.html">loanInstructionDecisionLevelDetails</a>
+			</div>
+			<div class="mock-list">
+				<b> Description : </b>Détails des niveaux de décision d'une étape pour un dossier IDC
+			</div>
+
+	</div>
+
+</div>
+<div class="detail-column" id="d3" style="display:none">
+	<div class="detail">
+			<div class="mock-list">
+				<b>Nom : </b>loanInstructionDecisionLevelDetail
+			</div>
+			<div class="mock-list">
+				<b>Description : </b>Détail d'un niveau de décision d'une étape pour un dossier IDC
+			</div>
+			<div class="mock-list">
+				<b>Limite du nombre d'occurences mini-maxi : </b>aucune aucune
+			</div>
+
+	</div>
+	<div class="detail">
+			<div class="mock-list">
+				<b>Nom : </b> <a href="../types/loanInstructionDecisionLevelDetail.html">loanInstructionDecisionLevelDetail</a>
+			</div>
+			<div class="mock-list">
+				<b> Description : </b>Détail d'un niveau de décision d'une étape pour un dossier IDC.
+			</div>
+
+	</div>
+
+</div>
+<div class="detail-column" id="d4" style="display:none">
+	<div class="detail">
+			<div class="mock-list">
+				<b>Nom : </b>decisionLevel
+			</div>
+			<div class="mock-list">
+				<b>Description : </b>Niveau de décision de l'étape.
+			</div>
+
+	</div>
+	<div class="detail">
+			<div class="mock-list">
+				<b>Nom : </b> <a href="../types/decimal2_0.html">decimal2_0</a>
+			</div>
+			<div class="mock-list">
+				<b> Description : </b>Type décimal à 2 chiffres dont 0 décimales.
+			</div>
+			<div class="mock-list">
+				<b>Format : </b>decimal
+			</div>
+			<div class="mock-list">
+				<b>Nombre total de chiffres : </b>2
+			</div>
+
+	</div>
+
+</div>
+<div class="detail-column" id="d5" style="display:none">
+	<div class="detail">
+			<div class="mock-list">
+				<b>Nom : </b>designation
+			</div>
+			<div class="mock-list">
+				<b>Description : </b>Libellé du niveau de décision de l'étape.
+			</div>
+
+	</div>
+	<div class="detail">
+			<div class="mock-list">
+				<b>Nom : </b> <a href="../types/charMax255.html">charMax255</a>
+			</div>
+			<div class="mock-list">
+				<b> Description : </b>Chaîne composée d'au plus 255 caractères.
+			</div>
+			<div class="mock-list">
+				<b>Format : </b>string
+			</div>
+			<div class="mock-list">
+				<b>Longueur mini-maxi : </b>1 - 255
+			</div>
+
+	</div>
+
+</div>
+<div class="detail-column" id="d6" style="display:none">
+	<div class="detail">
+			<div class="mock-list">
+				<b>Nom : </b>decisionMode
+			</div>
+			<div class="mock-list">
+				<b>Description : </b>Mode de décision.
+			</div>
+
+	</div>
+	<div class="detail">
+			<div class="mock-list">
+				<b>Nom : </b> <a href="../types/loanInstructionDecisionMode.html">loanInstructionDecisionMode</a>
+			</div>
+			<div class="mock-list">
+				<b> Description : </b>Mode de decision
+			</div>
+			<div class="mock-list">
+				<b>Format : </b>string
+			</div>
+			<div class="mock-list">
+				<b>Valeurs possibles : </b>					<table class="table_enum" class="table_enum">
+						<tr>
+						<td> A
+						</td>						<td class="td_right"> Automatique
+						</td>
+						</tr>
+						<tr>
+						<td> O
+						</td>						<td class="td_right"> Obligatoire
+						</td>
+						</tr>
+
+					</table>
+
+			</div>
+
+	</div>
+
+</div>
+<div class="detail-column" id="d7" style="display:none">
+	<div class="detail">
+			<div class="mock-list">
+				<b>Nom : </b>authorizedRolesToProcess
+			</div>
+			<div class="mock-list">
+				<b>Description : </b>Rôles habilités pour le traitement d'un niveau de décision d'une étape.
+			</div>
+
+	</div>
+	<div class="detail">
+			<div class="mock-list">
+				<b>Nom : </b> <a href="../types/loanInstructionAuthorizedRolesToProcessDecision.html">loanInstructionAuthorizedRolesToProcessDecision</a>
+			</div>
+			<div class="mock-list">
+				<b> Description : </b>Rôles habilités pour un niveau de décision sur une étape d'un dossier IDC.
+			</div>
+
+	</div>
+
+</div>
+<div class="detail-column" id="d8" style="display:none">
+	<div class="detail">
+			<div class="mock-list">
+				<b>Nom : </b>authorizedRoleToProcess
+			</div>
+			<div class="mock-list">
+				<b>Description : </b>Rôle habilité pour un niveau de décision d'un dossier IDC.
+			</div>
+			<div class="mock-list">
+				<b>Limite du nombre d'occurences mini-maxi : </b>aucune aucune
+			</div>
+
+	</div>
+	<div class="detail">
+			<div class="mock-list">
+				<b>Nom : </b> <a href="../types/loanInstructionAuthorizedRoleToProcessDecision.html">loanInstructionAuthorizedRoleToProcessDecision</a>
+			</div>
+			<div class="mock-list">
+				<b> Description : </b>Rôle habilité pour un niveau de décision d'un dossier IDC.
+			</div>
+
+	</div>
+
+</div>
+<div class="detail-column" id="d9" style="display:none">
+	<div class="detail">
+			<div class="mock-list">
+				<b>Nom : </b>authorizedRoleCode
+			</div>
+			<div class="mock-list">
+				<b>Description : </b>Code rôle autorisé.
+			</div>
+
+	</div>
+	<div class="detail">
+			<div class="mock-list">
+				<b>Nom : </b> <a href="../types/char10.html">char10</a>
+			</div>
+			<div class="mock-list">
+				<b> Description : </b>Type avec un nombre de caractères égal à 10.
+			</div>
+			<div class="mock-list">
+				<b>Format : </b>string
+			</div>
+			<div class="mock-list">
+				<b>Longueur fixe : </b>10
+			</div>
+
+	</div>
+
+</div>
+<div class="detail-column" id="d10" style="display:none">
+	<div class="detail">
+			<div class="mock-list">
+				<b>Nom : </b>authorizedRoleDesignation
+			</div>
+			<div class="mock-list">
+				<b>Description : </b>Libellé rôle autorisé.
+			</div>
+			<div class="mock-list">
+				<b>Commentaire : </b><p>Nomenclature 958.</p>
+
+			</div>
+
+	</div>
+	<div class="detail">
+			<div class="mock-list">
+				<b>Nom : </b> <a href="../types/charMax30.html">charMax30</a>
+			</div>
+			<div class="mock-list">
+				<b> Description : </b>Chaîne composée d'au plus 30 caractères.
+			</div>
+			<div class="mock-list">
+				<b>Format : </b>string
+			</div>
+			<div class="mock-list">
+				<b>Longueur mini-maxi : </b>1 - 30
+			</div>
+
+	</div>
+
+</div>
+      </div> 
+  </div>
+
+  
+  <script src="../resources/jquery.js"></script>
+  <script src="../resources/doc.js"></script>
+</body>
+</html>

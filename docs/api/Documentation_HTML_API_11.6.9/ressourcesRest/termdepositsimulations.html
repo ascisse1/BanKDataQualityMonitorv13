@@ -1,0 +1,606 @@
+<!DOCTYPE html>
+<html>
+<head>
+	<link rel="stylesheet" href="../resources/styleDocu.css" />
+    <link rel="stylesheet" href="../resources/font-awesome/css/font-awesome.min.css" />
+	<title>Documentation Xsd</title>
+	<meta charset="UTF-8" />
+</head>
+
+<body>
+  <div class="document">
+	<div class="header">		
+	</div>
+
+    <div class="tabs">
+        <div class="tabs-wrapper-selected" onclick="window.open('../liste-ressources.html', '_self');">
+            <div class="tabs-left-content" >Liste des ressources</div>
+        </div>
+        <div class="tabs-wrapper" onclick="window.open('../liste-services.html', '_self');">
+            <div class="tabs-left-content">Liste des services</div>
+        </div>
+        <div class="tabs-wrapper" onclick="window.open('../liste-types.html', '_self');">
+            <div class="tabs-right-content">Liste des types</div>
+        </div>
+    </div>
+
+	<div class="contenu">
+      <div class="breadcrumb"> 
+        <ul class="breadcrumb">
+           <li> <a href="../index.html"> Accueil </a></li>
+           <li> > </li>
+           <li> <a href="../liste-ressources.html"> Liste des ressources </a></li>
+           <li> > </li>
+           <li> termdepositsimulations </li>
+        </ul>                    
+      </div>                    
+      
+      <div class="summary">
+        <div class="mock-list"> Nom ressource REST : termdepositsimulations </div>
+        <div class="mock-list"> Programme Amplitude : dtwrtermdepositsimulations </div>
+        <div class="mock-list"> Email : support@soprabanking.com </div>        
+        <br/>
+            <div class="mock-list"> Simulations of term deposits</div>
+      </div>
+      
+      <div class="column-content" style="width:93%">
+        <div class="detail-column" style="width: 35%">
+          <div class="tree"> 
+<ul style="padding:0">
+	<li>
+<i class="fa fa-caret-down fa-fw" onclick="expand_or_collapse(this)">
+</i>		termdepositsimulations		<ul>
+			<li>
+<i class="fa fa-caret-down fa-fw" onclick="expand_or_collapse(this)">
+</i>				v1				<ul>
+					<li>
+<i class="fa fa-fw">
+</i><span class="selectable" id="e0"> GETLIST
+</span>
+					</li>
+
+				</ul>
+
+			</li>
+
+		</ul>
+		<ul>
+			<li>
+<i class="fa fa-caret-down fa-fw" onclick="expand_or_collapse(this)">
+</i>				v2				<ul>
+					<li>
+<i class="fa fa-fw">
+</i><span class="selectable" id="e1"> GETLIST
+</span>
+					</li>
+
+				</ul>
+
+			</li>
+
+		</ul>
+
+	</li>
+
+</ul>
+          </div>
+        </div>
+                 
+        
+<div class="detail-column" id="d0" style="display:none; width: 65%">
+	<div class="detail">
+		<div class="mock-list">
+			<b>Service SOAP : </b> <a href="../services/getTDSimulationDetail.html">getTDSimulationDetail</a>
+		</div>
+		<div class="mock-list">
+			<b>Code retour succes : </b>200 - OK
+		</div>
+		<div class="mock-list">
+			<b>Uri : </b>http://soprabanking.com/amplitude/termdepositsimulations/v1/
+		</div>
+		<div class="mock-list">
+			<b>Description : </b>The service getTDSimulationDetail allows simulating the situation at end of term of a TD, corresponding either to a unique identifier received or to the TD detailed information received.
+
+For the selected or simulated TD, the following information is returned:
+- the global amount, the average amount, the amount in case of breaking for:
+   . the gross interest,
+   . the mandatory deductions,
+   . the social deductions,
+   . the social contribution,
+   . the generalised social contribution,
+   . the free deductions,
+   . the taxes,
+   . the RSA deduction (French income support),
+   . the breaking penalties,
+   . the net interest,
+- the net amount to be credited,
+- the net amount to be credited in case of breaking.
+		</div>
+		<br>
+
+		</br>
+		<div class="mock-list">
+			<b>Parametres : </b>			<table class="table_param">
+				<tr>
+				<td>
+				</td>				<td title="getTDSimulationDetailRequest.simulationTD.tdSimulationDetail.additionalRate"> <a href="../types/decimal10_7.html">X-SBS-additionalRate</a><br>Taux additionnel.
+				</td>				<td> Header
+				</td>
+				</tr>
+				<tr>
+				<td> <i class="fa fa-key fa-fw"> </i>
+				</td>				<td title="getTDSimulationDetailRequest.simulationTD.tdSimulationDetail.amount"> <a href="../types/decimal19_4.html">X-SBS-amount</a><br>Montant du dépôt.
+				</td>				<td> Header
+				</td>
+				</tr>
+				<tr>
+				<td> <i class="fa fa-key fa-fw"> </i>
+				</td>				<td title="getTDSimulationDetailRequest.simulationTD.tdSimulationDetail.branchCode"> <a href="../types/branchCode.html">X-SBS-branchCode</a><br>Code agence.
+				</td>				<td> Header
+				</td>
+				</tr>
+				<tr>
+				<td>
+				</td>				<td title="getTDSimulationDetailRequest.breakingDate"> <a href="../types/date.html">X-SBS-breakingDate</a><br>Date de la tombée.
+				</td>				<td> Header
+				</td>
+				</tr>
+				<tr>
+				<td>
+				</td>				<td title="getTDSimulationDetailRequest.breakingRate"> <a href="../types/decimal10_7.html">X-SBS-breakingRate</a><br>Taux de la tombée.
+				</td>				<td> Header
+				</td>
+				</tr>
+				<tr>
+				<td>
+				</td>				<td title="getTDSimulationDetailRequest.simulationTD.tdSimulationDetail.capitalizedOfInterest"> <a href="../types/boolean.html">X-SBS-capitalizedOfInterest</a><br>Capitalisation des intérêts.
+				</td>				<td> Header
+				</td>
+				</tr>
+				<tr>
+				<td> <i class="fa fa-key fa-fw"> </i>
+				</td>				<td title="getTDSimulationDetailRequest.simulationTD.tdSimulationDetail.currency"> <a href="../types/currencyCode.html">X-SBS-currency</a><br>Code devise du dépôt.
+				</td>				<td> Header
+				</td>
+				</tr>
+				<tr>
+				<td>
+				</td>				<td title="getTDSimulationDetailRequest.simulationTD.tdSimulationDetail.currentAccount.branch"> <a href="../types/char5.html">X-SBS-currentAccountBranch</a><br>Agence du compte.
+				</td>				<td> Header
+				</td>
+				</tr>
+				<tr>
+				<td>
+				</td>				<td title="getTDSimulationDetailRequest.simulationTD.tdSimulationDetail.currentAccount.currency"> <a href="../types/char3.html">X-SBS-currentAccountCurrency</a><br>Devise du compte.
+				</td>				<td> Header
+				</td>
+				</tr>
+				<tr>
+				<td>
+				</td>				<td title="getTDSimulationDetailRequest.simulationTD.tdSimulationDetail.currentAccount.account"> <a href="../types/charMax11.html">X-SBS-currentAccountNumber</a><br>Numéro du compte.
+				</td>				<td> Header
+				</td>
+				</tr>
+				<tr>
+				<td>
+				</td>				<td title="getTDSimulationDetailRequest.simulationTD.tdSimulationDetail.currentAccount.suffix"> <a href="../types/charMax2.html">X-SBS-currentAccountSuffix</a><br>Suffixe du compte.
+				</td>				<td> Header
+				</td>
+				</tr>
+				<tr>
+				<td>
+				</td>				<td title="getTDSimulationDetailRequest.simulationTD.tdSimulationDetail.deductionAtSource"> <a href="../types/boolean.html">X-SBS-deductionAtSource</a><br>Prélèvement libératoire.
+				</td>				<td> Header
+				</td>
+				</tr>
+				<tr>
+				<td>
+				</td>				<td title="getTDSimulationDetailRequest.simulationTD.tdSimulationDetail.depositAccount.branch"> <a href="../types/char5.html">X-SBS-depositAccountBranch</a><br>Agence du compte.
+				</td>				<td> Header
+				</td>
+				</tr>
+				<tr>
+				<td>
+				</td>				<td title="getTDSimulationDetailRequest.simulationTD.tdSimulationDetail.depositAccount.currency"> <a href="../types/char3.html">X-SBS-depositAccountCurrency</a><br>Devise du compte.
+				</td>				<td> Header
+				</td>
+				</tr>
+				<tr>
+				<td>
+				</td>				<td title="getTDSimulationDetailRequest.simulationTD.tdSimulationDetail.depositAccount.account"> <a href="../types/charMax11.html">X-SBS-depositAccountNumber</a><br>Numéro du compte.
+				</td>				<td> Header
+				</td>
+				</tr>
+				<tr>
+				<td>
+				</td>				<td title="getTDSimulationDetailRequest.simulationTD.tdSimulationDetail.depositAccount.suffix"> <a href="../types/charMax2.html">X-SBS-depositAccountSuffix</a><br>Suffixe du compte.
+				</td>				<td> Header
+				</td>
+				</tr>
+				<tr>
+				<td> <i class="fa fa-key fa-fw"> </i>
+				</td>				<td title="getTDSimulationDetailRequest.simulationTD.tdSimulationDetail.executionDate"> <a href="../types/date.html">X-SBS-executionDate</a><br>Date d'exécution.
+				</td>				<td> Header
+				</td>
+				</tr>
+				<tr>
+				<td>
+				</td>				<td title="getTDSimulationDetailRequest.simulationTD.tdSimulationDetail.frequency"> <a href="../types/tdFrequency.html">X-SBS-frequency</a><br>Périodicité.
+				</td>				<td> Header
+				</td>
+				</tr>
+				<tr>
+				<td>
+				</td>				<td title="getTDSimulationDetailRequest.simulationTD.tdSimulationDetail.indexedTermDeposit"> <a href="../types/boolean.html">X-SBS-indexedTermDeposit</a><br>DAT indexé.
+				</td>				<td> Header
+				</td>
+				</tr>
+				<tr>
+				<td>
+				</td>				<td title="getTDSimulationDetailRequest.simulationTD.tdSimulationDetail.maturityDate"> <a href="../types/date.html">X-SBS-maturityDate</a><br>Date d'échéance initiale.
+				</td>				<td> Header
+				</td>
+				</tr>
+				<tr>
+				<td>
+				</td>				<td title="getTDSimulationDetailRequest.permanentTransfer.amount"> <a href="../types/decimal19_4.html">X-SBS-permanentTransferAmount</a><br>Montant.
+				</td>				<td> Header
+				</td>
+				</tr>
+				<tr>
+				<td>
+				</td>				<td title="getTDSimulationDetailRequest.permanentTransfer.frequency"> <a href="../types/tdGenAmendmentFrequency.html">X-SBS-permanentTransferFrequency</a><br>Périodicité.
+				</td>				<td> Header
+				</td>
+				</tr>
+				<tr>
+				<td>
+				</td>				<td title="getTDSimulationDetailRequest.permanentTransfer.maturityDate"> <a href="../types/date.html">X-SBS-permanentTransferMaturityDate</a><br>Date de fin.
+				</td>				<td> Header
+				</td>
+				</tr>
+				<tr>
+				<td>
+				</td>				<td title="getTDSimulationDetailRequest.permanentTransfer.startingDate"> <a href="../types/date.html">X-SBS-permanentTransferStartingDate</a><br>Date de début.
+				</td>				<td> Header
+				</td>
+				</tr>
+				<tr>
+				<td> <i class="fa fa-key fa-fw"> </i>
+				</td>				<td title="getTDSimulationDetailRequest.simulationTD.tdSimulationDetail.pledged"> <a href="../types/boolean.html">X-SBS-pledged</a><br>Nantissement du dépôt.
+				</td>				<td> Header
+				</td>
+				</tr>
+				<tr>
+				<td>
+				</td>				<td title="getTDSimulationDetailRequest.simulationTD.tdSimulationDetail.progressiveRate"> <a href="../types/boolean.html">X-SBS-progressiveRate</a><br>Dépôt à terme à taux progressifs.
+				</td>				<td> Header
+				</td>
+				</tr>
+				<tr>
+				<td>
+				</td>				<td title="getTDSimulationDetailRequest.simulationTD.tdSimulationDetail.rate"> <a href="../types/decimal10_7.html">X-SBS-rate</a><br>Taux d'intérêts.
+				</td>				<td> Header
+				</td>
+				</tr>
+				<tr>
+				<td>
+				</td>				<td title="getTDSimulationDetailRequest.simulationTD.tdSimulationDetail.realDays"> <a href="../types/tdRealDays.html">X-SBS-realDays</a><br>Calcul en nombre de jours réels.
+				</td>				<td> Header
+				</td>
+				</tr>
+				<tr>
+				<td>
+				</td>				<td title="getTDSimulationDetailRequest.residualPenaltyRate"> <a href="../types/decimal10_7.html">X-SBS-residualPenaltyRate</a><br>Taux de pénalité résiduel.
+				</td>				<td> Header
+				</td>
+				</tr>
+				<tr>
+				<td>
+				</td>				<td title="getTDSimulationDetailRequest.simulationTD.tdSimulationDetail.tdMethodCalculingInterest"> <a href="../types/tdMethodCalculingInterest.html">X-SBS-tdMethodCalculingInterest</a><br>Méthode de calcul des intérêts.
+				</td>				<td> Header
+				</td>
+				</tr>
+				<tr>
+				<td> <i class="fa fa-key fa-fw"> </i>
+				</td>				<td title="getTDSimulationDetailRequest.simulationTD.tdSimulationDetail.type"> <a href="../types/tdTypeCode.html">X-SBS-type</a><br>Type de DAT.
+				</td>				<td> Header
+				</td>
+				</tr>
+				<tr>
+				<td>
+				</td>				<td title="getTDSimulationDetailRequest.simulationTD.tdSimulationDetail.upFrontInterest"> <a href="../types/boolean.html">X-SBS-upFrontInterest</a><br>Intérêts précomptés.
+				</td>				<td> Header
+				</td>
+				</tr>
+				<tr>
+				<td> <i class="fa fa-key fa-fw"> </i>
+				</td>				<td title="getTDSimulationDetailRequest.simulationTD.tdSimulationDetail.valueDate"> <a href="../types/date.html">X-SBS-valueDate</a><br>Date d'effet.
+				</td>				<td> Header
+				</td>
+				</tr>
+
+			</table>
+
+		</div>
+		<br>
+
+		</br>
+		<div class="mock-list">
+			<b>Codes Erreur : </b>			<table>
+				<tr>
+				<td> 400
+				</td>				<td> Bad Request
+				</td>
+				</tr>
+
+			</table>
+
+		</div>
+
+	</div>
+
+</div>
+<div class="detail-column" id="d1" style="display:none; width: 65%">
+	<div class="detail">
+		<div class="mock-list">
+			<b>Service SOAP : </b> <a href="../services/getTDSimulationDetailV2.html">getTDSimulationDetailV2</a>
+		</div>
+		<div class="mock-list">
+			<b>Code retour succes : </b>200 - OK
+		</div>
+		<div class="mock-list">
+			<b>Uri : </b>http://soprabanking.com/amplitude/termdepositsimulations/v2/
+		</div>
+		<div class="mock-list">
+			<b>Description : </b>The service getTDSimulationDetail allows simulating the situation at end of term of a TD, corresponding either to a unique identifier received or to the TD detailed information received.
+
+For the selected or simulated TD, the following information is returned:
+- the global amount, the average amount, the amount in case of breaking for:
+   . the gross interest,
+   . the mandatory deductions,
+   . the social deductions,
+   . the social contribution,
+   . the generalised social contribution,
+   . the free deductions,
+   . the taxes,
+   . the RSA deduction (French income support),
+   . the breaking penalties,
+   . the net interest,
+- the net amount to be credited,
+- the net amount to be credited in case of breaking.
+		</div>
+		<br>
+
+		</br>
+		<div class="mock-list">
+			<b>Parametres : </b>			<table class="table_param">
+				<tr>
+				<td>
+				</td>				<td title="getTDSimulationDetailV2Request.simulationTD.tdSimulationDetail.capitalizedOfInterest"> <a href="../types/boolean.html">X-SBS-capitalizedOfInterest</a><br>Capitalisation des intérêts.
+				</td>				<td> Header
+				</td>
+				</tr>
+				<tr>
+				<td> <i class="fa fa-key fa-fw"> </i>
+				</td>				<td title="getTDSimulationDetailV2Request.simulationTD.tdSimulationDetail.currency"> <a href="../types/currencyCode.html">X-SBS-currency</a><br>Code devise du dépôt.
+				</td>				<td> Header
+				</td>
+				</tr>
+				<tr>
+				<td>
+				</td>				<td title="getTDSimulationDetailV2Request.simulationTD.tdSimulationDetail.currentAccount.branch"> <a href="../types/char5.html">X-SBS-currentAccountBranch</a><br>Agence du compte.
+				</td>				<td> Header
+				</td>
+				</tr>
+				<tr>
+				<td>
+				</td>				<td title="getTDSimulationDetailV2Request.simulationTD.tdSimulationDetail.currentAccount.currency"> <a href="../types/char3.html">X-SBS-currentAccountCurrency</a><br>Devise du compte.
+				</td>				<td> Header
+				</td>
+				</tr>
+				<tr>
+				<td>
+				</td>				<td title="getTDSimulationDetailV2Request.simulationTD.tdSimulationDetail.currentAccount.account"> <a href="../types/charMax11.html">X-SBS-currentAccountNumber</a><br>Numéro du compte.
+				</td>				<td> Header
+				</td>
+				</tr>
+				<tr>
+				<td>
+				</td>				<td title="getTDSimulationDetailV2Request.simulationTD.tdSimulationDetail.currentAccount.suffix"> <a href="../types/charMax2.html">X-SBS-currentAccountSuffix</a><br>Suffixe du compte.
+				</td>				<td> Header
+				</td>
+				</tr>
+				<tr>
+				<td>
+				</td>				<td title="getTDSimulationDetailV2Request.simulationTD.tdSimulationDetail.deductionAtSource"> <a href="../types/boolean.html">X-SBS-deductionAtSource</a><br>Prélèvement libératoire.
+				</td>				<td> Header
+				</td>
+				</tr>
+				<tr>
+				<td>
+				</td>				<td title="getTDSimulationDetailV2Request.simulationTD.tdSimulationDetail.depositAccount.branch"> <a href="../types/char5.html">X-SBS-depositAccountBranch</a><br>Agence du compte.
+				</td>				<td> Header
+				</td>
+				</tr>
+				<tr>
+				<td>
+				</td>				<td title="getTDSimulationDetailV2Request.simulationTD.tdSimulationDetail.depositAccount.currency"> <a href="../types/char3.html">X-SBS-depositAccountCurrency</a><br>Devise du compte.
+				</td>				<td> Header
+				</td>
+				</tr>
+				<tr>
+				<td>
+				</td>				<td title="getTDSimulationDetailV2Request.simulationTD.tdSimulationDetail.depositAccount.account"> <a href="../types/charMax11.html">X-SBS-depositAccountNumber</a><br>Numéro du compte.
+				</td>				<td> Header
+				</td>
+				</tr>
+				<tr>
+				<td>
+				</td>				<td title="getTDSimulationDetailV2Request.simulationTD.tdSimulationDetail.depositAccount.suffix"> <a href="../types/charMax2.html">X-SBS-depositAccountSuffix</a><br>Suffixe du compte.
+				</td>				<td> Header
+				</td>
+				</tr>
+				<tr>
+				<td> <i class="fa fa-key fa-fw"> </i>
+				</td>				<td title="getTDSimulationDetailV2Request.simulationTD.tdSimulationDetail.executionDate"> <a href="../types/date.html">X-SBS-executionDate</a><br>Date d'exécution.
+				</td>				<td> Header
+				</td>
+				</tr>
+				<tr>
+				<td>
+				</td>				<td title="getTDSimulationDetailV2Request.simulationTD.tdSimulationDetail.frequency"> <a href="../types/tdFrequency.html">X-SBS-frequency</a><br>Périodicité.
+				</td>				<td> Header
+				</td>
+				</tr>
+				<tr>
+				<td>
+				</td>				<td title="getTDSimulationDetailV2Request.simulationTD.tdSimulationDetail.indexedTermDeposit"> <a href="../types/boolean.html">X-SBS-indexedTermDeposit</a><br>DAT indexé.
+				</td>				<td> Header
+				</td>
+				</tr>
+				<tr>
+				<td>
+				</td>				<td title="getTDSimulationDetailV2Request.simulationTD.tdSimulationDetail.maturityDate"> <a href="../types/date.html">X-SBS-maturityDate</a><br>Date d'échéance initiale.
+				</td>				<td> Header
+				</td>
+				</tr>
+				<tr>
+				<td>
+				</td>				<td title="getTDSimulationDetailV2Request.permanentTransfer.amount"> <a href="../types/decimal19_4.html">X-SBS-permanentTransferAmount</a><br>Montant.
+				</td>				<td> Header
+				</td>
+				</tr>
+				<tr>
+				<td>
+				</td>				<td title="getTDSimulationDetailV2Request.permanentTransfer.frequency"> <a href="../types/tdGenAmendmentFrequency.html">X-SBS-permanentTransferFrequency</a><br>Périodicité.
+				</td>				<td> Header
+				</td>
+				</tr>
+				<tr>
+				<td>
+				</td>				<td title="getTDSimulationDetailV2Request.permanentTransfer.maturityDate"> <a href="../types/date.html">X-SBS-permanentTransferMaturityDate</a><br>Date de fin.
+				</td>				<td> Header
+				</td>
+				</tr>
+				<tr>
+				<td>
+				</td>				<td title="getTDSimulationDetailV2Request.permanentTransfer.startingDate"> <a href="../types/date.html">X-SBS-permanentTransferStartingDate</a><br>Date de début.
+				</td>				<td> Header
+				</td>
+				</tr>
+				<tr>
+				<td> <i class="fa fa-key fa-fw"> </i>
+				</td>				<td title="getTDSimulationDetailV2Request.simulationTD.tdSimulationDetail.pledged"> <a href="../types/boolean.html">X-SBS-pledged</a><br>Nantissement du dépôt.
+				</td>				<td> Header
+				</td>
+				</tr>
+				<tr>
+				<td>
+				</td>				<td title="getTDSimulationDetailV2Request.simulationTD.tdSimulationDetail.progressiveRate"> <a href="../types/boolean.html">X-SBS-progressiveRate</a><br>Dépôt à terme à taux progressifs.
+				</td>				<td> Header
+				</td>
+				</tr>
+				<tr>
+				<td>
+				</td>				<td title="getTDSimulationDetailV2Request.simulationTD.tdSimulationDetail.rate"> <a href="../types/decimal10_7.html">X-SBS-rate</a><br>Taux d'intérêts.
+				</td>				<td> Header
+				</td>
+				</tr>
+				<tr>
+				<td>
+				</td>				<td title="getTDSimulationDetailV2Request.simulationTD.tdSimulationDetail.realDays"> <a href="../types/tdRealDays.html">X-SBS-realDays</a><br>Calcul en nombre de jours réels.
+				</td>				<td> Header
+				</td>
+				</tr>
+				<tr>
+				<td>
+				</td>				<td title="getTDSimulationDetailV2Request.residualPenaltyRate"> <a href="../types/decimal10_7.html">X-SBS-residualPenaltyRate</a><br>Taux de pénalité résiduel.
+				</td>				<td> Header
+				</td>
+				</tr>
+				<tr>
+				<td>
+				</td>				<td title="getTDSimulationDetailV2Request.simulationTD.tdSimulationDetail.tdMethodCalculingInterest"> <a href="../types/tdMethodCalculingInterest.html">X-SBS-tdMethodCalculingInterest</a><br>Méthode de calcul des intérêts.
+				</td>				<td> Header
+				</td>
+				</tr>
+				<tr>
+				<td> <i class="fa fa-key fa-fw"> </i>
+				</td>				<td title="getTDSimulationDetailV2Request.simulationTD.tdSimulationDetail.type"> <a href="../types/tdTypeCode.html">X-SBS-type</a><br>Type de DAT.
+				</td>				<td> Header
+				</td>
+				</tr>
+				<tr>
+				<td>
+				</td>				<td title="getTDSimulationDetailV2Request.simulationTD.tdSimulationDetail.upFrontInterest"> <a href="../types/boolean.html">X-SBS-upFrontInterest</a><br>Intérêts précomptés.
+				</td>				<td> Header
+				</td>
+				</tr>
+				<tr>
+				<td> <i class="fa fa-key fa-fw"> </i>
+				</td>				<td title="getTDSimulationDetailV2Request.simulationTD.tdSimulationDetail.valueDate"> <a href="../types/date.html">X-SBS-valueDate</a><br>Date d'effet.
+				</td>				<td> Header
+				</td>
+				</tr>
+				<tr>
+				<td>
+				</td>				<td title="getTDSimulationDetailV2Request.breakingDate"> <a href="../types/date.html">X-SBS-breakingDate</a><br>Date de la tombée.
+				</td>				<td> Header
+				</td>
+				</tr>
+				<tr>
+				<td>
+				</td>				<td title="getTDSimulationDetailV2Request.breakingRate"> <a href="../types/decimal10_7.html">X-SBS-breakingRate</a><br>Taux de la tombée.
+				</td>				<td> Header
+				</td>
+				</tr>
+				<tr>
+				<td>
+				</td>				<td title="getTDSimulationDetailV2Request.simulationTD.tdSimulationDetail.additionalRate"> <a href="../types/decimal10_7.html">X-SBS-additionalRate</a><br>Taux additionnel.
+				</td>				<td> Header
+				</td>
+				</tr>
+				<tr>
+				<td> <i class="fa fa-key fa-fw"> </i>
+				</td>				<td title="getTDSimulationDetailV2Request.simulationTD.tdSimulationDetail.amount"> <a href="../types/decimal19_4.html">X-SBS-amount</a><br>Montant du dépôt.
+				</td>				<td> Header
+				</td>
+				</tr>
+				<tr>
+				<td> <i class="fa fa-key fa-fw"> </i>
+				</td>				<td title="getTDSimulationDetailV2Request.simulationTD.tdSimulationDetail.branchCode"> <a href="../types/branchCode.html">X-SBS-branchCode</a><br>Code agence.
+				</td>				<td> Header
+				</td>
+				</tr>
+
+			</table>
+
+		</div>
+		<br>
+
+		</br>
+		<div class="mock-list">
+			<b>Codes Erreur : </b>			<table>
+				<tr>
+				<td> 400
+				</td>				<td> Bad Request
+				</td>
+				</tr>
+
+			</table>
+
+		</div>
+
+	</div>
+
+</div>
+     </div> 
+  </div>
+  </div>
+
+  
+  <script src="../resources/jquery.js"></script>
+  <script src="../resources/doc.js"></script>
+</body>
+</html>

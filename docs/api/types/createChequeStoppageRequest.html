@@ -1,0 +1,644 @@
+<!DOCTYPE html >
+<html>
+<head>
+	<link rel="stylesheet" href="../resources/styleDocu.css" />
+  <link rel="stylesheet" href="../resources/font-awesome/css/font-awesome.min.css" />
+	<title>Documentation Xsd</title>
+	<meta charset="UTF-8" />
+</head>
+
+<body>
+  <div class="document">
+	<div class="header">
+		
+	</div>
+
+  <div class="tabs">
+    <div class="tabs-wrapper" onclick="window.open('../liste-ressources.html', '_self');">
+      <div class="tabs-left-content">
+        Liste des ressources
+      </div>
+    </div>
+    <div class="tabs-wrapper" onclick="window.open('../liste-services.html', '_self');">
+      <div class="tabs-left-content" >
+        Liste des services  
+      </div>
+    </div>
+    <div class="tabs-wrapper-selected" onclick="window.open('../liste-types.html', '_self');">
+      <div class="tabs-right-content">
+        Liste des types
+      </div>
+    </div>
+  </div>
+
+	
+
+	<div class="contenu">
+      <div class="breadcrumb"> 
+        <ul class="breadcrumb">
+           <li> <a href="../index.html"> Accueil </a></li>
+           <li> > </li>
+           <li> <a href="../liste-types.html"> Liste des types </a></li>
+           <li> > </li>
+           <li> createChequeStoppageRequest </li>
+        </ul>                    
+      </div>                    
+      
+     
+      <div class="summary">
+			<div class="mock-list">
+				<b>Nom : </b>createChequeStoppageRequest
+			</div>
+			<div class="mock-list">
+				<b> Description : </b>Requête de mise en opposition d'un ou plusieurs chèques.
+			</div>
+        
+        <div> </div>
+        <div class="mock-list"> Choix : Non</div>
+        
+      </div>
+                        
+      <div class="column-content">
+        <div class="detail-column">
+          <div class="tree"> 
+<ul>
+	<li>
+<i class="fa fa-caret-down fa-fw" onclick="expand_or_collapse(this)">
+</i>		createChequeStoppageRequest		<ul style="display:block">
+			<li>
+<i class="fa fa-fw">
+</i><i class="fa fa-key fa-fw">
+</i><span class="selectable" id="e0"> branchCode : branchCode
+</span>
+			</li>
+			<li>
+<i class="fa fa-fw">
+</i><i class="fa fa-key fa-fw">
+</i><span class="selectable" id="e1"> accountNumber : accountNumber
+</span>
+			</li>
+			<li>
+<i class="fa fa-fw">
+</i><span class="selectable" id="e2"> accountSuffix : accountSuffix
+</span>
+			</li>
+			<li>
+<i class="fa fa-fw">
+</i><i class="fa fa-key fa-fw">
+</i><span class="selectable" id="e3"> stoppageReason : reasonCodeForChequeStoppageAndRelease
+</span>
+			</li>
+			<li>
+<i class="fa fa-fw">
+</i><i class="fa fa-key fa-fw">
+</i><span class="selectable" id="e4"> stoppageApplicationDate : date
+</span>
+			</li>
+			<li>
+<i class="fa fa-fw">
+</i><span class="selectable" id="e5"> chargesAmount : decimal19_4
+</span>
+			</li>
+			<li>
+<i class="fa fa-fw">
+</i><span class="selectable" id="e6"> commissionAmount : decimal19_4
+</span>
+			</li>
+			<li>
+<i class="fa fa-caret-down fa-fw" onclick="expand_or_collapse(this)">
+</i><i class="fa fa-key fa-fw">
+</i><span style="font-weight:bold"> [M]
+</span><span class="selectable" id="e7"> stoppedCheque : stoppedCheque
+</span>				<ul style="display:block">
+					<li>
+<i class="fa fa-fw">
+</i><span class="selectable" id="e8"> chequeSerialNumber : char2
+</span>
+					</li>
+					<li>
+<i class="fa fa-fw">
+</i><i class="fa fa-key fa-fw">
+</i><span class="selectable" id="e9"> chequeNumber : charMax8
+</span>
+					</li>
+					<li>
+<i class="fa fa-caret-down fa-fw" onclick="expand_or_collapse(this)">
+</i><span class="selectable" id="e10"> stoppedChequeAdditionalInformation : stoppedChequeAdditionalInformation
+</span>						<ul style="display:block">
+							<li>
+<i class="fa fa-fw">
+</i><span class="selectable" id="e11"> chequeAmount : decimal19_4
+</span>
+							</li>
+							<li>
+<i class="fa fa-fw">
+</i><span class="selectable" id="e12"> beneficiaryName : charMax30
+</span>
+							</li>
+							<li>
+<i class="fa fa-fw">
+</i><span class="selectable" id="e13"> chequeIssueDate : date
+</span>
+							</li>
+
+						</ul>
+
+					</li>
+					<li>
+<i class="fa fa-fw">
+</i><span class="selectable" id="e14"> chequeBlockingMethod : chequeBlockingMethod
+</span>
+					</li>
+
+				</ul>
+
+			</li>
+
+		</ul>
+
+	</li>
+
+</ul>
+          </div>
+          
+          <div class="detail">
+				<p align="left">
+					Légende :<br />
+				</p>
+            <ul>
+               <li align="left">
+                  <i class="fa fa-key fa-fw">
+                  </i>
+                  = Elément obligatoire en saisie.
+               </li>
+               <li align="left">
+                  <span style="font-weight:bold"> [M]
+                  </span>
+                  = Elément multiple (0 à n occurrences).
+               </li>
+               <li align="left">
+                  <span style="font-weight:bold"> [C]
+                  </span>
+                  = Elément composé d'un choix à effectuer. Un seul choix autorisé.
+               </li>
+            </ul>
+            <p align="left">
+               Remarque : Un même élément peut regrouper plusieurs caractéristiques
+            </p>          
+          </div>
+          
+        </div>
+<div class="detail-column" id="d0" style="display:none">
+	<div class="detail">
+			<div class="mock-list">
+				<b>Nom : </b>branchCode
+			</div>
+			<div class="mock-list">
+				<b>Description : </b>Code agence.
+			</div>
+			<div class="mock-list">
+				<b>Commentaire : </b><p>L&#39;agence doit &ecirc;tre diff&eacute;rente du site central.<br />
+L&#39;agence doit &ecirc;tre autoris&eacute;e pour l&#39;utilisateur et ouverte.<br />
+&nbsp;</p>
+
+			</div>
+
+	</div>
+	<div class="detail">
+			<div class="mock-list">
+				<b>Nom : </b> <a href="../types/branchCode.html">branchCode</a>
+			</div>
+			<div class="mock-list">
+				<b> Description : </b>Code d'une agence.
+			</div>
+			<div class="mock-list">
+				<b>Format : </b>string
+			</div>
+			<div class="mock-list">
+				<b>Longueur fixe : </b>5
+			</div>
+
+	</div>
+
+</div>
+<div class="detail-column" id="d1" style="display:none">
+	<div class="detail">
+			<div class="mock-list">
+				<b>Nom : </b>accountNumber
+			</div>
+			<div class="mock-list">
+				<b>Description : </b>Numéro de compte.
+			</div>
+			<div class="mock-list">
+				<b>Commentaire : </b><p>Le num&eacute;ro du compte doit &ecirc;tre num&eacute;rique et sa longueur doit &ecirc;tre &eacute;gale au <strong>Montant 1</strong> du param&egrave;tre <strong>COMPTE</strong> dans la nomenclature <strong>999</strong>.<br />
+Le compte doit exister dans la table des comptes et ne doit pas &ecirc;tre en instance de fermeture ni ferm&eacute;.<br />
+La devise du compte doit exister dans la nomenclature <strong>005</strong>.<br />
+Le compte doit d&eacute;signer un compte ch&egrave;que.<br />
+Le client d&eacute;tenteur du compte doit exister dans la table des clients.<br />
+L&#39;utilisateur doit &ecirc;tre habilit&eacute; sur le chapitre du compte et sur le profil du client. Le chapitre du compte doit &eacute;galement &ecirc;tre autoris&eacute; pour l&rsquo;op&eacute;ration.<br />
+Les conditions <strong>DATVAL</strong> et <strong>EXOCOM</strong> doivent exister pour ce compte.<br />
+&nbsp;</p>
+
+			</div>
+
+	</div>
+	<div class="detail">
+			<div class="mock-list">
+				<b>Nom : </b> <a href="../types/accountNumber.html">accountNumber</a>
+			</div>
+			<div class="mock-list">
+				<b> Description : </b>Numéro de compte.
+			</div>
+			<div class="mock-list">
+				<b>Format : </b>string
+			</div>
+			<div class="mock-list">
+				<b>Longueur mini-maxi : </b>1 - 11
+			</div>
+
+	</div>
+
+</div>
+<div class="detail-column" id="d2" style="display:none">
+	<div class="detail">
+			<div class="mock-list">
+				<b>Nom : </b>accountSuffix
+			</div>
+			<div class="mock-list">
+				<b>Description : </b>Suffixe du compte.
+			</div>
+			<div class="mock-list">
+				<b>Commentaire : </b><p>Le suffixe est obligatoire si le <strong>Libell&eacute; 5 </strong>du param&egrave;tre <strong>COMPT</strong>E dans la nomenclature <strong>999 </strong>est &eacute;gal&nbsp;&agrave; <strong>O</strong>.<br />
+S&#39;il est renseign&eacute;, le suffixe doit &ecirc;tre num&eacute;rique.<br />
+&nbsp;</p>
+
+			</div>
+
+	</div>
+	<div class="detail">
+			<div class="mock-list">
+				<b>Nom : </b> <a href="../types/accountSuffix.html">accountSuffix</a>
+			</div>
+			<div class="mock-list">
+				<b> Description : </b>Suffixe du compte.
+			</div>
+			<div class="mock-list">
+				<b>Format : </b>string
+			</div>
+			<div class="mock-list">
+				<b>Longueur mini-maxi : </b>1 - 2
+			</div>
+
+	</div>
+
+</div>
+<div class="detail-column" id="d3" style="display:none">
+	<div class="detail">
+			<div class="mock-list">
+				<b>Nom : </b>stoppageReason
+			</div>
+			<div class="mock-list">
+				<b>Description : </b>Motif de mise en opposition.
+			</div>
+			<div class="mock-list">
+				<b>Commentaire : </b><p>Le motif doit exister dans la nomenclature <strong>207 </strong>avec le <strong>Montant 1</strong> &eacute;gal&nbsp;&agrave; <strong>1.</strong></p>
+
+			</div>
+
+	</div>
+	<div class="detail">
+			<div class="mock-list">
+				<b>Nom : </b> <a href="../types/reasonCodeForChequeStoppageAndRelease.html">reasonCodeForChequeStoppageAndRelease</a>
+			</div>
+			<div class="mock-list">
+				<b> Description : </b>Motif d'opposition ou de levée d'opposition sur les chèques.
+			</div>
+			<div class="mock-list">
+				<b>Format : </b>string
+			</div>
+			<div class="mock-list">
+				<b>Longueur mini-maxi : </b>1 - 4
+			</div>
+
+	</div>
+
+</div>
+<div class="detail-column" id="d4" style="display:none">
+	<div class="detail">
+			<div class="mock-list">
+				<b>Nom : </b>stoppageApplicationDate
+			</div>
+			<div class="mock-list">
+				<b>Description : </b>Date d'application de l'opposition.
+			</div>
+			<div class="mock-list">
+				<b>Commentaire : </b><p>La date d&#39;application de la mise en opposition est modifiable uniquement si le param&egrave;tre <strong>MDOPCH</strong> existe dans la nomenclature <strong>099</strong> et que le niveau de for&ccedil;age de l&#39;utilisateur est sup&eacute;rieur ou &eacute;gal au <strong>Montant 1</strong>.<br />
+Si elle est renseign&eacute;e, la date doit &ecirc;tre sup&eacute;rieure ou &eacute;gale&nbsp;&agrave; la date comptable.<br />
+&nbsp;</p>
+
+			</div>
+
+	</div>
+	<div class="detail">
+			<div class="mock-list">
+				<b>Nom : </b> <a href="../types/date.html">date</a>
+			</div>
+
+	</div>
+
+</div>
+<div class="detail-column" id="d5" style="display:none">
+	<div class="detail">
+			<div class="mock-list">
+				<b>Nom : </b>chargesAmount
+			</div>
+			<div class="mock-list">
+				<b>Description : </b>Montant des frais.
+			</div>
+			<div class="mock-list">
+				<b>Commentaire : </b><p>Si le montant est renseign&eacute; et si&nbsp;la condition&nbsp;<strong>MAFOPC</strong> existe, alors le montant des frais doit &ecirc;tre inf&eacute;rieur ou &eacute;gal&nbsp;&agrave; la valeur de cette condition.</p>
+
+			</div>
+
+	</div>
+	<div class="detail">
+			<div class="mock-list">
+				<b>Nom : </b> <a href="../types/decimal19_4.html">decimal19_4</a>
+			</div>
+			<div class="mock-list">
+				<b> Description : </b>Type décimal à 19 chiffres dont 4 décimales.
+			</div>
+			<div class="mock-list">
+				<b>Format : </b>decimal
+			</div>
+			<div class="mock-list">
+				<b>Nombre total de chiffres : </b>19
+			</div>
+
+	</div>
+
+</div>
+<div class="detail-column" id="d6" style="display:none">
+	<div class="detail">
+			<div class="mock-list">
+				<b>Nom : </b>commissionAmount
+			</div>
+			<div class="mock-list">
+				<b>Description : </b>Montant des commissions.
+			</div>
+
+	</div>
+	<div class="detail">
+			<div class="mock-list">
+				<b>Nom : </b> <a href="../types/decimal19_4.html">decimal19_4</a>
+			</div>
+			<div class="mock-list">
+				<b> Description : </b>Type décimal à 19 chiffres dont 4 décimales.
+			</div>
+			<div class="mock-list">
+				<b>Format : </b>decimal
+			</div>
+			<div class="mock-list">
+				<b>Nombre total de chiffres : </b>19
+			</div>
+
+	</div>
+
+</div>
+<div class="detail-column" id="d7" style="display:none">
+	<div class="detail">
+			<div class="mock-list">
+				<b>Nom : </b>stoppedCheque
+			</div>
+			<div class="mock-list">
+				<b>Description : </b>Informations sur le ou les chèques à mettre en opposition.
+			</div>
+			<div class="mock-list">
+				<b>Limite du nombre d'occurences mini-maxi : </b>aucune aucune
+			</div>
+
+	</div>
+	<div class="detail">
+			<div class="mock-list">
+				<b>Nom : </b> <a href="../types/stoppedCheque.html">stoppedCheque</a>
+			</div>
+			<div class="mock-list">
+				<b> Description : </b>Informations sur un chèque mis en opposition.
+			</div>
+
+	</div>
+
+</div>
+<div class="detail-column" id="d8" style="display:none">
+	<div class="detail">
+			<div class="mock-list">
+				<b>Nom : </b>chequeSerialNumber
+			</div>
+			<div class="mock-list">
+				<b>Description : </b>Numéro de série du chèque.
+			</div>
+			<div class="mock-list">
+				<b>Commentaire : </b><p>Le num&eacute;ro de s&eacute;rie du ch&egrave;que est obligatoire si le <strong>Libell&eacute; 2</strong> du param&egrave;tre <strong>CHEQUES</strong> dans la nomenclature <strong>098</strong> est &eacute;gal&nbsp;&agrave; <strong>O</strong>.</p>
+
+			</div>
+
+	</div>
+	<div class="detail">
+			<div class="mock-list">
+				<b>Nom : </b> <a href="../types/char2.html">char2</a>
+			</div>
+			<div class="mock-list">
+				<b> Description : </b>Type avec un nombre de caractères égal à 2.
+			</div>
+			<div class="mock-list">
+				<b>Format : </b>string
+			</div>
+			<div class="mock-list">
+				<b>Longueur fixe : </b>2
+			</div>
+
+	</div>
+
+</div>
+<div class="detail-column" id="d9" style="display:none">
+	<div class="detail">
+			<div class="mock-list">
+				<b>Nom : </b>chequeNumber
+			</div>
+			<div class="mock-list">
+				<b>Description : </b>Numéro de chèque.
+			</div>
+			<div class="mock-list">
+				<b>Commentaire : </b><p>La longueur du num&eacute;ro du ch&egrave;que doit &ecirc;tre &eacute;gale au <strong>Montant 3</strong> du param&egrave;tre <strong>CHEQUES</strong> dans la nomenclature <strong>098</strong>.<br />
+Si le ch&egrave;que est en stock, alors :</p>
+
+<ul>
+	<li>¿Il ne doit pas faire l&#39;objet d&rsquo;un autre &eacute;v&egrave;nement.</li>
+	<li>¿Il doit appartenir au compte saisi.</li>
+	<li>¿Il ne doit pas faire d&eacute;j&agrave; l&#39;objet d&#39;une opposition.</li>
+	<li>¿Il doit &ecirc;tre remis.</li>
+</ul>
+
+<p>Si le ch&egrave;que n&#39;est pas en stock, alors un enregistrement est cr&eacute;&eacute; dans la table des ch&egrave;ques.<br />
+&nbsp;</p>
+
+			</div>
+
+	</div>
+	<div class="detail">
+			<div class="mock-list">
+				<b>Nom : </b> <a href="../types/charMax8.html">charMax8</a>
+			</div>
+			<div class="mock-list">
+				<b> Description : </b>Chaîne composée d'au plus 8 caractères.
+			</div>
+			<div class="mock-list">
+				<b>Format : </b>string
+			</div>
+			<div class="mock-list">
+				<b>Longueur mini-maxi : </b>1 - 8
+			</div>
+
+	</div>
+
+</div>
+<div class="detail-column" id="d10" style="display:none">
+	<div class="detail">
+			<div class="mock-list">
+				<b>Nom : </b>stoppedChequeAdditionalInformation
+			</div>
+			<div class="mock-list">
+				<b>Description : </b>Informations additionnelles sur le chèque.
+			</div>
+
+	</div>
+	<div class="detail">
+			<div class="mock-list">
+				<b>Nom : </b> <a href="../types/stoppedChequeAdditionalInformation.html">stoppedChequeAdditionalInformation</a>
+			</div>
+			<div class="mock-list">
+				<b> Description : </b>Informations supplémentaires sur le chèque en opposition.
+			</div>
+
+	</div>
+
+</div>
+<div class="detail-column" id="d11" style="display:none">
+	<div class="detail">
+			<div class="mock-list">
+				<b>Nom : </b>chequeAmount
+			</div>
+			<div class="mock-list">
+				<b>Description : </b>Montant du chèque.
+			</div>
+			<div class="mock-list">
+				<b>Commentaire : </b><p>S&#39;il est renseign&eacute;, le montant du ch&egrave;que doit &ecirc;tre strictement sup&eacute;rieur&nbsp;&agrave; <strong>0.</strong></p>
+
+			</div>
+
+	</div>
+	<div class="detail">
+			<div class="mock-list">
+				<b>Nom : </b> <a href="../types/decimal19_4.html">decimal19_4</a>
+			</div>
+			<div class="mock-list">
+				<b> Description : </b>Type décimal à 19 chiffres dont 4 décimales.
+			</div>
+			<div class="mock-list">
+				<b>Format : </b>decimal
+			</div>
+			<div class="mock-list">
+				<b>Nombre total de chiffres : </b>19
+			</div>
+
+	</div>
+
+</div>
+<div class="detail-column" id="d12" style="display:none">
+	<div class="detail">
+			<div class="mock-list">
+				<b>Nom : </b>beneficiaryName
+			</div>
+			<div class="mock-list">
+				<b>Description : </b>Nom du bénéficiaire.
+			</div>
+
+	</div>
+	<div class="detail">
+			<div class="mock-list">
+				<b>Nom : </b> <a href="../types/charMax30.html">charMax30</a>
+			</div>
+			<div class="mock-list">
+				<b> Description : </b>Chaîne composée d'au plus 30 caractères.
+			</div>
+			<div class="mock-list">
+				<b>Format : </b>string
+			</div>
+			<div class="mock-list">
+				<b>Longueur mini-maxi : </b>1 - 30
+			</div>
+
+	</div>
+
+</div>
+<div class="detail-column" id="d13" style="display:none">
+	<div class="detail">
+			<div class="mock-list">
+				<b>Nom : </b>chequeIssueDate
+			</div>
+			<div class="mock-list">
+				<b>Description : </b>Date d'émission du chèque.
+			</div>
+			<div class="mock-list">
+				<b>Commentaire : </b><p>Si elle est renseign&eacute;e, la date d&#39;&eacute;mission du ch&egrave;que doit &ecirc;tre inf&eacute;rieure ou &eacute;gale&nbsp;&agrave; la date comptable.</p>
+
+			</div>
+
+	</div>
+	<div class="detail">
+			<div class="mock-list">
+				<b>Nom : </b> <a href="../types/date.html">date</a>
+			</div>
+
+	</div>
+
+</div>
+<div class="detail-column" id="d14" style="display:none">
+	<div class="detail">
+			<div class="mock-list">
+				<b>Nom : </b>chequeBlockingMethod
+			</div>
+			<div class="mock-list">
+				<b>Description : </b>Mode de blocage du chèque.
+			</div>
+			<div class="mock-list">
+				<b>Commentaire : </b><p>S&#39;il est renseign&eacute;, le mode de blocage du ch&egrave;que doit exister dans la nomenclature <strong>218</strong>.</p>
+
+			</div>
+
+	</div>
+	<div class="detail">
+			<div class="mock-list">
+				<b>Nom : </b> <a href="../types/chequeBlockingMethod.html">chequeBlockingMethod</a>
+			</div>
+			<div class="mock-list">
+				<b> Description : </b>Mode de blocage du chèque.
+			</div>
+			<div class="mock-list">
+				<b>Format : </b>string
+			</div>
+			<div class="mock-list">
+				<b>Longueur mini-maxi : </b>1 - 4
+			</div>
+
+	</div>
+
+</div>
+      </div> 
+  </div>
+
+  
+  <script src="../resources/jquery.js"></script>
+  <script src="../resources/doc.js"></script>
+</body>
+</html>

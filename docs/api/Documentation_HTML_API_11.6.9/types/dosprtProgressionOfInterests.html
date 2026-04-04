@@ -1,0 +1,378 @@
+<!DOCTYPE html >
+<html>
+<head>
+	<link rel="stylesheet" href="../resources/styleDocu.css" />
+  <link rel="stylesheet" href="../resources/font-awesome/css/font-awesome.min.css" />
+	<title>Documentation Xsd</title>
+	<meta charset="UTF-8" />
+</head>
+
+<body>
+  <div class="document">
+	<div class="header">
+		
+	</div>
+
+  <div class="tabs">
+    <div class="tabs-wrapper" onclick="window.open('../liste-ressources.html', '_self');">
+      <div class="tabs-left-content">
+        Liste des ressources
+      </div>
+    </div>
+    <div class="tabs-wrapper" onclick="window.open('../liste-services.html', '_self');">
+      <div class="tabs-left-content" >
+        Liste des services  
+      </div>
+    </div>
+    <div class="tabs-wrapper-selected" onclick="window.open('../liste-types.html', '_self');">
+      <div class="tabs-right-content">
+        Liste des types
+      </div>
+    </div>
+  </div>
+
+	
+
+	<div class="contenu">
+      <div class="breadcrumb"> 
+        <ul class="breadcrumb">
+           <li> <a href="../index.html"> Accueil </a></li>
+           <li> > </li>
+           <li> <a href="../liste-types.html"> Liste des types </a></li>
+           <li> > </li>
+           <li> dosprtProgressionOfInterests </li>
+        </ul>                    
+      </div>                    
+      
+     
+      <div class="summary">
+			<div class="mock-list">
+				<b>Nom : </b>dosprtProgressionOfInterests
+			</div>
+			<div class="mock-list">
+				<b> Description : </b>Tableau de progression des intérêts.
+			</div>
+        
+        <div> <p>Dans le cas des taux r&eacute;visables, ce tableau peut &ecirc;tre non renseign&eacute; dans le flux d&#39;entr&eacute;e.</p>
+
+<p>S&#39;il est non renseign&eacute;, une premi&egrave;re r&eacute;vision sera automatiquement ins&eacute;r&eacute;e avec :</p>
+
+<ul>
+	<li>Une date d&#39;application &eacute;gale &agrave; la date de mise en place du dossier de pr&ecirc;t</li>
+	<li>Un code de taux de base &eacute;gal au code param&eacute;tr&eacute; dans la condition <strong>TBPRET</strong></li>
+	<li>Une marge &eacute;gale &agrave; la marge param&eacute;tr&eacute;e dans la condition <strong>VTBPRG</strong></li>
+</ul>
+
+<p>Dans le cas des taux progressifs, ce tableau doit &ecirc;tre renseign&eacute; avec &agrave; minima la premi&egrave;re r&eacute;vision.</p>
+</div>
+        <div class="mock-list"> Choix : Non</div>
+        
+      </div>
+                        
+      <div class="column-content">
+        <div class="detail-column">
+          <div class="tree"> 
+<ul>
+	<li>
+<i class="fa fa-caret-down fa-fw" onclick="expand_or_collapse(this)">
+</i>		dosprtProgressionOfInterests		<ul style="display:block">
+			<li>
+<i class="fa fa-caret-down fa-fw" onclick="expand_or_collapse(this)">
+</i><i class="fa fa-key fa-fw">
+</i><span style="font-weight:bold"> [M]
+</span><span class="selectable" id="e0"> rateChange : dosprtFloatingOrProgressiveRateChange
+</span>				<ul style="display:block">
+					<li>
+<i class="fa fa-fw">
+</i><i class="fa fa-key fa-fw">
+</i><span class="selectable" id="e1"> applicationDate : date
+</span>
+					</li>
+					<li>
+<i class="fa fa-fw">
+</i><span class="selectable" id="e2"> baseRate : char3
+</span>
+					</li>
+					<li>
+<i class="fa fa-fw">
+</i><span class="selectable" id="e3"> margin : decimal9_6
+</span>
+					</li>
+					<li>
+<i class="fa fa-fw">
+</i><span class="selectable" id="e4"> finalRate : decimal9_6
+</span>
+					</li>
+					<li>
+<i class="fa fa-fw">
+</i><span class="selectable" id="e5"> fixRate : decimal9_6
+</span>
+					</li>
+
+				</ul>
+
+			</li>
+
+		</ul>
+
+	</li>
+
+</ul>
+          </div>
+          
+          <div class="detail">
+				<p align="left">
+					Légende :<br />
+				</p>
+            <ul>
+               <li align="left">
+                  <i class="fa fa-key fa-fw">
+                  </i>
+                  = Elément obligatoire en saisie.
+               </li>
+               <li align="left">
+                  <span style="font-weight:bold"> [M]
+                  </span>
+                  = Elément multiple (0 à n occurrences).
+               </li>
+               <li align="left">
+                  <span style="font-weight:bold"> [C]
+                  </span>
+                  = Elément composé d'un choix à effectuer. Un seul choix autorisé.
+               </li>
+            </ul>
+            <p align="left">
+               Remarque : Un même élément peut regrouper plusieurs caractéristiques
+            </p>          
+          </div>
+          
+        </div>
+<div class="detail-column" id="d0" style="display:none">
+	<div class="detail">
+			<div class="mock-list">
+				<b>Nom : </b>rateChange
+			</div>
+			<div class="mock-list">
+				<b>Description : </b>Changement de taux.
+			</div>
+			<div class="mock-list">
+				<b>Limite du nombre d'occurences mini-maxi : </b>aucune aucune
+			</div>
+
+	</div>
+	<div class="detail">
+			<div class="mock-list">
+				<b>Nom : </b> <a href="../types/dosprtFloatingOrProgressiveRateChange.html">dosprtFloatingOrProgressiveRateChange</a>
+			</div>
+			<div class="mock-list">
+				<b> Description : </b>Détail d'un changement de taux progressif ou révisable.
+			</div>
+
+	</div>
+
+</div>
+<div class="detail-column" id="d1" style="display:none">
+	<div class="detail">
+			<div class="mock-list">
+				<b>Nom : </b>applicationDate
+			</div>
+			<div class="mock-list">
+				<b>Description : </b>Date d'application du taux.
+			</div>
+			<div class="mock-list">
+				<b>Commentaire : </b><p>La premi&egrave;re date d&rsquo;application du taux&nbsp; (la date la plus ancienne parmi toutes les lignes de r&eacute;vision &agrave; traiter) doit &ecirc;tre &eacute;gale &agrave; la date de mise en place du dossier.</p>
+
+<p>La date d&rsquo;application du taux doit &ecirc;tre sup&eacute;rieure strictement &agrave; la date d&rsquo;application du taux pr&eacute;c&eacute;dent (&agrave; partir de la&nbsp; 2<sup>&egrave;me</sup> ligne du tableau).</p>
+
+<p>La date d&rsquo;application du taux doit &ecirc;tre sup&eacute;rieure ou &eacute;gale &agrave; la date comptable.</p>
+
+<p>La date d&rsquo;application du taux doit &ecirc;tre inf&eacute;rieure ou &eacute;gale &agrave; la date de derni&egrave;re r&eacute;vision.</p>
+
+			</div>
+
+	</div>
+	<div class="detail">
+			<div class="mock-list">
+				<b>Nom : </b> <a href="../types/date.html">date</a>
+			</div>
+
+	</div>
+
+</div>
+<div class="detail-column" id="d2" style="display:none">
+	<div class="detail">
+			<div class="mock-list">
+				<b>Nom : </b>baseRate
+			</div>
+			<div class="mock-list">
+				<b>Description : </b>Code du taux de base.
+			</div>
+			<div class="mock-list">
+				<b>Commentaire : </b><p>Pour la r&eacute;vision, soit le code du taux de base, soit un taux fixe doit &ecirc;tre renseign&eacute;.</p>
+
+<p>Pour la premi&egrave;re r&eacute;vision de taux renseign&eacute;e (celle dont la date d&#39;application est &eacute;gale &agrave; la date de mise en place du dossier), si ni le code du taux de base n&rsquo;est renseign&eacute; ni le taux fixe, alors le code du taux de base sera affect&eacute; par d&eacute;faut avec le code param&eacute;tr&eacute; pour la condition <strong>TBPRET</strong>.</p>
+
+<p>Si un code du taux de base est modifi&eacute; mais que le niveau de for&ccedil;age de l&#39;utilisateur ne lui permet pas de le modifier par rapport au niveau de for&ccedil;age param&eacute;tr&eacute; pour le type de pr&ecirc;t, alors le code du taux de base sera affect&eacute; avec celui par d&eacute;faut.</p>
+
+<p>Si le code du taux de base n&rsquo;est pas g&eacute;r&eacute; par condition (<strong>Libell&eacute; 2</strong> &eacute;gal &agrave; <strong>N</strong> dans le param&egrave;tre <strong>CDTPAR2</strong> en nomenclature <strong>098</strong>) alors le code du taux de base doit &ecirc;tre autoris&eacute; parmi une liste de codes possibles en fonction de la devise et du type de cr&eacute;dit (dans la table des ent&ecirc;tes des taux de base et dans la table des codes des taux li&eacute;s &agrave; un type de pr&ecirc;t et une devise).</p>
+
+<p>Sinon, le code du taux de base doit exister uniquement dans la table des ent&ecirc;tes des taux de base.</p>
+
+<p>Si la gestion des tranches de maturit&eacute; est activ&eacute;e (param&eacute;trage des tranches en nomenclature <strong>156</strong>), alors le code maturit&eacute; du taux de base doit &ecirc;tre &eacute;gal au code maturit&eacute; du dossier.</p>
+
+<p>Si le code du taux de base est renseign&eacute; :</p>
+
+<ul>
+	<li>Si le <strong>Montant 4</strong> du param&egrave;tre <strong>CDTREVIS</strong> en nomenclature <strong>098</strong> est &eacute;gal &agrave; <strong>1</strong>, alors la marge ne doit pas &ecirc;tre renseign&eacute;e mais uniquement le taux final (la valeur de la marge est alors calcul&eacute;e par diff&eacute;rence entre le taux final et la valeur du taux de base)</li>
+	<li>Si le <strong>Montant 4</strong> du param&egrave;tre <strong>CDTREVIS</strong> en nomenclature <strong>098</strong> vaut <strong>0</strong> ou <strong>NULL</strong>, alors le taux final ne doit pas &ecirc;tre renseign&eacute; mais uniquement la marge (a valeur du taux final est alors calcul&eacute;e par addition entre la valeur du taux de base et la marge)</li>
+</ul>
+
+<p>Si le code du taux de base n&#39;est pas renseign&eacute;, alors ni la marge ni le taux final ne doivent &ecirc;tre renseign&eacute;s. Seul le taux fixe doit &ecirc;tre aliment&eacute;.</p>
+
+			</div>
+
+	</div>
+	<div class="detail">
+			<div class="mock-list">
+				<b>Nom : </b> <a href="../types/char3.html">char3</a>
+			</div>
+			<div class="mock-list">
+				<b> Description : </b>Type avec un nombre de caractères égal à 3.
+			</div>
+			<div class="mock-list">
+				<b>Format : </b>string
+			</div>
+			<div class="mock-list">
+				<b>Longueur fixe : </b>3
+			</div>
+
+	</div>
+
+</div>
+<div class="detail-column" id="d3" style="display:none">
+	<div class="detail">
+			<div class="mock-list">
+				<b>Nom : </b>margin
+			</div>
+			<div class="mock-list">
+				<b>Description : </b>Marge.
+			</div>
+			<div class="mock-list">
+				<b>Commentaire : </b><p>La marge ne doit &ecirc;tre renseign&eacute;e que si le taux de base est renseign&eacute; pour la r&eacute;vison et que la marge est autoris&eacute;e (<strong>Montant 4</strong> du param&egrave;tre <strong>CDTREVIS</strong> en nomenclature <strong>098</strong> diff&eacute;rent de <strong>1</strong>).</p>
+
+<p>Si la marge peut &ecirc;tre renseign&eacute;e mais qu&rsquo;elle ne l&rsquo;est pas, alors elle est affect&eacute;e &agrave; la valeur&nbsp; de la condition <strong>VTBPRG</strong>.</p>
+
+<p>Si le dossier est avec marge variable et type d&#39;int&eacute;r&ecirc;ts r&eacute;visables alors la marge est forc&eacute;e &agrave; <strong>0</strong>.</p>
+
+<p>La marge doit &ecirc;tre comprise dans les bornes minimum et maximum param&eacute;tr&eacute;es dans la condition <strong>VTBPRG</strong>.</p>
+
+<p>Le taux final est alors calcul&eacute; automatiquement. Et il doit &ecirc;tre&nbsp;:</p>
+
+<ul>
+	<li>Sup&eacute;rieur ou &eacute;gal au taux de r&eacute;vision minimum,</li>
+	<li>Inf&eacute;rieur ou &eacute;gal au taux de r&eacute;vision maximum.</li>
+</ul>
+
+			</div>
+
+	</div>
+	<div class="detail">
+			<div class="mock-list">
+				<b>Nom : </b> <a href="../types/decimal9_6.html">decimal9_6</a>
+			</div>
+			<div class="mock-list">
+				<b> Description : </b>Type décimal à 9 chiffres dont 6 décimales.
+			</div>
+			<div class="mock-list">
+				<b>Format : </b>decimal
+			</div>
+			<div class="mock-list">
+				<b>Nombre total de chiffres : </b>9
+			</div>
+
+	</div>
+
+</div>
+<div class="detail-column" id="d4" style="display:none">
+	<div class="detail">
+			<div class="mock-list">
+				<b>Nom : </b>finalRate
+			</div>
+			<div class="mock-list">
+				<b>Description : </b>Taux final.
+			</div>
+			<div class="mock-list">
+				<b>Commentaire : </b><p>Le taux final ne peut &ecirc;tre renseign&eacute; que si le taux de base est renseign&eacute;.</p>
+
+<p>Il doit &ecirc;tre renseign&eacute; si la marge n&rsquo;est pas renseign&eacute;e.</p>
+
+<p>Le taux final doit &ecirc;tre&nbsp;:</p>
+
+<ul>
+	<li>Sup&eacute;rieur ou &eacute;gal au taux de r&eacute;vision miniimum,</li>
+	<li>Inf&eacute;rieur ou &eacute;gal au taux de r&eacute;vision maximum.</li>
+</ul>
+
+<p>La marge est alors calcul&eacute;e automatiquement et doit &ecirc;tre comprise dans les bornes minimum et maximum param&eacute;tr&eacute;es dans la condition <strong>VTBPRG</strong>.</p>
+
+			</div>
+
+	</div>
+	<div class="detail">
+			<div class="mock-list">
+				<b>Nom : </b> <a href="../types/decimal9_6.html">decimal9_6</a>
+			</div>
+			<div class="mock-list">
+				<b> Description : </b>Type décimal à 9 chiffres dont 6 décimales.
+			</div>
+			<div class="mock-list">
+				<b>Format : </b>decimal
+			</div>
+			<div class="mock-list">
+				<b>Nombre total de chiffres : </b>9
+			</div>
+
+	</div>
+
+</div>
+<div class="detail-column" id="d5" style="display:none">
+	<div class="detail">
+			<div class="mock-list">
+				<b>Nom : </b>fixRate
+			</div>
+			<div class="mock-list">
+				<b>Description : </b>Taux fixe.
+			</div>
+			<div class="mock-list">
+				<b>Commentaire : </b><p>Pour la r&eacute;vison, soit le code du taux de base, soit le taux fixe doit &ecirc;tre renseign&eacute;.</p>
+
+<p>S&rsquo;il est renseign&eacute;, le taux fixe doit &ecirc;tre compris dans les bornes minimum et maximum param&eacute;tr&eacute;es dans la condition <strong>INssss </strong>(<strong>ssss</strong> = source de financement) ou&nbsp; <strong>INTttt </strong>(<strong>ttt</strong> = type de pr&ecirc;t) ou <strong>INTPRT</strong>.</p>
+
+			</div>
+
+	</div>
+	<div class="detail">
+			<div class="mock-list">
+				<b>Nom : </b> <a href="../types/decimal9_6.html">decimal9_6</a>
+			</div>
+			<div class="mock-list">
+				<b> Description : </b>Type décimal à 9 chiffres dont 6 décimales.
+			</div>
+			<div class="mock-list">
+				<b>Format : </b>decimal
+			</div>
+			<div class="mock-list">
+				<b>Nombre total de chiffres : </b>9
+			</div>
+
+	</div>
+
+</div>
+      </div> 
+  </div>
+
+  
+  <script src="../resources/jquery.js"></script>
+  <script src="../resources/doc.js"></script>
+</body>
+</html>

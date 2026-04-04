@@ -1,0 +1,653 @@
+<!DOCTYPE html >
+<html>
+<head>
+	<link rel="stylesheet" href="../resources/styleDocu.css" />
+  <link rel="stylesheet" href="../resources/font-awesome/css/font-awesome.min.css" />
+	<title>Documentation Xsd</title>
+	<meta charset="UTF-8" />
+</head>
+
+<body>
+  <div class="document">
+	<div class="header">
+		
+	</div>
+
+  <div class="tabs">
+    <div class="tabs-wrapper" onclick="window.open('../liste-ressources.html', '_self');">
+      <div class="tabs-left-content">
+        Liste des ressources
+      </div>
+    </div>
+    <div class="tabs-wrapper" onclick="window.open('../liste-services.html', '_self');">
+      <div class="tabs-left-content" >
+        Liste des services  
+      </div>
+    </div>
+    <div class="tabs-wrapper-selected" onclick="window.open('../liste-types.html', '_self');">
+      <div class="tabs-right-content">
+        Liste des types
+      </div>
+    </div>
+  </div>
+
+	
+
+	<div class="contenu">
+      <div class="breadcrumb"> 
+        <ul class="breadcrumb">
+           <li> <a href="../index.html"> Accueil </a></li>
+           <li> > </li>
+           <li> <a href="../liste-types.html"> Liste des types </a></li>
+           <li> > </li>
+           <li> rootCardHistorical </li>
+        </ul>                    
+      </div>                    
+      
+     
+      <div class="summary">
+			<div class="mock-list">
+				<b>Nom : </b>rootCardHistorical
+			</div>
+			<div class="mock-list">
+				<b> Description : </b>Liste des transactions à historiser
+			</div>
+        
+        <div> </div>
+        <div class="mock-list"> Choix : Non</div>
+        
+      </div>
+                        
+      <div class="column-content">
+        <div class="detail-column">
+          <div class="tree"> 
+<ul>
+	<li>
+<i class="fa fa-caret-down fa-fw" onclick="expand_or_collapse(this)">
+</i>		rootCardHistorical		<ul style="display:block">
+			<li>
+<i class="fa fa-caret-down fa-fw" onclick="expand_or_collapse(this)">
+</i><i class="fa fa-key fa-fw">
+</i><span style="font-weight:bold"> [M]
+</span><span class="selectable" id="e0"> cardHistoricalInformation : cardHistoricalInformation
+</span>				<ul style="display:block">
+					<li>
+<i class="fa fa-caret-down fa-fw" onclick="expand_or_collapse(this)">
+</i><i class="fa fa-key fa-fw">
+</i><span style="font-weight:bold"> [C]
+</span><span class="selectable" id="e1"> cardIdentifier : cardIdentifierV2
+</span>						<ul style="display:block">
+							<li>
+<i class="fa fa-fw">
+</i><span class="selectable" id="e2"> cardReference : cardReference
+</span>
+							</li>
+							<li>
+<i class="fa fa-fw">
+</i><span class="selectable" id="e3"> cardNumber : charMax19
+</span>
+							</li>
+							<li>
+<i class="fa fa-fw">
+</i><span class="selectable" id="e4"> token : charMax19
+</span>
+							</li>
+							<li>
+<i class="fa fa-fw">
+</i><span class="selectable" id="e5"> cardParNumber : charMax29
+</span>
+							</li>
+
+						</ul>
+
+					</li>
+					<li>
+<i class="fa fa-fw">
+</i><i class="fa fa-key fa-fw">
+</i><span class="selectable" id="e6"> cardStatus : cardStatus
+</span>
+					</li>
+					<li>
+<i class="fa fa-fw">
+</i><span class="selectable" id="e7"> modificationDate : date
+</span>
+					</li>
+					<li>
+<i class="fa fa-fw">
+</i><span class="selectable" id="e8"> modificationTime : time
+</span>
+					</li>
+					<li>
+<i class="fa fa-fw">
+</i><i class="fa fa-key fa-fw">
+</i><span class="selectable" id="e9"> modificationType : string
+</span>
+					</li>
+					<li>
+<i class="fa fa-fw">
+</i><span class="selectable" id="e10"> modifiedData : string
+</span>
+					</li>
+					<li>
+<i class="fa fa-fw">
+</i><span class="selectable" id="e11"> historizedMemo : historizedMemo
+</span>
+					</li>
+
+				</ul>
+
+			</li>
+
+		</ul>
+
+	</li>
+
+</ul>
+          </div>
+          
+          <div class="detail">
+				<p align="left">
+					Légende :<br />
+				</p>
+            <ul>
+               <li align="left">
+                  <i class="fa fa-key fa-fw">
+                  </i>
+                  = Elément obligatoire en saisie.
+               </li>
+               <li align="left">
+                  <span style="font-weight:bold"> [M]
+                  </span>
+                  = Elément multiple (0 à n occurrences).
+               </li>
+               <li align="left">
+                  <span style="font-weight:bold"> [C]
+                  </span>
+                  = Elément composé d'un choix à effectuer. Un seul choix autorisé.
+               </li>
+            </ul>
+            <p align="left">
+               Remarque : Un même élément peut regrouper plusieurs caractéristiques
+            </p>          
+          </div>
+          
+        </div>
+<div class="detail-column" id="d0" style="display:none">
+	<div class="detail">
+			<div class="mock-list">
+				<b>Nom : </b>cardHistoricalInformation
+			</div>
+			<div class="mock-list">
+				<b>Description : </b>Informations sur une transaction à historiser
+			</div>
+			<div class="mock-list">
+				<b>Limite du nombre d'occurences mini-maxi : </b>aucune aucune
+			</div>
+
+	</div>
+	<div class="detail">
+			<div class="mock-list">
+				<b>Nom : </b> <a href="../types/cardHistoricalInformation.html">cardHistoricalInformation</a>
+			</div>
+			<div class="mock-list">
+				<b> Description : </b>Informations sur une transaction à historiser
+			</div>
+
+	</div>
+
+</div>
+<div class="detail-column" id="d1" style="display:none">
+	<div class="detail">
+			<div class="mock-list">
+				<b>Nom : </b>cardIdentifier
+			</div>
+			<div class="mock-list">
+				<b>Description : </b>Identifiant de la carte utilisé pour l¿historisation
+			</div>
+			<div class="mock-list">
+				<b>Commentaire : </b><p>Afin de respecter la norme PA-DSS, si le num&eacute;ro de carte est renseign&eacute;, il est converti en r&eacute;f&eacute;rence de carte et seule cette r&eacute;f&eacute;rence est stock&eacute;e.</p>
+
+			</div>
+
+	</div>
+	<div class="detail">
+			<div class="mock-list">
+				<b>Nom : </b> <a href="../types/cardIdentifierV2.html">cardIdentifierV2</a>
+			</div>
+			<div class="mock-list">
+				<b> Description : </b>Identifiant de la carte.
+			</div>
+
+	</div>
+
+</div>
+<div class="detail-column" id="d2" style="display:none">
+	<div class="detail">
+			<div class="mock-list">
+				<b>Nom : </b>cardReference
+			</div>
+			<div class="mock-list">
+				<b>Description : </b>Référence de la carte.
+			</div>
+			<div class="mock-list">
+				<b>Commentaire : </b><p>La r&eacute;f&eacute;rence de la carte doit exister en base.</p>
+
+			</div>
+
+	</div>
+	<div class="detail">
+			<div class="mock-list">
+				<b>Nom : </b> <a href="../types/cardReference.html">cardReference</a>
+			</div>
+			<div class="mock-list">
+				<b> Description : </b>Référence d'une carte.
+			</div>
+			<div class="mock-list">
+				<b>Format : </b>decimal
+			</div>
+			<div class="mock-list">
+				<b>Nombre total de chiffres : </b>10
+			</div>
+
+	</div>
+
+</div>
+<div class="detail-column" id="d3" style="display:none">
+	<div class="detail">
+			<div class="mock-list">
+				<b>Nom : </b>cardNumber
+			</div>
+			<div class="mock-list">
+				<b>Description : </b>Numéro de carte.
+			</div>
+			<div class="mock-list">
+				<b>Commentaire : </b><p>Le num&eacute;ro de carte doit exister en base.</p>
+
+			</div>
+
+	</div>
+	<div class="detail">
+			<div class="mock-list">
+				<b>Nom : </b> <a href="../types/charMax19.html">charMax19</a>
+			</div>
+			<div class="mock-list">
+				<b> Description : </b>Chaîne composée d'au plus 19 caractères.
+			</div>
+			<div class="mock-list">
+				<b>Format : </b>string
+			</div>
+			<div class="mock-list">
+				<b>Longueur mini-maxi : </b>1 - 19
+			</div>
+
+	</div>
+
+</div>
+<div class="detail-column" id="d4" style="display:none">
+	<div class="detail">
+			<div class="mock-list">
+				<b>Nom : </b>token
+			</div>
+			<div class="mock-list">
+				<b>Description : </b>Jeton.
+			</div>
+
+	</div>
+	<div class="detail">
+			<div class="mock-list">
+				<b>Nom : </b> <a href="../types/charMax19.html">charMax19</a>
+			</div>
+			<div class="mock-list">
+				<b> Description : </b>Chaîne composée d'au plus 19 caractères.
+			</div>
+			<div class="mock-list">
+				<b>Format : </b>string
+			</div>
+			<div class="mock-list">
+				<b>Longueur mini-maxi : </b>1 - 19
+			</div>
+
+	</div>
+
+</div>
+<div class="detail-column" id="d5" style="display:none">
+	<div class="detail">
+			<div class="mock-list">
+				<b>Nom : </b>cardParNumber
+			</div>
+			<div class="mock-list">
+				<b>Description : </b>Numéro de PAR de la carte.
+			</div>
+
+	</div>
+	<div class="detail">
+			<div class="mock-list">
+				<b>Nom : </b> <a href="../types/charMax29.html">charMax29</a>
+			</div>
+			<div class="mock-list">
+				<b> Description : </b>Chaîne composée d'au plus 29 caractères.
+			</div>
+			<div class="mock-list">
+				<b>Format : </b>string
+			</div>
+			<div class="mock-list">
+				<b>Longueur mini-maxi : </b>1 - 29
+			</div>
+
+	</div>
+
+</div>
+<div class="detail-column" id="d6" style="display:none">
+	<div class="detail">
+			<div class="mock-list">
+				<b>Nom : </b>cardStatus
+			</div>
+			<div class="mock-list">
+				<b>Description : </b>Statut d¿une carte
+			</div>
+			<div class="mock-list">
+				<b>Commentaire : </b><p>Liste des valeurs possibles :</p>
+
+<p>D = Carte demand&eacute;e</p>
+
+<p>J = Carte rejet&eacute;e</p>
+
+<p>PV = Demande de carte pr&eacute;-valid&eacute;e</p>
+
+<p>V = Demande de carte valid&eacute;e</p>
+
+<p>X = Demande de carte envoy&eacute;e en production</p>
+
+<p>FV = Fabrication valid&eacute;e</p>
+
+<p>FJ = Fabrication rejet&eacute;e</p>
+
+<p>F = Carte en fabrication</p>
+
+<p>I = Carte plastifi&eacute;e en agence</p>
+
+<p>H = Carte plastifi&eacute;e hors agence</p>
+
+<p>L = Carte plastifi&eacute;e envoy&eacute;e au bureau de destruction</p>
+
+<p>R = Carte r&eacute;ceptionn&eacute;e en agence</p>
+
+<p>G = Carte remise au client</p>
+
+<p>C = Carte active</p>
+
+<p>O = Carte en opposition</p>
+
+<p>B = Carte bloqu&eacute;e</p>
+
+<p>BP = Carte bloqu&eacute;e par le prestataire&nbsp;</p>
+
+<p>A = Carte annul&eacute;e&nbsp;</p>
+
+<p>E = Carte &eacute;chue&nbsp;</p>
+
+<p>N = Aucun renouvellement ni aucune r&eacute;fection en cours&nbsp;</p>
+
+<p>Z = Carte en r&eacute;fection</p>
+
+			</div>
+
+	</div>
+	<div class="detail">
+			<div class="mock-list">
+				<b>Nom : </b> <a href="../types/cardStatus.html">cardStatus</a>
+			</div>
+			<div class="mock-list">
+				<b> Description : </b>Statut d'une carte.
+			</div>
+			<div class="mock-list">
+				<b>Format : </b>string
+			</div>
+			<div class="mock-list">
+				<b>Valeurs possibles : </b>					<table class="table_enum" class="table_enum" class="table_enum" class="table_enum" class="table_enum" class="table_enum" class="table_enum" class="table_enum" class="table_enum" class="table_enum" class="table_enum" class="table_enum" class="table_enum" class="table_enum" class="table_enum" class="table_enum" class="table_enum" class="table_enum" class="table_enum" class="table_enum" class="table_enum" class="table_enum" class="table_enum">
+						<tr>
+						<td> A
+						</td>						<td class="td_right"> Carte annulée
+						</td>
+						</tr>
+						<tr>
+						<td> B
+						</td>						<td class="td_right"> Carte bloquée
+						</td>
+						</tr>
+						<tr>
+						<td> C
+						</td>						<td class="td_right"> Carte active
+						</td>
+						</tr>
+						<tr>
+						<td> D
+						</td>						<td class="td_right"> Carte demandée
+						</td>
+						</tr>
+						<tr>
+						<td> R
+						</td>						<td class="td_right"> Carte réceptionnée en agence
+						</td>
+						</tr>
+						<tr>
+						<td> BP
+						</td>						<td class="td_right"> Carte bloquée par le prestataire
+						</td>
+						</tr>
+						<tr>
+						<td> FJ
+						</td>						<td class="td_right"> Fabrication rejetée
+						</td>
+						</tr>
+						<tr>
+						<td> G
+						</td>						<td class="td_right"> Carte remise au client
+						</td>
+						</tr>
+						<tr>
+						<td> H
+						</td>						<td class="td_right"> Carte plastifiée hors agence
+						</td>
+						</tr>
+						<tr>
+						<td> I
+						</td>						<td class="td_right"> Carte plastifiée en agence
+						</td>
+						</tr>
+						<tr>
+						<td> J
+						</td>						<td class="td_right"> Carte rejetée
+						</td>
+						</tr>
+						<tr>
+						<td> FV
+						</td>						<td class="td_right"> Fabrication validée
+						</td>
+						</tr>
+						<tr>
+						<td> E
+						</td>						<td class="td_right"> Carte échue
+						</td>
+						</tr>
+						<tr>
+						<td> F
+						</td>						<td class="td_right"> Carte en fabrication
+						</td>
+						</tr>
+						<tr>
+						<td> PV
+						</td>						<td class="td_right"> Demande de carte pré-validée
+						</td>
+						</tr>
+						<tr>
+						<td> L
+						</td>						<td class="td_right"> Carte plastifiée envoyée au bureau de destruction
+						</td>
+						</tr>
+						<tr>
+						<td> N
+						</td>						<td class="td_right"> Aucun renouvellement ni aucune réfection en cours
+						</td>
+						</tr>
+						<tr>
+						<td> O
+						</td>						<td class="td_right"> Carte en opposition
+						</td>
+						</tr>
+						<tr>
+						<td> Z
+						</td>						<td class="td_right"> Carte en réfection
+						</td>
+						</tr>
+						<tr>
+						<td> U
+						</td>						<td class="td_right"> Réception au service monétique
+						</td>
+						</tr>
+						<tr>
+						<td> V
+						</td>						<td class="td_right"> Demande de carte validée
+						</td>
+						</tr>
+						<tr>
+						<td> X
+						</td>						<td class="td_right"> Demande de carte envoyée en production
+						</td>
+						</tr>
+						<tr>
+						<td> GD
+						</td>						<td class="td_right"> Desactivation de la carte
+						</td>
+						</tr>
+
+					</table>
+
+			</div>
+
+	</div>
+
+</div>
+<div class="detail-column" id="d7" style="display:none">
+	<div class="detail">
+			<div class="mock-list">
+				<b>Nom : </b>modificationDate
+			</div>
+			<div class="mock-list">
+				<b>Description : </b>Date de la modification
+			</div>
+
+	</div>
+	<div class="detail">
+			<div class="mock-list">
+				<b>Nom : </b> <a href="../types/date.html">date</a>
+			</div>
+
+	</div>
+
+</div>
+<div class="detail-column" id="d8" style="display:none">
+	<div class="detail">
+			<div class="mock-list">
+				<b>Nom : </b>modificationTime
+			</div>
+			<div class="mock-list">
+				<b>Description : </b>Heure de la modification
+			</div>
+
+	</div>
+	<div class="detail">
+			<div class="mock-list">
+				<b>Nom : </b> <a href="../types/time.html">time</a>
+			</div>
+
+	</div>
+
+</div>
+<div class="detail-column" id="d9" style="display:none">
+	<div class="detail">
+			<div class="mock-list">
+				<b>Nom : </b>modificationType
+			</div>
+			<div class="mock-list">
+				<b>Description : </b>Type de modification
+			</div>
+			<div class="mock-list">
+				<b>Commentaire : </b><p>Liste des valeurs possibles :&nbsp;</p>
+
+<p>0 = Modification de donn&eacute;es</p>
+
+<p>1 = Modification de status</p>
+
+			</div>
+
+	</div>
+	<div class="detail">
+			<div class="mock-list">
+				<b>Nom : </b> <a href="../types/string.html">string</a>
+			</div>
+
+	</div>
+
+</div>
+<div class="detail-column" id="d10" style="display:none">
+	<div class="detail">
+			<div class="mock-list">
+				<b>Nom : </b>modifiedData
+			</div>
+			<div class="mock-list">
+				<b>Description : </b>Donnée modifiée
+			</div>
+			<div class="mock-list">
+				<b>Commentaire : </b><p>Dans le cas o&ugrave; le type de modification est 0 et uniquement 0.&nbsp;</p>
+
+			</div>
+
+	</div>
+	<div class="detail">
+			<div class="mock-list">
+				<b>Nom : </b> <a href="../types/string.html">string</a>
+			</div>
+
+	</div>
+
+</div>
+<div class="detail-column" id="d11" style="display:none">
+	<div class="detail">
+			<div class="mock-list">
+				<b>Nom : </b>historizedMemo
+			</div>
+			<div class="mock-list">
+				<b>Description : </b>Commentaire historisé
+			</div>
+			<div class="mock-list">
+				<b>Commentaire : </b><p>Le type &quot;historizedMemo&quot; est d&eacute;crit dans la documentation des types transverses au domaine Moyens de paiement.</p>
+
+			</div>
+
+	</div>
+	<div class="detail">
+			<div class="mock-list">
+				<b>Nom : </b> <a href="../types/historizedMemo.html">historizedMemo</a>
+			</div>
+			<div class="mock-list">
+				<b> Description : </b>Commentaire historisé.
+			</div>
+			<div class="mock-list">
+				<b>Format : </b>string
+			</div>
+			<div class="mock-list">
+				<b>Longueur mini-maxi : </b>néant - 1000
+			</div>
+
+	</div>
+
+</div>
+      </div> 
+  </div>
+
+  
+  <script src="../resources/jquery.js"></script>
+  <script src="../resources/doc.js"></script>
+</body>
+</html>

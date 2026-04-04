@@ -1,0 +1,280 @@
+<!DOCTYPE html >
+<html>
+<head>
+	<link rel="stylesheet" href="../resources/styleDocu.css" />
+  <link rel="stylesheet" href="../resources/font-awesome/css/font-awesome.min.css" />
+	<title>Documentation Xsd</title>
+	<meta charset="UTF-8" />
+</head>
+
+<body>
+  <div class="document">
+	<div class="header">
+		
+	</div>
+
+  <div class="tabs">
+    <div class="tabs-wrapper" onclick="window.open('../liste-ressources.html', '_self');">
+      <div class="tabs-left-content">
+        Liste des ressources
+      </div>
+    </div>
+    <div class="tabs-wrapper" onclick="window.open('../liste-services.html', '_self');">
+      <div class="tabs-left-content" >
+        Liste des services  
+      </div>
+    </div>
+    <div class="tabs-wrapper-selected" onclick="window.open('../liste-types.html', '_self');">
+      <div class="tabs-right-content">
+        Liste des types
+      </div>
+    </div>
+  </div>
+
+	
+
+	<div class="contenu">
+      <div class="breadcrumb"> 
+        <ul class="breadcrumb">
+           <li> <a href="../index.html"> Accueil </a></li>
+           <li> > </li>
+           <li> <a href="../liste-types.html"> Liste des types </a></li>
+           <li> > </li>
+           <li> customerFamily </li>
+        </ul>                    
+      </div>                    
+      
+     
+      <div class="summary">
+			<div class="mock-list">
+				<b>Nom : </b>customerFamily
+			</div>
+			<div class="mock-list">
+				<b> Description : </b>Famille.
+			</div>
+        
+        <div> <p>Pour un client de type Particulier (<strong>1</strong>).</p>
+</div>
+        <div class="mock-list"> Choix : Non</div>
+        
+      </div>
+                        
+      <div class="column-content">
+        <div class="detail-column">
+          <div class="tree"> 
+<ul>
+	<li>
+<i class="fa fa-caret-down fa-fw" onclick="expand_or_collapse(this)">
+</i>		customerFamily		<ul style="display:block">
+			<li>
+<i class="fa fa-fw">
+</i><span class="selectable" id="e0"> spouseType : customerThirdPartyType
+</span>
+			</li>
+			<li>
+<i class="fa fa-fw">
+</i><span class="selectable" id="e1"> spouseCode : charMax15
+</span>
+			</li>
+			<li>
+<i class="fa fa-fw">
+</i><span class="selectable" id="e2"> numberOfChildren : short
+</span>
+			</li>
+			<li>
+<i class="fa fa-fw">
+</i><span class="selectable" id="e3"> customerFamilyRelationshipCode : charMax15
+</span>
+			</li>
+
+		</ul>
+
+	</li>
+
+</ul>
+          </div>
+          
+          <div class="detail">
+				<p align="left">
+					Légende :<br />
+				</p>
+            <ul>
+               <li align="left">
+                  <i class="fa fa-key fa-fw">
+                  </i>
+                  = Elément obligatoire en saisie.
+               </li>
+               <li align="left">
+                  <span style="font-weight:bold"> [M]
+                  </span>
+                  = Elément multiple (0 à n occurrences).
+               </li>
+               <li align="left">
+                  <span style="font-weight:bold"> [C]
+                  </span>
+                  = Elément composé d'un choix à effectuer. Un seul choix autorisé.
+               </li>
+            </ul>
+            <p align="left">
+               Remarque : Un même élément peut regrouper plusieurs caractéristiques
+            </p>          
+          </div>
+          
+        </div>
+<div class="detail-column" id="d0" style="display:none">
+	<div class="detail">
+			<div class="mock-list">
+				<b>Nom : </b>spouseType
+			</div>
+			<div class="mock-list">
+				<b>Description : </b>Type de conjoint.
+			</div>
+			<div class="mock-list">
+				<b>Commentaire : </b><p>Le type de conjoint ne peut &ecirc;tre renseign&eacute; que si le code du conjoint est renseign&eacute;.</p>
+
+			</div>
+
+	</div>
+	<div class="detail">
+			<div class="mock-list">
+				<b>Nom : </b> <a href="../types/customerThirdPartyType.html">customerThirdPartyType</a>
+			</div>
+			<div class="mock-list">
+				<b> Description : </b>Population ciblée.
+			</div>
+			<div class="mock-list">
+				<b>Format : </b>string
+			</div>
+			<div class="mock-list">
+				<b>Valeurs possibles : </b>					<table class="table_enum" class="table_enum" class="table_enum">
+						<tr>
+						<td>  
+						</td>						<td class="td_right"> Tous
+						</td>
+						</tr>
+						<tr>
+						<td> C
+						</td>						<td class="td_right"> Clients
+						</td>
+						</tr>
+						<tr>
+						<td> T
+						</td>						<td class="td_right"> Tiers
+						</td>
+						</tr>
+
+					</table>
+
+			</div>
+
+	</div>
+
+</div>
+<div class="detail-column" id="d1" style="display:none">
+	<div class="detail">
+			<div class="mock-list">
+				<b>Nom : </b>spouseCode
+			</div>
+			<div class="mock-list">
+				<b>Description : </b>Code du conjoint.
+			</div>
+			<div class="mock-list">
+				<b>Commentaire : </b><p>Le code du conjoint doit exister dans la table des clients ou dans la table des tiers et doit &ecirc;tre coh&eacute;rent avec le type de conjoint renseign&eacute;.</p>
+
+<p>Valeur par d&eacute;faut (contr&ocirc;le de l&rsquo;obligation de saisie uniquement)&nbsp;: <strong>conj</strong></p>
+
+			</div>
+
+	</div>
+	<div class="detail">
+			<div class="mock-list">
+				<b>Nom : </b> <a href="../types/charMax15.html">charMax15</a>
+			</div>
+			<div class="mock-list">
+				<b> Description : </b>Chaîne composée d'au plus 15 caractères.
+			</div>
+			<div class="mock-list">
+				<b>Format : </b>string
+			</div>
+			<div class="mock-list">
+				<b>Longueur mini-maxi : </b>1 - 15
+			</div>
+
+	</div>
+
+</div>
+<div class="detail-column" id="d2" style="display:none">
+	<div class="detail">
+			<div class="mock-list">
+				<b>Nom : </b>numberOfChildren
+			</div>
+			<div class="mock-list">
+				<b>Description : </b>Nombre d'enfants.
+			</div>
+			<div class="mock-list">
+				<b>Commentaire : </b><p>En cr&eacute;ation ou en modification d&rsquo;un client, si des enfants sont renseign&eacute;s dans la balise childrenList, alors&nbsp;:</p>
+
+<ul>
+	<li>Si le nombre d&rsquo;enfants renseign&eacute; dans la liste est diff&eacute;rent du nombre indiqu&eacute; dans la balise numberOfChildren, alors&nbsp;:
+	<ul>
+		<li>Le nombre d&rsquo;enfants indiqu&eacute; ici est ignor&eacute; et remplac&eacute; par le nombre d&rsquo;enfants effectivement renseign&eacute;s dans la liste de la balise childrenList.</li>
+	</ul>
+	</li>
+</ul>
+
+<p>En modification d&rsquo;un client, si aucun enfant n&rsquo;est renseign&eacute; dans la balise childrenList et que le nombre d&rsquo;enfants est diff&eacute;rent de celui d&eacute;j&agrave; associ&eacute; au client, alors il sera ignor&eacute; et remplac&eacute; par ce dernier.</p>
+
+<p>Valeur par d&eacute;faut&nbsp;: <strong>nbenf</strong></p>
+
+			</div>
+
+	</div>
+	<div class="detail">
+			<div class="mock-list">
+				<b>Nom : </b> <a href="../types/short.html">short</a>
+			</div>
+
+	</div>
+
+</div>
+<div class="detail-column" id="d3" style="display:none">
+	<div class="detail">
+			<div class="mock-list">
+				<b>Nom : </b>customerFamilyRelationshipCode
+			</div>
+			<div class="mock-list">
+				<b>Description : </b>Code du client de rattachement familial.
+			</div>
+			<div class="mock-list">
+				<b>Commentaire : </b><p>Si le code client de rattachement familial est renseign&eacute;, alors il doit exister dans la table des clients.</p>
+
+<p>Valeur par d&eacute;faut (contr&ocirc;le de l&rsquo;obligation de saisie uniquement)&nbsp;: <strong>clifam</strong></p>
+
+			</div>
+
+	</div>
+	<div class="detail">
+			<div class="mock-list">
+				<b>Nom : </b> <a href="../types/charMax15.html">charMax15</a>
+			</div>
+			<div class="mock-list">
+				<b> Description : </b>Chaîne composée d'au plus 15 caractères.
+			</div>
+			<div class="mock-list">
+				<b>Format : </b>string
+			</div>
+			<div class="mock-list">
+				<b>Longueur mini-maxi : </b>1 - 15
+			</div>
+
+	</div>
+
+</div>
+      </div> 
+  </div>
+
+  
+  <script src="../resources/jquery.js"></script>
+  <script src="../resources/doc.js"></script>
+</body>
+</html>

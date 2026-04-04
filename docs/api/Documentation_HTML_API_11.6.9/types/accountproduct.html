@@ -1,0 +1,189 @@
+<!DOCTYPE html >
+<html>
+<head>
+	<link rel="stylesheet" href="../resources/styleDocu.css" />
+  <link rel="stylesheet" href="../resources/font-awesome/css/font-awesome.min.css" />
+	<title>Documentation Xsd</title>
+	<meta charset="UTF-8" />
+</head>
+
+<body>
+  <div class="document">
+	<div class="header">
+		
+	</div>
+
+  <div class="tabs">
+    <div class="tabs-wrapper" onclick="window.open('../liste-ressources.html', '_self');">
+      <div class="tabs-left-content">
+        Liste des ressources
+      </div>
+    </div>
+    <div class="tabs-wrapper" onclick="window.open('../liste-services.html', '_self');">
+      <div class="tabs-left-content" >
+        Liste des services  
+      </div>
+    </div>
+    <div class="tabs-wrapper-selected" onclick="window.open('../liste-types.html', '_self');">
+      <div class="tabs-right-content">
+        Liste des types
+      </div>
+    </div>
+  </div>
+
+	
+
+	<div class="contenu">
+      <div class="breadcrumb"> 
+        <ul class="breadcrumb">
+           <li> <a href="../index.html"> Accueil </a></li>
+           <li> > </li>
+           <li> <a href="../liste-types.html"> Liste des types </a></li>
+           <li> > </li>
+           <li> accountproduct </li>
+        </ul>                    
+      </div>                    
+      
+     
+      <div class="summary">
+			<div class="mock-list">
+				<b>Nom : </b>accountproduct
+			</div>
+			<div class="mock-list">
+				<b> Description : </b>Compte produit.
+			</div>
+        
+        <div> </div>
+        <div class="mock-list"> Choix : Non</div>
+        
+      </div>
+                        
+      <div class="column-content">
+        <div class="detail-column">
+          <div class="tree"> 
+<ul>
+	<li>
+<i class="fa fa-caret-down fa-fw" onclick="expand_or_collapse(this)">
+</i>		accountproduct		<ul style="display:block">
+			<li>
+<i class="fa fa-fw">
+</i><i class="fa fa-key fa-fw">
+</i><span class="selectable" id="e0"> productCode : productCode
+</span>
+			</li>
+			<li>
+<i class="fa fa-fw">
+</i><span class="selectable" id="e1"> packageCode : packageCode
+</span>
+			</li>
+
+		</ul>
+
+	</li>
+
+</ul>
+          </div>
+          
+          <div class="detail">
+				<p align="left">
+					Légende :<br />
+				</p>
+            <ul>
+               <li align="left">
+                  <i class="fa fa-key fa-fw">
+                  </i>
+                  = Elément obligatoire en saisie.
+               </li>
+               <li align="left">
+                  <span style="font-weight:bold"> [M]
+                  </span>
+                  = Elément multiple (0 à n occurrences).
+               </li>
+               <li align="left">
+                  <span style="font-weight:bold"> [C]
+                  </span>
+                  = Elément composé d'un choix à effectuer. Un seul choix autorisé.
+               </li>
+            </ul>
+            <p align="left">
+               Remarque : Un même élément peut regrouper plusieurs caractéristiques
+            </p>          
+          </div>
+          
+        </div>
+<div class="detail-column" id="d0" style="display:none">
+	<div class="detail">
+			<div class="mock-list">
+				<b>Nom : </b>productCode
+			</div>
+			<div class="mock-list">
+				<b>Description : </b>Code produit.
+			</div>
+			<div class="mock-list">
+				<b>Commentaire : </b><p>Le code produit doit exister dans la table des produits.</p>
+
+<p>Seuls les comptes rattach&eacute;s &agrave; des produits d&#39;attribut &quot;compte&quot; ou les comptes rattach&eacute;s &agrave; des dossiers sont autoris&eacute;s dans le cadre de ce service.</p>
+
+<p>S&#39;il s&#39;agit d&#39;une cr&eacute;ation de compte rattach&eacute; &agrave; un produit d&#39;attribut &quot;compte&quot;, les contr&ocirc;les d&#39;&eacute;ligibilit&eacute; du client &agrave; la souscription du produit sont effectu&eacute;s (contr&ocirc;les identiques &agrave; ceux r&eacute;alis&eacute;s dans le cadre d&#39;une souscription de produit).</p>
+
+			</div>
+
+	</div>
+	<div class="detail">
+			<div class="mock-list">
+				<b>Nom : </b> <a href="../types/productCode.html">productCode</a>
+			</div>
+			<div class="mock-list">
+				<b> Description : </b>Code produit.
+			</div>
+			<div class="mock-list">
+				<b>Format : </b>string
+			</div>
+			<div class="mock-list">
+				<b>Longueur fixe : </b>3
+			</div>
+
+	</div>
+
+</div>
+<div class="detail-column" id="d1" style="display:none">
+	<div class="detail">
+			<div class="mock-list">
+				<b>Nom : </b>packageCode
+			</div>
+			<div class="mock-list">
+				<b>Description : </b>Code package.
+			</div>
+			<div class="mock-list">
+				<b>Commentaire : </b><p>Cette information concerne les comptes rattach&eacute;s &agrave; des produits d&#39;attribut &quot;compte&quot; uniquement.</p>
+
+<p>Si le code package est renseign&eacute;, les contr&ocirc;les d&#39;&eacute;ligibilit&eacute; du client &agrave; la souscription du produit/package sont effectu&eacute;s (contr&ocirc;les identiques &agrave; ceux r&eacute;alis&eacute;s dans le cadre d&#39;une souscription de produit).</p>
+
+			</div>
+
+	</div>
+	<div class="detail">
+			<div class="mock-list">
+				<b>Nom : </b> <a href="../types/packageCode.html">packageCode</a>
+			</div>
+			<div class="mock-list">
+				<b> Description : </b>Code package.
+			</div>
+			<div class="mock-list">
+				<b>Format : </b>string
+			</div>
+			<div class="mock-list">
+				<b>Longueur fixe : </b>6
+			</div>
+
+	</div>
+
+</div>
+      </div> 
+  </div>
+
+  
+  <script src="../resources/jquery.js"></script>
+  <script src="../resources/doc.js"></script>
+</body>
+</html>

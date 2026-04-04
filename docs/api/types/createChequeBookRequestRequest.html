@@ -1,0 +1,2046 @@
+<!DOCTYPE html >
+<html>
+<head>
+	<link rel="stylesheet" href="../resources/styleDocu.css" />
+  <link rel="stylesheet" href="../resources/font-awesome/css/font-awesome.min.css" />
+	<title>Documentation Xsd</title>
+	<meta charset="UTF-8" />
+</head>
+
+<body>
+  <div class="document">
+	<div class="header">
+		
+	</div>
+
+  <div class="tabs">
+    <div class="tabs-wrapper" onclick="window.open('../liste-ressources.html', '_self');">
+      <div class="tabs-left-content">
+        Liste des ressources
+      </div>
+    </div>
+    <div class="tabs-wrapper" onclick="window.open('../liste-services.html', '_self');">
+      <div class="tabs-left-content" >
+        Liste des services  
+      </div>
+    </div>
+    <div class="tabs-wrapper-selected" onclick="window.open('../liste-types.html', '_self');">
+      <div class="tabs-right-content">
+        Liste des types
+      </div>
+    </div>
+  </div>
+
+	
+
+	<div class="contenu">
+      <div class="breadcrumb"> 
+        <ul class="breadcrumb">
+           <li> <a href="../index.html"> Accueil </a></li>
+           <li> > </li>
+           <li> <a href="../liste-types.html"> Liste des types </a></li>
+           <li> > </li>
+           <li> createChequeBookRequestRequest </li>
+        </ul>                    
+      </div>                    
+      
+     
+      <div class="summary">
+			<div class="mock-list">
+				<b>Nom : </b>createChequeBookRequestRequest
+			</div>
+			<div class="mock-list">
+				<b> Description : </b>Requête création d'une commande de chéquier.
+			</div>
+        
+        <div> </div>
+        <div class="mock-list"> Choix : Non</div>
+        
+      </div>
+                        
+      <div class="column-content">
+        <div class="detail-column">
+          <div class="tree"> 
+<ul>
+	<li>
+<i class="fa fa-caret-down fa-fw" onclick="expand_or_collapse(this)">
+</i>		createChequeBookRequestRequest		<ul style="display:block">
+			<li>
+<i class="fa fa-fw">
+</i><i class="fa fa-key fa-fw">
+</i><span class="selectable" id="e0"> branchCode : branchCode
+</span>
+			</li>
+			<li>
+<i class="fa fa-caret-down fa-fw" onclick="expand_or_collapse(this)">
+</i><i class="fa fa-key fa-fw">
+</i><span class="selectable" id="e1"> account : internalAccountKey
+</span>				<ul style="display:block">
+					<li>
+<i class="fa fa-fw">
+</i><i class="fa fa-key fa-fw">
+</i><span class="selectable" id="e2"> branch : char5
+</span>
+					</li>
+					<li>
+<i class="fa fa-fw">
+</i><i class="fa fa-key fa-fw">
+</i><span class="selectable" id="e3"> currency : currencyCode
+</span>
+					</li>
+					<li>
+<i class="fa fa-fw">
+</i><i class="fa fa-key fa-fw">
+</i><span class="selectable" id="e4"> account : charMax11
+</span>
+					</li>
+					<li>
+<i class="fa fa-fw">
+</i><span class="selectable" id="e5"> suffix : charMax2
+</span>
+					</li>
+
+				</ul>
+
+			</li>
+			<li>
+<i class="fa fa-caret-down fa-fw" onclick="expand_or_collapse(this)">
+</i><i class="fa fa-key fa-fw">
+</i><span style="font-weight:bold"> [C]
+</span><span class="selectable" id="e6"> chequeBookRequestOrigin : chequeBookRequestOrigin
+</span>				<ul style="display:block">
+					<li>
+<i class="fa fa-caret-down fa-fw" onclick="expand_or_collapse(this)">
+</i><span style="font-weight:bold"> [C]
+</span><span class="selectable" id="e7"> customerOrThirdPartyCode : customerOrThirdPartyCode
+</span>						<ul style="display:block">
+							<li>
+<i class="fa fa-fw">
+</i><span class="selectable" id="e8"> customerCode : customerCode
+</span>
+							</li>
+							<li>
+<i class="fa fa-fw">
+</i><span class="selectable" id="e9"> thirdPartyCode : customerCode
+</span>
+							</li>
+
+						</ul>
+
+					</li>
+					<li>
+<i class="fa fa-fw">
+</i><span class="selectable" id="e10"> powerOfAttorneyNumber : standardBillOfExchangeAttorneyId
+</span>
+					</li>
+
+				</ul>
+
+			</li>
+			<li>
+<i class="fa fa-fw">
+</i><i class="fa fa-key fa-fw">
+</i><span class="selectable" id="e11"> deliveryMethod : chequeBookDeliveryMethod
+</span>
+			</li>
+			<li>
+<i class="fa fa-caret-down fa-fw" onclick="expand_or_collapse(this)">
+</i><i class="fa fa-key fa-fw">
+</i><span style="font-weight:bold"> [C]
+</span><span class="selectable" id="e12"> chequeBookDeliveryPlace : chequeBookDeliveryPlace
+</span>				<ul style="display:block">
+					<li>
+<i class="fa fa-fw">
+</i><span class="selectable" id="e13"> remittanceBranch : branchCode
+</span>
+					</li>
+					<li>
+<i class="fa fa-caret-down fa-fw" onclick="expand_or_collapse(this)">
+</i><span style="font-weight:bold"> [C]
+</span><span class="selectable" id="e14"> deliveryAddress : chequeBookDeliveryAddress
+</span>						<ul style="display:block">
+							<li>
+<i class="fa fa-caret-down fa-fw" onclick="expand_or_collapse(this)">
+</i><span style="font-weight:bold"> [C]
+</span><span class="selectable" id="e15"> useAnExistingAddress : useAnExistingAddress
+</span>								<ul style="display:block">
+									<li>
+<i class="fa fa-fw">
+</i><span class="selectable" id="e16"> existingAddressToBeUsed : existingAddressToBeUsed
+</span>
+									</li>
+									<li>
+<i class="fa fa-fw">
+</i><span class="selectable" id="e17"> codingAddressType : charMax2
+</span>
+									</li>
+
+								</ul>
+
+							</li>
+							<li>
+<i class="fa fa-caret-down fa-fw" onclick="expand_or_collapse(this)">
+</i><span class="selectable" id="e18"> otherAddress : createCustomerAddressRequest
+</span>								<ul style="display:block">
+									<li>
+<i class="fa fa-caret-down fa-fw" onclick="expand_or_collapse(this)">
+</i><i class="fa fa-key fa-fw">
+</i><span class="selectable" id="e19"> identifier : addressCreateIdentifier
+</span>										<ul style="display:block">
+											<li>
+<i class="fa fa-fw">
+</i><span class="selectable" id="e20"> customerCode : customerCode
+</span>
+											</li>
+											<li>
+<i class="fa fa-fw">
+</i><i class="fa fa-key fa-fw">
+</i><span class="selectable" id="e21"> type : charMax2
+</span>
+											</li>
+
+										</ul>
+
+									</li>
+									<li>
+<i class="fa fa-fw">
+</i><i class="fa fa-key fa-fw">
+</i><span class="selectable" id="e22"> languageCode : char3
+</span>
+									</li>
+									<li>
+<i class="fa fa-fw">
+</i><i class="fa fa-key fa-fw">
+</i><span class="selectable" id="e23"> addressFormat : charMax2
+</span>
+									</li>
+									<li>
+<i class="fa fa-fw">
+</i><span class="selectable" id="e24"> addressLine1 : charMax30
+</span>
+									</li>
+									<li>
+<i class="fa fa-fw">
+</i><span class="selectable" id="e25"> addressLine2 : charMax30
+</span>
+									</li>
+									<li>
+<i class="fa fa-fw">
+</i><span class="selectable" id="e26"> addressLine3 : charMax30
+</span>
+									</li>
+									<li>
+<i class="fa fa-fw">
+</i><span class="selectable" id="e27"> city : charMax30
+</span>
+									</li>
+									<li>
+<i class="fa fa-fw">
+</i><span class="selectable" id="e28"> postalCode : charMax10
+</span>
+									</li>
+									<li>
+<i class="fa fa-fw">
+</i><span class="selectable" id="e29"> deliveryOffice : charMax30
+</span>
+									</li>
+									<li>
+<i class="fa fa-fw">
+</i><span class="selectable" id="e30"> poBox : charMax10
+</span>
+									</li>
+									<li>
+<i class="fa fa-fw">
+</i><span class="selectable" id="e31"> postalSector : charMax10
+</span>
+									</li>
+									<li>
+<i class="fa fa-fw">
+</i><span class="selectable" id="e32"> postalSectorDesignation : charMax30
+</span>
+									</li>
+									<li>
+<i class="fa fa-fw">
+</i><span class="selectable" id="e33"> countryCode : charMax3
+</span>
+									</li>
+									<li>
+<i class="fa fa-fw">
+</i><span class="selectable" id="e34"> branchCode : char5
+</span>
+									</li>
+									<li>
+<i class="fa fa-fw">
+</i><span class="selectable" id="e35"> locker : charMax9
+</span>
+									</li>
+									<li>
+<i class="fa fa-fw">
+</i><span class="selectable" id="e36"> serviceCode : charMax4
+</span>
+									</li>
+									<li>
+<i class="fa fa-fw">
+</i><span class="selectable" id="e37"> transportTypeCode : charMax3
+</span>
+									</li>
+									<li>
+<i class="fa fa-fw">
+</i><span class="selectable" id="e38"> emailAddress : charMax50
+</span>
+									</li>
+									<li>
+<i class="fa fa-fw">
+</i><span class="selectable" id="e39"> provisionalAddressStartDate : date
+</span>
+									</li>
+									<li>
+<i class="fa fa-fw">
+</i><span class="selectable" id="e40"> provisionalAddressEndDate : date
+</span>
+									</li>
+									<li>
+<i class="fa fa-fw">
+</i><span class="selectable" id="e41"> geographicalDepartment : charMax30
+</span>
+									</li>
+									<li>
+<i class="fa fa-fw">
+</i><span class="selectable" id="e42"> county : charMax50
+</span>
+									</li>
+
+								</ul>
+
+							</li>
+
+						</ul>
+
+					</li>
+
+				</ul>
+
+			</li>
+			<li>
+<i class="fa fa-caret-down fa-fw" onclick="expand_or_collapse(this)">
+</i><i class="fa fa-key fa-fw">
+</i><span style="font-weight:bold"> [M]
+</span><span class="selectable" id="e43"> chequeBookTypeAndNumber : chequeBookTypeAndNumber
+</span>				<ul style="display:block">
+					<li>
+<i class="fa fa-fw">
+</i><i class="fa fa-key fa-fw">
+</i><span class="selectable" id="e44"> chequeBookType : chequeBookTypeCode
+</span>
+					</li>
+					<li>
+<i class="fa fa-fw">
+</i><i class="fa fa-key fa-fw">
+</i><span class="selectable" id="e45"> chequeBookNumber : positiveInteger
+</span>
+					</li>
+					<li>
+<i class="fa fa-caret-down fa-fw" onclick="expand_or_collapse(this)">
+</i><span class="selectable" id="e46"> attributes : chequeBookAttributes
+</span>						<ul style="display:block">
+							<li>
+<i class="fa fa-fw">
+</i><span class="selectable" id="e47"> attribute1 : chequeBookAttributeCode
+</span>
+							</li>
+							<li>
+<i class="fa fa-fw">
+</i><span class="selectable" id="e48"> attribute2 : chequeBookAttributeCode
+</span>
+							</li>
+
+						</ul>
+
+					</li>
+					<li>
+<i class="fa fa-fw">
+</i><i class="fa fa-key fa-fw">
+</i><span class="selectable" id="e49"> chequeTitle : chequeTitle
+</span>
+					</li>
+
+				</ul>
+
+			</li>
+
+		</ul>
+
+	</li>
+
+</ul>
+          </div>
+          
+          <div class="detail">
+				<p align="left">
+					Légende :<br />
+				</p>
+            <ul>
+               <li align="left">
+                  <i class="fa fa-key fa-fw">
+                  </i>
+                  = Elément obligatoire en saisie.
+               </li>
+               <li align="left">
+                  <span style="font-weight:bold"> [M]
+                  </span>
+                  = Elément multiple (0 à n occurrences).
+               </li>
+               <li align="left">
+                  <span style="font-weight:bold"> [C]
+                  </span>
+                  = Elément composé d'un choix à effectuer. Un seul choix autorisé.
+               </li>
+            </ul>
+            <p align="left">
+               Remarque : Un même élément peut regrouper plusieurs caractéristiques
+            </p>          
+          </div>
+          
+        </div>
+<div class="detail-column" id="d0" style="display:none">
+	<div class="detail">
+			<div class="mock-list">
+				<b>Nom : </b>branchCode
+			</div>
+			<div class="mock-list">
+				<b>Description : </b>Code agence de la commande.
+			</div>
+			<div class="mock-list">
+				<b>Commentaire : </b><p>Le code agence doit exister en nomenclature <strong>001</strong>, l&#39;agence doit &ecirc;tre ouverte et diff&eacute;rente du site central.</p>
+
+			</div>
+
+	</div>
+	<div class="detail">
+			<div class="mock-list">
+				<b>Nom : </b> <a href="../types/branchCode.html">branchCode</a>
+			</div>
+			<div class="mock-list">
+				<b> Description : </b>Code d'une agence.
+			</div>
+			<div class="mock-list">
+				<b>Format : </b>string
+			</div>
+			<div class="mock-list">
+				<b>Longueur fixe : </b>5
+			</div>
+
+	</div>
+
+</div>
+<div class="detail-column" id="d1" style="display:none">
+	<div class="detail">
+			<div class="mock-list">
+				<b>Nom : </b>account
+			</div>
+			<div class="mock-list">
+				<b>Description : </b>Compte de la commande.
+			</div>
+			<div class="mock-list">
+				<b>Commentaire : </b><p>Le compte doit exister en tant que compte client, &ecirc;tre ouvert et au format demand&eacute; par la cl&eacute; <strong>COMPTE</strong> en nomenclature <strong>999</strong> (num&eacute;ricit&eacute; et nombre de caract&egrave;res). Le client titulaire du compte doit exister dans la base des clients et ne pas &ecirc;tre interdit de ch&eacute;quier. Le compte doit avoir un chapitre comptable autoris&eacute;&nbsp;&agrave; la commande de ch&eacute;quier.<br />
+Le code agence du compte doit exister en nomenclature <strong>001</strong>. S&#39;il est valoris&eacute;, il doit &ecirc;tre &eacute;gal au code agence de la demande.<br />
+Le suffixe du compte doit &ecirc;tre valoris&eacute; num&eacute;rique ou non valoris&eacute; en fonction de la cl&eacute; <strong>COMPTE</strong> en nomenclature <strong>999</strong>.<br />
+Le code devise doit exister en nomenclature <strong>005</strong> et, en fonction de la cl&eacute; <strong>DEMCHQ</strong> en nomenclature <strong>052</strong>, doit &ecirc;tre &eacute;gal au code devise nationale du param&egrave;tre <strong>DEVISE_NAT </strong>en nomenclature <strong>098</strong>.<br />
+&nbsp;</p>
+
+			</div>
+
+	</div>
+	<div class="detail">
+			<div class="mock-list">
+				<b>Nom : </b> <a href="../types/internalAccountKey.html">internalAccountKey</a>
+			</div>
+			<div class="mock-list">
+				<b> Description : </b>Identifiant de compte au format interne.
+			</div>
+
+	</div>
+
+</div>
+<div class="detail-column" id="d2" style="display:none">
+	<div class="detail">
+			<div class="mock-list">
+				<b>Nom : </b>branch
+			</div>
+			<div class="mock-list">
+				<b>Description : </b>Agence du compte.
+			</div>
+			<div class="mock-list">
+				<b>Commentaire : </b><p>Les agences sont d&eacute;finies dans la nomenclature <strong>001</strong>.</p>
+
+			</div>
+
+	</div>
+	<div class="detail">
+			<div class="mock-list">
+				<b>Nom : </b> <a href="../types/char5.html">char5</a>
+			</div>
+			<div class="mock-list">
+				<b> Description : </b>Type avec un nombre de caractères égal à 5.
+			</div>
+			<div class="mock-list">
+				<b>Format : </b>string
+			</div>
+			<div class="mock-list">
+				<b>Longueur fixe : </b>5
+			</div>
+
+	</div>
+
+</div>
+<div class="detail-column" id="d3" style="display:none">
+	<div class="detail">
+			<div class="mock-list">
+				<b>Nom : </b>currency
+			</div>
+			<div class="mock-list">
+				<b>Description : </b>Devise du compte.
+			</div>
+			<div class="mock-list">
+				<b>Commentaire : </b><p>Les devises sont d&eacute;finies dans les nomenclatures <strong>002</strong> (devises alphanum&eacute;riques) et <strong>005</strong> (devises num&eacute;riques).</p>
+
+			</div>
+
+	</div>
+	<div class="detail">
+			<div class="mock-list">
+				<b>Nom : </b> <a href="../types/currencyCode.html">currencyCode</a>
+			</div>
+			<div class="mock-list">
+				<b> Description : </b>Code devise.
+			</div>
+			<div class="mock-list">
+				<b>Format : </b>string
+			</div>
+			<div class="mock-list">
+				<b>Longueur fixe : </b>3
+			</div>
+
+	</div>
+
+</div>
+<div class="detail-column" id="d4" style="display:none">
+	<div class="detail">
+			<div class="mock-list">
+				<b>Nom : </b>account
+			</div>
+			<div class="mock-list">
+				<b>Description : </b>Numéro du compte.
+			</div>
+
+	</div>
+	<div class="detail">
+			<div class="mock-list">
+				<b>Nom : </b> <a href="../types/charMax11.html">charMax11</a>
+			</div>
+			<div class="mock-list">
+				<b> Description : </b>Chaîne composée d'au plus 11 caractères.
+			</div>
+			<div class="mock-list">
+				<b>Format : </b>string
+			</div>
+			<div class="mock-list">
+				<b>Longueur mini-maxi : </b>1 - 11
+			</div>
+
+	</div>
+
+</div>
+<div class="detail-column" id="d5" style="display:none">
+	<div class="detail">
+			<div class="mock-list">
+				<b>Nom : </b>suffix
+			</div>
+			<div class="mock-list">
+				<b>Description : </b>Suffixe du compte.
+			</div>
+
+	</div>
+	<div class="detail">
+			<div class="mock-list">
+				<b>Nom : </b> <a href="../types/charMax2.html">charMax2</a>
+			</div>
+			<div class="mock-list">
+				<b> Description : </b>Chaîne composée d'au plus 2 caractères.
+			</div>
+			<div class="mock-list">
+				<b>Format : </b>string
+			</div>
+			<div class="mock-list">
+				<b>Longueur mini-maxi : </b>1 - 2
+			</div>
+
+	</div>
+
+</div>
+<div class="detail-column" id="d6" style="display:none">
+	<div class="detail">
+			<div class="mock-list">
+				<b>Nom : </b>chequeBookRequestOrigin
+			</div>
+			<div class="mock-list">
+				<b>Description : </b>Origine de la demande de chéquier.
+			</div>
+
+	</div>
+	<div class="detail">
+			<div class="mock-list">
+				<b>Nom : </b> <a href="../types/chequeBookRequestOrigin.html">chequeBookRequestOrigin</a>
+			</div>
+			<div class="mock-list">
+				<b> Description : </b>Origine de la demande de chéquier.
+			</div>
+
+	</div>
+
+</div>
+<div class="detail-column" id="d7" style="display:none">
+	<div class="detail">
+			<div class="mock-list">
+				<b>Nom : </b>customerOrThirdPartyCode
+			</div>
+			<div class="mock-list">
+				<b>Description : </b>Code du client ou du tiers.
+			</div>
+			<div class="mock-list">
+				<b>Commentaire : </b><p>Le client ou tiers doit exister et &ecirc;tre soit titulaire du compte, soit mandataire avec procuration sur le compte.</p>
+
+			</div>
+
+	</div>
+	<div class="detail">
+			<div class="mock-list">
+				<b>Nom : </b> <a href="../types/customerOrThirdPartyCode.html">customerOrThirdPartyCode</a>
+			</div>
+			<div class="mock-list">
+				<b> Description : </b>Code du client/tiers.
+			</div>
+
+	</div>
+
+</div>
+<div class="detail-column" id="d8" style="display:none">
+	<div class="detail">
+			<div class="mock-list">
+				<b>Nom : </b>customerCode
+			</div>
+			<div class="mock-list">
+				<b>Description : </b>Code client.
+			</div>
+
+	</div>
+	<div class="detail">
+			<div class="mock-list">
+				<b>Nom : </b> <a href="../types/customerCode.html">customerCode</a>
+			</div>
+			<div class="mock-list">
+				<b> Description : </b>Code client.
+			</div>
+			<div class="mock-list">
+				<b>Format : </b>string
+			</div>
+			<div class="mock-list">
+				<b>Longueur mini-maxi : </b>1 - 15
+			</div>
+
+	</div>
+
+</div>
+<div class="detail-column" id="d9" style="display:none">
+	<div class="detail">
+			<div class="mock-list">
+				<b>Nom : </b>thirdPartyCode
+			</div>
+			<div class="mock-list">
+				<b>Description : </b>Code tiers.
+			</div>
+
+	</div>
+	<div class="detail">
+			<div class="mock-list">
+				<b>Nom : </b> <a href="../types/customerCode.html">customerCode</a>
+			</div>
+			<div class="mock-list">
+				<b> Description : </b>Code client.
+			</div>
+			<div class="mock-list">
+				<b>Format : </b>string
+			</div>
+			<div class="mock-list">
+				<b>Longueur mini-maxi : </b>1 - 15
+			</div>
+
+	</div>
+
+</div>
+<div class="detail-column" id="d10" style="display:none">
+	<div class="detail">
+			<div class="mock-list">
+				<b>Nom : </b>powerOfAttorneyNumber
+			</div>
+			<div class="mock-list">
+				<b>Description : </b>Numéro de procuration.
+			</div>
+			<div class="mock-list">
+				<b>Commentaire : </b><p>La procuration doit exister pour le compte de la demande de ch&eacute;quier.</p>
+
+			</div>
+
+	</div>
+	<div class="detail">
+			<div class="mock-list">
+				<b>Nom : </b> <a href="../types/standardBillOfExchangeAttorneyId.html">standardBillOfExchangeAttorneyId</a>
+			</div>
+			<div class="mock-list">
+				<b> Description : </b>Identifiant du mandataire de la demande de lettre de change normalisée.
+			</div>
+			<div class="mock-list">
+				<b>Format : </b>string
+			</div>
+			<div class="mock-list">
+				<b>Longueur fixe : </b>6
+			</div>
+
+	</div>
+
+</div>
+<div class="detail-column" id="d11" style="display:none">
+	<div class="detail">
+			<div class="mock-list">
+				<b>Nom : </b>deliveryMethod
+			</div>
+			<div class="mock-list">
+				<b>Description : </b>Mode d'expédition du chéquier.
+			</div>
+			<div class="mock-list">
+				<b>Commentaire : </b><p>Si le ch&eacute;quier est remis en agence (<strong>B</strong> = Ch&eacute;quier remis au guichet), le code agence de remise du ch&eacute;quier doit &ecirc;tre valoris&eacute; et exister en nomenclature <strong>001</strong>.</p>
+
+			</div>
+
+	</div>
+	<div class="detail">
+			<div class="mock-list">
+				<b>Nom : </b> <a href="../types/chequeBookDeliveryMethod.html">chequeBookDeliveryMethod</a>
+			</div>
+			<div class="mock-list">
+				<b> Description : </b>Mode d'expédition du chéquier.
+			</div>
+			<div class="mock-list">
+				<b>Format : </b>string
+			</div>
+			<div class="mock-list">
+				<b>Valeurs possibles : </b>					<table class="table_enum" class="table_enum" class="table_enum">
+						<tr>
+						<td> B
+						</td>						<td class="td_right"> Chéquier remis au guichet
+						</td>
+						</tr>
+						<tr>
+						<td> R
+						</td>						<td class="td_right"> Envoi du chéquier en courrier recommandé
+						</td>
+						</tr>
+						<tr>
+						<td> C
+						</td>						<td class="td_right"> Envoi du chéquier en courrier simple
+						</td>
+						</tr>
+
+					</table>
+
+			</div>
+
+	</div>
+
+</div>
+<div class="detail-column" id="d12" style="display:none">
+	<div class="detail">
+			<div class="mock-list">
+				<b>Nom : </b>chequeBookDeliveryPlace
+			</div>
+			<div class="mock-list">
+				<b>Description : </b>Lieu d'expédition du chéquier.
+			</div>
+
+	</div>
+	<div class="detail">
+			<div class="mock-list">
+				<b>Nom : </b> <a href="../types/chequeBookDeliveryPlace.html">chequeBookDeliveryPlace</a>
+			</div>
+			<div class="mock-list">
+				<b> Description : </b>Lieu de délivrance du chéquier.
+			</div>
+
+	</div>
+
+</div>
+<div class="detail-column" id="d13" style="display:none">
+	<div class="detail">
+			<div class="mock-list">
+				<b>Nom : </b>remittanceBranch
+			</div>
+			<div class="mock-list">
+				<b>Description : </b>Agence de remise du chéquier.
+			</div>
+			<div class="mock-list">
+				<b>Commentaire : </b><p>Obligatoire si le mode d&#39;exp&eacute;dition est <strong>B.</strong><br />
+Le code agence doit exister en nomenclature <strong>001</strong>, l&#39;agence doit &ecirc;tre ouverte et diff&eacute;rente du site central.<br />
+&nbsp;</p>
+
+			</div>
+
+	</div>
+	<div class="detail">
+			<div class="mock-list">
+				<b>Nom : </b> <a href="../types/branchCode.html">branchCode</a>
+			</div>
+			<div class="mock-list">
+				<b> Description : </b>Code d'une agence.
+			</div>
+			<div class="mock-list">
+				<b>Format : </b>string
+			</div>
+			<div class="mock-list">
+				<b>Longueur fixe : </b>5
+			</div>
+
+	</div>
+
+</div>
+<div class="detail-column" id="d14" style="display:none">
+	<div class="detail">
+			<div class="mock-list">
+				<b>Nom : </b>deliveryAddress
+			</div>
+			<div class="mock-list">
+				<b>Description : </b>Adresse de réception du chéquier.
+			</div>
+
+	</div>
+	<div class="detail">
+			<div class="mock-list">
+				<b>Nom : </b> <a href="../types/chequeBookDeliveryAddress.html">chequeBookDeliveryAddress</a>
+			</div>
+			<div class="mock-list">
+				<b> Description : </b>Adresse de délivrance du chéquier (en cas d¿envoi).
+			</div>
+
+	</div>
+
+</div>
+<div class="detail-column" id="d15" style="display:none">
+	<div class="detail">
+			<div class="mock-list">
+				<b>Nom : </b>useAnExistingAddress
+			</div>
+			<div class="mock-list">
+				<b>Description : </b>Utilisation d'une adresse existante.
+			</div>
+
+	</div>
+	<div class="detail">
+			<div class="mock-list">
+				<b>Nom : </b> <a href="../types/useAnExistingAddress.html">useAnExistingAddress</a>
+			</div>
+			<div class="mock-list">
+				<b> Description : </b>Utilisation d'une adresse existante.
+			</div>
+
+	</div>
+
+</div>
+<div class="detail-column" id="d16" style="display:none">
+	<div class="detail">
+			<div class="mock-list">
+				<b>Nom : </b>existingAddressToBeUsed
+			</div>
+			<div class="mock-list">
+				<b>Description : </b>Choix de l'adresse existante parmi des types fixes.
+			</div>
+
+	</div>
+	<div class="detail">
+			<div class="mock-list">
+				<b>Nom : </b> <a href="../types/existingAddressToBeUsed.html">existingAddressToBeUsed</a>
+			</div>
+			<div class="mock-list">
+				<b> Description : </b>Choix de l'adresse parmi des types fixes.
+			</div>
+			<div class="mock-list">
+				<b>Format : </b>string
+			</div>
+			<div class="mock-list">
+				<b>Valeurs possibles : </b>					<table class="table_enum" class="table_enum" class="table_enum" class="table_enum" class="table_enum">
+						<tr>
+						<td> CC
+						</td>						<td class="td_right"> Adresse compte
+						</td>
+						</tr>
+						<tr>
+						<td> C
+						</td>						<td class="td_right"> Adresse courrier client
+						</td>
+						</tr>
+						<tr>
+						<td> S
+						</td>						<td class="td_right"> Adresse spécifique
+						</td>
+						</tr>
+						<tr>
+						<td> D
+						</td>						<td class="td_right"> Adresse déclarative client
+						</td>
+						</tr>
+						<tr>
+						<td> CH
+						</td>						<td class="td_right"> Adresse chéquier
+						</td>
+						</tr>
+
+					</table>
+
+			</div>
+
+	</div>
+
+</div>
+<div class="detail-column" id="d17" style="display:none">
+	<div class="detail">
+			<div class="mock-list">
+				<b>Nom : </b>codingAddressType
+			</div>
+			<div class="mock-list">
+				<b>Description : </b>Choix de l'adresse existante parmi des types paramétrés en nomenclature 180.
+			</div>
+			<div class="mock-list">
+				<b>Commentaire : </b><p>Le type d&#39;adresse doit exister en nomenclature <strong>180</strong>.<br />
+Le client titulaire du compte doit poss&eacute;der une adresse de ce type.<br />
+&nbsp;</p>
+
+			</div>
+
+	</div>
+	<div class="detail">
+			<div class="mock-list">
+				<b>Nom : </b> <a href="../types/charMax2.html">charMax2</a>
+			</div>
+			<div class="mock-list">
+				<b> Description : </b>Chaîne composée d'au plus 2 caractères.
+			</div>
+			<div class="mock-list">
+				<b>Format : </b>string
+			</div>
+			<div class="mock-list">
+				<b>Longueur mini-maxi : </b>1 - 2
+			</div>
+
+	</div>
+
+</div>
+<div class="detail-column" id="d18" style="display:none">
+	<div class="detail">
+			<div class="mock-list">
+				<b>Nom : </b>otherAddress
+			</div>
+			<div class="mock-list">
+				<b>Description : </b>Autre adresse.
+			</div>
+
+	</div>
+	<div class="detail">
+			<div class="mock-list">
+				<b>Nom : </b> <a href="../types/createCustomerAddressRequest.html">createCustomerAddressRequest</a>
+			</div>
+			<div class="mock-list">
+				<b> Description : </b>Requête création d'une adresse d'un client.
+			</div>
+
+	</div>
+
+</div>
+<div class="detail-column" id="d19" style="display:none">
+	<div class="detail">
+			<div class="mock-list">
+				<b>Nom : </b>identifier
+			</div>
+			<div class="mock-list">
+				<b>Description : </b>Identifiant de l'adresse.
+			</div>
+			<div class="mock-list">
+				<b>Commentaire : </b><p>Un contr&ocirc;le de saisie obligatoire d&rsquo;au moins une adresse de type D&eacute;claration (<strong>D</strong>) pour le client est effectu&eacute; via la valeur par d&eacute;faut <strong>adcli</strong>.</p>
+
+<p>Un contr&ocirc;le de saisie obligatoire d&rsquo;au moins une adresse de type Courrier (<strong>C</strong>) pour le client est effectu&eacute; via la valeur par d&eacute;faut <strong>adcou</strong>.</p>
+
+<p>Un contr&ocirc;le de saisie obligatoire d&rsquo;au moins une adresse de type Provisoire (<strong>P</strong>) pour le client est effectu&eacute; via la valeur par d&eacute;faut <strong>adprov</strong>.</p>
+
+			</div>
+
+	</div>
+	<div class="detail">
+			<div class="mock-list">
+				<b>Nom : </b> <a href="../types/addressCreateIdentifier.html">addressCreateIdentifier</a>
+			</div>
+			<div class="mock-list">
+				<b> Description : </b>Identifiant d'une adresse d'un client.
+			</div>
+
+	</div>
+
+</div>
+<div class="detail-column" id="d20" style="display:none">
+	<div class="detail">
+			<div class="mock-list">
+				<b>Nom : </b>customerCode
+			</div>
+			<div class="mock-list">
+				<b>Description : </b>Code du client.
+			</div>
+			<div class="mock-list">
+				<b>Commentaire : </b><p>Le code client n&rsquo;est pas obligatoire si le service de cr&eacute;ation d&rsquo;une adresse pour un client est appel&eacute; par le service <strong>createCustomer</strong>, et est obligatoire dans tous les autres cas.</p>
+
+<p>S&rsquo;il est renseign&eacute;, il doit correspondre &agrave; un client existant dans la table des clients.</p>
+
+<p>Si le contr&ocirc;le sur le contentieux est demand&eacute; dans le <strong>Montant&nbsp;1</strong> (&eacute;gal &agrave; <strong>1</strong>) du param&egrave;tre <strong>AWMH</strong> dans la nomenclature <strong>098</strong> ou si le param&egrave;tre <strong>AWMH</strong> n&rsquo;existe pas dans la nomenclature <strong>098</strong>, alors le client ne doit pas &ecirc;tre pr&eacute;sent dans la table des clients en contentieux.</p>
+
+			</div>
+
+	</div>
+	<div class="detail">
+			<div class="mock-list">
+				<b>Nom : </b> <a href="../types/customerCode.html">customerCode</a>
+			</div>
+			<div class="mock-list">
+				<b> Description : </b>Code client.
+			</div>
+			<div class="mock-list">
+				<b>Format : </b>string
+			</div>
+			<div class="mock-list">
+				<b>Longueur mini-maxi : </b>1 - 15
+			</div>
+
+	</div>
+
+</div>
+<div class="detail-column" id="d21" style="display:none">
+	<div class="detail">
+			<div class="mock-list">
+				<b>Nom : </b>type
+			</div>
+			<div class="mock-list">
+				<b>Description : </b>Type de l'adresse.
+			</div>
+			<div class="mock-list">
+				<b>Commentaire : </b><p>Le code du type de l&rsquo;adresse doit exister en nomenclature <strong>180</strong> s&rsquo;il est diff&eacute;rent de Courrier (<strong>C</strong>), D&eacute;claration (<strong>D</strong>) et Provisoire (<strong>P</strong>).</p>
+
+<p>Il ne doit pas exister plus d&rsquo;une adresse par type pour le client.</p>
+
+			</div>
+
+	</div>
+	<div class="detail">
+			<div class="mock-list">
+				<b>Nom : </b> <a href="../types/charMax2.html">charMax2</a>
+			</div>
+			<div class="mock-list">
+				<b> Description : </b>Chaîne composée d'au plus 2 caractères.
+			</div>
+			<div class="mock-list">
+				<b>Format : </b>string
+			</div>
+			<div class="mock-list">
+				<b>Longueur mini-maxi : </b>1 - 2
+			</div>
+
+	</div>
+
+</div>
+<div class="detail-column" id="d22" style="display:none">
+	<div class="detail">
+			<div class="mock-list">
+				<b>Nom : </b>languageCode
+			</div>
+			<div class="mock-list">
+				<b>Description : </b>Code langue de l'adresse.
+			</div>
+			<div class="mock-list">
+				<b>Commentaire : </b><p>Le code langue doit exister en nomenclature <strong>190</strong>.</p>
+
+			</div>
+
+	</div>
+	<div class="detail">
+			<div class="mock-list">
+				<b>Nom : </b> <a href="../types/char3.html">char3</a>
+			</div>
+			<div class="mock-list">
+				<b> Description : </b>Type avec un nombre de caractères égal à 3.
+			</div>
+			<div class="mock-list">
+				<b>Format : </b>string
+			</div>
+			<div class="mock-list">
+				<b>Longueur fixe : </b>3
+			</div>
+
+	</div>
+
+</div>
+<div class="detail-column" id="d23" style="display:none">
+	<div class="detail">
+			<div class="mock-list">
+				<b>Nom : </b>addressFormat
+			</div>
+			<div class="mock-list">
+				<b>Description : </b>Format de l'adresse.
+			</div>
+			<div class="mock-list">
+				<b>Commentaire : </b><p>Le format de l&rsquo;adresse doit &ecirc;tre g&eacute;ographique (<strong>GE</strong>) si le type de l&rsquo;adresse est&nbsp;:</p>
+
+<p>Le format d&rsquo;adresse doit exister en nomenclature <strong>181</strong>.</p>
+
+<ul>
+	<li>D&eacute;claration (<strong>D</strong>), ou</li>
+	<li>Diff&eacute;rent de D&eacute;claration (<strong>D</strong>), Courrier (<strong>C</strong>) et Provisoire (<strong>P</strong>).</li>
+</ul>
+
+			</div>
+
+	</div>
+	<div class="detail">
+			<div class="mock-list">
+				<b>Nom : </b> <a href="../types/charMax2.html">charMax2</a>
+			</div>
+			<div class="mock-list">
+				<b> Description : </b>Chaîne composée d'au plus 2 caractères.
+			</div>
+			<div class="mock-list">
+				<b>Format : </b>string
+			</div>
+			<div class="mock-list">
+				<b>Longueur mini-maxi : </b>1 - 2
+			</div>
+
+	</div>
+
+</div>
+<div class="detail-column" id="d24" style="display:none">
+	<div class="detail">
+			<div class="mock-list">
+				<b>Nom : </b>addressLine1
+			</div>
+			<div class="mock-list">
+				<b>Description : </b>Ligne 1 de l¿adresse.
+			</div>
+			<div class="mock-list">
+				<b>Commentaire : </b><p>Dans le cas d&rsquo;une banque de Nouvelle-Cal&eacute;donie (param&egrave;tre <strong>NCALEDONIE</strong> existant dans la nomenclature <strong>098</strong>), cette information doit &ecirc;tre alphanum&eacute;rique si elle est renseign&eacute;e. Elle correspond &agrave; un num&eacute;ro d&rsquo;appartement, d&rsquo;&eacute;tage, de couloir ou d&rsquo;escalier.</p>
+
+<p>Valeur par d&eacute;faut&nbsp;:</p>
+
+<ul>
+	<li><strong>adr1 </strong>si le format de l&#39;adresse est<strong> GE</strong> et si le contr&ocirc;le de la ligne 1 de l&#39;adresse est demand&eacute; dans le param&egrave;tre <strong>FMT-ADRGEO</strong> en nomenclature <strong>098</strong> avec le <strong>Montant 1 </strong>renseign&eacute; et diff&eacute;rent de <strong>0</strong>.</li>
+	<li><strong>dest1cx </strong>si le format de l&rsquo;adresse est <strong>CX</strong>.</li>
+</ul>
+
+			</div>
+
+	</div>
+	<div class="detail">
+			<div class="mock-list">
+				<b>Nom : </b> <a href="../types/charMax30.html">charMax30</a>
+			</div>
+			<div class="mock-list">
+				<b> Description : </b>Chaîne composée d'au plus 30 caractères.
+			</div>
+			<div class="mock-list">
+				<b>Format : </b>string
+			</div>
+			<div class="mock-list">
+				<b>Longueur mini-maxi : </b>1 - 30
+			</div>
+
+	</div>
+
+</div>
+<div class="detail-column" id="d25" style="display:none">
+	<div class="detail">
+			<div class="mock-list">
+				<b>Nom : </b>addressLine2
+			</div>
+			<div class="mock-list">
+				<b>Description : </b>Ligne 2 de l'adresse.
+			</div>
+			<div class="mock-list">
+				<b>Commentaire : </b><p>Dans le cas d&rsquo;une banque de Nouvelle-Cal&eacute;donie (param&egrave;tre <strong>NCALEDONIE</strong> existant dans la nomenclature <strong>098</strong>), cette information doit &ecirc;tre alphanum&eacute;rique si elle est renseign&eacute;e. Elle correspond &agrave; un num&eacute;ro d&rsquo;entr&eacute;e, de b&acirc;timent, d&rsquo;immeuble, de r&eacute;sidence.</p>
+
+<p>Valeur par d&eacute;faut&nbsp;:</p>
+
+<ul>
+	<li><strong>adr2 </strong>si le format de l&rsquo;adresse est<strong> GE</strong> et si le contr&ocirc;le de la ligne 2 de l&rsquo;adresse est demand&eacute; dans le param&egrave;tre <strong>FMT-ADRGEO</strong> en nomenclature <strong>098</strong> avec le <strong>Montant 2 </strong>renseign&eacute; et diff&eacute;rent de <strong>0</strong>.</li>
+	<li><strong>dest2cx </strong>si le format de l&rsquo;adresse est <strong>CX</strong>.</li>
+</ul>
+
+			</div>
+
+	</div>
+	<div class="detail">
+			<div class="mock-list">
+				<b>Nom : </b> <a href="../types/charMax30.html">charMax30</a>
+			</div>
+			<div class="mock-list">
+				<b> Description : </b>Chaîne composée d'au plus 30 caractères.
+			</div>
+			<div class="mock-list">
+				<b>Format : </b>string
+			</div>
+			<div class="mock-list">
+				<b>Longueur mini-maxi : </b>1 - 30
+			</div>
+
+	</div>
+
+</div>
+<div class="detail-column" id="d26" style="display:none">
+	<div class="detail">
+			<div class="mock-list">
+				<b>Nom : </b>addressLine3
+			</div>
+			<div class="mock-list">
+				<b>Description : </b>Ligne 3 de l'adresse.
+			</div>
+			<div class="mock-list">
+				<b>Commentaire : </b><p>Dans le cas d&rsquo;une banque de Nouvelle-Cal&eacute;donie (param&egrave;tre <strong>NCALEDONIE</strong> existant dans la nomenclature <strong>098</strong>), cette information doit obligatoirement &ecirc;tre renseign&eacute;e en fonction du param&egrave;tre <strong>NCALADRGEO </strong>existant dans la nomenclature <strong>098 </strong>et du type de client. Elle correspond au num&eacute;ro strictement positif (ramen&eacute; sur 4 caract&egrave;res) suivi du nom alphanum&eacute;rique de la rue. Le num&eacute;ro de rue et le nom de rue doivent &ecirc;tre imp&eacute;rativement s&eacute;par&eacute;s par un espace.</p>
+
+<p>Valeur par d&eacute;faut&nbsp;:</p>
+
+<ul>
+	<li><strong>adr3 </strong>si le format de l&rsquo;adresse est<strong> GE</strong> et si le contr&ocirc;le de la ligne 3 de l&rsquo;adresse est demand&eacute; dans le param&egrave;tre <strong>FMT-ADRGEO</strong> en nomenclature <strong>098</strong> avec le <strong>Montant 3 </strong>renseign&eacute; et diff&eacute;rent de <strong>0</strong>.</li>
+	<li><strong>bposcx </strong>si le format de l&rsquo;adresse est<strong> CX</strong></li>
+</ul>
+
+<p style="margin-left:15.85pt">Si elle est renseign&eacute;e, alors la bo&icirc;te postale doit&nbsp;:</p>
+
+<ul style="margin-left: 40px;">
+	<li>Etre num&eacute;rique si le param&egrave;tre <strong>ADRESSE</strong> n&rsquo;est pas positionn&eacute; en&nbsp;nomenclature <strong>098</strong></li>
+	<li>Respecter le contr&ocirc;le de num&eacute;ricit&eacute; indiqu&eacute; dans le param&egrave;tre <strong>ADRESSE</strong> de la nomenclature <strong>098</strong> s&rsquo;il est positionn&eacute;</li>
+</ul>
+
+			</div>
+
+	</div>
+	<div class="detail">
+			<div class="mock-list">
+				<b>Nom : </b> <a href="../types/charMax30.html">charMax30</a>
+			</div>
+			<div class="mock-list">
+				<b> Description : </b>Chaîne composée d'au plus 30 caractères.
+			</div>
+			<div class="mock-list">
+				<b>Format : </b>string
+			</div>
+			<div class="mock-list">
+				<b>Longueur mini-maxi : </b>1 - 30
+			</div>
+
+	</div>
+
+</div>
+<div class="detail-column" id="d27" style="display:none">
+	<div class="detail">
+			<div class="mock-list">
+				<b>Nom : </b>city
+			</div>
+			<div class="mock-list">
+				<b>Description : </b>Ville.
+			</div>
+			<div class="mock-list">
+				<b>Commentaire : </b><p>Si le format de l&#39;adresse est <strong>GE</strong> et que le contr&ocirc;le de la ville est demand&eacute; dans le param&egrave;tre <strong>FMT-ADRGEO</strong> en nomenclature <strong>098</strong> avec le <strong>Montant 5</strong> renseign&eacute; et diff&eacute;rent de <strong>0</strong>, alors&nbsp;:</p>
+
+<ul>
+	<li>La ville doit exister dans <strong>bkville</strong> si le param&egrave;tre <strong>VILLE</strong> est renseign&eacute; en nomenclature <strong>098</strong> avec le <strong>Montant 3</strong> assign&eacute; &agrave; <strong>1</strong>.</li>
+	<li>Dans le cas d&rsquo;une banque de Nouvelle-Cal&eacute;donie (param&egrave;tre <strong>NCALEDONIE</strong> existant dans la nomenclature <strong>098</strong>), la ville est obligatoire et doit &ecirc;tre alphanum&eacute;rique.</li>
+</ul>
+
+<p>Valeur par d&eacute;faut&nbsp;:</p>
+
+<ul>
+	<li><strong>villeg </strong>si le format de l&rsquo;adresse est <strong>GE</strong> et si le contr&ocirc;le de la ville est demand&eacute; dans le param&egrave;tre <strong>FMT-ADRGEO</strong> en nomenclature <strong>098</strong> avec le <strong>Montant 5</strong> renseign&eacute; et diff&eacute;rent de <strong>0</strong>.</li>
+	<li><strong>villeb </strong>si le format de l&rsquo;adresse est<strong> BP</strong>.</li>
+	<li><strong>villes </strong>si le format de l&rsquo;adresse est<strong> SP</strong>.</li>
+</ul>
+
+			</div>
+
+	</div>
+	<div class="detail">
+			<div class="mock-list">
+				<b>Nom : </b> <a href="../types/charMax30.html">charMax30</a>
+			</div>
+			<div class="mock-list">
+				<b> Description : </b>Chaîne composée d'au plus 30 caractères.
+			</div>
+			<div class="mock-list">
+				<b>Format : </b>string
+			</div>
+			<div class="mock-list">
+				<b>Longueur mini-maxi : </b>1 - 30
+			</div>
+
+	</div>
+
+</div>
+<div class="detail-column" id="d28" style="display:none">
+	<div class="detail">
+			<div class="mock-list">
+				<b>Nom : </b>postalCode
+			</div>
+			<div class="mock-list">
+				<b>Description : </b>Code postal.
+			</div>
+			<div class="mock-list">
+				<b>Commentaire : </b><p>Pour le type de courrier <strong>CX</strong>, le code postal doit exister en nomenclature <strong>080</strong>.</p>
+
+<p>Dans le cas d&#39;une banque de Nouvelle-Cal&eacute;donie (param&egrave;tre <strong>NCALEDONIE</strong> existant dans la nomenclature <strong>098</strong>), le code postal est obligatoire et doit &ecirc;tre alphanum&eacute;rique.</p>
+
+<p>Valeur par d&eacute;faut&nbsp;:</p>
+
+<ul>
+	<li><strong>cposg </strong>si le format de l&rsquo;adresse est<strong> GE</strong> et si le contr&ocirc;le du code postal est demand&eacute; dans le param&egrave;tre <strong>FMT-ADRGEO</strong> en nomenclature <strong>098</strong> avec le <strong>Montant 4 </strong>renseign&eacute; et diff&eacute;rent de <strong>0</strong>.</li>
+	<li><strong>cposb </strong>si le format de l&rsquo;adresse est<strong> BP</strong>.</li>
+	<li><strong>cposs </strong>si le format de l&rsquo;adresse est<strong> SP</strong>.</li>
+	<li><strong>cposcx</strong> si le format de l&rsquo;adresse est<strong> CX</strong></li>
+</ul>
+
+			</div>
+
+	</div>
+	<div class="detail">
+			<div class="mock-list">
+				<b>Nom : </b> <a href="../types/charMax10.html">charMax10</a>
+			</div>
+			<div class="mock-list">
+				<b> Description : </b>Chaîne composée d'au plus 10 caractères.
+			</div>
+			<div class="mock-list">
+				<b>Format : </b>string
+			</div>
+			<div class="mock-list">
+				<b>Longueur mini-maxi : </b>1 - 10
+			</div>
+
+	</div>
+
+</div>
+<div class="detail-column" id="d29" style="display:none">
+	<div class="detail">
+			<div class="mock-list">
+				<b>Nom : </b>deliveryOffice
+			</div>
+			<div class="mock-list">
+				<b>Description : </b>Bureau distributeur.
+			</div>
+			<div class="mock-list">
+				<b>Commentaire : </b><p>Dans le cas d&#39;une banque de Nouvelle-Cal&eacute;donie (param&egrave;tre <strong>NCALEDONIE</strong> existant dans la nomenclature <strong>098</strong>), s&#39;il est renseign&eacute;, alors le bureau distributeur doit &ecirc;tre alphanum&eacute;rique.</p>
+
+<p>Valeur par d&eacute;faut&nbsp;:</p>
+
+<ul>
+	<li><strong>bdisg </strong>si le format de l&rsquo;adresse est<strong> GE</strong> et si le contr&ocirc;le du bureau distributeur est demand&eacute; dans le param&egrave;tre <strong>FMT-ADRGEO</strong> en nomenclature <strong>098</strong> avec le <strong>Montant 6 </strong>renseign&eacute; et diff&eacute;rent de <strong>0</strong>.</li>
+	<li><strong>bdisb </strong>si le format de l&rsquo;adresse est<strong> BP</strong></li>
+	<li><strong>bdiss </strong>si le format de l&rsquo;adresse est<strong> SP</strong></li>
+</ul>
+
+			</div>
+
+	</div>
+	<div class="detail">
+			<div class="mock-list">
+				<b>Nom : </b> <a href="../types/charMax30.html">charMax30</a>
+			</div>
+			<div class="mock-list">
+				<b> Description : </b>Chaîne composée d'au plus 30 caractères.
+			</div>
+			<div class="mock-list">
+				<b>Format : </b>string
+			</div>
+			<div class="mock-list">
+				<b>Longueur mini-maxi : </b>1 - 30
+			</div>
+
+	</div>
+
+</div>
+<div class="detail-column" id="d30" style="display:none">
+	<div class="detail">
+			<div class="mock-list">
+				<b>Nom : </b>poBox
+			</div>
+			<div class="mock-list">
+				<b>Description : </b>Boîte postale.
+			</div>
+			<div class="mock-list">
+				<b>Commentaire : </b><p>Si elle est renseign&eacute;e, alors la bo&icirc;te postale doit&nbsp;:</p>
+
+<ul>
+	<li>Etre num&eacute;rique si le param&egrave;tre <strong>ADRESSE</strong> n&rsquo;est pas positionn&eacute; en nomenclature <strong>098</strong></li>
+	<li>Respecter le contr&ocirc;le de num&eacute;ricit&eacute; indiqu&eacute; dans le param&egrave;tre <strong>ADRESSE</strong> de la nomenclature <strong>098</strong> s&rsquo;il est positionn&eacute;</li>
+</ul>
+
+<p>Valeur par d&eacute;faut&nbsp;:</p>
+
+<ul>
+	<li><strong>bpos </strong>si le format de l&rsquo;adresse est<strong> BP</strong></li>
+</ul>
+
+			</div>
+
+	</div>
+	<div class="detail">
+			<div class="mock-list">
+				<b>Nom : </b> <a href="../types/charMax10.html">charMax10</a>
+			</div>
+			<div class="mock-list">
+				<b> Description : </b>Chaîne composée d'au plus 10 caractères.
+			</div>
+			<div class="mock-list">
+				<b>Format : </b>string
+			</div>
+			<div class="mock-list">
+				<b>Longueur mini-maxi : </b>1 - 10
+			</div>
+
+	</div>
+
+</div>
+<div class="detail-column" id="d31" style="display:none">
+	<div class="detail">
+			<div class="mock-list">
+				<b>Nom : </b>postalSector
+			</div>
+			<div class="mock-list">
+				<b>Description : </b>Secteur postal.
+			</div>
+			<div class="mock-list">
+				<b>Commentaire : </b><p>Valeur par d&eacute;faut&nbsp;:</p>
+
+<ul>
+	<li><strong>spos </strong>si le format de l&rsquo;adresse est<strong> SP</strong></li>
+</ul>
+
+			</div>
+
+	</div>
+	<div class="detail">
+			<div class="mock-list">
+				<b>Nom : </b> <a href="../types/charMax10.html">charMax10</a>
+			</div>
+			<div class="mock-list">
+				<b> Description : </b>Chaîne composée d'au plus 10 caractères.
+			</div>
+			<div class="mock-list">
+				<b>Format : </b>string
+			</div>
+			<div class="mock-list">
+				<b>Longueur mini-maxi : </b>1 - 10
+			</div>
+
+	</div>
+
+</div>
+<div class="detail-column" id="d32" style="display:none">
+	<div class="detail">
+			<div class="mock-list">
+				<b>Nom : </b>postalSectorDesignation
+			</div>
+			<div class="mock-list">
+				<b>Description : </b>Libellé du secteur postal.
+			</div>
+			<div class="mock-list">
+				<b>Commentaire : </b><p>Valeur par d&eacute;faut&nbsp;:</p>
+
+<ul>
+	<li><strong>lspos </strong>si le format de l&rsquo;adresse est<strong> SP</strong></li>
+</ul>
+
+			</div>
+
+	</div>
+	<div class="detail">
+			<div class="mock-list">
+				<b>Nom : </b> <a href="../types/charMax30.html">charMax30</a>
+			</div>
+			<div class="mock-list">
+				<b> Description : </b>Chaîne composée d'au plus 30 caractères.
+			</div>
+			<div class="mock-list">
+				<b>Format : </b>string
+			</div>
+			<div class="mock-list">
+				<b>Longueur mini-maxi : </b>1 - 30
+			</div>
+
+	</div>
+
+</div>
+<div class="detail-column" id="d33" style="display:none">
+	<div class="detail">
+			<div class="mock-list">
+				<b>Nom : </b>countryCode
+			</div>
+			<div class="mock-list">
+				<b>Description : </b>Code du pays.
+			</div>
+			<div class="mock-list">
+				<b>Commentaire : </b><p>Le code pays doit exister en nomenclature <strong>040</strong>.</p>
+
+<p>Pour une adresse g&eacute;ographique (format <strong>GE</strong>), dans le cas d&rsquo;une banque de Nouvelle-Cal&eacute;donie (param&egrave;tre <strong>NCALEDONIE</strong> existant dans la nomenclature <strong>098</strong>), le code pays est obligatoire et doit &ecirc;tre alphanum&eacute;rique, m&ecirc;me s&rsquo;il est aliment&eacute; par une valeur par d&eacute;faut.</p>
+
+<p>Valeur par d&eacute;faut&nbsp;:</p>
+
+<ul>
+	<li><strong>paysg </strong>si le format de l&rsquo;adresse est<strong> GE</strong> et si le contr&ocirc;le du code pays est demand&eacute; dans le param&egrave;tre <strong>FMT-ADRGEO</strong> en nomenclature <strong>098</strong> avec le <strong>Taux 1 </strong>renseign&eacute; et diff&eacute;rent de <strong>0</strong>.</li>
+	<li><strong>paysb </strong>si le format de l&rsquo;adresse est<strong> BP</strong>.</li>
+	<li><strong>payss </strong>si le format de l&rsquo;adresse est<strong> SP</strong>.</li>
+	<li><strong>paycx </strong>si le format de l&rsquo;adresse est<strong> CX</strong>.</li>
+</ul>
+
+			</div>
+
+	</div>
+	<div class="detail">
+			<div class="mock-list">
+				<b>Nom : </b> <a href="../types/charMax3.html">charMax3</a>
+			</div>
+			<div class="mock-list">
+				<b> Description : </b>Chaîne composée d'au plus 3 caractères.
+			</div>
+			<div class="mock-list">
+				<b>Format : </b>string
+			</div>
+			<div class="mock-list">
+				<b>Longueur mini-maxi : </b>1 - 3
+			</div>
+
+	</div>
+
+</div>
+<div class="detail-column" id="d34" style="display:none">
+	<div class="detail">
+			<div class="mock-list">
+				<b>Nom : </b>branchCode
+			</div>
+			<div class="mock-list">
+				<b>Description : </b>Code guichet.
+			</div>
+			<div class="mock-list">
+				<b>Commentaire : </b><p>Le code agence doit exister en nomenclature <strong>001</strong>.</p>
+
+<p>Valeur par d&eacute;faut&nbsp;:</p>
+
+<ul>
+	<li><strong>gui</strong> si le format de l&rsquo;adresse est<strong> GU</strong></li>
+</ul>
+
+			</div>
+
+	</div>
+	<div class="detail">
+			<div class="mock-list">
+				<b>Nom : </b> <a href="../types/char5.html">char5</a>
+			</div>
+			<div class="mock-list">
+				<b> Description : </b>Type avec un nombre de caractères égal à 5.
+			</div>
+			<div class="mock-list">
+				<b>Format : </b>string
+			</div>
+			<div class="mock-list">
+				<b>Longueur fixe : </b>5
+			</div>
+
+	</div>
+
+</div>
+<div class="detail-column" id="d35" style="display:none">
+	<div class="detail">
+			<div class="mock-list">
+				<b>Nom : </b>locker
+			</div>
+			<div class="mock-list">
+				<b>Description : </b>Casier.
+			</div>
+			<div class="mock-list">
+				<b>Commentaire : </b><p>Valeur par d&eacute;faut&nbsp;:</p>
+
+<ul>
+	<li><strong>cas </strong>si le format de l&rsquo;adresse est<strong> CA</strong></li>
+</ul>
+
+			</div>
+
+	</div>
+	<div class="detail">
+			<div class="mock-list">
+				<b>Nom : </b> <a href="../types/charMax9.html">charMax9</a>
+			</div>
+			<div class="mock-list">
+				<b> Description : </b>Chaîne composée d'au plus 9 caractères.
+			</div>
+			<div class="mock-list">
+				<b>Format : </b>string
+			</div>
+			<div class="mock-list">
+				<b>Longueur mini-maxi : </b>1 - 9
+			</div>
+
+	</div>
+
+</div>
+<div class="detail-column" id="d36" style="display:none">
+	<div class="detail">
+			<div class="mock-list">
+				<b>Nom : </b>serviceCode
+			</div>
+			<div class="mock-list">
+				<b>Description : </b>Code du service.
+			</div>
+			<div class="mock-list">
+				<b>Commentaire : </b><p>Le code service doit exister en nomenclature <strong>034</strong>.</p>
+
+<p>Valeur par d&eacute;faut&nbsp;:</p>
+
+<ul>
+	<li><strong>ser </strong>si le format de l&rsquo;adresse est<strong> SE</strong></li>
+</ul>
+
+			</div>
+
+	</div>
+	<div class="detail">
+			<div class="mock-list">
+				<b>Nom : </b> <a href="../types/charMax4.html">charMax4</a>
+			</div>
+			<div class="mock-list">
+				<b> Description : </b>Chaîne composée d'au plus 4 caractères.
+			</div>
+			<div class="mock-list">
+				<b>Format : </b>string
+			</div>
+			<div class="mock-list">
+				<b>Longueur mini-maxi : </b>1 - 4
+			</div>
+
+	</div>
+
+</div>
+<div class="detail-column" id="d37" style="display:none">
+	<div class="detail">
+			<div class="mock-list">
+				<b>Nom : </b>transportTypeCode
+			</div>
+			<div class="mock-list">
+				<b>Description : </b>Code du type de transport.
+			</div>
+			<div class="mock-list">
+				<b>Commentaire : </b><p>Le code du type de transport doit exister en nomenclature <strong>184</strong>.</p>
+
+<p>Valeur par d&eacute;faut&nbsp;:</p>
+
+<ul>
+	<li><strong>trs </strong>si le format de l&rsquo;adresse est<strong> TR</strong></li>
+</ul>
+
+			</div>
+
+	</div>
+	<div class="detail">
+			<div class="mock-list">
+				<b>Nom : </b> <a href="../types/charMax3.html">charMax3</a>
+			</div>
+			<div class="mock-list">
+				<b> Description : </b>Chaîne composée d'au plus 3 caractères.
+			</div>
+			<div class="mock-list">
+				<b>Format : </b>string
+			</div>
+			<div class="mock-list">
+				<b>Longueur mini-maxi : </b>1 - 3
+			</div>
+
+	</div>
+
+</div>
+<div class="detail-column" id="d38" style="display:none">
+	<div class="detail">
+			<div class="mock-list">
+				<b>Nom : </b>emailAddress
+			</div>
+			<div class="mock-list">
+				<b>Description : </b>Adresse e-mail.
+			</div>
+			<div class="mock-list">
+				<b>Commentaire : </b><p>L&rsquo;adresse &eacute;lectronique doit contenir le symbole &quot;@&quot;.</p>
+
+<p>Valeur par d&eacute;faut&nbsp;:</p>
+
+<ul>
+	<li><strong>email </strong>si le format de l&rsquo;adresse est<strong> EM</strong></li>
+</ul>
+
+			</div>
+
+	</div>
+	<div class="detail">
+			<div class="mock-list">
+				<b>Nom : </b> <a href="../types/charMax50.html">charMax50</a>
+			</div>
+			<div class="mock-list">
+				<b> Description : </b>Chaîne composée d'au plus 50 caractères.
+			</div>
+			<div class="mock-list">
+				<b>Format : </b>string
+			</div>
+			<div class="mock-list">
+				<b>Longueur mini-maxi : </b>1 - 50
+			</div>
+
+	</div>
+
+</div>
+<div class="detail-column" id="d39" style="display:none">
+	<div class="detail">
+			<div class="mock-list">
+				<b>Nom : </b>provisionalAddressStartDate
+			</div>
+			<div class="mock-list">
+				<b>Description : </b>Date de début d'adresse provisoire.
+			</div>
+			<div class="mock-list">
+				<b>Commentaire : </b><p>Si l&rsquo;adresse est de type Provisoire (<strong>P</strong>), alors la date de d&eacute;but d&rsquo;adresse provisoire est obligatoire.</p>
+
+<p>Si le client est de type Particulier (<strong>1</strong>) et si sa date de naissance est renseign&eacute;e, alors la date de d&eacute;but d&rsquo;adresse provisoire doit &ecirc;tre post&eacute;rieure &agrave; la date de naissance du client.</p>
+
+<p>Si le client est de type Soci&eacute;t&eacute; (<strong>2</strong>) ou Entreprise individuelle (<strong>3</strong>) et si sa date de cr&eacute;ation est renseign&eacute;e, alors la date de d&eacute;but d&rsquo;adresse provisoire doit &ecirc;tre post&eacute;rieure &agrave; la date de cr&eacute;ation de la soci&eacute;t&eacute; ou de l&#39;entreprise.</p>
+
+			</div>
+
+	</div>
+	<div class="detail">
+			<div class="mock-list">
+				<b>Nom : </b> <a href="../types/date.html">date</a>
+			</div>
+
+	</div>
+
+</div>
+<div class="detail-column" id="d40" style="display:none">
+	<div class="detail">
+			<div class="mock-list">
+				<b>Nom : </b>provisionalAddressEndDate
+			</div>
+			<div class="mock-list">
+				<b>Description : </b>Date de fin d¿adresse provisoire.
+			</div>
+			<div class="mock-list">
+				<b>Commentaire : </b><p>Si l&rsquo;adresse est de type Provisoire (<strong>P</strong>), alors la date de fin de l&rsquo;adresse provisoire est obligatoire. Cette date de fin doit par ailleurs &ecirc;tre sup&eacute;rieure &agrave; la date de d&eacute;but.</p>
+
+			</div>
+
+	</div>
+	<div class="detail">
+			<div class="mock-list">
+				<b>Nom : </b> <a href="../types/date.html">date</a>
+			</div>
+
+	</div>
+
+</div>
+<div class="detail-column" id="d41" style="display:none">
+	<div class="detail">
+			<div class="mock-list">
+				<b>Nom : </b>geographicalDepartment
+			</div>
+			<div class="mock-list">
+				<b>Description : </b>Département.
+			</div>
+			<div class="mock-list">
+				<b>Commentaire : </b><p>Le code du d&eacute;partement doit exister en nomenclature <strong>191</strong>.</p>
+
+<p>Dans le cas d&#39;une banque de Nouvelle-Cal&eacute;donie (param&egrave;tre <strong>NCALEDONIE</strong> existant dans la nomenclature <strong>098</strong>), le d&eacute;partement est obligatoire et doit &ecirc;tre alphanum&eacute;rique.</p>
+
+<p>Valeur par d&eacute;faut&nbsp;:</p>
+
+<ul>
+	<li><strong>depg </strong>si le format de l&rsquo;adresse est<strong> GE </strong>et si le contr&ocirc;le du d&eacute;partement est demand&eacute; dans le param&egrave;tre <strong>FMT-ADRGEO</strong> en nomenclature <strong>098</strong> avec le <strong>Montant 7</strong> renseign&eacute; et diff&eacute;rent de <strong>0</strong>.</li>
+</ul>
+
+			</div>
+
+	</div>
+	<div class="detail">
+			<div class="mock-list">
+				<b>Nom : </b> <a href="../types/charMax30.html">charMax30</a>
+			</div>
+			<div class="mock-list">
+				<b> Description : </b>Chaîne composée d'au plus 30 caractères.
+			</div>
+			<div class="mock-list">
+				<b>Format : </b>string
+			</div>
+			<div class="mock-list">
+				<b>Longueur mini-maxi : </b>1 - 30
+			</div>
+
+	</div>
+
+</div>
+<div class="detail-column" id="d42" style="display:none">
+	<div class="detail">
+			<div class="mock-list">
+				<b>Nom : </b>county
+			</div>
+			<div class="mock-list">
+				<b>Description : </b>Région.
+			</div>
+			<div class="mock-list">
+				<b>Commentaire : </b><p>Le code de la r&eacute;gion doit exister en nomenclature <strong>196</strong>.</p>
+
+<p>Dans le cas d&#39;une banque de Nouvelle-Cal&eacute;donie (param&egrave;tre <strong>NCALEDONIE</strong> existant dans la nomenclature <strong>098</strong>), la r&eacute;gion est obligatoire et doit &ecirc;tre alphanum&eacute;rique.</p>
+
+<p>Valeur par d&eacute;faut&nbsp;:</p>
+
+<ul>
+	<li><strong>regg </strong>si le format de l&rsquo;adresse est<strong> GE </strong>et si le contr&ocirc;le de la r&eacute;gion est demand&eacute; dans le param&egrave;tre <strong>FMT-ADRGEO</strong> en nomenclature <strong>098</strong> avec le <strong>Montant 8</strong> renseign&eacute; et diff&eacute;rent de <strong>0</strong>.</li>
+</ul>
+
+			</div>
+
+	</div>
+	<div class="detail">
+			<div class="mock-list">
+				<b>Nom : </b> <a href="../types/charMax50.html">charMax50</a>
+			</div>
+			<div class="mock-list">
+				<b> Description : </b>Chaîne composée d'au plus 50 caractères.
+			</div>
+			<div class="mock-list">
+				<b>Format : </b>string
+			</div>
+			<div class="mock-list">
+				<b>Longueur mini-maxi : </b>1 - 50
+			</div>
+
+	</div>
+
+</div>
+<div class="detail-column" id="d43" style="display:none">
+	<div class="detail">
+			<div class="mock-list">
+				<b>Nom : </b>chequeBookTypeAndNumber
+			</div>
+			<div class="mock-list">
+				<b>Description : </b>Types de chéquiers de la commande.
+			</div>
+			<div class="mock-list">
+				<b>Limite du nombre d'occurences mini-maxi : </b>aucune aucune
+			</div>
+
+	</div>
+	<div class="detail">
+			<div class="mock-list">
+				<b>Nom : </b> <a href="../types/chequeBookTypeAndNumber.html">chequeBookTypeAndNumber</a>
+			</div>
+			<div class="mock-list">
+				<b> Description : </b>Type et nombre de chéquiers.
+			</div>
+
+	</div>
+
+</div>
+<div class="detail-column" id="d44" style="display:none">
+	<div class="detail">
+			<div class="mock-list">
+				<b>Nom : </b>chequeBookType
+			</div>
+			<div class="mock-list">
+				<b>Description : </b>Type de chéquier.
+			</div>
+
+	</div>
+	<div class="detail">
+			<div class="mock-list">
+				<b>Nom : </b> <a href="../types/chequeBookTypeCode.html">chequeBookTypeCode</a>
+			</div>
+			<div class="mock-list">
+				<b> Description : </b>Code d'un type de chéquier.
+			</div>
+			<div class="mock-list">
+				<b>Format : </b>string
+			</div>
+			<div class="mock-list">
+				<b>Longueur mini-maxi : </b>1 - 2
+			</div>
+
+	</div>
+
+</div>
+<div class="detail-column" id="d45" style="display:none">
+	<div class="detail">
+			<div class="mock-list">
+				<b>Nom : </b>chequeBookNumber
+			</div>
+			<div class="mock-list">
+				<b>Description : </b>Nombre de chéquiers demandés pour le type.
+			</div>
+			<div class="mock-list">
+				<b>Commentaire : </b><p>Pour un type donn&eacute;&nbsp;: le nombre de ch&eacute;quiers&nbsp;&agrave; commander ne doit pas d&eacute;passer le <strong>Montant 5 </strong>de la nomenclature <strong>057</strong> s&rsquo;il est pr&eacute;cis&eacute;.<br />
+Le nombre de ch&eacute;quiers de la commande ne doit pas d&eacute;passer le <strong>Montant 1</strong> de la nomenclature <strong>098</strong>, param&egrave;tre <strong>NBDEMCHQ</strong>, s&#39;il est pr&eacute;cis&eacute;.<br />
+&nbsp;</p>
+
+			</div>
+
+	</div>
+	<div class="detail">
+			<div class="mock-list">
+				<b>Nom : </b> <a href="../types/positiveInteger.html">positiveInteger</a>
+			</div>
+
+	</div>
+
+</div>
+<div class="detail-column" id="d46" style="display:none">
+	<div class="detail">
+			<div class="mock-list">
+				<b>Nom : </b>attributes
+			</div>
+			<div class="mock-list">
+				<b>Description : </b>Attributs.
+			</div>
+
+	</div>
+	<div class="detail">
+			<div class="mock-list">
+				<b>Nom : </b> <a href="../types/chequeBookAttributes.html">chequeBookAttributes</a>
+			</div>
+			<div class="mock-list">
+				<b> Description : </b>Attributs liés au type de chéquier.
+			</div>
+
+	</div>
+
+</div>
+<div class="detail-column" id="d47" style="display:none">
+	<div class="detail">
+			<div class="mock-list">
+				<b>Nom : </b>attribute1
+			</div>
+			<div class="mock-list">
+				<b>Description : </b>Attribut 1.
+			</div>
+			<div class="mock-list">
+				<b>Commentaire : </b><p>L&#39;attribut 1 est d&eacute;fini dans la nomenclature <strong>220</strong>.</p>
+
+			</div>
+
+	</div>
+	<div class="detail">
+			<div class="mock-list">
+				<b>Nom : </b> <a href="../types/chequeBookAttributeCode.html">chequeBookAttributeCode</a>
+			</div>
+			<div class="mock-list">
+				<b> Description : </b>Code attribut d'un type de chéquier.
+			</div>
+			<div class="mock-list">
+				<b>Format : </b>string
+			</div>
+			<div class="mock-list">
+				<b>Longueur mini-maxi : </b>1 - 10
+			</div>
+
+	</div>
+
+</div>
+<div class="detail-column" id="d48" style="display:none">
+	<div class="detail">
+			<div class="mock-list">
+				<b>Nom : </b>attribute2
+			</div>
+			<div class="mock-list">
+				<b>Description : </b>Attribut 2.
+			</div>
+			<div class="mock-list">
+				<b>Commentaire : </b><p>L&#39;attribut 2 est d&eacute;fini dans la nomenclature <strong>221</strong>.</p>
+
+			</div>
+
+	</div>
+	<div class="detail">
+			<div class="mock-list">
+				<b>Nom : </b> <a href="../types/chequeBookAttributeCode.html">chequeBookAttributeCode</a>
+			</div>
+			<div class="mock-list">
+				<b> Description : </b>Code attribut d'un type de chéquier.
+			</div>
+			<div class="mock-list">
+				<b>Format : </b>string
+			</div>
+			<div class="mock-list">
+				<b>Longueur mini-maxi : </b>1 - 10
+			</div>
+
+	</div>
+
+</div>
+<div class="detail-column" id="d49" style="display:none">
+	<div class="detail">
+			<div class="mock-list">
+				<b>Nom : </b>chequeTitle
+			</div>
+			<div class="mock-list">
+				<b>Description : </b>Intitulé d¿un chèque.
+			</div>
+
+	</div>
+	<div class="detail">
+			<div class="mock-list">
+				<b>Nom : </b> <a href="../types/chequeTitle.html">chequeTitle</a>
+			</div>
+			<div class="mock-list">
+				<b> Description : </b>Intitulé d'un chèque.
+			</div>
+			<div class="mock-list">
+				<b>Format : </b>string
+			</div>
+			<div class="mock-list">
+				<b>Valeurs possibles : </b>					<table class="table_enum" class="table_enum">
+						<tr>
+						<td> 1
+						</td>						<td class="td_right"> Edition du nom du client sur le chèque
+						</td>
+						</tr>
+						<tr>
+						<td> 2
+						</td>						<td class="td_right"> Edition de l¿intitulé du compte sur le chèque
+						</td>
+						</tr>
+
+					</table>
+
+			</div>
+
+	</div>
+
+</div>
+      </div> 
+  </div>
+
+  
+  <script src="../resources/jquery.js"></script>
+  <script src="../resources/doc.js"></script>
+</body>
+</html>

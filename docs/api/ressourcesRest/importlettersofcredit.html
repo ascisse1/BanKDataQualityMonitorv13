@@ -1,0 +1,191 @@
+<!DOCTYPE html>
+<html>
+<head>
+	<link rel="stylesheet" href="../resources/styleDocu.css" />
+    <link rel="stylesheet" href="../resources/font-awesome/css/font-awesome.min.css" />
+	<title>Documentation Xsd</title>
+	<meta charset="UTF-8" />
+</head>
+
+<body>
+  <div class="document">
+	<div class="header">		
+	</div>
+
+    <div class="tabs">
+        <div class="tabs-wrapper-selected" onclick="window.open('../liste-ressources.html', '_self');">
+            <div class="tabs-left-content" >Liste des ressources</div>
+        </div>
+        <div class="tabs-wrapper" onclick="window.open('../liste-services.html', '_self');">
+            <div class="tabs-left-content">Liste des services</div>
+        </div>
+        <div class="tabs-wrapper" onclick="window.open('../liste-types.html', '_self');">
+            <div class="tabs-right-content">Liste des types</div>
+        </div>
+    </div>
+
+	<div class="contenu">
+      <div class="breadcrumb"> 
+        <ul class="breadcrumb">
+           <li> <a href="../index.html"> Accueil </a></li>
+           <li> > </li>
+           <li> <a href="../liste-ressources.html"> Liste des ressources </a></li>
+           <li> > </li>
+           <li> importlettersofcredit </li>
+        </ul>                    
+      </div>                    
+      
+      <div class="summary">
+        <div class="mock-list"> Nom ressource REST : importlettersofcredit </div>
+        <div class="mock-list"> Programme Amplitude : cdwrimportlettersofcredit </div>
+        <div class="mock-list"> Email : support@soprabanking.com </div>        
+        <br/>
+            <div class="mock-list"> Import letters of credit</div>
+      </div>
+      
+      <div class="column-content" style="width:93%">
+        <div class="detail-column" style="width: 35%">
+          <div class="tree"> 
+<ul style="padding:0">
+	<li>
+<i class="fa fa-caret-down fa-fw" onclick="expand_or_collapse(this)">
+</i>		importlettersofcredit		<ul>
+			<li>
+<i class="fa fa-caret-down fa-fw" onclick="expand_or_collapse(this)">
+</i>				v1				<ul>
+					<li>
+<i class="fa fa-fw">
+</i><span class="selectable" id="e0"> POST
+</span>
+					</li>
+					<li>
+<i class="fa fa-fw">
+</i><span class="selectable" id="e1"> GET
+</span>
+					</li>
+
+				</ul>
+
+			</li>
+
+		</ul>
+
+	</li>
+
+</ul>
+          </div>
+        </div>
+                 
+        
+<div class="detail-column" id="d0" style="display:none; width: 65%">
+	<div class="detail">
+		<div class="mock-list">
+			<b>Service SOAP : </b> <a href="../services/createImportLetterOfCreditPreInput.html">createImportLetterOfCreditPreInput</a>
+		</div>
+		<div class="mock-list">
+			<b>Code retour succes : </b>201 - Created
+		</div>
+		<div class="mock-list">
+			<b>Uri : </b>http://soprabanking.com/amplitude/importlettersofcredit/v1/
+		</div>
+		<div class="mock-list">
+			<b>Description : </b>The service createImportLetterOfCreditPreInput allows creating an import Letter of Credit pre input (L/C).
+		</div>
+		<br>
+
+		</br>
+		<div class="mock-list">
+			<b>Codes Erreur : </b>			<table>
+				<tr>
+				<td> 400
+				</td>				<td> Bad Request
+				</td>
+				</tr>
+
+			</table>
+
+		</div>
+
+	</div>
+
+</div>
+<div class="detail-column" id="d1" style="display:none; width: 65%">
+	<div class="detail">
+		<div class="mock-list">
+			<b>Service SOAP : </b> <a href="../services/getLetterOfCreditDetail.html">getLetterOfCreditDetail</a>
+		</div>
+		<div class="mock-list">
+			<b>Code retour succes : </b>200 - OK
+		</div>
+		<div class="mock-list">
+			<b>Uri : </b>http://soprabanking.com/amplitude/importlettersofcredit/v1/{lettersOfCreditId}
+		</div>
+		<div class="mock-list">
+			<b>Description : </b>Données d'un crédit documentaire.
+		</div>
+		<br>
+
+		</br>
+		<div class="mock-list">
+			<b>Identifiants : </b>			<table class="table_param">
+				<tr>
+				<td> 0
+				</td>				<td title="getLetterOfCreditDetailRequest.branchCode"> <a href="../types/branchCode.html">branchCode</a><br>Code de l¿agence.
+				</td>
+				</tr>
+				<tr>
+				<td> 1
+				</td>				<td title="getLetterOfCreditDetailRequest.letterOfCreditTypeCode"> <a href="../types/char3.html">letterOfCreditTypeCode</a><br>Type de credoc.
+				</td>
+				</tr>
+				<tr>
+				<td> 2
+				</td>				<td title="getLetterOfCreditDetailRequest.fileNumber"> <a href="../types/char11.html">fileNumber</a><br>Numéro de dossier.
+				</td>
+				</tr>
+
+			</table>
+
+		</div>
+		<br>
+
+		</br>
+		<div class="mock-list">
+			<b>Parametres : </b>			<table class="table_param">
+				<tr>
+				<td>
+				</td>				<td title="getLetterOfCreditDetailRequest.module"> <a href="../types/char3.html">X-SBS-module</a><br>Module.
+				</td>				<td> Header
+				</td>
+				</tr>
+
+			</table>
+
+		</div>
+		<br>
+
+		</br>
+		<div class="mock-list">
+			<b>Codes Erreur : </b>			<table>
+				<tr>
+				<td> 400
+				</td>				<td> Bad Request
+				</td>
+				</tr>
+
+			</table>
+
+		</div>
+
+	</div>
+
+</div>
+     </div> 
+  </div>
+  </div>
+
+  
+  <script src="../resources/jquery.js"></script>
+  <script src="../resources/doc.js"></script>
+</body>
+</html>

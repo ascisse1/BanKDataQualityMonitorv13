@@ -1,0 +1,1270 @@
+<!DOCTYPE html >
+<html>
+<head>
+	<link rel="stylesheet" href="../resources/styleDocu.css" />
+  <link rel="stylesheet" href="../resources/font-awesome/css/font-awesome.min.css" />
+	<title>Documentation Xsd</title>
+	<meta charset="UTF-8" />
+</head>
+
+<body>
+  <div class="document">
+	<div class="header">
+		
+	</div>
+
+  <div class="tabs">
+    <div class="tabs-wrapper" onclick="window.open('../liste-ressources.html', '_self');">
+      <div class="tabs-left-content">
+        Liste des ressources
+      </div>
+    </div>
+    <div class="tabs-wrapper" onclick="window.open('../liste-services.html', '_self');">
+      <div class="tabs-left-content" >
+        Liste des services  
+      </div>
+    </div>
+    <div class="tabs-wrapper-selected" onclick="window.open('../liste-types.html', '_self');">
+      <div class="tabs-right-content">
+        Liste des types
+      </div>
+    </div>
+  </div>
+
+	
+
+	<div class="contenu">
+      <div class="breadcrumb"> 
+        <ul class="breadcrumb">
+           <li> <a href="../index.html"> Accueil </a></li>
+           <li> > </li>
+           <li> <a href="../liste-types.html"> Liste des types </a></li>
+           <li> > </li>
+           <li> TaxRecord1 </li>
+        </ul>                    
+      </div>                    
+      
+     
+      <div class="summary">
+			<div class="mock-list">
+				<b>Nom : </b>TaxRecord1
+			</div>
+			<div class="mock-list">
+				<b> Description : </b>Détail de la taxe.
+			</div>
+        
+        <div> </div>
+        <div class="mock-list"> Choix : Non</div>
+        
+      </div>
+                        
+      <div class="column-content">
+        <div class="detail-column">
+          <div class="tree"> 
+<ul>
+	<li>
+<i class="fa fa-caret-down fa-fw" onclick="expand_or_collapse(this)">
+</i>		TaxRecord1		<ul style="display:block">
+			<li>
+<i class="fa fa-fw">
+</i><span class="selectable" id="e0"> Tp : Max35Text
+</span>
+			</li>
+			<li>
+<i class="fa fa-fw">
+</i><span class="selectable" id="e1"> Ctgy : Max35Text
+</span>
+			</li>
+			<li>
+<i class="fa fa-fw">
+</i><span class="selectable" id="e2"> CtgyDtls : Max35Text
+</span>
+			</li>
+			<li>
+<i class="fa fa-fw">
+</i><span class="selectable" id="e3"> DbtrSts : Max35Text
+</span>
+			</li>
+			<li>
+<i class="fa fa-fw">
+</i><span class="selectable" id="e4"> CertId : Max35Text
+</span>
+			</li>
+			<li>
+<i class="fa fa-fw">
+</i><span class="selectable" id="e5"> FrmsCd : Max35Text
+</span>
+			</li>
+			<li>
+<i class="fa fa-caret-down fa-fw" onclick="expand_or_collapse(this)">
+</i><span class="selectable" id="e6"> Prd : TaxPeriod1
+</span>				<ul style="display:block">
+					<li>
+<i class="fa fa-fw">
+</i><span class="selectable" id="e7"> Yr : ISODate
+</span>
+					</li>
+					<li>
+<i class="fa fa-fw">
+</i><span class="selectable" id="e8"> Tp : TaxRecordPeriod1Code
+</span>
+					</li>
+					<li>
+<i class="fa fa-caret-down fa-fw" onclick="expand_or_collapse(this)">
+</i><span class="selectable" id="e9"> FrToDt : DatePeriodDetails
+</span>						<ul style="display:block">
+							<li>
+<i class="fa fa-fw">
+</i><i class="fa fa-key fa-fw">
+</i><span class="selectable" id="e10"> FrDt : ISODate
+</span>
+							</li>
+							<li>
+<i class="fa fa-fw">
+</i><i class="fa fa-key fa-fw">
+</i><span class="selectable" id="e11"> ToDt : ISODate
+</span>
+							</li>
+
+						</ul>
+
+					</li>
+
+				</ul>
+
+			</li>
+			<li>
+<i class="fa fa-caret-down fa-fw" onclick="expand_or_collapse(this)">
+</i><span class="selectable" id="e12"> TaxAmt : TaxAmount1
+</span>				<ul style="display:block">
+					<li>
+<i class="fa fa-fw">
+</i><span class="selectable" id="e13"> Rate : PercentageRate
+</span>
+					</li>
+					<li>
+<i class="fa fa-caret-down fa-fw" onclick="expand_or_collapse(this)">
+</i><span class="selectable" id="e14"> TaxblBaseAmt : ActiveOrHistoricCurrencyAndAmount
+</span>						<ul style="display:block">
+							<li>
+<i class="fa fa-fw">
+</i><span style="font-weight:bold"> [B]
+</span><span class="selectable" id="e15"> base : ActiveOrHistoricCurrencyAndAmount_SimpleType
+</span>
+							</li>
+							<li>
+<i class="fa fa-fw">
+</i><i class="fa fa-key fa-fw">
+</i><span style="font-weight:bold"> [A]
+</span><span class="selectable" id="e16"> Ccy : ActiveOrHistoricCurrencyCode
+</span>
+							</li>
+
+						</ul>
+
+					</li>
+					<li>
+<i class="fa fa-caret-down fa-fw" onclick="expand_or_collapse(this)">
+</i><span class="selectable" id="e17"> TtlAmt : ActiveOrHistoricCurrencyAndAmount
+</span>						<ul style="display:block">
+							<li>
+<i class="fa fa-fw">
+</i><span style="font-weight:bold"> [B]
+</span><span class="selectable" id="e18"> base : ActiveOrHistoricCurrencyAndAmount_SimpleType
+</span>
+							</li>
+							<li>
+<i class="fa fa-fw">
+</i><i class="fa fa-key fa-fw">
+</i><span style="font-weight:bold"> [A]
+</span><span class="selectable" id="e19"> Ccy : ActiveOrHistoricCurrencyCode
+</span>
+							</li>
+
+						</ul>
+
+					</li>
+					<li>
+<i class="fa fa-caret-down fa-fw" onclick="expand_or_collapse(this)">
+</i><span style="font-weight:bold"> [M]
+</span><span class="selectable" id="e20"> Dtls : TaxRecordDetails1
+</span>						<ul style="display:block">
+							<li>
+<i class="fa fa-caret-down fa-fw" onclick="expand_or_collapse(this)">
+</i><span class="selectable" id="e21"> Prd : TaxPeriod1
+</span>								<ul style="display:block">
+									<li>
+<i class="fa fa-fw">
+</i><span class="selectable" id="e22"> Yr : ISODate
+</span>
+									</li>
+									<li>
+<i class="fa fa-fw">
+</i><span class="selectable" id="e23"> Tp : TaxRecordPeriod1Code
+</span>
+									</li>
+									<li>
+<i class="fa fa-caret-down fa-fw" onclick="expand_or_collapse(this)">
+</i><span class="selectable" id="e24"> FrToDt : DatePeriodDetails
+</span>										<ul style="display:block">
+											<li>
+<i class="fa fa-fw">
+</i><i class="fa fa-key fa-fw">
+</i><span class="selectable" id="e25"> FrDt : ISODate
+</span>
+											</li>
+											<li>
+<i class="fa fa-fw">
+</i><i class="fa fa-key fa-fw">
+</i><span class="selectable" id="e26"> ToDt : ISODate
+</span>
+											</li>
+
+										</ul>
+
+									</li>
+
+								</ul>
+
+							</li>
+							<li>
+<i class="fa fa-caret-down fa-fw" onclick="expand_or_collapse(this)">
+</i><i class="fa fa-key fa-fw">
+</i><span class="selectable" id="e27"> Amt : ActiveOrHistoricCurrencyAndAmount
+</span>								<ul style="display:block">
+									<li>
+<i class="fa fa-fw">
+</i><span style="font-weight:bold"> [B]
+</span><span class="selectable" id="e28"> base : ActiveOrHistoricCurrencyAndAmount_SimpleType
+</span>
+									</li>
+									<li>
+<i class="fa fa-fw">
+</i><i class="fa fa-key fa-fw">
+</i><span style="font-weight:bold"> [A]
+</span><span class="selectable" id="e29"> Ccy : ActiveOrHistoricCurrencyCode
+</span>
+									</li>
+
+								</ul>
+
+							</li>
+
+						</ul>
+
+					</li>
+
+				</ul>
+
+			</li>
+			<li>
+<i class="fa fa-fw">
+</i><span class="selectable" id="e30"> AddtlInf : Max140Text
+</span>
+			</li>
+
+		</ul>
+
+	</li>
+
+</ul>
+          </div>
+          
+          <div class="detail">
+				<p align="left">
+					Légende :<br />
+				</p>
+            <ul>
+               <li align="left">
+                  <i class="fa fa-key fa-fw">
+                  </i>
+                  = Elément obligatoire en saisie.
+               </li>
+               <li align="left">
+                  <span style="font-weight:bold"> [M]
+                  </span>
+                  = Elément multiple (0 à n occurrences).
+               </li>
+               <li align="left">
+                  <span style="font-weight:bold"> [C]
+                  </span>
+                  = Elément composé d'un choix à effectuer. Un seul choix autorisé.
+               </li>
+            </ul>
+            <p align="left">
+               Remarque : Un même élément peut regrouper plusieurs caractéristiques
+            </p>          
+          </div>
+          
+        </div>
+<div class="detail-column" id="d0" style="display:none">
+	<div class="detail">
+			<div class="mock-list">
+				<b>Nom : </b>Tp
+			</div>
+			<div class="mock-list">
+				<b>Description : </b>Code d'identification de la taxe.
+			</div>
+
+	</div>
+	<div class="detail">
+			<div class="mock-list">
+				<b>Nom : </b> <a href="../types/Max35Text.html">Max35Text</a>
+			</div>
+			<div class="mock-list">
+				<b> Description : </b>Identifiant unique pour le groupe message.
+			</div>
+			<div class="mock-list">
+				<b>Format : </b>string
+			</div>
+			<div class="mock-list">
+				<b>Longueur mini-maxi : </b>1 - 35
+			</div>
+
+	</div>
+
+</div>
+<div class="detail-column" id="d1" style="display:none">
+	<div class="detail">
+			<div class="mock-list">
+				<b>Nom : </b>Ctgy
+			</div>
+			<div class="mock-list">
+				<b>Description : </b>Spécifie le code taxe externe.
+			</div>
+
+	</div>
+	<div class="detail">
+			<div class="mock-list">
+				<b>Nom : </b> <a href="../types/Max35Text.html">Max35Text</a>
+			</div>
+			<div class="mock-list">
+				<b> Description : </b>Identifiant unique pour le groupe message.
+			</div>
+			<div class="mock-list">
+				<b>Format : </b>string
+			</div>
+			<div class="mock-list">
+				<b>Longueur mini-maxi : </b>1 - 35
+			</div>
+
+	</div>
+
+</div>
+<div class="detail-column" id="d2" style="display:none">
+	<div class="detail">
+			<div class="mock-list">
+				<b>Nom : </b>CtgyDtls
+			</div>
+			<div class="mock-list">
+				<b>Description : </b>Détail sur le code taxe externe.
+			</div>
+
+	</div>
+	<div class="detail">
+			<div class="mock-list">
+				<b>Nom : </b> <a href="../types/Max35Text.html">Max35Text</a>
+			</div>
+			<div class="mock-list">
+				<b> Description : </b>Identifiant unique pour le groupe message.
+			</div>
+			<div class="mock-list">
+				<b>Format : </b>string
+			</div>
+			<div class="mock-list">
+				<b>Longueur mini-maxi : </b>1 - 35
+			</div>
+
+	</div>
+
+</div>
+<div class="detail-column" id="d3" style="display:none">
+	<div class="detail">
+			<div class="mock-list">
+				<b>Nom : </b>DbtrSts
+			</div>
+			<div class="mock-list">
+				<b>Description : </b>Code local pour la taxe.
+			</div>
+
+	</div>
+	<div class="detail">
+			<div class="mock-list">
+				<b>Nom : </b> <a href="../types/Max35Text.html">Max35Text</a>
+			</div>
+			<div class="mock-list">
+				<b> Description : </b>Identifiant unique pour le groupe message.
+			</div>
+			<div class="mock-list">
+				<b>Format : </b>string
+			</div>
+			<div class="mock-list">
+				<b>Longueur mini-maxi : </b>1 - 35
+			</div>
+
+	</div>
+
+</div>
+<div class="detail-column" id="d4" style="display:none">
+	<div class="detail">
+			<div class="mock-list">
+				<b>Nom : </b>CertId
+			</div>
+			<div class="mock-list">
+				<b>Description : </b>Numéro d¿identification de la déclaration fiscale attribué par l¿autorité fiscale.
+			</div>
+
+	</div>
+	<div class="detail">
+			<div class="mock-list">
+				<b>Nom : </b> <a href="../types/Max35Text.html">Max35Text</a>
+			</div>
+			<div class="mock-list">
+				<b> Description : </b>Identifiant unique pour le groupe message.
+			</div>
+			<div class="mock-list">
+				<b>Format : </b>string
+			</div>
+			<div class="mock-list">
+				<b>Longueur mini-maxi : </b>1 - 35
+			</div>
+
+	</div>
+
+</div>
+<div class="detail-column" id="d5" style="display:none">
+	<div class="detail">
+			<div class="mock-list">
+				<b>Nom : </b>FrmsCd
+			</div>
+			<div class="mock-list">
+				<b>Description : </b>Indique, sous forme de code le modèle de taxe qui doit être fourni.
+			</div>
+
+	</div>
+	<div class="detail">
+			<div class="mock-list">
+				<b>Nom : </b> <a href="../types/Max35Text.html">Max35Text</a>
+			</div>
+			<div class="mock-list">
+				<b> Description : </b>Identifiant unique pour le groupe message.
+			</div>
+			<div class="mock-list">
+				<b>Format : </b>string
+			</div>
+			<div class="mock-list">
+				<b>Longueur mini-maxi : </b>1 - 35
+			</div>
+
+	</div>
+
+</div>
+<div class="detail-column" id="d6" style="display:none">
+	<div class="detail">
+			<div class="mock-list">
+				<b>Nom : </b>Prd
+			</div>
+			<div class="mock-list">
+				<b>Description : </b>Ensemble d¿éléments utilisés pour fournir des détails sur la période liée au paiement de la taxe.
+			</div>
+
+	</div>
+	<div class="detail">
+			<div class="mock-list">
+				<b>Nom : </b> <a href="../types/TaxPeriod1.html">TaxPeriod1</a>
+			</div>
+			<div class="mock-list">
+				<b> Description : </b>Informations sur la période relative à la taxe.
+			</div>
+
+	</div>
+
+</div>
+<div class="detail-column" id="d7" style="display:none">
+	<div class="detail">
+			<div class="mock-list">
+				<b>Nom : </b>Yr
+			</div>
+			<div class="mock-list">
+				<b>Description : </b>Date et heure sur la taxe.
+			</div>
+
+	</div>
+	<div class="detail">
+			<div class="mock-list">
+				<b>Nom : </b> <a href="../types/ISODate.html">ISODate</a>
+			</div>
+			<div class="mock-list">
+				<b> Description : </b>Format de date ISO.
+			</div>
+			<div class="mock-list">
+				<b>Format : </b>date
+			</div>
+
+	</div>
+
+</div>
+<div class="detail-column" id="d8" style="display:none">
+	<div class="detail">
+			<div class="mock-list">
+				<b>Nom : </b>Tp
+			</div>
+			<div class="mock-list">
+				<b>Description : </b>Période relative au paiement de la taxe.
+			</div>
+
+	</div>
+	<div class="detail">
+			<div class="mock-list">
+				<b>Nom : </b> <a href="../types/TaxRecordPeriod1Code.html">TaxRecordPeriod1Code</a>
+			</div>
+			<div class="mock-list">
+				<b> Description : </b>Identification de la période liée au paiement de la taxe.
+			</div>
+			<div class="mock-list">
+				<b>Format : </b>string
+			</div>
+			<div class="mock-list">
+				<b>Valeurs possibles : </b>					<table class="table_enum" class="table_enum" class="table_enum" class="table_enum" class="table_enum" class="table_enum" class="table_enum" class="table_enum" class="table_enum" class="table_enum" class="table_enum" class="table_enum" class="table_enum" class="table_enum" class="table_enum" class="table_enum" class="table_enum" class="table_enum">
+						<tr>
+						<td> MM03
+						</td>						<td class="td_right"> Troisième mois
+						</td>
+						</tr>
+						<tr>
+						<td> QTR4
+						</td>						<td class="td_right"> Quatrième trimestre
+						</td>
+						</tr>
+						<tr>
+						<td> MM07
+						</td>						<td class="td_right"> Septième mois
+						</td>
+						</tr>
+						<tr>
+						<td> MM08
+						</td>						<td class="td_right"> Huitième mois
+						</td>
+						</tr>
+						<tr>
+						<td> MM09
+						</td>						<td class="td_right"> Neuvième mois
+						</td>
+						</tr>
+						<tr>
+						<td> MM10
+						</td>						<td class="td_right"> Dixième mois
+						</td>
+						</tr>
+						<tr>
+						<td> MM11
+						</td>						<td class="td_right"> Onzième mois
+						</td>
+						</tr>
+						<tr>
+						<td> QTR3
+						</td>						<td class="td_right"> Troisième trimestre
+						</td>
+						</tr>
+						<tr>
+						<td> MM01
+						</td>						<td class="td_right"> Premier mois
+						</td>
+						</tr>
+						<tr>
+						<td> QTR2
+						</td>						<td class="td_right"> Deuxième trimestre
+						</td>
+						</tr>
+						<tr>
+						<td> MM12
+						</td>						<td class="td_right"> Douzième mois
+						</td>
+						</tr>
+						<tr>
+						<td> MM02
+						</td>						<td class="td_right"> Deuxième mois
+						</td>
+						</tr>
+						<tr>
+						<td> MM04
+						</td>						<td class="td_right"> Quatrième mois
+						</td>
+						</tr>
+						<tr>
+						<td> MM05
+						</td>						<td class="td_right"> Cinquième mois
+						</td>
+						</tr>
+						<tr>
+						<td> MM06
+						</td>						<td class="td_right"> Sixième mois
+						</td>
+						</tr>
+						<tr>
+						<td> HLF2
+						</td>						<td class="td_right"> Deuxième moitié
+						</td>
+						</tr>
+						<tr>
+						<td> QTR1
+						</td>						<td class="td_right"> Premier trimestre
+						</td>
+						</tr>
+						<tr>
+						<td> HLF1
+						</td>						<td class="td_right"> Première moitié
+						</td>
+						</tr>
+
+					</table>
+
+			</div>
+
+	</div>
+
+</div>
+<div class="detail-column" id="d9" style="display:none">
+	<div class="detail">
+			<div class="mock-list">
+				<b>Nom : </b>FrToDt
+			</div>
+			<div class="mock-list">
+				<b>Description : </b>Intervalle de temps pour le paiement de la taxe.
+			</div>
+
+	</div>
+	<div class="detail">
+			<div class="mock-list">
+				<b>Nom : </b> <a href="../types/DatePeriodDetails.html">DatePeriodDetails</a>
+			</div>
+			<div class="mock-list">
+				<b> Description : </b>Détail de la période concernée.
+			</div>
+
+	</div>
+
+</div>
+<div class="detail-column" id="d10" style="display:none">
+	<div class="detail">
+			<div class="mock-list">
+				<b>Nom : </b>FrDt
+			</div>
+			<div class="mock-list">
+				<b>Description : </b>Date de début.
+			</div>
+
+	</div>
+	<div class="detail">
+			<div class="mock-list">
+				<b>Nom : </b> <a href="../types/ISODate.html">ISODate</a>
+			</div>
+			<div class="mock-list">
+				<b> Description : </b>Format de date ISO.
+			</div>
+			<div class="mock-list">
+				<b>Format : </b>date
+			</div>
+
+	</div>
+
+</div>
+<div class="detail-column" id="d11" style="display:none">
+	<div class="detail">
+			<div class="mock-list">
+				<b>Nom : </b>ToDt
+			</div>
+			<div class="mock-list">
+				<b>Description : </b>Date de fin.
+			</div>
+
+	</div>
+	<div class="detail">
+			<div class="mock-list">
+				<b>Nom : </b> <a href="../types/ISODate.html">ISODate</a>
+			</div>
+			<div class="mock-list">
+				<b> Description : </b>Format de date ISO.
+			</div>
+			<div class="mock-list">
+				<b>Format : </b>date
+			</div>
+
+	</div>
+
+</div>
+<div class="detail-column" id="d12" style="display:none">
+	<div class="detail">
+			<div class="mock-list">
+				<b>Nom : </b>TaxAmt
+			</div>
+			<div class="mock-list">
+				<b>Description : </b>Ensemble d¿éléments utilisés pour fournir des renseignements sur le montant de la taxe.
+			</div>
+
+	</div>
+	<div class="detail">
+			<div class="mock-list">
+				<b>Nom : </b> <a href="../types/TaxAmount1.html">TaxAmount1</a>
+			</div>
+			<div class="mock-list">
+				<b> Description : </b>Informations relatives au montant de la taxe.
+			</div>
+
+	</div>
+
+</div>
+<div class="detail-column" id="d13" style="display:none">
+	<div class="detail">
+			<div class="mock-list">
+				<b>Nom : </b>Rate
+			</div>
+			<div class="mock-list">
+				<b>Description : </b>Taux.
+			</div>
+
+	</div>
+	<div class="detail">
+			<div class="mock-list">
+				<b>Nom : </b> <a href="../types/PercentageRate.html">PercentageRate</a>
+			</div>
+			<div class="mock-list">
+				<b> Description : </b>Pourcentage.
+			</div>
+			<div class="mock-list">
+				<b>Format : </b>decimal
+			</div>
+			<div class="mock-list">
+				<b>Nombre total de chiffres : </b>11
+			</div>
+
+	</div>
+
+</div>
+<div class="detail-column" id="d14" style="display:none">
+	<div class="detail">
+			<div class="mock-list">
+				<b>Nom : </b>TaxblBaseAmt
+			</div>
+			<div class="mock-list">
+				<b>Description : </b>Montant taxable.
+			</div>
+
+	</div>
+	<div class="detail">
+			<div class="mock-list">
+				<b>Nom : </b> <a href="../types/ActiveOrHistoricCurrencyAndAmount.html">ActiveOrHistoricCurrencyAndAmount</a>
+			</div>
+			<div class="mock-list">
+				<b> Description : </b>Montant net exprimé en devise de transaction.
+			</div>
+
+	</div>
+
+</div>
+<div class="detail-column" id="d15" style="display:none">
+	<div class="detail">
+			<div class="mock-list">
+				<b>Nom : </b>base
+			</div>
+			<div class="mock-list">
+				<b>Description : </b>Montant.
+			</div>
+
+	</div>
+	<div class="detail">
+			<div class="mock-list">
+				<b>Nom : </b> <a href="../types/ActiveOrHistoricCurrencyAndAmount_SimpleType.html">ActiveOrHistoricCurrencyAndAmount_SimpleType</a>
+			</div>
+			<div class="mock-list">
+				<b> Description : </b>Type de montant en devise.
+			</div>
+			<div class="mock-list">
+				<b>Format : </b>decimal
+			</div>
+			<div class="mock-list">
+				<b>Min-max inclusive : </b>0 - néant
+			</div>
+			<div class="mock-list">
+				<b>Nombre total de chiffres : </b>18
+			</div>
+
+	</div>
+
+</div>
+<div class="detail-column" id="d16" style="display:none">
+	<div class="detail">
+			<div class="mock-list">
+				<b>Nom : </b>Ccy
+			</div>
+			<div class="mock-list">
+				<b>Description : </b>Code devise.
+			</div>
+
+	</div>
+	<div class="detail">
+			<div class="mock-list">
+				<b>Nom : </b> <a href="../types/ActiveOrHistoricCurrencyCode.html">ActiveOrHistoricCurrencyCode</a>
+			</div>
+			<div class="mock-list">
+				<b> Description : </b>Code devise.
+			</div>
+			<div class="mock-list">
+				<b>Format : </b>string
+			</div>
+			<li class="mock-list">
+				<b>Expression régulière : </b>[A-Z]{3,3}
+			</li>
+
+	</div>
+
+</div>
+<div class="detail-column" id="d17" style="display:none">
+	<div class="detail">
+			<div class="mock-list">
+				<b>Nom : </b>TtlAmt
+			</div>
+			<div class="mock-list">
+				<b>Description : </b>Montant total.
+			</div>
+
+	</div>
+	<div class="detail">
+			<div class="mock-list">
+				<b>Nom : </b> <a href="../types/ActiveOrHistoricCurrencyAndAmount.html">ActiveOrHistoricCurrencyAndAmount</a>
+			</div>
+			<div class="mock-list">
+				<b> Description : </b>Montant net exprimé en devise de transaction.
+			</div>
+
+	</div>
+
+</div>
+<div class="detail-column" id="d18" style="display:none">
+	<div class="detail">
+			<div class="mock-list">
+				<b>Nom : </b>base
+			</div>
+			<div class="mock-list">
+				<b>Description : </b>Montant.
+			</div>
+
+	</div>
+	<div class="detail">
+			<div class="mock-list">
+				<b>Nom : </b> <a href="../types/ActiveOrHistoricCurrencyAndAmount_SimpleType.html">ActiveOrHistoricCurrencyAndAmount_SimpleType</a>
+			</div>
+			<div class="mock-list">
+				<b> Description : </b>Type de montant en devise.
+			</div>
+			<div class="mock-list">
+				<b>Format : </b>decimal
+			</div>
+			<div class="mock-list">
+				<b>Min-max inclusive : </b>0 - néant
+			</div>
+			<div class="mock-list">
+				<b>Nombre total de chiffres : </b>18
+			</div>
+
+	</div>
+
+</div>
+<div class="detail-column" id="d19" style="display:none">
+	<div class="detail">
+			<div class="mock-list">
+				<b>Nom : </b>Ccy
+			</div>
+			<div class="mock-list">
+				<b>Description : </b>Code devise.
+			</div>
+
+	</div>
+	<div class="detail">
+			<div class="mock-list">
+				<b>Nom : </b> <a href="../types/ActiveOrHistoricCurrencyCode.html">ActiveOrHistoricCurrencyCode</a>
+			</div>
+			<div class="mock-list">
+				<b> Description : </b>Code devise.
+			</div>
+			<div class="mock-list">
+				<b>Format : </b>string
+			</div>
+			<li class="mock-list">
+				<b>Expression régulière : </b>[A-Z]{3,3}
+			</li>
+
+	</div>
+
+</div>
+<div class="detail-column" id="d20" style="display:none">
+	<div class="detail">
+			<div class="mock-list">
+				<b>Nom : </b>Dtls
+			</div>
+			<div class="mock-list">
+				<b>Description : </b>Détail de la taxe.
+			</div>
+			<div class="mock-list">
+				<b>Limite du nombre d'occurences mini-maxi : </b>0 aucune
+			</div>
+
+	</div>
+	<div class="detail">
+			<div class="mock-list">
+				<b>Nom : </b> <a href="../types/TaxRecordDetails1.html">TaxRecordDetails1</a>
+			</div>
+			<div class="mock-list">
+				<b> Description : </b>Informations générales relatives à la taxe.
+			</div>
+
+	</div>
+
+</div>
+<div class="detail-column" id="d21" style="display:none">
+	<div class="detail">
+			<div class="mock-list">
+				<b>Nom : </b>Prd
+			</div>
+			<div class="mock-list">
+				<b>Description : </b>Ensemble d'éléments utilisés pour fournir des détails sur la période de temps liée au paiement de la taxe.
+			</div>
+
+	</div>
+	<div class="detail">
+			<div class="mock-list">
+				<b>Nom : </b> <a href="../types/TaxPeriod1.html">TaxPeriod1</a>
+			</div>
+			<div class="mock-list">
+				<b> Description : </b>Informations sur la période relative à la taxe.
+			</div>
+
+	</div>
+
+</div>
+<div class="detail-column" id="d22" style="display:none">
+	<div class="detail">
+			<div class="mock-list">
+				<b>Nom : </b>Yr
+			</div>
+			<div class="mock-list">
+				<b>Description : </b>Date et heure sur la taxe.
+			</div>
+
+	</div>
+	<div class="detail">
+			<div class="mock-list">
+				<b>Nom : </b> <a href="../types/ISODate.html">ISODate</a>
+			</div>
+			<div class="mock-list">
+				<b> Description : </b>Format de date ISO.
+			</div>
+			<div class="mock-list">
+				<b>Format : </b>date
+			</div>
+
+	</div>
+
+</div>
+<div class="detail-column" id="d23" style="display:none">
+	<div class="detail">
+			<div class="mock-list">
+				<b>Nom : </b>Tp
+			</div>
+			<div class="mock-list">
+				<b>Description : </b>Période relative au paiement de la taxe.
+			</div>
+
+	</div>
+	<div class="detail">
+			<div class="mock-list">
+				<b>Nom : </b> <a href="../types/TaxRecordPeriod1Code.html">TaxRecordPeriod1Code</a>
+			</div>
+			<div class="mock-list">
+				<b> Description : </b>Identification de la période liée au paiement de la taxe.
+			</div>
+			<div class="mock-list">
+				<b>Format : </b>string
+			</div>
+			<div class="mock-list">
+				<b>Valeurs possibles : </b>					<table class="table_enum" class="table_enum" class="table_enum" class="table_enum" class="table_enum" class="table_enum" class="table_enum" class="table_enum" class="table_enum" class="table_enum" class="table_enum" class="table_enum" class="table_enum" class="table_enum" class="table_enum" class="table_enum" class="table_enum" class="table_enum">
+						<tr>
+						<td> MM03
+						</td>						<td class="td_right"> Troisième mois
+						</td>
+						</tr>
+						<tr>
+						<td> QTR4
+						</td>						<td class="td_right"> Quatrième trimestre
+						</td>
+						</tr>
+						<tr>
+						<td> MM07
+						</td>						<td class="td_right"> Septième mois
+						</td>
+						</tr>
+						<tr>
+						<td> MM08
+						</td>						<td class="td_right"> Huitième mois
+						</td>
+						</tr>
+						<tr>
+						<td> MM09
+						</td>						<td class="td_right"> Neuvième mois
+						</td>
+						</tr>
+						<tr>
+						<td> MM10
+						</td>						<td class="td_right"> Dixième mois
+						</td>
+						</tr>
+						<tr>
+						<td> MM11
+						</td>						<td class="td_right"> Onzième mois
+						</td>
+						</tr>
+						<tr>
+						<td> QTR3
+						</td>						<td class="td_right"> Troisième trimestre
+						</td>
+						</tr>
+						<tr>
+						<td> MM01
+						</td>						<td class="td_right"> Premier mois
+						</td>
+						</tr>
+						<tr>
+						<td> QTR2
+						</td>						<td class="td_right"> Deuxième trimestre
+						</td>
+						</tr>
+						<tr>
+						<td> MM12
+						</td>						<td class="td_right"> Douzième mois
+						</td>
+						</tr>
+						<tr>
+						<td> MM02
+						</td>						<td class="td_right"> Deuxième mois
+						</td>
+						</tr>
+						<tr>
+						<td> MM04
+						</td>						<td class="td_right"> Quatrième mois
+						</td>
+						</tr>
+						<tr>
+						<td> MM05
+						</td>						<td class="td_right"> Cinquième mois
+						</td>
+						</tr>
+						<tr>
+						<td> MM06
+						</td>						<td class="td_right"> Sixième mois
+						</td>
+						</tr>
+						<tr>
+						<td> HLF2
+						</td>						<td class="td_right"> Deuxième moitié
+						</td>
+						</tr>
+						<tr>
+						<td> QTR1
+						</td>						<td class="td_right"> Premier trimestre
+						</td>
+						</tr>
+						<tr>
+						<td> HLF1
+						</td>						<td class="td_right"> Première moitié
+						</td>
+						</tr>
+
+					</table>
+
+			</div>
+
+	</div>
+
+</div>
+<div class="detail-column" id="d24" style="display:none">
+	<div class="detail">
+			<div class="mock-list">
+				<b>Nom : </b>FrToDt
+			</div>
+			<div class="mock-list">
+				<b>Description : </b>Intervalle de temps pour le paiement de la taxe.
+			</div>
+
+	</div>
+	<div class="detail">
+			<div class="mock-list">
+				<b>Nom : </b> <a href="../types/DatePeriodDetails.html">DatePeriodDetails</a>
+			</div>
+			<div class="mock-list">
+				<b> Description : </b>Détail de la période concernée.
+			</div>
+
+	</div>
+
+</div>
+<div class="detail-column" id="d25" style="display:none">
+	<div class="detail">
+			<div class="mock-list">
+				<b>Nom : </b>FrDt
+			</div>
+			<div class="mock-list">
+				<b>Description : </b>Date de début.
+			</div>
+
+	</div>
+	<div class="detail">
+			<div class="mock-list">
+				<b>Nom : </b> <a href="../types/ISODate.html">ISODate</a>
+			</div>
+			<div class="mock-list">
+				<b> Description : </b>Format de date ISO.
+			</div>
+			<div class="mock-list">
+				<b>Format : </b>date
+			</div>
+
+	</div>
+
+</div>
+<div class="detail-column" id="d26" style="display:none">
+	<div class="detail">
+			<div class="mock-list">
+				<b>Nom : </b>ToDt
+			</div>
+			<div class="mock-list">
+				<b>Description : </b>Date de fin.
+			</div>
+
+	</div>
+	<div class="detail">
+			<div class="mock-list">
+				<b>Nom : </b> <a href="../types/ISODate.html">ISODate</a>
+			</div>
+			<div class="mock-list">
+				<b> Description : </b>Format de date ISO.
+			</div>
+			<div class="mock-list">
+				<b>Format : </b>date
+			</div>
+
+	</div>
+
+</div>
+<div class="detail-column" id="d27" style="display:none">
+	<div class="detail">
+			<div class="mock-list">
+				<b>Nom : </b>Amt
+			</div>
+			<div class="mock-list">
+				<b>Description : </b>Montant des frais en cas de dépassement de la période.
+			</div>
+
+	</div>
+	<div class="detail">
+			<div class="mock-list">
+				<b>Nom : </b> <a href="../types/ActiveOrHistoricCurrencyAndAmount.html">ActiveOrHistoricCurrencyAndAmount</a>
+			</div>
+			<div class="mock-list">
+				<b> Description : </b>Montant net exprimé en devise de transaction.
+			</div>
+
+	</div>
+
+</div>
+<div class="detail-column" id="d28" style="display:none">
+	<div class="detail">
+			<div class="mock-list">
+				<b>Nom : </b>base
+			</div>
+			<div class="mock-list">
+				<b>Description : </b>Montant.
+			</div>
+
+	</div>
+	<div class="detail">
+			<div class="mock-list">
+				<b>Nom : </b> <a href="../types/ActiveOrHistoricCurrencyAndAmount_SimpleType.html">ActiveOrHistoricCurrencyAndAmount_SimpleType</a>
+			</div>
+			<div class="mock-list">
+				<b> Description : </b>Type de montant en devise.
+			</div>
+			<div class="mock-list">
+				<b>Format : </b>decimal
+			</div>
+			<div class="mock-list">
+				<b>Min-max inclusive : </b>0 - néant
+			</div>
+			<div class="mock-list">
+				<b>Nombre total de chiffres : </b>18
+			</div>
+
+	</div>
+
+</div>
+<div class="detail-column" id="d29" style="display:none">
+	<div class="detail">
+			<div class="mock-list">
+				<b>Nom : </b>Ccy
+			</div>
+			<div class="mock-list">
+				<b>Description : </b>Code devise.
+			</div>
+
+	</div>
+	<div class="detail">
+			<div class="mock-list">
+				<b>Nom : </b> <a href="../types/ActiveOrHistoricCurrencyCode.html">ActiveOrHistoricCurrencyCode</a>
+			</div>
+			<div class="mock-list">
+				<b> Description : </b>Code devise.
+			</div>
+			<div class="mock-list">
+				<b>Format : </b>string
+			</div>
+			<li class="mock-list">
+				<b>Expression régulière : </b>[A-Z]{3,3}
+			</li>
+
+	</div>
+
+</div>
+<div class="detail-column" id="d30" style="display:none">
+	<div class="detail">
+			<div class="mock-list">
+				<b>Nom : </b>AddtlInf
+			</div>
+			<div class="mock-list">
+				<b>Description : </b>Données additionnelles de détail de la taxe.
+			</div>
+
+	</div>
+	<div class="detail">
+			<div class="mock-list">
+				<b>Nom : </b> <a href="../types/Max140Text.html">Max140Text</a>
+			</div>
+			<div class="mock-list">
+				<b> Description : </b>Informations complémentaires, relatives au traitement de l'instruction de paiement.
+			</div>
+			<div class="mock-list">
+				<b>Format : </b>string
+			</div>
+			<div class="mock-list">
+				<b>Longueur mini-maxi : </b>1 - 140
+			</div>
+
+	</div>
+
+</div>
+      </div> 
+  </div>
+
+  
+  <script src="../resources/jquery.js"></script>
+  <script src="../resources/doc.js"></script>
+</body>
+</html>

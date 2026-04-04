@@ -1,0 +1,59 @@
+name: bdqm
+
+# BDQM Data Quality Monitor - Faro AI (Ollama + Mistral 7B)
+# Usage:
+#   docker compose -f docker-compose.faro.yml up -d
+#   Then wait ~2min for Mistral 7B to download on first start.
+
+services:
+  # ===========================================
+  # Faro AI - Ollama LLM Server
+  # ===========================================
+  ollama:
+    image: ollama/ollama:latest
+    container_name: bdqm-faro
+    ports:
+      - "11434:11434"
+    volumes:
+      - ollama-data:/root/.ollama
+    deploy:
+      resources:
+        limits:
+          memory: 10G
+    restart: unless-stopped
+    networks:
+      - bdqm-network
+    healthcheck:
+      test: ["CMD-SHELL", "ollama list || exit 1"]
+      interval: 10s
+      timeout: 5s
+      retries: 10
+      start_period: 10s
+    # Uncomment below for NVIDIA GPU acceleration:
+    runtime: nvidia
+    environment:
+      - NVIDIA_VISIBLE_DEVICES=all
+
+  # ===========================================
+  # Auto-pull Mistral 7B on first start
+  # ===========================================
+  ollama-init:
+    image: ollama/ollama:latest
+    container_name: bdqm-faro-init
+    depends_on:
+      ollama:
+        condition: service_healthy
+    entrypoint: ["sh", "-c", "ollama pull mistral && echo 'Faro (Mistral 7B) ready!'"]
+    environment:
+      - OLLAMA_HOST=http://ollama:11434
+    networks:
+      - bdqm-network
+    restart: "no"
+
+volumes:
+  ollama-data:
+    driver: local
+
+networks:
+  bdqm-network:
+    driver: bridge

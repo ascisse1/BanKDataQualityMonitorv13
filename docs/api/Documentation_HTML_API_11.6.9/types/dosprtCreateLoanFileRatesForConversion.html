@@ -1,0 +1,224 @@
+<!DOCTYPE html >
+<html>
+<head>
+	<link rel="stylesheet" href="../resources/styleDocu.css" />
+  <link rel="stylesheet" href="../resources/font-awesome/css/font-awesome.min.css" />
+	<title>Documentation Xsd</title>
+	<meta charset="UTF-8" />
+</head>
+
+<body>
+  <div class="document">
+	<div class="header">
+		
+	</div>
+
+  <div class="tabs">
+    <div class="tabs-wrapper" onclick="window.open('../liste-ressources.html', '_self');">
+      <div class="tabs-left-content">
+        Liste des ressources
+      </div>
+    </div>
+    <div class="tabs-wrapper" onclick="window.open('../liste-services.html', '_self');">
+      <div class="tabs-left-content" >
+        Liste des services  
+      </div>
+    </div>
+    <div class="tabs-wrapper-selected" onclick="window.open('../liste-types.html', '_self');">
+      <div class="tabs-right-content">
+        Liste des types
+      </div>
+    </div>
+  </div>
+
+	
+
+	<div class="contenu">
+      <div class="breadcrumb"> 
+        <ul class="breadcrumb">
+           <li> <a href="../index.html"> Accueil </a></li>
+           <li> > </li>
+           <li> <a href="../liste-types.html"> Liste des types </a></li>
+           <li> > </li>
+           <li> dosprtCreateLoanFileRatesForConversion </li>
+        </ul>                    
+      </div>                    
+      
+     
+      <div class="summary">
+			<div class="mock-list">
+				<b>Nom : </b>dosprtCreateLoanFileRatesForConversion
+			</div>
+			<div class="mock-list">
+				<b> Description : </b>Taux utilisés pour les conversions.
+			</div>
+        
+        <div> </div>
+        <div class="mock-list"> Choix : Non</div>
+        
+      </div>
+                        
+      <div class="column-content">
+        <div class="detail-column">
+          <div class="tree"> 
+<ul>
+	<li>
+<i class="fa fa-caret-down fa-fw" onclick="expand_or_collapse(this)">
+</i>		dosprtCreateLoanFileRatesForConversion		<ul style="display:block">
+			<li>
+<i class="fa fa-fw">
+</i><span class="selectable" id="e0"> rateTypeUsedForConversion : dosprtRateType
+</span>
+			</li>
+			<li>
+<i class="fa fa-fw">
+</i><span class="selectable" id="e1"> rateTypeUsedForFundsRelease : dosprtRateType
+</span>
+			</li>
+
+		</ul>
+
+	</li>
+
+</ul>
+          </div>
+          
+          <div class="detail">
+				<p align="left">
+					Légende :<br />
+				</p>
+            <ul>
+               <li align="left">
+                  <i class="fa fa-key fa-fw">
+                  </i>
+                  = Elément obligatoire en saisie.
+               </li>
+               <li align="left">
+                  <span style="font-weight:bold"> [M]
+                  </span>
+                  = Elément multiple (0 à n occurrences).
+               </li>
+               <li align="left">
+                  <span style="font-weight:bold"> [C]
+                  </span>
+                  = Elément composé d'un choix à effectuer. Un seul choix autorisé.
+               </li>
+            </ul>
+            <p align="left">
+               Remarque : Un même élément peut regrouper plusieurs caractéristiques
+            </p>          
+          </div>
+          
+        </div>
+<div class="detail-column" id="d0" style="display:none">
+	<div class="detail">
+			<div class="mock-list">
+				<b>Nom : </b>rateTypeUsedForConversion
+			</div>
+			<div class="mock-list">
+				<b>Description : </b>Type de taux à appliquer  lors des conversions dans une autre devise.
+			</div>
+			<div class="mock-list">
+				<b>Commentaire : </b><p>Un type de taux de conversion par d&eacute;faut doit &ecirc;tre renseign&eacute; au niveau du type de pr&ecirc;t.</p>
+
+<p>Le type de taux de conversion ne doit &ecirc;tre renseign&eacute; que s&rsquo;il peut &ecirc;tre choisi (si le <strong>Montant 1</strong> du param&egrave;tre <strong>CDTCONVERS</strong> en nomenclature <strong>098</strong> est positionn&eacute; &agrave; <strong>1</strong>), si on est&nbsp; dans une banque croate (param&egrave;tre <strong>CROATIE</strong> en nomenclature <strong>098</strong>) et si la r&eacute;&eacute;valuation des dossiers est autoris&eacute;e (param&egrave;tre <strong>CDTREEVAL</strong> en nomenclature <strong>098</strong>).</p>
+
+<p>Valeur par d&eacute;faut&nbsp;:<strong> typetaux_conv</strong></p>
+
+			</div>
+
+	</div>
+	<div class="detail">
+			<div class="mock-list">
+				<b>Nom : </b> <a href="../types/dosprtRateType.html">dosprtRateType</a>
+			</div>
+			<div class="mock-list">
+				<b> Description : </b>Type de taux (utilisé pour les conversions).
+			</div>
+			<div class="mock-list">
+				<b>Format : </b>string
+			</div>
+			<div class="mock-list">
+				<b>Valeurs possibles : </b>					<table class="table_enum" class="table_enum" class="table_enum">
+						<tr>
+						<td> M00
+						</td>						<td class="td_right"> Cours moyen
+						</td>
+						</tr>
+						<tr>
+						<td> V00
+						</td>						<td class="td_right"> Cours vente
+						</td>
+						</tr>
+						<tr>
+						<td> A00
+						</td>						<td class="td_right"> Cours achat
+						</td>
+						</tr>
+
+					</table>
+
+			</div>
+
+	</div>
+
+</div>
+<div class="detail-column" id="d1" style="display:none">
+	<div class="detail">
+			<div class="mock-list">
+				<b>Nom : </b>rateTypeUsedForFundsRelease
+			</div>
+			<div class="mock-list">
+				<b>Description : </b>Type de taux à appliquer  lors des conversions au moment du déblocage des fonds.
+			</div>
+			<div class="mock-list">
+				<b>Commentaire : </b><p>Le type de taux pour le d&eacute;blocage ne doit &ecirc;tre renseign&eacute; que s&rsquo;il peut &ecirc;tre&nbsp; choisi (si le <strong>Montant 2</strong> du param&egrave;tre <strong>CDTCONVERS</strong> en nomenclature <strong>098</strong> est positionn&eacute; &agrave; <strong>1</strong>), si on est&nbsp; dans une banque croate (param&egrave;tre <strong>CROATIE</strong> en nomenclature <strong>098</strong>) et si le type de d&eacute;blocage au niveau du type de pr&ecirc;t est d&eacute;blocage client (<strong>C</strong>), &agrave; la mise en place (<strong>M</strong>) ou imm&eacute;diat (<strong>I</strong>).</p>
+
+<p>Valeur par d&eacute;faut&nbsp;:<strong> typetaux_debl</strong></p>
+
+			</div>
+
+	</div>
+	<div class="detail">
+			<div class="mock-list">
+				<b>Nom : </b> <a href="../types/dosprtRateType.html">dosprtRateType</a>
+			</div>
+			<div class="mock-list">
+				<b> Description : </b>Type de taux (utilisé pour les conversions).
+			</div>
+			<div class="mock-list">
+				<b>Format : </b>string
+			</div>
+			<div class="mock-list">
+				<b>Valeurs possibles : </b>					<table class="table_enum" class="table_enum" class="table_enum">
+						<tr>
+						<td> M00
+						</td>						<td class="td_right"> Cours moyen
+						</td>
+						</tr>
+						<tr>
+						<td> V00
+						</td>						<td class="td_right"> Cours vente
+						</td>
+						</tr>
+						<tr>
+						<td> A00
+						</td>						<td class="td_right"> Cours achat
+						</td>
+						</tr>
+
+					</table>
+
+			</div>
+
+	</div>
+
+</div>
+      </div> 
+  </div>
+
+  
+  <script src="../resources/jquery.js"></script>
+  <script src="../resources/doc.js"></script>
+</body>
+</html>

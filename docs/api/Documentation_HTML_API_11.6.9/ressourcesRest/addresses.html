@@ -1,0 +1,139 @@
+<!DOCTYPE html>
+<html>
+<head>
+	<link rel="stylesheet" href="../resources/styleDocu.css" />
+    <link rel="stylesheet" href="../resources/font-awesome/css/font-awesome.min.css" />
+	<title>Documentation Xsd</title>
+	<meta charset="UTF-8" />
+</head>
+
+<body>
+  <div class="document">
+	<div class="header">		
+	</div>
+
+    <div class="tabs">
+        <div class="tabs-wrapper-selected" onclick="window.open('../liste-ressources.html', '_self');">
+            <div class="tabs-left-content" >Liste des ressources</div>
+        </div>
+        <div class="tabs-wrapper" onclick="window.open('../liste-services.html', '_self');">
+            <div class="tabs-left-content">Liste des services</div>
+        </div>
+        <div class="tabs-wrapper" onclick="window.open('../liste-types.html', '_self');">
+            <div class="tabs-right-content">Liste des types</div>
+        </div>
+    </div>
+
+	<div class="contenu">
+      <div class="breadcrumb"> 
+        <ul class="breadcrumb">
+           <li> <a href="../index.html"> Accueil </a></li>
+           <li> > </li>
+           <li> <a href="../liste-ressources.html"> Liste des ressources </a></li>
+           <li> > </li>
+           <li> addresses </li>
+        </ul>                    
+      </div>                    
+      
+      <div class="summary">
+        <div class="mock-list"> Nom ressource REST : addresses </div>
+        <div class="mock-list"> Programme Amplitude : prwraddresses </div>
+        <div class="mock-list"> Email : support.hotl.amplitude@soprabanking.com </div>        
+        <br/>
+            <div class="mock-list"> Addresses.</div>
+      </div>
+      
+      <div class="column-content" style="width:93%">
+        <div class="detail-column" style="width: 35%">
+          <div class="tree"> 
+<ul style="padding:0">
+	<li>
+<i class="fa fa-caret-down fa-fw" onclick="expand_or_collapse(this)">
+</i>		addresses		<ul>
+			<li>
+<i class="fa fa-caret-down fa-fw" onclick="expand_or_collapse(this)">
+</i>				v1				<ul>
+					<li>
+<i class="fa fa-fw">
+</i><span class="selectable" id="e0"> GET
+</span>
+					</li>
+
+				</ul>
+
+			</li>
+
+		</ul>
+
+	</li>
+
+</ul>
+          </div>
+        </div>
+                 
+        
+<div class="detail-column" id="d0" style="display:none; width: 65%">
+	<div class="detail">
+		<div class="mock-list">
+			<b>Service SOAP : </b> <a href="../services/getStructuredAddressFormatDetail.html">getStructuredAddressFormatDetail</a>
+		</div>
+		<div class="mock-list">
+			<b>Code retour succes : </b>200 - OK
+		</div>
+		<div class="mock-list">
+			<b>Uri : </b>http://soprabanking.com/amplitude/addresses/v1/{addressid}
+		</div>
+		<div class="mock-list">
+			<b>Description : </b>The service getStructuredAddressFormatDetail allows getting the structured address format (labels) of an specified code or criteria.
+		</div>
+		<br>
+
+		</br>
+		<div class="mock-list">
+			<b>Identifiants : </b>			<table class="table_param">
+				<tr>
+				<td> 0
+				</td>				<td title="getStructuredAddressFormatDetailRequest.addressFormatIdentifier.addressFormatCriteria.addressCategoryCode"> <a href="../types/decimal3_0.html">addressCategoryCode</a><br>Code catégorie du format d'adresse structurée.
+				</td>
+				</tr>
+				<tr>
+				<td> 1
+				</td>				<td title="getStructuredAddressFormatDetailRequest.addressFormatIdentifier.addressFormatCriteria.addressFormat"> <a href="../types/char2.html">addressFormat</a><br>Type de format d'adresse.
+				</td>
+				</tr>
+				<tr>
+				<td> 2
+				</td>				<td title="getStructuredAddressFormatDetailRequest.addressFormatIdentifier.addressFormatCriteria.countryCode"> <a href="../types/countryCode.html">countryCode</a><br>Code du pays.
+				</td>
+				</tr>
+
+			</table>
+
+		</div>
+		<br>
+
+		</br>
+		<div class="mock-list">
+			<b>Codes Erreur : </b>			<table>
+				<tr>
+				<td> 400
+				</td>				<td> Bad Request
+				</td>
+				</tr>
+
+			</table>
+
+		</div>
+
+	</div>
+
+</div>
+     </div> 
+  </div>
+  </div>
+
+  
+  <script src="../resources/jquery.js"></script>
+  <script src="../resources/doc.js"></script>
+</body>
+</html>

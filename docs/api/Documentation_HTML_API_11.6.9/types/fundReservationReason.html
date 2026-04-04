@@ -1,0 +1,431 @@
+<!DOCTYPE html >
+<html>
+<head>
+	<link rel="stylesheet" href="../resources/styleDocu.css" />
+  <link rel="stylesheet" href="../resources/font-awesome/css/font-awesome.min.css" />
+	<title>Documentation Xsd</title>
+	<meta charset="UTF-8" />
+</head>
+
+<body>
+  <div class="document">
+	<div class="header">
+		
+	</div>
+
+  <div class="tabs">
+    <div class="tabs-wrapper" onclick="window.open('../liste-ressources.html', '_self');">
+      <div class="tabs-left-content">
+        Liste des ressources
+      </div>
+    </div>
+    <div class="tabs-wrapper" onclick="window.open('../liste-services.html', '_self');">
+      <div class="tabs-left-content" >
+        Liste des services  
+      </div>
+    </div>
+    <div class="tabs-wrapper-selected" onclick="window.open('../liste-types.html', '_self');">
+      <div class="tabs-right-content">
+        Liste des types
+      </div>
+    </div>
+  </div>
+
+	
+
+	<div class="contenu">
+      <div class="breadcrumb"> 
+        <ul class="breadcrumb">
+           <li> <a href="../index.html"> Accueil </a></li>
+           <li> > </li>
+           <li> <a href="../liste-types.html"> Liste des types </a></li>
+           <li> > </li>
+           <li> fundReservationReason </li>
+        </ul>                    
+      </div>                    
+      
+     
+      <div class="summary">
+			<div class="mock-list">
+				<b>Nom : </b>fundReservationReason
+			</div>
+			<div class="mock-list">
+				<b> Description : </b>Motif d'une réservation de fonds.
+			</div>
+        
+        <div> </div>
+        <div class="mock-list"> Choix : Non</div>
+        
+      </div>
+                        
+      <div class="column-content">
+        <div class="detail-column">
+          <div class="tree"> 
+<ul>
+	<li>
+<i class="fa fa-caret-down fa-fw" onclick="expand_or_collapse(this)">
+</i>		fundReservationReason		<ul style="display:block">
+			<li>
+<i class="fa fa-fw">
+</i><span class="selectable" id="e0"> reason : char3
+</span>
+			</li>
+			<li>
+<i class="fa fa-caret-down fa-fw" onclick="expand_or_collapse(this)">
+</i><span style="font-weight:bold"> [M]
+</span><span class="selectable" id="e1"> reasonTranslate : fundReservationReasonTranslate
+</span>				<ul style="display:block">
+					<li>
+<i class="fa fa-caret-down fa-fw" onclick="expand_or_collapse(this)">
+</i><span style="font-weight:bold"> [M]
+</span><span class="selectable" id="e2"> designations : fundReservationDesignation
+</span>						<ul style="display:block">
+							<li>
+<i class="fa fa-fw">
+</i><span class="selectable" id="e3"> id : idFundReservationDesignation
+</span>
+							</li>
+							<li>
+<i class="fa fa-fw">
+</i><span class="selectable" id="e4"> designation : charMax40
+</span>
+							</li>
+
+						</ul>
+
+					</li>
+					<li>
+<i class="fa fa-fw">
+</i><span class="selectable" id="e5"> language : languageCode
+</span>
+					</li>
+
+				</ul>
+
+			</li>
+			<li>
+<i class="fa fa-caret-down fa-fw" onclick="expand_or_collapse(this)">
+</i><span style="font-weight:bold"> [M]
+</span><span class="selectable" id="e6"> designations : fundReservationDesignation
+</span>				<ul style="display:block">
+					<li>
+<i class="fa fa-fw">
+</i><span class="selectable" id="e7"> id : idFundReservationDesignation
+</span>
+					</li>
+					<li>
+<i class="fa fa-fw">
+</i><span class="selectable" id="e8"> designation : charMax40
+</span>
+					</li>
+
+				</ul>
+
+			</li>
+
+		</ul>
+
+	</li>
+
+</ul>
+          </div>
+          
+          <div class="detail">
+				<p align="left">
+					Légende :<br />
+				</p>
+            <ul>
+               <li align="left">
+                  <i class="fa fa-key fa-fw">
+                  </i>
+                  = Elément obligatoire en saisie.
+               </li>
+               <li align="left">
+                  <span style="font-weight:bold"> [M]
+                  </span>
+                  = Elément multiple (0 à n occurrences).
+               </li>
+               <li align="left">
+                  <span style="font-weight:bold"> [C]
+                  </span>
+                  = Elément composé d'un choix à effectuer. Un seul choix autorisé.
+               </li>
+            </ul>
+            <p align="left">
+               Remarque : Un même élément peut regrouper plusieurs caractéristiques
+            </p>          
+          </div>
+          
+        </div>
+<div class="detail-column" id="d0" style="display:none">
+	<div class="detail">
+			<div class="mock-list">
+				<b>Nom : </b>reason
+			</div>
+			<div class="mock-list">
+				<b>Description : </b>Code raison.
+			</div>
+			<div class="mock-list">
+				<b>Commentaire : </b><p>Les codes sont param&eacute;tr&eacute;s en nomenclature <strong>255</strong>.</p>
+
+			</div>
+
+	</div>
+	<div class="detail">
+			<div class="mock-list">
+				<b>Nom : </b> <a href="../types/char3.html">char3</a>
+			</div>
+			<div class="mock-list">
+				<b> Description : </b>Type avec un nombre de caractères égal à 3.
+			</div>
+			<div class="mock-list">
+				<b>Format : </b>string
+			</div>
+			<div class="mock-list">
+				<b>Longueur fixe : </b>3
+			</div>
+
+	</div>
+
+</div>
+<div class="detail-column" id="d1" style="display:none">
+	<div class="detail">
+			<div class="mock-list">
+				<b>Nom : </b>reasonTranslate
+			</div>
+			<div class="mock-list">
+				<b>Description : </b>Traduction
+			</div>
+			<div class="mock-list">
+				<b>Limite du nombre d'occurences mini-maxi : </b>aucune aucune
+			</div>
+
+	</div>
+	<div class="detail">
+			<div class="mock-list">
+				<b>Nom : </b> <a href="../types/fundReservationReasonTranslate.html">fundReservationReasonTranslate</a>
+			</div>
+			<div class="mock-list">
+				<b> Description : </b>Traduction.
+			</div>
+
+	</div>
+
+</div>
+<div class="detail-column" id="d2" style="display:none">
+	<div class="detail">
+			<div class="mock-list">
+				<b>Nom : </b>designations
+			</div>
+			<div class="mock-list">
+				<b>Description : </b>Libellé de description des réservations de fonds.
+			</div>
+			<div class="mock-list">
+				<b>Limite du nombre d'occurences mini-maxi : </b>aucune 3
+			</div>
+
+	</div>
+	<div class="detail">
+			<div class="mock-list">
+				<b>Nom : </b> <a href="../types/fundReservationDesignation.html">fundReservationDesignation</a>
+			</div>
+			<div class="mock-list">
+				<b> Description : </b>Libellé de réservation de fonds.
+			</div>
+
+	</div>
+
+</div>
+<div class="detail-column" id="d3" style="display:none">
+	<div class="detail">
+			<div class="mock-list">
+				<b>Nom : </b>id
+			</div>
+			<div class="mock-list">
+				<b>Description : </b>Numéro de libellé de réservation de fonds.
+			</div>
+			<div class="mock-list">
+				<b>Commentaire : </b><p>Liste des valeurs possibles&nbsp;:</p>
+
+<ul>
+	<li><strong>1</strong> = Premier libell&eacute; (premi&egrave;re zone de saisie libre) de la r&eacute;servation de fonds.</li>
+	<li><strong>2</strong> = Deuxi&egrave;me libell&eacute; (deuxi&egrave;me zone de saisie libre) de la r&eacute;servation de fonds.</li>
+	<li><strong>3</strong> = Troisi&egrave;me libell&eacute; (troisi&egrave;me zone de saisie libre) de la r&eacute;servation de fonds.</li>
+</ul>
+
+			</div>
+
+	</div>
+	<div class="detail">
+			<div class="mock-list">
+				<b>Nom : </b> <a href="../types/idFundReservationDesignation.html">idFundReservationDesignation</a>
+			</div>
+			<div class="mock-list">
+				<b> Description : </b>Numéro de libellé de réservation de fonds.
+			</div>
+			<div class="mock-list">
+				<b>Format : </b>short
+			</div>
+			<div class="mock-list">
+				<b>Min-max inclusive : </b>1 - 3
+			</div>
+
+	</div>
+
+</div>
+<div class="detail-column" id="d4" style="display:none">
+	<div class="detail">
+			<div class="mock-list">
+				<b>Nom : </b>designation
+			</div>
+			<div class="mock-list">
+				<b>Description : </b>Désignation.
+			</div>
+
+	</div>
+	<div class="detail">
+			<div class="mock-list">
+				<b>Nom : </b> <a href="../types/charMax40.html">charMax40</a>
+			</div>
+			<div class="mock-list">
+				<b> Description : </b>Chaîne composée d'au plus 40 caractères.
+			</div>
+			<div class="mock-list">
+				<b>Format : </b>string
+			</div>
+			<div class="mock-list">
+				<b>Longueur mini-maxi : </b>1 - 40
+			</div>
+
+	</div>
+
+</div>
+<div class="detail-column" id="d5" style="display:none">
+	<div class="detail">
+			<div class="mock-list">
+				<b>Nom : </b>language
+			</div>
+			<div class="mock-list">
+				<b>Description : </b>Code langue.
+			</div>
+
+	</div>
+	<div class="detail">
+			<div class="mock-list">
+				<b>Nom : </b> <a href="../types/languageCode.html">languageCode</a>
+			</div>
+			<div class="mock-list">
+				<b> Description : </b>Code langue.
+			</div>
+			<div class="mock-list">
+				<b>Format : </b>string
+			</div>
+			<div class="mock-list">
+				<b>Longueur fixe : </b>3
+			</div>
+
+	</div>
+
+</div>
+<div class="detail-column" id="d6" style="display:none">
+	<div class="detail">
+			<div class="mock-list">
+				<b>Nom : </b>designations
+			</div>
+			<div class="mock-list">
+				<b>Description : </b>Description.
+			</div>
+			<div class="mock-list">
+				<b>Limite du nombre d'occurences mini-maxi : </b>0 3
+			</div>
+			<div class="mock-list">
+				<b>Commentaire : </b><p>Libell&eacute;s libres d&eacute;crivant la r&eacute;servation de fonds.</p>
+
+<p>Il peut y en avoir au plus 3.</p>
+
+			</div>
+
+	</div>
+	<div class="detail">
+			<div class="mock-list">
+				<b>Nom : </b> <a href="../types/fundReservationDesignation.html">fundReservationDesignation</a>
+			</div>
+			<div class="mock-list">
+				<b> Description : </b>Libellé de réservation de fonds.
+			</div>
+
+	</div>
+
+</div>
+<div class="detail-column" id="d7" style="display:none">
+	<div class="detail">
+			<div class="mock-list">
+				<b>Nom : </b>id
+			</div>
+			<div class="mock-list">
+				<b>Description : </b>Numéro de libellé de réservation de fonds.
+			</div>
+			<div class="mock-list">
+				<b>Commentaire : </b><p>Liste des valeurs possibles&nbsp;:</p>
+
+<ul>
+	<li><strong>1</strong> = Premier libell&eacute; (premi&egrave;re zone de saisie libre) de la r&eacute;servation de fonds.</li>
+	<li><strong>2</strong> = Deuxi&egrave;me libell&eacute; (deuxi&egrave;me zone de saisie libre) de la r&eacute;servation de fonds.</li>
+	<li><strong>3</strong> = Troisi&egrave;me libell&eacute; (troisi&egrave;me zone de saisie libre) de la r&eacute;servation de fonds.</li>
+</ul>
+
+			</div>
+
+	</div>
+	<div class="detail">
+			<div class="mock-list">
+				<b>Nom : </b> <a href="../types/idFundReservationDesignation.html">idFundReservationDesignation</a>
+			</div>
+			<div class="mock-list">
+				<b> Description : </b>Numéro de libellé de réservation de fonds.
+			</div>
+			<div class="mock-list">
+				<b>Format : </b>short
+			</div>
+			<div class="mock-list">
+				<b>Min-max inclusive : </b>1 - 3
+			</div>
+
+	</div>
+
+</div>
+<div class="detail-column" id="d8" style="display:none">
+	<div class="detail">
+			<div class="mock-list">
+				<b>Nom : </b>designation
+			</div>
+			<div class="mock-list">
+				<b>Description : </b>Désignation.
+			</div>
+
+	</div>
+	<div class="detail">
+			<div class="mock-list">
+				<b>Nom : </b> <a href="../types/charMax40.html">charMax40</a>
+			</div>
+			<div class="mock-list">
+				<b> Description : </b>Chaîne composée d'au plus 40 caractères.
+			</div>
+			<div class="mock-list">
+				<b>Format : </b>string
+			</div>
+			<div class="mock-list">
+				<b>Longueur mini-maxi : </b>1 - 40
+			</div>
+
+	</div>
+
+</div>
+      </div> 
+  </div>
+
+  
+  <script src="../resources/jquery.js"></script>
+  <script src="../resources/doc.js"></script>
+</body>
+</html>

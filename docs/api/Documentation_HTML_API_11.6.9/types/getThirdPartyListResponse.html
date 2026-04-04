@@ -1,0 +1,1626 @@
+<!DOCTYPE html >
+<html>
+<head>
+	<link rel="stylesheet" href="../resources/styleDocu.css" />
+  <link rel="stylesheet" href="../resources/font-awesome/css/font-awesome.min.css" />
+	<title>Documentation Xsd</title>
+	<meta charset="UTF-8" />
+</head>
+
+<body>
+  <div class="document">
+	<div class="header">
+		
+	</div>
+
+  <div class="tabs">
+    <div class="tabs-wrapper" onclick="window.open('../liste-ressources.html', '_self');">
+      <div class="tabs-left-content">
+        Liste des ressources
+      </div>
+    </div>
+    <div class="tabs-wrapper" onclick="window.open('../liste-services.html', '_self');">
+      <div class="tabs-left-content" >
+        Liste des services  
+      </div>
+    </div>
+    <div class="tabs-wrapper-selected" onclick="window.open('../liste-types.html', '_self');">
+      <div class="tabs-right-content">
+        Liste des types
+      </div>
+    </div>
+  </div>
+
+	
+
+	<div class="contenu">
+      <div class="breadcrumb"> 
+        <ul class="breadcrumb">
+           <li> <a href="../index.html"> Accueil </a></li>
+           <li> > </li>
+           <li> <a href="../liste-types.html"> Liste des types </a></li>
+           <li> > </li>
+           <li> getThirdPartyListResponse </li>
+        </ul>                    
+      </div>                    
+      
+     
+      <div class="summary">
+			<div class="mock-list">
+				<b>Nom : </b>getThirdPartyListResponse
+			</div>
+			<div class="mock-list">
+				<b> Description : </b>Réponse liste des tiers.
+			</div>
+        
+        <div> </div>
+        <div class="mock-list"> Choix : Non</div>
+        
+      </div>
+                        
+      <div class="column-content">
+        <div class="detail-column">
+          <div class="tree"> 
+<ul>
+	<li>
+<i class="fa fa-caret-down fa-fw" onclick="expand_or_collapse(this)">
+</i>		getThirdPartyListResponse		<ul style="display:block">
+			<li>
+<i class="fa fa-caret-down fa-fw" onclick="expand_or_collapse(this)">
+</i><i class="fa fa-key fa-fw">
+</i><span style="font-weight:bold"> [M]
+</span><span class="selectable" id="e0"> thirdParty : getThirdPartyResponse
+</span>				<ul style="display:block">
+		<li>
+<i class="fa fa-caret-down fa-fw" onclick="expand_or_collapse(this)">
+</i><span class="selectable" id="e1"> thirdParty : thirdPartyPopulation
+</span>			<ul style="display:block">
+				<li>
+<i class="fa fa-caret-down fa-fw" onclick="expand_or_collapse(this)">
+</i><span class="selectable" id="e2"> thirdParty : restrictedThirdParty
+</span>					<ul style="display:block">
+						<li>
+<i class="fa fa-fw">
+</i><span class="selectable" id="e3"> thirdPartyNumber : thirdPartyCode
+</span>
+						</li>
+						<li>
+<i class="fa fa-fw">
+</i><span class="selectable" id="e4"> displayedName : charMax67
+</span>
+						</li>
+
+					</ul>
+
+				</li>
+				<li>
+<i class="fa fa-fw">
+</i><span class="selectable" id="e5"> type : customerType
+</span>
+				</li>
+				<li>
+<i class="fa fa-fw">
+</i><span class="selectable" id="e6"> nationalIdentifier : charMax20
+</span>
+				</li>
+				<li>
+<i class="fa fa-caret-down fa-fw" onclick="expand_or_collapse(this)">
+</i><span class="selectable" id="e7"> additionalInformation : thirdPartyComplementaryInformation
+</span>					<ul style="display:block">
+						<li>
+<i class="fa fa-caret-down fa-fw" onclick="expand_or_collapse(this)">
+</i><i class="fa fa-key fa-fw">
+</i><span class="selectable" id="e8"> complementaryInformation : comparisonAdditionalData
+</span>							<ul style="display:block">
+								<li>
+<i class="fa fa-fw">
+</i><i class="fa fa-key fa-fw">
+</i><span class="selectable" id="e9"> identifier : charMax10
+</span>
+								</li>
+								<li>
+<i class="fa fa-caret-down fa-fw" onclick="expand_or_collapse(this)">
+</i><i class="fa fa-key fa-fw">
+</i><span style="font-weight:bold"> [C]
+</span><span class="selectable" id="e10"> value : comparisonAdditionalDataValue
+</span>									<ul style="display:block">
+										<li>
+<i class="fa fa-caret-down fa-fw" onclick="expand_or_collapse(this)">
+</i><span class="selectable" id="e11"> alphanumeric : designation
+</span>											<ul style="display:block">
+												<li>
+<i class="fa fa-fw">
+</i><i class="fa fa-key fa-fw">
+</i><span class="selectable" id="e12"> value : string
+</span>
+												</li>
+												<li>
+<i class="fa fa-fw">
+</i><i class="fa fa-key fa-fw">
+</i><span class="selectable" id="e13"> comparisonOperator : comparisonOperator
+</span>
+												</li>
+
+											</ul>
+
+										</li>
+										<li>
+<i class="fa fa-caret-down fa-fw" onclick="expand_or_collapse(this)">
+</i><span class="selectable" id="e14"> amountOrRate : comparisonDecimal
+</span>											<ul style="display:block">
+												<li>
+<i class="fa fa-fw">
+</i><i class="fa fa-key fa-fw">
+</i><span class="selectable" id="e15"> decimal1 : decimal32_16
+</span>
+												</li>
+												<li>
+<i class="fa fa-fw">
+</i><span class="selectable" id="e16"> decimal2 : decimal32_16
+</span>
+												</li>
+												<li>
+<i class="fa fa-fw">
+</i><i class="fa fa-key fa-fw">
+</i><span class="selectable" id="e17"> comparator : comparator
+</span>
+												</li>
+
+											</ul>
+
+										</li>
+										<li>
+<i class="fa fa-caret-down fa-fw" onclick="expand_or_collapse(this)">
+</i><span class="selectable" id="e18"> date : comparisonDate
+</span>											<ul style="display:block">
+												<li>
+<i class="fa fa-fw">
+</i><i class="fa fa-key fa-fw">
+</i><span class="selectable" id="e19"> date1 : date
+</span>
+												</li>
+												<li>
+<i class="fa fa-fw">
+</i><span class="selectable" id="e20"> date2 : date
+</span>
+												</li>
+												<li>
+<i class="fa fa-fw">
+</i><i class="fa fa-key fa-fw">
+</i><span class="selectable" id="e21"> comparator : comparator
+</span>
+												</li>
+
+											</ul>
+
+										</li>
+
+									</ul>
+
+								</li>
+
+							</ul>
+
+						</li>
+						<li>
+<i class="fa fa-fw">
+</i><span class="selectable" id="e22"> designation : charMax30
+</span>
+						</li>
+
+					</ul>
+
+				</li>
+				<li>
+<i class="fa fa-fw">
+</i><span class="selectable" id="e23"> externalReference : charMax25
+</span>
+				</li>
+
+			</ul>
+
+		</li>
+		<li>
+<i class="fa fa-caret-down fa-fw" onclick="expand_or_collapse(this)">
+</i><span class="selectable" id="e24"> individual : individualThirdParty
+</span>			<ul style="display:block">
+				<li>
+<i class="fa fa-fw">
+</i><span class="selectable" id="e25"> lastname : charMax36
+</span>
+				</li>
+				<li>
+<i class="fa fa-fw">
+</i><span class="selectable" id="e26"> firstname : charMax30
+</span>
+				</li>
+				<li>
+<i class="fa fa-fw">
+</i><span class="selectable" id="e27"> middlename : charMax30
+</span>
+				</li>
+				<li>
+<i class="fa fa-caret-down fa-fw" onclick="expand_or_collapse(this)">
+</i><span class="selectable" id="e28"> birthdate : comparisonDate
+</span>					<ul style="display:block">
+						<li>
+<i class="fa fa-fw">
+</i><i class="fa fa-key fa-fw">
+</i><span class="selectable" id="e29"> date1 : date
+</span>
+						</li>
+						<li>
+<i class="fa fa-fw">
+</i><span class="selectable" id="e30"> date2 : date
+</span>
+						</li>
+						<li>
+<i class="fa fa-fw">
+</i><i class="fa fa-key fa-fw">
+</i><span class="selectable" id="e31"> comparator : comparator
+</span>
+						</li>
+
+					</ul>
+
+				</li>
+				<li>
+<i class="fa fa-caret-down fa-fw" onclick="expand_or_collapse(this)">
+</i><span class="selectable" id="e32"> idPaper : idPaper
+</span>					<ul style="display:block">
+						<li>
+<i class="fa fa-caret-down fa-fw" onclick="expand_or_collapse(this)">
+</i><span class="selectable" id="e33"> type : idPaperType
+</span>							<ul style="display:block">
+								<li>
+<i class="fa fa-fw">
+</i><span class="selectable" id="e34"> code : charMax5
+</span>
+								</li>
+								<li>
+<i class="fa fa-fw">
+</i><span class="selectable" id="e35"> designation : charMax30
+</span>
+								</li>
+
+							</ul>
+
+						</li>
+						<li>
+<i class="fa fa-fw">
+</i><span class="selectable" id="e36"> number : charMax20
+</span>
+						</li>
+
+					</ul>
+
+				</li>
+
+			</ul>
+
+		</li>
+		<li>
+<i class="fa fa-caret-down fa-fw" onclick="expand_or_collapse(this)">
+</i><span class="selectable" id="e37"> corporate : corporateThirdParty
+</span>			<ul style="display:block">
+				<li>
+<i class="fa fa-fw">
+</i><span class="selectable" id="e38"> corporateName : charMax65
+</span>
+				</li>
+				<li>
+<i class="fa fa-fw">
+</i><span class="selectable" id="e39"> abbreviation : charMax20
+</span>
+				</li>
+				<li>
+<i class="fa fa-fw">
+</i><span class="selectable" id="e40"> tradeRegisterNumber : charMax20
+</span>
+				</li>
+				<li>
+<i class="fa fa-fw">
+</i><span class="selectable" id="e41"> businessLicenseNumber : charMax20
+</span>
+				</li>
+				<li>
+<i class="fa fa-fw">
+</i><span class="selectable" id="e42"> taxIdentityNumber : charMax20
+</span>
+				</li>
+
+			</ul>
+
+		</li>
+
+				</ul>
+
+			</li>
+
+		</ul>
+
+	</li>
+
+</ul>
+          </div>
+          
+          <div class="detail">
+				<p align="left">
+					Légende :<br />
+				</p>
+            <ul>
+               <li align="left">
+                  <i class="fa fa-key fa-fw">
+                  </i>
+                  = Elément obligatoire en saisie.
+               </li>
+               <li align="left">
+                  <span style="font-weight:bold"> [M]
+                  </span>
+                  = Elément multiple (0 à n occurrences).
+               </li>
+               <li align="left">
+                  <span style="font-weight:bold"> [C]
+                  </span>
+                  = Elément composé d'un choix à effectuer. Un seul choix autorisé.
+               </li>
+            </ul>
+            <p align="left">
+               Remarque : Un même élément peut regrouper plusieurs caractéristiques
+            </p>          
+          </div>
+          
+        </div>
+<div class="detail-column" id="d0" style="display:none">
+	<div class="detail">
+			<div class="mock-list">
+				<b>Nom : </b>thirdParty
+			</div>
+			<div class="mock-list">
+				<b>Description : </b>Réponse pour un tiers de la liste.
+			</div>
+			<div class="mock-list">
+				<b>Limite du nombre d'occurences mini-maxi : </b>0 aucune
+			</div>
+
+	</div>
+	<div class="detail">
+			<div class="mock-list">
+				<b>Nom : </b> <a href="../types/getThirdPartyResponse.html">getThirdPartyResponse</a>
+			</div>
+			<div class="mock-list">
+				<b> Description : </b>Réponse pour un tiers de la liste.
+			</div>
+
+	</div>
+
+</div>
+<div class="detail-column" id="d1" style="display:none">
+	<div class="detail">
+			<div class="mock-list">
+				<b>Nom : </b>thirdParty
+			</div>
+			<div class="mock-list">
+				<b>Description : </b>Type de tiers.
+			</div>
+
+	</div>
+	<div class="detail">
+			<div class="mock-list">
+				<b>Nom : </b> <a href="../types/thirdPartyPopulation.html">thirdPartyPopulation</a>
+			</div>
+			<div class="mock-list">
+				<b> Description : </b>Population de tiers de dossiers.
+			</div>
+
+	</div>
+
+</div>
+<div class="detail-column" id="d2" style="display:none">
+	<div class="detail">
+			<div class="mock-list">
+				<b>Nom : </b>thirdParty
+			</div>
+			<div class="mock-list">
+				<b>Description : </b>Tiers restreint.
+			</div>
+
+	</div>
+	<div class="detail">
+			<div class="mock-list">
+				<b>Nom : </b> <a href="../types/restrictedThirdParty.html">restrictedThirdParty</a>
+			</div>
+			<div class="mock-list">
+				<b> Description : </b>Tiers restreint.
+			</div>
+
+	</div>
+
+</div>
+<div class="detail-column" id="d3" style="display:none">
+	<div class="detail">
+			<div class="mock-list">
+				<b>Nom : </b>thirdPartyNumber
+			</div>
+			<div class="mock-list">
+				<b>Description : </b>Code du tiers.
+			</div>
+
+	</div>
+	<div class="detail">
+			<div class="mock-list">
+				<b>Nom : </b> <a href="../types/thirdPartyCode.html">thirdPartyCode</a>
+			</div>
+			<div class="mock-list">
+				<b> Description : </b>Code d'un tiers.
+			</div>
+			<div class="mock-list">
+				<b>Format : </b>string
+			</div>
+			<div class="mock-list">
+				<b>Longueur mini-maxi : </b>1 - 15
+			</div>
+
+	</div>
+
+</div>
+<div class="detail-column" id="d4" style="display:none">
+	<div class="detail">
+			<div class="mock-list">
+				<b>Nom : </b>displayedName
+			</div>
+			<div class="mock-list">
+				<b>Description : </b>Nom de restitution du tiers.
+			</div>
+
+	</div>
+	<div class="detail">
+			<div class="mock-list">
+				<b>Nom : </b> <a href="../types/charMax67.html">charMax67</a>
+			</div>
+			<div class="mock-list">
+				<b> Description : </b>Chaîne composée d'au plus 67 caractères.
+			</div>
+			<div class="mock-list">
+				<b>Format : </b>string
+			</div>
+			<div class="mock-list">
+				<b>Longueur mini-maxi : </b>1 - 67
+			</div>
+
+	</div>
+
+</div>
+<div class="detail-column" id="d5" style="display:none">
+	<div class="detail">
+			<div class="mock-list">
+				<b>Nom : </b>type
+			</div>
+			<div class="mock-list">
+				<b>Description : </b>Type de client.
+			</div>
+
+	</div>
+	<div class="detail">
+			<div class="mock-list">
+				<b>Nom : </b> <a href="../types/customerType.html">customerType</a>
+			</div>
+			<div class="mock-list">
+				<b> Description : </b>Type de client.
+			</div>
+			<div class="mock-list">
+				<b>Format : </b>string
+			</div>
+			<div class="mock-list">
+				<b>Valeurs possibles : </b>					<table class="table_enum" class="table_enum" class="table_enum">
+						<tr>
+						<td> 1
+						</td>						<td class="td_right"> Particulier
+						</td>
+						</tr>
+						<tr>
+						<td> 2
+						</td>						<td class="td_right"> Société
+						</td>
+						</tr>
+						<tr>
+						<td> 3
+						</td>						<td class="td_right"> Entreprise individuelle
+						</td>
+						</tr>
+
+					</table>
+
+			</div>
+
+	</div>
+
+</div>
+<div class="detail-column" id="d6" style="display:none">
+	<div class="detail">
+			<div class="mock-list">
+				<b>Nom : </b>nationalIdentifier
+			</div>
+			<div class="mock-list">
+				<b>Description : </b>Identifiant national.
+			</div>
+
+	</div>
+	<div class="detail">
+			<div class="mock-list">
+				<b>Nom : </b> <a href="../types/charMax20.html">charMax20</a>
+			</div>
+			<div class="mock-list">
+				<b> Description : </b>Chaîne composée d'au plus 20 caractères.
+			</div>
+			<div class="mock-list">
+				<b>Format : </b>string
+			</div>
+			<div class="mock-list">
+				<b>Longueur mini-maxi : </b>1 - 20
+			</div>
+
+	</div>
+
+</div>
+<div class="detail-column" id="d7" style="display:none">
+	<div class="detail">
+			<div class="mock-list">
+				<b>Nom : </b>additionalInformation
+			</div>
+			<div class="mock-list">
+				<b>Description : </b>Donnée complémentaire tiers.
+			</div>
+			<div class="mock-list">
+				<b>Commentaire : </b><p>Une seule donn&eacute;e compl&eacute;mentaire peut &ecirc;tre pr&eacute;cis&eacute;e ici.</p>
+
+			</div>
+
+	</div>
+	<div class="detail">
+			<div class="mock-list">
+				<b>Nom : </b> <a href="../types/thirdPartyComplementaryInformation.html">thirdPartyComplementaryInformation</a>
+			</div>
+			<div class="mock-list">
+				<b> Description : </b>Donnée complémentaire d'un tiers.
+			</div>
+
+	</div>
+
+</div>
+<div class="detail-column" id="d8" style="display:none">
+	<div class="detail">
+			<div class="mock-list">
+				<b>Nom : </b>complementaryInformation
+			</div>
+			<div class="mock-list">
+				<b>Description : </b>Informations sur la donnée complémentaire.
+			</div>
+
+	</div>
+	<div class="detail">
+			<div class="mock-list">
+				<b>Nom : </b> <a href="../types/comparisonAdditionalData.html">comparisonAdditionalData</a>
+			</div>
+			<div class="mock-list">
+				<b> Description : </b>Structure de base d'une donnée complémentaire.
+			</div>
+
+	</div>
+
+</div>
+<div class="detail-column" id="d9" style="display:none">
+	<div class="detail">
+			<div class="mock-list">
+				<b>Nom : </b>identifier
+			</div>
+			<div class="mock-list">
+				<b>Description : </b>Identifiant de la donnée complémentaire.
+			</div>
+
+	</div>
+	<div class="detail">
+			<div class="mock-list">
+				<b>Nom : </b> <a href="../types/charMax10.html">charMax10</a>
+			</div>
+			<div class="mock-list">
+				<b> Description : </b>Chaîne composée d'au plus 10 caractères.
+			</div>
+			<div class="mock-list">
+				<b>Format : </b>string
+			</div>
+			<div class="mock-list">
+				<b>Longueur mini-maxi : </b>1 - 10
+			</div>
+
+	</div>
+
+</div>
+<div class="detail-column" id="d10" style="display:none">
+	<div class="detail">
+			<div class="mock-list">
+				<b>Nom : </b>value
+			</div>
+			<div class="mock-list">
+				<b>Description : </b>Valeur de la donnée complémentaire.
+			</div>
+
+	</div>
+	<div class="detail">
+			<div class="mock-list">
+				<b>Nom : </b> <a href="../types/comparisonAdditionalDataValue.html">comparisonAdditionalDataValue</a>
+			</div>
+			<div class="mock-list">
+				<b> Description : </b>Valeur d¿une donnée complémentaire.
+			</div>
+
+	</div>
+
+</div>
+<div class="detail-column" id="d11" style="display:none">
+	<div class="detail">
+			<div class="mock-list">
+				<b>Nom : </b>alphanumeric
+			</div>
+			<div class="mock-list">
+				<b>Description : </b>Donnée complémentaire de type alphanumérique.
+			</div>
+
+	</div>
+	<div class="detail">
+			<div class="mock-list">
+				<b>Nom : </b> <a href="../types/designation.html">designation</a>
+			</div>
+			<div class="mock-list">
+				<b> Description : </b>Désignation.
+			</div>
+
+	</div>
+
+</div>
+<div class="detail-column" id="d12" style="display:none">
+	<div class="detail">
+			<div class="mock-list">
+				<b>Nom : </b>value
+			</div>
+			<div class="mock-list">
+				<b>Description : </b>Valeur de la désignation.
+			</div>
+			<div class="mock-list">
+				<b>Commentaire : </b>Type permettant de comparer une chaine de caractère
+			</div>
+
+	</div>
+	<div class="detail">
+			<div class="mock-list">
+				<b>Nom : </b> <a href="../types/string.html">string</a>
+			</div>
+
+	</div>
+
+</div>
+<div class="detail-column" id="d13" style="display:none">
+	<div class="detail">
+			<div class="mock-list">
+				<b>Nom : </b>comparisonOperator
+			</div>
+			<div class="mock-list">
+				<b>Description : </b>Opérateur de comparaison.
+			</div>
+			<div class="mock-list">
+				<b>Commentaire : </b>Comparateurs: "Commence par", "Termine par", "égal", "contient": Chargé avec "=" pour les flux de réponse
+			</div>
+
+	</div>
+	<div class="detail">
+			<div class="mock-list">
+				<b>Nom : </b> <a href="../types/comparisonOperator.html">comparisonOperator</a>
+			</div>
+			<div class="mock-list">
+				<b> Description : </b>Opérateur de comparaison de chaînes de caractères.
+			</div>
+			<div class="mock-list">
+				<b>Format : </b>string
+			</div>
+			<div class="mock-list">
+				<b>Valeurs possibles : </b>					<table class="table_enum" class="table_enum" class="table_enum" class="table_enum">
+						<tr>
+						<td> EQUALS
+						</td>						<td class="td_right"> Egal à
+						</td>
+						</tr>
+						<tr>
+						<td> CONTAINS
+						</td>						<td class="td_right"> Contient
+						</td>
+						</tr>
+						<tr>
+						<td> STARTS WITH
+						</td>						<td class="td_right"> Commence par
+						</td>
+						</tr>
+						<tr>
+						<td> ENDS WITH
+						</td>						<td class="td_right"> Termine par
+						</td>
+						</tr>
+
+					</table>
+
+			</div>
+
+	</div>
+
+</div>
+<div class="detail-column" id="d14" style="display:none">
+	<div class="detail">
+			<div class="mock-list">
+				<b>Nom : </b>amountOrRate
+			</div>
+			<div class="mock-list">
+				<b>Description : </b>Donnée complémentaire de type montant ou taux.
+			</div>
+
+	</div>
+	<div class="detail">
+			<div class="mock-list">
+				<b>Nom : </b> <a href="../types/comparisonDecimal.html">comparisonDecimal</a>
+			</div>
+			<div class="mock-list">
+				<b> Description : </b>Comparaison de nombres décimaux.
+			</div>
+
+	</div>
+
+</div>
+<div class="detail-column" id="d15" style="display:none">
+	<div class="detail">
+			<div class="mock-list">
+				<b>Nom : </b>decimal1
+			</div>
+			<div class="mock-list">
+				<b>Description : </b>1ère décimale.
+			</div>
+
+	</div>
+	<div class="detail">
+			<div class="mock-list">
+				<b>Nom : </b> <a href="../types/decimal32_16.html">decimal32_16</a>
+			</div>
+			<div class="mock-list">
+				<b> Description : </b>Type décimal à 32 chiffres dont 16 décimales.
+			</div>
+			<div class="mock-list">
+				<b>Format : </b>decimal
+			</div>
+			<div class="mock-list">
+				<b>Nombre total de chiffres : </b>32
+			</div>
+
+	</div>
+
+</div>
+<div class="detail-column" id="d16" style="display:none">
+	<div class="detail">
+			<div class="mock-list">
+				<b>Nom : </b>decimal2
+			</div>
+			<div class="mock-list">
+				<b>Description : </b>2ème décimale.
+			</div>
+			<div class="mock-list">
+				<b>Commentaire : </b><p>Le 2<sup>&egrave;me</sup> d&eacute;cimal n&rsquo;est pris en compte que pour les op&eacute;rateurs de comparaison <strong>BETWEEN</strong> et <strong>BETWEEN EQUALS</strong>.</p>
+
+<p>N&#39;est jamais renseign&eacute; dans un flux de r&eacute;ponse d&rsquo;un service.</p>
+
+			</div>
+
+	</div>
+	<div class="detail">
+			<div class="mock-list">
+				<b>Nom : </b> <a href="../types/decimal32_16.html">decimal32_16</a>
+			</div>
+			<div class="mock-list">
+				<b> Description : </b>Type décimal à 32 chiffres dont 16 décimales.
+			</div>
+			<div class="mock-list">
+				<b>Format : </b>decimal
+			</div>
+			<div class="mock-list">
+				<b>Nombre total de chiffres : </b>32
+			</div>
+
+	</div>
+
+</div>
+<div class="detail-column" id="d17" style="display:none">
+	<div class="detail">
+			<div class="mock-list">
+				<b>Nom : </b>comparator
+			</div>
+			<div class="mock-list">
+				<b>Description : </b>Opérateur de comparaison.
+			</div>
+			<div class="mock-list">
+				<b>Commentaire : </b><p>Vaut <strong>EQUALS</strong> dans un flux de r&eacute;ponse.</p>
+
+			</div>
+
+	</div>
+	<div class="detail">
+			<div class="mock-list">
+				<b>Nom : </b> <a href="../types/comparator.html">comparator</a>
+			</div>
+			<div class="mock-list">
+				<b> Description : </b>Opérateur de comparaison.
+			</div>
+			<div class="mock-list">
+				<b>Format : </b>string
+			</div>
+			<div class="mock-list">
+				<b>Valeurs possibles : </b>					<table class="table_enum" class="table_enum" class="table_enum" class="table_enum" class="table_enum" class="table_enum" class="table_enum" class="table_enum">
+						<tr>
+						<td> GREATER THAN
+						</td>						<td class="td_right"> Supérieur strict
+						</td>
+						</tr>
+						<tr>
+						<td> NOT EQUALS
+						</td>						<td class="td_right"> Différent de
+						</td>
+						</tr>
+						<tr>
+						<td> GREATER EQUALS
+						</td>						<td class="td_right"> Supérieur ou égal à
+						</td>
+						</tr>
+						<tr>
+						<td> LOWER EQUALS
+						</td>						<td class="td_right"> Inférieur ou égal
+						</td>
+						</tr>
+						<tr>
+						<td> BETWEEN
+						</td>						<td class="td_right"> Compris entre bornes exclues
+						</td>
+						</tr>
+						<tr>
+						<td> BETWEEN EQUALS
+						</td>						<td class="td_right"> Compris entre bornes incluses
+						</td>
+						</tr>
+						<tr>
+						<td> EQUALS
+						</td>						<td class="td_right"> Egal à
+						</td>
+						</tr>
+						<tr>
+						<td> LOWER THAN
+						</td>						<td class="td_right"> Inférieur strict
+						</td>
+						</tr>
+
+					</table>
+
+			</div>
+
+	</div>
+
+</div>
+<div class="detail-column" id="d18" style="display:none">
+	<div class="detail">
+			<div class="mock-list">
+				<b>Nom : </b>date
+			</div>
+			<div class="mock-list">
+				<b>Description : </b>Donnée complémentaire de type date.
+			</div>
+
+	</div>
+	<div class="detail">
+			<div class="mock-list">
+				<b>Nom : </b> <a href="../types/comparisonDate.html">comparisonDate</a>
+			</div>
+			<div class="mock-list">
+				<b> Description : </b>Comparaison de dates.
+			</div>
+
+	</div>
+
+</div>
+<div class="detail-column" id="d19" style="display:none">
+	<div class="detail">
+			<div class="mock-list">
+				<b>Nom : </b>date1
+			</div>
+			<div class="mock-list">
+				<b>Description : </b>1ère date.
+			</div>
+
+	</div>
+	<div class="detail">
+			<div class="mock-list">
+				<b>Nom : </b> <a href="../types/date.html">date</a>
+			</div>
+
+	</div>
+
+</div>
+<div class="detail-column" id="d20" style="display:none">
+	<div class="detail">
+			<div class="mock-list">
+				<b>Nom : </b>date2
+			</div>
+			<div class="mock-list">
+				<b>Description : </b>2ème date.
+			</div>
+			<div class="mock-list">
+				<b>Commentaire : </b><p>La 2<sup>&egrave;me</sup> date n&rsquo;est prise en compte que pour les&nbsp;op&eacute;rateurs de comparaison&nbsp;<strong>BETWEEN</strong> et <strong>BETWEEN EQUALS</strong>.</p>
+
+<p>N&#39;est jamais renseign&eacute;e dans un flux de r&eacute;ponse.</p>
+
+			</div>
+
+	</div>
+	<div class="detail">
+			<div class="mock-list">
+				<b>Nom : </b> <a href="../types/date.html">date</a>
+			</div>
+
+	</div>
+
+</div>
+<div class="detail-column" id="d21" style="display:none">
+	<div class="detail">
+			<div class="mock-list">
+				<b>Nom : </b>comparator
+			</div>
+			<div class="mock-list">
+				<b>Description : </b>Opérateur de comparaison.
+			</div>
+			<div class="mock-list">
+				<b>Commentaire : </b><p>Vaut <strong>EQUALS</strong> dans un flux de r&eacute;ponse.</p>
+
+			</div>
+
+	</div>
+	<div class="detail">
+			<div class="mock-list">
+				<b>Nom : </b> <a href="../types/comparator.html">comparator</a>
+			</div>
+			<div class="mock-list">
+				<b> Description : </b>Opérateur de comparaison.
+			</div>
+			<div class="mock-list">
+				<b>Format : </b>string
+			</div>
+			<div class="mock-list">
+				<b>Valeurs possibles : </b>					<table class="table_enum" class="table_enum" class="table_enum" class="table_enum" class="table_enum" class="table_enum" class="table_enum" class="table_enum">
+						<tr>
+						<td> GREATER THAN
+						</td>						<td class="td_right"> Supérieur strict
+						</td>
+						</tr>
+						<tr>
+						<td> NOT EQUALS
+						</td>						<td class="td_right"> Différent de
+						</td>
+						</tr>
+						<tr>
+						<td> GREATER EQUALS
+						</td>						<td class="td_right"> Supérieur ou égal à
+						</td>
+						</tr>
+						<tr>
+						<td> LOWER EQUALS
+						</td>						<td class="td_right"> Inférieur ou égal
+						</td>
+						</tr>
+						<tr>
+						<td> BETWEEN
+						</td>						<td class="td_right"> Compris entre bornes exclues
+						</td>
+						</tr>
+						<tr>
+						<td> BETWEEN EQUALS
+						</td>						<td class="td_right"> Compris entre bornes incluses
+						</td>
+						</tr>
+						<tr>
+						<td> EQUALS
+						</td>						<td class="td_right"> Egal à
+						</td>
+						</tr>
+						<tr>
+						<td> LOWER THAN
+						</td>						<td class="td_right"> Inférieur strict
+						</td>
+						</tr>
+
+					</table>
+
+			</div>
+
+	</div>
+
+</div>
+<div class="detail-column" id="d22" style="display:none">
+	<div class="detail">
+			<div class="mock-list">
+				<b>Nom : </b>designation
+			</div>
+			<div class="mock-list">
+				<b>Description : </b>Désignation.
+			</div>
+
+	</div>
+	<div class="detail">
+			<div class="mock-list">
+				<b>Nom : </b> <a href="../types/charMax30.html">charMax30</a>
+			</div>
+			<div class="mock-list">
+				<b> Description : </b>Chaîne composée d'au plus 30 caractères.
+			</div>
+			<div class="mock-list">
+				<b>Format : </b>string
+			</div>
+			<div class="mock-list">
+				<b>Longueur mini-maxi : </b>1 - 30
+			</div>
+
+	</div>
+
+</div>
+<div class="detail-column" id="d23" style="display:none">
+	<div class="detail">
+			<div class="mock-list">
+				<b>Nom : </b>externalReference
+			</div>
+			<div class="mock-list">
+				<b>Description : </b>Référence externe.
+			</div>
+
+	</div>
+	<div class="detail">
+			<div class="mock-list">
+				<b>Nom : </b> <a href="../types/charMax25.html">charMax25</a>
+			</div>
+			<div class="mock-list">
+				<b> Description : </b>Chaîne composée d'au plus 25 caractères.
+			</div>
+			<div class="mock-list">
+				<b>Format : </b>string
+			</div>
+			<div class="mock-list">
+				<b>Longueur mini-maxi : </b>1 - 25
+			</div>
+
+	</div>
+
+</div>
+<div class="detail-column" id="d24" style="display:none">
+	<div class="detail">
+			<div class="mock-list">
+				<b>Nom : </b>individual
+			</div>
+			<div class="mock-list">
+				<b>Description : </b>Détail d'un tiers.
+			</div>
+
+	</div>
+	<div class="detail">
+			<div class="mock-list">
+				<b>Nom : </b> <a href="../types/individualThirdParty.html">individualThirdParty</a>
+			</div>
+			<div class="mock-list">
+				<b> Description : </b>Détail d¿un tiers.
+			</div>
+
+	</div>
+
+</div>
+<div class="detail-column" id="d25" style="display:none">
+	<div class="detail">
+			<div class="mock-list">
+				<b>Nom : </b>lastname
+			</div>
+			<div class="mock-list">
+				<b>Description : </b>Nom.
+			</div>
+
+	</div>
+	<div class="detail">
+			<div class="mock-list">
+				<b>Nom : </b> <a href="../types/charMax36.html">charMax36</a>
+			</div>
+			<div class="mock-list">
+				<b> Description : </b>Chaîne composée d'au plus 36 caractères.
+			</div>
+			<div class="mock-list">
+				<b>Format : </b>string
+			</div>
+			<div class="mock-list">
+				<b>Longueur mini-maxi : </b>1 - 36
+			</div>
+
+	</div>
+
+</div>
+<div class="detail-column" id="d26" style="display:none">
+	<div class="detail">
+			<div class="mock-list">
+				<b>Nom : </b>firstname
+			</div>
+			<div class="mock-list">
+				<b>Description : </b>Prénom.
+			</div>
+
+	</div>
+	<div class="detail">
+			<div class="mock-list">
+				<b>Nom : </b> <a href="../types/charMax30.html">charMax30</a>
+			</div>
+			<div class="mock-list">
+				<b> Description : </b>Chaîne composée d'au plus 30 caractères.
+			</div>
+			<div class="mock-list">
+				<b>Format : </b>string
+			</div>
+			<div class="mock-list">
+				<b>Longueur mini-maxi : </b>1 - 30
+			</div>
+
+	</div>
+
+</div>
+<div class="detail-column" id="d27" style="display:none">
+	<div class="detail">
+			<div class="mock-list">
+				<b>Nom : </b>middlename
+			</div>
+			<div class="mock-list">
+				<b>Description : </b>Deuxième prénom.
+			</div>
+
+	</div>
+	<div class="detail">
+			<div class="mock-list">
+				<b>Nom : </b> <a href="../types/charMax30.html">charMax30</a>
+			</div>
+			<div class="mock-list">
+				<b> Description : </b>Chaîne composée d'au plus 30 caractères.
+			</div>
+			<div class="mock-list">
+				<b>Format : </b>string
+			</div>
+			<div class="mock-list">
+				<b>Longueur mini-maxi : </b>1 - 30
+			</div>
+
+	</div>
+
+</div>
+<div class="detail-column" id="d28" style="display:none">
+	<div class="detail">
+			<div class="mock-list">
+				<b>Nom : </b>birthdate
+			</div>
+			<div class="mock-list">
+				<b>Description : </b>Date de naissance.
+			</div>
+
+	</div>
+	<div class="detail">
+			<div class="mock-list">
+				<b>Nom : </b> <a href="../types/comparisonDate.html">comparisonDate</a>
+			</div>
+			<div class="mock-list">
+				<b> Description : </b>Comparaison de dates.
+			</div>
+
+	</div>
+
+</div>
+<div class="detail-column" id="d29" style="display:none">
+	<div class="detail">
+			<div class="mock-list">
+				<b>Nom : </b>date1
+			</div>
+			<div class="mock-list">
+				<b>Description : </b>1ère date.
+			</div>
+
+	</div>
+	<div class="detail">
+			<div class="mock-list">
+				<b>Nom : </b> <a href="../types/date.html">date</a>
+			</div>
+
+	</div>
+
+</div>
+<div class="detail-column" id="d30" style="display:none">
+	<div class="detail">
+			<div class="mock-list">
+				<b>Nom : </b>date2
+			</div>
+			<div class="mock-list">
+				<b>Description : </b>2ème date.
+			</div>
+			<div class="mock-list">
+				<b>Commentaire : </b><p>La 2<sup>&egrave;me</sup> date n&rsquo;est prise en compte que pour les&nbsp;op&eacute;rateurs de comparaison&nbsp;<strong>BETWEEN</strong> et <strong>BETWEEN EQUALS</strong>.</p>
+
+<p>N&#39;est jamais renseign&eacute;e dans un flux de r&eacute;ponse.</p>
+
+			</div>
+
+	</div>
+	<div class="detail">
+			<div class="mock-list">
+				<b>Nom : </b> <a href="../types/date.html">date</a>
+			</div>
+
+	</div>
+
+</div>
+<div class="detail-column" id="d31" style="display:none">
+	<div class="detail">
+			<div class="mock-list">
+				<b>Nom : </b>comparator
+			</div>
+			<div class="mock-list">
+				<b>Description : </b>Opérateur de comparaison.
+			</div>
+			<div class="mock-list">
+				<b>Commentaire : </b><p>Vaut <strong>EQUALS</strong> dans un flux de r&eacute;ponse.</p>
+
+			</div>
+
+	</div>
+	<div class="detail">
+			<div class="mock-list">
+				<b>Nom : </b> <a href="../types/comparator.html">comparator</a>
+			</div>
+			<div class="mock-list">
+				<b> Description : </b>Opérateur de comparaison.
+			</div>
+			<div class="mock-list">
+				<b>Format : </b>string
+			</div>
+			<div class="mock-list">
+				<b>Valeurs possibles : </b>					<table class="table_enum" class="table_enum" class="table_enum" class="table_enum" class="table_enum" class="table_enum" class="table_enum" class="table_enum">
+						<tr>
+						<td> GREATER THAN
+						</td>						<td class="td_right"> Supérieur strict
+						</td>
+						</tr>
+						<tr>
+						<td> NOT EQUALS
+						</td>						<td class="td_right"> Différent de
+						</td>
+						</tr>
+						<tr>
+						<td> GREATER EQUALS
+						</td>						<td class="td_right"> Supérieur ou égal à
+						</td>
+						</tr>
+						<tr>
+						<td> LOWER EQUALS
+						</td>						<td class="td_right"> Inférieur ou égal
+						</td>
+						</tr>
+						<tr>
+						<td> BETWEEN
+						</td>						<td class="td_right"> Compris entre bornes exclues
+						</td>
+						</tr>
+						<tr>
+						<td> BETWEEN EQUALS
+						</td>						<td class="td_right"> Compris entre bornes incluses
+						</td>
+						</tr>
+						<tr>
+						<td> EQUALS
+						</td>						<td class="td_right"> Egal à
+						</td>
+						</tr>
+						<tr>
+						<td> LOWER THAN
+						</td>						<td class="td_right"> Inférieur strict
+						</td>
+						</tr>
+
+					</table>
+
+			</div>
+
+	</div>
+
+</div>
+<div class="detail-column" id="d32" style="display:none">
+	<div class="detail">
+			<div class="mock-list">
+				<b>Nom : </b>idPaper
+			</div>
+			<div class="mock-list">
+				<b>Description : </b>Pièce d'identité.
+			</div>
+
+	</div>
+	<div class="detail">
+			<div class="mock-list">
+				<b>Nom : </b> <a href="../types/idPaper.html">idPaper</a>
+			</div>
+			<div class="mock-list">
+				<b> Description : </b>Pièce d'identité.
+			</div>
+
+	</div>
+
+</div>
+<div class="detail-column" id="d33" style="display:none">
+	<div class="detail">
+			<div class="mock-list">
+				<b>Nom : </b>type
+			</div>
+			<div class="mock-list">
+				<b>Description : </b>Type de pièce.
+			</div>
+
+	</div>
+	<div class="detail">
+			<div class="mock-list">
+				<b>Nom : </b> <a href="../types/idPaperType.html">idPaperType</a>
+			</div>
+			<div class="mock-list">
+				<b> Description : </b>Type de pièce d'identité.
+			</div>
+
+	</div>
+
+</div>
+<div class="detail-column" id="d34" style="display:none">
+	<div class="detail">
+			<div class="mock-list">
+				<b>Nom : </b>code
+			</div>
+			<div class="mock-list">
+				<b>Description : </b>Code du type.
+			</div>
+
+	</div>
+	<div class="detail">
+			<div class="mock-list">
+				<b>Nom : </b> <a href="../types/charMax5.html">charMax5</a>
+			</div>
+			<div class="mock-list">
+				<b> Description : </b>Chaîne composée d'au plus 5 caractères.
+			</div>
+			<div class="mock-list">
+				<b>Format : </b>string
+			</div>
+			<div class="mock-list">
+				<b>Longueur mini-maxi : </b>1 - 5
+			</div>
+
+	</div>
+
+</div>
+<div class="detail-column" id="d35" style="display:none">
+	<div class="detail">
+			<div class="mock-list">
+				<b>Nom : </b>designation
+			</div>
+			<div class="mock-list">
+				<b>Description : </b>Désignation.
+			</div>
+
+	</div>
+	<div class="detail">
+			<div class="mock-list">
+				<b>Nom : </b> <a href="../types/charMax30.html">charMax30</a>
+			</div>
+			<div class="mock-list">
+				<b> Description : </b>Chaîne composée d'au plus 30 caractères.
+			</div>
+			<div class="mock-list">
+				<b>Format : </b>string
+			</div>
+			<div class="mock-list">
+				<b>Longueur mini-maxi : </b>1 - 30
+			</div>
+
+	</div>
+
+</div>
+<div class="detail-column" id="d36" style="display:none">
+	<div class="detail">
+			<div class="mock-list">
+				<b>Nom : </b>number
+			</div>
+			<div class="mock-list">
+				<b>Description : </b>Numéro de pièce.
+			</div>
+
+	</div>
+	<div class="detail">
+			<div class="mock-list">
+				<b>Nom : </b> <a href="../types/charMax20.html">charMax20</a>
+			</div>
+			<div class="mock-list">
+				<b> Description : </b>Chaîne composée d'au plus 20 caractères.
+			</div>
+			<div class="mock-list">
+				<b>Format : </b>string
+			</div>
+			<div class="mock-list">
+				<b>Longueur mini-maxi : </b>1 - 20
+			</div>
+
+	</div>
+
+</div>
+<div class="detail-column" id="d37" style="display:none">
+	<div class="detail">
+			<div class="mock-list">
+				<b>Nom : </b>corporate
+			</div>
+			<div class="mock-list">
+				<b>Description : </b>Tiers société.
+			</div>
+
+	</div>
+	<div class="detail">
+			<div class="mock-list">
+				<b>Nom : </b> <a href="../types/corporateThirdParty.html">corporateThirdParty</a>
+			</div>
+			<div class="mock-list">
+				<b> Description : </b>Tiers société.
+			</div>
+
+	</div>
+
+</div>
+<div class="detail-column" id="d38" style="display:none">
+	<div class="detail">
+			<div class="mock-list">
+				<b>Nom : </b>corporateName
+			</div>
+			<div class="mock-list">
+				<b>Description : </b>Raison sociale.
+			</div>
+
+	</div>
+	<div class="detail">
+			<div class="mock-list">
+				<b>Nom : </b> <a href="../types/charMax65.html">charMax65</a>
+			</div>
+			<div class="mock-list">
+				<b> Description : </b>Chaîne composée d'au plus 65 caractères.
+			</div>
+			<div class="mock-list">
+				<b>Format : </b>string
+			</div>
+			<div class="mock-list">
+				<b>Longueur mini-maxi : </b>1 - 65
+			</div>
+
+	</div>
+
+</div>
+<div class="detail-column" id="d39" style="display:none">
+	<div class="detail">
+			<div class="mock-list">
+				<b>Nom : </b>abbreviation
+			</div>
+			<div class="mock-list">
+				<b>Description : </b>Sigle.
+			</div>
+
+	</div>
+	<div class="detail">
+			<div class="mock-list">
+				<b>Nom : </b> <a href="../types/charMax20.html">charMax20</a>
+			</div>
+			<div class="mock-list">
+				<b> Description : </b>Chaîne composée d'au plus 20 caractères.
+			</div>
+			<div class="mock-list">
+				<b>Format : </b>string
+			</div>
+			<div class="mock-list">
+				<b>Longueur mini-maxi : </b>1 - 20
+			</div>
+
+	</div>
+
+</div>
+<div class="detail-column" id="d40" style="display:none">
+	<div class="detail">
+			<div class="mock-list">
+				<b>Nom : </b>tradeRegisterNumber
+			</div>
+			<div class="mock-list">
+				<b>Description : </b>Numéro de registre du commerce.
+			</div>
+
+	</div>
+	<div class="detail">
+			<div class="mock-list">
+				<b>Nom : </b> <a href="../types/charMax20.html">charMax20</a>
+			</div>
+			<div class="mock-list">
+				<b> Description : </b>Chaîne composée d'au plus 20 caractères.
+			</div>
+			<div class="mock-list">
+				<b>Format : </b>string
+			</div>
+			<div class="mock-list">
+				<b>Longueur mini-maxi : </b>1 - 20
+			</div>
+
+	</div>
+
+</div>
+<div class="detail-column" id="d41" style="display:none">
+	<div class="detail">
+			<div class="mock-list">
+				<b>Nom : </b>businessLicenseNumber
+			</div>
+			<div class="mock-list">
+				<b>Description : </b>Numéro de patente.
+			</div>
+
+	</div>
+	<div class="detail">
+			<div class="mock-list">
+				<b>Nom : </b> <a href="../types/charMax20.html">charMax20</a>
+			</div>
+			<div class="mock-list">
+				<b> Description : </b>Chaîne composée d'au plus 20 caractères.
+			</div>
+			<div class="mock-list">
+				<b>Format : </b>string
+			</div>
+			<div class="mock-list">
+				<b>Longueur mini-maxi : </b>1 - 20
+			</div>
+
+	</div>
+
+</div>
+<div class="detail-column" id="d42" style="display:none">
+	<div class="detail">
+			<div class="mock-list">
+				<b>Nom : </b>taxIdentityNumber
+			</div>
+			<div class="mock-list">
+				<b>Description : </b>Numéro d'identité fiscale.
+			</div>
+
+	</div>
+	<div class="detail">
+			<div class="mock-list">
+				<b>Nom : </b> <a href="../types/charMax20.html">charMax20</a>
+			</div>
+			<div class="mock-list">
+				<b> Description : </b>Chaîne composée d'au plus 20 caractères.
+			</div>
+			<div class="mock-list">
+				<b>Format : </b>string
+			</div>
+			<div class="mock-list">
+				<b>Longueur mini-maxi : </b>1 - 20
+			</div>
+
+	</div>
+
+</div>
+      </div> 
+  </div>
+
+  
+  <script src="../resources/jquery.js"></script>
+  <script src="../resources/doc.js"></script>
+</body>
+</html>

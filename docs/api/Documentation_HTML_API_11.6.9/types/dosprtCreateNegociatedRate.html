@@ -1,0 +1,277 @@
+<!DOCTYPE html >
+<html>
+<head>
+	<link rel="stylesheet" href="../resources/styleDocu.css" />
+  <link rel="stylesheet" href="../resources/font-awesome/css/font-awesome.min.css" />
+	<title>Documentation Xsd</title>
+	<meta charset="UTF-8" />
+</head>
+
+<body>
+  <div class="document">
+	<div class="header">
+		
+	</div>
+
+  <div class="tabs">
+    <div class="tabs-wrapper" onclick="window.open('../liste-ressources.html', '_self');">
+      <div class="tabs-left-content">
+        Liste des ressources
+      </div>
+    </div>
+    <div class="tabs-wrapper" onclick="window.open('../liste-services.html', '_self');">
+      <div class="tabs-left-content" >
+        Liste des services  
+      </div>
+    </div>
+    <div class="tabs-wrapper-selected" onclick="window.open('../liste-types.html', '_self');">
+      <div class="tabs-right-content">
+        Liste des types
+      </div>
+    </div>
+  </div>
+
+	
+
+	<div class="contenu">
+      <div class="breadcrumb"> 
+        <ul class="breadcrumb">
+           <li> <a href="../index.html"> Accueil </a></li>
+           <li> > </li>
+           <li> <a href="../liste-types.html"> Liste des types </a></li>
+           <li> > </li>
+           <li> dosprtCreateNegociatedRate </li>
+        </ul>                    
+      </div>                    
+      
+     
+      <div class="summary">
+			<div class="mock-list">
+				<b>Nom : </b>dosprtCreateNegociatedRate
+			</div>
+			<div class="mock-list">
+				<b> Description : </b>Taux d'intérêts négociés.
+			</div>
+        
+        <div> <p>Il doit exister &agrave; minima une condition <strong>INNttt</strong>, <strong>VINttt</strong>, <strong>INNPRT</strong> ou <strong>VINPRT</strong> pour permettre la saisie d&rsquo;un taux d&rsquo;int&eacute;r&ecirc;t n&eacute;goci&eacute;, <strong>ttt</strong> correspondant au code du type de pr&ecirc;t.</p>
+</div>
+        <div class="mock-list"> Choix : Non</div>
+        
+      </div>
+                        
+      <div class="column-content">
+        <div class="detail-column">
+          <div class="tree"> 
+<ul>
+	<li>
+<i class="fa fa-caret-down fa-fw" onclick="expand_or_collapse(this)">
+</i>		dosprtCreateNegociatedRate		<ul style="display:block">
+			<li>
+<i class="fa fa-fw">
+</i><span class="selectable" id="e0"> effectiveDate : date
+</span>
+			</li>
+			<li>
+<i class="fa fa-fw">
+</i><span class="selectable" id="e1"> rateValue : decimal9_6
+</span>
+			</li>
+			<li>
+<i class="fa fa-fw">
+</i><span class="selectable" id="e2"> marginValue : decimal9_6
+</span>
+			</li>
+			<li>
+<i class="fa fa-fw">
+</i><span class="selectable" id="e3"> internalRate : decimal9_6
+</span>
+			</li>
+			<li>
+<i class="fa fa-fw">
+</i><span class="selectable" id="e4"> nextNegociationDate : date
+</span>
+			</li>
+
+		</ul>
+
+	</li>
+
+</ul>
+          </div>
+          
+          <div class="detail">
+				<p align="left">
+					Légende :<br />
+				</p>
+            <ul>
+               <li align="left">
+                  <i class="fa fa-key fa-fw">
+                  </i>
+                  = Elément obligatoire en saisie.
+               </li>
+               <li align="left">
+                  <span style="font-weight:bold"> [M]
+                  </span>
+                  = Elément multiple (0 à n occurrences).
+               </li>
+               <li align="left">
+                  <span style="font-weight:bold"> [C]
+                  </span>
+                  = Elément composé d'un choix à effectuer. Un seul choix autorisé.
+               </li>
+            </ul>
+            <p align="left">
+               Remarque : Un même élément peut regrouper plusieurs caractéristiques
+            </p>          
+          </div>
+          
+        </div>
+<div class="detail-column" id="d0" style="display:none">
+	<div class="detail">
+			<div class="mock-list">
+				<b>Nom : </b>effectiveDate
+			</div>
+			<div class="mock-list">
+				<b>Description : </b>Date d¿effet du taux.
+			</div>
+			<div class="mock-list">
+				<b>Commentaire : </b><p>La date d&rsquo;effet du taux doit &ecirc;tre &eacute;gale &agrave; la date de mise en place du dossier.</p>
+
+			</div>
+
+	</div>
+	<div class="detail">
+			<div class="mock-list">
+				<b>Nom : </b> <a href="../types/date.html">date</a>
+			</div>
+
+	</div>
+
+</div>
+<div class="detail-column" id="d1" style="display:none">
+	<div class="detail">
+			<div class="mock-list">
+				<b>Nom : </b>rateValue
+			</div>
+			<div class="mock-list">
+				<b>Description : </b>Valeur du taux.
+			</div>
+			<div class="mock-list">
+				<b>Commentaire : </b><p>Si la valeur du taux n&rsquo;est pas&nbsp; renseign&eacute;e, elle est affect&eacute;e avec la valeur de la condition <strong>INNttt</strong> o&ugrave; <strong>ttt</strong> correspond au code du type de pr&ecirc;t ou <strong>INNPRT</strong>.</p>
+
+<p>La valeur du taux doit &ecirc;tre comprise dans les bornes minimum et maximum param&eacute;tr&eacute;es dans la condition<strong> INNttt</strong> o&ugrave; <strong>ttt</strong> correspond au code du type de pr&ecirc;t ou <strong>INNPRT</strong>.</p>
+
+<p>La somme des valeurs du taux&nbsp;et de la marge doit &ecirc;tre diff&eacute;rente de <strong>0</strong>.</p>
+
+			</div>
+
+	</div>
+	<div class="detail">
+			<div class="mock-list">
+				<b>Nom : </b> <a href="../types/decimal9_6.html">decimal9_6</a>
+			</div>
+			<div class="mock-list">
+				<b> Description : </b>Type décimal à 9 chiffres dont 6 décimales.
+			</div>
+			<div class="mock-list">
+				<b>Format : </b>decimal
+			</div>
+			<div class="mock-list">
+				<b>Nombre total de chiffres : </b>9
+			</div>
+
+	</div>
+
+</div>
+<div class="detail-column" id="d2" style="display:none">
+	<div class="detail">
+			<div class="mock-list">
+				<b>Nom : </b>marginValue
+			</div>
+			<div class="mock-list">
+				<b>Description : </b>Valeur de la marge.
+			</div>
+			<div class="mock-list">
+				<b>Commentaire : </b><p>Si la valeur de la marge n&rsquo;est pas&nbsp; renseign&eacute;e, elle est affect&eacute;e avec la valeur de la condition <strong>VINttt</strong> o&ugrave; <strong>ttt</strong> correspond au code du type de pr&ecirc;t ou <strong>VINPRT</strong>.</p>
+
+<p>La valeur du taux doit &ecirc;tre comprise dans les bornes minimum et maximum param&eacute;tr&eacute;es dans la condition<strong> VINttt</strong> o&ugrave; <strong>ttt</strong> correspond au code du type de pr&ecirc;t ou <strong>VINPRT</strong>.</p>
+
+<p>La somme des valeurs du taux&nbsp; et de la marge doit &ecirc;tre diff&eacute;rente de <strong>0</strong>.</p>
+
+			</div>
+
+	</div>
+	<div class="detail">
+			<div class="mock-list">
+				<b>Nom : </b> <a href="../types/decimal9_6.html">decimal9_6</a>
+			</div>
+			<div class="mock-list">
+				<b> Description : </b>Type décimal à 9 chiffres dont 6 décimales.
+			</div>
+			<div class="mock-list">
+				<b>Format : </b>decimal
+			</div>
+			<div class="mock-list">
+				<b>Nombre total de chiffres : </b>9
+			</div>
+
+	</div>
+
+</div>
+<div class="detail-column" id="d3" style="display:none">
+	<div class="detail">
+			<div class="mock-list">
+				<b>Nom : </b>internalRate
+			</div>
+			<div class="mock-list">
+				<b>Description : </b>Taux interne.
+			</div>
+
+	</div>
+	<div class="detail">
+			<div class="mock-list">
+				<b>Nom : </b> <a href="../types/decimal9_6.html">decimal9_6</a>
+			</div>
+			<div class="mock-list">
+				<b> Description : </b>Type décimal à 9 chiffres dont 6 décimales.
+			</div>
+			<div class="mock-list">
+				<b>Format : </b>decimal
+			</div>
+			<div class="mock-list">
+				<b>Nombre total de chiffres : </b>9
+			</div>
+
+	</div>
+
+</div>
+<div class="detail-column" id="d4" style="display:none">
+	<div class="detail">
+			<div class="mock-list">
+				<b>Nom : </b>nextNegociationDate
+			</div>
+			<div class="mock-list">
+				<b>Description : </b>Date de prochaine négociation.
+			</div>
+			<div class="mock-list">
+				<b>Commentaire : </b><p>La date de prochaine n&eacute;gociation doit &ecirc;tre sup&eacute;rieure ou &eacute;gale &agrave; la date de traitement comptable.</p>
+
+			</div>
+
+	</div>
+	<div class="detail">
+			<div class="mock-list">
+				<b>Nom : </b> <a href="../types/date.html">date</a>
+			</div>
+
+	</div>
+
+</div>
+      </div> 
+  </div>
+
+  
+  <script src="../resources/jquery.js"></script>
+  <script src="../resources/doc.js"></script>
+</body>
+</html>

@@ -1,0 +1,696 @@
+<!DOCTYPE html >
+<html>
+<head>
+	<link rel="stylesheet" href="../resources/styleDocu.css" />
+  <link rel="stylesheet" href="../resources/font-awesome/css/font-awesome.min.css" />
+	<title>Documentation Xsd</title>
+	<meta charset="UTF-8" />
+</head>
+
+<body>
+  <div class="document">
+	<div class="header">
+		
+	</div>
+
+  <div class="tabs">
+    <div class="tabs-wrapper" onclick="window.open('../liste-ressources.html', '_self');">
+      <div class="tabs-left-content">
+        Liste des ressources
+      </div>
+    </div>
+    <div class="tabs-wrapper" onclick="window.open('../liste-services.html', '_self');">
+      <div class="tabs-left-content" >
+        Liste des services  
+      </div>
+    </div>
+    <div class="tabs-wrapper-selected" onclick="window.open('../liste-types.html', '_self');">
+      <div class="tabs-right-content">
+        Liste des types
+      </div>
+    </div>
+  </div>
+
+	
+
+	<div class="contenu">
+      <div class="breadcrumb"> 
+        <ul class="breadcrumb">
+           <li> <a href="../index.html"> Accueil </a></li>
+           <li> > </li>
+           <li> <a href="../liste-types.html"> Liste des types </a></li>
+           <li> > </li>
+           <li> dosprtCreateLoanFileCollateralForEIRCalculation </li>
+        </ul>                    
+      </div>                    
+      
+     
+      <div class="summary">
+			<div class="mock-list">
+				<b>Nom : </b>dosprtCreateLoanFileCollateralForEIRCalculation
+			</div>
+			<div class="mock-list">
+				<b> Description : </b>Garantie pour le calcul de l'EIR.
+			</div>
+        
+        <div> </div>
+        <div class="mock-list"> Choix : Oui</div>
+        
+      </div>
+                        
+      <div class="column-content">
+        <div class="detail-column">
+          <div class="tree"> 
+<ul>
+	<li>
+<i class="fa fa-caret-down fa-fw" onclick="expand_or_collapse(this)">
+</i>		dosprtCreateLoanFileCollateralForEIRCalculation		<ul style="display:block">
+			<li>
+<i class="fa fa-caret-down fa-fw" onclick="expand_or_collapse(this)">
+</i><span class="selectable" id="e0"> depositAccount : dosprtCreateDepositAccount
+</span>				<ul style="display:block">
+					<li>
+<i class="fa fa-caret-down fa-fw" onclick="expand_or_collapse(this)">
+</i><span style="font-weight:bold"> [C]
+</span><span class="selectable" id="e1"> collateralAmountOrRate : collateralAmountOrRate
+</span>						<ul style="display:block">
+							<li>
+<i class="fa fa-fw">
+</i><span class="selectable" id="e2"> collateralAmount : decimal19_4
+</span>
+							</li>
+							<li>
+<i class="fa fa-fw">
+</i><span class="selectable" id="e3"> collateralRate : decimal10_7
+</span>
+							</li>
+
+						</ul>
+
+					</li>
+					<li>
+<i class="fa fa-fw">
+</i><span class="selectable" id="e4"> taxable : boolean
+</span>
+					</li>
+					<li>
+<i class="fa fa-fw">
+</i><span class="selectable" id="e5"> depositAccountPeriodicity : depositAccountPeriodicity
+</span>
+					</li>
+					<li>
+<i class="fa fa-fw">
+</i><span class="selectable" id="e6"> creditInterestRate : decimal10_7
+</span>
+					</li>
+					<li>
+<i class="fa fa-fw">
+</i><span class="selectable" id="e7"> taxRate : decimal10_7
+</span>
+					</li>
+					<li>
+<i class="fa fa-fw">
+</i><span class="selectable" id="e8"> rateOfDeductionAtSource : decimal10_7
+</span>
+					</li>
+					<li>
+<i class="fa fa-fw">
+</i><span class="selectable" id="e9"> interestCapitalisation : char1
+</span>
+					</li>
+
+				</ul>
+
+			</li>
+			<li>
+<i class="fa fa-caret-down fa-fw" onclick="expand_or_collapse(this)">
+</i><span class="selectable" id="e10"> termDeposit : dosprtCreateTermDeposit
+</span>				<ul style="display:block">
+					<li>
+<i class="fa fa-caret-down fa-fw" onclick="expand_or_collapse(this)">
+</i><span style="font-weight:bold"> [C]
+</span><span class="selectable" id="e11"> collateralAmountOrRate : collateralAmountOrRate
+</span>						<ul style="display:block">
+							<li>
+<i class="fa fa-fw">
+</i><span class="selectable" id="e12"> collateralAmount : decimal19_4
+</span>
+							</li>
+							<li>
+<i class="fa fa-fw">
+</i><span class="selectable" id="e13"> collateralRate : decimal10_7
+</span>
+							</li>
+
+						</ul>
+
+					</li>
+					<li>
+<i class="fa fa-fw">
+</i><i class="fa fa-key fa-fw">
+</i><span class="selectable" id="e14"> termDepositType : tdTypeCode
+</span>
+					</li>
+					<li>
+<i class="fa fa-fw">
+</i><span class="selectable" id="e15"> interestRate : decimal10_7
+</span>
+					</li>
+
+				</ul>
+
+			</li>
+
+		</ul>
+
+	</li>
+
+</ul>
+          </div>
+          
+          <div class="detail">
+				<p align="left">
+					Légende :<br />
+				</p>
+            <ul>
+               <li align="left">
+                  <i class="fa fa-key fa-fw">
+                  </i>
+                  = Elément obligatoire en saisie.
+               </li>
+               <li align="left">
+                  <span style="font-weight:bold"> [M]
+                  </span>
+                  = Elément multiple (0 à n occurrences).
+               </li>
+               <li align="left">
+                  <span style="font-weight:bold"> [C]
+                  </span>
+                  = Elément composé d'un choix à effectuer. Un seul choix autorisé.
+               </li>
+            </ul>
+            <p align="left">
+               Remarque : Un même élément peut regrouper plusieurs caractéristiques
+            </p>          
+          </div>
+          
+        </div>
+<div class="detail-column" id="d0" style="display:none">
+	<div class="detail">
+			<div class="mock-list">
+				<b>Nom : </b>depositAccount
+			</div>
+			<div class="mock-list">
+				<b>Description : </b>Compte de dépôt.
+			</div>
+
+	</div>
+	<div class="detail">
+			<div class="mock-list">
+				<b>Nom : </b> <a href="../types/dosprtCreateDepositAccount.html">dosprtCreateDepositAccount</a>
+			</div>
+			<div class="mock-list">
+				<b> Description : </b>Garantie de compte de dépôt pour le calcul de l'EIR.
+			</div>
+
+	</div>
+
+</div>
+<div class="detail-column" id="d1" style="display:none">
+	<div class="detail">
+			<div class="mock-list">
+				<b>Nom : </b>collateralAmountOrRate
+			</div>
+			<div class="mock-list">
+				<b>Description : </b>Montant ou taux de la garantie.
+			</div>
+			<div class="mock-list">
+				<b>Commentaire : </b><p>Si ni le montant de la garantie, ni le taux de la garantie ne sont renseign&eacute;s, alors le montant de la garantie sera affect&eacute; par d&eacute;faut avec la valeur param&eacute;tr&eacute;e pour la condition <strong>MONGAR</strong>.</p>
+
+			</div>
+
+	</div>
+	<div class="detail">
+			<div class="mock-list">
+				<b>Nom : </b> <a href="../types/collateralAmountOrRate.html">collateralAmountOrRate</a>
+			</div>
+			<div class="mock-list">
+				<b> Description : </b>Montant ou taux de garantie.
+			</div>
+
+	</div>
+
+</div>
+<div class="detail-column" id="d2" style="display:none">
+	<div class="detail">
+			<div class="mock-list">
+				<b>Nom : </b>collateralAmount
+			</div>
+			<div class="mock-list">
+				<b>Description : </b>Montant de garantie.
+			</div>
+			<div class="mock-list">
+				<b>Commentaire : </b><p>S&rsquo;il est renseign&eacute;, le montant de la garantie doit &ecirc;tre compris dans les bornes minimum et maximum param&eacute;tr&eacute;es pour la condition <strong>MONGAR</strong>.</p>
+
+			</div>
+
+	</div>
+	<div class="detail">
+			<div class="mock-list">
+				<b>Nom : </b> <a href="../types/decimal19_4.html">decimal19_4</a>
+			</div>
+			<div class="mock-list">
+				<b> Description : </b>Type décimal à 19 chiffres dont 4 décimales.
+			</div>
+			<div class="mock-list">
+				<b>Format : </b>decimal
+			</div>
+			<div class="mock-list">
+				<b>Nombre total de chiffres : </b>19
+			</div>
+
+	</div>
+
+</div>
+<div class="detail-column" id="d3" style="display:none">
+	<div class="detail">
+			<div class="mock-list">
+				<b>Nom : </b>collateralRate
+			</div>
+			<div class="mock-list">
+				<b>Description : </b>Taux de garantie.
+			</div>
+			<div class="mock-list">
+				<b>Commentaire : </b><p>Si le taux de la garantie est renseign&eacute;, alors le montant de la garantie est calcul&eacute; &agrave; partir du montant du pr&ecirc;t multipli&eacute; par le taux de garantie divis&eacute; par 100. Le montant de la garantie calcul&eacute; doit &ecirc;tre compris dans les bornes minimum et maximum param&eacute;tr&eacute;es pour la condition <strong>MONGAR</strong>.</p>
+
+			</div>
+
+	</div>
+	<div class="detail">
+			<div class="mock-list">
+				<b>Nom : </b> <a href="../types/decimal10_7.html">decimal10_7</a>
+			</div>
+			<div class="mock-list">
+				<b> Description : </b>Type décimal à 10 chiffres dont 7 décimales.
+			</div>
+			<div class="mock-list">
+				<b>Format : </b>decimal
+			</div>
+			<div class="mock-list">
+				<b>Nombre total de chiffres : </b>10
+			</div>
+
+	</div>
+
+</div>
+<div class="detail-column" id="d4" style="display:none">
+	<div class="detail">
+			<div class="mock-list">
+				<b>Nom : </b>taxable
+			</div>
+			<div class="mock-list">
+				<b>Description : </b>Taxable.
+			</div>
+			<div class="mock-list">
+				<b>Commentaire : </b><p>Si non renseign&eacute;, le caract&egrave;re taxable est affect&eacute; par d&eacute;faut &agrave; <strong>FALSE</strong>.</p>
+
+			</div>
+
+	</div>
+	<div class="detail">
+			<div class="mock-list">
+				<b>Nom : </b> <a href="../types/boolean.html">boolean</a>
+			</div>
+
+	</div>
+
+</div>
+<div class="detail-column" id="d5" style="display:none">
+	<div class="detail">
+			<div class="mock-list">
+				<b>Nom : </b>depositAccountPeriodicity
+			</div>
+			<div class="mock-list">
+				<b>Description : </b>Périodicité du compte de dépôt.
+			</div>
+			<div class="mock-list">
+				<b>Commentaire : </b><p>Si la p&eacute;riodicit&eacute; du compte de d&eacute;p&ocirc;t n&rsquo;est pas renseign&eacute;e alors la p&eacute;riodicit&eacute; est affect&eacute;e par d&eacute;faut &agrave; mensuelle (<strong>M</strong>).</p>
+
+<p>Si la p&eacute;riodicit&eacute;renseign&eacute;e est &eacute;gale &agrave; Epargne (<strong>E</strong>) alors la p&eacute;riodicit&eacute; est forc&eacute;e &agrave; Annuelle (<strong>A</strong>).</p>
+
+			</div>
+
+	</div>
+	<div class="detail">
+			<div class="mock-list">
+				<b>Nom : </b> <a href="../types/depositAccountPeriodicity.html">depositAccountPeriodicity</a>
+			</div>
+			<div class="mock-list">
+				<b> Description : </b>Périodicité du compte de dépôt.
+			</div>
+			<div class="mock-list">
+				<b>Format : </b>string
+			</div>
+			<div class="mock-list">
+				<b>Valeurs possibles : </b>					<table class="table_enum" class="table_enum" class="table_enum" class="table_enum" class="table_enum">
+						<tr>
+						<td> M
+						</td>						<td class="td_right"> Mensuelle
+						</td>
+						</tr>
+						<tr>
+						<td> S
+						</td>						<td class="td_right"> Semestrielle
+						</td>
+						</tr>
+						<tr>
+						<td> T
+						</td>						<td class="td_right"> Trimestrielle
+						</td>
+						</tr>
+						<tr>
+						<td> E
+						</td>						<td class="td_right"> Epargne
+						</td>
+						</tr>
+						<tr>
+						<td> A
+						</td>						<td class="td_right"> Annuelle
+						</td>
+						</tr>
+
+					</table>
+
+			</div>
+
+	</div>
+
+</div>
+<div class="detail-column" id="d6" style="display:none">
+	<div class="detail">
+			<div class="mock-list">
+				<b>Nom : </b>creditInterestRate
+			</div>
+			<div class="mock-list">
+				<b>Description : </b>Taux d'intérêts créditeur.
+			</div>
+			<div class="mock-list">
+				<b>Commentaire : </b><p>Si le taux d&#39;int&eacute;r&ecirc;ts cr&eacute;diteur n&rsquo;est pas renseign&eacute;, il sera affect&eacute; par d&eacute;faut avec la valeur param&eacute;tr&eacute;e pour la condition <strong>CREGAR</strong>.</p>
+
+			</div>
+
+	</div>
+	<div class="detail">
+			<div class="mock-list">
+				<b>Nom : </b> <a href="../types/decimal10_7.html">decimal10_7</a>
+			</div>
+			<div class="mock-list">
+				<b> Description : </b>Type décimal à 10 chiffres dont 7 décimales.
+			</div>
+			<div class="mock-list">
+				<b>Format : </b>decimal
+			</div>
+			<div class="mock-list">
+				<b>Nombre total de chiffres : </b>10
+			</div>
+
+	</div>
+
+</div>
+<div class="detail-column" id="d7" style="display:none">
+	<div class="detail">
+			<div class="mock-list">
+				<b>Nom : </b>taxRate
+			</div>
+			<div class="mock-list">
+				<b>Description : </b>Taux de taxe.
+			</div>
+			<div class="mock-list">
+				<b>Commentaire : </b><p>Si le taux de taxe n&rsquo;est pas renseign&eacute;, il sera affect&eacute; par d&eacute;faut avec la valeur param&eacute;tr&eacute;e pour la condition <strong>TAXGAR</strong>.</p>
+
+<p>S&rsquo;il est renseign&eacute;, Le taux de taxe doit &ecirc;tre compris dans les bornes minimum et maximum param&eacute;tr&eacute;es pour la condition <strong>TAXGAR.</strong></p>
+
+			</div>
+
+	</div>
+	<div class="detail">
+			<div class="mock-list">
+				<b>Nom : </b> <a href="../types/decimal10_7.html">decimal10_7</a>
+			</div>
+			<div class="mock-list">
+				<b> Description : </b>Type décimal à 10 chiffres dont 7 décimales.
+			</div>
+			<div class="mock-list">
+				<b>Format : </b>decimal
+			</div>
+			<div class="mock-list">
+				<b>Nombre total de chiffres : </b>10
+			</div>
+
+	</div>
+
+</div>
+<div class="detail-column" id="d8" style="display:none">
+	<div class="detail">
+			<div class="mock-list">
+				<b>Nom : </b>rateOfDeductionAtSource
+			</div>
+			<div class="mock-list">
+				<b>Description : </b>Taux de prélèvement libératoire.
+			</div>
+			<div class="mock-list">
+				<b>Commentaire : </b><p>Si le taux de pr&eacute;l&egrave;vement lib&eacute;ratoire n&rsquo;est pas renseign&eacute;, il sera affect&eacute; par d&eacute;faut avec la valeur param&eacute;tr&eacute;e pour la condition <strong>PLIGAR</strong>.</p>
+
+<p>S&rsquo;il est renseign&eacute;, le taux de pr&eacute;l&egrave;vement lib&eacute;ratoire doit &ecirc;tre compris dans les bornes minimum et maximum param&eacute;tr&eacute;es pour la condition <strong>PLIGAR.</strong></p>
+
+			</div>
+
+	</div>
+	<div class="detail">
+			<div class="mock-list">
+				<b>Nom : </b> <a href="../types/decimal10_7.html">decimal10_7</a>
+			</div>
+			<div class="mock-list">
+				<b> Description : </b>Type décimal à 10 chiffres dont 7 décimales.
+			</div>
+			<div class="mock-list">
+				<b>Format : </b>decimal
+			</div>
+			<div class="mock-list">
+				<b>Nombre total de chiffres : </b>10
+			</div>
+
+	</div>
+
+</div>
+<div class="detail-column" id="d9" style="display:none">
+	<div class="detail">
+			<div class="mock-list">
+				<b>Nom : </b>interestCapitalisation
+			</div>
+			<div class="mock-list">
+				<b>Description : </b>Capitalisation des intérêts.
+			</div>
+			<div class="mock-list">
+				<b>Commentaire : </b><p>S&rsquo;il n&rsquo;est pas renseign&eacute;, l&rsquo;indicateur de capitalisation est affect&eacute; &agrave; la valeur <strong>N</strong>.</p>
+
+			</div>
+
+	</div>
+	<div class="detail">
+			<div class="mock-list">
+				<b>Nom : </b> <a href="../types/char1.html">char1</a>
+			</div>
+			<div class="mock-list">
+				<b> Description : </b>Type avec un nombre de caractères égal à 1.
+			</div>
+			<div class="mock-list">
+				<b>Format : </b>string
+			</div>
+			<div class="mock-list">
+				<b>Longueur fixe : </b>1
+			</div>
+
+	</div>
+
+</div>
+<div class="detail-column" id="d10" style="display:none">
+	<div class="detail">
+			<div class="mock-list">
+				<b>Nom : </b>termDeposit
+			</div>
+			<div class="mock-list">
+				<b>Description : </b>Dépôt à terme.
+			</div>
+
+	</div>
+	<div class="detail">
+			<div class="mock-list">
+				<b>Nom : </b> <a href="../types/dosprtCreateTermDeposit.html">dosprtCreateTermDeposit</a>
+			</div>
+			<div class="mock-list">
+				<b> Description : </b>Garantie dépôt à terme pour le calcul de l'EIR.
+			</div>
+
+	</div>
+
+</div>
+<div class="detail-column" id="d11" style="display:none">
+	<div class="detail">
+			<div class="mock-list">
+				<b>Nom : </b>collateralAmountOrRate
+			</div>
+			<div class="mock-list">
+				<b>Description : </b>Montant ou taux de la garantie.
+			</div>
+			<div class="mock-list">
+				<b>Commentaire : </b><p>Si ni le montant de la garantie, ni le taux de la garantie ne sont renseign&eacute;s, alors le montant de la garantie sera affect&eacute; par d&eacute;faut avec la valeur param&eacute;tr&eacute;e pour la condition <strong>MONGAR</strong>.</p>
+
+			</div>
+
+	</div>
+	<div class="detail">
+			<div class="mock-list">
+				<b>Nom : </b> <a href="../types/collateralAmountOrRate.html">collateralAmountOrRate</a>
+			</div>
+			<div class="mock-list">
+				<b> Description : </b>Montant ou taux de garantie.
+			</div>
+
+	</div>
+
+</div>
+<div class="detail-column" id="d12" style="display:none">
+	<div class="detail">
+			<div class="mock-list">
+				<b>Nom : </b>collateralAmount
+			</div>
+			<div class="mock-list">
+				<b>Description : </b>Montant de garantie.
+			</div>
+			<div class="mock-list">
+				<b>Commentaire : </b><p>S&rsquo;il est renseign&eacute;, le montant de la garantie doit &ecirc;tre compris dans les bornes minimum et maximum param&eacute;tr&eacute;es pour la condition <strong>MONGAR</strong>.</p>
+
+			</div>
+
+	</div>
+	<div class="detail">
+			<div class="mock-list">
+				<b>Nom : </b> <a href="../types/decimal19_4.html">decimal19_4</a>
+			</div>
+			<div class="mock-list">
+				<b> Description : </b>Type décimal à 19 chiffres dont 4 décimales.
+			</div>
+			<div class="mock-list">
+				<b>Format : </b>decimal
+			</div>
+			<div class="mock-list">
+				<b>Nombre total de chiffres : </b>19
+			</div>
+
+	</div>
+
+</div>
+<div class="detail-column" id="d13" style="display:none">
+	<div class="detail">
+			<div class="mock-list">
+				<b>Nom : </b>collateralRate
+			</div>
+			<div class="mock-list">
+				<b>Description : </b>Taux de garantie.
+			</div>
+			<div class="mock-list">
+				<b>Commentaire : </b><p>Si le taux de la garantie est renseign&eacute;, alors le montant de la garantie est calcul&eacute; &agrave; partir du montant du pr&ecirc;t multipli&eacute; par le taux de garantie divis&eacute; par 100. Le montant de la garantie calcul&eacute; doit &ecirc;tre compris dans les bornes minimum et maximum param&eacute;tr&eacute;es pour la condition <strong>MONGAR</strong>.</p>
+
+			</div>
+
+	</div>
+	<div class="detail">
+			<div class="mock-list">
+				<b>Nom : </b> <a href="../types/decimal10_7.html">decimal10_7</a>
+			</div>
+			<div class="mock-list">
+				<b> Description : </b>Type décimal à 10 chiffres dont 7 décimales.
+			</div>
+			<div class="mock-list">
+				<b>Format : </b>decimal
+			</div>
+			<div class="mock-list">
+				<b>Nombre total de chiffres : </b>10
+			</div>
+
+	</div>
+
+</div>
+<div class="detail-column" id="d14" style="display:none">
+	<div class="detail">
+			<div class="mock-list">
+				<b>Nom : </b>termDepositType
+			</div>
+			<div class="mock-list">
+				<b>Description : </b>Type de dépôt à terme.
+			</div>
+			<div class="mock-list">
+				<b>Commentaire : </b><p>Le type de d&eacute;p&ocirc;t &agrave; terme doit exister dans la table des types de d&eacute;p&ocirc;t &agrave; terme avec le code agence du dossier (ou par d&eacute;faut le code du site central).</p>
+
+			</div>
+
+	</div>
+	<div class="detail">
+			<div class="mock-list">
+				<b>Nom : </b> <a href="../types/tdTypeCode.html">tdTypeCode</a>
+			</div>
+			<div class="mock-list">
+				<b> Description : </b>Code type d'un DAT.
+			</div>
+			<div class="mock-list">
+				<b>Format : </b>string
+			</div>
+			<div class="mock-list">
+				<b>Longueur fixe : </b>3
+			</div>
+
+	</div>
+
+</div>
+<div class="detail-column" id="d15" style="display:none">
+	<div class="detail">
+			<div class="mock-list">
+				<b>Nom : </b>interestRate
+			</div>
+			<div class="mock-list">
+				<b>Description : </b>Taux d'intérêts.
+			</div>
+			<div class="mock-list">
+				<b>Commentaire : </b><p>Si le taux d&rsquo;int&eacute;r&ecirc;ts n&rsquo;est pas renseign&eacute;, il sera affect&eacute; par d&eacute;faut avec la valeur&nbsp; param&eacute;tr&eacute;e pour l&rsquo;une des conditions <strong>MITDAT</strong>, <strong>MATDAT</strong>, <strong>BARDAT</strong>, <strong>TINDAT</strong>, <strong>TBADAT</strong> ou <strong>INTDTI</strong>.</p>
+
+<p>S&rsquo;il est renseign&eacute;, le taux d&rsquo;int&eacute;r&ecirc;ts doit &ecirc;tre compris dans les bornes minimum et maximum param&eacute;tr&eacute;es pour l&rsquo;une des conditions ci-dessus.</p>
+
+			</div>
+
+	</div>
+	<div class="detail">
+			<div class="mock-list">
+				<b>Nom : </b> <a href="../types/decimal10_7.html">decimal10_7</a>
+			</div>
+			<div class="mock-list">
+				<b> Description : </b>Type décimal à 10 chiffres dont 7 décimales.
+			</div>
+			<div class="mock-list">
+				<b>Format : </b>decimal
+			</div>
+			<div class="mock-list">
+				<b>Nombre total de chiffres : </b>10
+			</div>
+
+	</div>
+
+</div>
+      </div> 
+  </div>
+
+  
+  <script src="../resources/jquery.js"></script>
+  <script src="../resources/doc.js"></script>
+</body>
+</html>

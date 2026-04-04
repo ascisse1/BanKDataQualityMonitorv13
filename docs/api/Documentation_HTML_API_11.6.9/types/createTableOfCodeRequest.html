@@ -1,0 +1,882 @@
+<!DOCTYPE html >
+<html>
+<head>
+	<link rel="stylesheet" href="../resources/styleDocu.css" />
+  <link rel="stylesheet" href="../resources/font-awesome/css/font-awesome.min.css" />
+	<title>Documentation Xsd</title>
+	<meta charset="UTF-8" />
+</head>
+
+<body>
+  <div class="document">
+	<div class="header">
+		
+	</div>
+
+  <div class="tabs">
+    <div class="tabs-wrapper" onclick="window.open('../liste-ressources.html', '_self');">
+      <div class="tabs-left-content">
+        Liste des ressources
+      </div>
+    </div>
+    <div class="tabs-wrapper" onclick="window.open('../liste-services.html', '_self');">
+      <div class="tabs-left-content" >
+        Liste des services  
+      </div>
+    </div>
+    <div class="tabs-wrapper-selected" onclick="window.open('../liste-types.html', '_self');">
+      <div class="tabs-right-content">
+        Liste des types
+      </div>
+    </div>
+  </div>
+
+	
+
+	<div class="contenu">
+      <div class="breadcrumb"> 
+        <ul class="breadcrumb">
+           <li> <a href="../index.html"> Accueil </a></li>
+           <li> > </li>
+           <li> <a href="../liste-types.html"> Liste des types </a></li>
+           <li> > </li>
+           <li> createTableOfCodeRequest </li>
+        </ul>                    
+      </div>                    
+      
+     
+      <div class="summary">
+			<div class="mock-list">
+				<b>Nom : </b>createTableOfCodeRequest
+			</div>
+			<div class="mock-list">
+				<b> Description : </b>Requête de création de nomenclature.
+			</div>
+        
+        <div> </div>
+        <div class="mock-list"> Choix : Non</div>
+        
+      </div>
+                        
+      <div class="column-content">
+        <div class="detail-column">
+          <div class="tree"> 
+<ul>
+	<li>
+<i class="fa fa-caret-down fa-fw" onclick="expand_or_collapse(this)">
+</i>		createTableOfCodeRequest		<ul style="display:block">
+			<li>
+<i class="fa fa-fw">
+</i><span class="selectable" id="e0"> branchCode : branchCode
+</span>
+			</li>
+			<li>
+<i class="fa fa-fw">
+</i><i class="fa fa-key fa-fw">
+</i><span class="selectable" id="e1"> tableNumber : char3
+</span>
+			</li>
+			<li>
+<i class="fa fa-fw">
+</i><i class="fa fa-key fa-fw">
+</i><span class="selectable" id="e2"> accessKey : charMax10
+</span>
+			</li>
+			<li>
+<i class="fa fa-fw">
+</i><span class="selectable" id="e3"> wording1 : charMax30
+</span>
+			</li>
+			<li>
+<i class="fa fa-fw">
+</i><span class="selectable" id="e4"> wording2 : charMax30
+</span>
+			</li>
+			<li>
+<i class="fa fa-fw">
+</i><span class="selectable" id="e5"> wording3 : charMax30
+</span>
+			</li>
+			<li>
+<i class="fa fa-fw">
+</i><span class="selectable" id="e6"> wording4 : charMax30
+</span>
+			</li>
+			<li>
+<i class="fa fa-fw">
+</i><span class="selectable" id="e7"> wording5 : charMax30
+</span>
+			</li>
+			<li>
+<i class="fa fa-fw">
+</i><span class="selectable" id="e8"> amount1 : decimal15_0
+</span>
+			</li>
+			<li>
+<i class="fa fa-fw">
+</i><span class="selectable" id="e9"> amount2 : decimal15_0
+</span>
+			</li>
+			<li>
+<i class="fa fa-fw">
+</i><span class="selectable" id="e10"> amount3 : decimal15_0
+</span>
+			</li>
+			<li>
+<i class="fa fa-fw">
+</i><span class="selectable" id="e11"> amount4 : decimal15_0
+</span>
+			</li>
+			<li>
+<i class="fa fa-fw">
+</i><span class="selectable" id="e12"> amount5 : decimal15_0
+</span>
+			</li>
+			<li>
+<i class="fa fa-fw">
+</i><span class="selectable" id="e13"> amount6 : decimal15_0
+</span>
+			</li>
+			<li>
+<i class="fa fa-fw">
+</i><span class="selectable" id="e14"> amount7 : decimal15_0
+</span>
+			</li>
+			<li>
+<i class="fa fa-fw">
+</i><span class="selectable" id="e15"> amount8 : decimal15_0
+</span>
+			</li>
+			<li>
+<i class="fa fa-fw">
+</i><span class="selectable" id="e16"> rate1 : decimal15_7
+</span>
+			</li>
+			<li>
+<i class="fa fa-fw">
+</i><span class="selectable" id="e17"> rate2 : decimal15_7
+</span>
+			</li>
+			<li>
+<i class="fa fa-fw">
+</i><span class="selectable" id="e18"> rate3 : decimal15_7
+</span>
+			</li>
+			<li>
+<i class="fa fa-fw">
+</i><span class="selectable" id="e19"> rate4 : decimal15_7
+</span>
+			</li>
+			<li>
+<i class="fa fa-fw">
+</i><span class="selectable" id="e20"> rate5 : decimal15_7
+</span>
+			</li>
+
+		</ul>
+
+	</li>
+
+</ul>
+          </div>
+          
+          <div class="detail">
+				<p align="left">
+					Légende :<br />
+				</p>
+            <ul>
+               <li align="left">
+                  <i class="fa fa-key fa-fw">
+                  </i>
+                  = Elément obligatoire en saisie.
+               </li>
+               <li align="left">
+                  <span style="font-weight:bold"> [M]
+                  </span>
+                  = Elément multiple (0 à n occurrences).
+               </li>
+               <li align="left">
+                  <span style="font-weight:bold"> [C]
+                  </span>
+                  = Elément composé d'un choix à effectuer. Un seul choix autorisé.
+               </li>
+            </ul>
+            <p align="left">
+               Remarque : Un même élément peut regrouper plusieurs caractéristiques
+            </p>          
+          </div>
+          
+        </div>
+<div class="detail-column" id="d0" style="display:none">
+	<div class="detail">
+			<div class="mock-list">
+				<b>Nom : </b>branchCode
+			</div>
+			<div class="mock-list">
+				<b>Description : </b>Code de l'agence.
+			</div>
+			<div class="mock-list">
+				<b>Commentaire : </b><p>Si le code de l&#39;agence est renseign&eacute;, alors il doit exister en nomenclature 001.<br />
+Sinon, le code du site central est utilis&eacute; par d&eacute;faut.<br />
+&nbsp;</p>
+
+			</div>
+
+	</div>
+	<div class="detail">
+			<div class="mock-list">
+				<b>Nom : </b> <a href="../types/branchCode.html">branchCode</a>
+			</div>
+			<div class="mock-list">
+				<b> Description : </b>Code d'une agence.
+			</div>
+			<div class="mock-list">
+				<b>Format : </b>string
+			</div>
+			<div class="mock-list">
+				<b>Longueur fixe : </b>5
+			</div>
+
+	</div>
+
+</div>
+<div class="detail-column" id="d1" style="display:none">
+	<div class="detail">
+			<div class="mock-list">
+				<b>Nom : </b>tableNumber
+			</div>
+			<div class="mock-list">
+				<b>Description : </b>Numéro de la nomenclature.
+			</div>
+			<div class="mock-list">
+				<b>Commentaire : </b><p>Le num&eacute;ro de nomenclature doit &ecirc;tre diff&eacute;rent de 051.<br />
+Le code agence et le num&eacute;ro de nomenclature doivent correspondre &agrave; un enregistrement de la table des identifiants de nomenclatures.<br />
+&nbsp;</p>
+
+			</div>
+
+	</div>
+	<div class="detail">
+			<div class="mock-list">
+				<b>Nom : </b> <a href="../types/char3.html">char3</a>
+			</div>
+			<div class="mock-list">
+				<b> Description : </b>Type avec un nombre de caractères égal à 3.
+			</div>
+			<div class="mock-list">
+				<b>Format : </b>string
+			</div>
+			<div class="mock-list">
+				<b>Longueur fixe : </b>3
+			</div>
+
+	</div>
+
+</div>
+<div class="detail-column" id="d2" style="display:none">
+	<div class="detail">
+			<div class="mock-list">
+				<b>Nom : </b>accessKey
+			</div>
+			<div class="mock-list">
+				<b>Description : </b>Clé d'accès.
+			</div>
+			<div class="mock-list">
+				<b>Commentaire : </b><p>La longueur de la cl&eacute; d&#39;acc&egrave;s doit respecter le param&eacute;trage donn&eacute; dans la table des identifiants de nomenclatures.<br />
+Contr&ocirc;le d&#39;existence de la cl&eacute; d&#39;acc&egrave;s ; si celle-ci n&#39;existe pas d&eacute;j&agrave;, un message d&#39;information sera affich&eacute; dans le flux de r&eacute;ponse. Si elle existe, un message d&#39;erreur sera affich&eacute; dans le flux et le contr&ocirc;le sera faux.<br />
+&nbsp;</p>
+
+			</div>
+
+	</div>
+	<div class="detail">
+			<div class="mock-list">
+				<b>Nom : </b> <a href="../types/charMax10.html">charMax10</a>
+			</div>
+			<div class="mock-list">
+				<b> Description : </b>Chaîne composée d'au plus 10 caractères.
+			</div>
+			<div class="mock-list">
+				<b>Format : </b>string
+			</div>
+			<div class="mock-list">
+				<b>Longueur mini-maxi : </b>1 - 10
+			</div>
+
+	</div>
+
+</div>
+<div class="detail-column" id="d3" style="display:none">
+	<div class="detail">
+			<div class="mock-list">
+				<b>Nom : </b>wording1
+			</div>
+			<div class="mock-list">
+				<b>Description : </b>Libellé 1.
+			</div>
+			<div class="mock-list">
+				<b>Commentaire : </b><p>Un contr&ocirc;le suppl&eacute;mentaire est fait s&#39;il existe un enregistrement correspondant dans la table des contr&ocirc;les des nomenclatures. Ce contr&ocirc;le v&eacute;rifie que le libell&eacute; respecte les valeurs d&eacute;finies dans la table des conversions des messages pour le code stipul&eacute;.</p>
+
+			</div>
+
+	</div>
+	<div class="detail">
+			<div class="mock-list">
+				<b>Nom : </b> <a href="../types/charMax30.html">charMax30</a>
+			</div>
+			<div class="mock-list">
+				<b> Description : </b>Chaîne composée d'au plus 30 caractères.
+			</div>
+			<div class="mock-list">
+				<b>Format : </b>string
+			</div>
+			<div class="mock-list">
+				<b>Longueur mini-maxi : </b>1 - 30
+			</div>
+
+	</div>
+
+</div>
+<div class="detail-column" id="d4" style="display:none">
+	<div class="detail">
+			<div class="mock-list">
+				<b>Nom : </b>wording2
+			</div>
+			<div class="mock-list">
+				<b>Description : </b>Libellé 2.
+			</div>
+			<div class="mock-list">
+				<b>Commentaire : </b><p>La saisie du champ est autoris&eacute;e uniquement lorsqu&#39;il appara&icirc;t dans la table des libell&eacute;s des nomenclatures.<br />
+Un contr&ocirc;le suppl&eacute;mentaire est fait s&#39;il existe un enregistrement correspondant dans la table des contr&ocirc;les des nomenclatures. Ce contr&ocirc;le v&eacute;rifie que le libell&eacute; respecte les valeurs d&eacute;finies dans la table des conversions des messages pour le code stipul&eacute;.<br />
+&nbsp;</p>
+
+			</div>
+
+	</div>
+	<div class="detail">
+			<div class="mock-list">
+				<b>Nom : </b> <a href="../types/charMax30.html">charMax30</a>
+			</div>
+			<div class="mock-list">
+				<b> Description : </b>Chaîne composée d'au plus 30 caractères.
+			</div>
+			<div class="mock-list">
+				<b>Format : </b>string
+			</div>
+			<div class="mock-list">
+				<b>Longueur mini-maxi : </b>1 - 30
+			</div>
+
+	</div>
+
+</div>
+<div class="detail-column" id="d5" style="display:none">
+	<div class="detail">
+			<div class="mock-list">
+				<b>Nom : </b>wording3
+			</div>
+			<div class="mock-list">
+				<b>Description : </b>Libellé 3.
+			</div>
+			<div class="mock-list">
+				<b>Commentaire : </b><p>La saisie du champ est autoris&eacute;e uniquement lorsqu&#39;il appara&icirc;t dans la table des libell&eacute;s des nomenclatures.<br />
+Un contr&ocirc;le suppl&eacute;mentaire est fait s&#39;il existe un enregistrement correspondant dans la table des contr&ocirc;les des nomenclatures. Ce contr&ocirc;le v&eacute;rifie que le libell&eacute; respecte les valeurs d&eacute;finies dans la table des conversions des messages pour le code stipul&eacute;.<br />
+&nbsp;</p>
+
+			</div>
+
+	</div>
+	<div class="detail">
+			<div class="mock-list">
+				<b>Nom : </b> <a href="../types/charMax30.html">charMax30</a>
+			</div>
+			<div class="mock-list">
+				<b> Description : </b>Chaîne composée d'au plus 30 caractères.
+			</div>
+			<div class="mock-list">
+				<b>Format : </b>string
+			</div>
+			<div class="mock-list">
+				<b>Longueur mini-maxi : </b>1 - 30
+			</div>
+
+	</div>
+
+</div>
+<div class="detail-column" id="d6" style="display:none">
+	<div class="detail">
+			<div class="mock-list">
+				<b>Nom : </b>wording4
+			</div>
+			<div class="mock-list">
+				<b>Description : </b>Libellé 4.
+			</div>
+			<div class="mock-list">
+				<b>Commentaire : </b><p>La saisie du champ est autoris&eacute;e uniquement lorsqu&#39;il appara&icirc;t dans la table des libell&eacute;s des nomenclatures.<br />
+Un contr&ocirc;le suppl&eacute;mentaire est fait s&#39;il existe un enregistrement correspondant dans la table des contr&ocirc;les des nomenclatures. Ce contr&ocirc;le v&eacute;rifie que le libell&eacute; respecte les valeurs d&eacute;finies dans la table des conversions des messages pour le code stipul&eacute;.<br />
+&nbsp;</p>
+
+			</div>
+
+	</div>
+	<div class="detail">
+			<div class="mock-list">
+				<b>Nom : </b> <a href="../types/charMax30.html">charMax30</a>
+			</div>
+			<div class="mock-list">
+				<b> Description : </b>Chaîne composée d'au plus 30 caractères.
+			</div>
+			<div class="mock-list">
+				<b>Format : </b>string
+			</div>
+			<div class="mock-list">
+				<b>Longueur mini-maxi : </b>1 - 30
+			</div>
+
+	</div>
+
+</div>
+<div class="detail-column" id="d7" style="display:none">
+	<div class="detail">
+			<div class="mock-list">
+				<b>Nom : </b>wording5
+			</div>
+			<div class="mock-list">
+				<b>Description : </b>Libellé 5.
+			</div>
+			<div class="mock-list">
+				<b>Commentaire : </b><p>La saisie du champ est autoris&eacute;e uniquement lorsqu&#39;il appara&icirc;t dans la table des libell&eacute;s des nomenclatures.<br />
+Un contr&ocirc;le suppl&eacute;mentaire est fait s&#39;il existe un enregistrement correspondant dans la table des contr&ocirc;les des nomenclatures. Ce contr&ocirc;le v&eacute;rifie que le libell&eacute; respecte les valeurs d&eacute;finies dans la table des conversions des messages pour le code stipul&eacute;.<br />
+&nbsp;</p>
+
+			</div>
+
+	</div>
+	<div class="detail">
+			<div class="mock-list">
+				<b>Nom : </b> <a href="../types/charMax30.html">charMax30</a>
+			</div>
+			<div class="mock-list">
+				<b> Description : </b>Chaîne composée d'au plus 30 caractères.
+			</div>
+			<div class="mock-list">
+				<b>Format : </b>string
+			</div>
+			<div class="mock-list">
+				<b>Longueur mini-maxi : </b>1 - 30
+			</div>
+
+	</div>
+
+</div>
+<div class="detail-column" id="d8" style="display:none">
+	<div class="detail">
+			<div class="mock-list">
+				<b>Nom : </b>amount1
+			</div>
+			<div class="mock-list">
+				<b>Description : </b>Montant 1.
+			</div>
+			<div class="mock-list">
+				<b>Commentaire : </b><p>La saisie du champ est autoris&eacute;e uniquement lorsqu&#39;il appara&icirc;t dans la table des libell&eacute;s des nomenclatures.</p>
+
+			</div>
+
+	</div>
+	<div class="detail">
+			<div class="mock-list">
+				<b>Nom : </b> <a href="../types/decimal15_0.html">decimal15_0</a>
+			</div>
+			<div class="mock-list">
+				<b> Description : </b>Type décimal à 15 chiffres dont 0 décimales.
+			</div>
+			<div class="mock-list">
+				<b>Format : </b>decimal
+			</div>
+			<div class="mock-list">
+				<b>Nombre total de chiffres : </b>15
+			</div>
+
+	</div>
+
+</div>
+<div class="detail-column" id="d9" style="display:none">
+	<div class="detail">
+			<div class="mock-list">
+				<b>Nom : </b>amount2
+			</div>
+			<div class="mock-list">
+				<b>Description : </b>Montant 2.
+			</div>
+			<div class="mock-list">
+				<b>Commentaire : </b><p>La saisie du champ est autoris&eacute;e uniquement lorsqu&#39;il appara&icirc;t dans la table des libell&eacute;s des nomenclatures.</p>
+
+			</div>
+
+	</div>
+	<div class="detail">
+			<div class="mock-list">
+				<b>Nom : </b> <a href="../types/decimal15_0.html">decimal15_0</a>
+			</div>
+			<div class="mock-list">
+				<b> Description : </b>Type décimal à 15 chiffres dont 0 décimales.
+			</div>
+			<div class="mock-list">
+				<b>Format : </b>decimal
+			</div>
+			<div class="mock-list">
+				<b>Nombre total de chiffres : </b>15
+			</div>
+
+	</div>
+
+</div>
+<div class="detail-column" id="d10" style="display:none">
+	<div class="detail">
+			<div class="mock-list">
+				<b>Nom : </b>amount3
+			</div>
+			<div class="mock-list">
+				<b>Description : </b>Montant 3.
+			</div>
+			<div class="mock-list">
+				<b>Commentaire : </b><p>La saisie du champ est autoris&eacute;e uniquement lorsqu&#39;il appara&icirc;t dans la table des libell&eacute;s des nomenclatures.</p>
+
+			</div>
+
+	</div>
+	<div class="detail">
+			<div class="mock-list">
+				<b>Nom : </b> <a href="../types/decimal15_0.html">decimal15_0</a>
+			</div>
+			<div class="mock-list">
+				<b> Description : </b>Type décimal à 15 chiffres dont 0 décimales.
+			</div>
+			<div class="mock-list">
+				<b>Format : </b>decimal
+			</div>
+			<div class="mock-list">
+				<b>Nombre total de chiffres : </b>15
+			</div>
+
+	</div>
+
+</div>
+<div class="detail-column" id="d11" style="display:none">
+	<div class="detail">
+			<div class="mock-list">
+				<b>Nom : </b>amount4
+			</div>
+			<div class="mock-list">
+				<b>Description : </b>Montant 4.
+			</div>
+			<div class="mock-list">
+				<b>Commentaire : </b><p>La saisie du champ est autoris&eacute;e uniquement lorsqu&#39;il appara&icirc;t dans la table des libell&eacute;s des nomenclatures.</p>
+
+			</div>
+
+	</div>
+	<div class="detail">
+			<div class="mock-list">
+				<b>Nom : </b> <a href="../types/decimal15_0.html">decimal15_0</a>
+			</div>
+			<div class="mock-list">
+				<b> Description : </b>Type décimal à 15 chiffres dont 0 décimales.
+			</div>
+			<div class="mock-list">
+				<b>Format : </b>decimal
+			</div>
+			<div class="mock-list">
+				<b>Nombre total de chiffres : </b>15
+			</div>
+
+	</div>
+
+</div>
+<div class="detail-column" id="d12" style="display:none">
+	<div class="detail">
+			<div class="mock-list">
+				<b>Nom : </b>amount5
+			</div>
+			<div class="mock-list">
+				<b>Description : </b>Montant 5.
+			</div>
+			<div class="mock-list">
+				<b>Commentaire : </b><p>La saisie du champ est autoris&eacute;e uniquement lorsqu&#39;il appara&icirc;t dans la table des libell&eacute;s des nomenclatures.</p>
+
+			</div>
+
+	</div>
+	<div class="detail">
+			<div class="mock-list">
+				<b>Nom : </b> <a href="../types/decimal15_0.html">decimal15_0</a>
+			</div>
+			<div class="mock-list">
+				<b> Description : </b>Type décimal à 15 chiffres dont 0 décimales.
+			</div>
+			<div class="mock-list">
+				<b>Format : </b>decimal
+			</div>
+			<div class="mock-list">
+				<b>Nombre total de chiffres : </b>15
+			</div>
+
+	</div>
+
+</div>
+<div class="detail-column" id="d13" style="display:none">
+	<div class="detail">
+			<div class="mock-list">
+				<b>Nom : </b>amount6
+			</div>
+			<div class="mock-list">
+				<b>Description : </b>Montant 6.
+			</div>
+			<div class="mock-list">
+				<b>Commentaire : </b><p>La saisie du champ est autoris&eacute;e uniquement lorsqu&#39;il appara&icirc;t dans la table des libell&eacute;s des nomenclatures.</p>
+
+			</div>
+
+	</div>
+	<div class="detail">
+			<div class="mock-list">
+				<b>Nom : </b> <a href="../types/decimal15_0.html">decimal15_0</a>
+			</div>
+			<div class="mock-list">
+				<b> Description : </b>Type décimal à 15 chiffres dont 0 décimales.
+			</div>
+			<div class="mock-list">
+				<b>Format : </b>decimal
+			</div>
+			<div class="mock-list">
+				<b>Nombre total de chiffres : </b>15
+			</div>
+
+	</div>
+
+</div>
+<div class="detail-column" id="d14" style="display:none">
+	<div class="detail">
+			<div class="mock-list">
+				<b>Nom : </b>amount7
+			</div>
+			<div class="mock-list">
+				<b>Description : </b>Montant 7.
+			</div>
+			<div class="mock-list">
+				<b>Commentaire : </b><p>La saisie du champ est autoris&eacute;e uniquement lorsqu&#39;il appara&icirc;t dans la table des libell&eacute;s des nomenclatures.</p>
+
+			</div>
+
+	</div>
+	<div class="detail">
+			<div class="mock-list">
+				<b>Nom : </b> <a href="../types/decimal15_0.html">decimal15_0</a>
+			</div>
+			<div class="mock-list">
+				<b> Description : </b>Type décimal à 15 chiffres dont 0 décimales.
+			</div>
+			<div class="mock-list">
+				<b>Format : </b>decimal
+			</div>
+			<div class="mock-list">
+				<b>Nombre total de chiffres : </b>15
+			</div>
+
+	</div>
+
+</div>
+<div class="detail-column" id="d15" style="display:none">
+	<div class="detail">
+			<div class="mock-list">
+				<b>Nom : </b>amount8
+			</div>
+			<div class="mock-list">
+				<b>Description : </b>Montant 8.
+			</div>
+			<div class="mock-list">
+				<b>Commentaire : </b><p>La saisie du champ est autoris&eacute;e uniquement lorsqu&#39;il appara&icirc;t dans la table des libell&eacute;s des nomenclatures.</p>
+
+			</div>
+
+	</div>
+	<div class="detail">
+			<div class="mock-list">
+				<b>Nom : </b> <a href="../types/decimal15_0.html">decimal15_0</a>
+			</div>
+			<div class="mock-list">
+				<b> Description : </b>Type décimal à 15 chiffres dont 0 décimales.
+			</div>
+			<div class="mock-list">
+				<b>Format : </b>decimal
+			</div>
+			<div class="mock-list">
+				<b>Nombre total de chiffres : </b>15
+			</div>
+
+	</div>
+
+</div>
+<div class="detail-column" id="d16" style="display:none">
+	<div class="detail">
+			<div class="mock-list">
+				<b>Nom : </b>rate1
+			</div>
+			<div class="mock-list">
+				<b>Description : </b>Taux 1.
+			</div>
+			<div class="mock-list">
+				<b>Commentaire : </b><p>La saisie du champ est autoris&eacute;e uniquement lorsqu&#39;il appara&icirc;t dans la table des libell&eacute;s des nomenclatures.</p>
+
+			</div>
+
+	</div>
+	<div class="detail">
+			<div class="mock-list">
+				<b>Nom : </b> <a href="../types/decimal15_7.html">decimal15_7</a>
+			</div>
+			<div class="mock-list">
+				<b> Description : </b>Type décimal à 15 chiffres dont 7 décimales.
+			</div>
+			<div class="mock-list">
+				<b>Format : </b>decimal
+			</div>
+			<div class="mock-list">
+				<b>Nombre total de chiffres : </b>15
+			</div>
+
+	</div>
+
+</div>
+<div class="detail-column" id="d17" style="display:none">
+	<div class="detail">
+			<div class="mock-list">
+				<b>Nom : </b>rate2
+			</div>
+			<div class="mock-list">
+				<b>Description : </b>Taux 2.
+			</div>
+			<div class="mock-list">
+				<b>Commentaire : </b><p>La saisie du champ est autoris&eacute;e uniquement lorsqu&#39;il appara&icirc;t dans la table des libell&eacute;s des nomenclatures.</p>
+
+			</div>
+
+	</div>
+	<div class="detail">
+			<div class="mock-list">
+				<b>Nom : </b> <a href="../types/decimal15_7.html">decimal15_7</a>
+			</div>
+			<div class="mock-list">
+				<b> Description : </b>Type décimal à 15 chiffres dont 7 décimales.
+			</div>
+			<div class="mock-list">
+				<b>Format : </b>decimal
+			</div>
+			<div class="mock-list">
+				<b>Nombre total de chiffres : </b>15
+			</div>
+
+	</div>
+
+</div>
+<div class="detail-column" id="d18" style="display:none">
+	<div class="detail">
+			<div class="mock-list">
+				<b>Nom : </b>rate3
+			</div>
+			<div class="mock-list">
+				<b>Description : </b>Taux 3.
+			</div>
+			<div class="mock-list">
+				<b>Commentaire : </b><p>La saisie du champ est autoris&eacute;e uniquement lorsqu&#39;il appara&icirc;t dans la table des libell&eacute;s des nomenclatures.</p>
+
+			</div>
+
+	</div>
+	<div class="detail">
+			<div class="mock-list">
+				<b>Nom : </b> <a href="../types/decimal15_7.html">decimal15_7</a>
+			</div>
+			<div class="mock-list">
+				<b> Description : </b>Type décimal à 15 chiffres dont 7 décimales.
+			</div>
+			<div class="mock-list">
+				<b>Format : </b>decimal
+			</div>
+			<div class="mock-list">
+				<b>Nombre total de chiffres : </b>15
+			</div>
+
+	</div>
+
+</div>
+<div class="detail-column" id="d19" style="display:none">
+	<div class="detail">
+			<div class="mock-list">
+				<b>Nom : </b>rate4
+			</div>
+			<div class="mock-list">
+				<b>Description : </b>Taux 4.
+			</div>
+			<div class="mock-list">
+				<b>Commentaire : </b><p>La saisie du champ est autoris&eacute;e uniquement lorsqu&#39;il appara&icirc;t dans la table des libell&eacute;s des nomenclatures.</p>
+
+			</div>
+
+	</div>
+	<div class="detail">
+			<div class="mock-list">
+				<b>Nom : </b> <a href="../types/decimal15_7.html">decimal15_7</a>
+			</div>
+			<div class="mock-list">
+				<b> Description : </b>Type décimal à 15 chiffres dont 7 décimales.
+			</div>
+			<div class="mock-list">
+				<b>Format : </b>decimal
+			</div>
+			<div class="mock-list">
+				<b>Nombre total de chiffres : </b>15
+			</div>
+
+	</div>
+
+</div>
+<div class="detail-column" id="d20" style="display:none">
+	<div class="detail">
+			<div class="mock-list">
+				<b>Nom : </b>rate5
+			</div>
+			<div class="mock-list">
+				<b>Description : </b>Taux 5.
+			</div>
+			<div class="mock-list">
+				<b>Commentaire : </b><p>La saisie du champ est autoris&eacute;e uniquement lorsqu&#39;il appara&icirc;t dans la table des libell&eacute;s des nomenclatures.</p>
+
+			</div>
+
+	</div>
+	<div class="detail">
+			<div class="mock-list">
+				<b>Nom : </b> <a href="../types/decimal15_7.html">decimal15_7</a>
+			</div>
+			<div class="mock-list">
+				<b> Description : </b>Type décimal à 15 chiffres dont 7 décimales.
+			</div>
+			<div class="mock-list">
+				<b>Format : </b>decimal
+			</div>
+			<div class="mock-list">
+				<b>Nombre total de chiffres : </b>15
+			</div>
+
+	</div>
+
+</div>
+      </div> 
+  </div>
+
+  
+  <script src="../resources/jquery.js"></script>
+  <script src="../resources/doc.js"></script>
+</body>
+</html>

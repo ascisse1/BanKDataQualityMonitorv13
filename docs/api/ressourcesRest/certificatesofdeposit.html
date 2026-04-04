@@ -1,0 +1,769 @@
+<!DOCTYPE html>
+<html>
+<head>
+	<link rel="stylesheet" href="../resources/styleDocu.css" />
+    <link rel="stylesheet" href="../resources/font-awesome/css/font-awesome.min.css" />
+	<title>Documentation Xsd</title>
+	<meta charset="UTF-8" />
+</head>
+
+<body>
+  <div class="document">
+	<div class="header">		
+	</div>
+
+    <div class="tabs">
+        <div class="tabs-wrapper-selected" onclick="window.open('../liste-ressources.html', '_self');">
+            <div class="tabs-left-content" >Liste des ressources</div>
+        </div>
+        <div class="tabs-wrapper" onclick="window.open('../liste-services.html', '_self');">
+            <div class="tabs-left-content">Liste des services</div>
+        </div>
+        <div class="tabs-wrapper" onclick="window.open('../liste-types.html', '_self');">
+            <div class="tabs-right-content">Liste des types</div>
+        </div>
+    </div>
+
+	<div class="contenu">
+      <div class="breadcrumb"> 
+        <ul class="breadcrumb">
+           <li> <a href="../index.html"> Accueil </a></li>
+           <li> > </li>
+           <li> <a href="../liste-ressources.html"> Liste des ressources </a></li>
+           <li> > </li>
+           <li> certificatesofdeposit </li>
+        </ul>                    
+      </div>                    
+      
+      <div class="summary">
+        <div class="mock-list"> Nom ressource REST : certificatesofdeposit </div>
+        <div class="mock-list"> Programme Amplitude : bcwrcertificatesofdeposit </div>
+        <div class="mock-list"> Email : support@soprabanking.com </div>        
+        <br/>
+            <div class="mock-list"> Certificates of deposit</div>
+      </div>
+      
+      <div class="column-content" style="width:93%">
+        <div class="detail-column" style="width: 35%">
+          <div class="tree"> 
+<ul style="padding:0">
+	<li>
+<i class="fa fa-caret-down fa-fw" onclick="expand_or_collapse(this)">
+</i>		certificatesofdeposit		<ul>
+			<li>
+<i class="fa fa-caret-down fa-fw" onclick="expand_or_collapse(this)">
+</i>				v1				<ul>
+					<li>
+<i class="fa fa-fw">
+</i><span class="selectable" id="e0"> GET
+</span>
+					</li>
+					<li>
+<i class="fa fa-fw">
+</i><span class="selectable" id="e1"> GETLIST
+</span>
+					</li>
+
+				</ul>
+				<ul>
+					<li>
+<i class="fa fa-caret-down fa-fw" onclick="expand_or_collapse(this)">
+</i><span class="selectable" id="e2"> simulations
+</span>						<ul>
+							<li>
+<i class="fa fa-fw">
+</i><span class="selectable" id="e3"> GETLIST
+</span>
+							</li>
+
+						</ul>
+
+					</li>
+
+				</ul>
+
+			</li>
+
+		</ul>
+
+	</li>
+
+</ul>
+          </div>
+        </div>
+                 
+        
+<div class="detail-column" id="d0" style="display:none; width: 65%">
+	<div class="detail">
+		<div class="mock-list">
+			<b>Service SOAP : </b> <a href="../services/getCoDDetail.html">getCoDDetail</a>
+		</div>
+		<div class="mock-list">
+			<b>Code retour succes : </b>200 - OK
+		</div>
+		<div class="mock-list">
+			<b>Uri : </b>http://soprabanking.com/amplitude/certificatesofdeposit/v1/{codId}
+		</div>
+		<div class="mock-list">
+			<b>Description : </b>The service getCoDDetail allows getting detailed information on a certificate of deposit corresponding to a unique identifier received.
+
+For the selected certificate of deposit, the following information is returned:
+- details of the certificate of deposit,
+- the list of concerned accounts,
+- the situation in file currency,
+- the situation in domestic currency.
+		</div>
+		<br>
+
+		</br>
+		<div class="mock-list">
+			<b>Identifiants : </b>			<table class="table_param">
+				<tr>
+				<td> 0
+				</td>				<td title="getCoDDetailRequest.coDDetailIdentifier.branchCode"> <a href="../types/branchCode.html">branchCode</a><br>Code agence.
+				</td>
+				</tr>
+				<tr>
+				<td> 1
+				</td>				<td title="getCoDDetailRequest.coDDetailIdentifier.coDNumber"> <a href="../types/eventNumber.html">coDNumber</a><br>Numéro de bon de caisse.
+				</td>
+				</tr>
+				<tr>
+				<td> 2
+				</td>				<td title="getCoDDetailRequest.coDDetailIdentifier.subscriptionNumber"> <a href="../types/eventNumber.html">subscriptionNumber</a><br>Numéro de souscription.
+				</td>
+				</tr>
+
+			</table>
+
+		</div>
+		<br>
+
+		</br>
+		<div class="mock-list">
+			<b>Codes Erreur : </b>			<table>
+				<tr>
+				<td> 400
+				</td>				<td> Bad Request
+				</td>
+				</tr>
+
+			</table>
+
+		</div>
+
+	</div>
+
+</div>
+<div class="detail-column" id="d1" style="display:none; width: 65%">
+	<div class="detail">
+		<div class="mock-list">
+			<b>Service SOAP : </b> <a href="../services/getCoDList.html">getCoDList</a>
+		</div>
+		<div class="mock-list">
+			<b>Code retour succes : </b>200 - OK
+		</div>
+		<div class="mock-list">
+			<b>Uri : </b>http://soprabanking.com/amplitude/certificatesofdeposit/v1/
+		</div>
+		<div class="mock-list">
+			<b>Description : </b>The service getCoDList allows returning a list of certificates of deposit matching the search criteria received.
+
+The search is based on the optional criteria below:
+- the identifier of the certificate of deposit: branch (code and/or designation), CD subscription number, CD number,
+- the currency (alphanumeric code and/or digital code and/or designation),
+- the type of certificate of deposit (code and/or designation),
+- the file account: number (internal and/or IBAN and/or external format) and/or class and/or customer and/or additional information (identifier and/or value (or value range) and/or designation),
+- the customer: code and/or name to be displayed, type, profile (code and/or designation), national identifier, account officer (code and/or name), additional information (identifier and/or value (or value range) and/or designation), external reference,
+- the pledge indicator,
+- the naming indicator,
+- the value date (or a date range),
+- the maturity date (or a date range),
+- the CD situation.
+
+For each CD returned, all data used in the search criteria will be indicated as well as:
+- the execution date,
+- the initial amount,
+- the amount remaining to be reimbursed,
+- the rate,
+- the capitalisation indicator.
+		</div>
+		<br>
+
+		</br>
+		<div class="mock-list">
+			<b>Parametres : </b>			<table class="table_param">
+				<tr>
+				<td>
+				</td>				<td title="getCoDListRequest.debitAccount.accountNumber.internalFormatAccountOurBranch.branch.code"> <a href="../types/char5.html">X-SBS-accountBranchCode</a><br>Code de l'agence.
+				</td>				<td> Header
+				</td>
+				</tr>
+				<tr>
+				<td>
+				</td>				<td title="getCoDListRequest.debitAccount.accountNumber.internalFormatAccountOurBranch.branch.designation"> <a href="../types/charMax30.html">X-SBS-accountBranchDesignation</a><br>Désignation de l'agence.
+				</td>				<td> Header
+				</td>
+				</tr>
+				<tr>
+				<td>
+				</td>				<td title="getCoDListRequest.debitAccount.accountClass.comparisonOperator"> <a href="../types/comparisonOperator.html">X-SBS-accountClassComparisonOperator</a><br>Opérateur de comparaison.
+				</td>				<td> Header
+				</td>
+				</tr>
+				<tr>
+				<td>
+				</td>				<td title="getCoDListRequest.debitAccount.accountClass.value"> <a href="../types/string.html">X-SBS-accountClassValue</a><br>Valeur de la désignation.
+				</td>				<td> Header
+				</td>
+				</tr>
+				<tr>
+				<td>
+				</td>				<td title="getCoDListRequest.debitAccount.additionalInformation.complementaryInformation.value.alphanumeric.comparisonOperator"> <a href="../types/comparisonOperator.html">X-SBS-accountComplementaryInformationAlphanumericComparisonOperator</a><br>Opérateur de comparaison.
+				</td>				<td> Header
+				</td>
+				</tr>
+				<tr>
+				<td>
+				</td>				<td title="getCoDListRequest.debitAccount.additionalInformation.complementaryInformation.value.alphanumeric.value"> <a href="../types/string.html">X-SBS-accountComplementaryInformationAlphanumericValue</a><br>Valeur de la désignation.
+				</td>				<td> Header
+				</td>
+				</tr>
+				<tr>
+				<td>
+				</td>				<td title="getCoDListRequest.debitAccount.additionalInformation.complementaryInformation.value.date.date1"> <a href="../types/date.html">X-SBS-accountComplementaryInformationDate1</a><br>1ère date.
+				</td>				<td> Header
+				</td>
+				</tr>
+				<tr>
+				<td>
+				</td>				<td title="getCoDListRequest.debitAccount.additionalInformation.complementaryInformation.value.date.date2"> <a href="../types/date.html">X-SBS-accountComplementaryInformationDate2</a><br>2ème date.
+				</td>				<td> Header
+				</td>
+				</tr>
+				<tr>
+				<td>
+				</td>				<td title="getCoDListRequest.debitAccount.additionalInformation.complementaryInformation.value.date.comparator"> <a href="../types/comparator.html">X-SBS-accountComplementaryInformationDateComparator</a><br>Opérateur de comparaison.
+				</td>				<td> Header
+				</td>
+				</tr>
+				<tr>
+				<td>
+				</td>				<td title="getCoDListRequest.debitAccount.additionalInformation.complementaryInformation.value.amountOrRate.decimal1"> <a href="../types/decimal32_16.html">X-SBS-accountComplementaryInformationDecimal1</a><br>1ère décimale.
+				</td>				<td> Header
+				</td>
+				</tr>
+				<tr>
+				<td>
+				</td>				<td title="getCoDListRequest.debitAccount.additionalInformation.complementaryInformation.value.amountOrRate.comparator"> <a href="../types/comparator.html">X-SBS-accountComplementaryInformationDecimal1Comparator</a><br>Opérateur de comparaison.
+				</td>				<td> Header
+				</td>
+				</tr>
+				<tr>
+				<td>
+				</td>				<td title="getCoDListRequest.debitAccount.additionalInformation.complementaryInformation.value.amountOrRate.decimal2"> <a href="../types/decimal32_16.html">X-SBS-accountComplementaryInformationDecimal2</a><br>2ème décimale.
+				</td>				<td> Header
+				</td>
+				</tr>
+				<tr>
+				<td>
+				</td>				<td title="getCoDListRequest.debitAccount.additionalInformation.complementaryInformation.identifier"> <a href="../types/charMax10.html">X-SBS-accountComplementaryInformationIdentifier</a><br>Identifiant de la donnée complémentaire.
+				</td>				<td> Header
+				</td>
+				</tr>
+				<tr>
+				<td>
+				</td>				<td title="getCoDListRequest.debitAccount.accountNumber.internalFormatAccountOurBranch.currency.alphaCode"> <a href="../types/char3.html">X-SBS-accountCurrencyAlphaCode</a><br>Code devise alphanumérique.
+				</td>				<td> Header
+				</td>
+				</tr>
+				<tr>
+				<td>
+				</td>				<td title="getCoDListRequest.debitAccount.accountNumber.internalFormatAccountOurBranch.currency.numericCode"> <a href="../types/char3.html">X-SBS-accountCurrencyNumericCode</a><br>Code devise numérique.
+				</td>				<td> Header
+				</td>
+				</tr>
+				<tr>
+				<td>
+				</td>				<td title="getCoDListRequest.debitAccount.customer.activeProfile.code"> <a href="../types/charMax3.html">X-SBS-accountCustomerActiveProfileCode</a><br>Code profil.
+				</td>				<td> Header
+				</td>
+				</tr>
+				<tr>
+				<td>
+				</td>				<td title="getCoDListRequest.debitAccount.customer.activeProfile.designation"> <a href="../types/charMax30.html">X-SBS-accountCustomerActiveProfileDesignation</a><br>Désignation du profil.
+				</td>				<td> Header
+				</td>
+				</tr>
+				<tr>
+				<td>
+				</td>				<td title="getCoDListRequest.debitAccount.customer.additionalInformation.designation"> <a href="../types/charMax30.html">X-SBS-accountCustomerAdditionalInformationDesignation</a><br>Désignation.
+				</td>				<td> Header
+				</td>
+				</tr>
+				<tr>
+				<td>
+				</td>				<td title="getCoDListRequest.debitAccount.customer.additionalInformation.complementaryInformation.value.alphanumeric.comparisonOperator"> <a href="../types/comparisonOperator.html">X-SBS-accountCustomerComplementaryInformationAlphanumericComparisonOperator</a><br>Opérateur de comparaison.
+				</td>				<td> Header
+				</td>
+				</tr>
+				<tr>
+				<td>
+				</td>				<td title="getCoDListRequest.debitAccount.customer.additionalInformation.complementaryInformation.value.alphanumeric.value"> <a href="../types/string.html">X-SBS-accountCustomerComplementaryInformationAlphanumericValue</a><br>Valeur de la désignation.
+				</td>				<td> Header
+				</td>
+				</tr>
+				<tr>
+				<td>
+				</td>				<td title="getCoDListRequest.debitAccount.customer.additionalInformation.complementaryInformation.value.date.date1"> <a href="../types/date.html">X-SBS-accountCustomerComplementaryInformationDate1</a><br>1ère date.
+				</td>				<td> Header
+				</td>
+				</tr>
+				<tr>
+				<td>
+				</td>				<td title="getCoDListRequest.debitAccount.customer.additionalInformation.complementaryInformation.value.date.date2"> <a href="../types/date.html">X-SBS-accountCustomerComplementaryInformationDate2</a><br>2ème date.
+				</td>				<td> Header
+				</td>
+				</tr>
+				<tr>
+				<td>
+				</td>				<td title="getCoDListRequest.debitAccount.customer.additionalInformation.complementaryInformation.value.date.comparator"> <a href="../types/comparator.html">X-SBS-accountCustomerComplementaryInformationDateComparator</a><br>Opérateur de comparaison.
+				</td>				<td> Header
+				</td>
+				</tr>
+				<tr>
+				<td>
+				</td>				<td title="getCoDListRequest.debitAccount.customer.additionalInformation.complementaryInformation.value.amountOrRate.decimal1"> <a href="../types/decimal32_16.html">X-SBS-accountCustomerComplementaryInformationDecimal1</a><br>1ère décimale.
+				</td>				<td> Header
+				</td>
+				</tr>
+				<tr>
+				<td>
+				</td>				<td title="getCoDListRequest.debitAccount.customer.additionalInformation.complementaryInformation.value.amountOrRate.comparator"> <a href="../types/comparator.html">X-SBS-accountCustomerComplementaryInformationDecimal1Comparator</a><br>Opérateur de comparaison.
+				</td>				<td> Header
+				</td>
+				</tr>
+				<tr>
+				<td>
+				</td>				<td title="getCoDListRequest.debitAccount.customer.additionalInformation.complementaryInformation.value.amountOrRate.decimal2"> <a href="../types/decimal32_16.html">X-SBS-accountCustomerComplementaryInformationDecimal2</a><br>2ème décimale.
+				</td>				<td> Header
+				</td>
+				</tr>
+				<tr>
+				<td>
+				</td>				<td title="getCoDListRequest.debitAccount.customer.additionalInformation.complementaryInformation.identifier"> <a href="../types/charMax10.html">X-SBS-accountCustomerComplementaryInformationIdentifier</a><br>Identifiant de la donnée complémentaire.
+				</td>				<td> Header
+				</td>
+				</tr>
+				<tr>
+				<td>
+				</td>				<td title="getCoDListRequest.debitAccount.customer.customer.displayedName"> <a href="../types/charMax67.html">X-SBS-accountCustomerDisplayedName</a><br>Nom de restitution du client.
+				</td>				<td> Header
+				</td>
+				</tr>
+				<tr>
+				<td>
+				</td>				<td title="getCoDListRequest.debitAccount.customer.externalReference"> <a href="../types/charMax25.html">X-SBS-accountCustomerExternalReference</a><br>Référence externe.
+				</td>				<td> Header
+				</td>
+				</tr>
+				<tr>
+				<td>
+				</td>				<td title="getCoDListRequest.debitAccount.customer.nationalIdentifier"> <a href="../types/charMax20.html">X-SBS-accountCustomerNationalIdentifier</a><br>Identifiant national.
+				</td>				<td> Header
+				</td>
+				</tr>
+				<tr>
+				<td>
+				</td>				<td title="getCoDListRequest.debitAccount.customer.customer.customerNumber"> <a href="../types/charMax15.html">X-SBS-accountCustomerNumber</a><br>Code du client.
+				</td>				<td> Header
+				</td>
+				</tr>
+				<tr>
+				<td>
+				</td>				<td title="getCoDListRequest.debitAccount.customer.customerOfficer.code"> <a href="../types/charMax3.html">X-SBS-accountCustomerOfficerCode</a><br>Code gestionnaire.
+				</td>				<td> Header
+				</td>
+				</tr>
+				<tr>
+				<td>
+				</td>				<td title="getCoDListRequest.debitAccount.customer.customerOfficer.name"> <a href="../types/charMax30.html">X-SBS-accountCustomerOfficerName</a><br>Nom du gestionnaire.
+				</td>				<td> Header
+				</td>
+				</tr>
+				<tr>
+				<td>
+				</td>				<td title="getCoDListRequest.debitAccount.customer.customerType"> <a href="../types/customerType.html">X-SBS-accountCustomerType</a><br>Type de client.
+				</td>				<td> Header
+				</td>
+				</tr>
+				<tr>
+				<td>
+				</td>				<td title="getCoDListRequest.debitAccount.accountNumber.internalFormatAccountOurBranch.account"> <a href="../types/charMax11.html">X-SBS-accountNumber</a><br>Numéro du compte.
+				</td>				<td> Header
+				</td>
+				</tr>
+				<tr>
+				<td>
+				</td>				<td title="getCoDListRequest.debitAccount.accountNumber.internalFormatAccountOurBranch.suffix"> <a href="../types/charMax2.html">X-SBS-accountSuffix</a><br>Suffixe du compte.
+				</td>				<td> Header
+				</td>
+				</tr>
+				<tr>
+				<td>
+				</td>				<td title="getCoDListRequest.debitCustomer.activeProfile.code"> <a href="../types/charMax3.html">X-SBS-activeProfileCode</a><br>Code profil.
+				</td>				<td> Header
+				</td>
+				</tr>
+				<tr>
+				<td>
+				</td>				<td title="getCoDListRequest.debitCustomer.activeProfile.designation"> <a href="../types/charMax30.html">X-SBS-activeProfileDesignation</a><br>Désignation du profil.
+				</td>				<td> Header
+				</td>
+				</tr>
+				<tr>
+				<td>
+				</td>				<td title="getCoDListRequest.certificateOfDepositIdentifier.branch.code"> <a href="../types/char5.html">X-SBS-branchCode</a><br>Code de l'agence.
+				</td>				<td> Header
+				</td>
+				</tr>
+				<tr>
+				<td>
+				</td>				<td title="getCoDListRequest.certificateOfDepositIdentifier.certificateOfDepositNumber"> <a href="../types/char6.html">X-SBS-certificateOfDepositNumber</a><br>null
+				</td>				<td> Header
+				</td>
+				</tr>
+				<tr>
+				<td>
+				</td>				<td title="getCoDListRequest.certificateOfDepositType.code"> <a href="../types/char3.html">X-SBS-certificateOfDepositTypeCode</a><br>Code du type de bon de caisse.
+				</td>				<td> Header
+				</td>
+				</tr>
+				<tr>
+				<td>
+				</td>				<td title="getCoDListRequest.certificateOfDepositType.designation"> <a href="../types/charMax30.html">X-SBS-certificateOfDepositTypeDesignation</a><br>Désignation du type de bon de caisse.
+				</td>				<td> Header
+				</td>
+				</tr>
+				<tr>
+				<td>
+				</td>				<td title="getCoDListRequest.currency.alphaCode"> <a href="../types/char3.html">X-SBS-currencyAlphaCode</a><br>Code devise alphanumérique.
+				</td>				<td> Header
+				</td>
+				</tr>
+				<tr>
+				<td>
+				</td>				<td title="getCoDListRequest.currency.numericCode"> <a href="../types/char3.html">X-SBS-currencyNumericCode</a><br>Code devise numérique.
+				</td>				<td> Header
+				</td>
+				</tr>
+				<tr>
+				<td>
+				</td>				<td title="getCoDListRequest.debitCustomer.additionalInformation.designation"> <a href="../types/charMax30.html">X-SBS-customerAdditionalInformationDesignation</a><br>Désignation.
+				</td>				<td> Header
+				</td>
+				</tr>
+				<tr>
+				<td>
+				</td>				<td title="getCoDListRequest.debitCustomer.additionalInformation.complementaryInformation.value.alphanumeric.comparisonOperator"> <a href="../types/comparisonOperator.html">X-SBS-customerComplementaryInformationAlphanumericComparisonOperator</a><br>Opérateur de comparaison.
+				</td>				<td> Header
+				</td>
+				</tr>
+				<tr>
+				<td>
+				</td>				<td title="getCoDListRequest.debitCustomer.additionalInformation.complementaryInformation.value.alphanumeric.value"> <a href="../types/string.html">X-SBS-customerComplementaryInformationAlphanumericValue</a><br>Valeur de la désignation.
+				</td>				<td> Header
+				</td>
+				</tr>
+				<tr>
+				<td>
+				</td>				<td title="getCoDListRequest.debitCustomer.additionalInformation.complementaryInformation.value.date.date1"> <a href="../types/date.html">X-SBS-customerComplementaryInformationDate1</a><br>1ère date.
+				</td>				<td> Header
+				</td>
+				</tr>
+				<tr>
+				<td>
+				</td>				<td title="getCoDListRequest.debitCustomer.additionalInformation.complementaryInformation.value.date.date2"> <a href="../types/date.html">X-SBS-customerComplementaryInformationDate2</a><br>2ème date.
+				</td>				<td> Header
+				</td>
+				</tr>
+				<tr>
+				<td>
+				</td>				<td title="getCoDListRequest.debitCustomer.additionalInformation.complementaryInformation.value.date.comparator"> <a href="../types/comparator.html">X-SBS-customerComplementaryInformationDateComparator</a><br>Opérateur de comparaison.
+				</td>				<td> Header
+				</td>
+				</tr>
+				<tr>
+				<td>
+				</td>				<td title="getCoDListRequest.debitCustomer.additionalInformation.complementaryInformation.value.amountOrRate.decimal1"> <a href="../types/decimal32_16.html">X-SBS-customerComplementaryInformationDecimal1</a><br>1ère décimale.
+				</td>				<td> Header
+				</td>
+				</tr>
+				<tr>
+				<td>
+				</td>				<td title="getCoDListRequest.debitCustomer.additionalInformation.complementaryInformation.value.amountOrRate.comparator"> <a href="../types/comparator.html">X-SBS-customerComplementaryInformationDecimal1Comparator</a><br>Opérateur de comparaison.
+				</td>				<td> Header
+				</td>
+				</tr>
+				<tr>
+				<td>
+				</td>				<td title="getCoDListRequest.debitCustomer.additionalInformation.complementaryInformation.value.amountOrRate.decimal2"> <a href="../types/decimal32_16.html">X-SBS-customerComplementaryInformationDecimal2</a><br>2ème décimale.
+				</td>				<td> Header
+				</td>
+				</tr>
+				<tr>
+				<td>
+				</td>				<td title="getCoDListRequest.debitCustomer.additionalInformation.complementaryInformation.identifier"> <a href="../types/charMax10.html">X-SBS-customerComplementaryInformationIdentifier</a><br>Identifiant de la donnée complémentaire.
+				</td>				<td> Header
+				</td>
+				</tr>
+				<tr>
+				<td>
+				</td>				<td title="getCoDListRequest.debitCustomer.customer.displayedName"> <a href="../types/charMax67.html">X-SBS-customerDisplayedName</a><br>Nom de restitution du client.
+				</td>				<td> Header
+				</td>
+				</tr>
+				<tr>
+				<td>
+				</td>				<td title="getCoDListRequest.debitAccount.additionalInformation.designation"> <a href="../types/charMax30.html">X-SBS-accountAdditionalInformationDesignation</a><br>Désignation.
+				</td>				<td> Header
+				</td>
+				</tr>
+				<tr>
+				<td>
+				</td>				<td title="getCoDListRequest.debitCustomer.externalReference"> <a href="../types/charMax25.html">X-SBS-customerExternalReference</a><br>Référence externe.
+				</td>				<td> Header
+				</td>
+				</tr>
+				<tr>
+				<td>
+				</td>				<td title="getCoDListRequest.debitCustomer.customer.customerNumber"> <a href="../types/charMax15.html">X-SBS-customerNumber</a><br>Code du client.
+				</td>				<td> Header
+				</td>
+				</tr>
+				<tr>
+				<td>
+				</td>				<td title="getCoDListRequest.debitCustomer.customerOfficer.code"> <a href="../types/charMax3.html">X-SBS-customerOfficerCode</a><br>Code gestionnaire.
+				</td>				<td> Header
+				</td>
+				</tr>
+				<tr>
+				<td>
+				</td>				<td title="getCoDListRequest.debitCustomer.customerOfficer.name"> <a href="../types/charMax30.html">X-SBS-customerOfficerName</a><br>Nom du gestionnaire.
+				</td>				<td> Header
+				</td>
+				</tr>
+				<tr>
+				<td>
+				</td>				<td title="getCoDListRequest.debitCustomer.customerType"> <a href="../types/customerType.html">X-SBS-customerType</a><br>Type de client.
+				</td>				<td> Header
+				</td>
+				</tr>
+				<tr>
+				<td>
+				</td>				<td title="getCoDListRequest.debitAccount.accountNumber.externalFormatAccount.value"> <a href="../types/charMax34.html">X-SBS-externalFormatAccount</a><br>Valeur de l'identifiant externe du compte.
+				</td>				<td> Header
+				</td>
+				</tr>
+				<tr>
+				<td>
+				</td>				<td title="getCoDListRequest.debitAccount.accountNumber.ibanFormatAccount.value"> <a href="../types/charMax34.html">X-SBS-ibanFormatAccount</a><br>Valeur de l'IBAN.
+				</td>				<td> Header
+				</td>
+				</tr>
+				<tr>
+				<td>
+				</td>				<td title="getCoDListRequest.maturityDate.date1"> <a href="../types/date.html">X-SBS-maturityDate1</a><br>1ère date.
+				</td>				<td> Header
+				</td>
+				</tr>
+				<tr>
+				<td>
+				</td>				<td title="getCoDListRequest.maturityDate.date2"> <a href="../types/date.html">X-SBS-maturityDate2</a><br>2ème date.
+				</td>				<td> Header
+				</td>
+				</tr>
+				<tr>
+				<td>
+				</td>				<td title="getCoDListRequest.maturityDate.comparator"> <a href="../types/comparator.html">X-SBS-maturityDateComparator</a><br>Opérateur de comparaison.
+				</td>				<td> Header
+				</td>
+				</tr>
+				<tr>
+				<td>
+				</td>				<td title="getCoDListRequest.debitCustomer.nationalIdentifier"> <a href="../types/charMax20.html">X-SBS-nationalIdentifier</a><br>Identifiant national.
+				</td>				<td> Header
+				</td>
+				</tr>
+				<tr>
+				<td>
+				</td>				<td title="getCoDListRequest.nominativeCertificateOfDeposit"> <a href="../types/boolean.html">X-SBS-nominativeCertificateOfDeposit</a><br>Nominatif.
+				</td>				<td> Header
+				</td>
+				</tr>
+				<tr>
+				<td>
+				</td>				<td title="getCoDListRequest.pledged"> <a href="../types/boolean.html">X-SBS-pledged</a><br>Nanti.
+				</td>				<td> Header
+				</td>
+				</tr>
+				<tr>
+				<td>
+				</td>				<td title="getCoDListRequest.status"> <a href="../types/certificateOfDepositState.html">X-SBS-status</a><br>Situation du bon de caisse.
+				</td>				<td> Header
+				</td>
+				</tr>
+				<tr>
+				<td>
+				</td>				<td title="getCoDListRequest.certificateOfDepositIdentifier.subscriptionNumber"> <a href="../types/char6.html">X-SBS-subscriptionNumber</a><br>null
+				</td>				<td> Header
+				</td>
+				</tr>
+				<tr>
+				<td>
+				</td>				<td title="getCoDListRequest.valueDate.date1"> <a href="../types/date.html">X-SBS-valueDate1</a><br>1ère date.
+				</td>				<td> Header
+				</td>
+				</tr>
+				<tr>
+				<td>
+				</td>				<td title="getCoDListRequest.valueDate.date2"> <a href="../types/date.html">X-SBS-valueDate2</a><br>2ème date.
+				</td>				<td> Header
+				</td>
+				</tr>
+				<tr>
+				<td>
+				</td>				<td title="getCoDListRequest.valueDate.comparator"> <a href="../types/comparator.html">X-SBS-valueDateComparator</a><br>Opérateur de comparaison.
+				</td>				<td> Header
+				</td>
+				</tr>
+
+			</table>
+
+		</div>
+		<br>
+
+		</br>
+		<div class="mock-list">
+			<b>Codes Erreur : </b>			<table>
+				<tr>
+				<td> 400
+				</td>				<td> Bad Request
+				</td>
+				</tr>
+
+			</table>
+
+		</div>
+
+	</div>
+
+</div>
+<div class="detail-column" id="d2" style="display:none; width: 65%">
+	<div class="detail">
+		<div class="mock-list">
+			<b>Description : </b>Simulations
+		</div>
+
+	</div>
+
+</div>
+<div class="detail-column" id="d3" style="display:none; width: 65%">
+	<div class="detail">
+		<div class="mock-list">
+			<b>Service SOAP : </b> <a href="../services/getCoDSimulationDetail.html">getCoDSimulationDetail</a>
+		</div>
+		<div class="mock-list">
+			<b>Code retour succes : </b>200 - OK
+		</div>
+		<div class="mock-list">
+			<b>Uri : </b>http://soprabanking.com/amplitude/certificatesofdeposit/v1/{codId}/simulations
+		</div>
+		<div class="mock-list">
+			<b>Description : </b>The service getCoDSimulationDetail allows simulating the calculation of interest for a certificate of deposit either corresponding to a unique identifier received or matching the detailed CD information received.
+
+For the selected or simulated CD, the following information is returned:
+- the simulation of interest for all the CD duration,
+- the simulation of interest on maturity date,
+- the simulation of interest in case of breaking,
+- the simulation of interest for the next period,
+- the simulation of interest advance.
+		</div>
+		<br>
+
+		</br>
+		<div class="mock-list">
+			<b>Identifiants : </b>			<table class="table_param">
+				<tr>
+				<td> 0
+				</td>				<td title="getCoDSimulationDetailRequest.simulationExistingCoD.coDDetailIdentifier.branchCode"> <a href="../types/branchCode.html">branchCode</a><br>Code agence.
+				</td>
+				</tr>
+				<tr>
+				<td> 1
+				</td>				<td title="getCoDSimulationDetailRequest.simulationExistingCoD.coDDetailIdentifier.coDNumber"> <a href="../types/eventNumber.html">coDNumber</a><br>Numéro de bon de caisse.
+				</td>
+				</tr>
+				<tr>
+				<td> 2
+				</td>				<td title="getCoDSimulationDetailRequest.simulationExistingCoD.coDDetailIdentifier.subscriptionNumber"> <a href="../types/eventNumber.html">subscriptionNumber</a><br>Numéro de souscription.
+				</td>
+				</tr>
+
+			</table>
+
+		</div>
+		<br>
+
+		</br>
+		<div class="mock-list">
+			<b>Parametres : </b>			<table class="table_param">
+				<tr>
+				<td>
+				</td>				<td title="getCoDSimulationDetailRequest.simulationExistingCoD.breakingAmount"> <a href="../types/decimal19_4.html">X-SBS-breakingAmount</a><br>Montant de la tombée anticipée.
+				</td>				<td> Header
+				</td>
+				</tr>
+				<tr>
+				<td>
+				</td>				<td title="getCoDSimulationDetailRequest.simulationExistingCoD.breakingDate"> <a href="../types/date.html">X-SBS-breakingDate</a><br>Date de la tombée anticipée.
+				</td>				<td> Header
+				</td>
+				</tr>
+				<tr>
+				<td>
+				</td>				<td title="getCoDSimulationDetailRequest.simulationExistingCoD.breakingRate"> <a href="../types/decimal10_7.html">X-SBS-breakingRate</a><br>Taux de la tombée anticipée.
+				</td>				<td> Header
+				</td>
+				</tr>
+
+			</table>
+
+		</div>
+		<br>
+
+		</br>
+		<div class="mock-list">
+			<b>Codes Erreur : </b>			<table>
+				<tr>
+				<td> 400
+				</td>				<td> Bad Request
+				</td>
+				</tr>
+
+			</table>
+
+		</div>
+
+	</div>
+
+</div>
+     </div> 
+  </div>
+  </div>
+
+  
+  <script src="../resources/jquery.js"></script>
+  <script src="../resources/doc.js"></script>
+</body>
+</html>

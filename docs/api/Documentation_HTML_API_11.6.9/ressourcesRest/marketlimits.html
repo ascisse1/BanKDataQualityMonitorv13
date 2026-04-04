@@ -1,0 +1,154 @@
+<!DOCTYPE html>
+<html>
+<head>
+	<link rel="stylesheet" href="../resources/styleDocu.css" />
+    <link rel="stylesheet" href="../resources/font-awesome/css/font-awesome.min.css" />
+	<title>Documentation Xsd</title>
+	<meta charset="UTF-8" />
+</head>
+
+<body>
+  <div class="document">
+	<div class="header">		
+	</div>
+
+    <div class="tabs">
+        <div class="tabs-wrapper-selected" onclick="window.open('../liste-ressources.html', '_self');">
+            <div class="tabs-left-content" >Liste des ressources</div>
+        </div>
+        <div class="tabs-wrapper" onclick="window.open('../liste-services.html', '_self');">
+            <div class="tabs-left-content">Liste des services</div>
+        </div>
+        <div class="tabs-wrapper" onclick="window.open('../liste-types.html', '_self');">
+            <div class="tabs-right-content">Liste des types</div>
+        </div>
+    </div>
+
+	<div class="contenu">
+      <div class="breadcrumb"> 
+        <ul class="breadcrumb">
+           <li> <a href="../index.html"> Accueil </a></li>
+           <li> > </li>
+           <li> <a href="../liste-ressources.html"> Liste des ressources </a></li>
+           <li> > </li>
+           <li> marketlimits </li>
+        </ul>                    
+      </div>                    
+      
+      <div class="summary">
+        <div class="mock-list"> Nom ressource REST : marketlimits </div>
+        <div class="mock-list"> Programme Amplitude : cbwrmarketlimits </div>
+        <div class="mock-list"> Email : support@soprabanking.com </div>        
+        <br/>
+            <div class="mock-list"> Customer market limits</div>
+      </div>
+      
+      <div class="column-content" style="width:93%">
+        <div class="detail-column" style="width: 35%">
+          <div class="tree"> 
+<ul style="padding:0">
+	<li>
+<i class="fa fa-caret-down fa-fw" onclick="expand_or_collapse(this)">
+</i>		marketlimits		<ul>
+			<li>
+<i class="fa fa-caret-down fa-fw" onclick="expand_or_collapse(this)">
+</i>				v1				<ul>
+					<li>
+<i class="fa fa-fw">
+</i><span class="selectable" id="e0"> GETLIST
+</span>
+					</li>
+
+				</ul>
+
+			</li>
+
+		</ul>
+
+	</li>
+
+</ul>
+          </div>
+        </div>
+                 
+        
+<div class="detail-column" id="d0" style="display:none; width: 65%">
+	<div class="detail">
+		<div class="mock-list">
+			<b>Service SOAP : </b> <a href="../services/getMarketLimitList.html">getMarketLimitList</a>
+		</div>
+		<div class="mock-list">
+			<b>Code retour succes : </b>200 - OK
+		</div>
+		<div class="mock-list">
+			<b>Uri : </b>http://soprabanking.com/amplitude/marketlimits/v1/
+		</div>
+		<div class="mock-list">
+			<b>Description : </b>List of customer market limits.
+		</div>
+		<br>
+
+		</br>
+		<div class="mock-list">
+			<b>Parametres : </b>			<table class="table_param">
+				<tr>
+				<td> <i class="fa fa-key fa-fw"> </i>
+				</td>				<td title="getMarketLimitListRequest.customer"> <a href="../types/customerCode.html">X-SBS-customer</a><br>Code client.
+				</td>				<td> Header
+				</td>
+				</tr>
+				<tr>
+				<td> <i class="fa fa-key fa-fw"> </i>
+				</td>				<td title="getMarketLimitListRequest.fileModuleCode"> <a href="../types/moduleCode.html">X-SBS-fileModuleCode</a><br>Code du module du dossier d'engagement.
+				</td>				<td> Header
+				</td>
+				</tr>
+				<tr>
+				<td> <i class="fa fa-key fa-fw"> </i>
+				</td>				<td title="getMarketLimitListRequest.fileType"> <a href="../types/fileType.html">X-SBS-fileType</a><br>Type de dossier d'engagement.
+				</td>				<td> Header
+				</td>
+				</tr>
+				<tr>
+				<td>
+				</td>				<td title="getMarketLimitListRequest.marketReference"> <a href="../types/charMax10.html">X-SBS-marketReference</a><br>Critère de recherche de la référence de marché.
+				</td>				<td> Header
+				</td>
+				</tr>
+				<tr>
+				<td> <i class="fa fa-key fa-fw"> </i>
+				</td>				<td title="getMarketLimitListRequest.searchDate"> <a href="../types/date.html">X-SBS-searchDate</a><br>Date à laquelle les limites recherchés doivent être actives.
+				</td>				<td> Header
+				</td>
+				</tr>
+
+			</table>
+
+		</div>
+		<br>
+
+		</br>
+		<div class="mock-list">
+			<b>Codes Erreur : </b>			<table>
+				<tr>
+				<td> 400
+				</td>				<td> Bad Request
+				</td>
+				</tr>
+
+			</table>
+
+		</div>
+
+	</div>
+
+</div>
+     </div> 
+  </div>
+  </div>
+
+  
+  <script src="../resources/jquery.js"></script>
+  <script src="../resources/doc.js"></script>
+</body>
+</html>

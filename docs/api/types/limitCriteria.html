@@ -1,0 +1,73 @@
+<!DOCTYPE html >
+<html>
+<head>
+	<link rel="stylesheet" href="../resources/styleDocu.css" />
+  <link rel="stylesheet" href="../resources/font-awesome/css/font-awesome.min.css" />
+	<title>Documentation Xsd</title>
+	<meta charset="UTF-8" />
+</head>
+
+<body>
+  <div class="document">
+	<div class="header">
+		
+	</div>
+
+  <div class="tabs">
+    <div class="tabs-wrapper" onclick="window.open('../liste-ressources.html', '_self');">
+      <div class="tabs-left-content">
+        Liste des ressources
+      </div>
+    </div>
+    <div class="tabs-wrapper" onclick="window.open('../liste-services.html', '_self');">
+      <div class="tabs-left-content" >
+        Liste des services  
+      </div>
+    </div>
+    <div class="tabs-wrapper-selected" onclick="window.open('../liste-types.html', '_self');">
+      <div class="tabs-right-content">
+        Liste des types
+      </div>
+    </div>
+  </div>
+
+	
+
+	<div class="contenu">
+      <div class="breadcrumb"> 
+        <ul class="breadcrumb">
+           <li> <a href="../index.html"> Accueil </a></li>
+           <li> > </li>
+           <li> <a href="../liste-types.html"> Liste des types </a></li>
+           <li> > </li>
+           <li> limitCriteria </li>
+        </ul>                    
+      </div>                    
+      
+     
+      <div class="summary">
+			<div class="mock-list">
+				<b>Nom : </b>limitCriteria
+			</div>
+			<div class="mock-list">
+				<b> Description : </b>Nombre maximum d'enregistrements à retourner.
+			</div>
+			<div class="mock-list">
+				<b>Format : </b>integer
+			</div>
+        
+        <div> <p>Ce crit&egrave;re permet de limiter le nombre d&rsquo;enregistrements renvoy&eacute;s par un service.<br />
+La limite d&rsquo;enregistrements renvoy&eacute;s prend en compte la valeur minimale entre ce crit&egrave;re et le param&eacute;trage mis en place pour la totalit&eacute; des services via le <strong>Montant 1 </strong>du param&egrave;tre BS_RESPONSE en nomenclature <strong>098</strong>.<br />
+&nbsp;</p>
+</div>
+        
+      </div>
+                        
+  </div>
+  </div>
+
+  
+  <script src="../resources/jquery.js"></script>
+  <script src="../resources/doc.js"></script>
+</body>
+</html>

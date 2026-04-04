@@ -1,0 +1,350 @@
+<!DOCTYPE html >
+<html>
+<head>
+	<link rel="stylesheet" href="../resources/styleDocu.css" />
+  <link rel="stylesheet" href="../resources/font-awesome/css/font-awesome.min.css" />
+	<title>Documentation Xsd</title>
+	<meta charset="UTF-8" />
+</head>
+
+<body>
+  <div class="document">
+	<div class="header">
+		
+	</div>
+
+  <div class="tabs">
+    <div class="tabs-wrapper" onclick="window.open('../liste-ressources.html', '_self');">
+      <div class="tabs-left-content">
+        Liste des ressources
+      </div>
+    </div>
+    <div class="tabs-wrapper" onclick="window.open('../liste-services.html', '_self');">
+      <div class="tabs-left-content" >
+        Liste des services  
+      </div>
+    </div>
+    <div class="tabs-wrapper-selected" onclick="window.open('../liste-types.html', '_self');">
+      <div class="tabs-right-content">
+        Liste des types
+      </div>
+    </div>
+  </div>
+
+	
+
+	<div class="contenu">
+      <div class="breadcrumb"> 
+        <ul class="breadcrumb">
+           <li> <a href="../index.html"> Accueil </a></li>
+           <li> > </li>
+           <li> <a href="../liste-types.html"> Liste des types </a></li>
+           <li> > </li>
+           <li> cardActionType </li>
+        </ul>                    
+      </div>                    
+      
+     
+      <div class="summary">
+			<div class="mock-list">
+				<b>Nom : </b>cardActionType
+			</div>
+			<div class="mock-list">
+				<b> Description : </b>Action à envoyer.
+			</div>
+        
+        <div> </div>
+        <div class="mock-list"> Choix : Non</div>
+        
+      </div>
+                        
+      <div class="column-content">
+        <div class="detail-column">
+          <div class="tree"> 
+<ul>
+	<li>
+<i class="fa fa-caret-down fa-fw" onclick="expand_or_collapse(this)">
+</i>		cardActionType		<ul style="display:block">
+			<li>
+<i class="fa fa-fw">
+</i><i class="fa fa-key fa-fw">
+</i><span class="selectable" id="e0"> actionCode : cardActionCode
+</span>
+			</li>
+			<li>
+<i class="fa fa-fw">
+</i><span class="selectable" id="e1"> subActionCode : cardSubActionCode
+</span>
+			</li>
+			<li>
+<i class="fa fa-fw">
+</i><span class="selectable" id="e2"> urgentMode : boolean
+</span>
+			</li>
+			<li>
+<i class="fa fa-caret-down fa-fw" onclick="expand_or_collapse(this)">
+</i><i class="fa fa-key fa-fw">
+</i><span class="selectable" id="e3"> auditLabels : auditLabels
+</span>				<ul style="display:block">
+					<li>
+<i class="fa fa-fw">
+</i><span style="font-weight:bold"> [M]
+</span><span class="selectable" id="e4"> auditLabel : charMax30
+</span>
+					</li>
+
+				</ul>
+
+			</li>
+
+		</ul>
+
+	</li>
+
+</ul>
+          </div>
+          
+          <div class="detail">
+				<p align="left">
+					Légende :<br />
+				</p>
+            <ul>
+               <li align="left">
+                  <i class="fa fa-key fa-fw">
+                  </i>
+                  = Elément obligatoire en saisie.
+               </li>
+               <li align="left">
+                  <span style="font-weight:bold"> [M]
+                  </span>
+                  = Elément multiple (0 à n occurrences).
+               </li>
+               <li align="left">
+                  <span style="font-weight:bold"> [C]
+                  </span>
+                  = Elément composé d'un choix à effectuer. Un seul choix autorisé.
+               </li>
+            </ul>
+            <p align="left">
+               Remarque : Un même élément peut regrouper plusieurs caractéristiques
+            </p>          
+          </div>
+          
+        </div>
+<div class="detail-column" id="d0" style="display:none">
+	<div class="detail">
+			<div class="mock-list">
+				<b>Nom : </b>actionCode
+			</div>
+			<div class="mock-list">
+				<b>Description : </b>Code de l¿action.
+			</div>
+
+	</div>
+	<div class="detail">
+			<div class="mock-list">
+				<b>Nom : </b> <a href="../types/cardActionCode.html">cardActionCode</a>
+			</div>
+			<div class="mock-list">
+				<b> Description : </b>Code action d'une carte.
+			</div>
+			<div class="mock-list">
+				<b>Format : </b>string
+			</div>
+			<div class="mock-list">
+				<b>Valeurs possibles : </b>					<table class="table_enum" class="table_enum" class="table_enum" class="table_enum" class="table_enum" class="table_enum">
+						<tr>
+						<td> 01
+						</td>						<td class="td_right"> Changement de statut de la carte
+						</td>
+						</tr>
+						<tr>
+						<td> 02
+						</td>						<td class="td_right"> Mise à jour de carte
+						</td>
+						</tr>
+						<tr>
+						<td> 03
+						</td>						<td class="td_right"> Mise à jour client/tiers
+						</td>
+						</tr>
+						<tr>
+						<td> 04
+						</td>						<td class="td_right"> Mise à jour compte
+						</td>
+						</tr>
+						<tr>
+						<td> 05
+						</td>						<td class="td_right"> Mise à jour compte supplémentaire carte
+						</td>
+						</tr>
+						<tr>
+						<td> 06
+						</td>						<td class="td_right"> Extraction des informations carte/client/compte
+						</td>
+						</tr>
+
+					</table>
+
+			</div>
+
+	</div>
+
+</div>
+<div class="detail-column" id="d1" style="display:none">
+	<div class="detail">
+			<div class="mock-list">
+				<b>Nom : </b>subActionCode
+			</div>
+			<div class="mock-list">
+				<b>Description : </b>Code de sous-action.
+			</div>
+
+	</div>
+	<div class="detail">
+			<div class="mock-list">
+				<b>Nom : </b> <a href="../types/cardSubActionCode.html">cardSubActionCode</a>
+			</div>
+			<div class="mock-list">
+				<b> Description : </b>Code de sous-action d'une carte.
+			</div>
+			<div class="mock-list">
+				<b>Format : </b>string
+			</div>
+			<div class="mock-list">
+				<b>Valeurs possibles : </b>					<table class="table_enum" class="table_enum" class="table_enum" class="table_enum" class="table_enum" class="table_enum" class="table_enum" class="table_enum" class="table_enum" class="table_enum">
+						<tr>
+						<td> 01
+						</td>						<td class="td_right"> Validation de carte
+						</td>
+						</tr>
+						<tr>
+						<td> 03
+						</td>						<td class="td_right"> Réfection de carte
+						</td>
+						</tr>
+						<tr>
+						<td> 05
+						</td>						<td class="td_right"> Opposition sur carte
+						</td>
+						</tr>
+						<tr>
+						<td> 07
+						</td>						<td class="td_right"> Annulation de carte
+						</td>
+						</tr>
+						<tr>
+						<td> 09
+						</td>						<td class="td_right"> Échéance de cartes
+						</td>
+						</tr>
+						<tr>
+						<td> 00
+						</td>						<td class="td_right"> Mise à jour de données
+						</td>
+						</tr>
+						<tr>
+						<td> 02
+						</td>						<td class="td_right"> Renouvellement de carte
+						</td>
+						</tr>
+						<tr>
+						<td> 04
+						</td>						<td class="td_right"> Activation de carte
+						</td>
+						</tr>
+						<tr>
+						<td> 06
+						</td>						<td class="td_right"> Levée d'opposition sur carte
+						</td>
+						</tr>
+						<tr>
+						<td> 08
+						</td>						<td class="td_right"> Changement du code PIN
+						</td>
+						</tr>
+
+					</table>
+
+			</div>
+
+	</div>
+
+</div>
+<div class="detail-column" id="d2" style="display:none">
+	<div class="detail">
+			<div class="mock-list">
+				<b>Nom : </b>urgentMode
+			</div>
+			<div class="mock-list">
+				<b>Description : </b>Mode urgent
+			</div>
+
+	</div>
+	<div class="detail">
+			<div class="mock-list">
+				<b>Nom : </b> <a href="../types/boolean.html">boolean</a>
+			</div>
+
+	</div>
+
+</div>
+<div class="detail-column" id="d3" style="display:none">
+	<div class="detail">
+			<div class="mock-list">
+				<b>Nom : </b>auditLabels
+			</div>
+			<div class="mock-list">
+				<b>Description : </b>Liste des libellés d'audit d¿une action sur carte/compte/client.
+			</div>
+
+	</div>
+	<div class="detail">
+			<div class="mock-list">
+				<b>Nom : </b> <a href="../types/auditLabels.html">auditLabels</a>
+			</div>
+			<div class="mock-list">
+				<b> Description : </b>Liste des libellés d¿audit d¿une action sur carte/compte/client.
+			</div>
+
+	</div>
+
+</div>
+<div class="detail-column" id="d4" style="display:none">
+	<div class="detail">
+			<div class="mock-list">
+				<b>Nom : </b>auditLabel
+			</div>
+			<div class="mock-list">
+				<b>Description : </b>Libellé d¿audit d¿une action sur carte/compte/client.
+			</div>
+			<div class="mock-list">
+				<b>Limite du nombre d'occurences mini-maxi : </b>aucune aucune
+			</div>
+
+	</div>
+	<div class="detail">
+			<div class="mock-list">
+				<b>Nom : </b> <a href="../types/charMax30.html">charMax30</a>
+			</div>
+			<div class="mock-list">
+				<b> Description : </b>Chaîne composée d'au plus 30 caractères.
+			</div>
+			<div class="mock-list">
+				<b>Format : </b>string
+			</div>
+			<div class="mock-list">
+				<b>Longueur mini-maxi : </b>1 - 30
+			</div>
+
+	</div>
+
+</div>
+      </div> 
+  </div>
+
+  
+  <script src="../resources/jquery.js"></script>
+  <script src="../resources/doc.js"></script>
+</body>
+</html>

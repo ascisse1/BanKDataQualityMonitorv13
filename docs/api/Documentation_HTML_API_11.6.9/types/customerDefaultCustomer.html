@@ -1,0 +1,343 @@
+<!DOCTYPE html >
+<html>
+<head>
+	<link rel="stylesheet" href="../resources/styleDocu.css" />
+  <link rel="stylesheet" href="../resources/font-awesome/css/font-awesome.min.css" />
+	<title>Documentation Xsd</title>
+	<meta charset="UTF-8" />
+</head>
+
+<body>
+  <div class="document">
+	<div class="header">
+		
+	</div>
+
+  <div class="tabs">
+    <div class="tabs-wrapper" onclick="window.open('../liste-ressources.html', '_self');">
+      <div class="tabs-left-content">
+        Liste des ressources
+      </div>
+    </div>
+    <div class="tabs-wrapper" onclick="window.open('../liste-services.html', '_self');">
+      <div class="tabs-left-content" >
+        Liste des services  
+      </div>
+    </div>
+    <div class="tabs-wrapper-selected" onclick="window.open('../liste-types.html', '_self');">
+      <div class="tabs-right-content">
+        Liste des types
+      </div>
+    </div>
+  </div>
+
+	
+
+	<div class="contenu">
+      <div class="breadcrumb"> 
+        <ul class="breadcrumb">
+           <li> <a href="../index.html"> Accueil </a></li>
+           <li> > </li>
+           <li> <a href="../liste-types.html"> Liste des types </a></li>
+           <li> > </li>
+           <li> customerDefaultCustomer </li>
+        </ul>                    
+      </div>                    
+      
+     
+      <div class="summary">
+			<div class="mock-list">
+				<b>Nom : </b>customerDefaultCustomer
+			</div>
+			<div class="mock-list">
+				<b> Description : </b>Défaut client.
+			</div>
+        
+        <div> <p>La gestion du d&eacute;faut n&rsquo;est autoris&eacute;e que si le param&egrave;tre <strong>B2-DEFCLI</strong> est pr&eacute;sent en nomenclature <strong>098</strong>.</p>
+
+<p>La gestion du marquage du d&eacute;faut n&rsquo;est possible que si les segments de client&egrave;le sont param&eacute;tr&eacute;s en nomenclature <strong>708</strong>.</p>
+
+<p>La saisie du d&eacute;faut client n&rsquo;est possible que si le niveau de for&ccedil;age de l&rsquo;utilisateur est sup&eacute;rieur au niveau de for&ccedil;age pour la saisie du d&eacute;faut, param&eacute;tr&eacute; dans le <strong>Montant 1</strong>, ou au niveau de for&ccedil;age pour la modification du d&eacute;faut client, param&eacute;tr&eacute; dans le <strong>Montant&nbsp;2</strong> du param&egrave;tre <strong>B2-DEFCLI</strong> en nomenclature <strong>098.</strong></p>
+
+<p>Le choix des 2 balises retail/non retail doit &ecirc;tre en accord avec le type de d&eacute;faut du client.</p>
+
+<p>Le code segment est param&eacute;tr&eacute; dans la valeur alphanum&eacute;rique de la donn&eacute;e compl&eacute;mentaire du client pour laquelle&nbsp;:</p>
+
+<ul>
+	<li>l&rsquo;attribut est &eacute;gal au type de segmentation param&eacute;tr&eacute; dans le <strong>Libell&eacute; 3</strong> de la nomenclature <strong>171 </strong>pour la valeur de l&rsquo;information compl&eacute;mentaire du segment contenue dans le <strong>Libell&eacute; 5</strong> du param&egrave;tre <strong>B2-DEFCLI</strong> en nomenclature <strong>098</strong></li>
+	<li>le nom est&nbsp;:
+	<ul>
+		<li>soit &eacute;gal &agrave; <strong>SEG</strong> si l&rsquo;attribut de la donn&eacute;e compl&eacute;mentaire est sp&eacute;cifique (<strong>S</strong>),</li>
+		<li>soit param&eacute;tr&eacute; dans le <strong>Libell&eacute; 5</strong> du param&egrave;tre <strong>B2-DEFCLI</strong> en nomenclature <strong>098</strong>, dans les autres cas.</li>
+	</ul>
+	</li>
+</ul>
+
+<p>Le type de d&eacute;faut du client est retail si le <strong>Montant 3</strong> (sur 2 caract&egrave;res) du code segment en nomenclature<strong> 708</strong> est &eacute;gal &agrave; la valeur de l&rsquo;identifiant retail param&eacute;tr&eacute;e dans le <strong>Libell&eacute; 4</strong> du param&egrave;tre <strong>B2-DEFCLI</strong> en nomenclature <strong>098.</strong></p>
+
+<p>Le code de la cotation est aliment&eacute; avec le code qualit&eacute; du client.</p>
+</div>
+        <div class="mock-list"> Choix : Oui</div>
+        
+      </div>
+                        
+      <div class="column-content">
+        <div class="detail-column">
+          <div class="tree"> 
+<ul>
+	<li>
+<i class="fa fa-caret-down fa-fw" onclick="expand_or_collapse(this)">
+</i>		customerDefaultCustomer		<ul style="display:block">
+			<li>
+<i class="fa fa-caret-down fa-fw" onclick="expand_or_collapse(this)">
+</i><span class="selectable" id="e0"> retail : customerRetail
+</span>				<ul style="display:block">
+					<li>
+<i class="fa fa-fw">
+</i><span class="selectable" id="e1"> pmlDefault : boolean
+</span>
+					</li>
+					<li>
+<i class="fa fa-fw">
+</i><span class="selectable" id="e2"> pmlDefaultEntry : date
+</span>
+					</li>
+					<li>
+<i class="fa fa-fw">
+</i><span class="selectable" id="e3"> nonPmlDefault : boolean
+</span>
+					</li>
+					<li>
+<i class="fa fa-fw">
+</i><span class="selectable" id="e4"> nonPmlDefaultEntry : date
+</span>
+					</li>
+
+				</ul>
+
+			</li>
+			<li>
+<i class="fa fa-caret-down fa-fw" onclick="expand_or_collapse(this)">
+</i><span class="selectable" id="e5"> nonRetail : customerNonRetail
+</span>				<ul style="display:block">
+					<li>
+<i class="fa fa-fw">
+</i><i class="fa fa-key fa-fw">
+</i><span class="selectable" id="e6"> default : boolean
+</span>
+					</li>
+					<li>
+<i class="fa fa-fw">
+</i><i class="fa fa-key fa-fw">
+</i><span class="selectable" id="e7"> defaultEntry : date
+</span>
+					</li>
+
+				</ul>
+
+			</li>
+
+		</ul>
+
+	</li>
+
+</ul>
+          </div>
+          
+          <div class="detail">
+				<p align="left">
+					Légende :<br />
+				</p>
+            <ul>
+               <li align="left">
+                  <i class="fa fa-key fa-fw">
+                  </i>
+                  = Elément obligatoire en saisie.
+               </li>
+               <li align="left">
+                  <span style="font-weight:bold"> [M]
+                  </span>
+                  = Elément multiple (0 à n occurrences).
+               </li>
+               <li align="left">
+                  <span style="font-weight:bold"> [C]
+                  </span>
+                  = Elément composé d'un choix à effectuer. Un seul choix autorisé.
+               </li>
+            </ul>
+            <p align="left">
+               Remarque : Un même élément peut regrouper plusieurs caractéristiques
+            </p>          
+          </div>
+          
+        </div>
+<div class="detail-column" id="d0" style="display:none">
+	<div class="detail">
+			<div class="mock-list">
+				<b>Nom : </b>retail
+			</div>
+			<div class="mock-list">
+				<b>Description : </b>Client retail.
+			</div>
+
+	</div>
+	<div class="detail">
+			<div class="mock-list">
+				<b>Nom : </b> <a href="../types/customerRetail.html">customerRetail</a>
+			</div>
+			<div class="mock-list">
+				<b> Description : </b>Client retail.
+			</div>
+
+	</div>
+
+</div>
+<div class="detail-column" id="d1" style="display:none">
+	<div class="detail">
+			<div class="mock-list">
+				<b>Nom : </b>pmlDefault
+			</div>
+			<div class="mock-list">
+				<b>Description : </b>Indicateur de défaut PPI.
+			</div>
+
+	</div>
+	<div class="detail">
+			<div class="mock-list">
+				<b>Nom : </b> <a href="../types/boolean.html">boolean</a>
+			</div>
+
+	</div>
+
+</div>
+<div class="detail-column" id="d2" style="display:none">
+	<div class="detail">
+			<div class="mock-list">
+				<b>Nom : </b>pmlDefaultEntry
+			</div>
+			<div class="mock-list">
+				<b>Description : </b>Date de mise en défaut PPI.
+			</div>
+			<div class="mock-list">
+				<b>Commentaire : </b><p>La date de mise en d&eacute;faut PPI doit &ecirc;tre renseign&eacute;e uniquement si l&rsquo;indicateur de d&eacute;faut PPI est renseign&eacute;.</p>
+
+<p>Elle doit &ecirc;tre inf&eacute;rieure ou &eacute;gale &agrave; la date comptable et sup&eacute;rieure ou &eacute;gale &agrave; la date de cr&eacute;ation du client (si celle-ci est renseign&eacute;e).</p>
+
+			</div>
+
+	</div>
+	<div class="detail">
+			<div class="mock-list">
+				<b>Nom : </b> <a href="../types/date.html">date</a>
+			</div>
+
+	</div>
+
+</div>
+<div class="detail-column" id="d3" style="display:none">
+	<div class="detail">
+			<div class="mock-list">
+				<b>Nom : </b>nonPmlDefault
+			</div>
+			<div class="mock-list">
+				<b>Description : </b>Indicateur de défaut hors PPI.
+			</div>
+
+	</div>
+	<div class="detail">
+			<div class="mock-list">
+				<b>Nom : </b> <a href="../types/boolean.html">boolean</a>
+			</div>
+
+	</div>
+
+</div>
+<div class="detail-column" id="d4" style="display:none">
+	<div class="detail">
+			<div class="mock-list">
+				<b>Nom : </b>nonPmlDefaultEntry
+			</div>
+			<div class="mock-list">
+				<b>Description : </b>Date de mise en défaut hors PPI.
+			</div>
+			<div class="mock-list">
+				<b>Commentaire : </b><p>La date de mise en d&eacute;faut hors PPI doit &ecirc;tre renseign&eacute;e uniquement si l&rsquo;indicateur de d&eacute;faut hors PPI est renseign&eacute;.</p>
+
+<p>Elle doit &ecirc;tre inf&eacute;rieure ou &eacute;gale &agrave; la date comptable et sup&eacute;rieure ou &eacute;gale &agrave; la date de cr&eacute;ation du client (si celle-ci est renseign&eacute;e).</p>
+
+			</div>
+
+	</div>
+	<div class="detail">
+			<div class="mock-list">
+				<b>Nom : </b> <a href="../types/date.html">date</a>
+			</div>
+
+	</div>
+
+</div>
+<div class="detail-column" id="d5" style="display:none">
+	<div class="detail">
+			<div class="mock-list">
+				<b>Nom : </b>nonRetail
+			</div>
+			<div class="mock-list">
+				<b>Description : </b>Client non retail.
+			</div>
+
+	</div>
+	<div class="detail">
+			<div class="mock-list">
+				<b>Nom : </b> <a href="../types/customerNonRetail.html">customerNonRetail</a>
+			</div>
+			<div class="mock-list">
+				<b> Description : </b>Client non retail.
+			</div>
+
+	</div>
+
+</div>
+<div class="detail-column" id="d6" style="display:none">
+	<div class="detail">
+			<div class="mock-list">
+				<b>Nom : </b>default
+			</div>
+			<div class="mock-list">
+				<b>Description : </b>Indicateur de défaut.
+			</div>
+
+	</div>
+	<div class="detail">
+			<div class="mock-list">
+				<b>Nom : </b> <a href="../types/boolean.html">boolean</a>
+			</div>
+
+	</div>
+
+</div>
+<div class="detail-column" id="d7" style="display:none">
+	<div class="detail">
+			<div class="mock-list">
+				<b>Nom : </b>defaultEntry
+			</div>
+			<div class="mock-list">
+				<b>Description : </b>Date de mise en défaut.
+			</div>
+
+	</div>
+	<div class="detail">
+			<div class="mock-list">
+				<b>Nom : </b> <a href="../types/date.html">date</a>
+			</div>
+
+	</div>
+
+</div>
+      </div> 
+  </div>
+
+  
+  <script src="../resources/jquery.js"></script>
+  <script src="../resources/doc.js"></script>
+</body>
+</html>

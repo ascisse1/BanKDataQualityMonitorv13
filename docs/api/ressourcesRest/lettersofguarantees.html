@@ -1,0 +1,532 @@
+<!DOCTYPE html>
+<html>
+<head>
+	<link rel="stylesheet" href="../resources/styleDocu.css" />
+    <link rel="stylesheet" href="../resources/font-awesome/css/font-awesome.min.css" />
+	<title>Documentation Xsd</title>
+	<meta charset="UTF-8" />
+</head>
+
+<body>
+  <div class="document">
+	<div class="header">		
+	</div>
+
+    <div class="tabs">
+        <div class="tabs-wrapper-selected" onclick="window.open('../liste-ressources.html', '_self');">
+            <div class="tabs-left-content" >Liste des ressources</div>
+        </div>
+        <div class="tabs-wrapper" onclick="window.open('../liste-services.html', '_self');">
+            <div class="tabs-left-content">Liste des services</div>
+        </div>
+        <div class="tabs-wrapper" onclick="window.open('../liste-types.html', '_self');">
+            <div class="tabs-right-content">Liste des types</div>
+        </div>
+    </div>
+
+	<div class="contenu">
+      <div class="breadcrumb"> 
+        <ul class="breadcrumb">
+           <li> <a href="../index.html"> Accueil </a></li>
+           <li> > </li>
+           <li> <a href="../liste-ressources.html"> Liste des ressources </a></li>
+           <li> > </li>
+           <li> lettersofguarantees </li>
+        </ul>                    
+      </div>                    
+      
+      <div class="summary">
+        <div class="mock-list"> Nom ressource REST : lettersofguarantees </div>
+        <div class="mock-list"> Programme Amplitude : cawrlettersofguarantees </div>
+        <div class="mock-list"> Email : support@soprabanking.com </div>        
+        <br/>
+            <div class="mock-list"> Letters of guarantees</div>
+      </div>
+      
+      <div class="column-content" style="width:93%">
+        <div class="detail-column" style="width: 35%">
+          <div class="tree"> 
+<ul style="padding:0">
+	<li>
+<i class="fa fa-caret-down fa-fw" onclick="expand_or_collapse(this)">
+</i>		lettersofguarantees		<ul>
+			<li>
+<i class="fa fa-caret-down fa-fw" onclick="expand_or_collapse(this)">
+</i>				v1				<ul>
+					<li>
+<i class="fa fa-fw">
+</i><span class="selectable" id="e0"> DELETE
+</span>
+					</li>
+					<li>
+<i class="fa fa-fw">
+</i><span class="selectable" id="e1"> POST
+</span>
+					</li>
+					<li>
+<i class="fa fa-fw">
+</i><span class="selectable" id="e2"> GET
+</span>
+					</li>
+					<li>
+<i class="fa fa-fw">
+</i><span class="selectable" id="e3"> GETLIST
+</span>
+					</li>
+
+				</ul>
+
+			</li>
+
+		</ul>
+
+	</li>
+
+</ul>
+          </div>
+        </div>
+                 
+        
+<div class="detail-column" id="d0" style="display:none; width: 65%">
+	<div class="detail">
+		<div class="mock-list">
+			<b>Service SOAP : </b> <a href="../services/cancelLG.html">cancelLG</a>
+		</div>
+		<div class="mock-list">
+			<b>Code retour succes : </b>200 - OK
+		</div>
+		<div class="mock-list">
+			<b>Uri : </b>http://soprabanking.com/amplitude/lettersofguarantees/v1/{LoGId}
+		</div>
+		<div class="mock-list">
+			<b>Description : </b>The service cancelLG allows cancelling a L/G file.
+		</div>
+		<br>
+
+		</br>
+		<div class="mock-list">
+			<b>Identifiants : </b>			<table class="table_param">
+				<tr>
+				<td> 0
+				</td>				<td title="cancelLGRequest.letterOfGuaranteeIdentifier.branchCode.code"> <a href="../types/char5.html">code</a><br>Code de l'agence.
+				</td>
+				</tr>
+				<tr>
+				<td> 1
+				</td>				<td title="cancelLGRequest.letterOfGuaranteeIdentifier.letterOfGuaranteeNumber"> <a href="../types/char6.html">letterOfGuaranteeNumber</a><br>Numéro de la caution.
+				</td>
+				</tr>
+
+			</table>
+
+		</div>
+		<br>
+
+		</br>
+		<div class="mock-list">
+			<b>Codes Erreur : </b>			<table>
+				<tr>
+				<td> 400
+				</td>				<td> Bad Request
+				</td>
+				</tr>
+
+			</table>
+
+		</div>
+
+	</div>
+
+</div>
+<div class="detail-column" id="d1" style="display:none; width: 65%">
+	<div class="detail">
+		<div class="mock-list">
+			<b>Service SOAP : </b> <a href="../services/createLG.html">createLG</a>
+		</div>
+		<div class="mock-list">
+			<b>Code retour succes : </b>201 - Created
+		</div>
+		<div class="mock-list">
+			<b>Uri : </b>http://soprabanking.com/amplitude/lettersofguarantees/v1/
+		</div>
+		<div class="mock-list">
+			<b>Description : </b>L/G file creation.
+		</div>
+		<br>
+
+		</br>
+		<div class="mock-list">
+			<b>Codes Erreur : </b>			<table>
+				<tr>
+				<td> 400
+				</td>				<td> Bad Request
+				</td>
+				</tr>
+
+			</table>
+
+		</div>
+
+	</div>
+
+</div>
+<div class="detail-column" id="d2" style="display:none; width: 65%">
+	<div class="detail">
+		<div class="mock-list">
+			<b>Service SOAP : </b> <a href="../services/getLGDetail.html">getLGDetail</a>
+		</div>
+		<div class="mock-list">
+			<b>Code retour succes : </b>200 - OK
+		</div>
+		<div class="mock-list">
+			<b>Uri : </b>http://soprabanking.com/amplitude/lettersofguarantees/v1/{LoGId}
+		</div>
+		<div class="mock-list">
+			<b>Description : </b>The verb GET applied to URI /lettersofguarantees/v1/{letterofguaranteeId} returns the related information of a letter of guarantee file
+- Information of letter of guarantee
+- Type of letter of guarantee  
+- Retail of commissions, fees and charges
+- Additionnal informations of letter of guarantee
+- Recipient's address
+- Translated label
+- Planned lifts
+- Other accounts of letter of guarantee
+- History of letter of guarantee decisions
+- APR of letter of guarantee  ¿ The current APR.
+- Additionnal data
+- Legal attributes (applied to letter of guarantee module)
+- IFRS9 attributes (applied to letter of guarantee module)
+- History of interventions (applied to letter of guarantee module)
+		</div>
+		<br>
+
+		</br>
+		<div class="mock-list">
+			<b>Identifiants : </b>			<table class="table_param">
+				<tr>
+				<td> 0
+				</td>				<td title="getLGDetailRequest.letterOfGuaranteeIdentifier.branchCode"> <a href="../types/char5.html">branchCode</a><br>Agence de la caution
+				</td>
+				</tr>
+				<tr>
+				<td> 1
+				</td>				<td title="getLGDetailRequest.letterOfGuaranteeIdentifier.letterOfGuaranteeNumber"> <a href="../types/char6.html">letterOfGuaranteeNumber</a><br>Numéro de la caution
+				</td>
+				</tr>
+
+			</table>
+
+		</div>
+		<br>
+
+		</br>
+		<div class="mock-list">
+			<b>Codes Erreur : </b>			<table>
+				<tr>
+				<td> 404
+				</td>				<td> Not Found
+				</td>
+				</tr>
+
+			</table>
+
+		</div>
+
+	</div>
+
+</div>
+<div class="detail-column" id="d3" style="display:none; width: 65%">
+	<div class="detail">
+		<div class="mock-list">
+			<b>Service SOAP : </b> <a href="../services/getLGList.html">getLGList</a>
+		</div>
+		<div class="mock-list">
+			<b>Code retour succes : </b>200 - OK
+		</div>
+		<div class="mock-list">
+			<b>Uri : </b>http://soprabanking.com/amplitude/lettersofguarantees/v1/
+		</div>
+		<div class="mock-list">
+			<b>Description : </b>The service getLGList allows returning a list of letters of guarantee matching the search criteria received.
+
+The search is based on the optional criteria below:
+- the L/G identifier: branch (code and/or designation), L/G number,
+- the currency (alphanumeric code and/or digital code and/or designation),
+- the L/G type (code and/or designation),
+- the file number,
+- the customer: code and/or name to be displayed, type, profile (code and/or designation), national identifier, account officer (code and/or name), additional information (identifier and/or value (or value range) and/or designation), external reference,
+- the beneficiary: type (customer/third party) and/or code and/or name to be displayed,
+- the value date (or a date range),
+- the expiry date (or a date range),
+- the L/G situation,
+- the bill reference.
+
+For each L/G returned, all data used in the search criteria will be indicated as well as:
+- the amount,
+- the commission rate,
+- the frequency.
+		</div>
+		<br>
+
+		</br>
+		<div class="mock-list">
+			<b>Parametres : </b>			<table class="table_param">
+				<tr>
+				<td>
+				</td>				<td title="getLGListRequest.customer.activeProfile.code"> <a href="../types/charMax3.html">X-SBS-activeProfileCode</a><br>Code profil.
+				</td>				<td> Header
+				</td>
+				</tr>
+				<tr>
+				<td>
+				</td>				<td title="getLGListRequest.customer.activeProfile.designation"> <a href="../types/charMax30.html">X-SBS-activeProfileDesignation</a><br>Désignation du profil.
+				</td>				<td> Header
+				</td>
+				</tr>
+				<tr>
+				<td>
+				</td>				<td title="getLGListRequest.billDate"> <a href="../types/charMax12.html">X-SBS-billDate</a><br>Référence de l¿effet.
+				</td>				<td> Header
+				</td>
+				</tr>
+				<tr>
+				<td>
+				</td>				<td title="getLGListRequest.letterOfGuaranteeIdentifier.branchCode.code"> <a href="../types/char5.html">X-SBS-branchCode</a><br>Code de l'agence.
+				</td>				<td> Header
+				</td>
+				</tr>
+				<tr>
+				<td>
+				</td>				<td title="getLGListRequest.currency.alphaCode"> <a href="../types/char3.html">X-SBS-currencyAlphaCode</a><br>Code devise alphanumérique.
+				</td>				<td> Header
+				</td>
+				</tr>
+				<tr>
+				<td>
+				</td>				<td title="getLGListRequest.currency.numericCode"> <a href="../types/char3.html">X-SBS-currencyNumericCode</a><br>Code devise numérique.
+				</td>				<td> Header
+				</td>
+				</tr>
+				<tr>
+				<td>
+				</td>				<td title="getLGListRequest.customer.additionalInformation.designation"> <a href="../types/charMax30.html">X-SBS-customerAdditionalInformationDesignation</a><br>Désignation.
+				</td>				<td> Header
+				</td>
+				</tr>
+				<tr>
+				<td>
+				</td>				<td title="getLGListRequest.customer.additionalInformation.complementaryInformation.value.alphanumeric.comparisonOperator"> <a href="../types/comparisonOperator.html">X-SBS-customerComplementaryInformationAlphanumericComparisonOperator</a><br>Opérateur de comparaison.
+				</td>				<td> Header
+				</td>
+				</tr>
+				<tr>
+				<td>
+				</td>				<td title="getLGListRequest.customer.additionalInformation.complementaryInformation.value.alphanumeric.value"> <a href="../types/string.html">X-SBS-customerComplementaryInformationAlphanumericValue</a><br>Valeur de la désignation.
+				</td>				<td> Header
+				</td>
+				</tr>
+				<tr>
+				<td>
+				</td>				<td title="getLGListRequest.customer.additionalInformation.complementaryInformation.value.date.date1"> <a href="../types/date.html">X-SBS-customerComplementaryInformationDate1</a><br>1ère date.
+				</td>				<td> Header
+				</td>
+				</tr>
+				<tr>
+				<td>
+				</td>				<td title="getLGListRequest.customer.additionalInformation.complementaryInformation.value.date.date2"> <a href="../types/date.html">X-SBS-customerComplementaryInformationDate2</a><br>2ème date.
+				</td>				<td> Header
+				</td>
+				</tr>
+				<tr>
+				<td>
+				</td>				<td title="getLGListRequest.customer.additionalInformation.complementaryInformation.value.date.comparator"> <a href="../types/comparator.html">X-SBS-customerComplementaryInformationDateComparator</a><br>Opérateur de comparaison.
+				</td>				<td> Header
+				</td>
+				</tr>
+				<tr>
+				<td>
+				</td>				<td title="getLGListRequest.customer.additionalInformation.complementaryInformation.value.amountOrRate.decimal1"> <a href="../types/decimal32_16.html">X-SBS-customerComplementaryInformationDecimal1</a><br>1ère décimale.
+				</td>				<td> Header
+				</td>
+				</tr>
+				<tr>
+				<td>
+				</td>				<td title="getLGListRequest.customer.additionalInformation.complementaryInformation.value.amountOrRate.comparator"> <a href="../types/comparator.html">X-SBS-customerComplementaryInformationDecimal1Comparator</a><br>Opérateur de comparaison.
+				</td>				<td> Header
+				</td>
+				</tr>
+				<tr>
+				<td>
+				</td>				<td title="getLGListRequest.customer.additionalInformation.complementaryInformation.value.amountOrRate.decimal2"> <a href="../types/decimal32_16.html">X-SBS-customerComplementaryInformationDecimal2</a><br>2ème décimale.
+				</td>				<td> Header
+				</td>
+				</tr>
+				<tr>
+				<td>
+				</td>				<td title="getLGListRequest.customer.additionalInformation.complementaryInformation.identifier"> <a href="../types/charMax10.html">X-SBS-customerComplementaryInformationIdentifier</a><br>Identifiant de la donnée complémentaire.
+				</td>				<td> Header
+				</td>
+				</tr>
+				<tr>
+				<td>
+				</td>				<td title="getLGListRequest.customer.customer.displayedName"> <a href="../types/charMax67.html">X-SBS-customerDisplayedName</a><br>Nom de restitution du client.
+				</td>				<td> Header
+				</td>
+				</tr>
+				<tr>
+				<td>
+				</td>				<td title="getLGListRequest.customer.externalReference"> <a href="../types/charMax25.html">X-SBS-customerExternalReference</a><br>Référence externe.
+				</td>				<td> Header
+				</td>
+				</tr>
+				<tr>
+				<td>
+				</td>				<td title="getLGListRequest.customer.customer.customerNumber"> <a href="../types/charMax15.html">X-SBS-customerNumber</a><br>Code du client.
+				</td>				<td> Header
+				</td>
+				</tr>
+				<tr>
+				<td>
+				</td>				<td title="getLGListRequest.customer.customerOfficer.code"> <a href="../types/charMax3.html">X-SBS-customerOfficerCode</a><br>Code gestionnaire.
+				</td>				<td> Header
+				</td>
+				</tr>
+				<tr>
+				<td>
+				</td>				<td title="getLGListRequest.customer.customerOfficer.name"> <a href="../types/charMax30.html">X-SBS-customerOfficerName</a><br>Nom du gestionnaire.
+				</td>				<td> Header
+				</td>
+				</tr>
+				<tr>
+				<td>
+				</td>				<td title="getLGListRequest.customer.customerType"> <a href="../types/customerType.html">X-SBS-customerType</a><br>Type de client.
+				</td>				<td> Header
+				</td>
+				</tr>
+				<tr>
+				<td>
+				</td>				<td title="getLGListRequest.fileNumber"> <a href="../types/charMax8.html">X-SBS-fileNumber</a><br>Numéro de dossier.
+				</td>				<td> Header
+				</td>
+				</tr>
+				<tr>
+				<td>
+				</td>				<td title="getLGListRequest.letterOfGuaranteeIdentifier.letterOfGuaranteeNumber"> <a href="../types/char6.html">X-SBS-letterOfGuaranteeNumber</a><br>Numéro de la caution.
+				</td>				<td> Header
+				</td>
+				</tr>
+				<tr>
+				<td>
+				</td>				<td title="getLGListRequest.letterOfGuaranteeType.typeCode"> <a href="../types/letterOfGuaranteeTypeCode.html">X-SBS-letterOfGuaranteeTypeCode</a><br>Code type de caution.
+				</td>				<td> Header
+				</td>
+				</tr>
+				<tr>
+				<td>
+				</td>				<td title="getLGListRequest.letterOfGuaranteeType.designation"> <a href="../types/charMax30.html">X-SBS-letterOfGuaranteeTypeDesignation</a><br>Désignation du type de caution.
+				</td>				<td> Header
+				</td>
+				</tr>
+				<tr>
+				<td>
+				</td>				<td title="getLGListRequest.maturityDate.date1"> <a href="../types/date.html">X-SBS-maturityDate1</a><br>1ère date.
+				</td>				<td> Header
+				</td>
+				</tr>
+				<tr>
+				<td>
+				</td>				<td title="getLGListRequest.maturityDate.date2"> <a href="../types/date.html">X-SBS-maturityDate2</a><br>2ème date.
+				</td>				<td> Header
+				</td>
+				</tr>
+				<tr>
+				<td>
+				</td>				<td title="getLGListRequest.maturityDate.comparator"> <a href="../types/comparator.html">X-SBS-maturityDateComparator</a><br>Opérateur de comparaison.
+				</td>				<td> Header
+				</td>
+				</tr>
+				<tr>
+				<td>
+				</td>				<td title="getLGListRequest.customer.nationalIdentifier"> <a href="../types/charMax20.html">X-SBS-nationalIdentifier</a><br>Identifiant national.
+				</td>				<td> Header
+				</td>
+				</tr>
+				<tr>
+				<td>
+				</td>				<td title="getLGListRequest.recipient.code"> <a href="../types/charMax15.html">X-SBS-recipientCode</a><br>Code du client/tiers.
+				</td>				<td> Header
+				</td>
+				</tr>
+				<tr>
+				<td>
+				</td>				<td title="getLGListRequest.recipient.displayedName.comparisonOperator"> <a href="../types/comparisonOperator.html">X-SBS-recipientDisplayedNameComparisonOperator</a><br>Opérateur de comparaison.
+				</td>				<td> Header
+				</td>
+				</tr>
+				<tr>
+				<td>
+				</td>				<td title="getLGListRequest.recipient.displayedName.value"> <a href="../types/string.html">X-SBS-recipientDisplayedNameValue</a><br>Valeur de la désignation.
+				</td>				<td> Header
+				</td>
+				</tr>
+				<tr>
+				<td>
+				</td>				<td title="getLGListRequest.recipient.type"> <a href="../types/customerThirdPartyType.html">X-SBS-recipientType</a><br>Type de population.
+				</td>				<td> Header
+				</td>
+				</tr>
+				<tr>
+				<td>
+				</td>				<td title="getLGListRequest.situation"> <a href="../types/letterOfGuaranteeSituation.html">X-SBS-situation</a><br>Situation de la caution.
+				</td>				<td> Header
+				</td>
+				</tr>
+				<tr>
+				<td>
+				</td>				<td title="getLGListRequest.valueDate.date1"> <a href="../types/date.html">X-SBS-valueDate1</a><br>1ère date.
+				</td>				<td> Header
+				</td>
+				</tr>
+				<tr>
+				<td>
+				</td>				<td title="getLGListRequest.valueDate.date2"> <a href="../types/date.html">X-SBS-valueDate2</a><br>2ème date.
+				</td>				<td> Header
+				</td>
+				</tr>
+				<tr>
+				<td>
+				</td>				<td title="getLGListRequest.valueDate.comparator"> <a href="../types/comparator.html">X-SBS-valueDateComparator</a><br>Opérateur de comparaison.
+				</td>				<td> Header
+				</td>
+				</tr>
+
+			</table>
+
+		</div>
+		<br>
+
+		</br>
+		<div class="mock-list">
+			<b>Codes Erreur : </b>			<table>
+				<tr>
+				<td> 400
+				</td>				<td> Bad Request
+				</td>
+				</tr>
+
+			</table>
+
+		</div>
+
+	</div>
+
+</div>
+     </div> 
+  </div>
+  </div>
+
+  
+  <script src="../resources/jquery.js"></script>
+  <script src="../resources/doc.js"></script>
+</body>
+</html>

@@ -1,0 +1,201 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<databaseChangeLog
+        xmlns="http://www.liquibase.org/xml/ns/dbchangelog"
+        xmlns:xsi="http://www.w3.org/2001/XMLSchema-instance"
+        xsi:schemaLocation="http://www.liquibase.org/xml/ns/dbchangelog
+            http://www.liquibase.org/xml/ns/dbchangelog/dbchangelog-latest.xsd">
+
+    <!-- Add api_field_path column to cbs_fields for Amplitude API mapping -->
+    <changeSet id="020-01-add-api-field-path" author="bdqm">
+        <addColumn tableName="cbs_fields" schemaName="public">
+            <column name="api_field_path" type="VARCHAR(200)">
+                <constraints nullable="true"/>
+            </column>
+        </addColumn>
+        <comment>Maps CBS column names to Amplitude API field paths (e.g., nom → lastName, pre → individualSpecInfo.generalInfo.firstname)</comment>
+    </changeSet>
+
+    <!-- Seed api_field_path mappings for bkcli table -->
+    <changeSet id="020-02-seed-api-field-paths" author="bdqm">
+        <!-- Root-level fields -->
+        <update tableName="cbs_fields" schemaName="public">
+            <column name="api_field_path" value="lastName"/>
+            <where>column_name = 'nom' AND cbs_table_id = (SELECT id FROM public.cbs_tables WHERE table_name = 'bkcli')</where>
+        </update>
+        <update tableName="cbs_fields" schemaName="public">
+            <column name="api_field_path" value="language"/>
+            <where>column_name = 'lang' AND cbs_table_id = (SELECT id FROM public.cbs_tables WHERE table_name = 'bkcli')</where>
+        </update>
+        <update tableName="cbs_fields" schemaName="public">
+            <column name="api_field_path" value="titleCode"/>
+            <where>column_name = 'emtit' AND cbs_table_id = (SELECT id FROM public.cbs_tables WHERE table_name = 'bkcli')</where>
+        </update>
+        <update tableName="cbs_fields" schemaName="public">
+            <column name="api_field_path" value="externalIdentifier"/>
+            <where>column_name = 'clcr' AND cbs_table_id = (SELECT id FROM public.cbs_tables WHERE table_name = 'bkcli')</where>
+        </update>
+
+        <!-- Individual specific info: general -->
+        <update tableName="cbs_fields" schemaName="public">
+            <column name="api_field_path" value="individualSpecInfo.generalInfo.firstname"/>
+            <where>column_name = 'pre' AND cbs_table_id = (SELECT id FROM public.cbs_tables WHERE table_name = 'bkcli')</where>
+        </update>
+        <update tableName="cbs_fields" schemaName="public">
+            <column name="api_field_path" value="individualSpecInfo.generalInfo.middlename"/>
+            <where>column_name = 'midname' AND cbs_table_id = (SELECT id FROM public.cbs_tables WHERE table_name = 'bkcli')</where>
+        </update>
+        <update tableName="cbs_fields" schemaName="public">
+            <column name="api_field_path" value="individualSpecInfo.generalInfo.familyStatusCode"/>
+            <where>column_name = 'sit' AND cbs_table_id = (SELECT id FROM public.cbs_tables WHERE table_name = 'bkcli')</where>
+        </update>
+
+        <!-- Individual specific info: birth -->
+        <update tableName="cbs_fields" schemaName="public">
+            <column name="api_field_path" value="individualSpecInfo.birth.holderSex"/>
+            <where>column_name = 'sext' AND cbs_table_id = (SELECT id FROM public.cbs_tables WHERE table_name = 'bkcli')</where>
+        </update>
+        <update tableName="cbs_fields" schemaName="public">
+            <column name="api_field_path" value="individualSpecInfo.birth.birthDate"/>
+            <where>column_name = 'dna' AND cbs_table_id = (SELECT id FROM public.cbs_tables WHERE table_name = 'bkcli')</where>
+        </update>
+        <update tableName="cbs_fields" schemaName="public">
+            <column name="api_field_path" value="individualSpecInfo.birth.birthCity"/>
+            <where>column_name = 'viln' AND cbs_table_id = (SELECT id FROM public.cbs_tables WHERE table_name = 'bkcli')</where>
+        </update>
+        <update tableName="cbs_fields" schemaName="public">
+            <column name="api_field_path" value="individualSpecInfo.birth.birthCountry"/>
+            <where>column_name = 'payn' AND cbs_table_id = (SELECT id FROM public.cbs_tables WHERE table_name = 'bkcli')</where>
+        </update>
+        <update tableName="cbs_fields" schemaName="public">
+            <column name="api_field_path" value="individualSpecInfo.birth.maidenName"/>
+            <where>column_name = 'nmer' AND cbs_table_id = (SELECT id FROM public.cbs_tables WHERE table_name = 'bkcli')</where>
+        </update>
+
+        <!-- Individual specific info: ID paper -->
+        <update tableName="cbs_fields" schemaName="public">
+            <column name="api_field_path" value="individualSpecInfo.idPaper.type"/>
+            <where>column_name = 'tid' AND cbs_table_id = (SELECT id FROM public.cbs_tables WHERE table_name = 'bkcli')</where>
+        </update>
+        <update tableName="cbs_fields" schemaName="public">
+            <column name="api_field_path" value="individualSpecInfo.idPaper.idPaperNumber"/>
+            <where>column_name = 'nid' AND cbs_table_id = (SELECT id FROM public.cbs_tables WHERE table_name = 'bkcli')</where>
+        </update>
+        <update tableName="cbs_fields" schemaName="public">
+            <column name="api_field_path" value="individualSpecInfo.idPaper.idPaperValidityDate"/>
+            <where>column_name = 'vid' AND cbs_table_id = (SELECT id FROM public.cbs_tables WHERE table_name = 'bkcli')</where>
+        </update>
+        <update tableName="cbs_fields" schemaName="public">
+            <column name="api_field_path" value="individualSpecInfo.idPaper.idPaperDeliveryDate"/>
+            <where>column_name = 'did' AND cbs_table_id = (SELECT id FROM public.cbs_tables WHERE table_name = 'bkcli')</where>
+        </update>
+        <update tableName="cbs_fields" schemaName="public">
+            <column name="api_field_path" value="individualSpecInfo.idPaper.idPaperDeliveryPlace"/>
+            <where>column_name = 'lid' AND cbs_table_id = (SELECT id FROM public.cbs_tables WHERE table_name = 'bkcli')</where>
+        </update>
+        <update tableName="cbs_fields" schemaName="public">
+            <column name="api_field_path" value="individualSpecInfo.idPaper.organisationWhichDeliver"/>
+            <where>column_name = 'oid' AND cbs_table_id = (SELECT id FROM public.cbs_tables WHERE table_name = 'bkcli')</where>
+        </update>
+        <update tableName="cbs_fields" schemaName="public">
+            <column name="api_field_path" value="individualSpecInfo.idPaper.nationalIdentifier"/>
+            <where>column_name = 'nidn' AND cbs_table_id = (SELECT id FROM public.cbs_tables WHERE table_name = 'bkcli')</where>
+        </update>
+
+        <!-- Individual specific info: family -->
+        <update tableName="cbs_fields" schemaName="public">
+            <column name="api_field_path" value="individualSpecInfo.family.numberOfChildren"/>
+            <where>column_name = 'nbenf' AND cbs_table_id = (SELECT id FROM public.cbs_tables WHERE table_name = 'bkcli')</where>
+        </update>
+
+        <!-- Situation -->
+        <update tableName="cbs_fields" schemaName="public">
+            <column name="api_field_path" value="situation.nationalityCode"/>
+            <where>column_name = 'nat' AND cbs_table_id = (SELECT id FROM public.cbs_tables WHERE table_name = 'bkcli')</where>
+        </update>
+        <update tableName="cbs_fields" schemaName="public">
+            <column name="api_field_path" value="situation.countryOfResidence"/>
+            <where>column_name = 'res' AND cbs_table_id = (SELECT id FROM public.cbs_tables WHERE table_name = 'bkcli')</where>
+        </update>
+
+        <!-- Corporate specific info -->
+        <update tableName="cbs_fields" schemaName="public">
+            <column name="api_field_path" value="corporateSpecInfo.tradeNameToDeclare"/>
+            <where>column_name = 'rso' AND cbs_table_id = (SELECT id FROM public.cbs_tables WHERE table_name = 'bkcli')</where>
+        </update>
+        <update tableName="cbs_fields" schemaName="public">
+            <column name="api_field_path" value="corporateSpecInfo.companyCreationDate"/>
+            <where>column_name = 'datc' AND cbs_table_id = (SELECT id FROM public.cbs_tables WHERE table_name = 'bkcli')</where>
+        </update>
+        <update tableName="cbs_fields" schemaName="public">
+            <column name="api_field_path" value="corporateSpecInfo.legalFormCode"/>
+            <where>column_name = 'fju' AND cbs_table_id = (SELECT id FROM public.cbs_tables WHERE table_name = 'bkcli')</where>
+        </update>
+        <update tableName="cbs_fields" schemaName="public">
+            <column name="api_field_path" value="corporateSpecInfo.legalInformation.tradeRegisterNumber"/>
+            <where>column_name = 'nrc' AND cbs_table_id = (SELECT id FROM public.cbs_tables WHERE table_name = 'bkcli')</where>
+        </update>
+        <update tableName="cbs_fields" schemaName="public">
+            <column name="api_field_path" value="corporateSpecInfo.legalInformation.licenseNumber"/>
+            <where>column_name = 'npa' AND cbs_table_id = (SELECT id FROM public.cbs_tables WHERE table_name = 'bkcli')</where>
+        </update>
+        <update tableName="cbs_fields" schemaName="public">
+            <column name="api_field_path" value="corporateSpecInfo.corporateId.nationalIdentifier"/>
+            <where>column_name = 'nicr' AND cbs_table_id = (SELECT id FROM public.cbs_tables WHERE table_name = 'bkcli')</where>
+        </update>
+        <update tableName="cbs_fields" schemaName="public">
+            <column name="api_field_path" value="corporateSpecInfo.corporateId.socialIdentityNumber"/>
+            <where>column_name = 'nis' AND cbs_table_id = (SELECT id FROM public.cbs_tables WHERE table_name = 'bkcli')</where>
+        </update>
+        <update tableName="cbs_fields" schemaName="public">
+            <column name="api_field_path" value="corporateSpecInfo.corporateId.taxIdentityNumber"/>
+            <where>column_name = 'nidf' AND cbs_table_id = (SELECT id FROM public.cbs_tables WHERE table_name = 'bkcli')</where>
+        </update>
+        <update tableName="cbs_fields" schemaName="public">
+            <column name="api_field_path" value="corporateSpecInfo.corporateId.abbreviation"/>
+            <where>column_name = 'sig' AND cbs_table_id = (SELECT id FROM public.cbs_tables WHERE table_name = 'bkcli')</where>
+        </update>
+        <update tableName="cbs_fields" schemaName="public">
+            <column name="api_field_path" value="corporateSpecInfo.secondTradeNameToDeclare"/>
+            <where>column_name = 'rso2' AND cbs_table_id = (SELECT id FROM public.cbs_tables WHERE table_name = 'bkcli')</where>
+        </update>
+
+        <!-- General attributes -->
+        <update tableName="cbs_fields" schemaName="public">
+            <column name="api_field_path" value="generalAttributes.branchCode"/>
+            <where>column_name = 'age' AND cbs_table_id = (SELECT id FROM public.cbs_tables WHERE table_name = 'bkcli')</where>
+        </update>
+        <update tableName="cbs_fields" schemaName="public">
+            <column name="api_field_path" value="generalAttributes.customerOfficer"/>
+            <where>column_name = 'ges' AND cbs_table_id = (SELECT id FROM public.cbs_tables WHERE table_name = 'bkcli')</where>
+        </update>
+        <update tableName="cbs_fields" schemaName="public">
+            <column name="api_field_path" value="generalAttributes.qualityCode"/>
+            <where>column_name = 'qua' AND cbs_table_id = (SELECT id FROM public.cbs_tables WHERE table_name = 'bkcli')</where>
+        </update>
+        <update tableName="cbs_fields" schemaName="public">
+            <column name="api_field_path" value="generalAttributes.segment"/>
+            <where>column_name = 'seg' AND cbs_table_id = (SELECT id FROM public.cbs_tables WHERE table_name = 'bkcli')</where>
+        </update>
+        <update tableName="cbs_fields" schemaName="public">
+            <column name="api_field_path" value="generalAttributes.internalCategoryCode"/>
+            <where>column_name = 'catl' AND cbs_table_id = (SELECT id FROM public.cbs_tables WHERE table_name = 'bkcli')</where>
+        </update>
+        <update tableName="cbs_fields" schemaName="public">
+            <column name="api_field_path" value="generalAttributes.taxableCustomer"/>
+            <where>column_name = 'tax' AND cbs_table_id = (SELECT id FROM public.cbs_tables WHERE table_name = 'bkcli')</where>
+        </update>
+
+        <!-- Reporting attributes -->
+        <update tableName="cbs_fields" schemaName="public">
+            <column name="api_field_path" value="reportingAttributes.activityFieldCode"/>
+            <where>column_name = 'sec' AND cbs_table_id = (SELECT id FROM public.cbs_tables WHERE table_name = 'bkcli')</where>
+        </update>
+        <update tableName="cbs_fields" schemaName="public">
+            <column name="api_field_path" value="reportingAttributes.relationshipWithTheBank"/>
+            <where>column_name = 'lienbq' AND cbs_table_id = (SELECT id FROM public.cbs_tables WHERE table_name = 'bkcli')</where>
+        </update>
+
+        <comment>Seed Amplitude API field path mappings for bkcli columns</comment>
+    </changeSet>
+
+</databaseChangeLog>

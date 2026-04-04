@@ -1,0 +1,356 @@
+<!DOCTYPE html >
+<html>
+<head>
+	<link rel="stylesheet" href="../resources/styleDocu.css" />
+  <link rel="stylesheet" href="../resources/font-awesome/css/font-awesome.min.css" />
+	<title>Documentation Xsd</title>
+	<meta charset="UTF-8" />
+</head>
+
+<body>
+  <div class="document">
+	<div class="header">
+		
+	</div>
+
+  <div class="tabs">
+    <div class="tabs-wrapper" onclick="window.open('../liste-ressources.html', '_self');">
+      <div class="tabs-left-content">
+        Liste des ressources
+      </div>
+    </div>
+    <div class="tabs-wrapper" onclick="window.open('../liste-services.html', '_self');">
+      <div class="tabs-left-content" >
+        Liste des services  
+      </div>
+    </div>
+    <div class="tabs-wrapper-selected" onclick="window.open('../liste-types.html', '_self');">
+      <div class="tabs-right-content">
+        Liste des types
+      </div>
+    </div>
+  </div>
+
+	
+
+	<div class="contenu">
+      <div class="breadcrumb"> 
+        <ul class="breadcrumb">
+           <li> <a href="../index.html"> Accueil </a></li>
+           <li> > </li>
+           <li> <a href="../liste-types.html"> Liste des types </a></li>
+           <li> > </li>
+           <li> dosprtCreateLoanFileExtraInformations </li>
+        </ul>                    
+      </div>                    
+      
+     
+      <div class="summary">
+			<div class="mock-list">
+				<b>Nom : </b>dosprtCreateLoanFileExtraInformations
+			</div>
+			<div class="mock-list">
+				<b> Description : </b>Informations complémentaires dossier de prêt.
+			</div>
+        
+        <div> <p>La totalit&eacute; des donn&eacute;es compl&eacute;mentaires param&eacute;tr&eacute;es comme obligatoires dans la table <strong>bkitra</strong> doivent &ecirc;tre renseign&eacute;es pour permettre la cr&eacute;ation du dossier.</p>
+</div>
+        <div class="mock-list"> Choix : Non</div>
+        
+      </div>
+                        
+      <div class="column-content">
+        <div class="detail-column">
+          <div class="tree"> 
+<ul>
+	<li>
+<i class="fa fa-caret-down fa-fw" onclick="expand_or_collapse(this)">
+</i>		dosprtCreateLoanFileExtraInformations		<ul style="display:block">
+			<li>
+<i class="fa fa-caret-down fa-fw" onclick="expand_or_collapse(this)">
+</i><i class="fa fa-key fa-fw">
+</i><span style="font-weight:bold"> [M]
+</span><span class="selectable" id="e0"> loanFileExtraInformation : dosprtCreateLoanFileExtraInformation
+</span>				<ul style="display:block">
+					<li>
+<i class="fa fa-fw">
+</i><i class="fa fa-key fa-fw">
+</i><span class="selectable" id="e1"> informationCode : charMax5
+</span>
+					</li>
+					<li>
+<i class="fa fa-caret-down fa-fw" onclick="expand_or_collapse(this)">
+</i><span class="selectable" id="e2"> informationAlphanumericDetail : extraInformationAlphanumericDetail
+</span>						<ul style="display:block">
+							<li>
+<i class="fa fa-fw">
+</i><i class="fa fa-key fa-fw">
+</i><span class="selectable" id="e3"> informationAlphanumeric : charMax40
+</span>
+							</li>
+							<li>
+<i class="fa fa-fw">
+</i><span class="selectable" id="e4"> informationAlphanumericTranslation : charMax40
+</span>
+							</li>
+
+						</ul>
+
+					</li>
+					<li>
+<i class="fa fa-fw">
+</i><span class="selectable" id="e5"> informationSuchAmountOrRate : decimal22_7
+</span>
+					</li>
+					<li>
+<i class="fa fa-fw">
+</i><span class="selectable" id="e6"> dateValue : date
+</span>
+					</li>
+
+				</ul>
+
+			</li>
+
+		</ul>
+
+	</li>
+
+</ul>
+          </div>
+          
+          <div class="detail">
+				<p align="left">
+					Légende :<br />
+				</p>
+            <ul>
+               <li align="left">
+                  <i class="fa fa-key fa-fw">
+                  </i>
+                  = Elément obligatoire en saisie.
+               </li>
+               <li align="left">
+                  <span style="font-weight:bold"> [M]
+                  </span>
+                  = Elément multiple (0 à n occurrences).
+               </li>
+               <li align="left">
+                  <span style="font-weight:bold"> [C]
+                  </span>
+                  = Elément composé d'un choix à effectuer. Un seul choix autorisé.
+               </li>
+            </ul>
+            <p align="left">
+               Remarque : Un même élément peut regrouper plusieurs caractéristiques
+            </p>          
+          </div>
+          
+        </div>
+<div class="detail-column" id="d0" style="display:none">
+	<div class="detail">
+			<div class="mock-list">
+				<b>Nom : </b>loanFileExtraInformation
+			</div>
+			<div class="mock-list">
+				<b>Description : </b>Information complémentaire.
+			</div>
+			<div class="mock-list">
+				<b>Limite du nombre d'occurences mini-maxi : </b>1 aucune
+			</div>
+
+	</div>
+	<div class="detail">
+			<div class="mock-list">
+				<b>Nom : </b> <a href="../types/dosprtCreateLoanFileExtraInformation.html">dosprtCreateLoanFileExtraInformation</a>
+			</div>
+			<div class="mock-list">
+				<b> Description : </b>Informations complémentaires.
+			</div>
+
+	</div>
+
+</div>
+<div class="detail-column" id="d1" style="display:none">
+	<div class="detail">
+			<div class="mock-list">
+				<b>Nom : </b>informationCode
+			</div>
+			<div class="mock-list">
+				<b>Description : </b>Identifiant information complémentaire dossier.
+			</div>
+			<div class="mock-list">
+				<b>Commentaire : </b><p>L&rsquo;identifiant de la donn&eacute;e compl&eacute;mentaire doit exister en nomenclature <strong>167</strong>.</p>
+
+<p>La donn&eacute;e doit &eacute;galement exister dans la table <strong>bkitra</strong>.</p>
+
+			</div>
+
+	</div>
+	<div class="detail">
+			<div class="mock-list">
+				<b>Nom : </b> <a href="../types/charMax5.html">charMax5</a>
+			</div>
+			<div class="mock-list">
+				<b> Description : </b>Chaîne composée d'au plus 5 caractères.
+			</div>
+			<div class="mock-list">
+				<b>Format : </b>string
+			</div>
+			<div class="mock-list">
+				<b>Longueur mini-maxi : </b>1 - 5
+			</div>
+
+	</div>
+
+</div>
+<div class="detail-column" id="d2" style="display:none">
+	<div class="detail">
+			<div class="mock-list">
+				<b>Nom : </b>informationAlphanumericDetail
+			</div>
+			<div class="mock-list">
+				<b>Description : </b>Valeur alpha-numérique
+			</div>
+
+	</div>
+	<div class="detail">
+			<div class="mock-list">
+				<b>Nom : </b> <a href="../types/extraInformationAlphanumericDetail.html">extraInformationAlphanumericDetail</a>
+			</div>
+			<div class="mock-list">
+				<b> Description : </b>Détail de la valeur alpha-numérique d'une donnée complémentaire.
+			</div>
+
+	</div>
+
+</div>
+<div class="detail-column" id="d3" style="display:none">
+	<div class="detail">
+			<div class="mock-list">
+				<b>Nom : </b>informationAlphanumeric
+			</div>
+			<div class="mock-list">
+				<b>Description : </b>Valeur alpha-numérique en langue de paramétrage
+			</div>
+
+	</div>
+	<div class="detail">
+			<div class="mock-list">
+				<b>Nom : </b> <a href="../types/charMax40.html">charMax40</a>
+			</div>
+			<div class="mock-list">
+				<b> Description : </b>Chaîne composée d'au plus 40 caractères.
+			</div>
+			<div class="mock-list">
+				<b>Format : </b>string
+			</div>
+			<div class="mock-list">
+				<b>Longueur mini-maxi : </b>1 - 40
+			</div>
+
+	</div>
+
+</div>
+<div class="detail-column" id="d4" style="display:none">
+	<div class="detail">
+			<div class="mock-list">
+				<b>Nom : </b>informationAlphanumericTranslation
+			</div>
+			<div class="mock-list">
+				<b>Description : </b>Valeur alpha-numérique en langue du client
+			</div>
+
+	</div>
+	<div class="detail">
+			<div class="mock-list">
+				<b>Nom : </b> <a href="../types/charMax40.html">charMax40</a>
+			</div>
+			<div class="mock-list">
+				<b> Description : </b>Chaîne composée d'au plus 40 caractères.
+			</div>
+			<div class="mock-list">
+				<b>Format : </b>string
+			</div>
+			<div class="mock-list">
+				<b>Longueur mini-maxi : </b>1 - 40
+			</div>
+
+	</div>
+
+</div>
+<div class="detail-column" id="d5" style="display:none">
+	<div class="detail">
+			<div class="mock-list">
+				<b>Nom : </b>informationSuchAmountOrRate
+			</div>
+			<div class="mock-list">
+				<b>Description : </b>Valeur information de type numérique.
+			</div>
+			<div class="mock-list">
+				<b>Commentaire : </b><p>Si cette donn&eacute;e est renseign&eacute;e, alors&nbsp;:</p>
+
+<ul>
+	<li>Le type de donn&eacute;e, indiqu&eacute; dans le <strong>Libell&eacute;&nbsp;5</strong> de la nomenclature <strong>167</strong>, doit &ecirc;tre <strong>M</strong> ou <strong>T</strong>.</li>
+	<li>Son nombre de d&eacute;cimales doit &ecirc;tre inf&eacute;rieur ou &eacute;gal au nombre indiqu&eacute; dans le <strong>Montant 4</strong> de la nomenclature <strong>167</strong>.</li>
+</ul>
+
+			</div>
+
+	</div>
+	<div class="detail">
+			<div class="mock-list">
+				<b>Nom : </b> <a href="../types/decimal22_7.html">decimal22_7</a>
+			</div>
+			<div class="mock-list">
+				<b> Description : </b>Type décimal à 22 chiffres dont 7 décimales.
+			</div>
+			<div class="mock-list">
+				<b>Format : </b>decimal
+			</div>
+			<div class="mock-list">
+				<b>Nombre total de chiffres : </b>22
+			</div>
+
+	</div>
+
+</div>
+<div class="detail-column" id="d6" style="display:none">
+	<div class="detail">
+			<div class="mock-list">
+				<b>Nom : </b>dateValue
+			</div>
+			<div class="mock-list">
+				<b>Description : </b>Valeur information de type date.
+			</div>
+			<div class="mock-list">
+				<b>Commentaire : </b><p>Si cette donn&eacute;e est renseign&eacute;e, alors&nbsp;:</p>
+
+<ul>
+	<li>Le type de donn&eacute;e, indiqu&eacute; dans le <strong>Libell&eacute;&nbsp;5</strong> de la nomenclature <strong>167</strong>, doit &ecirc;tre <strong>D</strong>.</li>
+	<li>Si les <strong>Montant 7</strong> et <strong>Montant 8</strong> de la nomenclature <strong>167 </strong>sont tous les deux valoris&eacute;s, alors la date doit&nbsp;:
+	<ul>
+		<li>Etre ant&eacute;rieure &agrave; la date comptable &agrave; laquelle est ajout&eacute;e la valeur du <strong>Montant 7 </strong>en nombre d&rsquo;ann&eacute;es.</li>
+		<li>Etre post&eacute;rieure &agrave; la date comptable &agrave; laquelle est retir&eacute;e la valeur du <strong>Montant 8</strong> en nombre d&rsquo;ann&eacute;es.</li>
+	</ul>
+	</li>
+</ul>
+
+			</div>
+
+	</div>
+	<div class="detail">
+			<div class="mock-list">
+				<b>Nom : </b> <a href="../types/date.html">date</a>
+			</div>
+
+	</div>
+
+</div>
+      </div> 
+  </div>
+
+  
+  <script src="../resources/jquery.js"></script>
+  <script src="../resources/doc.js"></script>
+</body>
+</html>

@@ -1,0 +1,485 @@
+<!DOCTYPE html >
+<html>
+<head>
+	<link rel="stylesheet" href="../resources/styleDocu.css" />
+  <link rel="stylesheet" href="../resources/font-awesome/css/font-awesome.min.css" />
+	<title>Documentation Xsd</title>
+	<meta charset="UTF-8" />
+</head>
+
+<body>
+  <div class="document">
+	<div class="header">
+		
+	</div>
+
+  <div class="tabs">
+    <div class="tabs-wrapper" onclick="window.open('../liste-ressources.html', '_self');">
+      <div class="tabs-left-content">
+        Liste des ressources
+      </div>
+    </div>
+    <div class="tabs-wrapper" onclick="window.open('../liste-services.html', '_self');">
+      <div class="tabs-left-content" >
+        Liste des services  
+      </div>
+    </div>
+    <div class="tabs-wrapper-selected" onclick="window.open('../liste-types.html', '_self');">
+      <div class="tabs-right-content">
+        Liste des types
+      </div>
+    </div>
+  </div>
+
+	
+
+	<div class="contenu">
+      <div class="breadcrumb"> 
+        <ul class="breadcrumb">
+           <li> <a href="../index.html"> Accueil </a></li>
+           <li> > </li>
+           <li> <a href="../liste-types.html"> Liste des types </a></li>
+           <li> > </li>
+           <li> createChequeBookRequestResponse </li>
+        </ul>                    
+      </div>                    
+      
+     
+      <div class="summary">
+			<div class="mock-list">
+				<b>Nom : </b>createChequeBookRequestResponse
+			</div>
+			<div class="mock-list">
+				<b> Description : </b>Réponse de la création d'une commande de chéquier.
+			</div>
+        
+        <div> </div>
+        <div class="mock-list"> Choix : Non</div>
+        
+      </div>
+                        
+      <div class="column-content">
+        <div class="detail-column">
+          <div class="tree"> 
+<ul>
+	<li>
+<i class="fa fa-caret-down fa-fw" onclick="expand_or_collapse(this)">
+</i>		createChequeBookRequestResponse		<ul style="display:block">
+			<li>
+<i class="fa fa-fw">
+</i><span class="selectable" id="e0"> requestNumber : eventNumber
+</span>
+			</li>
+			<li>
+<i class="fa fa-fw">
+</i><span class="selectable" id="e1"> requestDate : date
+</span>
+			</li>
+			<li>
+<i class="fa fa-fw">
+</i><span class="selectable" id="e2"> valueDate : date
+</span>
+			</li>
+			<li>
+<i class="fa fa-fw">
+</i><span class="selectable" id="e3"> requestSituation : chequeBookRequestSituation
+</span>
+			</li>
+			<li>
+<i class="fa fa-fw">
+</i><span class="selectable" id="e4"> requestStatus : chequeBookRequestStatus
+</span>
+			</li>
+			<li>
+<i class="fa fa-fw">
+</i><span class="selectable" id="e5"> charges : decimal19_4
+</span>
+			</li>
+			<li>
+<i class="fa fa-caret-down fa-fw" onclick="expand_or_collapse(this)">
+</i><span style="font-weight:bold"> [M]
+</span><span class="selectable" id="e6"> disapprovals : disapproval
+</span>				<ul style="display:block">
+					<li>
+<i class="fa fa-fw">
+</i><span class="selectable" id="e7"> code : disapprovalCode
+</span>
+					</li>
+					<li>
+<i class="fa fa-fw">
+</i><span class="selectable" id="e8"> designation : charMax30
+</span>
+					</li>
+
+				</ul>
+
+			</li>
+
+		</ul>
+
+	</li>
+
+</ul>
+          </div>
+          
+          <div class="detail">
+				<p align="left">
+					Légende :<br />
+				</p>
+            <ul>
+               <li align="left">
+                  <i class="fa fa-key fa-fw">
+                  </i>
+                  = Elément obligatoire en saisie.
+               </li>
+               <li align="left">
+                  <span style="font-weight:bold"> [M]
+                  </span>
+                  = Elément multiple (0 à n occurrences).
+               </li>
+               <li align="left">
+                  <span style="font-weight:bold"> [C]
+                  </span>
+                  = Elément composé d'un choix à effectuer. Un seul choix autorisé.
+               </li>
+            </ul>
+            <p align="left">
+               Remarque : Un même élément peut regrouper plusieurs caractéristiques
+            </p>          
+          </div>
+          
+        </div>
+<div class="detail-column" id="d0" style="display:none">
+	<div class="detail">
+			<div class="mock-list">
+				<b>Nom : </b>requestNumber
+			</div>
+			<div class="mock-list">
+				<b>Description : </b>Numéro de commande de chéquier.
+			</div>
+			<div class="mock-list">
+				<b>Commentaire : </b><p>Le num&eacute;ro de commande de ch&eacute;quier est valoris&eacute; uniquement si la commande a abouti.</p>
+
+			</div>
+
+	</div>
+	<div class="detail">
+			<div class="mock-list">
+				<b>Nom : </b> <a href="../types/eventNumber.html">eventNumber</a>
+			</div>
+			<div class="mock-list">
+				<b> Description : </b>Numéro d'événement.
+			</div>
+			<div class="mock-list">
+				<b>Format : </b>string
+			</div>
+			<div class="mock-list">
+				<b>Longueur fixe : </b>6
+			</div>
+
+	</div>
+
+</div>
+<div class="detail-column" id="d1" style="display:none">
+	<div class="detail">
+			<div class="mock-list">
+				<b>Nom : </b>requestDate
+			</div>
+			<div class="mock-list">
+				<b>Description : </b>Date de commande de chéquier.
+			</div>
+			<div class="mock-list">
+				<b>Commentaire : </b><p>La date de la commande de ch&eacute;quier est valoris&eacute;e uniquement si la commande a abouti.</p>
+
+			</div>
+
+	</div>
+	<div class="detail">
+			<div class="mock-list">
+				<b>Nom : </b> <a href="../types/date.html">date</a>
+			</div>
+
+	</div>
+
+</div>
+<div class="detail-column" id="d2" style="display:none">
+	<div class="detail">
+			<div class="mock-list">
+				<b>Nom : </b>valueDate
+			</div>
+			<div class="mock-list">
+				<b>Description : </b>Date de valeur de la commande de chéquier.
+			</div>
+			<div class="mock-list">
+				<b>Commentaire : </b><p>La date de valeur de la commande de ch&eacute;quier est &eacute;gale&nbsp;&agrave; la date de commande du ch&eacute;quier.</p>
+
+			</div>
+
+	</div>
+	<div class="detail">
+			<div class="mock-list">
+				<b>Nom : </b> <a href="../types/date.html">date</a>
+			</div>
+
+	</div>
+
+</div>
+<div class="detail-column" id="d3" style="display:none">
+	<div class="detail">
+			<div class="mock-list">
+				<b>Nom : </b>requestSituation
+			</div>
+			<div class="mock-list">
+				<b>Description : </b>Situation de la commande de chéquier.
+			</div>
+
+	</div>
+	<div class="detail">
+			<div class="mock-list">
+				<b>Nom : </b> <a href="../types/chequeBookRequestSituation.html">chequeBookRequestSituation</a>
+			</div>
+			<div class="mock-list">
+				<b> Description : </b>Situation de la demande de chéquier.
+			</div>
+			<div class="mock-list">
+				<b>Format : </b>string
+			</div>
+			<div class="mock-list">
+				<b>Valeurs possibles : </b>					<table class="table_enum" class="table_enum" class="table_enum" class="table_enum" class="table_enum" class="table_enum" class="table_enum" class="table_enum">
+						<tr>
+						<td> X
+						</td>						<td class="td_right"> Erreur
+						</td>
+						</tr>
+						<tr>
+						<td> P
+						</td>						<td class="td_right"> personnalisée
+						</td>
+						</tr>
+						<tr>
+						<td> A
+						</td>						<td class="td_right"> arrivé à l'agence de délivrance
+						</td>
+						</tr>
+						<tr>
+						<td> R
+						</td>						<td class="td_right"> chéquier remis au client
+						</td>
+						</tr>
+						<tr>
+						<td> C
+						</td>						<td class="td_right"> commandée
+						</td>
+						</tr>
+						<tr>
+						<td> S
+						</td>						<td class="td_right"> chéquier détruit
+						</td>
+						</tr>
+						<tr>
+						<td> D
+						</td>						<td class="td_right"> demandée
+						</td>
+						</tr>
+						<tr>
+						<td> E
+						</td>						<td class="td_right"> envoyé à l'agence de délivrance 
+						</td>
+						</tr>
+
+					</table>
+
+			</div>
+
+	</div>
+
+</div>
+<div class="detail-column" id="d4" style="display:none">
+	<div class="detail">
+			<div class="mock-list">
+				<b>Nom : </b>requestStatus
+			</div>
+			<div class="mock-list">
+				<b>Description : </b>Etat de la commande de chéquier.
+			</div>
+
+	</div>
+	<div class="detail">
+			<div class="mock-list">
+				<b>Nom : </b> <a href="../types/chequeBookRequestStatus.html">chequeBookRequestStatus</a>
+			</div>
+			<div class="mock-list">
+				<b> Description : </b>Etat de la demande de chéquier.
+			</div>
+			<div class="mock-list">
+				<b>Format : </b>string
+			</div>
+			<div class="mock-list">
+				<b>Valeurs possibles : </b>					<table class="table_enum" class="table_enum" class="table_enum" class="table_enum" class="table_enum" class="table_enum" class="table_enum">
+						<tr>
+						<td> AT
+						</td>						<td class="td_right"> en attente
+						</td>
+						</tr>
+						<tr>
+						<td> VF
+						</td>						<td class="td_right"> validée forcée
+						</td>
+						</tr>
+						<tr>
+						<td> AB
+						</td>						<td class="td_right"> abandonnée
+						</td>
+						</tr>
+						<tr>
+						<td> FO
+						</td>						<td class="td_right"> forcée
+						</td>
+						</tr>
+						<tr>
+						<td> IF
+						</td>						<td class="td_right"> ignorée forcée
+						</td>
+						</tr>
+						<tr>
+						<td> IG
+						</td>						<td class="td_right"> rejetée
+						</td>
+						</tr>
+						<tr>
+						<td> VA
+						</td>						<td class="td_right"> validée
+						</td>
+						</tr>
+
+					</table>
+
+			</div>
+
+	</div>
+
+</div>
+<div class="detail-column" id="d5" style="display:none">
+	<div class="detail">
+			<div class="mock-list">
+				<b>Nom : </b>charges
+			</div>
+			<div class="mock-list">
+				<b>Description : </b>Montant des frais de la commande de chéquier.
+			</div>
+			<div class="mock-list">
+				<b>Commentaire : </b><p>Ce montant est nul s&#39;il n&#39;y a pas de frais.</p>
+
+			</div>
+
+	</div>
+	<div class="detail">
+			<div class="mock-list">
+				<b>Nom : </b> <a href="../types/decimal19_4.html">decimal19_4</a>
+			</div>
+			<div class="mock-list">
+				<b> Description : </b>Type décimal à 19 chiffres dont 4 décimales.
+			</div>
+			<div class="mock-list">
+				<b>Format : </b>decimal
+			</div>
+			<div class="mock-list">
+				<b>Nombre total de chiffres : </b>19
+			</div>
+
+	</div>
+
+</div>
+<div class="detail-column" id="d6" style="display:none">
+	<div class="detail">
+			<div class="mock-list">
+				<b>Nom : </b>disapprovals
+			</div>
+			<div class="mock-list">
+				<b>Description : </b>Désaccords de la commande de chéquier.
+			</div>
+			<div class="mock-list">
+				<b>Limite du nombre d'occurences mini-maxi : </b>0 aucune
+			</div>
+			<div class="mock-list">
+				<b>Commentaire : </b><p>Il peut y avoir plusieurs d&eacute;saccords pour une commande. Pour chaque d&eacute;saccord, il y aura une balise &quot;disapprovals&quot;.</p>
+
+			</div>
+
+	</div>
+	<div class="detail">
+			<div class="mock-list">
+				<b>Nom : </b> <a href="../types/disapproval.html">disapproval</a>
+			</div>
+			<div class="mock-list">
+				<b> Description : </b>Désaccord.
+			</div>
+
+	</div>
+
+</div>
+<div class="detail-column" id="d7" style="display:none">
+	<div class="detail">
+			<div class="mock-list">
+				<b>Nom : </b>code
+			</div>
+			<div class="mock-list">
+				<b>Description : </b>Code du désaccord.
+			</div>
+
+	</div>
+	<div class="detail">
+			<div class="mock-list">
+				<b>Nom : </b> <a href="../types/disapprovalCode.html">disapprovalCode</a>
+			</div>
+			<div class="mock-list">
+				<b> Description : </b>Code du désaccord.
+			</div>
+			<div class="mock-list">
+				<b>Format : </b>string
+			</div>
+			<div class="mock-list">
+				<b>Longueur mini-maxi : </b>1 - 4
+			</div>
+
+	</div>
+
+</div>
+<div class="detail-column" id="d8" style="display:none">
+	<div class="detail">
+			<div class="mock-list">
+				<b>Nom : </b>designation
+			</div>
+			<div class="mock-list">
+				<b>Description : </b>Désignation du désaccord.
+			</div>
+			<div class="mock-list">
+				<b>Commentaire : </b>bknom(058).lib
+			</div>
+
+	</div>
+	<div class="detail">
+			<div class="mock-list">
+				<b>Nom : </b> <a href="../types/charMax30.html">charMax30</a>
+			</div>
+			<div class="mock-list">
+				<b> Description : </b>Chaîne composée d'au plus 30 caractères.
+			</div>
+			<div class="mock-list">
+				<b>Format : </b>string
+			</div>
+			<div class="mock-list">
+				<b>Longueur mini-maxi : </b>1 - 30
+			</div>
+
+	</div>
+
+</div>
+      </div> 
+  </div>
+
+  
+  <script src="../resources/jquery.js"></script>
+  <script src="../resources/doc.js"></script>
+</body>
+</html>

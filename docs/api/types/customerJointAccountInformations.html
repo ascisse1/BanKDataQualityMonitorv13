@@ -1,0 +1,484 @@
+<!DOCTYPE html >
+<html>
+<head>
+	<link rel="stylesheet" href="../resources/styleDocu.css" />
+  <link rel="stylesheet" href="../resources/font-awesome/css/font-awesome.min.css" />
+	<title>Documentation Xsd</title>
+	<meta charset="UTF-8" />
+</head>
+
+<body>
+  <div class="document">
+	<div class="header">
+		
+	</div>
+
+  <div class="tabs">
+    <div class="tabs-wrapper" onclick="window.open('../liste-ressources.html', '_self');">
+      <div class="tabs-left-content">
+        Liste des ressources
+      </div>
+    </div>
+    <div class="tabs-wrapper" onclick="window.open('../liste-services.html', '_self');">
+      <div class="tabs-left-content" >
+        Liste des services  
+      </div>
+    </div>
+    <div class="tabs-wrapper-selected" onclick="window.open('../liste-types.html', '_self');">
+      <div class="tabs-right-content">
+        Liste des types
+      </div>
+    </div>
+  </div>
+
+	
+
+	<div class="contenu">
+      <div class="breadcrumb"> 
+        <ul class="breadcrumb">
+           <li> <a href="../index.html"> Accueil </a></li>
+           <li> > </li>
+           <li> <a href="../liste-types.html"> Liste des types </a></li>
+           <li> > </li>
+           <li> customerJointAccountInformations </li>
+        </ul>                    
+      </div>                    
+      
+     
+      <div class="summary">
+			<div class="mock-list">
+				<b>Nom : </b>customerJointAccountInformations
+			</div>
+			<div class="mock-list">
+				<b> Description : </b>Informations du compte joint d¿un client.
+			</div>
+        
+        <div> </div>
+        <div class="mock-list"> Choix : Non</div>
+        
+      </div>
+                        
+      <div class="column-content">
+        <div class="detail-column">
+          <div class="tree"> 
+<ul>
+	<li>
+<i class="fa fa-caret-down fa-fw" onclick="expand_or_collapse(this)">
+</i>		customerJointAccountInformations		<ul style="display:block">
+			<li>
+<i class="fa fa-caret-down fa-fw" onclick="expand_or_collapse(this)">
+</i><i class="fa fa-key fa-fw">
+</i><span style="font-weight:bold"> [C]
+</span><span class="selectable" id="e0"> coHolderInformations : customerCoHolderInformations
+</span>				<ul style="display:block">
+					<li>
+<i class="fa fa-caret-down fa-fw" onclick="expand_or_collapse(this)">
+</i><span class="selectable" id="e1"> customerOrThirdParty : customerOrThirdPartyCoHolder
+</span>						<ul style="display:block">
+							<li>
+<i class="fa fa-fw">
+</i><i class="fa fa-key fa-fw">
+</i><span class="selectable" id="e2"> coHolderType : customerOrThirdPartyType
+</span>
+							</li>
+							<li>
+<i class="fa fa-fw">
+</i><i class="fa fa-key fa-fw">
+</i><span class="selectable" id="e3"> jointCustomerCode : customerCode
+</span>
+							</li>
+
+						</ul>
+
+					</li>
+					<li>
+<i class="fa fa-caret-down fa-fw" onclick="expand_or_collapse(this)">
+</i><span class="selectable" id="e4"> otherCoHolderType : otherCoHolderType
+</span>						<ul style="display:block">
+							<li>
+<i class="fa fa-fw">
+</i><span class="selectable" id="e5"> name : charMax36
+</span>
+							</li>
+							<li>
+<i class="fa fa-fw">
+</i><span class="selectable" id="e6"> firstName : charMax30
+</span>
+							</li>
+							<li>
+<i class="fa fa-fw">
+</i><span class="selectable" id="e7"> titleCode : char2
+</span>
+							</li>
+
+						</ul>
+
+					</li>
+
+				</ul>
+
+			</li>
+			<li>
+<i class="fa fa-fw">
+</i><i class="fa fa-key fa-fw">
+</i><span class="selectable" id="e8"> linkTyp : linkTyp
+</span>
+			</li>
+			<li>
+<i class="fa fa-fw">
+</i><i class="fa fa-key fa-fw">
+</i><span class="selectable" id="e9"> toBePrintedInTheAddress : boolean
+</span>
+			</li>
+
+		</ul>
+
+	</li>
+
+</ul>
+          </div>
+          
+          <div class="detail">
+				<p align="left">
+					Légende :<br />
+				</p>
+            <ul>
+               <li align="left">
+                  <i class="fa fa-key fa-fw">
+                  </i>
+                  = Elément obligatoire en saisie.
+               </li>
+               <li align="left">
+                  <span style="font-weight:bold"> [M]
+                  </span>
+                  = Elément multiple (0 à n occurrences).
+               </li>
+               <li align="left">
+                  <span style="font-weight:bold"> [C]
+                  </span>
+                  = Elément composé d'un choix à effectuer. Un seul choix autorisé.
+               </li>
+            </ul>
+            <p align="left">
+               Remarque : Un même élément peut regrouper plusieurs caractéristiques
+            </p>          
+          </div>
+          
+        </div>
+<div class="detail-column" id="d0" style="display:none">
+	<div class="detail">
+			<div class="mock-list">
+				<b>Nom : </b>coHolderInformations
+			</div>
+			<div class="mock-list">
+				<b>Description : </b>Informations du co-titulaire.
+			</div>
+
+	</div>
+	<div class="detail">
+			<div class="mock-list">
+				<b>Nom : </b> <a href="../types/customerCoHolderInformations.html">customerCoHolderInformations</a>
+			</div>
+			<div class="mock-list">
+				<b> Description : </b>Informations du co-titulaire.
+			</div>
+
+	</div>
+
+</div>
+<div class="detail-column" id="d1" style="display:none">
+	<div class="detail">
+			<div class="mock-list">
+				<b>Nom : </b>customerOrThirdParty
+			</div>
+			<div class="mock-list">
+				<b>Description : </b>Co-titulaire : client ou tiers.
+			</div>
+
+	</div>
+	<div class="detail">
+			<div class="mock-list">
+				<b>Nom : </b> <a href="../types/customerOrThirdPartyCoHolder.html">customerOrThirdPartyCoHolder</a>
+			</div>
+			<div class="mock-list">
+				<b> Description : </b>Co-titulaire client ou tiers.
+			</div>
+
+	</div>
+
+</div>
+<div class="detail-column" id="d2" style="display:none">
+	<div class="detail">
+			<div class="mock-list">
+				<b>Nom : </b>coHolderType
+			</div>
+			<div class="mock-list">
+				<b>Description : </b>Type de co-titulaire.
+			</div>
+
+	</div>
+	<div class="detail">
+			<div class="mock-list">
+				<b>Nom : </b> <a href="../types/customerOrThirdPartyType.html">customerOrThirdPartyType</a>
+			</div>
+			<div class="mock-list">
+				<b> Description : </b>Population ciblée.
+			</div>
+			<div class="mock-list">
+				<b>Format : </b>string
+			</div>
+			<div class="mock-list">
+				<b>Valeurs possibles : </b>					<table class="table_enum" class="table_enum">
+						<tr>
+						<td> C
+						</td>						<td class="td_right"> Client
+						</td>
+						</tr>
+						<tr>
+						<td> T
+						</td>						<td class="td_right"> Tiers
+						</td>
+						</tr>
+
+					</table>
+
+			</div>
+
+	</div>
+
+</div>
+<div class="detail-column" id="d3" style="display:none">
+	<div class="detail">
+			<div class="mock-list">
+				<b>Nom : </b>jointCustomerCode
+			</div>
+			<div class="mock-list">
+				<b>Description : </b>Code du client joint.
+			</div>
+			<div class="mock-list">
+				<b>Commentaire : </b><p>Le code du client joint doit &ecirc;tre diff&eacute;rent du code du client principal.</p>
+
+<p>Si le type de co-titulaire d&eacute;signe un client (<strong>C</strong>), alors le code du client joint doit identifier un enregistrement dans la table des clients.</p>
+
+<p>Sinon, si le type de co-titulaire d&eacute;signe un tiers (<strong>T</strong>), alors le code du client joint doit correspondre &agrave; un enregistrement dans la table des tiers.</p>
+
+<p>Si le param&egrave;tre <strong>COOP</strong> n&rsquo;est pas pr&eacute;sent en nomenclature <strong>098</strong>, le client ou le tiers ne doit pas &ecirc;tre un collectif, c&#39;est-&agrave;-dire que le <strong>Montant&nbsp;2 </strong>de la nomenclature <strong>036</strong> lue sur son code intitul&eacute; ne doit pas &ecirc;tre valoris&eacute; &agrave; <strong>2</strong>.</p>
+
+<p>Si le param&egrave;tre <strong>COOP</strong> n&rsquo;est pas pr&eacute;sent en nomenclature <strong>098</strong>, et si le <strong>Montant&nbsp;2</strong> pour le param&egrave;tre <strong>CTRLDIVCLI</strong> en nomenclature <strong>098</strong> est diff&eacute;rent de <strong>1</strong>, alors le co-titulaire doit &ecirc;tre un particulier.</p>
+
+<p>Si le param&egrave;tre <strong>COOP</strong> est pr&eacute;sent en nomenclature <strong>098</strong>, le nom du co-titulaire est format&eacute; avec la concat&eacute;nation du code client et du nom, s&eacute;par&eacute;s par un espace.</p>
+
+<p>Un couple &quot;type de co-titulaire/code du client joint&quot; ne doit figurer qu&rsquo;une seule fois dans le tableau des comptes joints &agrave; lier au client.</p>
+
+			</div>
+
+	</div>
+	<div class="detail">
+			<div class="mock-list">
+				<b>Nom : </b> <a href="../types/customerCode.html">customerCode</a>
+			</div>
+			<div class="mock-list">
+				<b> Description : </b>Code client.
+			</div>
+			<div class="mock-list">
+				<b>Format : </b>string
+			</div>
+			<div class="mock-list">
+				<b>Longueur mini-maxi : </b>1 - 15
+			</div>
+
+	</div>
+
+</div>
+<div class="detail-column" id="d4" style="display:none">
+	<div class="detail">
+			<div class="mock-list">
+				<b>Nom : </b>otherCoHolderType
+			</div>
+			<div class="mock-list">
+				<b>Description : </b>Autre type de co-titulaire.
+			</div>
+
+	</div>
+	<div class="detail">
+			<div class="mock-list">
+				<b>Nom : </b> <a href="../types/otherCoHolderType.html">otherCoHolderType</a>
+			</div>
+			<div class="mock-list">
+				<b> Description : </b>Autre type de co-titulaire.
+			</div>
+
+	</div>
+
+</div>
+<div class="detail-column" id="d5" style="display:none">
+	<div class="detail">
+			<div class="mock-list">
+				<b>Nom : </b>name
+			</div>
+			<div class="mock-list">
+				<b>Description : </b>Nom.
+			</div>
+			<div class="mock-list">
+				<b>Commentaire : </b><p>Valeur par d&eacute;faut&nbsp;: <strong>nco</strong></p>
+
+			</div>
+
+	</div>
+	<div class="detail">
+			<div class="mock-list">
+				<b>Nom : </b> <a href="../types/charMax36.html">charMax36</a>
+			</div>
+			<div class="mock-list">
+				<b> Description : </b>Chaîne composée d'au plus 36 caractères.
+			</div>
+			<div class="mock-list">
+				<b>Format : </b>string
+			</div>
+			<div class="mock-list">
+				<b>Longueur mini-maxi : </b>1 - 36
+			</div>
+
+	</div>
+
+</div>
+<div class="detail-column" id="d6" style="display:none">
+	<div class="detail">
+			<div class="mock-list">
+				<b>Nom : </b>firstName
+			</div>
+			<div class="mock-list">
+				<b>Description : </b>Prénom.
+			</div>
+			<div class="mock-list">
+				<b>Commentaire : </b><p>Valeur par d&eacute;faut&nbsp;: <strong>pco</strong></p>
+
+			</div>
+
+	</div>
+	<div class="detail">
+			<div class="mock-list">
+				<b>Nom : </b> <a href="../types/charMax30.html">charMax30</a>
+			</div>
+			<div class="mock-list">
+				<b> Description : </b>Chaîne composée d'au plus 30 caractères.
+			</div>
+			<div class="mock-list">
+				<b>Format : </b>string
+			</div>
+			<div class="mock-list">
+				<b>Longueur mini-maxi : </b>1 - 30
+			</div>
+
+	</div>
+
+</div>
+<div class="detail-column" id="d7" style="display:none">
+	<div class="detail">
+			<div class="mock-list">
+				<b>Nom : </b>titleCode
+			</div>
+			<div class="mock-list">
+				<b>Description : </b>Code intitulé.
+			</div>
+			<div class="mock-list">
+				<b>Commentaire : </b><p>Si le code intitul&eacute; est renseign&eacute;, alors son libell&eacute; est r&eacute;cup&eacute;r&eacute; depuis la nomenclature <strong>036</strong> le d&eacute;finissant.</p>
+
+<p>Valeur par d&eacute;faut&nbsp;pour le libell&eacute;&nbsp;: <strong>lco</strong></p>
+
+			</div>
+
+	</div>
+	<div class="detail">
+			<div class="mock-list">
+				<b>Nom : </b> <a href="../types/char2.html">char2</a>
+			</div>
+			<div class="mock-list">
+				<b> Description : </b>Type avec un nombre de caractères égal à 2.
+			</div>
+			<div class="mock-list">
+				<b>Format : </b>string
+			</div>
+			<div class="mock-list">
+				<b>Longueur fixe : </b>2
+			</div>
+
+	</div>
+
+</div>
+<div class="detail-column" id="d8" style="display:none">
+	<div class="detail">
+			<div class="mock-list">
+				<b>Nom : </b>linkTyp
+			</div>
+			<div class="mock-list">
+				<b>Description : </b>Type de lien.
+			</div>
+
+	</div>
+	<div class="detail">
+			<div class="mock-list">
+				<b>Nom : </b> <a href="../types/linkTyp.html">linkTyp</a>
+			</div>
+			<div class="mock-list">
+				<b> Description : </b>Type de lien.
+			</div>
+			<div class="mock-list">
+				<b>Format : </b>string
+			</div>
+			<div class="mock-list">
+				<b>Valeurs possibles : </b>					<table class="table_enum" class="table_enum" class="table_enum" class="table_enum">
+						<tr>
+						<td> OU
+						</td>						<td class="td_right"> Ou
+						</td>
+						</tr>
+						<tr>
+						<td> MI
+						</td>						<td class="td_right"> Mineur
+						</td>
+						</tr>
+						<tr>
+						<td> SP
+						</td>						<td class="td_right"> Seul prop.
+						</td>
+						</tr>
+						<tr>
+						<td> ET
+						</td>						<td class="td_right"> Et
+						</td>
+						</tr>
+
+					</table>
+
+			</div>
+
+	</div>
+
+</div>
+<div class="detail-column" id="d9" style="display:none">
+	<div class="detail">
+			<div class="mock-list">
+				<b>Nom : </b>toBePrintedInTheAddress
+			</div>
+			<div class="mock-list">
+				<b>Description : </b>A éditer dans l'adresse ?
+			</div>
+
+	</div>
+	<div class="detail">
+			<div class="mock-list">
+				<b>Nom : </b> <a href="../types/boolean.html">boolean</a>
+			</div>
+
+	</div>
+
+</div>
+      </div> 
+  </div>
+
+  
+  <script src="../resources/jquery.js"></script>
+  <script src="../resources/doc.js"></script>
+</body>
+</html>

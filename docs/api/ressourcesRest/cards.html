@@ -1,0 +1,1628 @@
+<!DOCTYPE html>
+<html>
+<head>
+	<link rel="stylesheet" href="../resources/styleDocu.css" />
+    <link rel="stylesheet" href="../resources/font-awesome/css/font-awesome.min.css" />
+	<title>Documentation Xsd</title>
+	<meta charset="UTF-8" />
+</head>
+
+<body>
+  <div class="document">
+	<div class="header">		
+	</div>
+
+    <div class="tabs">
+        <div class="tabs-wrapper-selected" onclick="window.open('../liste-ressources.html', '_self');">
+            <div class="tabs-left-content" >Liste des ressources</div>
+        </div>
+        <div class="tabs-wrapper" onclick="window.open('../liste-services.html', '_self');">
+            <div class="tabs-left-content">Liste des services</div>
+        </div>
+        <div class="tabs-wrapper" onclick="window.open('../liste-types.html', '_self');">
+            <div class="tabs-right-content">Liste des types</div>
+        </div>
+    </div>
+
+	<div class="contenu">
+      <div class="breadcrumb"> 
+        <ul class="breadcrumb">
+           <li> <a href="../index.html"> Accueil </a></li>
+           <li> > </li>
+           <li> <a href="../liste-ressources.html"> Liste des ressources </a></li>
+           <li> > </li>
+           <li> cards </li>
+        </ul>                    
+      </div>                    
+      
+      <div class="summary">
+        <div class="mock-list"> Nom ressource REST : cards </div>
+        <div class="mock-list"> Programme Amplitude : mowrcards </div>
+        <div class="mock-list"> Email : support@soprabanking.com </div>        
+        <br/>
+            <div class="mock-list"> Cards</div>
+      </div>
+      
+      <div class="column-content" style="width:93%">
+        <div class="detail-column" style="width: 35%">
+          <div class="tree"> 
+<ul style="padding:0">
+	<li>
+<i class="fa fa-caret-down fa-fw" onclick="expand_or_collapse(this)">
+</i>		cards		<ul>
+			<li>
+<i class="fa fa-caret-down fa-fw" onclick="expand_or_collapse(this)">
+</i>				v1				<ul>
+					<li>
+<i class="fa fa-fw">
+</i><span class="selectable" id="e0"> GET
+</span>
+					</li>
+					<li>
+<i class="fa fa-fw">
+</i><span class="selectable" id="e1"> GETLIST
+</span>
+					</li>
+					<li>
+<i class="fa fa-fw">
+</i><span class="selectable" id="e2"> PUT
+</span>
+					</li>
+					<li>
+<i class="fa fa-fw">
+</i><span class="selectable" id="e3"> POST
+</span>
+					</li>
+
+				</ul>
+				<ul>
+					<li>
+<i class="fa fa-caret-down fa-fw" onclick="expand_or_collapse(this)">
+</i><span class="selectable" id="e4"> affectations
+</span>						<ul>
+							<li>
+<i class="fa fa-fw">
+</i><span class="selectable" id="e5"> POST
+</span>
+							</li>
+
+						</ul>
+
+					</li>
+					<li>
+<i class="fa fa-caret-down fa-fw" onclick="expand_or_collapse(this)">
+</i><span class="selectable" id="e6"> delivrances
+</span>						<ul>
+							<li>
+<i class="fa fa-fw">
+</i><span class="selectable" id="e7"> POST
+</span>
+							</li>
+
+						</ul>
+
+					</li>
+					<li>
+<i class="fa fa-caret-down fa-fw" onclick="expand_or_collapse(this)">
+</i><span class="selectable" id="e8"> stoppages
+</span>						<ul>
+							<li>
+<i class="fa fa-fw">
+</i><span class="selectable" id="e9"> POST
+</span>
+							</li>
+
+						</ul>
+
+					</li>
+
+				</ul>
+
+			</li>
+
+		</ul>
+		<ul>
+			<li>
+<i class="fa fa-caret-down fa-fw" onclick="expand_or_collapse(this)">
+</i>				v2				<ul>
+					<li>
+<i class="fa fa-fw">
+</i><span class="selectable" id="e10"> GET
+</span>
+					</li>
+					<li>
+<i class="fa fa-fw">
+</i><span class="selectable" id="e11"> GETLIST
+</span>
+					</li>
+					<li>
+<i class="fa fa-fw">
+</i><span class="selectable" id="e12"> POST
+</span>
+					</li>
+					<li>
+<i class="fa fa-fw">
+</i><span class="selectable" id="e13"> PUT
+</span>
+					</li>
+
+				</ul>
+				<ul>
+					<li>
+<i class="fa fa-caret-down fa-fw" onclick="expand_or_collapse(this)">
+</i><span class="selectable" id="e14"> stoppages
+</span>						<ul>
+							<li>
+<i class="fa fa-fw">
+</i><span class="selectable" id="e15"> POST
+</span>
+							</li>
+
+						</ul>
+
+					</li>
+
+				</ul>
+
+			</li>
+
+		</ul>
+
+	</li>
+
+</ul>
+          </div>
+        </div>
+                 
+        
+<div class="detail-column" id="d0" style="display:none; width: 65%">
+	<div class="detail">
+		<div class="mock-list">
+			<b>Service SOAP : </b> <a href="../services/getCardDetail.html">getCardDetail</a>
+		</div>
+		<div class="mock-list">
+			<b>Code retour succes : </b>200 - OK
+		</div>
+		<div class="mock-list">
+			<b>Uri : </b>http://soprabanking.com/amplitude/cards/v1/{cardId}
+		</div>
+		<div class="mock-list">
+			<b>Description : </b>The service getCardDetail allows listing detailed information about the card corresponding to a single identifier received.
+It also displays the list of exceptional limits of this card. 
+		</div>
+		<br>
+
+		</br>
+		<div class="mock-list">
+			<b>Identifiants : </b>			<table class="table_param">
+				<tr>
+				<td> 0
+				</td>				<td title="getCardDetailRequest.cardIdentifier.cardReference"> <a href="../types/cardReference.html">cardReference</a><br>Référence de la carte.
+				</td>
+				</tr>
+
+			</table>
+
+		</div>
+		<br>
+
+		</br>
+		<div class="mock-list">
+			<b>Codes Erreur : </b>			<table>
+				<tr>
+				<td> 400
+				</td>				<td> Bad Request
+				</td>
+				</tr>
+
+			</table>
+
+		</div>
+
+	</div>
+
+</div>
+<div class="detail-column" id="d1" style="display:none; width: 65%">
+	<div class="detail">
+		<div class="mock-list">
+			<b>Service SOAP : </b> <a href="../services/getCardList.html">getCardList</a>
+		</div>
+		<div class="mock-list">
+			<b>Code retour succes : </b>200 - OK
+		</div>
+		<div class="mock-list">
+			<b>Uri : </b>http://soprabanking.com/amplitude/cards/v1/
+		</div>
+		<div class="mock-list">
+			<b>Description : </b>The service getCardList allows returning a list of cards matching the search criteria received.
+
+The search is based on the optional criteria below:
+- the card branch (code and/or designation),
+- the input branch (code and/or designation),
+- the delivery branch (code and/or designation),
+- the account number (internal and/or IBAN and/or external format),
+- the customer: code and/or name to be displayed, type, profile (code and/or designation), national identifier, account officer (code and/or name), additional information (identifier and/or value (or value range) and/or designation), external reference,
+- the holder: code and/or name to be displayed, type, profile (code and/or designation), national identifier, account officer (code and/or name), additional information (identifier and/or value (or value range) and/or designation), external reference,
+- the card type (code and/or designation),
+- the card reference,
+- the card number,
+- the truncated card number,
+- the card situation,
+- the PIN code situation,
+- the date (or a date range) of the card remanufacturing batch,
+- the date (of a date range) of the PIN code manufacturing batch,
+- the card expiry date (of a date range),
+- the card stoppage reason,
+- the card cancellation reason.
+
+For each card returned, all data used in the search criteria will be indicated as well as:
+- the embossing,
+- the corporate name,
+- the holder type.
+		</div>
+		<br>
+
+		</br>
+		<div class="mock-list">
+			<b>Parametres : </b>			<table class="table_param">
+				<tr>
+				<td>
+				</td>				<td title="getCardListRequest.account.internalFormatAccountOurBranch.branch.code"> <a href="../types/char5.html">X-SBS-accountBranchCode</a><br>Code de l'agence.
+				</td>				<td> Header
+				</td>
+				</tr>
+				<tr>
+				<td>
+				</td>				<td title="getCardListRequest.account.internalFormatAccountOurBranch.currency.alphaCode"> <a href="../types/char3.html">X-SBS-accountCurrencyAlphaCode</a><br>Code devise alphanumérique.
+				</td>				<td> Header
+				</td>
+				</tr>
+				<tr>
+				<td>
+				</td>				<td title="getCardListRequest.account.internalFormatAccountOurBranch.currency.numericCode"> <a href="../types/char3.html">X-SBS-accountCurrencyNumericCode</a><br>Code devise numérique.
+				</td>				<td> Header
+				</td>
+				</tr>
+				<tr>
+				<td>
+				</td>				<td title="getCardListRequest.account.externalFormatAccount.value"> <a href="../types/charMax34.html">X-SBS-accountExternalFormat</a><br>Valeur de l'identifiant externe du compte.
+				</td>				<td> Header
+				</td>
+				</tr>
+				<tr>
+				<td>
+				</td>				<td title="getCardListRequest.account.ibanFormatAccount.value"> <a href="../types/charMax34.html">X-SBS-accountIbanFormat</a><br>Valeur de l'IBAN.
+				</td>				<td> Header
+				</td>
+				</tr>
+				<tr>
+				<td>
+				</td>				<td title="getCardListRequest.account.internalFormatAccountOurBranch.account"> <a href="../types/charMax11.html">X-SBS-accountNumber</a><br>Numéro du compte.
+				</td>				<td> Header
+				</td>
+				</tr>
+				<tr>
+				<td>
+				</td>				<td title="getCardListRequest.account.internalFormatAccountOurBranch.suffix"> <a href="../types/charMax2.html">X-SBS-accountSuffix</a><br>Suffixe du compte.
+				</td>				<td> Header
+				</td>
+				</tr>
+				<tr>
+				<td>
+				</td>				<td title="getCardListRequest.cancellationReason.code"> <a href="../types/cardCancellationReasonCode.html">X-SBS-cancellationReasonCode</a><br>Code.
+				</td>				<td> Header
+				</td>
+				</tr>
+				<tr>
+				<td>
+				</td>				<td title="getCardListRequest.cancellationReason.designation"> <a href="../types/charMax30.html">X-SBS-cancellationReasonDesignation</a><br>Désignation.
+				</td>				<td> Header
+				</td>
+				</tr>
+				<tr>
+				<td>
+				</td>				<td title="getCardListRequest.cardBranch.code"> <a href="../types/char5.html">X-SBS-cardBranchCode</a><br>Code de l'agence.
+				</td>				<td> Header
+				</td>
+				</tr>
+				<tr>
+				<td>
+				</td>				<td title="getCardListRequest.cardDateOfManufacture.date1"> <a href="../types/date.html">X-SBS-cardDateOfManufacture1</a><br>1ère date.
+				</td>				<td> Header
+				</td>
+				</tr>
+				<tr>
+				<td>
+				</td>				<td title="getCardListRequest.cardDateOfManufacture.date2"> <a href="../types/date.html">X-SBS-cardDateOfManufacture2</a><br>2ème date.
+				</td>				<td> Header
+				</td>
+				</tr>
+				<tr>
+				<td>
+				</td>				<td title="getCardListRequest.cardDateOfManufacture.comparator"> <a href="../types/comparator.html">X-SBS-cardDateOfManufactureComparator</a><br>Opérateur de comparaison.
+				</td>				<td> Header
+				</td>
+				</tr>
+				<tr>
+				<td>
+				</td>				<td title="getCardListRequest.cardHolder.activeProfile.code"> <a href="../types/charMax3.html">X-SBS-cardHolderActiveProfileCode</a><br>Code profil.
+				</td>				<td> Header
+				</td>
+				</tr>
+				<tr>
+				<td>
+				</td>				<td title="getCardListRequest.cardHolder.activeProfile.designation"> <a href="../types/charMax30.html">X-SBS-cardHolderActiveProfileDesignation</a><br>Désignation du profil.
+				</td>				<td> Header
+				</td>
+				</tr>
+				<tr>
+				<td>
+				</td>				<td title="getCardListRequest.cardHolder.additionalInformation.designation"> <a href="../types/charMax30.html">X-SBS-cardHolderAdditionalInformationDesignation</a><br>Désignation.
+				</td>				<td> Header
+				</td>
+				</tr>
+				<tr>
+				<td>
+				</td>				<td title="getCardListRequest.cardHolder.additionalInformation.complementaryInformation.value.alphanumeric.comparisonOperator"> <a href="../types/comparisonOperator.html">X-SBS-cardHolderComplementaryInformationAlphanumericComparisonOperator</a><br>Opérateur de comparaison.
+				</td>				<td> Header
+				</td>
+				</tr>
+				<tr>
+				<td>
+				</td>				<td title="getCardListRequest.cardHolder.additionalInformation.complementaryInformation.value.alphanumeric.value"> <a href="../types/string.html">X-SBS-cardHolderComplementaryInformationAlphanumericValue</a><br>Valeur de la désignation.
+				</td>				<td> Header
+				</td>
+				</tr>
+				<tr>
+				<td>
+				</td>				<td title="getCardListRequest.cardHolder.additionalInformation.complementaryInformation.value.date.date1"> <a href="../types/date.html">X-SBS-cardHolderComplementaryInformationDate1</a><br>1ère date.
+				</td>				<td> Header
+				</td>
+				</tr>
+				<tr>
+				<td>
+				</td>				<td title="getCardListRequest.cardHolder.additionalInformation.complementaryInformation.value.date.date2"> <a href="../types/date.html">X-SBS-cardHolderComplementaryInformationDate2</a><br>2ème date.
+				</td>				<td> Header
+				</td>
+				</tr>
+				<tr>
+				<td>
+				</td>				<td title="getCardListRequest.cardHolder.additionalInformation.complementaryInformation.value.date.comparator"> <a href="../types/comparator.html">X-SBS-cardHolderComplementaryInformationDateComparator</a><br>Opérateur de comparaison.
+				</td>				<td> Header
+				</td>
+				</tr>
+				<tr>
+				<td>
+				</td>				<td title="getCardListRequest.cardHolder.additionalInformation.complementaryInformation.value.amountOrRate.decimal1"> <a href="../types/decimal32_16.html">X-SBS-cardHolderComplementaryInformationDecimal1</a><br>1ère décimale.
+				</td>				<td> Header
+				</td>
+				</tr>
+				<tr>
+				<td>
+				</td>				<td title="getCardListRequest.cardHolder.additionalInformation.complementaryInformation.value.amountOrRate.comparator"> <a href="../types/comparator.html">X-SBS-cardHolderComplementaryInformationDecimal1Comparator</a><br>Opérateur de comparaison.
+				</td>				<td> Header
+				</td>
+				</tr>
+				<tr>
+				<td>
+				</td>				<td title="getCardListRequest.cardHolder.additionalInformation.complementaryInformation.value.amountOrRate.decimal2"> <a href="../types/decimal32_16.html">X-SBS-cardHolderComplementaryInformationDecimal2</a><br>2ème décimale.
+				</td>				<td> Header
+				</td>
+				</tr>
+				<tr>
+				<td>
+				</td>				<td title="getCardListRequest.cardHolder.additionalInformation.complementaryInformation.identifier"> <a href="../types/charMax10.html">X-SBS-cardHolderComplementaryInformationIdentifier</a><br>Identifiant de la donnée complémentaire.
+				</td>				<td> Header
+				</td>
+				</tr>
+				<tr>
+				<td>
+				</td>				<td title="getCardListRequest.cardHolder.customer.displayedName"> <a href="../types/charMax67.html">X-SBS-cardHolderDisplayedName</a><br>Nom de restitution du client.
+				</td>				<td> Header
+				</td>
+				</tr>
+				<tr>
+				<td>
+				</td>				<td title="getCardListRequest.cardHolder.externalReference"> <a href="../types/charMax25.html">X-SBS-cardHolderExternalReference</a><br>Référence externe.
+				</td>				<td> Header
+				</td>
+				</tr>
+				<tr>
+				<td>
+				</td>				<td title="getCardListRequest.cardHolder.nationalIdentifier"> <a href="../types/charMax20.html">X-SBS-cardHolderNationalIdentifier</a><br>Identifiant national.
+				</td>				<td> Header
+				</td>
+				</tr>
+				<tr>
+				<td>
+				</td>				<td title="getCardListRequest.cardHolder.customer.customerNumber"> <a href="../types/charMax15.html">X-SBS-cardHolderNumber</a><br>Code du client.
+				</td>				<td> Header
+				</td>
+				</tr>
+				<tr>
+				<td>
+				</td>				<td title="getCardListRequest.cardHolder.customerOfficer.code"> <a href="../types/charMax3.html">X-SBS-cardHolderOfficerCode</a><br>Code gestionnaire.
+				</td>				<td> Header
+				</td>
+				</tr>
+				<tr>
+				<td>
+				</td>				<td title="getCardListRequest.cardHolder.customerOfficer.name"> <a href="../types/charMax30.html">X-SBS-cardHolderOfficerName</a><br>Nom du gestionnaire.
+				</td>				<td> Header
+				</td>
+				</tr>
+				<tr>
+				<td>
+				</td>				<td title="getCardListRequest.cardHolder.customerType"> <a href="../types/customerType.html">X-SBS-cardHolderType</a><br>Type de client.
+				</td>				<td> Header
+				</td>
+				</tr>
+				<tr>
+				<td>
+				</td>				<td title="getCardListRequest.cardNumber"> <a href="../types/charMax19.html">X-SBS-cardNumber</a><br>Numéro de carte.
+				</td>				<td> Header
+				</td>
+				</tr>
+				<tr>
+				<td>
+				</td>				<td title="getCardListRequest.cardReference"> <a href="../types/cardReference.html">X-SBS-cardReference</a><br>Référence de la carte.
+				</td>				<td> Header
+				</td>
+				</tr>
+				<tr>
+				<td>
+				</td>				<td title="getCardListRequest.cardStatus"> <a href="../types/cardStatus.html">X-SBS-cardStatus</a><br>Situation de la carte.
+				</td>				<td> Header
+				</td>
+				</tr>
+				<tr>
+				<td>
+				</td>				<td title="getCardListRequest.cardType.code"> <a href="../types/char3.html">X-SBS-cardTypeCode</a><br>Code du type de carte.
+				</td>				<td> Header
+				</td>
+				</tr>
+				<tr>
+				<td>
+				</td>				<td title="getCardListRequest.cardType.designation"> <a href="../types/charMax30.html">X-SBS-cardTypeDesignation</a><br>Description du type de carte.
+				</td>				<td> Header
+				</td>
+				</tr>
+				<tr>
+				<td>
+				</td>				<td title="getCardListRequest.customer.activeProfile.code"> <a href="../types/charMax3.html">X-SBS-customerActiveProfileCode</a><br>Code profil.
+				</td>				<td> Header
+				</td>
+				</tr>
+				<tr>
+				<td>
+				</td>				<td title="getCardListRequest.customer.activeProfile.designation"> <a href="../types/charMax30.html">X-SBS-customerActiveProfileDesignation</a><br>Désignation du profil.
+				</td>				<td> Header
+				</td>
+				</tr>
+				<tr>
+				<td>
+				</td>				<td title="getCardListRequest.customer.additionalInformation.designation"> <a href="../types/charMax30.html">X-SBS-customerAdditionalInformationDesignation</a><br>Désignation.
+				</td>				<td> Header
+				</td>
+				</tr>
+				<tr>
+				<td>
+				</td>				<td title="getCardListRequest.customer.additionalInformation.complementaryInformation.value.alphanumeric.comparisonOperator"> <a href="../types/comparisonOperator.html">X-SBS-customerComplementaryInformationAlphanumericComparisonOperator</a><br>Opérateur de comparaison.
+				</td>				<td> Header
+				</td>
+				</tr>
+				<tr>
+				<td>
+				</td>				<td title="getCardListRequest.customer.additionalInformation.complementaryInformation.value.alphanumeric.value"> <a href="../types/string.html">X-SBS-customerComplementaryInformationAlphanumericValue</a><br>Valeur de la désignation.
+				</td>				<td> Header
+				</td>
+				</tr>
+				<tr>
+				<td>
+				</td>				<td title="getCardListRequest.customer.additionalInformation.complementaryInformation.value.date.date1"> <a href="../types/date.html">X-SBS-customerComplementaryInformationDate1</a><br>1ère date.
+				</td>				<td> Header
+				</td>
+				</tr>
+				<tr>
+				<td>
+				</td>				<td title="getCardListRequest.customer.additionalInformation.complementaryInformation.value.date.date2"> <a href="../types/date.html">X-SBS-customerComplementaryInformationDate2</a><br>2ème date.
+				</td>				<td> Header
+				</td>
+				</tr>
+				<tr>
+				<td>
+				</td>				<td title="getCardListRequest.customer.additionalInformation.complementaryInformation.value.date.comparator"> <a href="../types/comparator.html">X-SBS-customerComplementaryInformationDateComparator</a><br>Opérateur de comparaison.
+				</td>				<td> Header
+				</td>
+				</tr>
+				<tr>
+				<td>
+				</td>				<td title="getCardListRequest.customer.additionalInformation.complementaryInformation.value.amountOrRate.decimal1"> <a href="../types/decimal32_16.html">X-SBS-customerComplementaryInformationDecimal1</a><br>1ère décimale.
+				</td>				<td> Header
+				</td>
+				</tr>
+				<tr>
+				<td>
+				</td>				<td title="getCardListRequest.customer.additionalInformation.complementaryInformation.value.amountOrRate.comparator"> <a href="../types/comparator.html">X-SBS-customerComplementaryInformationDecimal1Comparator</a><br>Opérateur de comparaison.
+				</td>				<td> Header
+				</td>
+				</tr>
+				<tr>
+				<td>
+				</td>				<td title="getCardListRequest.customer.additionalInformation.complementaryInformation.value.amountOrRate.decimal2"> <a href="../types/decimal32_16.html">X-SBS-customerComplementaryInformationDecimal2</a><br>2ème décimale.
+				</td>				<td> Header
+				</td>
+				</tr>
+				<tr>
+				<td>
+				</td>				<td title="getCardListRequest.customer.additionalInformation.complementaryInformation.identifier"> <a href="../types/charMax10.html">X-SBS-customerComplementaryInformationIdentifier</a><br>Identifiant de la donnée complémentaire.
+				</td>				<td> Header
+				</td>
+				</tr>
+				<tr>
+				<td>
+				</td>				<td title="getCardListRequest.customer.customer.displayedName"> <a href="../types/charMax67.html">X-SBS-customerDisplayedName</a><br>Nom de restitution du client.
+				</td>				<td> Header
+				</td>
+				</tr>
+				<tr>
+				<td>
+				</td>				<td title="getCardListRequest.customer.externalReference"> <a href="../types/charMax25.html">X-SBS-customerExternalReference</a><br>Référence externe.
+				</td>				<td> Header
+				</td>
+				</tr>
+				<tr>
+				<td>
+				</td>				<td title="getCardListRequest.customer.nationalIdentifier"> <a href="../types/charMax20.html">X-SBS-customerNationalIdentifier</a><br>Identifiant national.
+				</td>				<td> Header
+				</td>
+				</tr>
+				<tr>
+				<td>
+				</td>				<td title="getCardListRequest.customer.customer.customerNumber"> <a href="../types/charMax15.html">X-SBS-customerNumber</a><br>Code du client.
+				</td>				<td> Header
+				</td>
+				</tr>
+				<tr>
+				<td>
+				</td>				<td title="getCardListRequest.customer.customerOfficer.code"> <a href="../types/charMax3.html">X-SBS-customerOfficerCode</a><br>Code gestionnaire.
+				</td>				<td> Header
+				</td>
+				</tr>
+				<tr>
+				<td>
+				</td>				<td title="getCardListRequest.customer.customerOfficer.name"> <a href="../types/charMax30.html">X-SBS-customerOfficerName</a><br>Nom du gestionnaire.
+				</td>				<td> Header
+				</td>
+				</tr>
+				<tr>
+				<td>
+				</td>				<td title="getCardListRequest.customer.customerType"> <a href="../types/customerType.html">X-SBS-customerType</a><br>Type de client.
+				</td>				<td> Header
+				</td>
+				</tr>
+				<tr>
+				<td>
+				</td>				<td title="getCardListRequest.expirationDate.date1"> <a href="../types/date.html">X-SBS-expirationDate1</a><br>1ère date.
+				</td>				<td> Header
+				</td>
+				</tr>
+				<tr>
+				<td>
+				</td>				<td title="getCardListRequest.expirationDate.date2"> <a href="../types/date.html">X-SBS-expirationDate2</a><br>2ème date.
+				</td>				<td> Header
+				</td>
+				</tr>
+				<tr>
+				<td>
+				</td>				<td title="getCardListRequest.expirationDate.comparator"> <a href="../types/comparator.html">X-SBS-expirationDateComparator</a><br>Opérateur de comparaison.
+				</td>				<td> Header
+				</td>
+				</tr>
+				<tr>
+				<td>
+				</td>				<td title="getCardListRequest.inputAgency.code"> <a href="../types/char5.html">X-SBS-inputAgencyCode</a><br>Code de l'agence.
+				</td>				<td> Header
+				</td>
+				</tr>
+				<tr>
+				<td>
+				</td>				<td title="getCardListRequest.issuingAgency.code"> <a href="../types/char5.html">X-SBS-issuingAgencyCode</a><br>Code de l'agence.
+				</td>				<td> Header
+				</td>
+				</tr>
+				<tr>
+				<td>
+				</td>				<td title="getCardListRequest.pinCodeDateOfManufacture.date1"> <a href="../types/date.html">X-SBS-pinCodeDateOfManufacture1</a><br>1ère date.
+				</td>				<td> Header
+				</td>
+				</tr>
+				<tr>
+				<td>
+				</td>				<td title="getCardListRequest.pinCodeDateOfManufacture.date2"> <a href="../types/date.html">X-SBS-pinCodeDateOfManufacture2</a><br>2ème date.
+				</td>				<td> Header
+				</td>
+				</tr>
+				<tr>
+				<td>
+				</td>				<td title="getCardListRequest.pinCodeDateOfManufacture.comparator"> <a href="../types/comparator.html">X-SBS-pinCodeDateOfManufactureComparator</a><br>Opérateur de comparaison.
+				</td>				<td> Header
+				</td>
+				</tr>
+				<tr>
+				<td>
+				</td>				<td title="getCardListRequest.pinCodeStatus"> <a href="../types/charMax2.html">X-SBS-pinCodeStatus</a><br>Situation du code PIN.
+				</td>				<td> Header
+				</td>
+				</tr>
+				<tr>
+				<td>
+				</td>				<td title="getCardListRequest.stoppageReason.code"> <a href="../types/cardStoppageReasonCode.html">X-SBS-stoppageReasonCode</a><br>Code.
+				</td>				<td> Header
+				</td>
+				</tr>
+				<tr>
+				<td>
+				</td>				<td title="getCardListRequest.stoppageReason.designation"> <a href="../types/charMax30.html">X-SBS-stoppageReasonDesignation</a><br>Désignation.
+				</td>				<td> Header
+				</td>
+				</tr>
+				<tr>
+				<td>
+				</td>				<td title="getCardListRequest.truncatedCardNumber"> <a href="../types/charMax19.html">X-SBS-truncatedCardNumber</a><br>Numéro de carte tronqué.
+				</td>				<td> Header
+				</td>
+				</tr>
+
+			</table>
+
+		</div>
+		<br>
+
+		</br>
+		<div class="mock-list">
+			<b>Codes Erreur : </b>			<table>
+				<tr>
+				<td> 400
+				</td>				<td> Bad Request
+				</td>
+				</tr>
+
+			</table>
+
+		</div>
+
+	</div>
+
+</div>
+<div class="detail-column" id="d2" style="display:none; width: 65%">
+	<div class="detail">
+		<div class="mock-list">
+			<b>Service SOAP : </b> <a href="../services/modifyCard.html">modifyCard</a>
+		</div>
+		<div class="mock-list">
+			<b>Code retour succes : </b>200 - OK
+		</div>
+		<div class="mock-list">
+			<b>Uri : </b>http://soprabanking.com/amplitude/cards/v1/{cardId}
+		</div>
+		<div class="mock-list">
+			<b>Description : </b>The service modifyCard allows modifying the characteristics of the card corresponding to a unique identifier received.
+		</div>
+		<br>
+
+		</br>
+		<div class="mock-list">
+			<b>Identifiants : </b>			<table class="table_param">
+				<tr>
+				<td> 0
+				</td>				<td title="modifyCardRequest.cardIdentifier.cardReference"> <a href="../types/cardReference.html">cardReference</a><br>Référence de la carte.
+				</td>
+				</tr>
+
+			</table>
+
+		</div>
+		<br>
+
+		</br>
+		<div class="mock-list">
+			<b>Codes Erreur : </b>			<table>
+				<tr>
+				<td> 400
+				</td>				<td> Bad Request
+				</td>
+				</tr>
+
+			</table>
+
+		</div>
+
+	</div>
+
+</div>
+<div class="detail-column" id="d3" style="display:none; width: 65%">
+	<div class="detail">
+		<div class="mock-list">
+			<b>Service SOAP : </b> <a href="../services/createCard.html">createCard</a>
+		</div>
+		<div class="mock-list">
+			<b>Code retour succes : </b>201 - Created
+		</div>
+		<div class="mock-list">
+			<b>Uri : </b>http://soprabanking.com/amplitude/cards/v1/
+		</div>
+		<div class="mock-list">
+			<b>Description : </b>The service createCard allows creating a card.
+
+The card characteristics are required.
+They can come along with other optional information:
+- the exceptional limits,
+- the additional card data.
+
+The service returns the reference and the truncated number of the card created.
+		</div>
+		<br>
+
+		</br>
+		<div class="mock-list">
+			<b>Codes Erreur : </b>			<table>
+				<tr>
+				<td> 400
+				</td>				<td> Bad Request
+				</td>
+				</tr>
+
+			</table>
+
+		</div>
+
+	</div>
+
+</div>
+<div class="detail-column" id="d4" style="display:none; width: 65%">
+	<div class="detail">
+		<div class="mock-list">
+			<b>Description : </b>Affectations
+		</div>
+
+	</div>
+
+</div>
+<div class="detail-column" id="d5" style="display:none; width: 65%">
+	<div class="detail">
+		<div class="mock-list">
+			<b>Service SOAP : </b> <a href="../services/createCardAffectation.html">createCardAffectation</a>
+		</div>
+		<div class="mock-list">
+			<b>Code retour succes : </b>201 - Created
+		</div>
+		<div class="mock-list">
+			<b>Uri : </b>http://soprabanking.com/amplitude/cards/v1/{cardId}/affectations
+		</div>
+		<div class="mock-list">
+			<b>Description : </b>The service createCardAffectation allows attaching a card to a client.
+		</div>
+		<br>
+
+		</br>
+		<div class="mock-list">
+			<b>Identifiants : </b>			<table class="table_param">
+				<tr>
+				<td> 0
+				</td>				<td title="createCardAffectationRequest.cardIdentifier.cardReference"> <a href="../types/cardReference.html">cardReference</a><br>Référence de la carte.
+				</td>
+				</tr>
+
+			</table>
+
+		</div>
+		<br>
+
+		</br>
+		<div class="mock-list">
+			<b>Codes Erreur : </b>			<table>
+				<tr>
+				<td> 400
+				</td>				<td> Bad Request
+				</td>
+				</tr>
+
+			</table>
+
+		</div>
+
+	</div>
+
+</div>
+<div class="detail-column" id="d6" style="display:none; width: 65%">
+	<div class="detail">
+		<div class="mock-list">
+			<b>Description : </b>Delivrances
+		</div>
+
+	</div>
+
+</div>
+<div class="detail-column" id="d7" style="display:none; width: 65%">
+	<div class="detail">
+		<div class="mock-list">
+			<b>Service SOAP : </b> <a href="../services/createCardDelivrance.html">createCardDelivrance</a>
+		</div>
+		<div class="mock-list">
+			<b>Code retour succes : </b>201 - Created
+		</div>
+		<div class="mock-list">
+			<b>Uri : </b>http://soprabanking.com/amplitude/cards/v1/{cardId}/delivrances
+		</div>
+		<div class="mock-list">
+			<b>Description : </b>The service createCardDelivrance indicate the delivery of a card to a customer.
+		</div>
+		<br>
+
+		</br>
+		<div class="mock-list">
+			<b>Identifiants : </b>			<table class="table_param">
+				<tr>
+				<td> 0
+				</td>				<td title="createCardDelivranceRequest.cardIdentifier.cardReference"> <a href="../types/cardReference.html">cardReference</a><br>Référence de la carte.
+				</td>
+				</tr>
+
+			</table>
+
+		</div>
+		<br>
+
+		</br>
+		<div class="mock-list">
+			<b>Codes Erreur : </b>			<table>
+				<tr>
+				<td> 400
+				</td>				<td> Bad Request
+				</td>
+				</tr>
+
+			</table>
+
+		</div>
+
+	</div>
+
+</div>
+<div class="detail-column" id="d8" style="display:none; width: 65%">
+	<div class="detail">
+		<div class="mock-list">
+			<b>Description : </b>Stoppages
+		</div>
+
+	</div>
+
+</div>
+<div class="detail-column" id="d9" style="display:none; width: 65%">
+	<div class="detail">
+		<div class="mock-list">
+			<b>Service SOAP : </b> <a href="../services/createCardStoppage.html">createCardStoppage</a>
+		</div>
+		<div class="mock-list">
+			<b>Code retour succes : </b>201 - Created
+		</div>
+		<div class="mock-list">
+			<b>Uri : </b>http://soprabanking.com/amplitude/cards/v1/{cardId}/stoppages
+		</div>
+		<div class="mock-list">
+			<b>Description : </b>The service createCardStoppage allows stopping the card corresponding to a unique identifier received.
+
+The stop order reason code is required.
+It can come along with other optional information concerning the card renewal and/or remanufacturing, as well as comments that will be stored in a history table.
+		</div>
+		<br>
+
+		</br>
+		<div class="mock-list">
+			<b>Identifiants : </b>			<table class="table_param">
+				<tr>
+				<td> 0
+				</td>				<td title="createCardStoppageRequest.cardIdentifier.cardReference"> <a href="../types/cardReference.html">cardReference</a><br>Référence de la carte.
+				</td>
+				</tr>
+
+			</table>
+
+		</div>
+		<br>
+
+		</br>
+		<div class="mock-list">
+			<b>Codes Erreur : </b>			<table>
+				<tr>
+				<td> 400
+				</td>				<td> Bad Request
+				</td>
+				</tr>
+
+			</table>
+
+		</div>
+
+	</div>
+
+</div>
+<div class="detail-column" id="d10" style="display:none; width: 65%">
+	<div class="detail">
+		<div class="mock-list">
+			<b>Service SOAP : </b> <a href="../services/getCardDetailV2.html">getCardDetailV2</a>
+		</div>
+		<div class="mock-list">
+			<b>Code retour succes : </b>200 - OK
+		</div>
+		<div class="mock-list">
+			<b>Uri : </b>http://soprabanking.com/amplitude/cards/v2/{cardId}
+		</div>
+		<div class="mock-list">
+			<b>Description : </b>The service getCardDetail allows listing detailed information about the card corresponding to a single identifier received.
+It also displays the list of exceptional limits of this card. 
+		</div>
+		<br>
+
+		</br>
+		<div class="mock-list">
+			<b>Identifiants : </b>			<table class="table_param">
+				<tr>
+				<td> 0
+				</td>				<td title="getCardDetailRequest.cardIdentifier.cardReference"> <a href="../types/cardReference.html">cardReference</a><br>Référence de la carte.
+				</td>
+				</tr>
+
+			</table>
+
+		</div>
+		<br>
+
+		</br>
+		<div class="mock-list">
+			<b>Codes Erreur : </b>			<table>
+				<tr>
+				<td> 400
+				</td>				<td> Bad Request
+				</td>
+				</tr>
+
+			</table>
+
+		</div>
+
+	</div>
+
+</div>
+<div class="detail-column" id="d11" style="display:none; width: 65%">
+	<div class="detail">
+		<div class="mock-list">
+			<b>Service SOAP : </b> <a href="../services/getCardListV2.html">getCardListV2</a>
+		</div>
+		<div class="mock-list">
+			<b>Code retour succes : </b>200 - OK
+		</div>
+		<div class="mock-list">
+			<b>Uri : </b>http://soprabanking.com/amplitude/cards/v2/
+		</div>
+		<div class="mock-list">
+			<b>Description : </b>The service getCardList allows returning a list of cards matching the search criteria received.
+
+The search is based on the optional criteria below:
+- the card branch (code and/or designation),
+- the input branch (code and/or designation),
+- the delivery branch (code and/or designation),
+- the account number (internal and/or IBAN and/or external format),
+- the customer: code and/or name to be displayed, type, profile (code and/or designation), national identifier, account officer (code and/or name), additional information (identifier and/or value (or value range) and/or designation), external reference,
+- the holder: code and/or name to be displayed, type, profile (code and/or designation), national identifier, account officer (code and/or name), additional information (identifier and/or value (or value range) and/or designation), external reference,
+- the card type (code and/or designation),
+- the card reference,
+- the card number,
+- the truncated card number,
+- the card situation,
+- the PIN code situation,
+- the date (or a date range) of the card remanufacturing batch,
+- the date (of a date range) of the PIN code manufacturing batch,
+- the card expiry date (of a date range),
+- the card stoppage reason,
+- the card cancellation reason.
+
+For each card returned, all data used in the search criteria will be indicated as well as:
+- the embossing,
+- the corporate name,
+- the holder type.
+		</div>
+		<br>
+
+		</br>
+		<div class="mock-list">
+			<b>Parametres : </b>			<table class="table_param">
+				<tr>
+				<td>
+				</td>				<td title="getCardListRequest.cardHolder.additionalInformation.complementaryInformation.value.amountOrRate.decimal1"> <a href="../types/decimal32_16.html">X-SBS-cardHolderComplementaryInformationDecimal1</a><br>1ère décimale.
+				</td>				<td> Header
+				</td>
+				</tr>
+				<tr>
+				<td>
+				</td>				<td title="getCardListRequest.cardHolder.additionalInformation.complementaryInformation.value.amountOrRate.comparator"> <a href="../types/comparator.html">X-SBS-cardHolderComplementaryInformationDecimal1Comparator</a><br>Opérateur de comparaison.
+				</td>				<td> Header
+				</td>
+				</tr>
+				<tr>
+				<td>
+				</td>				<td title="getCardListRequest.cardHolder.additionalInformation.complementaryInformation.value.amountOrRate.decimal2"> <a href="../types/decimal32_16.html">X-SBS-cardHolderComplementaryInformationDecimal2</a><br>2ème décimale.
+				</td>				<td> Header
+				</td>
+				</tr>
+				<tr>
+				<td>
+				</td>				<td title="getCardListRequest.cardHolder.additionalInformation.complementaryInformation.identifier"> <a href="../types/charMax10.html">X-SBS-cardHolderComplementaryInformationIdentifier</a><br>Identifiant de la donnée complémentaire.
+				</td>				<td> Header
+				</td>
+				</tr>
+				<tr>
+				<td>
+				</td>				<td title="getCardListRequest.cardHolder.customer.displayedName"> <a href="../types/charMax67.html">X-SBS-cardHolderDisplayedName</a><br>Nom de restitution du client.
+				</td>				<td> Header
+				</td>
+				</tr>
+				<tr>
+				<td>
+				</td>				<td title="getCardListRequest.cardHolder.externalReference"> <a href="../types/charMax25.html">X-SBS-cardHolderExternalReference</a><br>Référence externe.
+				</td>				<td> Header
+				</td>
+				</tr>
+				<tr>
+				<td>
+				</td>				<td title="getCardListRequest.cardHolder.nationalIdentifier"> <a href="../types/charMax20.html">X-SBS-cardHolderNationalIdentifier</a><br>Identifiant national.
+				</td>				<td> Header
+				</td>
+				</tr>
+				<tr>
+				<td>
+				</td>				<td title="getCardListRequest.cardHolder.customer.customerNumber"> <a href="../types/charMax15.html">X-SBS-cardHolderNumber</a><br>Code du client.
+				</td>				<td> Header
+				</td>
+				</tr>
+				<tr>
+				<td>
+				</td>				<td title="getCardListRequest.cardHolder.customerOfficer.code"> <a href="../types/charMax3.html">X-SBS-cardHolderOfficerCode</a><br>Code gestionnaire.
+				</td>				<td> Header
+				</td>
+				</tr>
+				<tr>
+				<td>
+				</td>				<td title="getCardListRequest.cardHolder.customerOfficer.name"> <a href="../types/charMax30.html">X-SBS-cardHolderOfficerName</a><br>Nom du gestionnaire.
+				</td>				<td> Header
+				</td>
+				</tr>
+				<tr>
+				<td>
+				</td>				<td title="getCardListRequest.cardHolder.customerType"> <a href="../types/customerType.html">X-SBS-cardHolderType</a><br>Type de client.
+				</td>				<td> Header
+				</td>
+				</tr>
+				<tr>
+				<td>
+				</td>				<td title="getCardListRequest.cardNumber"> <a href="../types/charMax19.html">X-SBS-cardNumber</a><br>Numéro de carte.
+				</td>				<td> Header
+				</td>
+				</tr>
+				<tr>
+				<td>
+				</td>				<td title="getCardListRequest.cardParNumber"> <a href="../types/charMax29.html">X-SBS-cardParNumber</a><br>Numéro de PAR de la carte.
+				</td>				<td> Header
+				</td>
+				</tr>
+				<tr>
+				<td>
+				</td>				<td title="getCardListRequest.cardReference"> <a href="../types/cardReference.html">X-SBS-cardReference</a><br>Référence de la carte.
+				</td>				<td> Header
+				</td>
+				</tr>
+				<tr>
+				<td>
+				</td>				<td title="getCardListRequest.cardStatus"> <a href="../types/cardStatus.html">X-SBS-cardStatus</a><br>Situation de la carte.
+				</td>				<td> Header
+				</td>
+				</tr>
+				<tr>
+				<td>
+				</td>				<td title="getCardListRequest.cardType.code"> <a href="../types/char3.html">X-SBS-cardTypeCode</a><br>Code du type de carte.
+				</td>				<td> Header
+				</td>
+				</tr>
+				<tr>
+				<td>
+				</td>				<td title="getCardListRequest.cardType.designation"> <a href="../types/charMax30.html">X-SBS-cardTypeDesignation</a><br>Description du type de carte.
+				</td>				<td> Header
+				</td>
+				</tr>
+				<tr>
+				<td>
+				</td>				<td title="getCardListRequest.customer.activeProfile.code"> <a href="../types/charMax3.html">X-SBS-customerActiveProfileCode</a><br>Code profil.
+				</td>				<td> Header
+				</td>
+				</tr>
+				<tr>
+				<td>
+				</td>				<td title="getCardListRequest.customer.activeProfile.designation"> <a href="../types/charMax30.html">X-SBS-customerActiveProfileDesignation</a><br>Désignation du profil.
+				</td>				<td> Header
+				</td>
+				</tr>
+				<tr>
+				<td>
+				</td>				<td title="getCardListRequest.customer.additionalInformation.designation"> <a href="../types/charMax30.html">X-SBS-customerAdditionalInformationDesignation</a><br>Désignation.
+				</td>				<td> Header
+				</td>
+				</tr>
+				<tr>
+				<td>
+				</td>				<td title="getCardListRequest.customer.additionalInformation.complementaryInformation.value.alphanumeric.comparisonOperator"> <a href="../types/comparisonOperator.html">X-SBS-customerComplementaryInformationAlphanumericComparisonOperator</a><br>Opérateur de comparaison.
+				</td>				<td> Header
+				</td>
+				</tr>
+				<tr>
+				<td>
+				</td>				<td title="getCardListRequest.customer.additionalInformation.complementaryInformation.value.alphanumeric.value"> <a href="../types/string.html">X-SBS-customerComplementaryInformationAlphanumericValue</a><br>Valeur de la désignation.
+				</td>				<td> Header
+				</td>
+				</tr>
+				<tr>
+				<td>
+				</td>				<td title="getCardListRequest.customer.additionalInformation.complementaryInformation.value.date.date1"> <a href="../types/date.html">X-SBS-customerComplementaryInformationDate1</a><br>1ère date.
+				</td>				<td> Header
+				</td>
+				</tr>
+				<tr>
+				<td>
+				</td>				<td title="getCardListRequest.customer.additionalInformation.complementaryInformation.value.date.date2"> <a href="../types/date.html">X-SBS-customerComplementaryInformationDate2</a><br>2ème date.
+				</td>				<td> Header
+				</td>
+				</tr>
+				<tr>
+				<td>
+				</td>				<td title="getCardListRequest.customer.additionalInformation.complementaryInformation.value.date.comparator"> <a href="../types/comparator.html">X-SBS-customerComplementaryInformationDateComparator</a><br>Opérateur de comparaison.
+				</td>				<td> Header
+				</td>
+				</tr>
+				<tr>
+				<td>
+				</td>				<td title="getCardListRequest.customer.additionalInformation.complementaryInformation.value.amountOrRate.decimal1"> <a href="../types/decimal32_16.html">X-SBS-customerComplementaryInformationDecimal1</a><br>1ère décimale.
+				</td>				<td> Header
+				</td>
+				</tr>
+				<tr>
+				<td>
+				</td>				<td title="getCardListRequest.customer.additionalInformation.complementaryInformation.value.amountOrRate.comparator"> <a href="../types/comparator.html">X-SBS-customerComplementaryInformationDecimal1Comparator</a><br>Opérateur de comparaison.
+				</td>				<td> Header
+				</td>
+				</tr>
+				<tr>
+				<td>
+				</td>				<td title="getCardListRequest.customer.additionalInformation.complementaryInformation.value.amountOrRate.decimal2"> <a href="../types/decimal32_16.html">X-SBS-customerComplementaryInformationDecimal2</a><br>2ème décimale.
+				</td>				<td> Header
+				</td>
+				</tr>
+				<tr>
+				<td>
+				</td>				<td title="getCardListRequest.customer.additionalInformation.complementaryInformation.identifier"> <a href="../types/charMax10.html">X-SBS-customerComplementaryInformationIdentifier</a><br>Identifiant de la donnée complémentaire.
+				</td>				<td> Header
+				</td>
+				</tr>
+				<tr>
+				<td>
+				</td>				<td title="getCardListRequest.customer.customer.displayedName"> <a href="../types/charMax67.html">X-SBS-customerDisplayedName</a><br>Nom de restitution du client.
+				</td>				<td> Header
+				</td>
+				</tr>
+				<tr>
+				<td>
+				</td>				<td title="getCardListRequest.customer.externalReference"> <a href="../types/charMax25.html">X-SBS-customerExternalReference</a><br>Référence externe.
+				</td>				<td> Header
+				</td>
+				</tr>
+				<tr>
+				<td>
+				</td>				<td title="getCardListRequest.customer.nationalIdentifier"> <a href="../types/charMax20.html">X-SBS-customerNationalIdentifier</a><br>Identifiant national.
+				</td>				<td> Header
+				</td>
+				</tr>
+				<tr>
+				<td>
+				</td>				<td title="getCardListRequest.customer.customer.customerNumber"> <a href="../types/charMax15.html">X-SBS-customerNumber</a><br>Code du client.
+				</td>				<td> Header
+				</td>
+				</tr>
+				<tr>
+				<td>
+				</td>				<td title="getCardListRequest.customer.customerOfficer.code"> <a href="../types/charMax3.html">X-SBS-customerOfficerCode</a><br>Code gestionnaire.
+				</td>				<td> Header
+				</td>
+				</tr>
+				<tr>
+				<td>
+				</td>				<td title="getCardListRequest.account.internalFormatAccountOurBranch.branch.code"> <a href="../types/char5.html">X-SBS-accountBranchCode</a><br>Code de l'agence.
+				</td>				<td> Header
+				</td>
+				</tr>
+				<tr>
+				<td>
+				</td>				<td title="getCardListRequest.account.internalFormatAccountOurBranch.currency.alphaCode"> <a href="../types/char3.html">X-SBS-accountCurrencyAlphaCode</a><br>Code devise alphanumérique.
+				</td>				<td> Header
+				</td>
+				</tr>
+				<tr>
+				<td>
+				</td>				<td title="getCardListRequest.account.internalFormatAccountOurBranch.currency.numericCode"> <a href="../types/char3.html">X-SBS-accountCurrencyNumericCode</a><br>Code devise numérique.
+				</td>				<td> Header
+				</td>
+				</tr>
+				<tr>
+				<td>
+				</td>				<td title="getCardListRequest.account.externalFormatAccount.value"> <a href="../types/charMax34.html">X-SBS-accountExternalFormat</a><br>Valeur de l'identifiant externe du compte.
+				</td>				<td> Header
+				</td>
+				</tr>
+				<tr>
+				<td>
+				</td>				<td title="getCardListRequest.account.ibanFormatAccount.value"> <a href="../types/charMax34.html">X-SBS-accountIbanFormat</a><br>Valeur de l'IBAN.
+				</td>				<td> Header
+				</td>
+				</tr>
+				<tr>
+				<td>
+				</td>				<td title="getCardListRequest.account.internalFormatAccountOurBranch.account"> <a href="../types/charMax11.html">X-SBS-accountNumber</a><br>Numéro du compte.
+				</td>				<td> Header
+				</td>
+				</tr>
+				<tr>
+				<td>
+				</td>				<td title="getCardListRequest.account.internalFormatAccountOurBranch.suffix"> <a href="../types/charMax2.html">X-SBS-accountSuffix</a><br>Suffixe du compte.
+				</td>				<td> Header
+				</td>
+				</tr>
+				<tr>
+				<td>
+				</td>				<td title="getCardListRequest.cancellationReason.code"> <a href="../types/cardCancellationReasonCode.html">X-SBS-cancellationReasonCode</a><br>Code.
+				</td>				<td> Header
+				</td>
+				</tr>
+				<tr>
+				<td>
+				</td>				<td title="getCardListRequest.cancellationReason.designation"> <a href="../types/charMax30.html">X-SBS-cancellationReasonDesignation</a><br>Désignation.
+				</td>				<td> Header
+				</td>
+				</tr>
+				<tr>
+				<td>
+				</td>				<td title="getCardListRequest.cardBranch.code"> <a href="../types/char5.html">X-SBS-cardBranchCode</a><br>Code de l'agence.
+				</td>				<td> Header
+				</td>
+				</tr>
+				<tr>
+				<td>
+				</td>				<td title="getCardListRequest.cardDateOfManufacture.date1"> <a href="../types/date.html">X-SBS-cardDateOfManufacture1</a><br>1ère date.
+				</td>				<td> Header
+				</td>
+				</tr>
+				<tr>
+				<td>
+				</td>				<td title="getCardListRequest.cardDateOfManufacture.date2"> <a href="../types/date.html">X-SBS-cardDateOfManufacture2</a><br>2ème date.
+				</td>				<td> Header
+				</td>
+				</tr>
+				<tr>
+				<td>
+				</td>				<td title="getCardListRequest.cardDateOfManufacture.comparator"> <a href="../types/comparator.html">X-SBS-cardDateOfManufactureComparator</a><br>Opérateur de comparaison.
+				</td>				<td> Header
+				</td>
+				</tr>
+				<tr>
+				<td>
+				</td>				<td title="getCardListRequest.cardHolder.activeProfile.code"> <a href="../types/charMax3.html">X-SBS-cardHolderActiveProfileCode</a><br>Code profil.
+				</td>				<td> Header
+				</td>
+				</tr>
+				<tr>
+				<td>
+				</td>				<td title="getCardListRequest.cardHolder.activeProfile.designation"> <a href="../types/charMax30.html">X-SBS-cardHolderActiveProfileDesignation</a><br>Désignation du profil.
+				</td>				<td> Header
+				</td>
+				</tr>
+				<tr>
+				<td>
+				</td>				<td title="getCardListRequest.cardHolder.additionalInformation.designation"> <a href="../types/charMax30.html">X-SBS-cardHolderAdditionalInformationDesignation</a><br>Désignation.
+				</td>				<td> Header
+				</td>
+				</tr>
+				<tr>
+				<td>
+				</td>				<td title="getCardListRequest.cardHolder.additionalInformation.complementaryInformation.value.alphanumeric.comparisonOperator"> <a href="../types/comparisonOperator.html">X-SBS-cardHolderComplementaryInformationAlphanumericComparisonOperator</a><br>Opérateur de comparaison.
+				</td>				<td> Header
+				</td>
+				</tr>
+				<tr>
+				<td>
+				</td>				<td title="getCardListRequest.cardHolder.additionalInformation.complementaryInformation.value.alphanumeric.value"> <a href="../types/string.html">X-SBS-cardHolderComplementaryInformationAlphanumericValue</a><br>Valeur de la désignation.
+				</td>				<td> Header
+				</td>
+				</tr>
+				<tr>
+				<td>
+				</td>				<td title="getCardListRequest.cardHolder.additionalInformation.complementaryInformation.value.date.date1"> <a href="../types/date.html">X-SBS-cardHolderComplementaryInformationDate1</a><br>1ère date.
+				</td>				<td> Header
+				</td>
+				</tr>
+				<tr>
+				<td>
+				</td>				<td title="getCardListRequest.cardHolder.additionalInformation.complementaryInformation.value.date.date2"> <a href="../types/date.html">X-SBS-cardHolderComplementaryInformationDate2</a><br>2ème date.
+				</td>				<td> Header
+				</td>
+				</tr>
+				<tr>
+				<td>
+				</td>				<td title="getCardListRequest.cardHolder.additionalInformation.complementaryInformation.value.date.comparator"> <a href="../types/comparator.html">X-SBS-cardHolderComplementaryInformationDateComparator</a><br>Opérateur de comparaison.
+				</td>				<td> Header
+				</td>
+				</tr>
+				<tr>
+				<td>
+				</td>				<td title="getCardListRequest.customer.customerOfficer.name"> <a href="../types/charMax30.html">X-SBS-customerOfficerName</a><br>Nom du gestionnaire.
+				</td>				<td> Header
+				</td>
+				</tr>
+				<tr>
+				<td>
+				</td>				<td title="getCardListRequest.customer.customerType"> <a href="../types/customerType.html">X-SBS-customerType</a><br>Type de client.
+				</td>				<td> Header
+				</td>
+				</tr>
+				<tr>
+				<td>
+				</td>				<td title="getCardListRequest.expirationDate.date1"> <a href="../types/date.html">X-SBS-expirationDate1</a><br>1ère date.
+				</td>				<td> Header
+				</td>
+				</tr>
+				<tr>
+				<td>
+				</td>				<td title="getCardListRequest.expirationDate.date2"> <a href="../types/date.html">X-SBS-expirationDate2</a><br>2ème date.
+				</td>				<td> Header
+				</td>
+				</tr>
+				<tr>
+				<td>
+				</td>				<td title="getCardListRequest.expirationDate.comparator"> <a href="../types/comparator.html">X-SBS-expirationDateComparator</a><br>Opérateur de comparaison.
+				</td>				<td> Header
+				</td>
+				</tr>
+				<tr>
+				<td>
+				</td>				<td title="getCardListRequest.inputAgency.code"> <a href="../types/char5.html">X-SBS-inputAgencyCode</a><br>Code de l'agence.
+				</td>				<td> Header
+				</td>
+				</tr>
+				<tr>
+				<td>
+				</td>				<td title="getCardListRequest.issuingAgency.code"> <a href="../types/char5.html">X-SBS-issuingAgencyCode</a><br>Code de l'agence.
+				</td>				<td> Header
+				</td>
+				</tr>
+				<tr>
+				<td>
+				</td>				<td title="getCardListRequest.pinCodeDateOfManufacture.date1"> <a href="../types/date.html">X-SBS-pinCodeDateOfManufacture1</a><br>1ère date.
+				</td>				<td> Header
+				</td>
+				</tr>
+				<tr>
+				<td>
+				</td>				<td title="getCardListRequest.pinCodeDateOfManufacture.date2"> <a href="../types/date.html">X-SBS-pinCodeDateOfManufacture2</a><br>2ème date.
+				</td>				<td> Header
+				</td>
+				</tr>
+				<tr>
+				<td>
+				</td>				<td title="getCardListRequest.pinCodeDateOfManufacture.comparator"> <a href="../types/comparator.html">X-SBS-pinCodeDateOfManufactureComparator</a><br>Opérateur de comparaison.
+				</td>				<td> Header
+				</td>
+				</tr>
+				<tr>
+				<td>
+				</td>				<td title="getCardListRequest.pinCodeStatus"> <a href="../types/charMax2.html">X-SBS-pinCodeStatus</a><br>Situation du code PIN.
+				</td>				<td> Header
+				</td>
+				</tr>
+				<tr>
+				<td>
+				</td>				<td title="getCardListRequest.stoppageReason.code"> <a href="../types/cardStoppageReasonCode.html">X-SBS-stoppageReasonCode</a><br>Code.
+				</td>				<td> Header
+				</td>
+				</tr>
+				<tr>
+				<td>
+				</td>				<td title="getCardListRequest.stoppageReason.designation"> <a href="../types/charMax30.html">X-SBS-stoppageReasonDesignation</a><br>Désignation.
+				</td>				<td> Header
+				</td>
+				</tr>
+				<tr>
+				<td>
+				</td>				<td title="getCardListRequest.truncatedCardNumber"> <a href="../types/charMax19.html">X-SBS-truncatedCardNumber</a><br>Numéro de carte tronqué.
+				</td>				<td> Header
+				</td>
+				</tr>
+
+			</table>
+
+		</div>
+		<br>
+
+		</br>
+		<div class="mock-list">
+			<b>Codes Erreur : </b>			<table>
+				<tr>
+				<td> 400
+				</td>				<td> Bad Request
+				</td>
+				</tr>
+
+			</table>
+
+		</div>
+
+	</div>
+
+</div>
+<div class="detail-column" id="d12" style="display:none; width: 65%">
+	<div class="detail">
+		<div class="mock-list">
+			<b>Service SOAP : </b> <a href="../services/createCardV2.html">createCardV2</a>
+		</div>
+		<div class="mock-list">
+			<b>Code retour succes : </b>201 - Created
+		</div>
+		<div class="mock-list">
+			<b>Uri : </b>http://soprabanking.com/amplitude/cards/v2/
+		</div>
+		<div class="mock-list">
+			<b>Description : </b>The service createCard allows creating a card.
+
+The card characteristics are required.
+They can come along with other optional information:
+- the exceptional limits,
+- the additional card data.
+
+The service returns the reference and the truncated number of the card created.
+		</div>
+		<br>
+
+		</br>
+		<div class="mock-list">
+			<b>Codes Erreur : </b>			<table>
+				<tr>
+				<td> 400
+				</td>				<td> Bad Request
+				</td>
+				</tr>
+
+			</table>
+
+		</div>
+
+	</div>
+
+</div>
+<div class="detail-column" id="d13" style="display:none; width: 65%">
+	<div class="detail">
+		<div class="mock-list">
+			<b>Service SOAP : </b> <a href="../services/modifyCardV2.html">modifyCardV2</a>
+		</div>
+		<div class="mock-list">
+			<b>Code retour succes : </b>200 - OK
+		</div>
+		<div class="mock-list">
+			<b>Uri : </b>http://soprabanking.com/amplitude/cards/v2/{cardId}
+		</div>
+		<div class="mock-list">
+			<b>Description : </b>The service modifyCard allows modifying the characteristics of the card corresponding to a unique identifier received.
+		</div>
+		<br>
+
+		</br>
+		<div class="mock-list">
+			<b>Identifiants : </b>			<table class="table_param">
+				<tr>
+				<td> 0
+				</td>				<td title="modifyCardRequest.cardIdentifier.cardReference"> <a href="../types/cardReference.html">cardReference</a><br>Référence de la carte.
+				</td>
+				</tr>
+
+			</table>
+
+		</div>
+		<br>
+
+		</br>
+		<div class="mock-list">
+			<b>Codes Erreur : </b>			<table>
+				<tr>
+				<td> 400
+				</td>				<td> Bad Request
+				</td>
+				</tr>
+
+			</table>
+
+		</div>
+
+	</div>
+
+</div>
+<div class="detail-column" id="d14" style="display:none; width: 65%">
+	<div class="detail">
+		<div class="mock-list">
+			<b>Description : </b>Stoppages
+		</div>
+
+	</div>
+
+</div>
+<div class="detail-column" id="d15" style="display:none; width: 65%">
+	<div class="detail">
+		<div class="mock-list">
+			<b>Service SOAP : </b> <a href="../services/createCardStoppageV2.html">createCardStoppageV2</a>
+		</div>
+		<div class="mock-list">
+			<b>Code retour succes : </b>201 - Created
+		</div>
+		<div class="mock-list">
+			<b>Uri : </b>http://soprabanking.com/amplitude/cards/v2/{cardId}/stoppages
+		</div>
+		<div class="mock-list">
+			<b>Description : </b>The service createCardStoppage allows stopping the card corresponding to a unique identifier received.
+
+The stop order reason code is required.
+It can come along with other optional information concerning the card renewal and/or remanufacturing, as well as comments that will be stored in a history table.
+		</div>
+		<br>
+
+		</br>
+		<div class="mock-list">
+			<b>Identifiants : </b>			<table class="table_param">
+				<tr>
+				<td> 0
+				</td>				<td title="createCardStoppageRequest.cardIdentifier.cardReference"> <a href="../types/cardReference.html">cardReference</a><br>Référence de la carte.
+				</td>
+				</tr>
+
+			</table>
+
+		</div>
+		<br>
+
+		</br>
+		<div class="mock-list">
+			<b>Codes Erreur : </b>			<table>
+				<tr>
+				<td> 400
+				</td>				<td> Bad Request
+				</td>
+				</tr>
+
+			</table>
+
+		</div>
+
+	</div>
+
+</div>
+     </div> 
+  </div>
+  </div>
+
+  
+  <script src="../resources/jquery.js"></script>
+  <script src="../resources/doc.js"></script>
+</body>
+</html>

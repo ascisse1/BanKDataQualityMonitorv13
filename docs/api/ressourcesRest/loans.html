@@ -1,0 +1,1486 @@
+<!DOCTYPE html>
+<html>
+<head>
+	<link rel="stylesheet" href="../resources/styleDocu.css" />
+    <link rel="stylesheet" href="../resources/font-awesome/css/font-awesome.min.css" />
+	<title>Documentation Xsd</title>
+	<meta charset="UTF-8" />
+</head>
+
+<body>
+  <div class="document">
+	<div class="header">		
+	</div>
+
+    <div class="tabs">
+        <div class="tabs-wrapper-selected" onclick="window.open('../liste-ressources.html', '_self');">
+            <div class="tabs-left-content" >Liste des ressources</div>
+        </div>
+        <div class="tabs-wrapper" onclick="window.open('../liste-services.html', '_self');">
+            <div class="tabs-left-content">Liste des services</div>
+        </div>
+        <div class="tabs-wrapper" onclick="window.open('../liste-types.html', '_self');">
+            <div class="tabs-right-content">Liste des types</div>
+        </div>
+    </div>
+
+	<div class="contenu">
+      <div class="breadcrumb"> 
+        <ul class="breadcrumb">
+           <li> <a href="../index.html"> Accueil </a></li>
+           <li> > </li>
+           <li> <a href="../liste-ressources.html"> Liste des ressources </a></li>
+           <li> > </li>
+           <li> loans </li>
+        </ul>                    
+      </div>                    
+      
+      <div class="summary">
+        <div class="mock-list"> Nom ressource REST : loans </div>
+        <div class="mock-list"> Programme Amplitude : pswrloans </div>
+        <div class="mock-list"> Email : support@soprabanking.com </div>        
+        <br/>
+            <div class="mock-list"> Amortizable loans</div>
+      </div>
+      
+      <div class="column-content" style="width:93%">
+        <div class="detail-column" style="width: 35%">
+          <div class="tree"> 
+<ul style="padding:0">
+	<li>
+<i class="fa fa-caret-down fa-fw" onclick="expand_or_collapse(this)">
+</i>		loans		<ul>
+			<li>
+<i class="fa fa-caret-down fa-fw" onclick="expand_or_collapse(this)">
+</i>				v1				<ul>
+					<li>
+<i class="fa fa-fw">
+</i><span class="selectable" id="e0"> DELETE
+</span>
+					</li>
+					<li>
+<i class="fa fa-fw">
+</i><span class="selectable" id="e1"> POST
+</span>
+					</li>
+					<li>
+<i class="fa fa-fw">
+</i><span class="selectable" id="e2"> PUT
+</span>
+					</li>
+					<li>
+<i class="fa fa-fw">
+</i><span class="selectable" id="e3"> GET
+</span>
+					</li>
+					<li>
+<i class="fa fa-fw">
+</i><span class="selectable" id="e4"> GETLIST
+</span>
+					</li>
+
+				</ul>
+				<ul>
+					<li>
+<i class="fa fa-caret-down fa-fw" onclick="expand_or_collapse(this)">
+</i><span class="selectable" id="e5"> earlyrepayments
+</span>						<ul>
+							<li>
+<i class="fa fa-fw">
+</i><span class="selectable" id="e6"> POST
+</span>
+							</li>
+
+						</ul>
+
+					</li>
+					<li>
+<i class="fa fa-caret-down fa-fw" onclick="expand_or_collapse(this)">
+</i><span class="selectable" id="e7"> finalvalidationsteps
+</span>						<ul>
+							<li>
+<i class="fa fa-fw">
+</i><span class="selectable" id="e8"> POST
+</span>
+							</li>
+
+						</ul>
+
+					</li>
+					<li>
+<i class="fa fa-caret-down fa-fw" onclick="expand_or_collapse(this)">
+</i><span class="selectable" id="e9"> fundsreleases
+</span>						<ul>
+							<li>
+<i class="fa fa-fw">
+</i><span class="selectable" id="e10"> POST
+</span>
+							</li>
+
+						</ul>
+
+					</li>
+					<li>
+<i class="fa fa-caret-down fa-fw" onclick="expand_or_collapse(this)">
+</i><span class="selectable" id="e11"> installments
+</span>						<ul>
+							<li>
+<i class="fa fa-fw">
+</i><span class="selectable" id="e12"> GETLIST
+</span>
+							</li>
+							<li>
+<i class="fa fa-fw">
+</i><span class="selectable" id="e13"> GET
+</span>
+							</li>
+
+						</ul>
+
+					</li>
+					<li>
+<i class="fa fa-caret-down fa-fw" onclick="expand_or_collapse(this)">
+</i><span class="selectable" id="e14"> intermediatevalidationsteps
+</span>						<ul>
+							<li>
+<i class="fa fa-fw">
+</i><span class="selectable" id="e15"> POST
+</span>
+							</li>
+
+						</ul>
+
+					</li>
+
+				</ul>
+
+			</li>
+
+		</ul>
+
+	</li>
+
+</ul>
+          </div>
+        </div>
+                 
+        
+<div class="detail-column" id="d0" style="display:none; width: 65%">
+	<div class="detail">
+		<div class="mock-list">
+			<b>Service SOAP : </b> <a href="../services/cancelAmortizableLoan.html">cancelAmortizableLoan</a>
+		</div>
+		<div class="mock-list">
+			<b>Code retour succes : </b>200 - OK
+		</div>
+		<div class="mock-list">
+			<b>Uri : </b>http://soprabanking.com/amplitude/loans/v1/{loanId}
+		</div>
+		<div class="mock-list">
+			<b>Description : </b>The service cancelAmortizableLoan allows cancelling an instalment loan file corresponding to a unique identifier received.
+
+Only incomplete files under examination (status code SI and check code 0), complete files under examination (status code SI and check code 1), files accepted by the bank (status code VB and check code 1), and files accepted by the customer (status code VC and check code 1) can be cancelled.
+
+If management of the history of the instalment loan type is activated, then one cancellation line is inserted into the loan history table.
+		</div>
+		<br>
+
+		</br>
+		<div class="mock-list">
+			<b>Identifiants : </b>			<table class="table_param">
+				<tr>
+				<td> 0
+				</td>				<td title="cancelAmortizableLoanRequest.amortizableLoanIdentifier.branchCode"> <a href="../types/char5.html">branchCode</a><br>Code agence.
+				</td>
+				</tr>
+				<tr>
+				<td> 1
+				</td>				<td title="cancelAmortizableLoanRequest.amortizableLoanIdentifier.fileNumber"> <a href="../types/char6.html">fileNumber</a><br>Numéro de dossier.
+				</td>
+				</tr>
+				<tr>
+				<td> 2
+				</td>				<td title="cancelAmortizableLoanRequest.amortizableLoanIdentifier.orderNumber"> <a href="../types/char3.html">orderNumber</a><br>Numéro d'ordre.
+				</td>
+				</tr>
+				<tr>
+				<td> 3
+				</td>				<td title="cancelAmortizableLoanRequest.amortizableLoanIdentifier.amendmentNumber"> <a href="../types/decimal2_0.html">amendmentNumber</a><br>Numéro d'avenant.
+				</td>
+				</tr>
+
+			</table>
+
+		</div>
+		<br>
+
+		</br>
+		<div class="mock-list">
+			<b>Parametres : </b>			<table class="table_param">
+				<tr>
+				<td>
+				</td>				<td title="cancelAmortizableLoanRequest.cancellationReason"> <a href="../types/disapprovalCode.html">X-SBS-cancellationReason</a><br>Motif de l'annulation.
+				</td>				<td> Header
+				</td>
+				</tr>
+				<tr>
+				<td>
+				</td>				<td title="cancelAmortizableLoanRequest.reasonForBankRejection"> <a href="../types/dosprtReasonForBankRejection.html">X-SBS-reasonForBankRejection</a><br>Motif du rejet par la banque.
+				</td>				<td> Header
+				</td>
+				</tr>
+
+			</table>
+
+		</div>
+		<br>
+
+		</br>
+		<div class="mock-list">
+			<b>Codes Erreur : </b>			<table>
+				<tr>
+				<td> 400
+				</td>				<td> Bad Request
+				</td>
+				</tr>
+
+			</table>
+
+		</div>
+
+	</div>
+
+</div>
+<div class="detail-column" id="d1" style="display:none; width: 65%">
+	<div class="detail">
+		<div class="mock-list">
+			<b>Service SOAP : </b> <a href="../services/createAmortizableLoan.html">createAmortizableLoan</a>
+		</div>
+		<div class="mock-list">
+			<b>Code retour succes : </b>201 - Created
+		</div>
+		<div class="mock-list">
+			<b>Uri : </b>http://soprabanking.com/amplitude/loans/v1/
+		</div>
+		<div class="mock-list">
+			<b>Description : </b>The service createAmortizableLoan allows creating an amortizable loan file.
+The file is created in the status SI `File under examination¿ (it will then have to be validated (see service createAmortizableLoanIntermediateValidationStep)).
+Global information about the loan file, description and incidental expenses are needed.
+They can be accompanied by other additional information:
+- Characteristics of loan file,
+- Credit object,
+- Documents,
+- Additional information,
+- Invoices,
+- Internal insurances,
+- Notes,
+- Instalment distribution between participants,
+- Repayment information,
+- Bank information of creditor¿s account,
+- Revaluation information,
+- Exchange rates used for conversions,
+- Marginal costs,
+- Pro forma,
+- Ancillary costs,
+- External charges,
+- Collateral information for EIR calculation,
+- Annual management commission,
+- Information about funds reservation for instalments,
+- Commitment commission.
+The service sends back the amortizable loan identifier created. 
+		</div>
+		<br>
+
+		</br>
+		<div class="mock-list">
+			<b>Codes Erreur : </b>			<table>
+				<tr>
+				<td> 400
+				</td>				<td> Bad Request
+				</td>
+				</tr>
+
+			</table>
+
+		</div>
+
+	</div>
+
+</div>
+<div class="detail-column" id="d2" style="display:none; width: 65%">
+	<div class="detail">
+		<div class="mock-list">
+			<b>Service SOAP : </b> <a href="../services/modifyAmortizableLoan.html">modifyAmortizableLoan</a>
+		</div>
+		<div class="mock-list">
+			<b>Code retour succes : </b>200 - OK
+		</div>
+		<div class="mock-list">
+			<b>Uri : </b>http://soprabanking.com/amplitude/loans/v1/{loanId}
+		</div>
+		<div class="mock-list">
+			<b>Description : </b>The service modifyAmortizableLoan allows modifying the data of the instalment loan file corresponding to a unique identifier received.
+
+The following data can be modified:
+- general information of the loan file,
+- the characteristics,
+- the purpose of the loan,
+- the documents,
+- the additional information,
+- the invoices,
+- the description,
+- the incidental expenses,
+- the comments,
+- the distribution of the instalment between the participants,
+- the bank details of the account to be debited,
+- the bank details of the creditor account.
+		</div>
+		<br>
+
+		</br>
+		<div class="mock-list">
+			<b>Identifiants : </b>			<table class="table_param">
+				<tr>
+				<td> 0
+				</td>				<td title="modifyAmortizableLoanRequest.loanFileGeneralInformations.identifier.branchCode"> <a href="../types/branchCode.html">branchCode</a><br>Code de l¿agence du dossier.
+				</td>
+				</tr>
+				<tr>
+				<td> 1
+				</td>				<td title="modifyAmortizableLoanRequest.loanFileGeneralInformations.identifier.fileNumber"> <a href="../types/char6.html">fileNumber</a><br>Numéro de dossier.
+				</td>
+				</tr>
+
+			</table>
+
+		</div>
+		<br>
+
+		</br>
+		<div class="mock-list">
+			<b>Codes Erreur : </b>			<table>
+				<tr>
+				<td> 400
+				</td>				<td> Bad Request
+				</td>
+				</tr>
+
+			</table>
+
+		</div>
+
+	</div>
+
+</div>
+<div class="detail-column" id="d3" style="display:none; width: 65%">
+	<div class="detail">
+		<div class="mock-list">
+			<b>Service SOAP : </b> <a href="../services/getAmortizableLoanDetail.html">getAmortizableLoanDetail</a>
+		</div>
+		<div class="mock-list">
+			<b>Code retour succes : </b>200 - OK
+		</div>
+		<div class="mock-list">
+			<b>Uri : </b>http://soprabanking.com/amplitude/loans/v1/{loanId}
+		</div>
+		<div class="mock-list">
+			<b>Description : </b>The service getAmortizableLoanDetail allows getting detailed information on an instalment loan file corresponding to a unique identifier received.
+
+For the instalment loan file selected, the following information is returned:
+- file detail information.
+		</div>
+		<br>
+
+		</br>
+		<div class="mock-list">
+			<b>Identifiants : </b>			<table class="table_param">
+				<tr>
+				<td> 0
+				</td>				<td title="getAmortizableLoanDetailRequest.amortizableLoanIdentifier.branchCode"> <a href="../types/char5.html">branchCode</a><br>Code agence.
+				</td>
+				</tr>
+				<tr>
+				<td> 1
+				</td>				<td title="getAmortizableLoanDetailRequest.amortizableLoanIdentifier.fileNumber"> <a href="../types/char6.html">fileNumber</a><br>Numéro de dossier.
+				</td>
+				</tr>
+				<tr>
+				<td> 2
+				</td>				<td title="getAmortizableLoanDetailRequest.amortizableLoanIdentifier.orderNumber"> <a href="../types/char3.html">orderNumber</a><br>Numéro d'ordre.
+				</td>
+				</tr>
+				<tr>
+				<td> 3
+				</td>				<td title="getAmortizableLoanDetailRequest.amortizableLoanIdentifier.amendmentNumber"> <a href="../types/decimal2_0.html">amendmentNumber</a><br>Numéro d'avenant.
+				</td>
+				</tr>
+
+			</table>
+
+		</div>
+		<br>
+
+		</br>
+		<div class="mock-list">
+			<b>Codes Erreur : </b>			<table>
+				<tr>
+				<td> 400
+				</td>				<td> Bad Request
+				</td>
+				</tr>
+
+			</table>
+
+		</div>
+
+	</div>
+
+</div>
+<div class="detail-column" id="d4" style="display:none; width: 65%">
+	<div class="detail">
+		<div class="mock-list">
+			<b>Service SOAP : </b> <a href="../services/getAmortizableLoanList.html">getAmortizableLoanList</a>
+		</div>
+		<div class="mock-list">
+			<b>Code retour succes : </b>200 - OK
+		</div>
+		<div class="mock-list">
+			<b>Uri : </b>http://soprabanking.com/amplitude/loans/v1/
+		</div>
+		<div class="mock-list">
+			<b>Description : </b>The service getAmortizableLoanList allows returning a list of instalment loan files matching the search criteria received.
+
+The search is based on the optional criteria below:
+- the loan file identifier: file number, order number, branch (code and/or designation), amendment number,
+- the currency (alphanumeric code and/or digital code and/or designation),
+- the customer: code and/or name to be displayed, type, profile (code and/or designation), national identifier, account officer (code and/or name), additional information (identifier and/or value (or value range) and/or designation), external reference,
+- the loan type (code and/or designation),
+- the last instalment date (or a date range),
+- the implementation date (or date range),
+- the status,
+- the processing code,
+- the duration: number (or range) of months,
+- the amount (or an amount range).
+
+For each file returned, all data used in the search criteria will be indicated as well as:
+- the remaining principal,
+- the interest rate and APR,
+- the frequency of instalments,
+- the number of remaining instalments,
+- the amount of unpaid amounts.
+		</div>
+		<br>
+
+		</br>
+		<div class="mock-list">
+			<b>Parametres : </b>			<table class="table_param">
+				<tr>
+				<td>
+				</td>				<td title="getAmortizableLoanListRequest.customer.activeProfile.code"> <a href="../types/charMax3.html">X-SBS-activeProfileCode</a><br>Code profil.
+				</td>				<td> Header
+				</td>
+				</tr>
+				<tr>
+				<td>
+				</td>				<td title="getAmortizableLoanListRequest.customer.activeProfile.designation"> <a href="../types/charMax30.html">X-SBS-activeProfileDesignation</a><br>Désignation du profil.
+				</td>				<td> Header
+				</td>
+				</tr>
+				<tr>
+				<td>
+				</td>				<td title="getAmortizableLoanListRequest.creditIdentifier.amendmentNumber"> <a href="../types/decimal2_0.html">X-SBS-amendmentNumber</a><br>Numéro d'avenant.
+				</td>				<td> Header
+				</td>
+				</tr>
+				<tr>
+				<td>
+				</td>				<td title="getAmortizableLoanListRequest.amount.amount1"> <a href="../types/decimal19_4.html">X-SBS-amount1</a><br>1er montant.
+				</td>				<td> Header
+				</td>
+				</tr>
+				<tr>
+				<td>
+				</td>				<td title="getAmortizableLoanListRequest.amount.amount2"> <a href="../types/decimal19_4.html">X-SBS-amount2</a><br>2ème montant.
+				</td>				<td> Header
+				</td>
+				</tr>
+				<tr>
+				<td>
+				</td>				<td title="getAmortizableLoanListRequest.amount.comparator"> <a href="../types/comparator.html">X-SBS-amountComparator</a><br>Opérateur de comparaison.
+				</td>				<td> Header
+				</td>
+				</tr>
+				<tr>
+				<td>
+				</td>				<td title="getAmortizableLoanListRequest.amount.currency.currency.alphaCode"> <a href="../types/char3.html">X-SBS-amountCurrencyAlphaCode</a><br>Code devise alphanumérique.
+				</td>				<td> Header
+				</td>
+				</tr>
+				<tr>
+				<td>
+				</td>				<td title="getAmortizableLoanListRequest.amount.currency.currency.numericCode"> <a href="../types/char3.html">X-SBS-amountCurrencyNumericCode</a><br>Code devise numérique.
+				</td>				<td> Header
+				</td>
+				</tr>
+				<tr>
+				<td>
+				</td>				<td title="getAmortizableLoanListRequest.creditIdentifier.branch.code"> <a href="../types/char5.html">X-SBS-branchCode</a><br>Code de l'agence.
+				</td>				<td> Header
+				</td>
+				</tr>
+				<tr>
+				<td>
+				</td>				<td title="getAmortizableLoanListRequest.creditIdentifier.branch.designation"> <a href="../types/charMax30.html">X-SBS-branchDesignation</a><br>Désignation de l'agence.
+				</td>				<td> Header
+				</td>
+				</tr>
+				<tr>
+				<td>
+				</td>				<td title="getAmortizableLoanListRequest.currency.alphaCode"> <a href="../types/char3.html">X-SBS-currencyAlphaCode</a><br>Code devise alphanumérique.
+				</td>				<td> Header
+				</td>
+				</tr>
+				<tr>
+				<td>
+				</td>				<td title="getAmortizableLoanListRequest.currency.numericCode"> <a href="../types/char3.html">X-SBS-currencyNumericCode</a><br>Code devise numérique.
+				</td>				<td> Header
+				</td>
+				</tr>
+				<tr>
+				<td>
+				</td>				<td title="getAmortizableLoanListRequest.customer.additionalInformation.designation"> <a href="../types/charMax30.html">X-SBS-customerAdditionalInformationDesignation</a><br>Désignation.
+				</td>				<td> Header
+				</td>
+				</tr>
+				<tr>
+				<td>
+				</td>				<td title="getAmortizableLoanListRequest.customer.additionalInformation.complementaryInformation.value.alphanumeric.comparisonOperator"> <a href="../types/comparisonOperator.html">X-SBS-customerComplementaryInformationAlphanumericComparisonOperator</a><br>Opérateur de comparaison.
+				</td>				<td> Header
+				</td>
+				</tr>
+				<tr>
+				<td>
+				</td>				<td title="getAmortizableLoanListRequest.customer.additionalInformation.complementaryInformation.value.alphanumeric.value"> <a href="../types/string.html">X-SBS-customerComplementaryInformationAlphanumericValue</a><br>Valeur de la désignation.
+				</td>				<td> Header
+				</td>
+				</tr>
+				<tr>
+				<td>
+				</td>				<td title="getAmortizableLoanListRequest.customer.additionalInformation.complementaryInformation.value.date.date1"> <a href="../types/date.html">X-SBS-customerComplementaryInformationDate1</a><br>1ère date.
+				</td>				<td> Header
+				</td>
+				</tr>
+				<tr>
+				<td>
+				</td>				<td title="getAmortizableLoanListRequest.customer.additionalInformation.complementaryInformation.value.date.date2"> <a href="../types/date.html">X-SBS-customerComplementaryInformationDate2</a><br>2ème date.
+				</td>				<td> Header
+				</td>
+				</tr>
+				<tr>
+				<td>
+				</td>				<td title="getAmortizableLoanListRequest.customer.additionalInformation.complementaryInformation.value.date.comparator"> <a href="../types/comparator.html">X-SBS-customerComplementaryInformationDateComparator</a><br>Opérateur de comparaison.
+				</td>				<td> Header
+				</td>
+				</tr>
+				<tr>
+				<td>
+				</td>				<td title="getAmortizableLoanListRequest.customer.additionalInformation.complementaryInformation.value.amountOrRate.decimal1"> <a href="../types/decimal32_16.html">X-SBS-customerComplementaryInformationDecimal1</a><br>1ère décimale.
+				</td>				<td> Header
+				</td>
+				</tr>
+				<tr>
+				<td>
+				</td>				<td title="getAmortizableLoanListRequest.customer.additionalInformation.complementaryInformation.value.amountOrRate.comparator"> <a href="../types/comparator.html">X-SBS-customerComplementaryInformationDecimal1Comparator</a><br>Opérateur de comparaison.
+				</td>				<td> Header
+				</td>
+				</tr>
+				<tr>
+				<td>
+				</td>				<td title="getAmortizableLoanListRequest.customer.additionalInformation.complementaryInformation.value.amountOrRate.decimal2"> <a href="../types/decimal32_16.html">X-SBS-customerComplementaryInformationDecimal2</a><br>2ème décimale.
+				</td>				<td> Header
+				</td>
+				</tr>
+				<tr>
+				<td>
+				</td>				<td title="getAmortizableLoanListRequest.customer.additionalInformation.complementaryInformation.identifier"> <a href="../types/charMax10.html">X-SBS-customerComplementaryInformationIdentifier</a><br>Identifiant de la donnée complémentaire.
+				</td>				<td> Header
+				</td>
+				</tr>
+				<tr>
+				<td>
+				</td>				<td title="getAmortizableLoanListRequest.customer.customer.displayedName"> <a href="../types/charMax67.html">X-SBS-customerDisplayedName</a><br>Nom de restitution du client.
+				</td>				<td> Header
+				</td>
+				</tr>
+				<tr>
+				<td>
+				</td>				<td title="getAmortizableLoanListRequest.customer.externalReference"> <a href="../types/charMax25.html">X-SBS-customerExternalReference</a><br>Référence externe.
+				</td>				<td> Header
+				</td>
+				</tr>
+				<tr>
+				<td>
+				</td>				<td title="getAmortizableLoanListRequest.customer.customer.customerNumber"> <a href="../types/charMax15.html">X-SBS-customerNumber</a><br>Code du client.
+				</td>				<td> Header
+				</td>
+				</tr>
+				<tr>
+				<td>
+				</td>				<td title="getAmortizableLoanListRequest.customer.customerOfficer.code"> <a href="../types/charMax3.html">X-SBS-customerOfficerCode</a><br>Code gestionnaire.
+				</td>				<td> Header
+				</td>
+				</tr>
+				<tr>
+				<td>
+				</td>				<td title="getAmortizableLoanListRequest.customer.customerOfficer.name"> <a href="../types/charMax30.html">X-SBS-customerOfficerName</a><br>Nom du gestionnaire.
+				</td>				<td> Header
+				</td>
+				</tr>
+				<tr>
+				<td>
+				</td>				<td title="getAmortizableLoanListRequest.customer.customerType"> <a href="../types/customerType.html">X-SBS-customerType</a><br>Type de client.
+				</td>				<td> Header
+				</td>
+				</tr>
+				<tr>
+				<td>
+				</td>				<td title="getAmortizableLoanListRequest.establishmentDate.date1"> <a href="../types/date.html">X-SBS-establishmentDate1</a><br>1ère date.
+				</td>				<td> Header
+				</td>
+				</tr>
+				<tr>
+				<td>
+				</td>				<td title="getAmortizableLoanListRequest.establishmentDate.date2"> <a href="../types/date.html">X-SBS-establishmentDate2</a><br>2ème date.
+				</td>				<td> Header
+				</td>
+				</tr>
+				<tr>
+				<td>
+				</td>				<td title="getAmortizableLoanListRequest.establishmentDate.comparator"> <a href="../types/comparator.html">X-SBS-establishmentDateComparator</a><br>Opérateur de comparaison.
+				</td>				<td> Header
+				</td>
+				</tr>
+				<tr>
+				<td>
+				</td>				<td title="getAmortizableLoanListRequest.creditIdentifier.fileNumber"> <a href="../types/char6.html">X-SBS-fileNumber</a><br>Numéro de dossier.
+				</td>				<td> Header
+				</td>
+				</tr>
+				<tr>
+				<td>
+				</td>				<td title="getAmortizableLoanListRequest.lastInstallmentDate.date1"> <a href="../types/date.html">X-SBS-lastInstallmentDate1</a><br>1ère date.
+				</td>				<td> Header
+				</td>
+				</tr>
+				<tr>
+				<td>
+				</td>				<td title="getAmortizableLoanListRequest.lastInstallmentDate.date2"> <a href="../types/date.html">X-SBS-lastInstallmentDate2</a><br>2ème date.
+				</td>				<td> Header
+				</td>
+				</tr>
+				<tr>
+				<td>
+				</td>				<td title="getAmortizableLoanListRequest.lastInstallmentDate.comparator"> <a href="../types/comparator.html">X-SBS-lastInstallmentDateComparator</a><br>Opérateur de comparaison.
+				</td>				<td> Header
+				</td>
+				</tr>
+				<tr>
+				<td>
+				</td>				<td title="getAmortizableLoanListRequest.loanType.code"> <a href="../types/char3.html">X-SBS-loanTypeCode</a><br>Code du type de dossier de crédit.
+				</td>				<td> Header
+				</td>
+				</tr>
+				<tr>
+				<td>
+				</td>				<td title="getAmortizableLoanListRequest.loanType.label"> <a href="../types/charMax30.html">X-SBS-loanTypeLabel</a><br>Intitulé du type de dossier de crédit.
+				</td>				<td> Header
+				</td>
+				</tr>
+				<tr>
+				<td>
+				</td>				<td title="getAmortizableLoanListRequest.monthsDuration.number1"> <a href="../types/int.html">X-SBS-monthsDuration1</a><br>1er nombre.
+				</td>				<td> Header
+				</td>
+				</tr>
+				<tr>
+				<td>
+				</td>				<td title="getAmortizableLoanListRequest.monthsDuration.number2"> <a href="../types/int.html">X-SBS-monthsDuration2</a><br>2ème nombre.
+				</td>				<td> Header
+				</td>
+				</tr>
+				<tr>
+				<td>
+				</td>				<td title="getAmortizableLoanListRequest.monthsDuration.comparator"> <a href="../types/comparator.html">X-SBS-monthsDurationComparator</a><br>Opérateur de comparaison.
+				</td>				<td> Header
+				</td>
+				</tr>
+				<tr>
+				<td>
+				</td>				<td title="getAmortizableLoanListRequest.customer.nationalIdentifier"> <a href="../types/charMax20.html">X-SBS-nationalIdentifier</a><br>Identifiant national.
+				</td>				<td> Header
+				</td>
+				</tr>
+				<tr>
+				<td>
+				</td>				<td title="getAmortizableLoanListRequest.creditIdentifier.orderNumber"> <a href="../types/char3.html">X-SBS-orderNumber</a><br>Numéro d'ordre.
+				</td>				<td> Header
+				</td>
+				</tr>
+				<tr>
+				<td>
+				</td>				<td title="getAmortizableLoanListRequest.processingCode"> <a href="../types/amortizableLoanFileProcessingCode.html">X-SBS-processingCode</a><br>Code traitement.
+				</td>				<td> Header
+				</td>
+				</tr>
+				<tr>
+				<td>
+				</td>				<td title="getAmortizableLoanListRequest.state"> <a href="../types/amortizableLoanFileStatus.html">X-SBS-state</a><br>État.
+				</td>				<td> Header
+				</td>
+				</tr>
+
+			</table>
+
+		</div>
+		<br>
+
+		</br>
+		<div class="mock-list">
+			<b>Codes Erreur : </b>			<table>
+				<tr>
+				<td> 400
+				</td>				<td> Bad Request
+				</td>
+				</tr>
+
+			</table>
+
+		</div>
+
+	</div>
+
+</div>
+<div class="detail-column" id="d5" style="display:none; width: 65%">
+	<div class="detail">
+		<div class="mock-list">
+			<b>Description : </b>Early repayments
+		</div>
+
+	</div>
+
+</div>
+<div class="detail-column" id="d6" style="display:none; width: 65%">
+	<div class="detail">
+		<div class="mock-list">
+			<b>Service SOAP : </b> <a href="../services/createAmortizableLoanEarlyRepayment.html">createAmortizableLoanEarlyRepayment</a>
+		</div>
+		<div class="mock-list">
+			<b>Code retour succes : </b>201 - Created
+		</div>
+		<div class="mock-list">
+			<b>Uri : </b>http://soprabanking.com/amplitude/loans/v1/{loanId}/earlyrepayments
+		</div>
+		<div class="mock-list">
+			<b>Description : </b>The service createAmortizableLoanEarlyRepayment enables to carry out a full or partial repayment, or a rescheduling of a loan file during its life time.
+Repayment characteristics are required.
+		</div>
+		<br>
+
+		</br>
+		<div class="mock-list">
+			<b>Identifiants : </b>			<table class="table_param">
+				<tr>
+				<td> 0
+				</td>				<td title="createAmortizableLoanEarlyRepaymentRequest.amortizableLoanIdentifier.branchCode"> <a href="../types/char5.html">branchCode</a><br>Code agence.
+				</td>
+				</tr>
+				<tr>
+				<td> 1
+				</td>				<td title="createAmortizableLoanEarlyRepaymentRequest.amortizableLoanIdentifier.fileNumber"> <a href="../types/char6.html">fileNumber</a><br>Numéro de dossier.
+				</td>
+				</tr>
+				<tr>
+				<td> 2
+				</td>				<td title="createAmortizableLoanEarlyRepaymentRequest.amortizableLoanIdentifier.orderNumber"> <a href="../types/char3.html">orderNumber</a><br>Numéro d'ordre.
+				</td>
+				</tr>
+				<tr>
+				<td> 3
+				</td>				<td title="createAmortizableLoanEarlyRepaymentRequest.amortizableLoanIdentifier.amendmentNumber"> <a href="../types/decimal2_0.html">amendmentNumber</a><br>Numéro d'avenant.
+				</td>
+				</tr>
+
+			</table>
+
+		</div>
+		<br>
+
+		</br>
+		<div class="mock-list">
+			<b>Codes Erreur : </b>			<table>
+				<tr>
+				<td> 400
+				</td>				<td> Bad Request
+				</td>
+				</tr>
+
+			</table>
+
+		</div>
+
+	</div>
+
+</div>
+<div class="detail-column" id="d7" style="display:none; width: 65%">
+	<div class="detail">
+		<div class="mock-list">
+			<b>Description : </b>Final validation steps
+		</div>
+
+	</div>
+
+</div>
+<div class="detail-column" id="d8" style="display:none; width: 65%">
+	<div class="detail">
+		<div class="mock-list">
+			<b>Service SOAP : </b> <a href="../services/createAmortizableLoanFinalValidationStep.html">createAmortizableLoanFinalValidationStep</a>
+		</div>
+		<div class="mock-list">
+			<b>Code retour succes : </b>201 - Created
+		</div>
+		<div class="mock-list">
+			<b>Uri : </b>http://soprabanking.com/amplitude/loans/v1/{loanId}/finalvalidationsteps
+		</div>
+		<div class="mock-list">
+			<b>Description : </b>The service createAmortizableLoanFinalValidationStep allows performing the final bank or customer validation step for an instalment loan file corresponding to a unique identifier received.
+This service is limited to a limited functional scope. It allows adding accounts linked to the loan file, which are necessary to the end of day process, legal attributes of loan file, fund release (only for files with a funds release method at implementation) and implementation charges repayment method.
+The following features are not processed during the final validation of the instalment loan file by the generic business service:
+- VISA credits,
+- Successive validations,
+- Document check as part of the AIC interface,
+- Electronic document management,
+- Validation limits
+- File validation history,
+- Exchange rate type and release exchange rate type
+- File revaluation
+- APR smoothing of file
+- Update LSP
+- Modification of financing source
+- Check of life or housing insurance (specific ABT)
+- Collateral check
+- Modification of pro forma invoices
+- Printout of acts and printout of schedule
+- Calculation of file repayment schedule, calculation of file APR and calculation of PARI file,
+- Modification of negotiated rates, ancillary costs and external charges of file
+- Modification of file instalment progression
+- Subsidised loan management
+- Modification of deferred amount distribution
+- Check of usury rate
+- Modification of annual management commission and commitment commission
+- Management of multiple repayment account
+- Automatic generation of overdraft limit on commitment account
+- Event generation CRSOUR
+- File forbearance
+- Update of internal insurance characteristics
+- IAS (fair-value and market rate)
+- Transact. file validation 
+		</div>
+		<br>
+
+		</br>
+		<div class="mock-list">
+			<b>Identifiants : </b>			<table class="table_param">
+				<tr>
+				<td> 0
+				</td>				<td title="createAmortizableLoanFinalValidationStepRequest.amortizableLoanIdentifier.branchCode"> <a href="../types/char5.html">branchCode</a><br>Code agence.
+				</td>
+				</tr>
+				<tr>
+				<td> 1
+				</td>				<td title="createAmortizableLoanFinalValidationStepRequest.amortizableLoanIdentifier.fileNumber"> <a href="../types/char6.html">fileNumber</a><br>Numéro de dossier.
+				</td>
+				</tr>
+				<tr>
+				<td> 2
+				</td>				<td title="createAmortizableLoanFinalValidationStepRequest.amortizableLoanIdentifier.orderNumber"> <a href="../types/char3.html">orderNumber</a><br>Numéro d'ordre.
+				</td>
+				</tr>
+				<tr>
+				<td> 3
+				</td>				<td title="createAmortizableLoanFinalValidationStepRequest.amortizableLoanIdentifier.amendmentNumber"> <a href="../types/decimal2_0.html">amendmentNumber</a><br>Numéro d'avenant.
+				</td>
+				</tr>
+
+			</table>
+
+		</div>
+		<br>
+
+		</br>
+		<div class="mock-list">
+			<b>Codes Erreur : </b>			<table>
+				<tr>
+				<td> 400
+				</td>				<td> Bad Request
+				</td>
+				</tr>
+
+			</table>
+
+		</div>
+
+	</div>
+
+</div>
+<div class="detail-column" id="d9" style="display:none; width: 65%">
+	<div class="detail">
+		<div class="mock-list">
+			<b>Description : </b>Funds releases
+		</div>
+
+	</div>
+
+</div>
+<div class="detail-column" id="d10" style="display:none; width: 65%">
+	<div class="detail">
+		<div class="mock-list">
+			<b>Service SOAP : </b> <a href="../services/createAmortizableLoanFundsRelease.html">createAmortizableLoanFundsRelease</a>
+		</div>
+		<div class="mock-list">
+			<b>Code retour succes : </b>201 - Created
+		</div>
+		<div class="mock-list">
+			<b>Uri : </b>http://soprabanking.com/amplitude/loans/v1/{loanId}/fundsreleases
+		</div>
+		<div class="mock-list">
+			<b>Description : </b>The service createAmortizableLoanFundsRelease allows preparing funds release of an instalment loan file, whose release is not at the implementation.
+This service is limited to a limited functional scope.
+The service sends back the list of errors met on the commitment account.
+The following features are not processed during the funds release of an instalment loan file by the generic business service:
+- Funds release on work progress,
+- Funds release on invoice,
+- Funds release on invoice advance,
+- Funds release on pro forma invoice,
+- Authorization check on commitment account,
+- Recalculation of amortization table,
+- Payment code management in case of release on customer request,
+- File forbearance,
+- Management of implementation charges in account currency
+- Management of implementation charges in the form of rate,
+- Spread of loan file commissions in repayment schedule,
+- Modification of marginal cost of loan file,
+- IAS (fair-value and market rate),
+- Spread of EIR in local currency,
+- Modification of funds reservation,
+- Modification of annual management commission,
+- Transact. file validation,
+- Modification of review start date for a file with floating rate.
+		</div>
+		<br>
+
+		</br>
+		<div class="mock-list">
+			<b>Identifiants : </b>			<table class="table_param">
+				<tr>
+				<td> 0
+				</td>				<td title="createAmortizableLoanFundsReleaseRequest.amortizableLoanIdentifier.branchCode"> <a href="../types/char5.html">branchCode</a><br>Code agence.
+				</td>
+				</tr>
+				<tr>
+				<td> 1
+				</td>				<td title="createAmortizableLoanFundsReleaseRequest.amortizableLoanIdentifier.fileNumber"> <a href="../types/char6.html">fileNumber</a><br>Numéro de dossier.
+				</td>
+				</tr>
+				<tr>
+				<td> 2
+				</td>				<td title="createAmortizableLoanFundsReleaseRequest.amortizableLoanIdentifier.orderNumber"> <a href="../types/char3.html">orderNumber</a><br>Numéro d'ordre.
+				</td>
+				</tr>
+				<tr>
+				<td> 3
+				</td>				<td title="createAmortizableLoanFundsReleaseRequest.amortizableLoanIdentifier.amendmentNumber"> <a href="../types/decimal2_0.html">amendmentNumber</a><br>Numéro d'avenant.
+				</td>
+				</tr>
+
+			</table>
+
+		</div>
+		<br>
+
+		</br>
+		<div class="mock-list">
+			<b>Codes Erreur : </b>			<table>
+				<tr>
+				<td> 400
+				</td>				<td> Bad Request
+				</td>
+				</tr>
+
+			</table>
+
+		</div>
+
+	</div>
+
+</div>
+<div class="detail-column" id="d11" style="display:none; width: 65%">
+	<div class="detail">
+		<div class="mock-list">
+			<b>Description : </b>Installments
+		</div>
+
+	</div>
+
+</div>
+<div class="detail-column" id="d12" style="display:none; width: 65%">
+	<div class="detail">
+		<div class="mock-list">
+			<b>Service SOAP : </b> <a href="../services/getAmortizableLoanInstallmentList.html">getAmortizableLoanInstallmentList</a>
+		</div>
+		<div class="mock-list">
+			<b>Code retour succes : </b>200 - OK
+		</div>
+		<div class="mock-list">
+			<b>Uri : </b>http://soprabanking.com/amplitude/loans/v1/{loanId}/installments
+		</div>
+		<div class="mock-list">
+			<b>Description : </b>The service getAmortizableLoanInstallmentList allows returning a list of instalments for instalment loans matching the search criteria received.
+
+The search is based on the optional criteria below:
+- the loan file identifier: file number, order number, branch (code and/or designation), amendment number,
+- the instalment number,
+- the currency (alphanumeric code and/or digital code and/or designation),
+- the instalment date (or a date range),
+- the opening date (or a date range),
+- the modification date (or a date range),
+- the instalment status,
+- the processing code,
+- the total amount (or an amount range) of the instalment,
+- the total amount (or an amount range) of the call,
+- the amount (or an amount range) of remaining principal.
+
+For each instalment returned, all data used in the search criteria will be indicated as well as:
+- the calculation date,
+- the amortisation (calculated, input, unpaid),
+- the interest (interest amount and taxes on interest calculated, unpaid, called, deferred and distributed),
+- the commissions 1, 2 and 3 (amount of commissions and taxes on commissions calculated, unpaid, called, deferred and distributed),
+- the charges (amount of charges and taxes on charges calculated, unpaid, called, deferred and distributed),
+- the tax on principal (calculated, unpaid, deferred and distributed),
+- the commitment commission (amount of commission and tax on commission calculated, unpaid),
+- the interest on unpaid amounts (amount of interest on unpaid amounts and taxes on interest on unpaid amounts calculated, unpaid),
+- the late penalties (amount of late penalties and taxes on late penalties calculated, unpaid),
+- the revenue stamp (calculated, unpaid, called, deferred and distributed).
+		</div>
+		<br>
+
+		</br>
+		<div class="mock-list">
+			<b>Identifiants : </b>			<table class="table_param">
+				<tr>
+				<td> 0
+				</td>				<td title="getAmortizableLoanInstallmentListRequest.amortizableLoanIdentifier.fileNumber"> <a href="../types/char6.html">fileNumber</a><br>Numéro de dossier.
+				</td>
+				</tr>
+				<tr>
+				<td> 1
+				</td>				<td title="getAmortizableLoanInstallmentListRequest.amortizableLoanIdentifier.orderNumber"> <a href="../types/char3.html">orderNumber</a><br>Numéro d'ordre.
+				</td>
+				</tr>
+				<tr>
+				<td> 2
+				</td>				<td title="getAmortizableLoanInstallmentListRequest.amortizableLoanIdentifier.branch.code"> <a href="../types/char5.html">code</a><br>Code de l'agence.
+				</td>
+				</tr>
+				<tr>
+				<td> 3
+				</td>				<td title="getAmortizableLoanInstallmentListRequest.amortizableLoanIdentifier.amendmentNumber"> <a href="../types/decimal2_0.html">amendmentNumber</a><br>Numéro d'avenant.
+				</td>
+				</tr>
+
+			</table>
+
+		</div>
+		<br>
+
+		</br>
+		<div class="mock-list">
+			<b>Parametres : </b>			<table class="table_param">
+				<tr>
+				<td>
+				</td>				<td title="getAmortizableLoanInstallmentListRequest.installmentNumber"> <a href="../types/integer.html">X-SBS-installmentNumber</a><br>Numéro d¿échéance.
+				</td>				<td> Header
+				</td>
+				</tr>
+				<tr>
+				<td>
+				</td>				<td title="getAmortizableLoanInstallmentListRequest.installmentStatus"> <a href="../types/amortizableLoanInstallmentStatus.html">X-SBS-installmentStatus</a><br>Etat de l¿échéance.
+				</td>				<td> Header
+				</td>
+				</tr>
+				<tr>
+				<td>
+				</td>				<td title="getAmortizableLoanInstallmentListRequest.modificationDate.date1"> <a href="../types/date.html">X-SBS-modificationDate1</a><br>1ère date.
+				</td>				<td> Header
+				</td>
+				</tr>
+				<tr>
+				<td>
+				</td>				<td title="getAmortizableLoanInstallmentListRequest.modificationDate.date2"> <a href="../types/date.html">X-SBS-modificationDate2</a><br>2ème date.
+				</td>				<td> Header
+				</td>
+				</tr>
+				<tr>
+				<td>
+				</td>				<td title="getAmortizableLoanInstallmentListRequest.modificationDate.comparator"> <a href="../types/comparator.html">X-SBS-modificationDateComparator</a><br>Opérateur de comparaison.
+				</td>				<td> Header
+				</td>
+				</tr>
+				<tr>
+				<td>
+				</td>				<td title="getAmortizableLoanInstallmentListRequest.openingDate.date1"> <a href="../types/date.html">X-SBS-openingDate1</a><br>1ère date.
+				</td>				<td> Header
+				</td>
+				</tr>
+				<tr>
+				<td>
+				</td>				<td title="getAmortizableLoanInstallmentListRequest.openingDate.date2"> <a href="../types/date.html">X-SBS-openingDate2</a><br>2ème date.
+				</td>				<td> Header
+				</td>
+				</tr>
+				<tr>
+				<td>
+				</td>				<td title="getAmortizableLoanInstallmentListRequest.openingDate.comparator"> <a href="../types/comparator.html">X-SBS-openingDateComparator</a><br>Opérateur de comparaison.
+				</td>				<td> Header
+				</td>
+				</tr>
+				<tr>
+				<td>
+				</td>				<td title="getAmortizableLoanInstallmentListRequest.processingCode"> <a href="../types/amortizableLoanInstallmentProcessingCode.html">X-SBS-processingCode</a><br>Code traitement.
+				</td>				<td> Header
+				</td>
+				</tr>
+				<tr>
+				<td>
+				</td>				<td title="getAmortizableLoanInstallmentListRequest.remainingCapital.amount1"> <a href="../types/decimal19_4.html">X-SBS-remainingCapital1</a><br>1er montant.
+				</td>				<td> Header
+				</td>
+				</tr>
+				<tr>
+				<td>
+				</td>				<td title="getAmortizableLoanInstallmentListRequest.remainingCapital.amount2"> <a href="../types/decimal19_4.html">X-SBS-remainingCapital2</a><br>2ème montant.
+				</td>				<td> Header
+				</td>
+				</tr>
+				<tr>
+				<td>
+				</td>				<td title="getAmortizableLoanInstallmentListRequest.remainingCapital.comparator"> <a href="../types/comparator.html">X-SBS-remainingCapitalComparator</a><br>Opérateur de comparaison.
+				</td>				<td> Header
+				</td>
+				</tr>
+				<tr>
+				<td>
+				</td>				<td title="getAmortizableLoanInstallmentListRequest.remainingCapital.currency.currency.alphaCode"> <a href="../types/char3.html">X-SBS-remainingCapitalCurrencyAlphaCode</a><br>Code devise alphanumérique.
+				</td>				<td> Header
+				</td>
+				</tr>
+				<tr>
+				<td>
+				</td>				<td title="getAmortizableLoanInstallmentListRequest.remainingCapital.currency.currency.numericCode"> <a href="../types/char3.html">X-SBS-remainingCapitalCurrencyNumericCode</a><br>Code devise numérique.
+				</td>				<td> Header
+				</td>
+				</tr>
+				<tr>
+				<td>
+				</td>				<td title="getAmortizableLoanInstallmentListRequest.totalCalling.amount1"> <a href="../types/decimal19_4.html">X-SBS-totalCalling1</a><br>1er montant.
+				</td>				<td> Header
+				</td>
+				</tr>
+				<tr>
+				<td>
+				</td>				<td title="getAmortizableLoanInstallmentListRequest.totalCalling.amount2"> <a href="../types/decimal19_4.html">X-SBS-totalCalling2</a><br>2ème montant.
+				</td>				<td> Header
+				</td>
+				</tr>
+				<tr>
+				<td>
+				</td>				<td title="getAmortizableLoanInstallmentListRequest.totalCalling.comparator"> <a href="../types/comparator.html">X-SBS-totalCallingComparator</a><br>Opérateur de comparaison.
+				</td>				<td> Header
+				</td>
+				</tr>
+				<tr>
+				<td>
+				</td>				<td title="getAmortizableLoanInstallmentListRequest.totalCalling.currency.currency.alphaCode"> <a href="../types/char3.html">X-SBS-totalCallingCurrencyAlphaCode</a><br>Code devise alphanumérique.
+				</td>				<td> Header
+				</td>
+				</tr>
+				<tr>
+				<td>
+				</td>				<td title="getAmortizableLoanInstallmentListRequest.totalCalling.currency.currency.numericCode"> <a href="../types/char3.html">X-SBS-totalCallingCurrencyNumericCode</a><br>Code devise numérique.
+				</td>				<td> Header
+				</td>
+				</tr>
+				<tr>
+				<td>
+				</td>				<td title="getAmortizableLoanInstallmentListRequest.totalInstallmentAmount.amount1"> <a href="../types/decimal19_4.html">X-SBS-totalInstallmentAmount1</a><br>1er montant.
+				</td>				<td> Header
+				</td>
+				</tr>
+				<tr>
+				<td>
+				</td>				<td title="getAmortizableLoanInstallmentListRequest.totalInstallmentAmount.amount2"> <a href="../types/decimal19_4.html">X-SBS-totalInstallmentAmount2</a><br>2ème montant.
+				</td>				<td> Header
+				</td>
+				</tr>
+				<tr>
+				<td>
+				</td>				<td title="getAmortizableLoanInstallmentListRequest.totalInstallmentAmount.comparator"> <a href="../types/comparator.html">X-SBS-totalInstallmentAmountComparator</a><br>Opérateur de comparaison.
+				</td>				<td> Header
+				</td>
+				</tr>
+				<tr>
+				<td>
+				</td>				<td title="getAmortizableLoanInstallmentListRequest.totalInstallmentAmount.currency.currency.alphaCode"> <a href="../types/char3.html">X-SBS-totalInstallmentAmountCurrencyAlphaCode</a><br>Code devise alphanumérique.
+				</td>				<td> Header
+				</td>
+				</tr>
+				<tr>
+				<td>
+				</td>				<td title="getAmortizableLoanInstallmentListRequest.totalInstallmentAmount.currency.currency.numericCode"> <a href="../types/char3.html">X-SBS-totalInstallmentAmountCurrencyNumericCode</a><br>Code devise numérique.
+				</td>				<td> Header
+				</td>
+				</tr>
+				<tr>
+				<td>
+				</td>				<td title="getAmortizableLoanInstallmentListRequest.currency.alphaCode"> <a href="../types/char3.html">X-SBS-currencyAlphaCode</a><br>Code devise alphanumérique.
+				</td>				<td> Header
+				</td>
+				</tr>
+				<tr>
+				<td>
+				</td>				<td title="getAmortizableLoanInstallmentListRequest.currency.numericCode"> <a href="../types/char3.html">X-SBS-currencyNumericCode</a><br>Code devise numérique.
+				</td>				<td> Header
+				</td>
+				</tr>
+				<tr>
+				<td>
+				</td>				<td title="getAmortizableLoanInstallmentListRequest.installmentDate.date1"> <a href="../types/date.html">X-SBS-installmentDate1</a><br>1ère date.
+				</td>				<td> Header
+				</td>
+				</tr>
+				<tr>
+				<td>
+				</td>				<td title="getAmortizableLoanInstallmentListRequest.installmentDate.date2"> <a href="../types/date.html">X-SBS-installmentDate2</a><br>2ème date.
+				</td>				<td> Header
+				</td>
+				</tr>
+				<tr>
+				<td>
+				</td>				<td title="getAmortizableLoanInstallmentListRequest.installmentDate.comparator"> <a href="../types/comparator.html">X-SBS-installmentDateComparator</a><br>Opérateur de comparaison.
+				</td>				<td> Header
+				</td>
+				</tr>
+
+			</table>
+
+		</div>
+		<br>
+
+		</br>
+		<div class="mock-list">
+			<b>Codes Erreur : </b>			<table>
+				<tr>
+				<td> 400
+				</td>				<td> Bad Request
+				</td>
+				</tr>
+
+			</table>
+
+		</div>
+
+	</div>
+
+</div>
+<div class="detail-column" id="d13" style="display:none; width: 65%">
+	<div class="detail">
+		<div class="mock-list">
+			<b>Service SOAP : </b> <a href="../services/getAmortizableLoanInstallmentList.html">getAmortizableLoanInstallmentList</a>
+		</div>
+		<div class="mock-list">
+			<b>Code retour succes : </b>200 - OK
+		</div>
+		<div class="mock-list">
+			<b>Uri : </b>http://soprabanking.com/amplitude/loans/v1/{loanId}/installments/{installmentId}
+		</div>
+		<div class="mock-list">
+			<b>Description : </b>The service getAmortizableLoanInstallmentList allows returning a list of instalments for instalment loans matching the search criteria received.
+
+The search is based on the optional criteria below:
+- the loan file identifier: file number, order number, branch (code and/or designation), amendment number,
+- the instalment number,
+- the currency (alphanumeric code and/or digital code and/or designation),
+- the instalment date (or a date range),
+- the opening date (or a date range),
+- the modification date (or a date range),
+- the instalment status,
+- the processing code,
+- the total amount (or an amount range) of the instalment,
+- the total amount (or an amount range) of the call,
+- the amount (or an amount range) of remaining principal.
+
+For each instalment returned, all data used in the search criteria will be indicated as well as:
+- the calculation date,
+- the amortisation (calculated, input, unpaid),
+- the interest (interest amount and taxes on interest calculated, unpaid, called, deferred and distributed),
+- the commissions 1, 2 and 3 (amount of commissions and taxes on commissions calculated, unpaid, called, deferred and distributed),
+- the charges (amount of charges and taxes on charges calculated, unpaid, called, deferred and distributed),
+- the tax on principal (calculated, unpaid, deferred and distributed),
+- the commitment commission (amount of commission and tax on commission calculated, unpaid),
+- the interest on unpaid amounts (amount of interest on unpaid amounts and taxes on interest on unpaid amounts calculated, unpaid),
+- the late penalties (amount of late penalties and taxes on late penalties calculated, unpaid),
+- the revenue stamp (calculated, unpaid, called, deferred and distributed).
+		</div>
+		<br>
+
+		</br>
+		<div class="mock-list">
+			<b>Identifiants : </b>			<table class="table_param">
+				<tr>
+				<td> 0
+				</td>				<td title="getAmortizableLoanInstallmentListRequest.amortizableLoanIdentifier.fileNumber"> <a href="../types/char6.html">fileNumber</a><br>Numéro de dossier.
+				</td>
+				</tr>
+				<tr>
+				<td> 1
+				</td>				<td title="getAmortizableLoanInstallmentListRequest.amortizableLoanIdentifier.orderNumber"> <a href="../types/char3.html">orderNumber</a><br>Numéro d'ordre.
+				</td>
+				</tr>
+				<tr>
+				<td> 2
+				</td>				<td title="getAmortizableLoanInstallmentListRequest.amortizableLoanIdentifier.branch.code"> <a href="../types/char5.html">code</a><br>Code de l'agence.
+				</td>
+				</tr>
+				<tr>
+				<td> 3
+				</td>				<td title="getAmortizableLoanInstallmentListRequest.amortizableLoanIdentifier.amendmentNumber"> <a href="../types/decimal2_0.html">amendmentNumber</a><br>Numéro d'avenant.
+				</td>
+				</tr>
+
+			</table>
+
+		</div>
+		<br>
+
+		</br>
+		<div class="mock-list">
+			<b>Sous Identifiants : </b>			<table class="table_param">
+				<tr>
+				<td> 0
+				</td>				<td title="getAmortizableLoanInstallmentListRequest.installmentNumber"> <a href="../types/integer.html">installmentNumber</a><br>Numéro d¿échéance.
+				</td>
+				</tr>
+
+			</table>
+
+		</div>
+		<br>
+
+		</br>
+		<div class="mock-list">
+			<b>Codes Erreur : </b>			<table>
+				<tr>
+				<td> 400
+				</td>				<td> Bad Request
+				</td>
+				</tr>
+
+			</table>
+
+		</div>
+
+	</div>
+
+</div>
+<div class="detail-column" id="d14" style="display:none; width: 65%">
+	<div class="detail">
+		<div class="mock-list">
+			<b>Description : </b>Intermediate validation steps
+		</div>
+
+	</div>
+
+</div>
+<div class="detail-column" id="d15" style="display:none; width: 65%">
+	<div class="detail">
+		<div class="mock-list">
+			<b>Service SOAP : </b> <a href="../services/createAmortizableLoanIntermediateValidationStep.html">createAmortizableLoanIntermediateValidationStep</a>
+		</div>
+		<div class="mock-list">
+			<b>Code retour succes : </b>201 - Created
+		</div>
+		<div class="mock-list">
+			<b>Uri : </b>http://soprabanking.com/amplitude/loans/v1/{loanId}/intermediatevalidationsteps
+		</div>
+		<div class="mock-list">
+			<b>Description : </b>The service createAmortizableLoanIntermediateValidationStep allows creating a bank or customer intermediate validation step of an instalment loan file corresponding to a single identifier received.
+
+Validation type is needed
+
+The service sends back disapprovals met on the repayment account. 
+		</div>
+		<br>
+
+		</br>
+		<div class="mock-list">
+			<b>Identifiants : </b>			<table class="table_param">
+				<tr>
+				<td> 0
+				</td>				<td title="createAmortizableLoanIntermediateValidationStepRequest.amortizableLoanIdentifier.branchCode"> <a href="../types/char5.html">branchCode</a><br>Code agence.
+				</td>
+				</tr>
+				<tr>
+				<td> 1
+				</td>				<td title="createAmortizableLoanIntermediateValidationStepRequest.amortizableLoanIdentifier.fileNumber"> <a href="../types/char6.html">fileNumber</a><br>Numéro de dossier.
+				</td>
+				</tr>
+				<tr>
+				<td> 2
+				</td>				<td title="createAmortizableLoanIntermediateValidationStepRequest.amortizableLoanIdentifier.orderNumber"> <a href="../types/char3.html">orderNumber</a><br>Numéro d'ordre.
+				</td>
+				</tr>
+				<tr>
+				<td> 3
+				</td>				<td title="createAmortizableLoanIntermediateValidationStepRequest.amortizableLoanIdentifier.amendmentNumber"> <a href="../types/decimal2_0.html">amendmentNumber</a><br>Numéro d'avenant.
+				</td>
+				</tr>
+
+			</table>
+
+		</div>
+		<br>
+
+		</br>
+		<div class="mock-list">
+			<b>Codes Erreur : </b>			<table>
+				<tr>
+				<td> 400
+				</td>				<td> Bad Request
+				</td>
+				</tr>
+
+			</table>
+
+		</div>
+
+	</div>
+
+</div>
+     </div> 
+  </div>
+  </div>
+
+  
+  <script src="../resources/jquery.js"></script>
+  <script src="../resources/doc.js"></script>
+</body>
+</html>

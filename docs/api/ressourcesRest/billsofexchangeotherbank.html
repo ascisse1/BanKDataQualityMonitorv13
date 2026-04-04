@@ -1,0 +1,320 @@
+<!DOCTYPE html>
+<html>
+<head>
+	<link rel="stylesheet" href="../resources/styleDocu.css" />
+    <link rel="stylesheet" href="../resources/font-awesome/css/font-awesome.min.css" />
+	<title>Documentation Xsd</title>
+	<meta charset="UTF-8" />
+</head>
+
+<body>
+  <div class="document">
+	<div class="header">		
+	</div>
+
+    <div class="tabs">
+        <div class="tabs-wrapper-selected" onclick="window.open('../liste-ressources.html', '_self');">
+            <div class="tabs-left-content" >Liste des ressources</div>
+        </div>
+        <div class="tabs-wrapper" onclick="window.open('../liste-services.html', '_self');">
+            <div class="tabs-left-content">Liste des services</div>
+        </div>
+        <div class="tabs-wrapper" onclick="window.open('../liste-types.html', '_self');">
+            <div class="tabs-right-content">Liste des types</div>
+        </div>
+    </div>
+
+	<div class="contenu">
+      <div class="breadcrumb"> 
+        <ul class="breadcrumb">
+           <li> <a href="../index.html"> Accueil </a></li>
+           <li> > </li>
+           <li> <a href="../liste-ressources.html"> Liste des ressources </a></li>
+           <li> > </li>
+           <li> billsofexchangeotherbank </li>
+        </ul>                    
+      </div>                    
+      
+      <div class="summary">
+        <div class="mock-list"> Nom ressource REST : billsofexchangeotherbank </div>
+        <div class="mock-list"> Programme Amplitude : guwrbillsofexchangeotherbank </div>
+        <div class="mock-list"> Email : support@soprabanking.com </div>        
+        <br/>
+            <div class="mock-list"> Bills of exchange issued from other banks</div>
+      </div>
+      
+      <div class="column-content" style="width:93%">
+        <div class="detail-column" style="width: 35%">
+          <div class="tree"> 
+<ul style="padding:0">
+	<li>
+<i class="fa fa-caret-down fa-fw" onclick="expand_or_collapse(this)">
+</i>		billsofexchangeotherbank		<ul>
+			<li>
+<i class="fa fa-caret-down fa-fw" onclick="expand_or_collapse(this)">
+</i>				v1				<ul>
+					<li>
+<i class="fa fa-fw">
+</i><span class="selectable" id="e0"> GET
+</span>
+					</li>
+					<li>
+<i class="fa fa-fw">
+</i><span class="selectable" id="e1"> GETLIST
+</span>
+					</li>
+
+				</ul>
+
+			</li>
+
+		</ul>
+
+	</li>
+
+</ul>
+          </div>
+        </div>
+                 
+        
+<div class="detail-column" id="d0" style="display:none; width: 65%">
+	<div class="detail">
+		<div class="mock-list">
+			<b>Service SOAP : </b> <a href="../services/getBillOfExchangeOtherBankDetail.html">getBillOfExchangeOtherBankDetail</a>
+		</div>
+		<div class="mock-list">
+			<b>Code retour succes : </b>200 - OK
+		</div>
+		<div class="mock-list">
+			<b>Uri : </b>http://soprabanking.com/amplitude/billsofexchangeotherbank/v1/{billId}
+		</div>
+		<div class="mock-list">
+			<b>Description : </b>The service getBillOfExchangeOtherBankDetail allows getting detailed information on a bill of exchange received from another bank corresponding to a unique identifier received.
+		</div>
+		<br>
+
+		</br>
+		<div class="mock-list">
+			<b>Identifiants : </b>			<table class="table_param">
+				<tr>
+				<td> 0
+				</td>				<td title="getBillOfExchangeOtherBankDetailRequest.branchCode"> <a href="../types/branchCode.html">branchCode</a><br>Numéro d'agence.
+				</td>
+				</tr>
+				<tr>
+				<td> 1
+				</td>				<td title="getBillOfExchangeOtherBankDetailRequest.establishmentAbroadIdentifier.branch"> <a href="../types/charMax10.html">branch</a><br>Etablissement.
+				</td>
+				</tr>
+				<tr>
+				<td> 2
+				</td>				<td title="getBillOfExchangeOtherBankDetailRequest.establishmentAbroadIdentifier.cashRegister"> <a href="../types/char5.html">cashRegister</a><br>Guichet.
+				</td>
+				</tr>
+				<tr>
+				<td> 3
+				</td>				<td title="getBillOfExchangeOtherBankDetailRequest.billNumber"> <a href="../types/billNumber.html">billNumber</a><br>Numéro d'effet.
+				</td>
+				</tr>
+
+			</table>
+
+		</div>
+		<br>
+
+		</br>
+		<div class="mock-list">
+			<b>Codes Erreur : </b>			<table>
+				<tr>
+				<td> 400
+				</td>				<td> Bad Request
+				</td>
+				</tr>
+
+			</table>
+
+		</div>
+
+	</div>
+
+</div>
+<div class="detail-column" id="d1" style="display:none; width: 65%">
+	<div class="detail">
+		<div class="mock-list">
+			<b>Service SOAP : </b> <a href="../services/getBillOfExchangeOtherBankList.html">getBillOfExchangeOtherBankList</a>
+		</div>
+		<div class="mock-list">
+			<b>Code retour succes : </b>200 - OK
+		</div>
+		<div class="mock-list">
+			<b>Uri : </b>http://soprabanking.com/amplitude/billsofexchangeotherbank/v1/
+		</div>
+		<div class="mock-list">
+			<b>Description : </b>The service getBillOfExchangeOtherBankList allows returning a list of bills of exchange issued from other banks corresponding to the search criteria received.
+
+The search is based on the optional criteria below:
+- the branch of the bill (code and/or designation),
+- the source branch (code and/or designation),
+- the drawee's bank code and/or branch sort code,
+- the presentation bank code and/or branch sort code,
+- the bill number,
+- the bill currency (alphanumeric code and/or digital code and/or designation),
+- the drawee identifier: internal or other bank drawee code and/or customer code and/or name,
+- the drawee's account in another bank: bank, branch sort code, account number,
+- the code of the bill type,
+- the linked event number,
+- the code of the linked bill type,
+- the presentation date.
+
+For each bill returned, all data used in the search criteria will be indicated.
+		</div>
+		<br>
+
+		</br>
+		<div class="mock-list">
+			<b>Parametres : </b>			<table class="table_param">
+				<tr>
+				<td>
+				</td>				<td title="getBillOfExchangeOtherBankListRequest.billCurrency.alphaCode"> <a href="../types/char3.html">X-SBS-billCurrencyAlphaCode</a><br>Code devise alphanumérique.
+				</td>				<td> Header
+				</td>
+				</tr>
+				<tr>
+				<td>
+				</td>				<td title="getBillOfExchangeOtherBankListRequest.billNumber"> <a href="../types/billNumber.html">X-SBS-billNumber</a><br>Numéro d'effet.
+				</td>				<td> Header
+				</td>
+				</tr>
+				<tr>
+				<td>
+				</td>				<td title="getBillOfExchangeOtherBankListRequest.billType"> <a href="../types/billOfExchangeTypeCode.html">X-SBS-billType</a><br>Code du type d'effet.
+				</td>				<td> Header
+				</td>
+				</tr>
+				<tr>
+				<td>
+				</td>				<td title="getBillOfExchangeOtherBankListRequest.branch.code"> <a href="../types/char5.html">X-SBS-branchCode</a><br>Code de l'agence.
+				</td>				<td> Header
+				</td>
+				</tr>
+				<tr>
+				<td>
+				</td>				<td title="getBillOfExchangeOtherBankListRequest.draweeAccountOtherBank.cashDesk"> <a href="../types/char5.html">X-SBS-draweeAccountCashDesk</a><br>Guichet.
+				</td>				<td> Header
+				</td>
+				</tr>
+				<tr>
+				<td>
+				</td>				<td title="getBillOfExchangeOtherBankListRequest.draweeAccountOtherBank.establishment"> <a href="../types/charMax10.html">X-SBS-draweeAccountEstablishment</a><br>Établissement bancaire.
+				</td>				<td> Header
+				</td>
+				</tr>
+				<tr>
+				<td>
+				</td>				<td title="getBillOfExchangeOtherBankListRequest.draweeAccountOtherBank.accountNumber"> <a href="../types/charMax25.html">X-SBS-draweeAccountNumber</a><br>Numéro de compte.
+				</td>				<td> Header
+				</td>
+				</tr>
+				<tr>
+				<td>
+				</td>				<td title="getBillOfExchangeOtherBankListRequest.draweeIdentifier.draweeCode"> <a href="../types/billOfExchangeDraweeCode.html">X-SBS-draweeCode</a><br>Code tiré interne ou autre banque.
+				</td>				<td> Header
+				</td>
+				</tr>
+				<tr>
+				<td>
+				</td>				<td title="getBillOfExchangeOtherBankListRequest.draweeIdentifier.customerCode"> <a href="../types/customerCode.html">X-SBS-draweeCustomerCode</a><br>Code client tiré.
+				</td>				<td> Header
+				</td>
+				</tr>
+				<tr>
+				<td>
+				</td>				<td title="getBillOfExchangeOtherBankListRequest.draweeEstablishment.branch"> <a href="../types/charMax10.html">X-SBS-draweeEstablishmentBranch</a><br>Etablissement.
+				</td>				<td> Header
+				</td>
+				</tr>
+				<tr>
+				<td>
+				</td>				<td title="getBillOfExchangeOtherBankListRequest.draweeEstablishment.cashRegister"> <a href="../types/char5.html">X-SBS-draweeEstablishmentCashRegister</a><br>Guichet.
+				</td>				<td> Header
+				</td>
+				</tr>
+				<tr>
+				<td>
+				</td>				<td title="getBillOfExchangeOtherBankListRequest.draweeIdentifier.name"> <a href="../types/charMax36.html">X-SBS-draweeName</a><br>Nom du tiré.
+				</td>				<td> Header
+				</td>
+				</tr>
+				<tr>
+				<td>
+				</td>				<td title="getBillOfExchangeOtherBankListRequest.eventNumber"> <a href="../types/eventNumber.html">X-SBS-eventNumber</a><br>Numéro d'événement associé.
+				</td>				<td> Header
+				</td>
+				</tr>
+				<tr>
+				<td>
+				</td>				<td title="getBillOfExchangeOtherBankListRequest.originalBranch.code"> <a href="../types/char5.html">X-SBS-originalBranchCode</a><br>Code de l'agence.
+				</td>				<td> Header
+				</td>
+				</tr>
+				<tr>
+				<td>
+				</td>				<td title="getBillOfExchangeOtherBankListRequest.presentationDate"> <a href="../types/date.html">X-SBS-presentationDate</a><br>Date de présentation.
+				</td>				<td> Header
+				</td>
+				</tr>
+				<tr>
+				<td>
+				</td>				<td title="getBillOfExchangeOtherBankListRequest.presentationEstablishment.branch"> <a href="../types/charMax10.html">X-SBS-presentationEstablishmentBranch</a><br>Etablissement.
+				</td>				<td> Header
+				</td>
+				</tr>
+				<tr>
+				<td>
+				</td>				<td title="getBillOfExchangeOtherBankListRequest.presentationEstablishment.cashRegister"> <a href="../types/char5.html">X-SBS-presentationEstablishmentCashRegister</a><br>Guichet.
+				</td>				<td> Header
+				</td>
+				</tr>
+				<tr>
+				<td>
+				</td>				<td title="getBillOfExchangeOtherBankListRequest.typeCode"> <a href="../types/billOfExchangeTypeCharacteristicsCode.html">X-SBS-typeCode</a><br>Code du type d'effet rattaché.
+				</td>				<td> Header
+				</td>
+				</tr>
+				<tr>
+				<td>
+				</td>				<td title="getBillOfExchangeOtherBankListRequest.billCurrency.numericCode"> <a href="../types/char3.html">X-SBS-billCurrencyNumericCode</a><br>Code devise numérique.
+				</td>				<td> Header
+				</td>
+				</tr>
+
+			</table>
+
+		</div>
+		<br>
+
+		</br>
+		<div class="mock-list">
+			<b>Codes Erreur : </b>			<table>
+				<tr>
+				<td> 400
+				</td>				<td> Bad Request
+				</td>
+				</tr>
+
+			</table>
+
+		</div>
+
+	</div>
+
+</div>
+     </div> 
+  </div>
+  </div>
+
+  
+  <script src="../resources/jquery.js"></script>
+  <script src="../resources/doc.js"></script>
+</body>
+</html>

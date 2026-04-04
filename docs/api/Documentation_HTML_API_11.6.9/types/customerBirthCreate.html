@@ -1,0 +1,393 @@
+<!DOCTYPE html >
+<html>
+<head>
+	<link rel="stylesheet" href="../resources/styleDocu.css" />
+  <link rel="stylesheet" href="../resources/font-awesome/css/font-awesome.min.css" />
+	<title>Documentation Xsd</title>
+	<meta charset="UTF-8" />
+</head>
+
+<body>
+  <div class="document">
+	<div class="header">
+		
+	</div>
+
+  <div class="tabs">
+    <div class="tabs-wrapper" onclick="window.open('../liste-ressources.html', '_self');">
+      <div class="tabs-left-content">
+        Liste des ressources
+      </div>
+    </div>
+    <div class="tabs-wrapper" onclick="window.open('../liste-services.html', '_self');">
+      <div class="tabs-left-content" >
+        Liste des services  
+      </div>
+    </div>
+    <div class="tabs-wrapper-selected" onclick="window.open('../liste-types.html', '_self');">
+      <div class="tabs-right-content">
+        Liste des types
+      </div>
+    </div>
+  </div>
+
+	
+
+	<div class="contenu">
+      <div class="breadcrumb"> 
+        <ul class="breadcrumb">
+           <li> <a href="../index.html"> Accueil </a></li>
+           <li> > </li>
+           <li> <a href="../liste-types.html"> Liste des types </a></li>
+           <li> > </li>
+           <li> customerBirthCreate </li>
+        </ul>                    
+      </div>                    
+      
+     
+      <div class="summary">
+			<div class="mock-list">
+				<b>Nom : </b>customerBirthCreate
+			</div>
+			<div class="mock-list">
+				<b> Description : </b>Informations sur la naissance d¿un client particulier.
+			</div>
+        
+        <div> </div>
+        <div class="mock-list"> Choix : Non</div>
+        
+      </div>
+                        
+      <div class="column-content">
+        <div class="detail-column">
+          <div class="tree"> 
+<ul>
+	<li>
+<i class="fa fa-caret-down fa-fw" onclick="expand_or_collapse(this)">
+</i>		customerBirthCreate		<ul style="display:block">
+			<li>
+<i class="fa fa-fw">
+</i><span class="selectable" id="e0"> holderSex : sex
+</span>
+			</li>
+			<li>
+<i class="fa fa-fw">
+</i><span class="selectable" id="e1"> maidenName : charMax36
+</span>
+			</li>
+			<li>
+<i class="fa fa-fw">
+</i><span class="selectable" id="e2"> birthDate : date
+</span>
+			</li>
+			<li>
+<i class="fa fa-fw">
+</i><span class="selectable" id="e3"> birthCity : charMax30
+</span>
+			</li>
+			<li>
+<i class="fa fa-fw">
+</i><span class="selectable" id="e4"> birthCounty : charMax30
+</span>
+			</li>
+			<li>
+<i class="fa fa-fw">
+</i><span class="selectable" id="e5"> birthRegion : charMax50
+</span>
+			</li>
+			<li>
+<i class="fa fa-fw">
+</i><span class="selectable" id="e6"> birthCountry : countryCode
+</span>
+			</li>
+
+		</ul>
+
+	</li>
+
+</ul>
+          </div>
+          
+          <div class="detail">
+				<p align="left">
+					Légende :<br />
+				</p>
+            <ul>
+               <li align="left">
+                  <i class="fa fa-key fa-fw">
+                  </i>
+                  = Elément obligatoire en saisie.
+               </li>
+               <li align="left">
+                  <span style="font-weight:bold"> [M]
+                  </span>
+                  = Elément multiple (0 à n occurrences).
+               </li>
+               <li align="left">
+                  <span style="font-weight:bold"> [C]
+                  </span>
+                  = Elément composé d'un choix à effectuer. Un seul choix autorisé.
+               </li>
+            </ul>
+            <p align="left">
+               Remarque : Un même élément peut regrouper plusieurs caractéristiques
+            </p>          
+          </div>
+          
+        </div>
+<div class="detail-column" id="d0" style="display:none">
+	<div class="detail">
+			<div class="mock-list">
+				<b>Nom : </b>holderSex
+			</div>
+			<div class="mock-list">
+				<b>Description : </b>Sexe du client.
+			</div>
+			<div class="mock-list">
+				<b>Commentaire : </b><p>Valeur par d&eacute;faut&nbsp;: <strong>sext.</strong></p>
+
+			</div>
+
+	</div>
+	<div class="detail">
+			<div class="mock-list">
+				<b>Nom : </b> <a href="../types/sex.html">sex</a>
+			</div>
+			<div class="mock-list">
+				<b> Description : </b>Sexe.
+			</div>
+			<div class="mock-list">
+				<b>Format : </b>string
+			</div>
+			<div class="mock-list">
+				<b>Valeurs possibles : </b>					<table class="table_enum" class="table_enum" class="table_enum">
+						<tr>
+						<td> F
+						</td>						<td class="td_right"> Féminin
+						</td>
+						</tr>
+						<tr>
+						<td> M
+						</td>						<td class="td_right"> Masculin
+						</td>
+						</tr>
+						<tr>
+						<td>  
+						</td>						<td class="td_right"> Non précisé
+						</td>
+						</tr>
+
+					</table>
+
+			</div>
+
+	</div>
+
+</div>
+<div class="detail-column" id="d1" style="display:none">
+	<div class="detail">
+			<div class="mock-list">
+				<b>Nom : </b>maidenName
+			</div>
+			<div class="mock-list">
+				<b>Description : </b>Nom de jeune fille.
+			</div>
+			<div class="mock-list">
+				<b>Commentaire : </b><p>Le nom de jeune fille ne doit pas &ecirc;tre renseign&eacute; si le sexe du client est masculin (<strong>M</strong>).</p>
+
+<p>Ce nom correspond soit au nom de jeune fille, soit au nom d&rsquo;&eacute;pouse si le param&egrave;tre <strong>NOM_EPOUSE</strong> existe en nomenclature <strong>098.</strong></p>
+
+<p>Valeur par d&eacute;faut&nbsp;: <strong>njf</strong></p>
+
+			</div>
+
+	</div>
+	<div class="detail">
+			<div class="mock-list">
+				<b>Nom : </b> <a href="../types/charMax36.html">charMax36</a>
+			</div>
+			<div class="mock-list">
+				<b> Description : </b>Chaîne composée d'au plus 36 caractères.
+			</div>
+			<div class="mock-list">
+				<b>Format : </b>string
+			</div>
+			<div class="mock-list">
+				<b>Longueur mini-maxi : </b>1 - 36
+			</div>
+
+	</div>
+
+</div>
+<div class="detail-column" id="d2" style="display:none">
+	<div class="detail">
+			<div class="mock-list">
+				<b>Nom : </b>birthDate
+			</div>
+			<div class="mock-list">
+				<b>Description : </b>Date de naissance.
+			</div>
+			<div class="mock-list">
+				<b>Commentaire : </b><p>Si le contr&ocirc;le est demand&eacute; avec l&rsquo;existence du param&egrave;tre <strong>CONTROLDNA</strong> en nomenclature <strong>098</strong>, l&rsquo;&acirc;ge du client ne doit pas exc&eacute;der l&rsquo;&acirc;ge maximum param&eacute;tr&eacute; dans le <strong>Montant 1</strong>.</p>
+
+<p>La date de naissance ne doit pas &ecirc;tre sup&eacute;rieure &agrave; la date comptable.</p>
+
+<p>Si le contr&ocirc;le d&rsquo;unicit&eacute; est demand&eacute; dans le <strong>Libell&eacute; 4</strong> (&eacute;gal &agrave; <strong>O</strong> (contr&ocirc;le non bloquant) ou <strong>B </strong>(contr&ocirc;le bloquant uniquement si l&rsquo;utilisateur n&rsquo;a pas le niveau de for&ccedil;age requis indiqu&eacute; dans le <strong>Montant 3</strong>)) pour le param&egrave;tre <strong>CTRIDENCL2</strong> mais pas dans le <strong>Libell&eacute; 2</strong> (diff&eacute;rent de <strong>O</strong> et <strong>B</strong>) pour le param&egrave;tre <strong>CTRIDENCL3 </strong>de la nomenclature <strong>098</strong>, alors il ne doit pas exister de client poss&eacute;dant les m&ecirc;mes nom, pr&eacute;nom, deuxi&egrave;me pr&eacute;nom et date de naissance.</p>
+
+<p>Si le contr&ocirc;le d&rsquo;unicit&eacute; du nom pour la Banque de France est demand&eacute; dans le <strong>Libell&eacute; 5</strong> (&eacute;gal &agrave; <strong>O</strong> (contr&ocirc;le non bloquant) ou <strong>B </strong>(contr&ocirc;le bloquant uniquement si l&rsquo;utilisateur n&rsquo;a pas le niveau de for&ccedil;age requis indiqu&eacute; dans le <strong>Montant 4</strong>)) pour le param&egrave;tre <strong>CTRIDENCLI</strong> de la nomenclature <strong>098</strong>, il ne doit pas exister de client avec les m&ecirc;mes nom (ou nom de jeune fille si le sexe du client est f&eacute;minin (<strong>F</strong>)) et date de naissance.</p>
+
+			</div>
+
+	</div>
+	<div class="detail">
+			<div class="mock-list">
+				<b>Nom : </b> <a href="../types/date.html">date</a>
+			</div>
+
+	</div>
+
+</div>
+<div class="detail-column" id="d3" style="display:none">
+	<div class="detail">
+			<div class="mock-list">
+				<b>Nom : </b>birthCity
+			</div>
+			<div class="mock-list">
+				<b>Description : </b>Ville de naissance.
+			</div>
+			<div class="mock-list">
+				<b>Commentaire : </b><p>Si la ville de naissance ou le nom de la m&egrave;re sont renseign&eacute;s, et si le contr&ocirc;le de v&eacute;rification des doublons est demand&eacute; dans le <strong>Libell&eacute; 2</strong> (&eacute;gal &agrave; <strong>O</strong> (contr&ocirc;le non bloquant) ou <strong>B </strong>(contr&ocirc;le bloquant uniquement si l&rsquo;utilisateur n&rsquo;a pas le niveau de for&ccedil;age requis indiqu&eacute; dans le <strong>Montant 1</strong>)) pour le param&egrave;tre <strong>CTRIDENCL3 </strong>de la nomenclature <strong>098</strong>, il ne doit pas exister de clients poss&eacute;dant les m&ecirc;mes nom, pr&eacute;nom, date de naissance, ville de naissance et/ou nom de m&egrave;re.</p>
+
+<p>Sinon, si le contr&ocirc;le de v&eacute;rification des doublons est demand&eacute; dans le <strong>Libell&eacute; 4</strong> (&eacute;gal &agrave; <strong>O</strong> (contr&ocirc;le non bloquant) ou <strong>B </strong>(contr&ocirc;le bloquant uniquement si l&rsquo;utilisateur n&rsquo;a pas le niveau de for&ccedil;age requis indiqu&eacute; dans le <strong>Montant 3</strong>)) pour le param&egrave;tre <strong>CTRIDENCLI </strong>de la nomenclature <strong>098</strong>, il ne doit pas exister de clients poss&eacute;dant les m&ecirc;mes nom, pr&eacute;nom, date de naissance et ville de naissance.</p>
+
+<p>Si les contr&ocirc;les d&rsquo;existence et de gestion en base de la ville sont demand&eacute;s respectivement dans le <strong>Montant 3</strong> et le <strong>Libell&eacute; 2</strong> du param&egrave;tre <strong>VILLE</strong> en nomenclature <strong>098</strong>, alors la ville doit exister dans la table des villes pour le d&eacute;partement de naissance et la r&eacute;gion de naissance s&rsquo;ils sont renseign&eacute;s.</p>
+
+<p>Si le pays n&rsquo;est pas un pays &eacute;tranger (<strong>Montant 3</strong> renseign&eacute; ou <strong>Montant 2</strong> de la nomenclature <strong>040 </strong>diff&eacute;rent de<strong> 4</strong>) alors on recherche le code localit&eacute; de la ville de naissance dans la table des villes.</p>
+
+<p>Valeur par d&eacute;faut (contr&ocirc;le de l&rsquo;obligation de saisie uniquement)&nbsp;: <strong>viln</strong></p>
+
+			</div>
+
+	</div>
+	<div class="detail">
+			<div class="mock-list">
+				<b>Nom : </b> <a href="../types/charMax30.html">charMax30</a>
+			</div>
+			<div class="mock-list">
+				<b> Description : </b>Chaîne composée d'au plus 30 caractères.
+			</div>
+			<div class="mock-list">
+				<b>Format : </b>string
+			</div>
+			<div class="mock-list">
+				<b>Longueur mini-maxi : </b>1 - 30
+			</div>
+
+	</div>
+
+</div>
+<div class="detail-column" id="d4" style="display:none">
+	<div class="detail">
+			<div class="mock-list">
+				<b>Nom : </b>birthCounty
+			</div>
+			<div class="mock-list">
+				<b>Description : </b>Département de naissance.
+			</div>
+			<div class="mock-list">
+				<b>Commentaire : </b><p>Si le contr&ocirc;le d&rsquo;existence est demand&eacute; dans le <strong>Libell&eacute; 4</strong> du param&egrave;tre <strong>VILLE</strong> en nomenclature <strong>098</strong>, alors si le d&eacute;partement de naissance n&rsquo;est pas renseign&eacute; et si le <strong>Libell&eacute; 4</strong> du param&egrave;tre <strong>CTRLDIVCLI</strong> de la nomenclature <strong>098</strong> est renseign&eacute; avec un code d&eacute;partement, alors le d&eacute;partement de naissance est aliment&eacute; avec le <strong>Libell&eacute; 1</strong> de la nomenclature <strong>191 </strong>pour ce code.</p>
+
+<p>Valeur par d&eacute;faut&nbsp;: <strong>lna</strong></p>
+
+			</div>
+
+	</div>
+	<div class="detail">
+			<div class="mock-list">
+				<b>Nom : </b> <a href="../types/charMax30.html">charMax30</a>
+			</div>
+			<div class="mock-list">
+				<b> Description : </b>Chaîne composée d'au plus 30 caractères.
+			</div>
+			<div class="mock-list">
+				<b>Format : </b>string
+			</div>
+			<div class="mock-list">
+				<b>Longueur mini-maxi : </b>1 - 30
+			</div>
+
+	</div>
+
+</div>
+<div class="detail-column" id="d5" style="display:none">
+	<div class="detail">
+			<div class="mock-list">
+				<b>Nom : </b>birthRegion
+			</div>
+			<div class="mock-list">
+				<b>Description : </b>Région de naissance.
+			</div>
+			<div class="mock-list">
+				<b>Commentaire : </b><p>Valeur par d&eacute;faut&nbsp;: <strong>regn </strong>si le contr&ocirc;le de la r&eacute;gion est demand&eacute; dans le param&egrave;tre <strong>VILLE</strong> en nomenclature <strong>098</strong> avec le <strong>Libell&eacute; 5 </strong>renseign&eacute; &agrave; <strong>O</strong>.</p>
+
+			</div>
+
+	</div>
+	<div class="detail">
+			<div class="mock-list">
+				<b>Nom : </b> <a href="../types/charMax50.html">charMax50</a>
+			</div>
+			<div class="mock-list">
+				<b> Description : </b>Chaîne composée d'au plus 50 caractères.
+			</div>
+			<div class="mock-list">
+				<b>Format : </b>string
+			</div>
+			<div class="mock-list">
+				<b>Longueur mini-maxi : </b>1 - 50
+			</div>
+
+	</div>
+
+</div>
+<div class="detail-column" id="d6" style="display:none">
+	<div class="detail">
+			<div class="mock-list">
+				<b>Nom : </b>birthCountry
+			</div>
+			<div class="mock-list">
+				<b>Description : </b>Pays de naissance.
+			</div>
+			<div class="mock-list">
+				<b>Commentaire : </b><p>Si le client est de type Particulier (<strong>1</strong>) et si le contr&ocirc;le d&rsquo;existence est demand&eacute; dans le <strong>Libell&eacute; 4</strong> du param&egrave;tre <strong>VILLE</strong> en nomenclature <strong>098&nbsp;</strong>alors si le pays de naissance est renseign&eacute;, il doit correspondre au code pays param&eacute;tr&eacute; dans le <strong>Libell&eacute; 4</strong> du libell&eacute; du d&eacute;partement (<strong>Libell&eacute; 1</strong>) de la nomenclature <strong>191</strong>.</p>
+
+<p>Valeur par d&eacute;faut&nbsp;: <strong>payn</strong></p>
+
+			</div>
+
+	</div>
+	<div class="detail">
+			<div class="mock-list">
+				<b>Nom : </b> <a href="../types/countryCode.html">countryCode</a>
+			</div>
+			<div class="mock-list">
+				<b> Description : </b>Code pays.
+			</div>
+			<div class="mock-list">
+				<b>Format : </b>string
+			</div>
+			<div class="mock-list">
+				<b>Longueur mini-maxi : </b>1 - 3
+			</div>
+
+	</div>
+
+</div>
+      </div> 
+  </div>
+
+  
+  <script src="../resources/jquery.js"></script>
+  <script src="../resources/doc.js"></script>
+</body>
+</html>

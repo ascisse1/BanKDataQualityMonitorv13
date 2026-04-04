@@ -1,0 +1,248 @@
+<!DOCTYPE html >
+<html>
+<head>
+	<link rel="stylesheet" href="../resources/styleDocu.css" />
+  <link rel="stylesheet" href="../resources/font-awesome/css/font-awesome.min.css" />
+	<title>Documentation Xsd</title>
+	<meta charset="UTF-8" />
+</head>
+
+<body>
+  <div class="document">
+	<div class="header">
+		
+	</div>
+
+  <div class="tabs">
+    <div class="tabs-wrapper" onclick="window.open('../liste-ressources.html', '_self');">
+      <div class="tabs-left-content">
+        Liste des ressources
+      </div>
+    </div>
+    <div class="tabs-wrapper" onclick="window.open('../liste-services.html', '_self');">
+      <div class="tabs-left-content" >
+        Liste des services  
+      </div>
+    </div>
+    <div class="tabs-wrapper-selected" onclick="window.open('../liste-types.html', '_self');">
+      <div class="tabs-right-content">
+        Liste des types
+      </div>
+    </div>
+  </div>
+
+	
+
+	<div class="contenu">
+      <div class="breadcrumb"> 
+        <ul class="breadcrumb">
+           <li> <a href="../index.html"> Accueil </a></li>
+           <li> > </li>
+           <li> <a href="../liste-types.html"> Liste des types </a></li>
+           <li> > </li>
+           <li> customerPaymentMethods </li>
+        </ul>                    
+      </div>                    
+      
+     
+      <div class="summary">
+			<div class="mock-list">
+				<b>Nom : </b>customerPaymentMethods
+			</div>
+			<div class="mock-list">
+				<b> Description : </b>Méthodes de paiement.
+			</div>
+        
+        <div> </div>
+        <div class="mock-list"> Choix : Non</div>
+        
+      </div>
+                        
+      <div class="column-content">
+        <div class="detail-column">
+          <div class="tree"> 
+<ul>
+	<li>
+<i class="fa fa-caret-down fa-fw" onclick="expand_or_collapse(this)">
+</i>		customerPaymentMethods		<ul style="display:block">
+			<li>
+<i class="fa fa-fw">
+</i><span class="selectable" id="e0"> chequeBookFacilitySuspension : char1
+</span>
+			</li>
+			<li>
+<i class="fa fa-fw">
+</i><span class="selectable" id="e1"> chequeBookFacilitySuspensionDate : date
+</span>
+			</li>
+			<li>
+<i class="fa fa-fw">
+</i><span class="selectable" id="e2"> withdrawalOfCreditCard : char1
+</span>
+			</li>
+			<li>
+<i class="fa fa-fw">
+</i><span class="selectable" id="e3"> dateOfWithdrawalOfCreditCard : date
+</span>
+			</li>
+
+		</ul>
+
+	</li>
+
+</ul>
+          </div>
+          
+          <div class="detail">
+				<p align="left">
+					Légende :<br />
+				</p>
+            <ul>
+               <li align="left">
+                  <i class="fa fa-key fa-fw">
+                  </i>
+                  = Elément obligatoire en saisie.
+               </li>
+               <li align="left">
+                  <span style="font-weight:bold"> [M]
+                  </span>
+                  = Elément multiple (0 à n occurrences).
+               </li>
+               <li align="left">
+                  <span style="font-weight:bold"> [C]
+                  </span>
+                  = Elément composé d'un choix à effectuer. Un seul choix autorisé.
+               </li>
+            </ul>
+            <p align="left">
+               Remarque : Un même élément peut regrouper plusieurs caractéristiques
+            </p>          
+          </div>
+          
+        </div>
+<div class="detail-column" id="d0" style="display:none">
+	<div class="detail">
+			<div class="mock-list">
+				<b>Nom : </b>chequeBookFacilitySuspension
+			</div>
+			<div class="mock-list">
+				<b>Description : </b>Interdiction de chéquier.
+			</div>
+			<div class="mock-list">
+				<b>Commentaire : </b><p>Valeur par d&eacute;faut&nbsp;: <strong>ichq</strong></p>
+
+			</div>
+
+	</div>
+	<div class="detail">
+			<div class="mock-list">
+				<b>Nom : </b> <a href="../types/char1.html">char1</a>
+			</div>
+			<div class="mock-list">
+				<b> Description : </b>Type avec un nombre de caractères égal à 1.
+			</div>
+			<div class="mock-list">
+				<b>Format : </b>string
+			</div>
+			<div class="mock-list">
+				<b>Longueur fixe : </b>1
+			</div>
+
+	</div>
+
+</div>
+<div class="detail-column" id="d1" style="display:none">
+	<div class="detail">
+			<div class="mock-list">
+				<b>Nom : </b>chequeBookFacilitySuspensionDate
+			</div>
+			<div class="mock-list">
+				<b>Description : </b>Date d¿interdiction de chéquier.
+			</div>
+			<div class="mock-list">
+				<b>Commentaire : </b><p>La date d&rsquo;interdiction de ch&eacute;quier ne peut &ecirc;tre renseign&eacute;e que s&rsquo;il y a interdiction de ch&eacute;quier.</p>
+
+<p>Elle doit &ecirc;tre ant&eacute;rieure ou &eacute;gale &agrave; la date comptable.</p>
+
+<p>Si elle n&rsquo;est pas renseign&eacute;e et qu&rsquo;il y a interdiction de ch&eacute;quier, alors elle est forc&eacute;e &agrave; la date comptable.</p>
+
+<p>Valeur par d&eacute;faut s&rsquo;il y a interdiction de ch&eacute;quier (contr&ocirc;le de l&rsquo;obligation de saisie uniquement)&nbsp;: <strong>dichq</strong></p>
+
+			</div>
+
+	</div>
+	<div class="detail">
+			<div class="mock-list">
+				<b>Nom : </b> <a href="../types/date.html">date</a>
+			</div>
+
+	</div>
+
+</div>
+<div class="detail-column" id="d2" style="display:none">
+	<div class="detail">
+			<div class="mock-list">
+				<b>Nom : </b>withdrawalOfCreditCard
+			</div>
+			<div class="mock-list">
+				<b>Description : </b>Interdiction de carte bancaire.
+			</div>
+			<div class="mock-list">
+				<b>Commentaire : </b><p>Valeur par d&eacute;faut&nbsp;: <strong>icb</strong></p>
+
+			</div>
+
+	</div>
+	<div class="detail">
+			<div class="mock-list">
+				<b>Nom : </b> <a href="../types/char1.html">char1</a>
+			</div>
+			<div class="mock-list">
+				<b> Description : </b>Type avec un nombre de caractères égal à 1.
+			</div>
+			<div class="mock-list">
+				<b>Format : </b>string
+			</div>
+			<div class="mock-list">
+				<b>Longueur fixe : </b>1
+			</div>
+
+	</div>
+
+</div>
+<div class="detail-column" id="d3" style="display:none">
+	<div class="detail">
+			<div class="mock-list">
+				<b>Nom : </b>dateOfWithdrawalOfCreditCard
+			</div>
+			<div class="mock-list">
+				<b>Description : </b>Date d'interdiction de carte bancaire.
+			</div>
+			<div class="mock-list">
+				<b>Commentaire : </b><p>La date d&rsquo;interdiction de carte bancaire ne peut &ecirc;tre renseign&eacute;e que s&rsquo;il y a interdiction de carte bancaire.</p>
+
+<p>Elle doit &ecirc;tre ant&eacute;rieure ou &eacute;gale &agrave; la date comptable.</p>
+
+<p>Si elle n&rsquo;est pas renseign&eacute;e et qu&rsquo;il y a interdiction de carte bancaire, alors elle est forc&eacute;e &agrave; la date comptable.</p>
+
+<p>Valeur par d&eacute;faut s&rsquo;il y a interdiction de carte (contr&ocirc;le de l&rsquo;obligation de saisie uniquement)&nbsp;: <strong>dicb</strong></p>
+
+			</div>
+
+	</div>
+	<div class="detail">
+			<div class="mock-list">
+				<b>Nom : </b> <a href="../types/date.html">date</a>
+			</div>
+
+	</div>
+
+</div>
+      </div> 
+  </div>
+
+  
+  <script src="../resources/jquery.js"></script>
+  <script src="../resources/doc.js"></script>
+</body>
+</html>

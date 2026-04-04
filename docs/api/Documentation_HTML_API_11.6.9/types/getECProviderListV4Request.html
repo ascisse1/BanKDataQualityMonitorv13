@@ -1,0 +1,961 @@
+<!DOCTYPE html >
+<html>
+<head>
+	<link rel="stylesheet" href="../resources/styleDocu.css" />
+  <link rel="stylesheet" href="../resources/font-awesome/css/font-awesome.min.css" />
+	<title>Documentation Xsd</title>
+	<meta charset="UTF-8" />
+</head>
+
+<body>
+  <div class="document">
+	<div class="header">
+		
+	</div>
+
+  <div class="tabs">
+    <div class="tabs-wrapper" onclick="window.open('../liste-ressources.html', '_self');">
+      <div class="tabs-left-content">
+        Liste des ressources
+      </div>
+    </div>
+    <div class="tabs-wrapper" onclick="window.open('../liste-services.html', '_self');">
+      <div class="tabs-left-content" >
+        Liste des services  
+      </div>
+    </div>
+    <div class="tabs-wrapper-selected" onclick="window.open('../liste-types.html', '_self');">
+      <div class="tabs-right-content">
+        Liste des types
+      </div>
+    </div>
+  </div>
+
+	
+
+	<div class="contenu">
+      <div class="breadcrumb"> 
+        <ul class="breadcrumb">
+           <li> <a href="../index.html"> Accueil </a></li>
+           <li> > </li>
+           <li> <a href="../liste-types.html"> Liste des types </a></li>
+           <li> > </li>
+           <li> getECProviderListV4Request </li>
+        </ul>                    
+      </div>                    
+      
+     
+      <div class="summary">
+			<div class="mock-list">
+				<b>Nom : </b>getECProviderListV4Request
+			</div>
+			<div class="mock-list">
+				<b> Description : </b>Requête de liste des fournisseurs
+			</div>
+        
+        <div> </div>
+        <div class="mock-list"> Choix : Non</div>
+        
+      </div>
+                        
+      <div class="column-content">
+        <div class="detail-column">
+          <div class="tree"> 
+<ul>
+	<li>
+<i class="fa fa-caret-down fa-fw" onclick="expand_or_collapse(this)">
+</i>		getECProviderListV4Request		<ul style="display:block">
+			<li>
+<i class="fa fa-fw">
+</i><span class="selectable" id="e0"> providerId : decimal6_0
+</span>
+			</li>
+			<li>
+<i class="fa fa-fw">
+</i><span class="selectable" id="e1"> providerName : charMax40
+</span>
+			</li>
+			<li>
+<i class="fa fa-fw">
+</i><span class="selectable" id="e2"> paymentType : providerPaymentType
+</span>
+			</li>
+			<li>
+<i class="fa fa-fw">
+</i><span class="selectable" id="e3"> mandatoryContract : boolean
+</span>
+			</li>
+			<li>
+<i class="fa fa-fw">
+</i><span class="selectable" id="e4"> communicationMethod : providerCommunicationMethod
+</span>
+			</li>
+			<li>
+<i class="fa fa-fw">
+</i><span class="selectable" id="e5"> integrationMethod : providerIntegrationMethodv2
+</span>
+			</li>
+			<li>
+<i class="fa fa-caret-down fa-fw" onclick="expand_or_collapse(this)">
+</i><span class="selectable" id="e6"> paymentChannelsIdentification : paymentChannelsIdentificationLimited
+</span>				<ul style="display:block">
+					<li>
+<i class="fa fa-caret-down fa-fw" onclick="expand_or_collapse(this)">
+</i><span class="selectable" id="e7"> paymentChannelIdentification1 : paymentChannelIdentification
+</span>						<ul style="display:block">
+							<li>
+<i class="fa fa-fw">
+</i><i class="fa fa-key fa-fw">
+</i><span class="selectable" id="e8"> paymentUseChannel : paymentUseChannel
+</span>
+							</li>
+							<li>
+<i class="fa fa-fw">
+</i><span class="selectable" id="e9"> channelId : channelId
+</span>
+							</li>
+
+						</ul>
+
+					</li>
+					<li>
+<i class="fa fa-caret-down fa-fw" onclick="expand_or_collapse(this)">
+</i><span class="selectable" id="e10"> paymentChannelIdentification2 : paymentChannelIdentification
+</span>						<ul style="display:block">
+							<li>
+<i class="fa fa-fw">
+</i><i class="fa fa-key fa-fw">
+</i><span class="selectable" id="e11"> paymentUseChannel : paymentUseChannel
+</span>
+							</li>
+							<li>
+<i class="fa fa-fw">
+</i><span class="selectable" id="e12"> channelId : channelId
+</span>
+							</li>
+
+						</ul>
+
+					</li>
+					<li>
+<i class="fa fa-caret-down fa-fw" onclick="expand_or_collapse(this)">
+</i><span class="selectable" id="e13"> paymentChannelIdentification3 : paymentChannelIdentification
+</span>						<ul style="display:block">
+							<li>
+<i class="fa fa-fw">
+</i><i class="fa fa-key fa-fw">
+</i><span class="selectable" id="e14"> paymentUseChannel : paymentUseChannel
+</span>
+							</li>
+							<li>
+<i class="fa fa-fw">
+</i><span class="selectable" id="e15"> channelId : channelId
+</span>
+							</li>
+
+						</ul>
+
+					</li>
+					<li>
+<i class="fa fa-caret-down fa-fw" onclick="expand_or_collapse(this)">
+</i><span class="selectable" id="e16"> paymentChannelIdentification4 : paymentChannelIdentification
+</span>						<ul style="display:block">
+							<li>
+<i class="fa fa-fw">
+</i><i class="fa fa-key fa-fw">
+</i><span class="selectable" id="e17"> paymentUseChannel : paymentUseChannel
+</span>
+							</li>
+							<li>
+<i class="fa fa-fw">
+</i><span class="selectable" id="e18"> channelId : channelId
+</span>
+							</li>
+
+						</ul>
+
+					</li>
+					<li>
+<i class="fa fa-caret-down fa-fw" onclick="expand_or_collapse(this)">
+</i><span class="selectable" id="e19"> paymentChannelIdentification5 : paymentChannelIdentification
+</span>						<ul style="display:block">
+							<li>
+<i class="fa fa-fw">
+</i><i class="fa fa-key fa-fw">
+</i><span class="selectable" id="e20"> paymentUseChannel : paymentUseChannel
+</span>
+							</li>
+							<li>
+<i class="fa fa-fw">
+</i><span class="selectable" id="e21"> channelId : channelId
+</span>
+							</li>
+
+						</ul>
+
+					</li>
+
+				</ul>
+
+			</li>
+
+		</ul>
+
+	</li>
+
+</ul>
+          </div>
+          
+          <div class="detail">
+				<p align="left">
+					Légende :<br />
+				</p>
+            <ul>
+               <li align="left">
+                  <i class="fa fa-key fa-fw">
+                  </i>
+                  = Elément obligatoire en saisie.
+               </li>
+               <li align="left">
+                  <span style="font-weight:bold"> [M]
+                  </span>
+                  = Elément multiple (0 à n occurrences).
+               </li>
+               <li align="left">
+                  <span style="font-weight:bold"> [C]
+                  </span>
+                  = Elément composé d'un choix à effectuer. Un seul choix autorisé.
+               </li>
+            </ul>
+            <p align="left">
+               Remarque : Un même élément peut regrouper plusieurs caractéristiques
+            </p>          
+          </div>
+          
+        </div>
+<div class="detail-column" id="d0" style="display:none">
+	<div class="detail">
+			<div class="mock-list">
+				<b>Nom : </b>providerId
+			</div>
+			<div class="mock-list">
+				<b>Description : </b>Identifiant du fournisseur
+			</div>
+
+	</div>
+	<div class="detail">
+			<div class="mock-list">
+				<b>Nom : </b> <a href="../types/decimal6_0.html">decimal6_0</a>
+			</div>
+			<div class="mock-list">
+				<b> Description : </b>Type décimal à 6 chiffres dont 0 décimale.
+			</div>
+			<div class="mock-list">
+				<b>Format : </b>decimal
+			</div>
+			<div class="mock-list">
+				<b>Nombre total de chiffres : </b>6
+			</div>
+
+	</div>
+
+</div>
+<div class="detail-column" id="d1" style="display:none">
+	<div class="detail">
+			<div class="mock-list">
+				<b>Nom : </b>providerName
+			</div>
+			<div class="mock-list">
+				<b>Description : </b>Nom du fournisseur
+			</div>
+
+	</div>
+	<div class="detail">
+			<div class="mock-list">
+				<b>Nom : </b> <a href="../types/charMax40.html">charMax40</a>
+			</div>
+			<div class="mock-list">
+				<b> Description : </b>Chaîne composée d'au plus 40 caractères.
+			</div>
+			<div class="mock-list">
+				<b>Format : </b>string
+			</div>
+			<div class="mock-list">
+				<b>Longueur mini-maxi : </b>1 - 40
+			</div>
+
+	</div>
+
+</div>
+<div class="detail-column" id="d2" style="display:none">
+	<div class="detail">
+			<div class="mock-list">
+				<b>Nom : </b>paymentType
+			</div>
+			<div class="mock-list">
+				<b>Description : </b>Type de paiement possible
+			</div>
+
+	</div>
+	<div class="detail">
+			<div class="mock-list">
+				<b>Nom : </b> <a href="../types/providerPaymentType.html">providerPaymentType</a>
+			</div>
+			<div class="mock-list">
+				<b> Description : </b>Type de paiement.
+			</div>
+			<div class="mock-list">
+				<b>Format : </b>string
+			</div>
+			<div class="mock-list">
+				<b>Valeurs possibles : </b>					<table class="table_enum" class="table_enum">
+						<tr>
+						<td> 1
+						</td>						<td class="td_right"> Paiement de factures
+						</td>
+						</tr>
+						<tr>
+						<td> 2
+						</td>						<td class="td_right"> Pré paiement
+						</td>
+						</tr>
+
+					</table>
+
+			</div>
+
+	</div>
+
+</div>
+<div class="detail-column" id="d3" style="display:none">
+	<div class="detail">
+			<div class="mock-list">
+				<b>Nom : </b>mandatoryContract
+			</div>
+			<div class="mock-list">
+				<b>Description : </b>Contrat obligatoire
+			</div>
+
+	</div>
+	<div class="detail">
+			<div class="mock-list">
+				<b>Nom : </b> <a href="../types/boolean.html">boolean</a>
+			</div>
+
+	</div>
+
+</div>
+<div class="detail-column" id="d4" style="display:none">
+	<div class="detail">
+			<div class="mock-list">
+				<b>Nom : </b>communicationMethod
+			</div>
+			<div class="mock-list">
+				<b>Description : </b>Mode de communication
+			</div>
+
+	</div>
+	<div class="detail">
+			<div class="mock-list">
+				<b>Nom : </b> <a href="../types/providerCommunicationMethod.html">providerCommunicationMethod</a>
+			</div>
+			<div class="mock-list">
+				<b> Description : </b>Mode de communication d'un fournisseur.
+			</div>
+			<div class="mock-list">
+				<b>Format : </b>string
+			</div>
+			<div class="mock-list">
+				<b>Valeurs possibles : </b>					<table class="table_enum" class="table_enum">
+						<tr>
+						<td> S
+						</td>						<td class="td_right"> Synchrone
+						</td>
+						</tr>
+						<tr>
+						<td> A
+						</td>						<td class="td_right"> Asynchrone
+						</td>
+						</tr>
+
+					</table>
+
+			</div>
+
+	</div>
+
+</div>
+<div class="detail-column" id="d5" style="display:none">
+	<div class="detail">
+			<div class="mock-list">
+				<b>Nom : </b>integrationMethod
+			</div>
+			<div class="mock-list">
+				<b>Description : </b>Mode d¿intégration du référentiel des factures/contrats
+			</div>
+
+	</div>
+	<div class="detail">
+			<div class="mock-list">
+				<b>Nom : </b> <a href="../types/providerIntegrationMethodv2.html">providerIntegrationMethodv2</a>
+			</div>
+			<div class="mock-list">
+				<b> Description : </b>Mode d'intégration du référentiel des factures du fournisseur.
+			</div>
+			<div class="mock-list">
+				<b>Format : </b>string
+			</div>
+			<div class="mock-list">
+				<b>Valeurs possibles : </b>					<table class="table_enum" class="table_enum" class="table_enum">
+						<tr>
+						<td> R
+						</td>						<td class="td_right"> Annule et remplace
+						</td>
+						</tr>
+						<tr>
+						<td> I
+						</td>						<td class="td_right"> Interrogation
+						</td>
+						</tr>
+						<tr>
+						<td> M
+						</td>						<td class="td_right"> Mise à jour
+						</td>
+						</tr>
+
+					</table>
+
+			</div>
+
+	</div>
+
+</div>
+<div class="detail-column" id="d6" style="display:none">
+	<div class="detail">
+			<div class="mock-list">
+				<b>Nom : </b>paymentChannelsIdentification
+			</div>
+			<div class="mock-list">
+				<b>Description : </b>Canaux de paiement possibles
+			</div>
+
+	</div>
+	<div class="detail">
+			<div class="mock-list">
+				<b>Nom : </b> <a href="../types/paymentChannelsIdentificationLimited.html">paymentChannelsIdentificationLimited</a>
+			</div>
+			<div class="mock-list">
+				<b> Description : </b>Informations sur les canaux
+			</div>
+
+	</div>
+
+</div>
+<div class="detail-column" id="d7" style="display:none">
+	<div class="detail">
+			<div class="mock-list">
+				<b>Nom : </b>paymentChannelIdentification1
+			</div>
+			<div class="mock-list">
+				<b>Description : </b>Canal 1
+			</div>
+
+	</div>
+	<div class="detail">
+			<div class="mock-list">
+				<b>Nom : </b> <a href="../types/paymentChannelIdentification.html">paymentChannelIdentification</a>
+			</div>
+			<div class="mock-list">
+				<b> Description : </b>Identification d'un canal de paiement.
+			</div>
+
+	</div>
+
+</div>
+<div class="detail-column" id="d8" style="display:none">
+	<div class="detail">
+			<div class="mock-list">
+				<b>Nom : </b>paymentUseChannel
+			</div>
+			<div class="mock-list">
+				<b>Description : </b>Canal d'utilisation
+			</div>
+
+	</div>
+	<div class="detail">
+			<div class="mock-list">
+				<b>Nom : </b> <a href="../types/paymentUseChannel.html">paymentUseChannel</a>
+			</div>
+			<div class="mock-list">
+				<b> Description : </b>Canal de règlement
+			</div>
+			<div class="mock-list">
+				<b>Format : </b>string
+			</div>
+			<div class="mock-list">
+				<b>Valeurs possibles : </b>					<table class="table_enum" class="table_enum" class="table_enum" class="table_enum" class="table_enum">
+						<tr>
+						<td> 1
+						</td>						<td class="td_right"> Canal web
+						</td>
+						</tr>
+						<tr>
+						<td> 2
+						</td>						<td class="td_right"> Canal agence
+						</td>
+						</tr>
+						<tr>
+						<td> 3
+						</td>						<td class="td_right"> Canal monétique
+						</td>
+						</tr>
+						<tr>
+						<td> 4
+						</td>						<td class="td_right"> Canal commerçant
+						</td>
+						</tr>
+						<tr>
+						<td> 5
+						</td>						<td class="td_right"> Canal mobile
+						</td>
+						</tr>
+
+					</table>
+
+			</div>
+
+	</div>
+
+</div>
+<div class="detail-column" id="d9" style="display:none">
+	<div class="detail">
+			<div class="mock-list">
+				<b>Nom : </b>channelId
+			</div>
+			<div class="mock-list">
+				<b>Description : </b>Identifiant du canal de paiement.
+			</div>
+
+	</div>
+	<div class="detail">
+			<div class="mock-list">
+				<b>Nom : </b> <a href="../types/channelId.html">channelId</a>
+			</div>
+			<div class="mock-list">
+				<b> Description : </b>Identifiant d'un canal de paiement.
+			</div>
+			<div class="mock-list">
+				<b>Format : </b>string
+			</div>
+
+	</div>
+
+</div>
+<div class="detail-column" id="d10" style="display:none">
+	<div class="detail">
+			<div class="mock-list">
+				<b>Nom : </b>paymentChannelIdentification2
+			</div>
+			<div class="mock-list">
+				<b>Description : </b>Canal 2
+			</div>
+
+	</div>
+	<div class="detail">
+			<div class="mock-list">
+				<b>Nom : </b> <a href="../types/paymentChannelIdentification.html">paymentChannelIdentification</a>
+			</div>
+			<div class="mock-list">
+				<b> Description : </b>Identification d'un canal de paiement.
+			</div>
+
+	</div>
+
+</div>
+<div class="detail-column" id="d11" style="display:none">
+	<div class="detail">
+			<div class="mock-list">
+				<b>Nom : </b>paymentUseChannel
+			</div>
+			<div class="mock-list">
+				<b>Description : </b>Canal d'utilisation
+			</div>
+
+	</div>
+	<div class="detail">
+			<div class="mock-list">
+				<b>Nom : </b> <a href="../types/paymentUseChannel.html">paymentUseChannel</a>
+			</div>
+			<div class="mock-list">
+				<b> Description : </b>Canal de règlement
+			</div>
+			<div class="mock-list">
+				<b>Format : </b>string
+			</div>
+			<div class="mock-list">
+				<b>Valeurs possibles : </b>					<table class="table_enum" class="table_enum" class="table_enum" class="table_enum" class="table_enum">
+						<tr>
+						<td> 1
+						</td>						<td class="td_right"> Canal web
+						</td>
+						</tr>
+						<tr>
+						<td> 2
+						</td>						<td class="td_right"> Canal agence
+						</td>
+						</tr>
+						<tr>
+						<td> 3
+						</td>						<td class="td_right"> Canal monétique
+						</td>
+						</tr>
+						<tr>
+						<td> 4
+						</td>						<td class="td_right"> Canal commerçant
+						</td>
+						</tr>
+						<tr>
+						<td> 5
+						</td>						<td class="td_right"> Canal mobile
+						</td>
+						</tr>
+
+					</table>
+
+			</div>
+
+	</div>
+
+</div>
+<div class="detail-column" id="d12" style="display:none">
+	<div class="detail">
+			<div class="mock-list">
+				<b>Nom : </b>channelId
+			</div>
+			<div class="mock-list">
+				<b>Description : </b>Identifiant du canal de paiement.
+			</div>
+
+	</div>
+	<div class="detail">
+			<div class="mock-list">
+				<b>Nom : </b> <a href="../types/channelId.html">channelId</a>
+			</div>
+			<div class="mock-list">
+				<b> Description : </b>Identifiant d'un canal de paiement.
+			</div>
+			<div class="mock-list">
+				<b>Format : </b>string
+			</div>
+
+	</div>
+
+</div>
+<div class="detail-column" id="d13" style="display:none">
+	<div class="detail">
+			<div class="mock-list">
+				<b>Nom : </b>paymentChannelIdentification3
+			</div>
+			<div class="mock-list">
+				<b>Description : </b>Canal 3
+			</div>
+
+	</div>
+	<div class="detail">
+			<div class="mock-list">
+				<b>Nom : </b> <a href="../types/paymentChannelIdentification.html">paymentChannelIdentification</a>
+			</div>
+			<div class="mock-list">
+				<b> Description : </b>Identification d'un canal de paiement.
+			</div>
+
+	</div>
+
+</div>
+<div class="detail-column" id="d14" style="display:none">
+	<div class="detail">
+			<div class="mock-list">
+				<b>Nom : </b>paymentUseChannel
+			</div>
+			<div class="mock-list">
+				<b>Description : </b>Canal d'utilisation
+			</div>
+
+	</div>
+	<div class="detail">
+			<div class="mock-list">
+				<b>Nom : </b> <a href="../types/paymentUseChannel.html">paymentUseChannel</a>
+			</div>
+			<div class="mock-list">
+				<b> Description : </b>Canal de règlement
+			</div>
+			<div class="mock-list">
+				<b>Format : </b>string
+			</div>
+			<div class="mock-list">
+				<b>Valeurs possibles : </b>					<table class="table_enum" class="table_enum" class="table_enum" class="table_enum" class="table_enum">
+						<tr>
+						<td> 1
+						</td>						<td class="td_right"> Canal web
+						</td>
+						</tr>
+						<tr>
+						<td> 2
+						</td>						<td class="td_right"> Canal agence
+						</td>
+						</tr>
+						<tr>
+						<td> 3
+						</td>						<td class="td_right"> Canal monétique
+						</td>
+						</tr>
+						<tr>
+						<td> 4
+						</td>						<td class="td_right"> Canal commerçant
+						</td>
+						</tr>
+						<tr>
+						<td> 5
+						</td>						<td class="td_right"> Canal mobile
+						</td>
+						</tr>
+
+					</table>
+
+			</div>
+
+	</div>
+
+</div>
+<div class="detail-column" id="d15" style="display:none">
+	<div class="detail">
+			<div class="mock-list">
+				<b>Nom : </b>channelId
+			</div>
+			<div class="mock-list">
+				<b>Description : </b>Identifiant du canal de paiement.
+			</div>
+
+	</div>
+	<div class="detail">
+			<div class="mock-list">
+				<b>Nom : </b> <a href="../types/channelId.html">channelId</a>
+			</div>
+			<div class="mock-list">
+				<b> Description : </b>Identifiant d'un canal de paiement.
+			</div>
+			<div class="mock-list">
+				<b>Format : </b>string
+			</div>
+
+	</div>
+
+</div>
+<div class="detail-column" id="d16" style="display:none">
+	<div class="detail">
+			<div class="mock-list">
+				<b>Nom : </b>paymentChannelIdentification4
+			</div>
+			<div class="mock-list">
+				<b>Description : </b>Canal 4
+			</div>
+
+	</div>
+	<div class="detail">
+			<div class="mock-list">
+				<b>Nom : </b> <a href="../types/paymentChannelIdentification.html">paymentChannelIdentification</a>
+			</div>
+			<div class="mock-list">
+				<b> Description : </b>Identification d'un canal de paiement.
+			</div>
+
+	</div>
+
+</div>
+<div class="detail-column" id="d17" style="display:none">
+	<div class="detail">
+			<div class="mock-list">
+				<b>Nom : </b>paymentUseChannel
+			</div>
+			<div class="mock-list">
+				<b>Description : </b>Canal d'utilisation
+			</div>
+
+	</div>
+	<div class="detail">
+			<div class="mock-list">
+				<b>Nom : </b> <a href="../types/paymentUseChannel.html">paymentUseChannel</a>
+			</div>
+			<div class="mock-list">
+				<b> Description : </b>Canal de règlement
+			</div>
+			<div class="mock-list">
+				<b>Format : </b>string
+			</div>
+			<div class="mock-list">
+				<b>Valeurs possibles : </b>					<table class="table_enum" class="table_enum" class="table_enum" class="table_enum" class="table_enum">
+						<tr>
+						<td> 1
+						</td>						<td class="td_right"> Canal web
+						</td>
+						</tr>
+						<tr>
+						<td> 2
+						</td>						<td class="td_right"> Canal agence
+						</td>
+						</tr>
+						<tr>
+						<td> 3
+						</td>						<td class="td_right"> Canal monétique
+						</td>
+						</tr>
+						<tr>
+						<td> 4
+						</td>						<td class="td_right"> Canal commerçant
+						</td>
+						</tr>
+						<tr>
+						<td> 5
+						</td>						<td class="td_right"> Canal mobile
+						</td>
+						</tr>
+
+					</table>
+
+			</div>
+
+	</div>
+
+</div>
+<div class="detail-column" id="d18" style="display:none">
+	<div class="detail">
+			<div class="mock-list">
+				<b>Nom : </b>channelId
+			</div>
+			<div class="mock-list">
+				<b>Description : </b>Identifiant du canal de paiement.
+			</div>
+
+	</div>
+	<div class="detail">
+			<div class="mock-list">
+				<b>Nom : </b> <a href="../types/channelId.html">channelId</a>
+			</div>
+			<div class="mock-list">
+				<b> Description : </b>Identifiant d'un canal de paiement.
+			</div>
+			<div class="mock-list">
+				<b>Format : </b>string
+			</div>
+
+	</div>
+
+</div>
+<div class="detail-column" id="d19" style="display:none">
+	<div class="detail">
+			<div class="mock-list">
+				<b>Nom : </b>paymentChannelIdentification5
+			</div>
+			<div class="mock-list">
+				<b>Description : </b>Canal 5
+			</div>
+
+	</div>
+	<div class="detail">
+			<div class="mock-list">
+				<b>Nom : </b> <a href="../types/paymentChannelIdentification.html">paymentChannelIdentification</a>
+			</div>
+			<div class="mock-list">
+				<b> Description : </b>Identification d'un canal de paiement.
+			</div>
+
+	</div>
+
+</div>
+<div class="detail-column" id="d20" style="display:none">
+	<div class="detail">
+			<div class="mock-list">
+				<b>Nom : </b>paymentUseChannel
+			</div>
+			<div class="mock-list">
+				<b>Description : </b>Canal d'utilisation
+			</div>
+
+	</div>
+	<div class="detail">
+			<div class="mock-list">
+				<b>Nom : </b> <a href="../types/paymentUseChannel.html">paymentUseChannel</a>
+			</div>
+			<div class="mock-list">
+				<b> Description : </b>Canal de règlement
+			</div>
+			<div class="mock-list">
+				<b>Format : </b>string
+			</div>
+			<div class="mock-list">
+				<b>Valeurs possibles : </b>					<table class="table_enum" class="table_enum" class="table_enum" class="table_enum" class="table_enum">
+						<tr>
+						<td> 1
+						</td>						<td class="td_right"> Canal web
+						</td>
+						</tr>
+						<tr>
+						<td> 2
+						</td>						<td class="td_right"> Canal agence
+						</td>
+						</tr>
+						<tr>
+						<td> 3
+						</td>						<td class="td_right"> Canal monétique
+						</td>
+						</tr>
+						<tr>
+						<td> 4
+						</td>						<td class="td_right"> Canal commerçant
+						</td>
+						</tr>
+						<tr>
+						<td> 5
+						</td>						<td class="td_right"> Canal mobile
+						</td>
+						</tr>
+
+					</table>
+
+			</div>
+
+	</div>
+
+</div>
+<div class="detail-column" id="d21" style="display:none">
+	<div class="detail">
+			<div class="mock-list">
+				<b>Nom : </b>channelId
+			</div>
+			<div class="mock-list">
+				<b>Description : </b>Identifiant du canal de paiement.
+			</div>
+
+	</div>
+	<div class="detail">
+			<div class="mock-list">
+				<b>Nom : </b> <a href="../types/channelId.html">channelId</a>
+			</div>
+			<div class="mock-list">
+				<b> Description : </b>Identifiant d'un canal de paiement.
+			</div>
+			<div class="mock-list">
+				<b>Format : </b>string
+			</div>
+
+	</div>
+
+</div>
+      </div> 
+  </div>
+
+  
+  <script src="../resources/jquery.js"></script>
+  <script src="../resources/doc.js"></script>
+</body>
+</html>

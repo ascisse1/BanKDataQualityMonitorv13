@@ -1,0 +1,337 @@
+<!DOCTYPE html >
+<html>
+<head>
+	<link rel="stylesheet" href="../resources/styleDocu.css" />
+  <link rel="stylesheet" href="../resources/font-awesome/css/font-awesome.min.css" />
+	<title>Documentation Xsd</title>
+	<meta charset="UTF-8" />
+</head>
+
+<body>
+  <div class="document">
+	<div class="header">
+		
+	</div>
+
+  <div class="tabs">
+    <div class="tabs-wrapper" onclick="window.open('../liste-ressources.html', '_self');">
+      <div class="tabs-left-content">
+        Liste des ressources
+      </div>
+    </div>
+    <div class="tabs-wrapper" onclick="window.open('../liste-services.html', '_self');">
+      <div class="tabs-left-content" >
+        Liste des services  
+      </div>
+    </div>
+    <div class="tabs-wrapper-selected" onclick="window.open('../liste-types.html', '_self');">
+      <div class="tabs-right-content">
+        Liste des types
+      </div>
+    </div>
+  </div>
+
+	
+
+	<div class="contenu">
+      <div class="breadcrumb"> 
+        <ul class="breadcrumb">
+           <li> <a href="../index.html"> Accueil </a></li>
+           <li> > </li>
+           <li> <a href="../liste-types.html"> Liste des types </a></li>
+           <li> > </li>
+           <li> dosprtCreateLoanFileDocuments </li>
+        </ul>                    
+      </div>                    
+      
+     
+      <div class="summary">
+			<div class="mock-list">
+				<b>Nom : </b>dosprtCreateLoanFileDocuments
+			</div>
+			<div class="mock-list">
+				<b> Description : </b>Documents du dossier de crédit.
+			</div>
+        
+        <div> </div>
+        <div class="mock-list"> Choix : Non</div>
+        
+      </div>
+                        
+      <div class="column-content">
+        <div class="detail-column">
+          <div class="tree"> 
+<ul>
+	<li>
+<i class="fa fa-caret-down fa-fw" onclick="expand_or_collapse(this)">
+</i>		dosprtCreateLoanFileDocuments		<ul style="display:block">
+			<li>
+<i class="fa fa-caret-down fa-fw" onclick="expand_or_collapse(this)">
+</i><i class="fa fa-key fa-fw">
+</i><span style="font-weight:bold"> [M]
+</span><span class="selectable" id="e0"> loanFileDocument : dosprtCreateLoanFileDocument
+</span>				<ul style="display:block">
+					<li>
+<i class="fa fa-fw">
+</i><i class="fa fa-key fa-fw">
+</i><span class="selectable" id="e1"> documentCode : dosprtDocumentCode
+</span>
+					</li>
+					<li>
+<i class="fa fa-fw">
+</i><span class="selectable" id="e2"> documentIsMandatory : boolean
+</span>
+					</li>
+					<li>
+<i class="fa fa-fw">
+</i><span class="selectable" id="e3"> documentNatureCode : documentNatureCode
+</span>
+					</li>
+					<li>
+<i class="fa fa-fw">
+</i><span class="selectable" id="e4"> documentStepCode : documentStepCode
+</span>
+					</li>
+
+				</ul>
+
+			</li>
+
+		</ul>
+
+	</li>
+
+</ul>
+          </div>
+          
+          <div class="detail">
+				<p align="left">
+					Légende :<br />
+				</p>
+            <ul>
+               <li align="left">
+                  <i class="fa fa-key fa-fw">
+                  </i>
+                  = Elément obligatoire en saisie.
+               </li>
+               <li align="left">
+                  <span style="font-weight:bold"> [M]
+                  </span>
+                  = Elément multiple (0 à n occurrences).
+               </li>
+               <li align="left">
+                  <span style="font-weight:bold"> [C]
+                  </span>
+                  = Elément composé d'un choix à effectuer. Un seul choix autorisé.
+               </li>
+            </ul>
+            <p align="left">
+               Remarque : Un même élément peut regrouper plusieurs caractéristiques
+            </p>          
+          </div>
+          
+        </div>
+<div class="detail-column" id="d0" style="display:none">
+	<div class="detail">
+			<div class="mock-list">
+				<b>Nom : </b>loanFileDocument
+			</div>
+			<div class="mock-list">
+				<b>Description : </b>Document.
+			</div>
+			<div class="mock-list">
+				<b>Limite du nombre d'occurences mini-maxi : </b>1 aucune
+			</div>
+			<div class="mock-list">
+				<b>Commentaire : </b><p>Des documents ne peuvent &ecirc;tre renseign&eacute;s que si le type de pr&ecirc;t le permet.</p>
+
+			</div>
+
+	</div>
+	<div class="detail">
+			<div class="mock-list">
+				<b>Nom : </b> <a href="../types/dosprtCreateLoanFileDocument.html">dosprtCreateLoanFileDocument</a>
+			</div>
+			<div class="mock-list">
+				<b> Description : </b>Document.
+			</div>
+
+	</div>
+
+</div>
+<div class="detail-column" id="d1" style="display:none">
+	<div class="detail">
+			<div class="mock-list">
+				<b>Nom : </b>documentCode
+			</div>
+			<div class="mock-list">
+				<b>Description : </b>Code du document.
+			</div>
+			<div class="mock-list">
+				<b>Commentaire : </b><p>Le code document doit exister dans la table <strong>bkdocprt</strong>.</p>
+
+<p>Contr&ocirc;le sur l&#39;unicit&eacute; du code document en cas de plusieurs documents renseign&eacute;s.</p>
+
+			</div>
+
+	</div>
+	<div class="detail">
+			<div class="mock-list">
+				<b>Nom : </b> <a href="../types/dosprtDocumentCode.html">dosprtDocumentCode</a>
+			</div>
+			<div class="mock-list">
+				<b> Description : </b>Code document.
+			</div>
+			<div class="mock-list">
+				<b>Format : </b>string
+			</div>
+			<div class="mock-list">
+				<b>Longueur fixe : </b>3
+			</div>
+
+	</div>
+
+</div>
+<div class="detail-column" id="d2" style="display:none">
+	<div class="detail">
+			<div class="mock-list">
+				<b>Nom : </b>documentIsMandatory
+			</div>
+			<div class="mock-list">
+				<b>Description : </b>Document obligatoire.
+			</div>
+			<div class="mock-list">
+				<b>Commentaire : </b><p>Si ce champ n&rsquo;est pas renseign&eacute; il est initialis&eacute; &agrave; <strong>FALSE</strong>.</p>
+
+			</div>
+
+	</div>
+	<div class="detail">
+			<div class="mock-list">
+				<b>Nom : </b> <a href="../types/boolean.html">boolean</a>
+			</div>
+
+	</div>
+
+</div>
+<div class="detail-column" id="d3" style="display:none">
+	<div class="detail">
+			<div class="mock-list">
+				<b>Nom : </b>documentNatureCode
+			</div>
+			<div class="mock-list">
+				<b>Description : </b>Nature du document.
+			</div>
+
+	</div>
+	<div class="detail">
+			<div class="mock-list">
+				<b>Nom : </b> <a href="../types/documentNatureCode.html">documentNatureCode</a>
+			</div>
+			<div class="mock-list">
+				<b> Description : </b>Code étape.
+			</div>
+			<div class="mock-list">
+				<b>Format : </b>string
+			</div>
+			<div class="mock-list">
+				<b>Valeurs possibles : </b>					<table class="table_enum" class="table_enum" class="table_enum" class="table_enum" class="table_enum">
+						<tr>
+						<td> 1
+						</td>						<td class="td_right"> Original
+						</td>
+						</tr>
+						<tr>
+						<td> 2
+						</td>						<td class="td_right"> Copie
+						</td>
+						</tr>
+						<tr>
+						<td> 3
+						</td>						<td class="td_right"> Copie certifiee
+						</td>
+						</tr>
+						<tr>
+						<td> 4
+						</td>						<td class="td_right"> Duplicata
+						</td>
+						</tr>
+						<tr>
+						<td> 5
+						</td>						<td class="td_right"> Manuscrit
+						</td>
+						</tr>
+
+					</table>
+
+			</div>
+
+	</div>
+
+</div>
+<div class="detail-column" id="d4" style="display:none">
+	<div class="detail">
+			<div class="mock-list">
+				<b>Nom : </b>documentStepCode
+			</div>
+			<div class="mock-list">
+				<b>Description : </b>Code de l'étape.
+			</div>
+			<div class="mock-list">
+				<b>Commentaire : </b><p>La valeur <strong>1</strong> &ndash; &quot;Etude du dossier&quot; n&#39;est pas autoris&eacute;e pour la cr&eacute;ation/modification d&#39;un dossier.</p>
+
+<p>La valeur <strong>2</strong> &ndash; &quot;D&eacute;cision de la banque&quot; n&#39;est autoris&eacute;e que si la comptabilisation de l&#39;&eacute;tape &quot;Validation banque&quot; est active.</p>
+
+<p>La valeur <strong>3</strong> &ndash; &quot;D&eacute;cision du client&quot; n&#39;est autoris&eacute;e que si la comptabilisation de l&#39;&eacute;tape &quot;Validation client&quot; est active.</p>
+
+			</div>
+
+	</div>
+	<div class="detail">
+			<div class="mock-list">
+				<b>Nom : </b> <a href="../types/documentStepCode.html">documentStepCode</a>
+			</div>
+			<div class="mock-list">
+				<b> Description : </b>Code étape.
+			</div>
+			<div class="mock-list">
+				<b>Format : </b>string
+			</div>
+			<div class="mock-list">
+				<b>Valeurs possibles : </b>					<table class="table_enum" class="table_enum" class="table_enum" class="table_enum">
+						<tr>
+						<td> 1
+						</td>						<td class="td_right"> Etude du dossier
+						</td>
+						</tr>
+						<tr>
+						<td> 2
+						</td>						<td class="td_right"> Decision de la banque
+						</td>
+						</tr>
+						<tr>
+						<td> 3
+						</td>						<td class="td_right"> Decision du client
+						</td>
+						</tr>
+						<tr>
+						<td> 4
+						</td>						<td class="td_right"> Validation du dossier
+						</td>
+						</tr>
+
+					</table>
+
+			</div>
+
+	</div>
+
+</div>
+      </div> 
+  </div>
+
+  
+  <script src="../resources/jquery.js"></script>
+  <script src="../resources/doc.js"></script>
+</body>
+</html>

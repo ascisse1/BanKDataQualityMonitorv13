@@ -1,0 +1,210 @@
+<!DOCTYPE html>
+<html>
+<head>
+	<link rel="stylesheet" href="../resources/styleDocu.css" />
+    <link rel="stylesheet" href="../resources/font-awesome/css/font-awesome.min.css" />
+	<title>Documentation Xsd</title>
+	<meta charset="UTF-8" />
+</head>
+
+<body>
+  <div class="document">
+	<div class="header">		
+	</div>
+
+    <div class="tabs">
+        <div class="tabs-wrapper-selected" onclick="window.open('../liste-ressources.html', '_self');">
+            <div class="tabs-left-content" >Liste des ressources</div>
+        </div>
+        <div class="tabs-wrapper" onclick="window.open('../liste-services.html', '_self');">
+            <div class="tabs-left-content">Liste des services</div>
+        </div>
+        <div class="tabs-wrapper" onclick="window.open('../liste-types.html', '_self');">
+            <div class="tabs-right-content">Liste des types</div>
+        </div>
+    </div>
+
+	<div class="contenu">
+      <div class="breadcrumb"> 
+        <ul class="breadcrumb">
+           <li> <a href="../index.html"> Accueil </a></li>
+           <li> > </li>
+           <li> <a href="../liste-ressources.html"> Liste des ressources </a></li>
+           <li> > </li>
+           <li> conditionevaluations </li>
+        </ul>                    
+      </div>                    
+      
+      <div class="summary">
+        <div class="mock-list"> Nom ressource REST : conditionevaluations </div>
+        <div class="mock-list"> Programme Amplitude : prwrconditionevaluations </div>
+        <div class="mock-list"> Email : support@soprabanking.com </div>        
+        <br/>
+            <div class="mock-list"> Condition evaluations</div>
+      </div>
+      
+      <div class="column-content" style="width:93%">
+        <div class="detail-column" style="width: 35%">
+          <div class="tree"> 
+<ul style="padding:0">
+	<li>
+<i class="fa fa-caret-down fa-fw" onclick="expand_or_collapse(this)">
+</i>		conditionevaluations		<ul>
+			<li>
+<i class="fa fa-caret-down fa-fw" onclick="expand_or_collapse(this)">
+</i>				v1				<ul>
+					<li>
+<i class="fa fa-fw">
+</i><span class="selectable" id="e0"> GET
+</span>
+					</li>
+
+				</ul>
+
+			</li>
+
+		</ul>
+
+	</li>
+
+</ul>
+          </div>
+        </div>
+                 
+        
+<div class="detail-column" id="d0" style="display:none; width: 65%">
+	<div class="detail">
+		<div class="mock-list">
+			<b>Service SOAP : </b> <a href="../services/getConditionEvaluation.html">getConditionEvaluation</a>
+		</div>
+		<div class="mock-list">
+			<b>Code retour succes : </b>200 - OK
+		</div>
+		<div class="mock-list">
+			<b>Uri : </b>http://soprabanking.com/amplitude/conditionevaluations/v1/{conditionId}
+		</div>
+		<div class="mock-list">
+			<b>Description : </b>Use this service to return the applicable condition information based on the data provided (condition nature, search date and other optional parameters such as branch, operation number etc.).
+		</div>
+		<br>
+
+		</br>
+		<div class="mock-list">
+			<b>Identifiants : </b>			<table class="table_param">
+				<tr>
+				<td> 0
+				</td>				<td title="getConditionEvaluationRequest.conditionNatureCode"> <a href="../types/conditionNatureCode.html">conditionNatureCode</a><br>Nature de condition recherchée.
+				</td>
+				</tr>
+
+			</table>
+
+		</div>
+		<br>
+
+		</br>
+		<div class="mock-list">
+			<b>Parametres : </b>			<table class="table_param">
+				<tr>
+				<td>
+				</td>				<td title="getConditionEvaluationRequest.accountIdentifier.branch"> <a href="../types/char5.html">X-SBS-accountBranchCode</a><br>Agence du compte.
+				</td>				<td> Header
+				</td>
+				</tr>
+				<tr>
+				<td>
+				</td>				<td title="getConditionEvaluationRequest.accountIdentifier.currency"> <a href="../types/currencyCode.html">X-SBS-accountCurrencyNumericCode</a><br>Devise du compte.
+				</td>				<td> Header
+				</td>
+				</tr>
+				<tr>
+				<td>
+				</td>				<td title="getConditionEvaluationRequest.accountIdentifier.account"> <a href="../types/charMax11.html">X-SBS-accountNumber</a><br>Numéro du compte.
+				</td>				<td> Header
+				</td>
+				</tr>
+				<tr>
+				<td>
+				</td>				<td title="getConditionEvaluationRequest.accountIdentifier.suffix"> <a href="../types/charMax2.html">X-SBS-accountSuffix</a><br>Suffixe du compte.
+				</td>				<td> Header
+				</td>
+				</tr>
+				<tr>
+				<td>
+				</td>				<td title="getConditionEvaluationRequest.branchCode"> <a href="../types/branchCode.html">X-SBS-branchCode</a><br>Code agence.
+				</td>				<td> Header
+				</td>
+				</tr>
+				<tr>
+				<td>
+				</td>				<td title="getConditionEvaluationRequest.currencyCode"> <a href="../types/currencyCode.html">X-SBS-currencyCode</a><br>Code devise.
+				</td>				<td> Header
+				</td>
+				</tr>
+				<tr>
+				<td>
+				</td>				<td title="getConditionEvaluationRequest.customerCode"> <a href="../types/customerCode.html">X-SBS-customerCode</a><br>Code du client.
+				</td>				<td> Header
+				</td>
+				</tr>
+				<tr>
+				<td>
+				</td>				<td title="getConditionEvaluationRequest.customerProfileCode"> <a href="../types/customerProfileCode.html">X-SBS-customerProfileCode</a><br>Code du profil client.
+				</td>				<td> Header
+				</td>
+				</tr>
+				<tr>
+				<td>
+				</td>				<td title="getConditionEvaluationRequest.operationCode"> <a href="../types/operationCode.html">X-SBS-operationCode</a><br>Code opération.
+				</td>				<td> Header
+				</td>
+				</tr>
+				<tr>
+				<td>
+				</td>				<td title="getConditionEvaluationRequest.packageCode"> <a href="../types/packageCode.html">X-SBS-packageCode</a><br>Code du package.
+				</td>				<td> Header
+				</td>
+				</tr>
+				<tr>
+				<td>
+				</td>				<td title="getConditionEvaluationRequest.productCode"> <a href="../types/productCode.html">X-SBS-productCode</a><br>Code du produit.
+				</td>				<td> Header
+				</td>
+				</tr>
+				<tr>
+				<td> <i class="fa fa-key fa-fw"> </i>
+				</td>				<td title="getConditionEvaluationRequest.requestDate"> <a href="../types/date.html">X-SBS-requestDate</a><br>Date de recherche.
+				</td>				<td> Header
+				</td>
+				</tr>
+
+			</table>
+
+		</div>
+		<br>
+
+		</br>
+		<div class="mock-list">
+			<b>Codes Erreur : </b>			<table>
+				<tr>
+				<td> 400
+				</td>				<td> Bad Request
+				</td>
+				</tr>
+
+			</table>
+
+		</div>
+
+	</div>
+
+</div>
+     </div> 
+  </div>
+  </div>
+
+  
+  <script src="../resources/jquery.js"></script>
+  <script src="../resources/doc.js"></script>
+</body>
+</html>

@@ -1,0 +1,267 @@
+<!DOCTYPE html >
+<html>
+<head>
+	<link rel="stylesheet" href="../resources/styleDocu.css" />
+  <link rel="stylesheet" href="../resources/font-awesome/css/font-awesome.min.css" />
+	<title>Documentation Xsd</title>
+	<meta charset="UTF-8" />
+</head>
+
+<body>
+  <div class="document">
+	<div class="header">
+		
+	</div>
+
+  <div class="tabs">
+    <div class="tabs-wrapper" onclick="window.open('../liste-ressources.html', '_self');">
+      <div class="tabs-left-content">
+        Liste des ressources
+      </div>
+    </div>
+    <div class="tabs-wrapper" onclick="window.open('../liste-services.html', '_self');">
+      <div class="tabs-left-content" >
+        Liste des services  
+      </div>
+    </div>
+    <div class="tabs-wrapper-selected" onclick="window.open('../liste-types.html', '_self');">
+      <div class="tabs-right-content">
+        Liste des types
+      </div>
+    </div>
+  </div>
+
+	
+
+	<div class="contenu">
+      <div class="breadcrumb"> 
+        <ul class="breadcrumb">
+           <li> <a href="../index.html"> Accueil </a></li>
+           <li> > </li>
+           <li> <a href="../liste-types.html"> Liste des types </a></li>
+           <li> > </li>
+           <li> customerCorporateId </li>
+        </ul>                    
+      </div>                    
+      
+     
+      <div class="summary">
+			<div class="mock-list">
+				<b>Nom : </b>customerCorporateId
+			</div>
+			<div class="mock-list">
+				<b> Description : </b>Informations d¿identité d¿une société.
+			</div>
+        
+        <div> <p>Pour un client de type Soci&eacute;t&eacute; (<strong>2 </strong>ou <strong>3</strong>).</p>
+</div>
+        <div class="mock-list"> Choix : Non</div>
+        
+      </div>
+                        
+      <div class="column-content">
+        <div class="detail-column">
+          <div class="tree"> 
+<ul>
+	<li>
+<i class="fa fa-caret-down fa-fw" onclick="expand_or_collapse(this)">
+</i>		customerCorporateId		<ul style="display:block">
+			<li>
+<i class="fa fa-fw">
+</i><span class="selectable" id="e0"> nationalIdentifier : charMax20
+</span>
+			</li>
+			<li>
+<i class="fa fa-fw">
+</i><span class="selectable" id="e1"> socialIdentityNumber : charMax20
+</span>
+			</li>
+			<li>
+<i class="fa fa-fw">
+</i><span class="selectable" id="e2"> taxIdentityNumber : charMax20
+</span>
+			</li>
+			<li>
+<i class="fa fa-fw">
+</i><span class="selectable" id="e3"> abbreviation : charMax20
+</span>
+			</li>
+
+		</ul>
+
+	</li>
+
+</ul>
+          </div>
+          
+          <div class="detail">
+				<p align="left">
+					Légende :<br />
+				</p>
+            <ul>
+               <li align="left">
+                  <i class="fa fa-key fa-fw">
+                  </i>
+                  = Elément obligatoire en saisie.
+               </li>
+               <li align="left">
+                  <span style="font-weight:bold"> [M]
+                  </span>
+                  = Elément multiple (0 à n occurrences).
+               </li>
+               <li align="left">
+                  <span style="font-weight:bold"> [C]
+                  </span>
+                  = Elément composé d'un choix à effectuer. Un seul choix autorisé.
+               </li>
+            </ul>
+            <p align="left">
+               Remarque : Un même élément peut regrouper plusieurs caractéristiques
+            </p>          
+          </div>
+          
+        </div>
+<div class="detail-column" id="d0" style="display:none">
+	<div class="detail">
+			<div class="mock-list">
+				<b>Nom : </b>nationalIdentifier
+			</div>
+			<div class="mock-list">
+				<b>Description : </b>Numéro d'identité nationale.
+			</div>
+			<div class="mock-list">
+				<b>Commentaire : </b><p>Pour un particulier de nature non collectif (<strong>2</strong>), si le num&eacute;ro d&rsquo;identit&eacute; nationale est renseign&eacute; alors&nbsp;:</p>
+
+<ul style="list-style-type:square">
+	<li>Si le contr&ocirc;le d&rsquo;unicit&eacute; est demand&eacute; sur le num&eacute;ro d&rsquo;identit&eacute; nationale dans le <strong>Libell&eacute;&nbsp;5</strong> (&eacute;gal &agrave; <strong>O</strong> (contr&ocirc;le non bloquant) ou <strong>B </strong>(contr&ocirc;le bloquant uniquement si l&rsquo;utilisateur n&rsquo;a pas le niveau de for&ccedil;age requis indiqu&eacute; dans le <strong>Montant&nbsp;1</strong>)) du param&egrave;tre <strong>CTRIDENCL2</strong> en nomenclature <strong>098</strong>, alors le num&eacute;ro d&rsquo;identit&eacute; nationale ne doit pas d&eacute;j&agrave; exister dans la table des clients.</li>
+	<li>Sinon, si le contr&ocirc;le d&rsquo;unicit&eacute; est demand&eacute; sur le num&eacute;ro d&rsquo;identit&eacute; et sur l&rsquo;intitul&eacute; dans le <strong>Libell&eacute; 2</strong> (&eacute;gal &agrave; <strong>O </strong>(contr&ocirc;le non bloquant) &nbsp;ou <strong>B </strong>(contr&ocirc;le bloquant uniquement si l&rsquo;utilisateur n&rsquo;a pas le niveau de for&ccedil;age requis indiqu&eacute; dans le <strong>Montant&nbsp;1</strong>)) mais pas sur le num&eacute;ro d&rsquo;identit&eacute; nationale dans le <strong>Libell&eacute;&nbsp;5</strong> (diff&eacute;rent de <strong>O</strong> et <strong>B</strong>) du param&egrave;tre <strong>CTRIDENCL2</strong> en nomenclature <strong>098</strong>, alors le num&eacute;ro d&rsquo;identit&eacute; nationale associ&eacute; au code intitul&eacute; du client ne doit pas d&eacute;j&agrave; exister dans la table des clients</li>
+	<li><strong>Sinon</strong>, si le contr&ocirc;le d&rsquo;unicit&eacute; est demand&eacute; sur le num&eacute;ro d&rsquo;identit&eacute; seul dans le <strong>Libell&eacute;&nbsp;5</strong> (&eacute;gal &agrave; <strong>O</strong> (contr&ocirc;le non bloquant) ou <strong>B </strong>(contr&ocirc;le bloquant uniquement si l&rsquo;utilisateur n&rsquo;a pas le niveau de for&ccedil;age requis indiqu&eacute; dans le <strong>Montant&nbsp;1</strong>)) du param&egrave;tre <strong>CTRIDENCL2</strong> en nomenclature <strong>098</strong>, alors le num&eacute;ro d&rsquo;identit&eacute; nationale ne doit pas d&eacute;j&agrave; exister dans la table des clients.</li>
+</ul>
+
+<p>Valeur par d&eacute;faut&nbsp;: <strong>nidn</strong></p>
+
+			</div>
+
+	</div>
+	<div class="detail">
+			<div class="mock-list">
+				<b>Nom : </b> <a href="../types/charMax20.html">charMax20</a>
+			</div>
+			<div class="mock-list">
+				<b> Description : </b>Chaîne composée d'au plus 20 caractères.
+			</div>
+			<div class="mock-list">
+				<b>Format : </b>string
+			</div>
+			<div class="mock-list">
+				<b>Longueur mini-maxi : </b>1 - 20
+			</div>
+
+	</div>
+
+</div>
+<div class="detail-column" id="d1" style="display:none">
+	<div class="detail">
+			<div class="mock-list">
+				<b>Nom : </b>socialIdentityNumber
+			</div>
+			<div class="mock-list">
+				<b>Description : </b>Numéro d'identité sociale.
+			</div>
+			<div class="mock-list">
+				<b>Commentaire : </b><p>Valeur par d&eacute;faut&nbsp;: <strong>nis</strong></p>
+
+			</div>
+
+	</div>
+	<div class="detail">
+			<div class="mock-list">
+				<b>Nom : </b> <a href="../types/charMax20.html">charMax20</a>
+			</div>
+			<div class="mock-list">
+				<b> Description : </b>Chaîne composée d'au plus 20 caractères.
+			</div>
+			<div class="mock-list">
+				<b>Format : </b>string
+			</div>
+			<div class="mock-list">
+				<b>Longueur mini-maxi : </b>1 - 20
+			</div>
+
+	</div>
+
+</div>
+<div class="detail-column" id="d2" style="display:none">
+	<div class="detail">
+			<div class="mock-list">
+				<b>Nom : </b>taxIdentityNumber
+			</div>
+			<div class="mock-list">
+				<b>Description : </b>Numéro d'identité fiscale.
+			</div>
+			<div class="mock-list">
+				<b>Commentaire : </b><p>Ce num&eacute;ro correspond soit au num&eacute;ro d&rsquo;identit&eacute; fiscale, soit au num&eacute;ro SIRET si le param&egrave;tre <strong>BANQ_DE_FR</strong> existe en nomenclature <strong>098</strong>.</p>
+
+<p>Si le contr&ocirc;le d&rsquo;unicit&eacute; est demand&eacute; dans le <strong>Libell&eacute; 3</strong> (&eacute;gal &agrave; <strong>O</strong> (contr&ocirc;le non bloquant) ou <strong>B </strong>(contr&ocirc;le bloquant uniquement si l&rsquo;utilisateur n&rsquo;a pas le niveau de for&ccedil;age requis indiqu&eacute; dans le <strong>Montant&nbsp;2</strong>)) du param&egrave;tre <strong>CTRIDENCL2</strong> en nomenclature <strong>098</strong>, alors le num&eacute;ro d&#39;identit&eacute; fiscale ne doit pas d&eacute;j&agrave; exister dans la table des clients.</p>
+
+<p>Valeur par d&eacute;faut&nbsp;: <strong>nidf</strong></p>
+
+			</div>
+
+	</div>
+	<div class="detail">
+			<div class="mock-list">
+				<b>Nom : </b> <a href="../types/charMax20.html">charMax20</a>
+			</div>
+			<div class="mock-list">
+				<b> Description : </b>Chaîne composée d'au plus 20 caractères.
+			</div>
+			<div class="mock-list">
+				<b>Format : </b>string
+			</div>
+			<div class="mock-list">
+				<b>Longueur mini-maxi : </b>1 - 20
+			</div>
+
+	</div>
+
+</div>
+<div class="detail-column" id="d3" style="display:none">
+	<div class="detail">
+			<div class="mock-list">
+				<b>Nom : </b>abbreviation
+			</div>
+			<div class="mock-list">
+				<b>Description : </b>Sigle.
+			</div>
+			<div class="mock-list">
+				<b>Commentaire : </b><p>Valeur par d&eacute;faut&nbsp;: <strong>sig</strong></p>
+
+			</div>
+
+	</div>
+	<div class="detail">
+			<div class="mock-list">
+				<b>Nom : </b> <a href="../types/charMax20.html">charMax20</a>
+			</div>
+			<div class="mock-list">
+				<b> Description : </b>Chaîne composée d'au plus 20 caractères.
+			</div>
+			<div class="mock-list">
+				<b>Format : </b>string
+			</div>
+			<div class="mock-list">
+				<b>Longueur mini-maxi : </b>1 - 20
+			</div>
+
+	</div>
+
+</div>
+      </div> 
+  </div>
+
+  
+  <script src="../resources/jquery.js"></script>
+  <script src="../resources/doc.js"></script>
+</body>
+</html>

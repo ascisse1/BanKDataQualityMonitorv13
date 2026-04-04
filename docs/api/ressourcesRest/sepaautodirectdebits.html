@@ -1,0 +1,1032 @@
+<!DOCTYPE html>
+<html>
+<head>
+	<link rel="stylesheet" href="../resources/styleDocu.css" />
+    <link rel="stylesheet" href="../resources/font-awesome/css/font-awesome.min.css" />
+	<title>Documentation Xsd</title>
+	<meta charset="UTF-8" />
+</head>
+
+<body>
+  <div class="document">
+	<div class="header">		
+	</div>
+
+    <div class="tabs">
+        <div class="tabs-wrapper-selected" onclick="window.open('../liste-ressources.html', '_self');">
+            <div class="tabs-left-content" >Liste des ressources</div>
+        </div>
+        <div class="tabs-wrapper" onclick="window.open('../liste-services.html', '_self');">
+            <div class="tabs-left-content">Liste des services</div>
+        </div>
+        <div class="tabs-wrapper" onclick="window.open('../liste-types.html', '_self');">
+            <div class="tabs-right-content">Liste des types</div>
+        </div>
+    </div>
+
+	<div class="contenu">
+      <div class="breadcrumb"> 
+        <ul class="breadcrumb">
+           <li> <a href="../index.html"> Accueil </a></li>
+           <li> > </li>
+           <li> <a href="../liste-ressources.html"> Liste des ressources </a></li>
+           <li> > </li>
+           <li> sepaautodirectdebits </li>
+        </ul>                    
+      </div>                    
+      
+      <div class="summary">
+        <div class="mock-list"> Nom ressource REST : sepaautodirectdebits </div>
+        <div class="mock-list"> Programme Amplitude : cbwrsepaautodirectdebits </div>
+        <div class="mock-list"> Email : support@soprabanking.com </div>        
+        <br/>
+            <div class="mock-list"> Automatic direct debits SEPA</div>
+      </div>
+      
+      <div class="column-content" style="width:93%">
+        <div class="detail-column" style="width: 35%">
+          <div class="tree"> 
+<ul style="padding:0">
+	<li>
+<i class="fa fa-caret-down fa-fw" onclick="expand_or_collapse(this)">
+</i>		sepaautodirectdebits		<ul>
+			<li>
+<i class="fa fa-caret-down fa-fw" onclick="expand_or_collapse(this)">
+</i>				v1				<ul>
+					<li>
+<i class="fa fa-fw">
+</i><span class="selectable" id="e0"> GETLIST
+</span>
+					</li>
+
+				</ul>
+
+			</li>
+
+		</ul>
+		<ul>
+			<li>
+<i class="fa fa-caret-down fa-fw" onclick="expand_or_collapse(this)">
+</i>				v2				<ul>
+					<li>
+<i class="fa fa-fw">
+</i><span class="selectable" id="e1"> GETLIST
+</span>
+					</li>
+
+				</ul>
+
+			</li>
+
+		</ul>
+
+	</li>
+
+</ul>
+          </div>
+        </div>
+                 
+        
+<div class="detail-column" id="d0" style="display:none; width: 65%">
+	<div class="detail">
+		<div class="mock-list">
+			<b>Service SOAP : </b> <a href="../services/getAutomaticDirectDebitList.html">getAutomaticDirectDebitList</a>
+		</div>
+		<div class="mock-list">
+			<b>Code retour succes : </b>200 - OK
+		</div>
+		<div class="mock-list">
+			<b>Uri : </b>http://soprabanking.com/amplitude/sepaautodirectdebits/v1/
+		</div>
+		<div class="mock-list">
+			<b>Description : </b>The service getAutomaticDirectDebitList allows returning a list of automatic direct debit matching the search criteria received. 
+		</div>
+		<br>
+
+		</br>
+		<div class="mock-list">
+			<b>Parametres : </b>			<table class="table_param">
+				<tr>
+				<td>
+				</td>				<td title="getAutomaticDirectDebitListRequest.directDebitInformations.creditor.creditAccount.additionalInformation.complementaryInformation.value.date.date1"> <a href="../types/date.html">X-SBS-creditAccountComplementaryInformationDate1</a><br>1ère date.
+				</td>				<td> Header
+				</td>
+				</tr>
+				<tr>
+				<td>
+				</td>				<td title="getAutomaticDirectDebitListRequest.directDebitInformations.creditor.creditAccount.additionalInformation.complementaryInformation.value.date.date2"> <a href="../types/date.html">X-SBS-creditAccountComplementaryInformationDate2</a><br>2ème date.
+				</td>				<td> Header
+				</td>
+				</tr>
+				<tr>
+				<td>
+				</td>				<td title="getAutomaticDirectDebitListRequest.directDebitInformations.creditor.creditAccount.additionalInformation.complementaryInformation.value.date.comparator"> <a href="../types/comparator.html">X-SBS-creditAccountComplementaryInformationDateComparator</a><br>Opérateur de comparaison.
+				</td>				<td> Header
+				</td>
+				</tr>
+				<tr>
+				<td>
+				</td>				<td title="getAutomaticDirectDebitListRequest.directDebitInformations.creditor.creditAccount.additionalInformation.complementaryInformation.value.amountOrRate.decimal1"> <a href="../types/decimal32_16.html">X-SBS-creditAccountComplementaryInformationDecimal1</a><br>1ère décimale.
+				</td>				<td> Header
+				</td>
+				</tr>
+				<tr>
+				<td>
+				</td>				<td title="getAutomaticDirectDebitListRequest.directDebitInformations.creditor.creditAccount.additionalInformation.complementaryInformation.value.amountOrRate.comparator"> <a href="../types/comparator.html">X-SBS-creditAccountComplementaryInformationDecimal1Comparator</a><br>Opérateur de comparaison.
+				</td>				<td> Header
+				</td>
+				</tr>
+				<tr>
+				<td>
+				</td>				<td title="getAutomaticDirectDebitListRequest.directDebitInformations.creditor.creditAccount.additionalInformation.complementaryInformation.value.amountOrRate.decimal2"> <a href="../types/decimal32_16.html">X-SBS-creditAccountComplementaryInformationDecimal2</a><br>2ème décimale.
+				</td>				<td> Header
+				</td>
+				</tr>
+				<tr>
+				<td>
+				</td>				<td title="getAutomaticDirectDebitListRequest.directDebitInformations.creditor.creditAccount.additionalInformation.complementaryInformation.identifier"> <a href="../types/charMax10.html">X-SBS-creditAccountComplementaryInformationIdentifier</a><br>Identifiant de la donnée complémentaire.
+				</td>				<td> Header
+				</td>
+				</tr>
+				<tr>
+				<td>
+				</td>				<td title="getAutomaticDirectDebitListRequest.directDebitInformations.creditor.creditAccount.accountNumber.internalFormatAccountOurBranch.currency.alphaCode"> <a href="../types/char3.html">X-SBS-creditAccountCurrencyAlphaCode</a><br>Code devise alphanumérique.
+				</td>				<td> Header
+				</td>
+				</tr>
+				<tr>
+				<td>
+				</td>				<td title="getAutomaticDirectDebitListRequest.directDebitInformations.creditor.creditAccount.accountNumber.internalFormatAccountOurBranch.currency.numericCode"> <a href="../types/char3.html">X-SBS-creditAccountCurrencyNumericCode</a><br>Code devise numérique.
+				</td>				<td> Header
+				</td>
+				</tr>
+				<tr>
+				<td>
+				</td>				<td title="getAutomaticDirectDebitListRequest.directDebitInformations.creditor.creditAccount.customer.activeProfile.code"> <a href="../types/charMax3.html">X-SBS-creditAccountCustomerActiveProfileCode</a><br>Code profil.
+				</td>				<td> Header
+				</td>
+				</tr>
+				<tr>
+				<td>
+				</td>				<td title="getAutomaticDirectDebitListRequest.directDebitInformations.creditor.creditAccount.customer.activeProfile.designation"> <a href="../types/charMax30.html">X-SBS-creditAccountCustomerActiveProfileDesignation</a><br>Désignation du profil.
+				</td>				<td> Header
+				</td>
+				</tr>
+				<tr>
+				<td>
+				</td>				<td title="getAutomaticDirectDebitListRequest.directDebitInformations.creditor.creditAccount.customer.additionalInformation.designation"> <a href="../types/charMax30.html">X-SBS-creditAccountCustomerAdditionalInformationDesignation</a><br>Désignation.
+				</td>				<td> Header
+				</td>
+				</tr>
+				<tr>
+				<td>
+				</td>				<td title="getAutomaticDirectDebitListRequest.directDebitInformations.creditor.creditAccount.customer.additionalInformation.complementaryInformation.value.alphanumeric.comparisonOperator"> <a href="../types/comparisonOperator.html">X-SBS-creditAccountCustomerComplementaryInformationAlphanumericComparisonOperator</a><br>Opérateur de comparaison.
+				</td>				<td> Header
+				</td>
+				</tr>
+				<tr>
+				<td>
+				</td>				<td title="getAutomaticDirectDebitListRequest.directDebitInformations.creditor.creditAccount.customer.additionalInformation.complementaryInformation.value.alphanumeric.value"> <a href="../types/string.html">X-SBS-creditAccountCustomerComplementaryInformationAlphanumericValue</a><br>Valeur de la désignation.
+				</td>				<td> Header
+				</td>
+				</tr>
+				<tr>
+				<td>
+				</td>				<td title="getAutomaticDirectDebitListRequest.directDebitInformations.creditor.creditAccount.customer.additionalInformation.complementaryInformation.value.date.date1"> <a href="../types/date.html">X-SBS-creditAccountCustomerComplementaryInformationDate1</a><br>1ère date.
+				</td>				<td> Header
+				</td>
+				</tr>
+				<tr>
+				<td>
+				</td>				<td title="getAutomaticDirectDebitListRequest.directDebitInformations.creditor.creditAccount.customer.additionalInformation.complementaryInformation.value.date.date2"> <a href="../types/date.html">X-SBS-creditAccountCustomerComplementaryInformationDate2</a><br>2ème date.
+				</td>				<td> Header
+				</td>
+				</tr>
+				<tr>
+				<td>
+				</td>				<td title="getAutomaticDirectDebitListRequest.directDebitInformations.creditor.creditAccount.customer.additionalInformation.complementaryInformation.value.date.comparator"> <a href="../types/comparator.html">X-SBS-creditAccountCustomerComplementaryInformationDateComparator</a><br>Opérateur de comparaison.
+				</td>				<td> Header
+				</td>
+				</tr>
+				<tr>
+				<td>
+				</td>				<td title="getAutomaticDirectDebitListRequest.directDebitInformations.creditor.creditAccount.customer.additionalInformation.complementaryInformation.value.amountOrRate.decimal1"> <a href="../types/decimal32_16.html">X-SBS-creditAccountCustomerComplementaryInformationDecimal1</a><br>1ère décimale.
+				</td>				<td> Header
+				</td>
+				</tr>
+				<tr>
+				<td>
+				</td>				<td title="getAutomaticDirectDebitListRequest.directDebitInformations.creditor.creditAccount.customer.additionalInformation.complementaryInformation.value.amountOrRate.comparator"> <a href="../types/comparator.html">X-SBS-creditAccountCustomerComplementaryInformationDecimal1Comparator</a><br>Opérateur de comparaison.
+				</td>				<td> Header
+				</td>
+				</tr>
+				<tr>
+				<td>
+				</td>				<td title="getAutomaticDirectDebitListRequest.directDebitInformations.creditor.creditAccount.customer.additionalInformation.complementaryInformation.value.amountOrRate.decimal2"> <a href="../types/decimal32_16.html">X-SBS-creditAccountCustomerComplementaryInformationDecimal2</a><br>2ème décimale.
+				</td>				<td> Header
+				</td>
+				</tr>
+				<tr>
+				<td>
+				</td>				<td title="getAutomaticDirectDebitListRequest.directDebitInformations.creditor.creditAccount.customer.additionalInformation.complementaryInformation.identifier"> <a href="../types/charMax10.html">X-SBS-creditAccountCustomerComplementaryInformationIdentifier</a><br>Identifiant de la donnée complémentaire.
+				</td>				<td> Header
+				</td>
+				</tr>
+				<tr>
+				<td>
+				</td>				<td title="getAutomaticDirectDebitListRequest.directDebitInformations.creditor.creditAccount.customer.customer.displayedName"> <a href="../types/charMax67.html">X-SBS-creditAccountCustomerDisplayedName</a><br>Nom de restitution du client.
+				</td>				<td> Header
+				</td>
+				</tr>
+				<tr>
+				<td>
+				</td>				<td title="getAutomaticDirectDebitListRequest.directDebitInformations.creditor.creditAccount.customer.externalReference"> <a href="../types/charMax25.html">X-SBS-creditAccountCustomerExternalReference</a><br>Référence externe.
+				</td>				<td> Header
+				</td>
+				</tr>
+				<tr>
+				<td>
+				</td>				<td title="getAutomaticDirectDebitListRequest.directDebitInformations.creditor.creditAccount.customer.nationalIdentifier"> <a href="../types/charMax20.html">X-SBS-creditAccountCustomerNationalIdentifier</a><br>Identifiant national.
+				</td>				<td> Header
+				</td>
+				</tr>
+				<tr>
+				<td>
+				</td>				<td title="getAutomaticDirectDebitListRequest.directDebitInformations.creditor.creditAccount.customer.customer.customerNumber"> <a href="../types/charMax15.html">X-SBS-creditAccountCustomerNumber</a><br>Code du client.
+				</td>				<td> Header
+				</td>
+				</tr>
+				<tr>
+				<td>
+				</td>				<td title="getAutomaticDirectDebitListRequest.directDebitInformations.creditor.creditAccount.customer.customerOfficer.code"> <a href="../types/charMax3.html">X-SBS-creditAccountCustomerOfficerCode</a><br>Code gestionnaire.
+				</td>				<td> Header
+				</td>
+				</tr>
+				<tr>
+				<td>
+				</td>				<td title="getAutomaticDirectDebitListRequest.directDebitInformations.creditor.creditAccount.customer.customerOfficer.name"> <a href="../types/charMax30.html">X-SBS-creditAccountCustomerOfficerName</a><br>Nom du gestionnaire.
+				</td>				<td> Header
+				</td>
+				</tr>
+				<tr>
+				<td>
+				</td>				<td title="getAutomaticDirectDebitListRequest.directDebitInformations.creditor.creditAccount.customer.customerType"> <a href="../types/customerType.html">X-SBS-creditAccountCustomerType</a><br>Type de client.
+				</td>				<td> Header
+				</td>
+				</tr>
+				<tr>
+				<td>
+				</td>				<td title="getAutomaticDirectDebitListRequest.directDebitInformations.creditor.creditAccount.accountNumber.externalFormatAccount.value"> <a href="../types/charMax34.html">X-SBS-creditAccountExternalFormat</a><br>Valeur de l'identifiant externe du compte.
+				</td>				<td> Header
+				</td>
+				</tr>
+				<tr>
+				<td>
+				</td>				<td title="getAutomaticDirectDebitListRequest.directDebitInformations.creditor.creditAccount.accountNumber.ibanFormatAccount.value"> <a href="../types/charMax34.html">X-SBS-creditAccountIbanFormat</a><br>Valeur de l'IBAN.
+				</td>				<td> Header
+				</td>
+				</tr>
+				<tr>
+				<td>
+				</td>				<td title="getAutomaticDirectDebitListRequest.directDebitInformations.creditor.creditAccount.accountNumber.internalFormatAccountOurBranch.account"> <a href="../types/charMax11.html">X-SBS-creditAccountNumber</a><br>Numéro du compte.
+				</td>				<td> Header
+				</td>
+				</tr>
+				<tr>
+				<td>
+				</td>				<td title="getAutomaticDirectDebitListRequest.directDebitInformations.creditor.creditAccount.accountNumber.internalFormatAccountOurBranch.suffix"> <a href="../types/charMax2.html">X-SBS-creditAccountSuffix</a><br>Suffixe du compte.
+				</td>				<td> Header
+				</td>
+				</tr>
+				<tr>
+				<td>
+				</td>				<td title="getAutomaticDirectDebitListRequest.directDebitInformations.creditor.creditOrganization.organization.accountNumber"> <a href="../types/charMax30.html">X-SBS-creditOrganizationAccountNumber</a><br>Numéro de compte de l'organisme.
+				</td>				<td> Header
+				</td>
+				</tr>
+				<tr>
+				<td>
+				</td>				<td title="getAutomaticDirectDebitListRequest.directDebitInformations.creditor.creditOrganization.organization.code"> <a href="../types/char5.html">X-SBS-creditOrganizationCode</a><br>Code organisme.
+				</td>				<td> Header
+				</td>
+				</tr>
+				<tr>
+				<td>
+				</td>				<td title="getAutomaticDirectDebitListRequest.directDebitInformations.creditor.creditOrganization.organization.designation"> <a href="../types/charMax30.html">X-SBS-creditOrganizationDesignation</a><br>Désignation.
+				</td>				<td> Header
+				</td>
+				</tr>
+				<tr>
+				<td>
+				</td>				<td title="getAutomaticDirectDebitListRequest.directDebitInformations.creditor.creditOrganization.creditOrganizationIdentifier"> <a href="../types/charMax35.html">X-SBS-creditOrganizationIdentifier</a><br>Nom identifiant l'organisme créditeur dans un prélèvement SEPA.
+				</td>				<td> Header
+				</td>
+				</tr>
+				<tr>
+				<td>
+				</td>				<td title="getAutomaticDirectDebitListRequest.directDebitInformations.creditor.creditOrganization.organization.nationalNumberOfTransmitter"> <a href="../types/integer.html">X-SBS-creditOrganizationNationalNumberOfTransmitter</a><br>Numéro national d'émetteur.
+				</td>				<td> Header
+				</td>
+				</tr>
+				<tr>
+				<td>
+				</td>				<td title="getAutomaticDirectDebitListRequest.directDebitInformations.debitAccount.accountOtherBank.internalFormatAccount.cashDesk"> <a href="../types/char5.html">X-SBS-debitAccountAccountOtherBankCashDesk</a><br>Guichet.
+				</td>				<td> Header
+				</td>
+				</tr>
+				<tr>
+				<td>
+				</td>				<td title="getAutomaticDirectDebitListRequest.directDebitInformations.amount.amount1"> <a href="../types/decimal19_4.html">X-SBS-amount1</a><br>1er montant.
+				</td>				<td> Header
+				</td>
+				</tr>
+				<tr>
+				<td>
+				</td>				<td title="getAutomaticDirectDebitListRequest.directDebitInformations.amount.amount2"> <a href="../types/decimal19_4.html">X-SBS-amount2</a><br>2ème montant.
+				</td>				<td> Header
+				</td>
+				</tr>
+				<tr>
+				<td>
+				</td>				<td title="getAutomaticDirectDebitListRequest.directDebitInformations.amount.comparator"> <a href="../types/comparator.html">X-SBS-amountComparator</a><br>Opérateur de comparaison.
+				</td>				<td> Header
+				</td>
+				</tr>
+				<tr>
+				<td>
+				</td>				<td title="getAutomaticDirectDebitListRequest.directDebitInformations.amount.currency.currency.alphaCode"> <a href="../types/char3.html">X-SBS-amountCurrencyAlphaCode</a><br>Code devise alphanumérique.
+				</td>				<td> Header
+				</td>
+				</tr>
+				<tr>
+				<td>
+				</td>				<td title="getAutomaticDirectDebitListRequest.directDebitInformations.amount.currency.currency.numericCode"> <a href="../types/char3.html">X-SBS-amountCurrencyNumericCode</a><br>Code devise numérique.
+				</td>				<td> Header
+				</td>
+				</tr>
+				<tr>
+				<td>
+				</td>				<td title="getAutomaticDirectDebitListRequest.directDebitInformations.creditor.creditAccount.additionalInformation.designation"> <a href="../types/charMax30.html">X-SBS-creditAccountAdditionalInformationDesignation</a><br>Désignation.
+				</td>				<td> Header
+				</td>
+				</tr>
+				<tr>
+				<td>
+				</td>				<td title="getAutomaticDirectDebitListRequest.directDebitInformations.creditor.creditAccount.accountNumber.internalFormatAccountOurBranch.branch.code"> <a href="../types/char5.html">X-SBS-creditAccountBranchCode</a><br>Code de l'agence.
+				</td>				<td> Header
+				</td>
+				</tr>
+				<tr>
+				<td>
+				</td>				<td title="getAutomaticDirectDebitListRequest.directDebitInformations.creditor.creditAccount.accountNumber.internalFormatAccountOurBranch.branch.designation"> <a href="../types/charMax30.html">X-SBS-creditAccountBranchDesignation</a><br>Désignation de l'agence.
+				</td>				<td> Header
+				</td>
+				</tr>
+				<tr>
+				<td>
+				</td>				<td title="getAutomaticDirectDebitListRequest.directDebitInformations.creditor.creditAccount.accountClass.comparisonOperator"> <a href="../types/comparisonOperator.html">X-SBS-creditAccountClassComparisonOperator</a><br>Opérateur de comparaison.
+				</td>				<td> Header
+				</td>
+				</tr>
+				<tr>
+				<td>
+				</td>				<td title="getAutomaticDirectDebitListRequest.directDebitInformations.creditor.creditAccount.accountClass.value"> <a href="../types/string.html">X-SBS-creditAccountClassValue</a><br>Valeur de la désignation.
+				</td>				<td> Header
+				</td>
+				</tr>
+				<tr>
+				<td>
+				</td>				<td title="getAutomaticDirectDebitListRequest.directDebitInformations.creditor.creditAccount.additionalInformation.complementaryInformation.value.alphanumeric.comparisonOperator"> <a href="../types/comparisonOperator.html">X-SBS-creditAccountComplementaryInformationAlphanumericComparisonOperator</a><br>Opérateur de comparaison.
+				</td>				<td> Header
+				</td>
+				</tr>
+				<tr>
+				<td>
+				</td>				<td title="getAutomaticDirectDebitListRequest.directDebitInformations.creditor.creditAccount.additionalInformation.complementaryInformation.value.alphanumeric.value"> <a href="../types/string.html">X-SBS-creditAccountComplementaryInformationAlphanumericValue</a><br>Valeur de la désignation.
+				</td>				<td> Header
+				</td>
+				</tr>
+				<tr>
+				<td>
+				</td>				<td title="getAutomaticDirectDebitListRequest.directDebitInformations.debitAccount.accountOtherBank.ibanFormatAccount.value"> <a href="../types/charMax34.html">X-SBS-debitAccountAccountOtherBankIbanFormat</a><br>Valeur de l'IBAN.
+				</td>				<td> Header
+				</td>
+				</tr>
+				<tr>
+				<td>
+				</td>				<td title="getAutomaticDirectDebitListRequest.directDebitInformations.debitAccount.accountOtherBank.internalFormatAccount.accountNumber"> <a href="../types/charMax25.html">X-SBS-debitAccountAccountOtherBankNumber</a><br>Numéro de compte.
+				</td>				<td> Header
+				</td>
+				</tr>
+				<tr>
+				<td>
+				</td>				<td title="getAutomaticDirectDebitListRequest.directDebitInformations.debitAccount.accountOurBranch.internalFormatAccountOurBranch.branch.code"> <a href="../types/char5.html">X-SBS-debitAccountAccountOurBranchBranchCode</a><br>Code de l'agence.
+				</td>				<td> Header
+				</td>
+				</tr>
+				<tr>
+				<td>
+				</td>				<td title="getAutomaticDirectDebitListRequest.directDebitInformations.debitAccount.accountOurBranch.internalFormatAccountOurBranch.currency.alphaCode"> <a href="../types/char3.html">X-SBS-debitAccountAccountOurBranchCurrencyAlphaCode</a><br>Code devise alphanumérique.
+				</td>				<td> Header
+				</td>
+				</tr>
+				<tr>
+				<td>
+				</td>				<td title="getAutomaticDirectDebitListRequest.directDebitInformations.debitAccount.accountOurBranch.internalFormatAccountOurBranch.currency.numericCode"> <a href="../types/char3.html">X-SBS-debitAccountAccountOurBranchCurrencyNumericCode</a><br>Code devise numérique.
+				</td>				<td> Header
+				</td>
+				</tr>
+				<tr>
+				<td>
+				</td>				<td title="getAutomaticDirectDebitListRequest.directDebitInformations.debitAccount.accountOurBranch.externalFormatAccount.value"> <a href="../types/charMax34.html">X-SBS-debitAccountAccountOurBranchExternalFormat</a><br>Valeur de l'identifiant externe du compte.
+				</td>				<td> Header
+				</td>
+				</tr>
+				<tr>
+				<td>
+				</td>				<td title="getAutomaticDirectDebitListRequest.directDebitInformations.debitAccount.accountOurBranch.ibanFormatAccount.value"> <a href="../types/charMax34.html">X-SBS-debitAccountAccountOurBranchIbanFormat</a><br>Valeur de l'IBAN.
+				</td>				<td> Header
+				</td>
+				</tr>
+				<tr>
+				<td>
+				</td>				<td title="getAutomaticDirectDebitListRequest.directDebitInformations.debitAccount.accountOurBranch.internalFormatAccountOurBranch.account"> <a href="../types/charMax11.html">X-SBS-debitAccountAccountOurBranchNumber</a><br>Numéro du compte.
+				</td>				<td> Header
+				</td>
+				</tr>
+				<tr>
+				<td>
+				</td>				<td title="getAutomaticDirectDebitListRequest.directDebitInformations.debitAccount.accountOurBranch.internalFormatAccountOurBranch.suffix"> <a href="../types/charMax2.html">X-SBS-debitAccountAccountOurBranchSuffix</a><br>Suffixe du compte.
+				</td>				<td> Header
+				</td>
+				</tr>
+				<tr>
+				<td>
+				</td>				<td title="getAutomaticDirectDebitListRequest.directDebitInformations.debitAccount.foreignAccount.bankIdentification.bic"> <a href="../types/bicCode.html">X-SBS-debitAccountForeignAccountBic</a><br>Code BIC.
+				</td>				<td> Header
+				</td>
+				</tr>
+				<tr>
+				<td>
+				</td>				<td title="getAutomaticDirectDebitListRequest.directDebitInformations.debitAccount.foreignAccount.bankIdentification.branch.branch"> <a href="../types/charMax10.html">X-SBS-debitAccountForeignAccountBranch</a><br>Etablissement.
+				</td>				<td> Header
+				</td>
+				</tr>
+				<tr>
+				<td>
+				</td>				<td title="getAutomaticDirectDebitListRequest.directDebitInformations.debitAccount.foreignAccount.bankIdentification.branch.cashRegister"> <a href="../types/char5.html">X-SBS-debitAccountForeignAccountCashRegister</a><br>Guichet.
+				</td>				<td> Header
+				</td>
+				</tr>
+				<tr>
+				<td>
+				</td>				<td title="getAutomaticDirectDebitListRequest.directDebitInformations.debitAccount.foreignAccount.account.freeFormatAccount"> <a href="../types/charMax34.html">X-SBS-debitAccountForeignAccountFreeFormat</a><br>Compte au format libre.
+				</td>				<td> Header
+				</td>
+				</tr>
+				<tr>
+				<td>
+				</td>				<td title="getAutomaticDirectDebitListRequest.directDebitInformations.debitAccount.foreignAccount.account.ibanFormatAccount.value"> <a href="../types/charMax34.html">X-SBS-debitAccountForeignAccountIbanFormat</a><br>Valeur de l'IBAN.
+				</td>				<td> Header
+				</td>
+				</tr>
+				<tr>
+				<td>
+				</td>				<td title="getAutomaticDirectDebitListRequest.directDebitInformations.directDebitCategory"> <a href="../types/sepaOrNotSepaCategory.html">X-SBS-directDebitCategory</a><br>Catégorie du prélèvement.
+				</td>				<td> Header
+				</td>
+				</tr>
+				<tr>
+				<td>
+				</td>				<td title="getAutomaticDirectDebitListRequest.identifier.sepaDirectDebitIdentifier.identifier"> <a href="../types/charMax38.html">X-SBS-sepaIdentifier</a><br>Identifiant.
+				</td>				<td> Header
+				</td>
+				</tr>
+				<tr>
+				<td>
+				</td>				<td title="getAutomaticDirectDebitListRequest.directDebitInformations.status"> <a href="../types/directDebitStatus.html">X-SBS-status</a><br>Etat du prélèvement.
+				</td>				<td> Header
+				</td>
+				</tr>
+				<tr>
+				<td>
+				</td>				<td title="getAutomaticDirectDebitListRequest.directDebitInformations.theoreticalExecutionDate.date1"> <a href="../types/date.html">X-SBS-theoreticalExecutionDate1</a><br>1ère date.
+				</td>				<td> Header
+				</td>
+				</tr>
+				<tr>
+				<td>
+				</td>				<td title="getAutomaticDirectDebitListRequest.directDebitInformations.theoreticalExecutionDate.date2"> <a href="../types/date.html">X-SBS-theoreticalExecutionDate2</a><br>2ème date.
+				</td>				<td> Header
+				</td>
+				</tr>
+				<tr>
+				<td>
+				</td>				<td title="getAutomaticDirectDebitListRequest.directDebitInformations.theoreticalExecutionDate.comparator"> <a href="../types/comparator.html">X-SBS-theoreticalExecutionDateComparator</a><br>Opérateur de comparaison.
+				</td>				<td> Header
+				</td>
+				</tr>
+				<tr>
+				<td>
+				</td>				<td title="getAutomaticDirectDebitListRequest.directDebitInformations.debitAccount.accountOtherBank.internalFormatAccount.establishment"> <a href="../types/charMax10.html">X-SBS-debitAccountAccountOtherBankEstablishment</a><br>Établissement bancaire.
+				</td>				<td> Header
+				</td>
+				</tr>
+
+			</table>
+
+		</div>
+		<br>
+
+		</br>
+		<div class="mock-list">
+			<b>Codes Erreur : </b>			<table>
+				<tr>
+				<td> 400
+				</td>				<td> Bad Request
+				</td>
+				</tr>
+
+			</table>
+
+		</div>
+
+	</div>
+
+</div>
+<div class="detail-column" id="d1" style="display:none; width: 65%">
+	<div class="detail">
+		<div class="mock-list">
+			<b>Service SOAP : </b> <a href="../services/getAutomaticDirectDebitListV2.html">getAutomaticDirectDebitListV2</a>
+		</div>
+		<div class="mock-list">
+			<b>Code retour succes : </b>200 - OK
+		</div>
+		<div class="mock-list">
+			<b>Uri : </b>http://soprabanking.com/amplitude/sepaautodirectdebits/v2/
+		</div>
+		<div class="mock-list">
+			<b>Description : </b>The service getAutomaticDirectDebitList allows returning a list of automatic direct debit matching the search criteria received. 
+		</div>
+		<br>
+
+		</br>
+		<div class="mock-list">
+			<b>Parametres : </b>			<table class="table_param">
+				<tr>
+				<td>
+				</td>				<td title="getAutomaticDirectDebitListV2Request.directDebitInformations.amount.amount1"> <a href="../types/decimal19_4.html">X-SBS-amount1</a><br>1er montant.
+				</td>				<td> Header
+				</td>
+				</tr>
+				<tr>
+				<td>
+				</td>				<td title="getAutomaticDirectDebitListV2Request.directDebitInformations.amount.amount2"> <a href="../types/decimal19_4.html">X-SBS-amount2</a><br>2ème montant.
+				</td>				<td> Header
+				</td>
+				</tr>
+				<tr>
+				<td>
+				</td>				<td title="getAutomaticDirectDebitListV2Request.directDebitInformations.amount.comparator"> <a href="../types/comparator.html">X-SBS-amountComparator</a><br>Opérateur de comparaison.
+				</td>				<td> Header
+				</td>
+				</tr>
+				<tr>
+				<td>
+				</td>				<td title="getAutomaticDirectDebitListV2Request.directDebitInformations.amount.currency.currency.alphaCode"> <a href="../types/char3.html">X-SBS-amountCurrencyAlphaCode</a><br>Code devise alphanumérique.
+				</td>				<td> Header
+				</td>
+				</tr>
+				<tr>
+				<td>
+				</td>				<td title="getAutomaticDirectDebitListV2Request.directDebitInformations.amount.currency.currency.numericCode"> <a href="../types/char3.html">X-SBS-amountCurrencyNumericCode</a><br>Code devise numérique.
+				</td>				<td> Header
+				</td>
+				</tr>
+				<tr>
+				<td>
+				</td>				<td title="getAutomaticDirectDebitListV2Request.directDebitInformations.creditor.creditAccount.additionalInformation.designation"> <a href="../types/charMax30.html">X-SBS-creditAccountAdditionalInformationDesignation</a><br>Désignation.
+				</td>				<td> Header
+				</td>
+				</tr>
+				<tr>
+				<td>
+				</td>				<td title="getAutomaticDirectDebitListV2Request.directDebitInformations.creditor.creditAccount.accountNumber.internalFormatAccountOurBranch.branch.code"> <a href="../types/char5.html">X-SBS-creditAccountBranchCode</a><br>Code de l'agence.
+				</td>				<td> Header
+				</td>
+				</tr>
+				<tr>
+				<td>
+				</td>				<td title="getAutomaticDirectDebitListV2Request.directDebitInformations.creditor.creditAccount.accountNumber.internalFormatAccountOurBranch.branch.designation"> <a href="../types/charMax30.html">X-SBS-creditAccountBranchDesignation</a><br>Désignation de l'agence.
+				</td>				<td> Header
+				</td>
+				</tr>
+				<tr>
+				<td>
+				</td>				<td title="getAutomaticDirectDebitListV2Request.directDebitInformations.creditor.creditAccount.accountClass.comparisonOperator"> <a href="../types/comparisonOperator.html">X-SBS-creditAccountClassComparisonOperator</a><br>Opérateur de comparaison.
+				</td>				<td> Header
+				</td>
+				</tr>
+				<tr>
+				<td>
+				</td>				<td title="getAutomaticDirectDebitListV2Request.directDebitInformations.creditor.creditAccount.accountClass.value"> <a href="../types/string.html">X-SBS-creditAccountClassValue</a><br>Valeur de la désignation.
+				</td>				<td> Header
+				</td>
+				</tr>
+				<tr>
+				<td>
+				</td>				<td title="getAutomaticDirectDebitListV2Request.directDebitInformations.creditor.creditAccount.customer.additionalInformation.complementaryInformation.value.date.date2"> <a href="../types/date.html">X-SBS-creditAccountCustomerComplementaryInformationDate2</a><br>2ème date.
+				</td>				<td> Header
+				</td>
+				</tr>
+				<tr>
+				<td>
+				</td>				<td title="getAutomaticDirectDebitListV2Request.directDebitInformations.creditor.creditAccount.customer.additionalInformation.complementaryInformation.value.date.comparator"> <a href="../types/comparator.html">X-SBS-creditAccountCustomerComplementaryInformationDateComparator</a><br>Opérateur de comparaison.
+				</td>				<td> Header
+				</td>
+				</tr>
+				<tr>
+				<td>
+				</td>				<td title="getAutomaticDirectDebitListV2Request.directDebitInformations.creditor.creditAccount.customer.additionalInformation.complementaryInformation.value.amountOrRate.decimal1"> <a href="../types/decimal32_16.html">X-SBS-creditAccountCustomerComplementaryInformationDecimal1</a><br>1ère décimale.
+				</td>				<td> Header
+				</td>
+				</tr>
+				<tr>
+				<td>
+				</td>				<td title="getAutomaticDirectDebitListV2Request.directDebitInformations.creditor.creditAccount.customer.additionalInformation.complementaryInformation.value.amountOrRate.comparator"> <a href="../types/comparator.html">X-SBS-creditAccountCustomerComplementaryInformationDecimal1Comparator</a><br>Opérateur de comparaison.
+				</td>				<td> Header
+				</td>
+				</tr>
+				<tr>
+				<td>
+				</td>				<td title="getAutomaticDirectDebitListV2Request.directDebitInformations.creditor.creditAccount.customer.additionalInformation.complementaryInformation.value.amountOrRate.decimal2"> <a href="../types/decimal32_16.html">X-SBS-creditAccountCustomerComplementaryInformationDecimal2</a><br>2ème décimale.
+				</td>				<td> Header
+				</td>
+				</tr>
+				<tr>
+				<td>
+				</td>				<td title="getAutomaticDirectDebitListV2Request.directDebitInformations.creditor.creditAccount.customer.additionalInformation.complementaryInformation.identifier"> <a href="../types/charMax10.html">X-SBS-creditAccountCustomerComplementaryInformationIdentifier</a><br>Identifiant de la donnée complémentaire.
+				</td>				<td> Header
+				</td>
+				</tr>
+				<tr>
+				<td>
+				</td>				<td title="getAutomaticDirectDebitListV2Request.directDebitInformations.creditor.creditAccount.customer.customer.displayedName"> <a href="../types/charMax67.html">X-SBS-creditAccountCustomerDisplayedName</a><br>Nom de restitution du client.
+				</td>				<td> Header
+				</td>
+				</tr>
+				<tr>
+				<td>
+				</td>				<td title="getAutomaticDirectDebitListV2Request.directDebitInformations.creditor.creditAccount.customer.externalReference"> <a href="../types/charMax25.html">X-SBS-creditAccountCustomerExternalReference</a><br>Référence externe.
+				</td>				<td> Header
+				</td>
+				</tr>
+				<tr>
+				<td>
+				</td>				<td title="getAutomaticDirectDebitListV2Request.directDebitInformations.creditor.creditAccount.customer.nationalIdentifier"> <a href="../types/charMax20.html">X-SBS-creditAccountCustomerNationalIdentifier</a><br>Identifiant national.
+				</td>				<td> Header
+				</td>
+				</tr>
+				<tr>
+				<td>
+				</td>				<td title="getAutomaticDirectDebitListV2Request.directDebitInformations.creditor.creditAccount.customer.customer.customerNumber"> <a href="../types/charMax15.html">X-SBS-creditAccountCustomerNumber</a><br>Code du client.
+				</td>				<td> Header
+				</td>
+				</tr>
+				<tr>
+				<td>
+				</td>				<td title="getAutomaticDirectDebitListV2Request.directDebitInformations.creditor.creditAccount.customer.customerOfficer.code"> <a href="../types/charMax3.html">X-SBS-creditAccountCustomerOfficerCode</a><br>Code gestionnaire.
+				</td>				<td> Header
+				</td>
+				</tr>
+				<tr>
+				<td>
+				</td>				<td title="getAutomaticDirectDebitListV2Request.directDebitInformations.creditor.creditAccount.customer.customerOfficer.name"> <a href="../types/charMax30.html">X-SBS-creditAccountCustomerOfficerName</a><br>Nom du gestionnaire.
+				</td>				<td> Header
+				</td>
+				</tr>
+				<tr>
+				<td>
+				</td>				<td title="getAutomaticDirectDebitListV2Request.directDebitInformations.creditor.creditAccount.customer.customerType"> <a href="../types/customerType.html">X-SBS-creditAccountCustomerType</a><br>Type de client.
+				</td>				<td> Header
+				</td>
+				</tr>
+				<tr>
+				<td>
+				</td>				<td title="getAutomaticDirectDebitListV2Request.directDebitInformations.creditor.creditAccount.accountNumber.externalFormatAccount.value"> <a href="../types/charMax34.html">X-SBS-creditAccountExternalFormat</a><br>Valeur de l'identifiant externe du compte.
+				</td>				<td> Header
+				</td>
+				</tr>
+				<tr>
+				<td>
+				</td>				<td title="getAutomaticDirectDebitListV2Request.directDebitInformations.creditor.creditAccount.accountNumber.ibanFormatAccount.value"> <a href="../types/charMax34.html">X-SBS-creditAccountIbanFormat</a><br>Valeur de l'IBAN.
+				</td>				<td> Header
+				</td>
+				</tr>
+				<tr>
+				<td>
+				</td>				<td title="getAutomaticDirectDebitListV2Request.directDebitInformations.creditor.creditAccount.accountNumber.internalFormatAccountOurBranch.account"> <a href="../types/charMax11.html">X-SBS-creditAccountNumber</a><br>Numéro du compte.
+				</td>				<td> Header
+				</td>
+				</tr>
+				<tr>
+				<td>
+				</td>				<td title="getAutomaticDirectDebitListV2Request.directDebitInformations.creditor.creditAccount.accountNumber.internalFormatAccountOurBranch.suffix"> <a href="../types/charMax2.html">X-SBS-creditAccountSuffix</a><br>Suffixe du compte.
+				</td>				<td> Header
+				</td>
+				</tr>
+				<tr>
+				<td>
+				</td>				<td title="getAutomaticDirectDebitListV2Request.directDebitInformations.creditor.creditOrganization.organization.accountNumber"> <a href="../types/charMax30.html">X-SBS-creditOrganizationAccountNumber</a><br>Numéro de compte de l'organisme.
+				</td>				<td> Header
+				</td>
+				</tr>
+				<tr>
+				<td>
+				</td>				<td title="getAutomaticDirectDebitListV2Request.directDebitInformations.creditor.creditOrganization.organization.code"> <a href="../types/char5.html">X-SBS-creditOrganizationCode</a><br>Code organisme.
+				</td>				<td> Header
+				</td>
+				</tr>
+				<tr>
+				<td>
+				</td>				<td title="getAutomaticDirectDebitListV2Request.directDebitInformations.creditor.creditOrganization.organization.designation"> <a href="../types/charMax30.html">X-SBS-creditOrganizationDesignation</a><br>Désignation.
+				</td>				<td> Header
+				</td>
+				</tr>
+				<tr>
+				<td>
+				</td>				<td title="getAutomaticDirectDebitListV2Request.directDebitInformations.creditor.creditOrganization.organization.nationalNumberOfTransmitter"> <a href="../types/integer.html">X-SBS-creditOrganizationNationalNumberOfTransmitter</a><br>Numéro national d'émetteur.
+				</td>				<td> Header
+				</td>
+				</tr>
+				<tr>
+				<td>
+				</td>				<td title="getAutomaticDirectDebitListV2Request.directDebitInformations.debitAccount.accountOtherBank.internalFormatAccount.cashDesk"> <a href="../types/char5.html">X-SBS-debitAccountAccountOtherBankCashDesk</a><br>Guichet.
+				</td>				<td> Header
+				</td>
+				</tr>
+				<tr>
+				<td>
+				</td>				<td title="getAutomaticDirectDebitListV2Request.directDebitInformations.debitAccount.accountOtherBank.internalFormatAccount.establishment"> <a href="../types/charMax10.html">X-SBS-debitAccountAccountOtherBankEstablishment</a><br>Établissement bancaire.
+				</td>				<td> Header
+				</td>
+				</tr>
+				<tr>
+				<td>
+				</td>				<td title="getAutomaticDirectDebitListV2Request.directDebitInformations.debitAccount.accountOtherBank.ibanFormatAccount.value"> <a href="../types/charMax34.html">X-SBS-debitAccountAccountOtherBankIbanFormat</a><br>Valeur de l'IBAN.
+				</td>				<td> Header
+				</td>
+				</tr>
+				<tr>
+				<td>
+				</td>				<td title="getAutomaticDirectDebitListV2Request.directDebitInformations.debitAccount.accountOtherBank.internalFormatAccount.accountNumber"> <a href="../types/charMax25.html">X-SBS-debitAccountAccountOtherBankNumber</a><br>Numéro de compte.
+				</td>				<td> Header
+				</td>
+				</tr>
+				<tr>
+				<td>
+				</td>				<td title="getAutomaticDirectDebitListV2Request.directDebitInformations.debitAccount.accountOurBranch.internalFormatAccountOurBranch.branch.code"> <a href="../types/char5.html">X-SBS-debitAccountAccountOurBranchBranchCode</a><br>Code de l'agence.
+				</td>				<td> Header
+				</td>
+				</tr>
+				<tr>
+				<td>
+				</td>				<td title="getAutomaticDirectDebitListV2Request.directDebitInformations.debitAccount.accountOurBranch.internalFormatAccountOurBranch.currency.alphaCode"> <a href="../types/char3.html">X-SBS-debitAccountAccountOurBranchCurrencyAlphaCode</a><br>Code devise alphanumérique.
+				</td>				<td> Header
+				</td>
+				</tr>
+				<tr>
+				<td>
+				</td>				<td title="getAutomaticDirectDebitListV2Request.directDebitInformations.debitAccount.accountOurBranch.internalFormatAccountOurBranch.currency.numericCode"> <a href="../types/char3.html">X-SBS-debitAccountAccountOurBranchCurrencyNumericCode</a><br>Code devise numérique.
+				</td>				<td> Header
+				</td>
+				</tr>
+				<tr>
+				<td>
+				</td>				<td title="getAutomaticDirectDebitListV2Request.directDebitInformations.debitAccount.accountOurBranch.externalFormatAccount.value"> <a href="../types/charMax34.html">X-SBS-debitAccountAccountOurBranchExternalFormat</a><br>Valeur de l'identifiant externe du compte.
+				</td>				<td> Header
+				</td>
+				</tr>
+				<tr>
+				<td>
+				</td>				<td title="getAutomaticDirectDebitListV2Request.directDebitInformations.debitAccount.accountOurBranch.ibanFormatAccount.value"> <a href="../types/charMax34.html">X-SBS-debitAccountAccountOurBranchIbanFormat</a><br>Valeur de l'IBAN.
+				</td>				<td> Header
+				</td>
+				</tr>
+				<tr>
+				<td>
+				</td>				<td title="getAutomaticDirectDebitListV2Request.directDebitInformations.debitAccount.accountOurBranch.internalFormatAccountOurBranch.account"> <a href="../types/charMax11.html">X-SBS-debitAccountAccountOurBranchNumber</a><br>Numéro du compte.
+				</td>				<td> Header
+				</td>
+				</tr>
+				<tr>
+				<td>
+				</td>				<td title="getAutomaticDirectDebitListV2Request.directDebitInformations.debitAccount.accountOurBranch.internalFormatAccountOurBranch.suffix"> <a href="../types/charMax2.html">X-SBS-debitAccountAccountOurBranchSuffix</a><br>Suffixe du compte.
+				</td>				<td> Header
+				</td>
+				</tr>
+				<tr>
+				<td>
+				</td>				<td title="getAutomaticDirectDebitListV2Request.directDebitInformations.debitAccount.foreignAccount.bankIdentification.bic"> <a href="../types/bicCode.html">X-SBS-debitAccountForeignAccountBic</a><br>Code BIC.
+				</td>				<td> Header
+				</td>
+				</tr>
+				<tr>
+				<td>
+				</td>				<td title="getAutomaticDirectDebitListV2Request.directDebitInformations.debitAccount.foreignAccount.bankIdentification.branch.branch"> <a href="../types/charMax10.html">X-SBS-debitAccountForeignAccountBranch</a><br>Etablissement.
+				</td>				<td> Header
+				</td>
+				</tr>
+				<tr>
+				<td>
+				</td>				<td title="getAutomaticDirectDebitListV2Request.directDebitInformations.debitAccount.foreignAccount.bankIdentification.branch.cashRegister"> <a href="../types/char5.html">X-SBS-debitAccountForeignAccountCashRegister</a><br>Guichet.
+				</td>				<td> Header
+				</td>
+				</tr>
+				<tr>
+				<td>
+				</td>				<td title="getAutomaticDirectDebitListV2Request.directDebitInformations.debitAccount.foreignAccount.account.freeFormatAccount"> <a href="../types/charMax34.html">X-SBS-debitAccountForeignAccountFreeFormat</a><br>Compte au format libre.
+				</td>				<td> Header
+				</td>
+				</tr>
+				<tr>
+				<td>
+				</td>				<td title="getAutomaticDirectDebitListV2Request.directDebitInformations.debitAccount.foreignAccount.account.ibanFormatAccount.value"> <a href="../types/charMax34.html">X-SBS-debitAccountForeignAccountIbanFormat</a><br>Valeur de l'IBAN.
+				</td>				<td> Header
+				</td>
+				</tr>
+				<tr>
+				<td>
+				</td>				<td title="getAutomaticDirectDebitListV2Request.directDebitInformations.directDebitCategory"> <a href="../types/sepaOrNotSepaCategory.html">X-SBS-directDebitCategory</a><br>Catégorie du prélèvement.
+				</td>				<td> Header
+				</td>
+				</tr>
+				<tr>
+				<td>
+				</td>				<td title="getAutomaticDirectDebitListV2Request.identifier.sepaDirectDebitIdentifier.identifier"> <a href="../types/charMax38.html">X-SBS-sepaIdentifier</a><br>Identifiant.
+				</td>				<td> Header
+				</td>
+				</tr>
+				<tr>
+				<td>
+				</td>				<td title="getAutomaticDirectDebitListV2Request.directDebitInformations.status"> <a href="../types/directDebitStatus.html">X-SBS-status</a><br>Etat du prélèvement.
+				</td>				<td> Header
+				</td>
+				</tr>
+				<tr>
+				<td>
+				</td>				<td title="getAutomaticDirectDebitListV2Request.directDebitInformations.theoreticalExecutionDate.date1"> <a href="../types/date.html">X-SBS-theoreticalExecutionDate1</a><br>1ère date.
+				</td>				<td> Header
+				</td>
+				</tr>
+				<tr>
+				<td>
+				</td>				<td title="getAutomaticDirectDebitListV2Request.directDebitInformations.creditor.creditOrganization.creditOrganizationIdentifier"> <a href="../types/charMax35.html">X-SBS-creditOrganizationIdentifier</a><br>Nom identifiant l'organisme créditeur dans un prélèvement SEPA.
+				</td>				<td> Header
+				</td>
+				</tr>
+				<tr>
+				<td>
+				</td>				<td title="getAutomaticDirectDebitListV2Request.directDebitInformations.creditor.creditAccount.additionalInformation.complementaryInformation.value.alphanumeric.comparisonOperator"> <a href="../types/comparisonOperator.html">X-SBS-creditAccountComplementaryInformationAlphanumericComparisonOperator</a><br>Opérateur de comparaison.
+				</td>				<td> Header
+				</td>
+				</tr>
+				<tr>
+				<td>
+				</td>				<td title="getAutomaticDirectDebitListV2Request.directDebitInformations.creditor.creditAccount.additionalInformation.complementaryInformation.value.alphanumeric.value"> <a href="../types/string.html">X-SBS-creditAccountComplementaryInformationAlphanumericValue</a><br>Valeur de la désignation.
+				</td>				<td> Header
+				</td>
+				</tr>
+				<tr>
+				<td>
+				</td>				<td title="getAutomaticDirectDebitListV2Request.directDebitInformations.creditor.creditAccount.additionalInformation.complementaryInformation.value.date.date1"> <a href="../types/date.html">X-SBS-creditAccountComplementaryInformationDate1</a><br>1ère date.
+				</td>				<td> Header
+				</td>
+				</tr>
+				<tr>
+				<td>
+				</td>				<td title="getAutomaticDirectDebitListV2Request.directDebitInformations.creditor.creditAccount.additionalInformation.complementaryInformation.value.date.date2"> <a href="../types/date.html">X-SBS-creditAccountComplementaryInformationDate2</a><br>2ème date.
+				</td>				<td> Header
+				</td>
+				</tr>
+				<tr>
+				<td>
+				</td>				<td title="getAutomaticDirectDebitListV2Request.directDebitInformations.creditor.creditAccount.additionalInformation.complementaryInformation.value.date.comparator"> <a href="../types/comparator.html">X-SBS-creditAccountComplementaryInformationDateComparator</a><br>Opérateur de comparaison.
+				</td>				<td> Header
+				</td>
+				</tr>
+				<tr>
+				<td>
+				</td>				<td title="getAutomaticDirectDebitListV2Request.directDebitInformations.creditor.creditAccount.additionalInformation.complementaryInformation.value.amountOrRate.decimal1"> <a href="../types/decimal32_16.html">X-SBS-creditAccountComplementaryInformationDecimal1</a><br>1ère décimale.
+				</td>				<td> Header
+				</td>
+				</tr>
+				<tr>
+				<td>
+				</td>				<td title="getAutomaticDirectDebitListV2Request.directDebitInformations.creditor.creditAccount.additionalInformation.complementaryInformation.value.amountOrRate.comparator"> <a href="../types/comparator.html">X-SBS-creditAccountComplementaryInformationDecimal1Comparator</a><br>Opérateur de comparaison.
+				</td>				<td> Header
+				</td>
+				</tr>
+				<tr>
+				<td>
+				</td>				<td title="getAutomaticDirectDebitListV2Request.directDebitInformations.creditor.creditAccount.additionalInformation.complementaryInformation.value.amountOrRate.decimal2"> <a href="../types/decimal32_16.html">X-SBS-creditAccountComplementaryInformationDecimal2</a><br>2ème décimale.
+				</td>				<td> Header
+				</td>
+				</tr>
+				<tr>
+				<td>
+				</td>				<td title="getAutomaticDirectDebitListV2Request.directDebitInformations.creditor.creditAccount.additionalInformation.complementaryInformation.identifier"> <a href="../types/charMax10.html">X-SBS-creditAccountComplementaryInformationIdentifier</a><br>Identifiant de la donnée complémentaire.
+				</td>				<td> Header
+				</td>
+				</tr>
+				<tr>
+				<td>
+				</td>				<td title="getAutomaticDirectDebitListV2Request.directDebitInformations.creditor.creditAccount.accountNumber.internalFormatAccountOurBranch.currency.alphaCode"> <a href="../types/char3.html">X-SBS-creditAccountCurrencyAlphaCode</a><br>Code devise alphanumérique.
+				</td>				<td> Header
+				</td>
+				</tr>
+				<tr>
+				<td>
+				</td>				<td title="getAutomaticDirectDebitListV2Request.directDebitInformations.creditor.creditAccount.accountNumber.internalFormatAccountOurBranch.currency.numericCode"> <a href="../types/char3.html">X-SBS-creditAccountCurrencyNumericCode</a><br>Code devise numérique.
+				</td>				<td> Header
+				</td>
+				</tr>
+				<tr>
+				<td>
+				</td>				<td title="getAutomaticDirectDebitListV2Request.directDebitInformations.creditor.creditAccount.customer.activeProfile.code"> <a href="../types/charMax3.html">X-SBS-creditAccountCustomerActiveProfileCode</a><br>Code profil.
+				</td>				<td> Header
+				</td>
+				</tr>
+				<tr>
+				<td>
+				</td>				<td title="getAutomaticDirectDebitListV2Request.directDebitInformations.creditor.creditAccount.customer.activeProfile.designation"> <a href="../types/charMax30.html">X-SBS-creditAccountCustomerActiveProfileDesignation</a><br>Désignation du profil.
+				</td>				<td> Header
+				</td>
+				</tr>
+				<tr>
+				<td>
+				</td>				<td title="getAutomaticDirectDebitListV2Request.directDebitInformations.creditor.creditAccount.customer.additionalInformation.designation"> <a href="../types/charMax30.html">X-SBS-creditAccountCustomerAdditionalInformationDesignation</a><br>Désignation.
+				</td>				<td> Header
+				</td>
+				</tr>
+				<tr>
+				<td>
+				</td>				<td title="getAutomaticDirectDebitListV2Request.directDebitInformations.creditor.creditAccount.customer.additionalInformation.complementaryInformation.value.alphanumeric.comparisonOperator"> <a href="../types/comparisonOperator.html">X-SBS-creditAccountCustomerComplementaryInformationAlphanumericComparisonOperator</a><br>Opérateur de comparaison.
+				</td>				<td> Header
+				</td>
+				</tr>
+				<tr>
+				<td>
+				</td>				<td title="getAutomaticDirectDebitListV2Request.directDebitInformations.creditor.creditAccount.customer.additionalInformation.complementaryInformation.value.alphanumeric.value"> <a href="../types/string.html">X-SBS-creditAccountCustomerComplementaryInformationAlphanumericValue</a><br>Valeur de la désignation.
+				</td>				<td> Header
+				</td>
+				</tr>
+				<tr>
+				<td>
+				</td>				<td title="getAutomaticDirectDebitListV2Request.directDebitInformations.creditor.creditAccount.customer.additionalInformation.complementaryInformation.value.date.date1"> <a href="../types/date.html">X-SBS-creditAccountCustomerComplementaryInformationDate1</a><br>1ère date.
+				</td>				<td> Header
+				</td>
+				</tr>
+				<tr>
+				<td>
+				</td>				<td title="getAutomaticDirectDebitListV2Request.directDebitInformations.theoreticalExecutionDate.date2"> <a href="../types/date.html">X-SBS-theoreticalExecutionDate2</a><br>2ème date.
+				</td>				<td> Header
+				</td>
+				</tr>
+				<tr>
+				<td>
+				</td>				<td title="getAutomaticDirectDebitListV2Request.directDebitInformations.theoreticalExecutionDate.comparator"> <a href="../types/comparator.html">X-SBS-theoreticalExecutionDateComparator</a><br>Opérateur de comparaison.
+				</td>				<td> Header
+				</td>
+				</tr>
+
+			</table>
+
+		</div>
+		<br>
+
+		</br>
+		<div class="mock-list">
+			<b>Codes Erreur : </b>			<table>
+				<tr>
+				<td> 400
+				</td>				<td> Bad Request
+				</td>
+				</tr>
+
+			</table>
+
+		</div>
+
+	</div>
+
+</div>
+     </div> 
+  </div>
+  </div>
+
+  
+  <script src="../resources/jquery.js"></script>
+  <script src="../resources/doc.js"></script>
+</body>
+</html>

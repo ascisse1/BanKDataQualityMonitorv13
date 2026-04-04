@@ -1,0 +1,374 @@
+<!DOCTYPE html>
+<html>
+<head>
+	<link rel="stylesheet" href="../resources/styleDocu.css" />
+    <link rel="stylesheet" href="../resources/font-awesome/css/font-awesome.min.css" />
+	<title>Documentation Xsd</title>
+	<meta charset="UTF-8" />
+</head>
+
+<body>
+  <div class="document">
+	<div class="header">		
+	</div>
+
+    <div class="tabs">
+        <div class="tabs-wrapper-selected" onclick="window.open('../liste-ressources.html', '_self');">
+            <div class="tabs-left-content" >Liste des ressources</div>
+        </div>
+        <div class="tabs-wrapper" onclick="window.open('../liste-services.html', '_self');">
+            <div class="tabs-left-content">Liste des services</div>
+        </div>
+        <div class="tabs-wrapper" onclick="window.open('../liste-types.html', '_self');">
+            <div class="tabs-right-content">Liste des types</div>
+        </div>
+    </div>
+
+	<div class="contenu">
+      <div class="breadcrumb"> 
+        <ul class="breadcrumb">
+           <li> <a href="../index.html"> Accueil </a></li>
+           <li> > </li>
+           <li> <a href="../liste-ressources.html"> Liste des ressources </a></li>
+           <li> > </li>
+           <li> tablesofcodes </li>
+        </ul>                    
+      </div>                    
+      
+      <div class="summary">
+        <div class="mock-list"> Nom ressource REST : tablesofcodes </div>
+        <div class="mock-list"> Programme Amplitude : prwrtablesofcodes </div>
+        <div class="mock-list"> Email : support@soprabanking.com </div>        
+        <br/>
+            <div class="mock-list"> Tables of codes</div>
+      </div>
+      
+      <div class="column-content" style="width:93%">
+        <div class="detail-column" style="width: 35%">
+          <div class="tree"> 
+<ul style="padding:0">
+	<li>
+<i class="fa fa-caret-down fa-fw" onclick="expand_or_collapse(this)">
+</i>		tablesofcodes		<ul>
+			<li>
+<i class="fa fa-caret-down fa-fw" onclick="expand_or_collapse(this)">
+</i>				v1				<ul>
+					<li>
+<i class="fa fa-fw">
+</i><span class="selectable" id="e0"> GET
+</span>
+					</li>
+					<li>
+<i class="fa fa-fw">
+</i><span class="selectable" id="e1"> POST
+</span>
+					</li>
+
+				</ul>
+
+			</li>
+
+		</ul>
+		<ul>
+			<li>
+<i class="fa fa-caret-down fa-fw" onclick="expand_or_collapse(this)">
+</i>				v2				<ul>
+					<li>
+<i class="fa fa-fw">
+</i><span class="selectable" id="e2"> GETLIST
+</span>
+					</li>
+
+				</ul>
+
+			</li>
+
+		</ul>
+
+	</li>
+
+</ul>
+          </div>
+        </div>
+                 
+        
+<div class="detail-column" id="d0" style="display:none; width: 65%">
+	<div class="detail">
+		<div class="mock-list">
+			<b>Service SOAP : </b> <a href="../services/getTableOfCodeDetail.html">getTableOfCodeDetail</a>
+		</div>
+		<div class="mock-list">
+			<b>Code retour succes : </b>200 - OK
+		</div>
+		<div class="mock-list">
+			<b>Uri : </b>http://soprabanking.com/amplitude/tablesofcodes/v1/{tableOfCodeId}
+		</div>
+		<div class="mock-list">
+			<b>Description : </b>The service getTableOfCodeDetail allows getting detailed information on a line of table of codes corresponding to a unique identifier received.
+		</div>
+		<br>
+
+		</br>
+		<div class="mock-list">
+			<b>Identifiants : </b>			<table class="table_param">
+				<tr>
+				<td> 0
+				</td>				<td title="getTableOfCodeDetailRequest.tableOfCodeIdentifier.tableNumber"> <a href="../types/char3.html">tableNumber</a><br>Numéro de la nomenclature.
+				</td>
+				</tr>
+				<tr>
+				<td> 1
+				</td>				<td title="getTableOfCodeDetailRequest.tableOfCodeIdentifier.branchCode"> <a href="../types/char5.html">branchCode</a><br>Agence de paramétrage.
+				</td>
+				</tr>
+				<tr>
+				<td> 2
+				</td>				<td title="getTableOfCodeDetailRequest.tableOfCodeIdentifier.accessKey"> <a href="../types/charMax10.html">accessKey</a><br>Clé d'accès de la nomenclature.
+				</td>
+				</tr>
+
+			</table>
+
+		</div>
+		<br>
+
+		</br>
+		<div class="mock-list">
+			<b>Codes Erreur : </b>			<table>
+				<tr>
+				<td> 400
+				</td>				<td> Bad Request
+				</td>
+				</tr>
+
+			</table>
+
+		</div>
+
+	</div>
+
+</div>
+<div class="detail-column" id="d1" style="display:none; width: 65%">
+	<div class="detail">
+		<div class="mock-list">
+			<b>Service SOAP : </b> <a href="../services/createTableOfCode.html">createTableOfCode</a>
+		</div>
+		<div class="mock-list">
+			<b>Code retour succes : </b>201 - Created
+		</div>
+		<div class="mock-list">
+			<b>Uri : </b>http://soprabanking.com/amplitude/tablesofcodes/v1/
+		</div>
+		<div class="mock-list">
+			<b>Description : </b>The service createTableOfCode service enables to create a key to a table of codes.
+		</div>
+		<br>
+
+		</br>
+		<div class="mock-list">
+			<b>Codes Erreur : </b>			<table>
+				<tr>
+				<td> 400
+				</td>				<td> Bad Request
+				</td>
+				</tr>
+
+			</table>
+
+		</div>
+
+	</div>
+
+</div>
+<div class="detail-column" id="d2" style="display:none; width: 65%">
+	<div class="detail">
+		<div class="mock-list">
+			<b>Service SOAP : </b> <a href="../services/getTableOfCodeListV2.html">getTableOfCodeListV2</a>
+		</div>
+		<div class="mock-list">
+			<b>Code retour succes : </b>200 - OK
+		</div>
+		<div class="mock-list">
+			<b>Uri : </b>http://soprabanking.com/amplitude/tablesofcodes/v2/
+		</div>
+		<div class="mock-list">
+			<b>Description : </b>The service getTableOfCodeList allows returning a list of keys of tables of codes matching the search criteria received.
+
+The search is based on the optional criteria below:
+- the branch (code and/or designation),
+- the table of codes (number and/or title),
+- the access key,
+- a table of wordings of tables of codes (identifier and/or value),
+- a table of amounts of tables of codes (identifier and/or value),
+- a table of rates of tables of codes (identifier and/or value),
+
+For each line of table of codes returned, all data used in the search criteria will be indicated.
+		</div>
+		<br>
+
+		</br>
+		<div class="mock-list">
+			<b>Parametres : </b>			<table class="table_param">
+				<tr>
+				<td>
+				</td>				<td title="getTableOfCodeListRequest.accessKey"> <a href="../types/accessKey.html">X-SBS-accessKey</a><br>Cle d'acces.
+				</td>				<td> Header
+				</td>
+				</tr>
+				<tr>
+				<td>
+				</td>				<td title="getTableOfCodeListRequest.amount1"> <a href="../types/decimal15_0.html">X-SBS-amount1</a><br>Montant 1.
+				</td>				<td> Header
+				</td>
+				</tr>
+				<tr>
+				<td>
+				</td>				<td title="getTableOfCodeListRequest.amount2"> <a href="../types/decimal15_0.html">X-SBS-amount2</a><br>Montant 2.
+				</td>				<td> Header
+				</td>
+				</tr>
+				<tr>
+				<td>
+				</td>				<td title="getTableOfCodeListRequest.amount3"> <a href="../types/decimal15_0.html">X-SBS-amount3</a><br>Montant 3.
+				</td>				<td> Header
+				</td>
+				</tr>
+				<tr>
+				<td>
+				</td>				<td title="getTableOfCodeListRequest.amount4"> <a href="../types/decimal15_0.html">X-SBS-amount4</a><br>Montant 4.
+				</td>				<td> Header
+				</td>
+				</tr>
+				<tr>
+				<td>
+				</td>				<td title="getTableOfCodeListRequest.amount5"> <a href="../types/decimal15_0.html">X-SBS-amount5</a><br>Montant 5.
+				</td>				<td> Header
+				</td>
+				</tr>
+				<tr>
+				<td>
+				</td>				<td title="getTableOfCodeListRequest.amount6"> <a href="../types/decimal15_0.html">X-SBS-amount6</a><br>Montant 6
+				</td>				<td> Header
+				</td>
+				</tr>
+				<tr>
+				<td>
+				</td>				<td title="getTableOfCodeListRequest.amount7"> <a href="../types/decimal15_0.html">X-SBS-amount7</a><br>Montant 7.
+				</td>				<td> Header
+				</td>
+				</tr>
+				<tr>
+				<td>
+				</td>				<td title="getTableOfCodeListRequest.amount8"> <a href="../types/decimal15_0.html">X-SBS-amount8</a><br>Montant 8.
+				</td>				<td> Header
+				</td>
+				</tr>
+				<tr>
+				<td>
+				</td>				<td title="getTableOfCodeListRequest.branch.code"> <a href="../types/char5.html">X-SBS-branchCode</a><br>Code de l'agence.
+				</td>				<td> Header
+				</td>
+				</tr>
+				<tr>
+				<td>
+				</td>				<td title="getTableOfCodeListRequest.rate1"> <a href="../types/decimal15_7.html">X-SBS-rate1</a><br>Taux 1.
+				</td>				<td> Header
+				</td>
+				</tr>
+				<tr>
+				<td>
+				</td>				<td title="getTableOfCodeListRequest.rate2"> <a href="../types/decimal15_7.html">X-SBS-rate2</a><br>Taux 2.
+				</td>				<td> Header
+				</td>
+				</tr>
+				<tr>
+				<td>
+				</td>				<td title="getTableOfCodeListRequest.rate3"> <a href="../types/decimal15_7.html">X-SBS-rate3</a><br>Taux 3.
+				</td>				<td> Header
+				</td>
+				</tr>
+				<tr>
+				<td>
+				</td>				<td title="getTableOfCodeListRequest.rate4"> <a href="../types/decimal15_7.html">X-SBS-rate4</a><br>Taux 4.
+				</td>				<td> Header
+				</td>
+				</tr>
+				<tr>
+				<td>
+				</td>				<td title="getTableOfCodeListRequest.rate5"> <a href="../types/decimal15_7.html">X-SBS-rate5</a><br>Taux 5.
+				</td>				<td> Header
+				</td>
+				</tr>
+				<tr>
+				<td>
+				</td>				<td title="getTableOfCodeListRequest.tableNumber.designation"> <a href="../types/charMax35.html">X-SBS-tableDesignation</a><br>Nom de la table.
+				</td>				<td> Header
+				</td>
+				</tr>
+				<tr>
+				<td>
+				</td>				<td title="getTableOfCodeListRequest.tableNumber.tableNumber"> <a href="../types/char3.html">X-SBS-tableNumber</a><br>Table.
+				</td>				<td> Header
+				</td>
+				</tr>
+				<tr>
+				<td>
+				</td>				<td title="getTableOfCodeListRequest.wording1"> <a href="../types/charMax30.html">X-SBS-wording1</a><br>Libelle 1.
+				</td>				<td> Header
+				</td>
+				</tr>
+				<tr>
+				<td>
+				</td>				<td title="getTableOfCodeListRequest.wording2"> <a href="../types/charMax30.html">X-SBS-wording2</a><br>Libelle 2.
+				</td>				<td> Header
+				</td>
+				</tr>
+				<tr>
+				<td>
+				</td>				<td title="getTableOfCodeListRequest.wording3"> <a href="../types/charMax30.html">X-SBS-wording3</a><br>Libelle 3
+				</td>				<td> Header
+				</td>
+				</tr>
+				<tr>
+				<td>
+				</td>				<td title="getTableOfCodeListRequest.wording4"> <a href="../types/charMax30.html">X-SBS-wording4</a><br>Libelle 4.
+				</td>				<td> Header
+				</td>
+				</tr>
+				<tr>
+				<td>
+				</td>				<td title="getTableOfCodeListRequest.wording5"> <a href="../types/charMax30.html">X-SBS-wording5</a><br>Libelle 5.
+				</td>				<td> Header
+				</td>
+				</tr>
+
+			</table>
+
+		</div>
+		<br>
+
+		</br>
+		<div class="mock-list">
+			<b>Codes Erreur : </b>			<table>
+				<tr>
+				<td> 400
+				</td>				<td> Bad Request
+				</td>
+				</tr>
+
+			</table>
+
+		</div>
+
+	</div>
+
+</div>
+     </div> 
+  </div>
+  </div>
+
+  
+  <script src="../resources/jquery.js"></script>
+  <script src="../resources/doc.js"></script>
+</body>
+</html>

@@ -1,0 +1,254 @@
+<!DOCTYPE html >
+<html>
+<head>
+	<link rel="stylesheet" href="../resources/styleDocu.css" />
+  <link rel="stylesheet" href="../resources/font-awesome/css/font-awesome.min.css" />
+	<title>Documentation Xsd</title>
+	<meta charset="UTF-8" />
+</head>
+
+<body>
+  <div class="document">
+	<div class="header">
+		
+	</div>
+
+  <div class="tabs">
+    <div class="tabs-wrapper" onclick="window.open('../liste-ressources.html', '_self');">
+      <div class="tabs-left-content">
+        Liste des ressources
+      </div>
+    </div>
+    <div class="tabs-wrapper" onclick="window.open('../liste-services.html', '_self');">
+      <div class="tabs-left-content" >
+        Liste des services  
+      </div>
+    </div>
+    <div class="tabs-wrapper-selected" onclick="window.open('../liste-types.html', '_self');">
+      <div class="tabs-right-content">
+        Liste des types
+      </div>
+    </div>
+  </div>
+
+	
+
+	<div class="contenu">
+      <div class="breadcrumb"> 
+        <ul class="breadcrumb">
+           <li> <a href="../index.html"> Accueil </a></li>
+           <li> > </li>
+           <li> <a href="../liste-types.html"> Liste des types </a></li>
+           <li> > </li>
+           <li> ReferredDocumentType1Choice </li>
+        </ul>                    
+      </div>                    
+      
+     
+      <div class="summary">
+			<div class="mock-list">
+				<b>Nom : </b>ReferredDocumentType1Choice
+			</div>
+			<div class="mock-list">
+				<b> Description : </b>Fournit les détails sur le type du document visé.
+			</div>
+        
+        <div> </div>
+        <div class="mock-list"> Choix : Oui</div>
+        
+      </div>
+                        
+      <div class="column-content">
+        <div class="detail-column">
+          <div class="tree"> 
+<ul>
+	<li>
+<i class="fa fa-caret-down fa-fw" onclick="expand_or_collapse(this)">
+</i>		ReferredDocumentType1Choice		<ul style="display:block">
+			<li>
+<i class="fa fa-fw">
+</i><i class="fa fa-key fa-fw">
+</i><span class="selectable" id="e0"> Cd : DocumentType5Code
+</span>
+			</li>
+			<li>
+<i class="fa fa-fw">
+</i><i class="fa fa-key fa-fw">
+</i><span class="selectable" id="e1"> Prtry : Max35Text
+</span>
+			</li>
+
+		</ul>
+
+	</li>
+
+</ul>
+          </div>
+          
+          <div class="detail">
+				<p align="left">
+					Légende :<br />
+				</p>
+            <ul>
+               <li align="left">
+                  <i class="fa fa-key fa-fw">
+                  </i>
+                  = Elément obligatoire en saisie.
+               </li>
+               <li align="left">
+                  <span style="font-weight:bold"> [M]
+                  </span>
+                  = Elément multiple (0 à n occurrences).
+               </li>
+               <li align="left">
+                  <span style="font-weight:bold"> [C]
+                  </span>
+                  = Elément composé d'un choix à effectuer. Un seul choix autorisé.
+               </li>
+            </ul>
+            <p align="left">
+               Remarque : Un même élément peut regrouper plusieurs caractéristiques
+            </p>          
+          </div>
+          
+        </div>
+<div class="detail-column" id="d0" style="display:none">
+	<div class="detail">
+			<div class="mock-list">
+				<b>Nom : </b>Cd
+			</div>
+			<div class="mock-list">
+				<b>Description : </b>Code ISO.
+			</div>
+
+	</div>
+	<div class="detail">
+			<div class="mock-list">
+				<b>Nom : </b> <a href="../types/DocumentType5Code.html">DocumentType5Code</a>
+			</div>
+			<div class="mock-list">
+				<b> Description : </b>Code relatif au type de document.
+			</div>
+			<div class="mock-list">
+				<b>Format : </b>string
+			</div>
+			<div class="mock-list">
+				<b>Valeurs possibles : </b>					<table class="table_enum" class="table_enum" class="table_enum" class="table_enum" class="table_enum" class="table_enum" class="table_enum" class="table_enum" class="table_enum" class="table_enum" class="table_enum" class="table_enum" class="table_enum" class="table_enum" class="table_enum">
+						<tr>
+						<td> CNFA
+						</td>						<td class="td_right"> Le document est un avoir du montant final payé pour une transaction commerciale
+						</td>
+						</tr>
+						<tr>
+						<td> DISP
+						</td>						<td class="td_right"> Le document est un avis d¿expédition
+						</td>
+						</tr>
+						<tr>
+						<td> DEBN
+						</td>						<td class="td_right"> Le document est une note de débit
+						</td>
+						</tr>
+						<tr>
+						<td> AROI
+						</td>						<td class="td_right"> Le document est un paiement qui s¿applique à un document source spécifique
+						</td>
+						</tr>
+						<tr>
+						<td> DNFA
+						</td>						<td class="td_right"> Le document est une note de débit du montant final payé pour une transaction commerciale
+						</td>
+						</tr>
+						<tr>
+						<td> MSIN
+						</td>						<td class="td_right"> Le document est une facture réclamant le paiement pour la fourniture de services (par exemple : gaz ou électricité) à un compteur fixe.
+						</td>
+						</tr>
+						<tr>
+						<td> CINV
+						</td>						<td class="td_right"> Le document est une facture
+						</td>
+						</tr>
+						<tr>
+						<td> CMCN
+						</td>						<td class="td_right"> Le document est un contrat entre les parties, stipulant les termes et conditions de livraison des biens et services
+						</td>
+						</tr>
+						<tr>
+						<td> HIRI
+						</td>						<td class="td_right"> Le document est une facture pour l¿embauche en ressources humaines ou la location de biens ou d¿équipement
+						</td>
+						</tr>
+						<tr>
+						<td> SBIN
+						</td>						<td class="td_right"> Le document est une facture émise par le débiteur
+						</td>
+						</tr>
+						<tr>
+						<td> VCHR
+						</td>						<td class="td_right"> Document de paiement électronique
+						</td>
+						</tr>
+						<tr>
+						<td> SOAC
+						</td>						<td class="td_right"> Le document est un relevé des transactions comptabilisées sur le compte du débiteur chez le fournisseur
+						</td>
+						</tr>
+						<tr>
+						<td> TSUT
+						</td>						<td class="td_right"> Le document est un identifiant de transaction tel qu¿attribué par le Trade Services Utility.
+						</td>
+						</tr>
+						<tr>
+						<td> CREN
+						</td>						<td class="td_right"> Le document est un avoir
+						</td>
+						</tr>
+						<tr>
+						<td> BOLD
+						</td>						<td class="td_right"> Le document est un préavis d¿expédition
+						</td>
+						</tr>
+
+					</table>
+
+			</div>
+
+	</div>
+
+</div>
+<div class="detail-column" id="d1" style="display:none">
+	<div class="detail">
+			<div class="mock-list">
+				<b>Nom : </b>Prtry
+			</div>
+			<div class="mock-list">
+				<b>Description : </b>Code Propriétaire.
+			</div>
+
+	</div>
+	<div class="detail">
+			<div class="mock-list">
+				<b>Nom : </b> <a href="../types/Max35Text.html">Max35Text</a>
+			</div>
+			<div class="mock-list">
+				<b> Description : </b>Identifiant unique pour le groupe message.
+			</div>
+			<div class="mock-list">
+				<b>Format : </b>string
+			</div>
+			<div class="mock-list">
+				<b>Longueur mini-maxi : </b>1 - 35
+			</div>
+
+	</div>
+
+</div>
+      </div> 
+  </div>
+
+  
+  <script src="../resources/jquery.js"></script>
+  <script src="../resources/doc.js"></script>
+</body>
+</html>

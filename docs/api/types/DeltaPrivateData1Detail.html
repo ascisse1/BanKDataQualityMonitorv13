@@ -1,0 +1,340 @@
+<!DOCTYPE html >
+<html>
+<head>
+	<link rel="stylesheet" href="../resources/styleDocu.css" />
+  <link rel="stylesheet" href="../resources/font-awesome/css/font-awesome.min.css" />
+	<title>Documentation Xsd</title>
+	<meta charset="UTF-8" />
+</head>
+
+<body>
+  <div class="document">
+	<div class="header">
+		
+	</div>
+
+  <div class="tabs">
+    <div class="tabs-wrapper" onclick="window.open('../liste-ressources.html', '_self');">
+      <div class="tabs-left-content">
+        Liste des ressources
+      </div>
+    </div>
+    <div class="tabs-wrapper" onclick="window.open('../liste-services.html', '_self');">
+      <div class="tabs-left-content" >
+        Liste des services  
+      </div>
+    </div>
+    <div class="tabs-wrapper-selected" onclick="window.open('../liste-types.html', '_self');">
+      <div class="tabs-right-content">
+        Liste des types
+      </div>
+    </div>
+  </div>
+
+	
+
+	<div class="contenu">
+      <div class="breadcrumb"> 
+        <ul class="breadcrumb">
+           <li> <a href="../index.html"> Accueil </a></li>
+           <li> > </li>
+           <li> <a href="../liste-types.html"> Liste des types </a></li>
+           <li> > </li>
+           <li> DeltaPrivateData1Detail </li>
+        </ul>                    
+      </div>                    
+      
+     
+      <div class="summary">
+			<div class="mock-list">
+				<b>Nom : </b>DeltaPrivateData1Detail
+			</div>
+			<div class="mock-list">
+				<b> Description : </b>Détail de la donnée privative Amplitude.
+			</div>
+        
+        <div> </div>
+        <div class="mock-list"> Choix : Non</div>
+        
+      </div>
+                        
+      <div class="column-content">
+        <div class="detail-column">
+          <div class="tree"> 
+<ul>
+	<li>
+<i class="fa fa-caret-down fa-fw" onclick="expand_or_collapse(this)">
+</i>		DeltaPrivateData1Detail		<ul style="display:block">
+			<li>
+<i class="fa fa-fw">
+</i><i class="fa fa-key fa-fw">
+</i><span class="selectable" id="e0"> PrvtDtInf : Max140Text
+</span>
+			</li>
+			<li>
+<i class="fa fa-caret-down fa-fw" onclick="expand_or_collapse(this)">
+</i><i class="fa fa-key fa-fw">
+</i><span class="selectable" id="e1"> Tp : DeltaPrivateData1Type
+</span>				<ul style="display:block">
+					<li>
+<i class="fa fa-caret-down fa-fw" onclick="expand_or_collapse(this)">
+</i><i class="fa fa-key fa-fw">
+</i><span style="font-weight:bold"> [C]
+</span><span class="selectable" id="e2"> CdOrPrtry : DeltaPrivateData1Type1Choice
+</span>						<ul style="display:block">
+							<li>
+<i class="fa fa-fw">
+</i><i class="fa fa-key fa-fw">
+</i><span class="selectable" id="e3"> Cd : DeltaPrivateData1Code
+</span>
+							</li>
+							<li>
+<i class="fa fa-fw">
+</i><i class="fa fa-key fa-fw">
+</i><span class="selectable" id="e4"> Prtry : Max35Text
+</span>
+							</li>
+
+						</ul>
+
+					</li>
+					<li>
+<i class="fa fa-fw">
+</i><span class="selectable" id="e5"> Issr : Max35Text
+</span>
+					</li>
+
+				</ul>
+
+			</li>
+
+		</ul>
+
+	</li>
+
+</ul>
+          </div>
+          
+          <div class="detail">
+				<p align="left">
+					Légende :<br />
+				</p>
+            <ul>
+               <li align="left">
+                  <i class="fa fa-key fa-fw">
+                  </i>
+                  = Elément obligatoire en saisie.
+               </li>
+               <li align="left">
+                  <span style="font-weight:bold"> [M]
+                  </span>
+                  = Elément multiple (0 à n occurrences).
+               </li>
+               <li align="left">
+                  <span style="font-weight:bold"> [C]
+                  </span>
+                  = Elément composé d'un choix à effectuer. Un seul choix autorisé.
+               </li>
+            </ul>
+            <p align="left">
+               Remarque : Un même élément peut regrouper plusieurs caractéristiques
+            </p>          
+          </div>
+          
+        </div>
+<div class="detail-column" id="d0" style="display:none">
+	<div class="detail">
+			<div class="mock-list">
+				<b>Nom : </b>PrvtDtInf
+			</div>
+			<div class="mock-list">
+				<b>Description : </b>Détail sur la donnée privative Amplitude.
+			</div>
+
+	</div>
+	<div class="detail">
+			<div class="mock-list">
+				<b>Nom : </b> <a href="../types/Max140Text.html">Max140Text</a>
+			</div>
+			<div class="mock-list">
+				<b> Description : </b>Informations complémentaires, relatives au traitement de l'instruction de paiement.
+			</div>
+			<div class="mock-list">
+				<b>Format : </b>string
+			</div>
+			<div class="mock-list">
+				<b>Longueur mini-maxi : </b>1 - 140
+			</div>
+
+	</div>
+
+</div>
+<div class="detail-column" id="d1" style="display:none">
+	<div class="detail">
+			<div class="mock-list">
+				<b>Nom : </b>Tp
+			</div>
+			<div class="mock-list">
+				<b>Description : </b>Type de donnée privative Amplitude.
+			</div>
+
+	</div>
+	<div class="detail">
+			<div class="mock-list">
+				<b>Nom : </b> <a href="../types/DeltaPrivateData1Type.html">DeltaPrivateData1Type</a>
+			</div>
+			<div class="mock-list">
+				<b> Description : </b>Type de la donnée privative.
+			</div>
+
+	</div>
+
+</div>
+<div class="detail-column" id="d2" style="display:none">
+	<div class="detail">
+			<div class="mock-list">
+				<b>Nom : </b>CdOrPrtry
+			</div>
+			<div class="mock-list">
+				<b>Description : </b>Code ISO ou prorpriétaire.
+			</div>
+
+	</div>
+	<div class="detail">
+			<div class="mock-list">
+				<b>Nom : </b> <a href="../types/DeltaPrivateData1Type1Choice.html">DeltaPrivateData1Type1Choice</a>
+			</div>
+			<div class="mock-list">
+				<b> Description : </b>Type de la donnée privative.
+			</div>
+
+	</div>
+
+</div>
+<div class="detail-column" id="d3" style="display:none">
+	<div class="detail">
+			<div class="mock-list">
+				<b>Nom : </b>Cd
+			</div>
+			<div class="mock-list">
+				<b>Description : </b>Code ISO.
+			</div>
+
+	</div>
+	<div class="detail">
+			<div class="mock-list">
+				<b>Nom : </b> <a href="../types/DeltaPrivateData1Code.html">DeltaPrivateData1Code</a>
+			</div>
+			<div class="mock-list">
+				<b> Description : </b>Code d'une donnée privative Amplitude.
+			</div>
+			<div class="mock-list">
+				<b>Format : </b>string
+			</div>
+			<div class="mock-list">
+				<b>Valeurs possibles : </b>					<table class="table_enum" class="table_enum" class="table_enum" class="table_enum" class="table_enum" class="table_enum" class="table_enum">
+						<tr>
+						<td> EXCHANGE_SYSTEM
+						</td>						<td class="td_right"> Système d'échange
+						</td>
+						</tr>
+						<tr>
+						<td> MOP_REFMSG
+						</td>						<td class="td_right"> Identifiant du message Amplitude
+						</td>
+						</tr>
+						<tr>
+						<td> CHANNEL
+						</td>						<td class="td_right"> Canal SIOP associé
+						</td>
+						</tr>
+						<tr>
+						<td> PtcInf_Sgt
+						</td>						<td class="td_right"> Message signé
+						</td>
+						</tr>
+						<tr>
+						<td> COMPLETION
+						</td>						<td class="td_right"> Utilisation de la Complétion
+						</td>
+						</tr>
+						<tr>
+						<td> NEGOCIATED_RATE
+						</td>						<td class="td_right"> Taux de change négocié
+						</td>
+						</tr>
+						<tr>
+						<td> VALIDATION
+						</td>						<td class="td_right"> Flux a valider
+						</td>
+						</tr>
+
+					</table>
+
+			</div>
+
+	</div>
+
+</div>
+<div class="detail-column" id="d4" style="display:none">
+	<div class="detail">
+			<div class="mock-list">
+				<b>Nom : </b>Prtry
+			</div>
+			<div class="mock-list">
+				<b>Description : </b>Code Propriétaire.
+			</div>
+
+	</div>
+	<div class="detail">
+			<div class="mock-list">
+				<b>Nom : </b> <a href="../types/Max35Text.html">Max35Text</a>
+			</div>
+			<div class="mock-list">
+				<b> Description : </b>Identifiant unique pour le groupe message.
+			</div>
+			<div class="mock-list">
+				<b>Format : </b>string
+			</div>
+			<div class="mock-list">
+				<b>Longueur mini-maxi : </b>1 - 35
+			</div>
+
+	</div>
+
+</div>
+<div class="detail-column" id="d5" style="display:none">
+	<div class="detail">
+			<div class="mock-list">
+				<b>Nom : </b>Issr
+			</div>
+			<div class="mock-list">
+				<b>Description : </b>Emetteur.
+			</div>
+
+	</div>
+	<div class="detail">
+			<div class="mock-list">
+				<b>Nom : </b> <a href="../types/Max35Text.html">Max35Text</a>
+			</div>
+			<div class="mock-list">
+				<b> Description : </b>Identifiant unique pour le groupe message.
+			</div>
+			<div class="mock-list">
+				<b>Format : </b>string
+			</div>
+			<div class="mock-list">
+				<b>Longueur mini-maxi : </b>1 - 35
+			</div>
+
+	</div>
+
+</div>
+      </div> 
+  </div>
+
+  
+  <script src="../resources/jquery.js"></script>
+  <script src="../resources/doc.js"></script>
+</body>
+</html>

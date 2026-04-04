@@ -1,0 +1,707 @@
+<!DOCTYPE html>
+<html>
+<head>
+	<link rel="stylesheet" href="../resources/styleDocu.css" />
+    <link rel="stylesheet" href="../resources/font-awesome/css/font-awesome.min.css" />
+	<title>Documentation Xsd</title>
+	<meta charset="UTF-8" />
+</head>
+
+<body>
+  <div class="document">
+	<div class="header">		
+	</div>
+
+    <div class="tabs">
+        <div class="tabs-wrapper-selected" onclick="window.open('../liste-ressources.html', '_self');">
+            <div class="tabs-left-content" >Liste des ressources</div>
+        </div>
+        <div class="tabs-wrapper" onclick="window.open('../liste-services.html', '_self');">
+            <div class="tabs-left-content">Liste des services</div>
+        </div>
+        <div class="tabs-wrapper" onclick="window.open('../liste-types.html', '_self');">
+            <div class="tabs-right-content">Liste des types</div>
+        </div>
+    </div>
+
+	<div class="contenu">
+      <div class="breadcrumb"> 
+        <ul class="breadcrumb">
+           <li> <a href="../index.html"> Accueil </a></li>
+           <li> > </li>
+           <li> <a href="../liste-ressources.html"> Liste des ressources </a></li>
+           <li> > </li>
+           <li> productsubscriptions </li>
+        </ul>                    
+      </div>                    
+      
+      <div class="summary">
+        <div class="mock-list"> Nom ressource REST : productsubscriptions </div>
+        <div class="mock-list"> Programme Amplitude : cbwrproductsubscriptions </div>
+        <div class="mock-list"> Email : support@soprabanking.com </div>        
+        <br/>
+            <div class="mock-list"> Product subscriptions</div>
+      </div>
+      
+      <div class="column-content" style="width:93%">
+        <div class="detail-column" style="width: 35%">
+          <div class="tree"> 
+<ul style="padding:0">
+	<li>
+<i class="fa fa-caret-down fa-fw" onclick="expand_or_collapse(this)">
+</i>		productsubscriptions		<ul>
+			<li>
+<i class="fa fa-caret-down fa-fw" onclick="expand_or_collapse(this)">
+</i>				v1				<ul>
+					<li>
+<i class="fa fa-fw">
+</i><span class="selectable" id="e0"> DELETE
+</span>
+					</li>
+					<li>
+<i class="fa fa-fw">
+</i><span class="selectable" id="e1"> POST
+</span>
+					</li>
+					<li>
+<i class="fa fa-fw">
+</i><span class="selectable" id="e2"> GETLIST
+</span>
+					</li>
+
+				</ul>
+				<ul>
+					<li>
+<i class="fa fa-caret-down fa-fw" onclick="expand_or_collapse(this)">
+</i><span class="selectable" id="e3"> contracts
+</span>						<ul>
+							<li>
+<i class="fa fa-fw">
+</i><span class="selectable" id="e4"> GETLIST
+</span>
+							</li>
+
+						</ul>
+
+					</li>
+
+				</ul>
+
+			</li>
+
+		</ul>
+
+	</li>
+
+</ul>
+          </div>
+        </div>
+                 
+        
+<div class="detail-column" id="d0" style="display:none; width: 65%">
+	<div class="detail">
+		<div class="mock-list">
+			<b>Service SOAP : </b> <a href="../services/cancelProductSubscription.html">cancelProductSubscription</a>
+		</div>
+		<div class="mock-list">
+			<b>Code retour succes : </b>200 - OK
+		</div>
+		<div class="mock-list">
+			<b>Uri : </b>http://soprabanking.com/amplitude/productsubscriptions/v1/{subscriptionId}
+		</div>
+		<div class="mock-list">
+			<b>Description : </b>The service cancelProductSubscription allows deleting the product subscription corresponding to a unique identifier received.
+		</div>
+		<br>
+
+		</br>
+		<div class="mock-list">
+			<b>Identifiants : </b>			<table class="table_param">
+				<tr>
+				<td> 0
+				</td>				<td title="cancelProductSubscriptionRequest.subscriptionReference"> <a href="../types/charMax25.html">subscriptionReference</a>
+				</td>
+				</tr>
+
+			</table>
+
+		</div>
+		<br>
+
+		</br>
+		<div class="mock-list">
+			<b>Codes Erreur : </b>			<table>
+				<tr>
+				<td> 400
+				</td>				<td> Bad Request
+				</td>
+				</tr>
+
+			</table>
+
+		</div>
+
+	</div>
+
+</div>
+<div class="detail-column" id="d1" style="display:none; width: 65%">
+	<div class="detail">
+		<div class="mock-list">
+			<b>Service SOAP : </b> <a href="../services/createProductSubscription.html">createProductSubscription</a>
+		</div>
+		<div class="mock-list">
+			<b>Code retour succes : </b>201 - Created
+		</div>
+		<div class="mock-list">
+			<b>Uri : </b>http://soprabanking.com/amplitude/productsubscriptions/v1/
+		</div>
+		<div class="mock-list">
+			<b>Description : </b>The service createProductSubscription allows creating a product subscription.
+
+The reference of the product subscription to be created is either provided or automatically allocated.
+The customer code, the product code and the subscription status are required.
+This information can come along with other optional information:
+- the code and reference of package subscription,
+- the file type and/or number,
+- the identifier of the main account in internal format,
+- the subscription end date,
+- the information on product pricing (code, type, invoicing account identifier in internal format, quantity of subscribed products, indicator of invoicing of implementation fees, amount without taxes at implementation time),
+- a comment,
+- an indicator of recovery of unpaid amount.
+
+The service returns the reference of the product subscription created.
+		</div>
+		<br>
+
+		</br>
+		<div class="mock-list">
+			<b>Codes Erreur : </b>			<table>
+				<tr>
+				<td> 400
+				</td>				<td> Bad Request
+				</td>
+				</tr>
+
+			</table>
+
+		</div>
+
+	</div>
+
+</div>
+<div class="detail-column" id="d2" style="display:none; width: 65%">
+	<div class="detail">
+		<div class="mock-list">
+			<b>Service SOAP : </b> <a href="../services/getProductSubscriptionList.html">getProductSubscriptionList</a>
+		</div>
+		<div class="mock-list">
+			<b>Code retour succes : </b>200 - OK
+		</div>
+		<div class="mock-list">
+			<b>Uri : </b>http://soprabanking.com/amplitude/productsubscriptions/v1/
+		</div>
+		<div class="mock-list">
+			<b>Description : </b>The service getProductSubscriptionList allows returning a list of subscribed products or packages matching the search criteria received.
+
+The search is based on the optional criteria below:
+- the customer: code and/or name to be displayed, type, profile (code and/or designation), national identifier, account officer (code and/or name), additional information (identifier and/or value (or value range) and/or designation), external reference,
+- the product (code and/or designation and/or attribute),
+- the package (code and/or designation),
+- the module of the linked file (code and/or designation),
+- the account: number (internal and/or IBAN and/or external format) and/or class and/or customer and/or additional information (identifier and/or value or value range and/or designation),
+- the processing code.
+
+For each subscribed product or package returned, all data used in the search criteria will be indicated as well as:
+- the file type and number,
+- the subscription reference,
+- the subscription start and end dates .
+		</div>
+		<br>
+
+		</br>
+		<div class="mock-list">
+			<b>Parametres : </b>			<table class="table_param">
+				<tr>
+				<td>
+				</td>				<td title="getProductSubscriptionListRequest.processingCode"> <a href="../types/processingCode.html">X-SBS-processingCode</a><br>Code de traitement.
+				</td>				<td> Header
+				</td>
+				</tr>
+				<tr>
+				<td>
+				</td>				<td title="getProductSubscriptionListRequest.product.productAttribute"> <a href="../types/productAttribute.html">X-SBS-productAttribute</a><br>Attribut produit.
+				</td>				<td> Header
+				</td>
+				</tr>
+				<tr>
+				<td>
+				</td>				<td title="getProductSubscriptionListRequest.product.code"> <a href="../types/char3.html">X-SBS-productCode</a><br>Code du produit.
+				</td>				<td> Header
+				</td>
+				</tr>
+				<tr>
+				<td>
+				</td>				<td title="getProductSubscriptionListRequest.product.designation"> <a href="../types/charMax30.html">X-SBS-productDesignation</a><br>Désignation du produit.
+				</td>				<td> Header
+				</td>
+				</tr>
+				<tr>
+				<td>
+				</td>				<td title="getProductSubscriptionListRequest.accountFile.additionalInformation.designation"> <a href="../types/charMax30.html">X-SBS-accountAdditionalInformationDesignation</a><br>Désignation.
+				</td>				<td> Header
+				</td>
+				</tr>
+				<tr>
+				<td>
+				</td>				<td title="getProductSubscriptionListRequest.accountFile.accountNumber.internalFormatAccountOurBranch.branch.code"> <a href="../types/char5.html">X-SBS-accountBranchCode</a><br>Code de l'agence.
+				</td>				<td> Header
+				</td>
+				</tr>
+				<tr>
+				<td>
+				</td>				<td title="getProductSubscriptionListRequest.accountFile.accountNumber.internalFormatAccountOurBranch.branch.designation"> <a href="../types/charMax30.html">X-SBS-accountBranchDesignation</a><br>Désignation de l'agence.
+				</td>				<td> Header
+				</td>
+				</tr>
+				<tr>
+				<td>
+				</td>				<td title="getProductSubscriptionListRequest.accountFile.accountClass.comparisonOperator"> <a href="../types/comparisonOperator.html">X-SBS-accountClassComparisonOperator</a><br>Opérateur de comparaison.
+				</td>				<td> Header
+				</td>
+				</tr>
+				<tr>
+				<td>
+				</td>				<td title="getProductSubscriptionListRequest.accountFile.accountClass.value"> <a href="../types/string.html">X-SBS-accountClassValue</a><br>Valeur de la désignation.
+				</td>				<td> Header
+				</td>
+				</tr>
+				<tr>
+				<td>
+				</td>				<td title="getProductSubscriptionListRequest.accountFile.additionalInformation.complementaryInformation.value.alphanumeric.comparisonOperator"> <a href="../types/comparisonOperator.html">X-SBS-accountComplementaryInformationAlphanumericComparisonOperator</a><br>Opérateur de comparaison.
+				</td>				<td> Header
+				</td>
+				</tr>
+				<tr>
+				<td>
+				</td>				<td title="getProductSubscriptionListRequest.accountFile.additionalInformation.complementaryInformation.value.alphanumeric.value"> <a href="../types/string.html">X-SBS-accountComplementaryInformationAlphanumericValue</a><br>Valeur de la désignation.
+				</td>				<td> Header
+				</td>
+				</tr>
+				<tr>
+				<td>
+				</td>				<td title="getProductSubscriptionListRequest.accountFile.additionalInformation.complementaryInformation.value.date.date1"> <a href="../types/date.html">X-SBS-accountComplementaryInformationDate1</a><br>1ère date.
+				</td>				<td> Header
+				</td>
+				</tr>
+				<tr>
+				<td>
+				</td>				<td title="getProductSubscriptionListRequest.accountFile.additionalInformation.complementaryInformation.value.date.date2"> <a href="../types/date.html">X-SBS-accountComplementaryInformationDate2</a><br>2ème date.
+				</td>				<td> Header
+				</td>
+				</tr>
+				<tr>
+				<td>
+				</td>				<td title="getProductSubscriptionListRequest.accountFile.additionalInformation.complementaryInformation.value.date.comparator"> <a href="../types/comparator.html">X-SBS-accountComplementaryInformationDateComparator</a><br>Opérateur de comparaison.
+				</td>				<td> Header
+				</td>
+				</tr>
+				<tr>
+				<td>
+				</td>				<td title="getProductSubscriptionListRequest.accountFile.additionalInformation.complementaryInformation.value.amountOrRate.decimal1"> <a href="../types/decimal32_16.html">X-SBS-accountComplementaryInformationDecimal1</a><br>1ère décimale.
+				</td>				<td> Header
+				</td>
+				</tr>
+				<tr>
+				<td>
+				</td>				<td title="getProductSubscriptionListRequest.accountFile.additionalInformation.complementaryInformation.value.amountOrRate.comparator"> <a href="../types/comparator.html">X-SBS-accountComplementaryInformationDecimal1Comparator</a><br>Opérateur de comparaison.
+				</td>				<td> Header
+				</td>
+				</tr>
+				<tr>
+				<td>
+				</td>				<td title="getProductSubscriptionListRequest.accountFile.additionalInformation.complementaryInformation.value.amountOrRate.decimal2"> <a href="../types/decimal32_16.html">X-SBS-accountComplementaryInformationDecimal2</a><br>2ème décimale.
+				</td>				<td> Header
+				</td>
+				</tr>
+				<tr>
+				<td>
+				</td>				<td title="getProductSubscriptionListRequest.accountFile.additionalInformation.complementaryInformation.identifier"> <a href="../types/charMax10.html">X-SBS-accountComplementaryInformationIdentifier</a><br>Identifiant de la donnée complémentaire.
+				</td>				<td> Header
+				</td>
+				</tr>
+				<tr>
+				<td>
+				</td>				<td title="getProductSubscriptionListRequest.accountFile.accountNumber.internalFormatAccountOurBranch.currency.alphaCode"> <a href="../types/char3.html">X-SBS-accountCurrencyAlphaCode</a><br>Code devise alphanumérique.
+				</td>				<td> Header
+				</td>
+				</tr>
+				<tr>
+				<td>
+				</td>				<td title="getProductSubscriptionListRequest.accountFile.accountNumber.internalFormatAccountOurBranch.currency.numericCode"> <a href="../types/char3.html">X-SBS-accountCurrencyNumericCode</a><br>Code devise numérique.
+				</td>				<td> Header
+				</td>
+				</tr>
+				<tr>
+				<td>
+				</td>				<td title="getProductSubscriptionListRequest.accountFile.customer.activeProfile.code"> <a href="../types/charMax3.html">X-SBS-accountCustomerActiveProfileCode</a><br>Code profil.
+				</td>				<td> Header
+				</td>
+				</tr>
+				<tr>
+				<td>
+				</td>				<td title="getProductSubscriptionListRequest.accountFile.customer.activeProfile.designation"> <a href="../types/charMax30.html">X-SBS-accountCustomerActiveProfileDesignation</a><br>Désignation du profil.
+				</td>				<td> Header
+				</td>
+				</tr>
+				<tr>
+				<td>
+				</td>				<td title="getProductSubscriptionListRequest.accountFile.customer.additionalInformation.designation"> <a href="../types/charMax30.html">X-SBS-accountCustomerAdditionalInformationDesignation</a><br>Désignation.
+				</td>				<td> Header
+				</td>
+				</tr>
+				<tr>
+				<td>
+				</td>				<td title="getProductSubscriptionListRequest.accountFile.customer.additionalInformation.complementaryInformation.value.alphanumeric.comparisonOperator"> <a href="../types/comparisonOperator.html">X-SBS-accountCustomerComplementaryInformationAlphanumericComparisonOperator</a><br>Opérateur de comparaison.
+				</td>				<td> Header
+				</td>
+				</tr>
+				<tr>
+				<td>
+				</td>				<td title="getProductSubscriptionListRequest.accountFile.customer.additionalInformation.complementaryInformation.value.alphanumeric.value"> <a href="../types/string.html">X-SBS-accountCustomerComplementaryInformationAlphanumericValue</a><br>Valeur de la désignation.
+				</td>				<td> Header
+				</td>
+				</tr>
+				<tr>
+				<td>
+				</td>				<td title="getProductSubscriptionListRequest.accountFile.customer.additionalInformation.complementaryInformation.value.date.date1"> <a href="../types/date.html">X-SBS-accountCustomerComplementaryInformationDate1</a><br>1ère date.
+				</td>				<td> Header
+				</td>
+				</tr>
+				<tr>
+				<td>
+				</td>				<td title="getProductSubscriptionListRequest.accountFile.customer.additionalInformation.complementaryInformation.value.date.date2"> <a href="../types/date.html">X-SBS-accountCustomerComplementaryInformationDate2</a><br>2ème date.
+				</td>				<td> Header
+				</td>
+				</tr>
+				<tr>
+				<td>
+				</td>				<td title="getProductSubscriptionListRequest.accountFile.customer.additionalInformation.complementaryInformation.value.date.comparator"> <a href="../types/comparator.html">X-SBS-accountCustomerComplementaryInformationDateComparator</a><br>Opérateur de comparaison.
+				</td>				<td> Header
+				</td>
+				</tr>
+				<tr>
+				<td>
+				</td>				<td title="getProductSubscriptionListRequest.accountFile.customer.additionalInformation.complementaryInformation.value.amountOrRate.decimal1"> <a href="../types/decimal32_16.html">X-SBS-accountCustomerComplementaryInformationDecimal1</a><br>1ère décimale.
+				</td>				<td> Header
+				</td>
+				</tr>
+				<tr>
+				<td>
+				</td>				<td title="getProductSubscriptionListRequest.accountFile.customer.additionalInformation.complementaryInformation.value.amountOrRate.comparator"> <a href="../types/comparator.html">X-SBS-accountCustomerComplementaryInformationDecimal1Comparator</a><br>Opérateur de comparaison.
+				</td>				<td> Header
+				</td>
+				</tr>
+				<tr>
+				<td>
+				</td>				<td title="getProductSubscriptionListRequest.accountFile.customer.additionalInformation.complementaryInformation.value.amountOrRate.decimal2"> <a href="../types/decimal32_16.html">X-SBS-accountCustomerComplementaryInformationDecimal2</a><br>2ème décimale.
+				</td>				<td> Header
+				</td>
+				</tr>
+				<tr>
+				<td>
+				</td>				<td title="getProductSubscriptionListRequest.accountFile.customer.additionalInformation.complementaryInformation.identifier"> <a href="../types/charMax10.html">X-SBS-accountCustomerComplementaryInformationIdentifier</a><br>Identifiant de la donnée complémentaire.
+				</td>				<td> Header
+				</td>
+				</tr>
+				<tr>
+				<td>
+				</td>				<td title="getProductSubscriptionListRequest.accountFile.customer.customer.displayedName"> <a href="../types/charMax67.html">X-SBS-accountCustomerDisplayedName</a><br>Nom de restitution du client.
+				</td>				<td> Header
+				</td>
+				</tr>
+				<tr>
+				<td>
+				</td>				<td title="getProductSubscriptionListRequest.accountFile.customer.externalReference"> <a href="../types/charMax25.html">X-SBS-accountCustomerExternalReference</a><br>Référence externe.
+				</td>				<td> Header
+				</td>
+				</tr>
+				<tr>
+				<td>
+				</td>				<td title="getProductSubscriptionListRequest.accountFile.customer.nationalIdentifier"> <a href="../types/charMax20.html">X-SBS-accountCustomerNationalIdentifier</a><br>Identifiant national.
+				</td>				<td> Header
+				</td>
+				</tr>
+				<tr>
+				<td>
+				</td>				<td title="getProductSubscriptionListRequest.accountFile.customer.customer.customerNumber"> <a href="../types/charMax15.html">X-SBS-accountCustomerNumber</a><br>Code du client.
+				</td>				<td> Header
+				</td>
+				</tr>
+				<tr>
+				<td>
+				</td>				<td title="getProductSubscriptionListRequest.accountFile.customer.customerOfficer.code"> <a href="../types/charMax3.html">X-SBS-accountCustomerOfficerCode</a><br>Code gestionnaire.
+				</td>				<td> Header
+				</td>
+				</tr>
+				<tr>
+				<td>
+				</td>				<td title="getProductSubscriptionListRequest.accountFile.customer.customerOfficer.name"> <a href="../types/charMax30.html">X-SBS-accountCustomerOfficerName</a><br>Nom du gestionnaire.
+				</td>				<td> Header
+				</td>
+				</tr>
+				<tr>
+				<td>
+				</td>				<td title="getProductSubscriptionListRequest.accountFile.customer.customerType"> <a href="../types/customerType.html">X-SBS-accountCustomerType</a><br>Type de client.
+				</td>				<td> Header
+				</td>
+				</tr>
+				<tr>
+				<td>
+				</td>				<td title="getProductSubscriptionListRequest.accountFile.accountNumber.externalFormatAccount.value"> <a href="../types/charMax34.html">X-SBS-accountExternalFormat</a><br>Valeur de l'identifiant externe du compte.
+				</td>				<td> Header
+				</td>
+				</tr>
+				<tr>
+				<td>
+				</td>				<td title="getProductSubscriptionListRequest.accountFile.accountNumber.ibanFormatAccount.value"> <a href="../types/charMax34.html">X-SBS-accountIbanFormat</a><br>Valeur de l'IBAN.
+				</td>				<td> Header
+				</td>
+				</tr>
+				<tr>
+				<td>
+				</td>				<td title="getProductSubscriptionListRequest.accountFile.accountNumber.internalFormatAccountOurBranch.account"> <a href="../types/charMax11.html">X-SBS-accountNumber</a><br>Numéro du compte.
+				</td>				<td> Header
+				</td>
+				</tr>
+				<tr>
+				<td>
+				</td>				<td title="getProductSubscriptionListRequest.accountFile.accountNumber.internalFormatAccountOurBranch.suffix"> <a href="../types/charMax2.html">X-SBS-accountSuffix</a><br>Suffixe du compte.
+				</td>				<td> Header
+				</td>
+				</tr>
+				<tr>
+				<td>
+				</td>				<td title="getProductSubscriptionListRequest.customer.activeProfile.code"> <a href="../types/charMax3.html">X-SBS-customerActiveProfileCode</a><br>Code profil.
+				</td>				<td> Header
+				</td>
+				</tr>
+				<tr>
+				<td>
+				</td>				<td title="getProductSubscriptionListRequest.customer.activeProfile.designation"> <a href="../types/charMax30.html">X-SBS-customerActiveProfileDesignation</a><br>Désignation du profil.
+				</td>				<td> Header
+				</td>
+				</tr>
+				<tr>
+				<td>
+				</td>				<td title="getProductSubscriptionListRequest.customer.additionalInformation.designation"> <a href="../types/charMax30.html">X-SBS-customerAdditionalInformationDesignation</a><br>Désignation.
+				</td>				<td> Header
+				</td>
+				</tr>
+				<tr>
+				<td>
+				</td>				<td title="getProductSubscriptionListRequest.customer.additionalInformation.complementaryInformation.value.alphanumeric.comparisonOperator"> <a href="../types/comparisonOperator.html">X-SBS-customerComplementaryInformationAlphanumericComparisonOperator</a><br>Opérateur de comparaison.
+				</td>				<td> Header
+				</td>
+				</tr>
+				<tr>
+				<td>
+				</td>				<td title="getProductSubscriptionListRequest.customer.additionalInformation.complementaryInformation.value.alphanumeric.value"> <a href="../types/string.html">X-SBS-customerComplementaryInformationAlphanumericValue</a><br>Valeur de la désignation.
+				</td>				<td> Header
+				</td>
+				</tr>
+				<tr>
+				<td>
+				</td>				<td title="getProductSubscriptionListRequest.customer.additionalInformation.complementaryInformation.value.date.date1"> <a href="../types/date.html">X-SBS-customerComplementaryInformationDate1</a><br>1ère date.
+				</td>				<td> Header
+				</td>
+				</tr>
+				<tr>
+				<td>
+				</td>				<td title="getProductSubscriptionListRequest.customer.additionalInformation.complementaryInformation.value.date.date2"> <a href="../types/date.html">X-SBS-customerComplementaryInformationDate2</a><br>2ème date.
+				</td>				<td> Header
+				</td>
+				</tr>
+				<tr>
+				<td>
+				</td>				<td title="getProductSubscriptionListRequest.customer.additionalInformation.complementaryInformation.value.date.comparator"> <a href="../types/comparator.html">X-SBS-customerComplementaryInformationDateComparator</a><br>Opérateur de comparaison.
+				</td>				<td> Header
+				</td>
+				</tr>
+				<tr>
+				<td>
+				</td>				<td title="getProductSubscriptionListRequest.customer.additionalInformation.complementaryInformation.value.amountOrRate.decimal1"> <a href="../types/decimal32_16.html">X-SBS-customerComplementaryInformationDecimal1</a><br>1ère décimale.
+				</td>				<td> Header
+				</td>
+				</tr>
+				<tr>
+				<td>
+				</td>				<td title="getProductSubscriptionListRequest.customer.additionalInformation.complementaryInformation.value.amountOrRate.comparator"> <a href="../types/comparator.html">X-SBS-customerComplementaryInformationDecimal1Comparator</a><br>Opérateur de comparaison.
+				</td>				<td> Header
+				</td>
+				</tr>
+				<tr>
+				<td>
+				</td>				<td title="getProductSubscriptionListRequest.customer.additionalInformation.complementaryInformation.value.amountOrRate.decimal2"> <a href="../types/decimal32_16.html">X-SBS-customerComplementaryInformationDecimal2</a><br>2ème décimale.
+				</td>				<td> Header
+				</td>
+				</tr>
+				<tr>
+				<td>
+				</td>				<td title="getProductSubscriptionListRequest.customer.additionalInformation.complementaryInformation.identifier"> <a href="../types/charMax10.html">X-SBS-customerComplementaryInformationIdentifier</a><br>Identifiant de la donnée complémentaire.
+				</td>				<td> Header
+				</td>
+				</tr>
+				<tr>
+				<td>
+				</td>				<td title="getProductSubscriptionListRequest.customer.customer.displayedName"> <a href="../types/charMax67.html">X-SBS-customerDisplayedName</a><br>Nom de restitution du client.
+				</td>				<td> Header
+				</td>
+				</tr>
+				<tr>
+				<td>
+				</td>				<td title="getProductSubscriptionListRequest.customer.externalReference"> <a href="../types/charMax25.html">X-SBS-customerExternalReference</a><br>Référence externe.
+				</td>				<td> Header
+				</td>
+				</tr>
+				<tr>
+				<td>
+				</td>				<td title="getProductSubscriptionListRequest.customer.nationalIdentifier"> <a href="../types/charMax20.html">X-SBS-customerNationalIdentifier</a><br>Identifiant national.
+				</td>				<td> Header
+				</td>
+				</tr>
+				<tr>
+				<td>
+				</td>				<td title="getProductSubscriptionListRequest.customer.customer.customerNumber"> <a href="../types/charMax15.html">X-SBS-customerNumber</a><br>Code du client.
+				</td>				<td> Header
+				</td>
+				</tr>
+				<tr>
+				<td>
+				</td>				<td title="getProductSubscriptionListRequest.customer.customerOfficer.code"> <a href="../types/charMax3.html">X-SBS-customerOfficerCode</a><br>Code gestionnaire.
+				</td>				<td> Header
+				</td>
+				</tr>
+				<tr>
+				<td>
+				</td>				<td title="getProductSubscriptionListRequest.customer.customerOfficer.name"> <a href="../types/charMax30.html">X-SBS-customerOfficerName</a><br>Nom du gestionnaire.
+				</td>				<td> Header
+				</td>
+				</tr>
+				<tr>
+				<td>
+				</td>				<td title="getProductSubscriptionListRequest.customer.customerType"> <a href="../types/customerType.html">X-SBS-customerType</a><br>Type de client.
+				</td>				<td> Header
+				</td>
+				</tr>
+				<tr>
+				<td>
+				</td>				<td title="getProductSubscriptionListRequest.fileModule.code"> <a href="../types/charMax3.html">X-SBS-fileModuleCode</a><br>Code module.
+				</td>				<td> Header
+				</td>
+				</tr>
+				<tr>
+				<td>
+				</td>				<td title="getProductSubscriptionListRequest.fileModule.name"> <a href="../types/charMax30.html">X-SBS-fileModuleName</a><br>Désignation.
+				</td>				<td> Header
+				</td>
+				</tr>
+				<tr>
+				<td>
+				</td>				<td title="getProductSubscriptionListRequest.package.code"> <a href="../types/char6.html">X-SBS-packageCode</a><br>Code du package.
+				</td>				<td> Header
+				</td>
+				</tr>
+				<tr>
+				<td>
+				</td>				<td title="getProductSubscriptionListRequest.package.designation"> <a href="../types/charMax30.html">X-SBS-packageDesignation</a><br>Désignation du package.
+				</td>				<td> Header
+				</td>
+				</tr>
+
+			</table>
+
+		</div>
+		<br>
+
+		</br>
+		<div class="mock-list">
+			<b>Codes Erreur : </b>			<table>
+				<tr>
+				<td> 400
+				</td>				<td> Bad Request
+				</td>
+				</tr>
+
+			</table>
+
+		</div>
+
+	</div>
+
+</div>
+<div class="detail-column" id="d3" style="display:none; width: 65%">
+	<div class="detail">
+		<div class="mock-list">
+			<b>Description : </b>Contracts
+		</div>
+
+	</div>
+
+</div>
+<div class="detail-column" id="d4" style="display:none; width: 65%">
+	<div class="detail">
+		<div class="mock-list">
+			<b>Service SOAP : </b> <a href="../services/getProductSubscriptionContract.html">getProductSubscriptionContract</a>
+		</div>
+		<div class="mock-list">
+			<b>Code retour succes : </b>200 - OK
+		</div>
+		<div class="mock-list">
+			<b>Uri : </b>http://soprabanking.com/amplitude/productsubscriptions/v1/{subscriptionId}/contracts
+		</div>
+		<div class="mock-list">
+			<b>Description : </b>The service getProductSubscriptionContract allows returning in XML format, all the data linked to the subscription of a product corresponding to a unique identifier received.
+
+Then it will be possible to rework these data in an external application in order to produce a printout or another document providing the information linked to the product subscription. 
+		</div>
+		<br>
+
+		</br>
+		<div class="mock-list">
+			<b>Identifiants : </b>			<table class="table_param">
+				<tr>
+				<td> 0
+				</td>				<td title="getProductSubscriptionContractRequest.productSubscriptionReference"> <a href="../types/subscriptionReference.html">productSubscriptionReference</a><br>Référence de souscription du produit.
+				</td>
+				</tr>
+
+			</table>
+
+		</div>
+		<br>
+
+		</br>
+		<div class="mock-list">
+			<b>Codes Erreur : </b>			<table>
+				<tr>
+				<td> 400
+				</td>				<td> Bad Request
+				</td>
+				</tr>
+
+			</table>
+
+		</div>
+
+	</div>
+
+</div>
+     </div> 
+  </div>
+  </div>
+
+  
+  <script src="../resources/jquery.js"></script>
+  <script src="../resources/doc.js"></script>
+</body>
+</html>

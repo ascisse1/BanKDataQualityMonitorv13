@@ -1,0 +1,187 @@
+<!DOCTYPE html>
+<html>
+<head>
+	<link rel="stylesheet" href="../resources/styleDocu.css" />
+    <link rel="stylesheet" href="../resources/font-awesome/css/font-awesome.min.css" />
+	<title>Documentation Xsd</title>
+	<meta charset="UTF-8" />
+</head>
+
+<body>
+  <div class="document">
+	<div class="header">		
+	</div>
+
+    <div class="tabs">
+        <div class="tabs-wrapper-selected" onclick="window.open('../liste-ressources.html', '_self');">
+            <div class="tabs-left-content" >Liste des ressources</div>
+        </div>
+        <div class="tabs-wrapper" onclick="window.open('../liste-services.html', '_self');">
+            <div class="tabs-left-content">Liste des services</div>
+        </div>
+        <div class="tabs-wrapper" onclick="window.open('../liste-types.html', '_self');">
+            <div class="tabs-right-content">Liste des types</div>
+        </div>
+    </div>
+
+	<div class="contenu">
+      <div class="breadcrumb"> 
+        <ul class="breadcrumb">
+           <li> <a href="../index.html"> Accueil </a></li>
+           <li> > </li>
+           <li> <a href="../liste-ressources.html"> Liste des ressources </a></li>
+           <li> > </li>
+           <li> exchangerates </li>
+        </ul>                    
+      </div>                    
+      
+      <div class="summary">
+        <div class="mock-list"> Nom ressource REST : exchangerates </div>
+        <div class="mock-list"> Programme Amplitude : cbwrexchangerates </div>
+        <div class="mock-list"> Email : support@soprabanking.com </div>        
+        <br/>
+            <div class="mock-list"> Exchange rates</div>
+      </div>
+      
+      <div class="column-content" style="width:93%">
+        <div class="detail-column" style="width: 35%">
+          <div class="tree"> 
+<ul style="padding:0">
+	<li>
+<i class="fa fa-caret-down fa-fw" onclick="expand_or_collapse(this)">
+</i>		exchangerates		<ul>
+			<li>
+<i class="fa fa-caret-down fa-fw" onclick="expand_or_collapse(this)">
+</i>				v1				<ul>
+					<li>
+<i class="fa fa-fw">
+</i><span class="selectable" id="e0"> GETLIST
+</span>
+					</li>
+
+				</ul>
+
+			</li>
+
+		</ul>
+
+	</li>
+
+</ul>
+          </div>
+        </div>
+                 
+        
+<div class="detail-column" id="d0" style="display:none; width: 65%">
+	<div class="detail">
+		<div class="mock-list">
+			<b>Service SOAP : </b> <a href="../services/getExchangeRateList.html">getExchangeRateList</a>
+		</div>
+		<div class="mock-list">
+			<b>Code retour succes : </b>200 - OK
+		</div>
+		<div class="mock-list">
+			<b>Uri : </b>http://soprabanking.com/amplitude/exchangerates/v1/
+		</div>
+		<div class="mock-list">
+			<b>Description : </b>The service getExchangeRateList allows returning a list of exchange rates matching the search criteria received.
+
+The search is based on the optional criteria below:
+- the branch code,
+- the initial currency code and/or target currency code,
+- the operation code,
+- the customer profile code,
+- the rate application date (by default: the ledger date),
+- the origin of the rate,
+- the search nature.
+
+For each rate returned, the following information will be indicated:
+- the calculation method,
+- the rate application date,
+- the exchange rate.
+
+		</div>
+		<br>
+
+		</br>
+		<div class="mock-list">
+			<b>Parametres : </b>			<table class="table_param">
+				<tr>
+				<td>
+				</td>				<td title="getExchangeRateListRequest.applicationDate"> <a href="../types/date.html">X-SBS-applicationDate</a><br>Date d'application du taux.
+				</td>				<td> Header
+				</td>
+				</tr>
+				<tr>
+				<td>
+				</td>				<td title="getExchangeRateListRequest.branchCode"> <a href="../types/branchCode.html">X-SBS-branchCode</a><br>Code agence.
+				</td>				<td> Header
+				</td>
+				</tr>
+				<tr>
+				<td>
+				</td>				<td title="getExchangeRateListRequest.customerProfileCode"> <a href="../types/customerProfileCode.html">X-SBS-customerProfileCode</a><br>Code du profil client.
+				</td>				<td> Header
+				</td>
+				</tr>
+				<tr>
+				<td>
+				</td>				<td title="getExchangeRateListRequest.initialCurrencyCode"> <a href="../types/currencyCode.html">X-SBS-initialCurrencyCode</a><br>Devise d'origine.
+				</td>				<td> Header
+				</td>
+				</tr>
+				<tr>
+				<td>
+				</td>				<td title="getExchangeRateListRequest.operationCode"> <a href="../types/operationCode.html">X-SBS-operationCode</a><br>Code opération.
+				</td>				<td> Header
+				</td>
+				</tr>
+				<tr>
+				<td> <i class="fa fa-key fa-fw"> </i>
+				</td>				<td title="getExchangeRateListRequest.origin"> <a href="../types/rateOriginType.html">X-SBS-origin</a><br>Origine des taux (locaux ou étrangers).
+				</td>				<td> Header
+				</td>
+				</tr>
+				<tr>
+				<td>
+				</td>				<td title="getExchangeRateListRequest.searchNature"> <a href="../types/rateSearchNatureType.html">X-SBS-searchNature</a><br>Nature de recherche.
+				</td>				<td> Header
+				</td>
+				</tr>
+				<tr>
+				<td>
+				</td>				<td title="getExchangeRateListRequest.targetCurrencyCode"> <a href="../types/currencyCode.html">X-SBS-targetCurrencyCode</a><br>Devise d'arrivée.
+				</td>				<td> Header
+				</td>
+				</tr>
+
+			</table>
+
+		</div>
+		<br>
+
+		</br>
+		<div class="mock-list">
+			<b>Codes Erreur : </b>			<table>
+				<tr>
+				<td> 400
+				</td>				<td> Bad Request
+				</td>
+				</tr>
+
+			</table>
+
+		</div>
+
+	</div>
+
+</div>
+     </div> 
+  </div>
+  </div>
+
+  
+  <script src="../resources/jquery.js"></script>
+  <script src="../resources/doc.js"></script>
+</body>
+</html>

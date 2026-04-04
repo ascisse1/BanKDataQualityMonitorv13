@@ -1,0 +1,338 @@
+<!DOCTYPE html>
+<html>
+<head>
+	<link rel="stylesheet" href="../resources/styleDocu.css" />
+    <link rel="stylesheet" href="../resources/font-awesome/css/font-awesome.min.css" />
+	<title>Documentation Xsd</title>
+	<meta charset="UTF-8" />
+</head>
+
+<body>
+  <div class="document">
+	<div class="header">		
+	</div>
+
+    <div class="tabs">
+        <div class="tabs-wrapper-selected" onclick="window.open('../liste-ressources.html', '_self');">
+            <div class="tabs-left-content" >Liste des ressources</div>
+        </div>
+        <div class="tabs-wrapper" onclick="window.open('../liste-services.html', '_self');">
+            <div class="tabs-left-content">Liste des services</div>
+        </div>
+        <div class="tabs-wrapper" onclick="window.open('../liste-types.html', '_self');">
+            <div class="tabs-right-content">Liste des types</div>
+        </div>
+    </div>
+
+	<div class="contenu">
+      <div class="breadcrumb"> 
+        <ul class="breadcrumb">
+           <li> <a href="../index.html"> Accueil </a></li>
+           <li> > </li>
+           <li> <a href="../liste-ressources.html"> Liste des ressources </a></li>
+           <li> > </li>
+           <li> customerlimits </li>
+        </ul>                    
+      </div>                    
+      
+      <div class="summary">
+        <div class="mock-list"> Nom ressource REST : customerlimits </div>
+        <div class="mock-list"> Programme Amplitude : cbwrcustomerlimits </div>
+        <div class="mock-list"> Email : support@soprabanking.com </div>        
+        <br/>
+            <div class="mock-list"> Limits for customers</div>
+      </div>
+      
+      <div class="column-content" style="width:93%">
+        <div class="detail-column" style="width: 35%">
+          <div class="tree"> 
+<ul style="padding:0">
+	<li>
+<i class="fa fa-caret-down fa-fw" onclick="expand_or_collapse(this)">
+</i>		customerlimits		<ul>
+			<li>
+<i class="fa fa-caret-down fa-fw" onclick="expand_or_collapse(this)">
+</i>				v1				<ul>
+					<li>
+<i class="fa fa-fw">
+</i><span class="selectable" id="e0"> DELETE
+</span>
+					</li>
+					<li>
+<i class="fa fa-fw">
+</i><span class="selectable" id="e1"> PUT
+</span>
+					</li>
+					<li>
+<i class="fa fa-fw">
+</i><span class="selectable" id="e2"> POST
+</span>
+					</li>
+					<li>
+<i class="fa fa-fw">
+</i><span class="selectable" id="e3"> GETLIST
+</span>
+					</li>
+
+				</ul>
+
+			</li>
+
+		</ul>
+
+	</li>
+
+</ul>
+          </div>
+        </div>
+                 
+        
+<div class="detail-column" id="d0" style="display:none; width: 65%">
+	<div class="detail">
+		<div class="mock-list">
+			<b>Service SOAP : </b> <a href="../services/cancelCustomerLimit.html">cancelCustomerLimit</a>
+		</div>
+		<div class="mock-list">
+			<b>Code retour succes : </b>200 - OK
+		</div>
+		<div class="mock-list">
+			<b>Uri : </b>http://soprabanking.com/amplitude/customerlimits/v1/{limitId}
+		</div>
+		<div class="mock-list">
+			<b>Description : </b>Use service cancelCustomerLimit to cancel a limit for a customer corresponding to a unique identifier received.
+		</div>
+		<br>
+
+		</br>
+		<div class="mock-list">
+			<b>Identifiants : </b>			<table class="table_param">
+				<tr>
+				<td> 0
+				</td>				<td title="cancelCustomerLimitRequest.identifier.limitNumber"> <a href="../types/limitNumber.html">limitNumber</a><br>Numéro de limite.
+				</td>
+				</tr>
+
+			</table>
+
+		</div>
+		<br>
+
+		</br>
+		<div class="mock-list">
+			<b>Parametres : </b>			<table class="table_param">
+				<tr>
+				<td>
+				</td>				<td title="cancelCustomerLimitRequest.identifier.designation"> <a href="../types/charMax30.html">X-SBS-designation</a><br>Désignation.
+				</td>				<td> Header
+				</td>
+				</tr>
+				<tr>
+				<td> <i class="fa fa-key fa-fw"> </i>
+				</td>				<td title="cancelCustomerLimitRequest.rejectionReason"> <a href="../types/charMax30.html">X-SBS-rejectionReason</a><br>Motif de l'annulation de la limite.
+				</td>				<td> Header
+				</td>
+				</tr>
+
+			</table>
+
+		</div>
+		<br>
+
+		</br>
+		<div class="mock-list">
+			<b>Codes Erreur : </b>			<table>
+				<tr>
+				<td> 400
+				</td>				<td> Bad Request
+				</td>
+				</tr>
+
+			</table>
+
+		</div>
+
+	</div>
+
+</div>
+<div class="detail-column" id="d1" style="display:none; width: 65%">
+	<div class="detail">
+		<div class="mock-list">
+			<b>Service SOAP : </b> <a href="../services/modifyCustomerLimit.html">modifyCustomerLimit</a>
+		</div>
+		<div class="mock-list">
+			<b>Code retour succes : </b>200 - OK
+		</div>
+		<div class="mock-list">
+			<b>Uri : </b>http://soprabanking.com/amplitude/customerlimits/v1/{limitId}
+		</div>
+		<div class="mock-list">
+			<b>Description : </b>Use service modifyCustomerLimit to modifiy the characteristics of a limit for a customer corresponding to a unique identifier received.
+		</div>
+		<br>
+
+		</br>
+		<div class="mock-list">
+			<b>Identifiants : </b>			<table class="table_param">
+				<tr>
+				<td> 0
+				</td>				<td title="modifyCustomerLimitRequest.identifier.limitNumber"> <a href="../types/limitNumber.html">limitNumber</a><br>Numéro de limite.
+				</td>
+				</tr>
+
+			</table>
+
+		</div>
+		<br>
+
+		</br>
+		<div class="mock-list">
+			<b>Codes Erreur : </b>			<table>
+				<tr>
+				<td> 400
+				</td>				<td> Bad Request
+				</td>
+				</tr>
+
+			</table>
+
+		</div>
+
+	</div>
+
+</div>
+<div class="detail-column" id="d2" style="display:none; width: 65%">
+	<div class="detail">
+		<div class="mock-list">
+			<b>Service SOAP : </b> <a href="../services/createCustomerLimit.html">createCustomerLimit</a>
+		</div>
+		<div class="mock-list">
+			<b>Code retour succes : </b>201 - Created
+		</div>
+		<div class="mock-list">
+			<b>Uri : </b>http://soprabanking.com/amplitude/customerlimits/v1/
+		</div>
+		<div class="mock-list">
+			<b>Description : </b>Use service createCustomerLimit to create a limit for a customer.
+		</div>
+		<br>
+
+		</br>
+		<div class="mock-list">
+			<b>Codes Erreur : </b>			<table>
+				<tr>
+				<td> 400
+				</td>				<td> Bad Request
+				</td>
+				</tr>
+
+			</table>
+
+		</div>
+
+	</div>
+
+</div>
+<div class="detail-column" id="d3" style="display:none; width: 65%">
+	<div class="detail">
+		<div class="mock-list">
+			<b>Service SOAP : </b> <a href="../services/getLimitList.html">getLimitList</a>
+		</div>
+		<div class="mock-list">
+			<b>Code retour succes : </b>200 - OK
+		</div>
+		<div class="mock-list">
+			<b>Uri : </b>http://soprabanking.com/amplitude/customerlimits/v1/
+		</div>
+		<div class="mock-list">
+			<b>Description : </b>Use service getCustomerLimitList to return a list of customer and customer group limits matching the search criteria received. 
+		</div>
+		<br>
+
+		</br>
+		<div class="mock-list">
+			<b>Parametres : </b>			<table class="table_param">
+				<tr>
+				<td>
+				</td>				<td title="getLimitListRequest.beginningDate"> <a href="../types/date.html">X-SBS-beginningDate</a><br>Date de début minimale des limites à rechercher.
+				</td>				<td> Header
+				</td>
+				</tr>
+				<tr>
+				<td> <i class="fa fa-key fa-fw"> </i>
+				</td>				<td title="getLimitListRequest.identifier.customer"> <a href="../types/customerCode.html">X-SBS-customer</a><br>Code client.
+				</td>				<td> Header
+				</td>
+				</tr>
+				<tr>
+				<td>
+				</td>				<td title="getLimitListRequest.customerGroupLimitIncluded"> <a href="../types/boolean.html">X-SBS-customerGroupLimitIncluded</a><br>Limites groupes incluses.
+				</td>				<td> Header
+				</td>
+				</tr>
+				<tr>
+				<td>
+				</td>				<td title="getLimitListRequest.customerLimitIncluded"> <a href="../types/boolean.html">X-SBS-customerLimitIncluded</a><br>Limites clients incluses.
+				</td>				<td> Header
+				</td>
+				</tr>
+				<tr>
+				<td>
+				</td>				<td title="getLimitListRequest.endingDate"> <a href="../types/date.html">X-SBS-endingDate</a><br>Date d'échéance maximale des limites à rechercher.
+				</td>				<td> Header
+				</td>
+				</tr>
+				<tr>
+				<td>
+				</td>				<td title="getLimitListRequest.globalLineIncluded"> <a href="../types/boolean.html">X-SBS-globalLineIncluded</a><br>Autorisations plafonnées autonomes incluses.
+				</td>				<td> Header
+				</td>
+				</tr>
+				<tr>
+				<td> <i class="fa fa-key fa-fw"> </i>
+				</td>				<td title="getLimitListRequest.limitLevelCode"> <a href="../types/limitLevelCode.html">X-SBS-limitLevelCode</a><br>Niveau des limites à rechercher.
+				</td>				<td> Header
+				</td>
+				</tr>
+				<tr>
+				<td> <i class="fa fa-key fa-fw"> </i>
+				</td>				<td title="getLimitListRequest.limitStatus"> <a href="../types/limitStatus.html">X-SBS-limitStatus</a><br>Situation des limites à rechercher
+				</td>				<td> Header
+				</td>
+				</tr>
+				<tr>
+				<td>
+				</td>				<td title="getLimitListRequest.subLimitGlobalLineDetailIncluded"> <a href="../types/boolean.html">X-SBS-subLimitGlobalLineDetailIncluded</a><br>Inclure le détail des autorisations plafonnées liées aux sous-limites.
+				</td>				<td> Header
+				</td>
+				</tr>
+
+			</table>
+
+		</div>
+		<br>
+
+		</br>
+		<div class="mock-list">
+			<b>Codes Erreur : </b>			<table>
+				<tr>
+				<td> 400
+				</td>				<td> Bad Request
+				</td>
+				</tr>
+
+			</table>
+
+		</div>
+
+	</div>
+
+</div>
+     </div> 
+  </div>
+  </div>
+
+  
+  <script src="../resources/jquery.js"></script>
+  <script src="../resources/doc.js"></script>
+</body>
+</html>

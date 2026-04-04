@@ -1,0 +1,544 @@
+<!DOCTYPE html >
+<html>
+<head>
+	<link rel="stylesheet" href="../resources/styleDocu.css" />
+  <link rel="stylesheet" href="../resources/font-awesome/css/font-awesome.min.css" />
+	<title>Documentation Xsd</title>
+	<meta charset="UTF-8" />
+</head>
+
+<body>
+  <div class="document">
+	<div class="header">
+		
+	</div>
+
+  <div class="tabs">
+    <div class="tabs-wrapper" onclick="window.open('../liste-ressources.html', '_self');">
+      <div class="tabs-left-content">
+        Liste des ressources
+      </div>
+    </div>
+    <div class="tabs-wrapper" onclick="window.open('../liste-services.html', '_self');">
+      <div class="tabs-left-content" >
+        Liste des services  
+      </div>
+    </div>
+    <div class="tabs-wrapper-selected" onclick="window.open('../liste-types.html', '_self');">
+      <div class="tabs-right-content">
+        Liste des types
+      </div>
+    </div>
+  </div>
+
+	
+
+	<div class="contenu">
+      <div class="breadcrumb"> 
+        <ul class="breadcrumb">
+           <li> <a href="../index.html"> Accueil </a></li>
+           <li> > </li>
+           <li> <a href="../liste-types.html"> Liste des types </a></li>
+           <li> > </li>
+           <li> dosprtCreateLoanFileInsurancePolicies </li>
+        </ul>                    
+      </div>                    
+      
+     
+      <div class="summary">
+			<div class="mock-list">
+				<b>Nom : </b>dosprtCreateLoanFileInsurancePolicies
+			</div>
+			<div class="mock-list">
+				<b> Description : </b>Polices d'assurances.
+			</div>
+        
+        <div> </div>
+        <div class="mock-list"> Choix : Non</div>
+        
+      </div>
+                        
+      <div class="column-content">
+        <div class="detail-column">
+          <div class="tree"> 
+<ul>
+	<li>
+<i class="fa fa-caret-down fa-fw" onclick="expand_or_collapse(this)">
+</i>		dosprtCreateLoanFileInsurancePolicies		<ul style="display:block">
+			<li>
+<i class="fa fa-caret-down fa-fw" onclick="expand_or_collapse(this)">
+</i><i class="fa fa-key fa-fw">
+</i><span style="font-weight:bold"> [M]
+</span><span class="selectable" id="e0"> loanFileInsurancePolicy : insurancePolicy
+</span>				<ul style="display:block">
+					<li>
+<i class="fa fa-fw">
+</i><i class="fa fa-key fa-fw">
+</i><span class="selectable" id="e1"> itemIdentifier : integer
+</span>
+					</li>
+					<li>
+<i class="fa fa-caret-down fa-fw" onclick="expand_or_collapse(this)">
+</i><i class="fa fa-key fa-fw">
+</i><span style="font-weight:bold"> [C]
+</span><span class="selectable" id="e2"> customerOrThirdPartyCode : customerOrThirdPartyCode
+</span>						<ul style="display:block">
+							<li>
+<i class="fa fa-fw">
+</i><span class="selectable" id="e3"> customerCode : customerCode
+</span>
+							</li>
+							<li>
+<i class="fa fa-fw">
+</i><span class="selectable" id="e4"> thirdPartyCode : customerCode
+</span>
+							</li>
+
+						</ul>
+
+					</li>
+					<li>
+<i class="fa fa-fw">
+</i><i class="fa fa-key fa-fw">
+</i><span class="selectable" id="e5"> allocation : charMax3
+</span>
+					</li>
+					<li>
+<i class="fa fa-fw">
+</i><span class="selectable" id="e6"> subscriberNumber : charMax20
+</span>
+					</li>
+					<li>
+<i class="fa fa-fw">
+</i><span style="font-weight:bold"> [M]
+</span><span class="selectable" id="e7"> beneficiaryOrderNumber : integer
+</span>
+					</li>
+					<li>
+<i class="fa fa-fw">
+</i><span class="selectable" id="e8"> coverRate : decimal9_5
+</span>
+					</li>
+					<li>
+<i class="fa fa-fw">
+</i><span class="selectable" id="e9"> bankPremium : decimal19_4
+</span>
+					</li>
+					<li>
+<i class="fa fa-fw">
+</i><span class="selectable" id="e10"> insurerPremium : decimal19_4
+</span>
+					</li>
+					<li>
+<i class="fa fa-fw">
+</i><span class="selectable" id="e11"> extraPremium : decimal19_4
+</span>
+					</li>
+
+				</ul>
+
+			</li>
+
+		</ul>
+
+	</li>
+
+</ul>
+          </div>
+          
+          <div class="detail">
+				<p align="left">
+					Légende :<br />
+				</p>
+            <ul>
+               <li align="left">
+                  <i class="fa fa-key fa-fw">
+                  </i>
+                  = Elément obligatoire en saisie.
+               </li>
+               <li align="left">
+                  <span style="font-weight:bold"> [M]
+                  </span>
+                  = Elément multiple (0 à n occurrences).
+               </li>
+               <li align="left">
+                  <span style="font-weight:bold"> [C]
+                  </span>
+                  = Elément composé d'un choix à effectuer. Un seul choix autorisé.
+               </li>
+            </ul>
+            <p align="left">
+               Remarque : Un même élément peut regrouper plusieurs caractéristiques
+            </p>          
+          </div>
+          
+        </div>
+<div class="detail-column" id="d0" style="display:none">
+	<div class="detail">
+			<div class="mock-list">
+				<b>Nom : </b>loanFileInsurancePolicy
+			</div>
+			<div class="mock-list">
+				<b>Description : </b>Police d'assurance.
+			</div>
+			<div class="mock-list">
+				<b>Limite du nombre d'occurences mini-maxi : </b>1 aucune
+			</div>
+
+	</div>
+	<div class="detail">
+			<div class="mock-list">
+				<b>Nom : </b> <a href="../types/insurancePolicy.html">insurancePolicy</a>
+			</div>
+			<div class="mock-list">
+				<b> Description : </b>Police d'assurance.
+			</div>
+
+	</div>
+
+</div>
+<div class="detail-column" id="d1" style="display:none">
+	<div class="detail">
+			<div class="mock-list">
+				<b>Nom : </b>itemIdentifier
+			</div>
+			<div class="mock-list">
+				<b>Description : </b>Identifiant de poste.
+			</div>
+			<div class="mock-list">
+				<b>Commentaire : </b><p>Le poste de commission au niveau du type de pr&ecirc;t doit &ecirc;tre param&eacute;tr&eacute; en tant qu&#39;assurance au niveau des int&eacute;r&ecirc;ts et accessoires.</p>
+
+			</div>
+
+	</div>
+	<div class="detail">
+			<div class="mock-list">
+				<b>Nom : </b> <a href="../types/integer.html">integer</a>
+			</div>
+
+	</div>
+
+</div>
+<div class="detail-column" id="d2" style="display:none">
+	<div class="detail">
+			<div class="mock-list">
+				<b>Nom : </b>customerOrThirdPartyCode
+			</div>
+			<div class="mock-list">
+				<b>Description : </b>Code du client ou du tiers concerné.
+			</div>
+			<div class="mock-list">
+				<b>Commentaire : </b><p>Le code du client doit exister dans la table des clients.</p>
+
+<p>Le code du tiers doit exister dans la table des tiers.</p>
+
+			</div>
+
+	</div>
+	<div class="detail">
+			<div class="mock-list">
+				<b>Nom : </b> <a href="../types/customerOrThirdPartyCode.html">customerOrThirdPartyCode</a>
+			</div>
+			<div class="mock-list">
+				<b> Description : </b>Code du client/tiers.
+			</div>
+
+	</div>
+
+</div>
+<div class="detail-column" id="d3" style="display:none">
+	<div class="detail">
+			<div class="mock-list">
+				<b>Nom : </b>customerCode
+			</div>
+			<div class="mock-list">
+				<b>Description : </b>Code client.
+			</div>
+
+	</div>
+	<div class="detail">
+			<div class="mock-list">
+				<b>Nom : </b> <a href="../types/customerCode.html">customerCode</a>
+			</div>
+			<div class="mock-list">
+				<b> Description : </b>Code client.
+			</div>
+			<div class="mock-list">
+				<b>Format : </b>string
+			</div>
+			<div class="mock-list">
+				<b>Longueur mini-maxi : </b>1 - 15
+			</div>
+
+	</div>
+
+</div>
+<div class="detail-column" id="d4" style="display:none">
+	<div class="detail">
+			<div class="mock-list">
+				<b>Nom : </b>thirdPartyCode
+			</div>
+			<div class="mock-list">
+				<b>Description : </b>Code tiers.
+			</div>
+
+	</div>
+	<div class="detail">
+			<div class="mock-list">
+				<b>Nom : </b> <a href="../types/customerCode.html">customerCode</a>
+			</div>
+			<div class="mock-list">
+				<b> Description : </b>Code client.
+			</div>
+			<div class="mock-list">
+				<b>Format : </b>string
+			</div>
+			<div class="mock-list">
+				<b>Longueur mini-maxi : </b>1 - 15
+			</div>
+
+	</div>
+
+</div>
+<div class="detail-column" id="d5" style="display:none">
+	<div class="detail">
+			<div class="mock-list">
+				<b>Nom : </b>allocation
+			</div>
+			<div class="mock-list">
+				<b>Description : </b>Type d'affectation.
+			</div>
+			<div class="mock-list">
+				<b>Commentaire : </b><p>Le type d&#39;affectation doit exister dans la table des types d&#39;affectation d&#39;assurance et doit &ecirc;tre un type d&#39;assurance interne (<strong>T</strong>).</p>
+
+			</div>
+
+	</div>
+	<div class="detail">
+			<div class="mock-list">
+				<b>Nom : </b> <a href="../types/charMax3.html">charMax3</a>
+			</div>
+			<div class="mock-list">
+				<b> Description : </b>Chaîne composée d'au plus 3 caractères.
+			</div>
+			<div class="mock-list">
+				<b>Format : </b>string
+			</div>
+			<div class="mock-list">
+				<b>Longueur mini-maxi : </b>1 - 3
+			</div>
+
+	</div>
+
+</div>
+<div class="detail-column" id="d6" style="display:none">
+	<div class="detail">
+			<div class="mock-list">
+				<b>Nom : </b>subscriberNumber
+			</div>
+			<div class="mock-list">
+				<b>Description : </b>Numéro d¿adhérent (numéro de police).
+			</div>
+			<div class="mock-list">
+				<b>Commentaire : </b><p>Si le <strong>Montant 7</strong> du&nbsp; param&egrave;tre <strong>ASSURANCE</strong> en nomenclature <strong>098</strong> est renseign&eacute; (valeur possible entre 4 et 15), alors le num&eacute;ro de police est affect&eacute; automatiquement avec le type d&#39;affectation auquel est concat&eacute;n&eacute; un entier incr&eacute;ment&eacute; &agrave; partir du dernier num&eacute;ro de police ins&eacute;r&eacute; pour le m&ecirc;me type d&#39;affectation, le tout sur le nombre de caract&egrave;res indiqu&eacute; dans le <strong>Montant 7</strong> du param&egrave;tre <strong>ASSURANCE</strong>.</p>
+
+<p>Sinon, le num&eacute;ro de police renseign&eacute; ne doit pas d&eacute;j&agrave; exister dans la table des polices d&rsquo;assurance.</p>
+
+<p>Si le num&eacute;ro de police n&#39;est pas renseign&eacute;, il est affect&eacute; automatiquement &agrave; partir du <strong>Montant 1</strong> du param&egrave;tre <strong>ASSURANCE</strong> en nomenclature <strong>098</strong> incr&eacute;ment&eacute; de 1, et format&eacute; sur 20 caract&egrave;res.</p>
+
+			</div>
+
+	</div>
+	<div class="detail">
+			<div class="mock-list">
+				<b>Nom : </b> <a href="../types/charMax20.html">charMax20</a>
+			</div>
+			<div class="mock-list">
+				<b> Description : </b>Chaîne composée d'au plus 20 caractères.
+			</div>
+			<div class="mock-list">
+				<b>Format : </b>string
+			</div>
+			<div class="mock-list">
+				<b>Longueur mini-maxi : </b>1 - 20
+			</div>
+
+	</div>
+
+</div>
+<div class="detail-column" id="d7" style="display:none">
+	<div class="detail">
+			<div class="mock-list">
+				<b>Nom : </b>beneficiaryOrderNumber
+			</div>
+			<div class="mock-list">
+				<b>Description : </b>Numéro d'ordre du bénéficiaire.
+			</div>
+			<div class="mock-list">
+				<b>Limite du nombre d'occurences mini-maxi : </b>aucune aucune
+			</div>
+			<div class="mock-list">
+				<b>Commentaire : </b><p>Chaque b&eacute;n&eacute;ficiaire doit exister dans la table des b&eacute;n&eacute;ficiaires de polices d&rsquo;assurances.</p>
+
+			</div>
+
+	</div>
+	<div class="detail">
+			<div class="mock-list">
+				<b>Nom : </b> <a href="../types/integer.html">integer</a>
+			</div>
+
+	</div>
+
+</div>
+<div class="detail-column" id="d8" style="display:none">
+	<div class="detail">
+			<div class="mock-list">
+				<b>Nom : </b>coverRate
+			</div>
+			<div class="mock-list">
+				<b>Description : </b>Taux de couverture.
+			</div>
+			<div class="mock-list">
+				<b>Commentaire : </b><p>S&rsquo;il n&rsquo;est pas renseign&eacute;, le taux de couverture est affect&eacute; &agrave; 100.</p>
+
+<p>Le taux de couverture doit &ecirc;tre&nbsp;:</p>
+
+<ul>
+	<li>strictement sup&eacute;rieur &agrave; <strong>0</strong> et,</li>
+	<li>strictement inf&eacute;rieur &agrave; <strong>100</strong>.</li>
+</ul>
+
+			</div>
+
+	</div>
+	<div class="detail">
+			<div class="mock-list">
+				<b>Nom : </b> <a href="../types/decimal9_5.html">decimal9_5</a>
+			</div>
+			<div class="mock-list">
+				<b> Description : </b>Type décimal à 9 chiffres dont 5 décimales.
+			</div>
+			<div class="mock-list">
+				<b>Format : </b>decimal
+			</div>
+			<div class="mock-list">
+				<b>Nombre total de chiffres : </b>9
+			</div>
+
+	</div>
+
+</div>
+<div class="detail-column" id="d9" style="display:none">
+	<div class="detail">
+			<div class="mock-list">
+				<b>Nom : </b>bankPremium
+			</div>
+			<div class="mock-list">
+				<b>Description : </b>Prime banque.
+			</div>
+			<div class="mock-list">
+				<b>Commentaire : </b><p>Si la prime banque n&rsquo;est pas renseign&eacute;e, elle est affect&eacute;e avec la valeur param&eacute;tr&eacute;e pour la condition <strong>BSUaaa </strong>(<strong>aaa </strong>= type d&#39;affectation), ou <strong>ASBAN2</strong> ou <strong>COnttt </strong>(<strong>n</strong> = num&eacute;ro de poste de commission et <strong>ttt</strong> = type de pr&ecirc;t).</p>
+
+<p>Si un bar&egrave;me est param&eacute;tr&eacute; au niveau du type d&#39;affectation de l&#39;assurance, alors la prime banque, si elle n&rsquo;est pas renseign&eacute;e, est initialis&eacute;e &agrave; partir de la valeur du bar&egrave;me.</p>
+
+<p>La prime banque doit &ecirc;tre comprise entre les bornes minimum et maximum param&eacute;tr&eacute;es pour la condition <strong>BSUaaa </strong>(<strong>aaa </strong>= type d&#39;affectation), ou <strong>ASBAN2</strong> ou <strong>COnttt </strong>(<strong>n</strong> = num&eacute;ro de poste de commission et <strong>ttt</strong> = type de pr&ecirc;t).</p>
+
+			</div>
+
+	</div>
+	<div class="detail">
+			<div class="mock-list">
+				<b>Nom : </b> <a href="../types/decimal19_4.html">decimal19_4</a>
+			</div>
+			<div class="mock-list">
+				<b> Description : </b>Type décimal à 19 chiffres dont 4 décimales.
+			</div>
+			<div class="mock-list">
+				<b>Format : </b>decimal
+			</div>
+			<div class="mock-list">
+				<b>Nombre total de chiffres : </b>19
+			</div>
+
+	</div>
+
+</div>
+<div class="detail-column" id="d10" style="display:none">
+	<div class="detail">
+			<div class="mock-list">
+				<b>Nom : </b>insurerPremium
+			</div>
+			<div class="mock-list">
+				<b>Description : </b>Prime assureur.
+			</div>
+			<div class="mock-list">
+				<b>Commentaire : </b><p>Si la prime assureur n&rsquo;est pas renseign&eacute;e, elle est affect&eacute;e avec la valeur param&eacute;tr&eacute;e pour la condition <strong>ASnaaa </strong>(<strong>n</strong> = num&eacute;ro de poste de commission&nbsp;et <strong>aaa</strong> =&nbsp;type d&#39;affectation) ou <strong>COnttt</strong> (<strong>n </strong>= num&eacute;ro de poste de commission et <strong>ttt</strong> =&nbsp;type de pr&ecirc;t) ou <strong>COnPRT</strong> (<strong>n </strong>= num&eacute;ro de poste de commission).</p>
+
+<p>Si un bar&egrave;me est param&eacute;tr&eacute; au niveau du type d&#39;affectation de l&#39;assurance, alors la prime assureur, si elle n&rsquo;est pas renseign&eacute;e, est initialis&eacute;e &agrave; partir de la valeur du bar&egrave;me.</p>
+
+<p>La prime assureur doit &ecirc;tre comprise entre les bornes minimum et maximum param&eacute;tr&eacute;es pour la condition <strong>ASnaaa </strong>(<strong>n</strong> = num&eacute;ro de poste de commission&nbsp; et <strong>aaa</strong> =&nbsp; type d&#39;affectation) ou <strong>COnttt</strong> (<strong>n </strong>= num&eacute;ro de poste de commission et <strong>ttt</strong> = &nbsp;type de pr&ecirc;t) ou <strong>COnPRT</strong> (<strong>n </strong>= &nbsp;num&eacute;ro de poste de commission).</p>
+
+			</div>
+
+	</div>
+	<div class="detail">
+			<div class="mock-list">
+				<b>Nom : </b> <a href="../types/decimal19_4.html">decimal19_4</a>
+			</div>
+			<div class="mock-list">
+				<b> Description : </b>Type décimal à 19 chiffres dont 4 décimales.
+			</div>
+			<div class="mock-list">
+				<b>Format : </b>decimal
+			</div>
+			<div class="mock-list">
+				<b>Nombre total de chiffres : </b>19
+			</div>
+
+	</div>
+
+</div>
+<div class="detail-column" id="d11" style="display:none">
+	<div class="detail">
+			<div class="mock-list">
+				<b>Nom : </b>extraPremium
+			</div>
+			<div class="mock-list">
+				<b>Description : </b>Surprime.
+			</div>
+			<div class="mock-list">
+				<b>Commentaire : </b><p>Si la surprime n&rsquo;est pas renseign&eacute;e, elle est affect&eacute;e avec la valeur param&eacute;tr&eacute;e pour la condition <strong>ASRaaa </strong>(<strong>aaa </strong>= &nbsp;type d&#39;affectation) ou <strong>ASSUR2</strong> ou <strong>COnttt </strong>(<strong>n</strong> = num&eacute;ro de poste de commission et <strong>ttt</strong> = type de pr&ecirc;t).</p>
+
+<p>Si un bar&egrave;me est param&eacute;tr&eacute; au niveau du type d&#39;affectation de l&#39;assurance, alors la surprime, si elle n&rsquo;est pas renseign&eacute;e, est initialis&eacute;e &agrave; partir de la valeur du bar&egrave;me.</p>
+
+<p>La surprime assureur doit &ecirc;tre comprise entre les bornes minimum et maximum param&eacute;tr&eacute;es pour la condition <strong>ASRaaa </strong>(<strong>aaa </strong>= &nbsp;type d&#39;affectation) ou <strong>ASSUR2</strong> ou <strong>COnttt </strong>(<strong>n</strong> = num&eacute;ro de poste de commission et <strong>ttt</strong> = type de pr&ecirc;t).</p>
+
+			</div>
+
+	</div>
+	<div class="detail">
+			<div class="mock-list">
+				<b>Nom : </b> <a href="../types/decimal19_4.html">decimal19_4</a>
+			</div>
+			<div class="mock-list">
+				<b> Description : </b>Type décimal à 19 chiffres dont 4 décimales.
+			</div>
+			<div class="mock-list">
+				<b>Format : </b>decimal
+			</div>
+			<div class="mock-list">
+				<b>Nombre total de chiffres : </b>19
+			</div>
+
+	</div>
+
+</div>
+      </div> 
+  </div>
+
+  
+  <script src="../resources/jquery.js"></script>
+  <script src="../resources/doc.js"></script>
+</body>
+</html>

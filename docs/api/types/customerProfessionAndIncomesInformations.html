@@ -1,0 +1,288 @@
+<!DOCTYPE html >
+<html>
+<head>
+	<link rel="stylesheet" href="../resources/styleDocu.css" />
+  <link rel="stylesheet" href="../resources/font-awesome/css/font-awesome.min.css" />
+	<title>Documentation Xsd</title>
+	<meta charset="UTF-8" />
+</head>
+
+<body>
+  <div class="document">
+	<div class="header">
+		
+	</div>
+
+  <div class="tabs">
+    <div class="tabs-wrapper" onclick="window.open('../liste-ressources.html', '_self');">
+      <div class="tabs-left-content">
+        Liste des ressources
+      </div>
+    </div>
+    <div class="tabs-wrapper" onclick="window.open('../liste-services.html', '_self');">
+      <div class="tabs-left-content" >
+        Liste des services  
+      </div>
+    </div>
+    <div class="tabs-wrapper-selected" onclick="window.open('../liste-types.html', '_self');">
+      <div class="tabs-right-content">
+        Liste des types
+      </div>
+    </div>
+  </div>
+
+	
+
+	<div class="contenu">
+      <div class="breadcrumb"> 
+        <ul class="breadcrumb">
+           <li> <a href="../index.html"> Accueil </a></li>
+           <li> > </li>
+           <li> <a href="../liste-types.html"> Liste des types </a></li>
+           <li> > </li>
+           <li> customerProfessionAndIncomesInformations </li>
+        </ul>                    
+      </div>                    
+      
+     
+      <div class="summary">
+			<div class="mock-list">
+				<b>Nom : </b>customerProfessionAndIncomesInformations
+			</div>
+			<div class="mock-list">
+				<b> Description : </b>Informations d'une profession et des revenus d'un client.
+			</div>
+        
+        <div> </div>
+        <div class="mock-list"> Choix : Non</div>
+        
+      </div>
+                        
+      <div class="column-content">
+        <div class="detail-column">
+          <div class="tree"> 
+<ul>
+	<li>
+<i class="fa fa-caret-down fa-fw" onclick="expand_or_collapse(this)">
+</i>		customerProfessionAndIncomesInformations		<ul style="display:block">
+			<li>
+<i class="fa fa-fw">
+</i><i class="fa fa-key fa-fw">
+</i><span class="selectable" id="e0"> hireDate : date
+</span>
+			</li>
+			<li>
+<i class="fa fa-fw">
+</i><span class="selectable" id="e1"> professionCode : professionCode
+</span>
+			</li>
+			<li>
+<i class="fa fa-fw">
+</i><span class="selectable" id="e2"> employerCode : employerCode
+</span>
+			</li>
+			<li>
+<i class="fa fa-fw">
+</i><span class="selectable" id="e3"> incomesBracketCode : incomesBracketCode
+</span>
+			</li>
+			<li>
+<i class="fa fa-fw">
+</i><span class="selectable" id="e4"> employerDepartment : charMax30
+</span>
+			</li>
+
+		</ul>
+
+	</li>
+
+</ul>
+          </div>
+          
+          <div class="detail">
+				<p align="left">
+					Légende :<br />
+				</p>
+            <ul>
+               <li align="left">
+                  <i class="fa fa-key fa-fw">
+                  </i>
+                  = Elément obligatoire en saisie.
+               </li>
+               <li align="left">
+                  <span style="font-weight:bold"> [M]
+                  </span>
+                  = Elément multiple (0 à n occurrences).
+               </li>
+               <li align="left">
+                  <span style="font-weight:bold"> [C]
+                  </span>
+                  = Elément composé d'un choix à effectuer. Un seul choix autorisé.
+               </li>
+            </ul>
+            <p align="left">
+               Remarque : Un même élément peut regrouper plusieurs caractéristiques
+            </p>          
+          </div>
+          
+        </div>
+<div class="detail-column" id="d0" style="display:none">
+	<div class="detail">
+			<div class="mock-list">
+				<b>Nom : </b>hireDate
+			</div>
+			<div class="mock-list">
+				<b>Description : </b>Date d'embauche.
+			</div>
+			<div class="mock-list">
+				<b>Commentaire : </b><p>Si un nombre de jours est param&eacute;tr&eacute; dans le <strong>Montant&nbsp;1</strong> de la nomenclature <strong>098</strong> pour le param&egrave;tre <strong>CONTRDEMB</strong>, alors la date d&rsquo;embauche doit &ecirc;tre inf&eacute;rieure ou &eacute;gale &agrave; la date comptable &agrave; laquelle on ajoute ce nombre de jours.</p>
+
+<p>Si un nombre de jours est param&eacute;tr&eacute; dans le <strong>Montant&nbsp;2</strong> de la nomenclature <strong>098</strong> pour le param&egrave;tre <strong>CONTRDEMB </strong>et si le client est un client collectif (<strong>Montant&nbsp;2</strong> renseign&eacute; &agrave; <strong>2 </strong>dans la nomenclature <strong>036</strong> pour le code intitul&eacute; du client), alors la date d&rsquo;embauche doit &ecirc;tre sup&eacute;rieure ou &eacute;gale &agrave; la date comptable &agrave; laquelle on retire ce nombre de jours.</p>
+
+<p>La date d&rsquo;embauche doit &ecirc;tre sup&eacute;rieure &agrave; la date de naissance du client.</p>
+
+			</div>
+
+	</div>
+	<div class="detail">
+			<div class="mock-list">
+				<b>Nom : </b> <a href="../types/date.html">date</a>
+			</div>
+
+	</div>
+
+</div>
+<div class="detail-column" id="d1" style="display:none">
+	<div class="detail">
+			<div class="mock-list">
+				<b>Nom : </b>professionCode
+			</div>
+			<div class="mock-list">
+				<b>Description : </b>Profession.
+			</div>
+			<div class="mock-list">
+				<b>Commentaire : </b><p>Valeur par d&eacute;faut&nbsp;: <strong>prf</strong></p>
+
+			</div>
+
+	</div>
+	<div class="detail">
+			<div class="mock-list">
+				<b>Nom : </b> <a href="../types/professionCode.html">professionCode</a>
+			</div>
+			<div class="mock-list">
+				<b> Description : </b>Code de la profession.
+			</div>
+			<div class="mock-list">
+				<b>Format : </b>string
+			</div>
+			<div class="mock-list">
+				<b>Longueur mini-maxi : </b>1 - 3
+			</div>
+
+	</div>
+
+</div>
+<div class="detail-column" id="d2" style="display:none">
+	<div class="detail">
+			<div class="mock-list">
+				<b>Nom : </b>employerCode
+			</div>
+			<div class="mock-list">
+				<b>Description : </b>Employeur.
+			</div>
+			<div class="mock-list">
+				<b>Commentaire : </b><p>Valeur par d&eacute;faut&nbsp;: <strong>emp</strong></p>
+
+			</div>
+
+	</div>
+	<div class="detail">
+			<div class="mock-list">
+				<b>Nom : </b> <a href="../types/employerCode.html">employerCode</a>
+			</div>
+			<div class="mock-list">
+				<b> Description : </b>Code de l'employeur.
+			</div>
+			<div class="mock-list">
+				<b>Format : </b>string
+			</div>
+			<div class="mock-list">
+				<b>Longueur mini-maxi : </b>1 - 15
+			</div>
+
+	</div>
+
+</div>
+<div class="detail-column" id="d3" style="display:none">
+	<div class="detail">
+			<div class="mock-list">
+				<b>Nom : </b>incomesBracketCode
+			</div>
+			<div class="mock-list">
+				<b>Description : </b>Tranche de revenus.
+			</div>
+			<div class="mock-list">
+				<b>Commentaire : </b><p>Valeur par d&eacute;faut&nbsp;: <strong>rev</strong></p>
+
+			</div>
+
+	</div>
+	<div class="detail">
+			<div class="mock-list">
+				<b>Nom : </b> <a href="../types/incomesBracketCode.html">incomesBracketCode</a>
+			</div>
+			<div class="mock-list">
+				<b> Description : </b>Code tranche de revenus.
+			</div>
+			<div class="mock-list">
+				<b>Format : </b>string
+			</div>
+			<div class="mock-list">
+				<b>Longueur fixe : </b>2
+			</div>
+
+	</div>
+
+</div>
+<div class="detail-column" id="d4" style="display:none">
+	<div class="detail">
+			<div class="mock-list">
+				<b>Nom : </b>employerDepartment
+			</div>
+			<div class="mock-list">
+				<b>Description : </b>Département de l'employeur.
+			</div>
+			<div class="mock-list">
+				<b>Commentaire : </b><p>Si la saisie libre est demand&eacute;e dans le <strong>Montant&nbsp;1 </strong>renseign&eacute; &agrave; <strong>1</strong> de la nomenclature <strong>098</strong> pour le param&egrave;tre <strong>EMPLOYEUR</strong>, alors le code d&eacute;partement doit &ecirc;tre param&eacute;tr&eacute; pour le client dans la table des d&eacute;partements employeurs.</p>
+
+<p>Valeur par d&eacute;faut&nbsp;: <strong>demp</strong></p>
+
+			</div>
+
+	</div>
+	<div class="detail">
+			<div class="mock-list">
+				<b>Nom : </b> <a href="../types/charMax30.html">charMax30</a>
+			</div>
+			<div class="mock-list">
+				<b> Description : </b>Chaîne composée d'au plus 30 caractères.
+			</div>
+			<div class="mock-list">
+				<b>Format : </b>string
+			</div>
+			<div class="mock-list">
+				<b>Longueur mini-maxi : </b>1 - 30
+			</div>
+
+	</div>
+
+</div>
+      </div> 
+  </div>
+
+  
+  <script src="../resources/jquery.js"></script>
+  <script src="../resources/doc.js"></script>
+</body>
+</html>

@@ -1,0 +1,373 @@
+<!DOCTYPE html >
+<html>
+<head>
+	<link rel="stylesheet" href="../resources/styleDocu.css" />
+  <link rel="stylesheet" href="../resources/font-awesome/css/font-awesome.min.css" />
+	<title>Documentation Xsd</title>
+	<meta charset="UTF-8" />
+</head>
+
+<body>
+  <div class="document">
+	<div class="header">
+		
+	</div>
+
+  <div class="tabs">
+    <div class="tabs-wrapper" onclick="window.open('../liste-ressources.html', '_self');">
+      <div class="tabs-left-content">
+        Liste des ressources
+      </div>
+    </div>
+    <div class="tabs-wrapper" onclick="window.open('../liste-services.html', '_self');">
+      <div class="tabs-left-content" >
+        Liste des services  
+      </div>
+    </div>
+    <div class="tabs-wrapper-selected" onclick="window.open('../liste-types.html', '_self');">
+      <div class="tabs-right-content">
+        Liste des types
+      </div>
+    </div>
+  </div>
+
+	
+
+	<div class="contenu">
+      <div class="breadcrumb"> 
+        <ul class="breadcrumb">
+           <li> <a href="../index.html"> Accueil </a></li>
+           <li> > </li>
+           <li> <a href="../liste-types.html"> Liste des types </a></li>
+           <li> > </li>
+           <li> AmountType3Choice </li>
+        </ul>                    
+      </div>                    
+      
+     
+      <div class="summary">
+			<div class="mock-list">
+				<b>Nom : </b>AmountType3Choice
+			</div>
+			<div class="mock-list">
+				<b> Description : </b>Informations sur le type de montant à payer.
+			</div>
+        
+        <div> </div>
+        <div class="mock-list"> Choix : Oui</div>
+        
+      </div>
+                        
+      <div class="column-content">
+        <div class="detail-column">
+          <div class="tree"> 
+<ul>
+	<li>
+<i class="fa fa-caret-down fa-fw" onclick="expand_or_collapse(this)">
+</i>		AmountType3Choice		<ul style="display:block">
+			<li>
+<i class="fa fa-caret-down fa-fw" onclick="expand_or_collapse(this)">
+</i><i class="fa fa-key fa-fw">
+</i><span class="selectable" id="e0"> InstdAmt : ActiveOrHistoricCurrencyAndAmount
+</span>				<ul style="display:block">
+					<li>
+<i class="fa fa-fw">
+</i><span style="font-weight:bold"> [B]
+</span><span class="selectable" id="e1"> base : ActiveOrHistoricCurrencyAndAmount_SimpleType
+</span>
+					</li>
+					<li>
+<i class="fa fa-fw">
+</i><i class="fa fa-key fa-fw">
+</i><span style="font-weight:bold"> [A]
+</span><span class="selectable" id="e2"> Ccy : ActiveOrHistoricCurrencyCode
+</span>
+					</li>
+
+				</ul>
+
+			</li>
+			<li>
+<i class="fa fa-caret-down fa-fw" onclick="expand_or_collapse(this)">
+</i><i class="fa fa-key fa-fw">
+</i><span class="selectable" id="e3"> EqvtAmt : EquivalentAmount2
+</span>				<ul style="display:block">
+					<li>
+<i class="fa fa-caret-down fa-fw" onclick="expand_or_collapse(this)">
+</i><i class="fa fa-key fa-fw">
+</i><span class="selectable" id="e4"> Amt : ActiveOrHistoricCurrencyAndAmount
+</span>						<ul style="display:block">
+							<li>
+<i class="fa fa-fw">
+</i><span style="font-weight:bold"> [B]
+</span><span class="selectable" id="e5"> base : ActiveOrHistoricCurrencyAndAmount_SimpleType
+</span>
+							</li>
+							<li>
+<i class="fa fa-fw">
+</i><i class="fa fa-key fa-fw">
+</i><span style="font-weight:bold"> [A]
+</span><span class="selectable" id="e6"> Ccy : ActiveOrHistoricCurrencyCode
+</span>
+							</li>
+
+						</ul>
+
+					</li>
+					<li>
+<i class="fa fa-fw">
+</i><i class="fa fa-key fa-fw">
+</i><span class="selectable" id="e7"> CcyOfTrf : ActiveOrHistoricCurrencyCode
+</span>
+					</li>
+
+				</ul>
+
+			</li>
+
+		</ul>
+
+	</li>
+
+</ul>
+          </div>
+          
+          <div class="detail">
+				<p align="left">
+					Légende :<br />
+				</p>
+            <ul>
+               <li align="left">
+                  <i class="fa fa-key fa-fw">
+                  </i>
+                  = Elément obligatoire en saisie.
+               </li>
+               <li align="left">
+                  <span style="font-weight:bold"> [M]
+                  </span>
+                  = Elément multiple (0 à n occurrences).
+               </li>
+               <li align="left">
+                  <span style="font-weight:bold"> [C]
+                  </span>
+                  = Elément composé d'un choix à effectuer. Un seul choix autorisé.
+               </li>
+            </ul>
+            <p align="left">
+               Remarque : Un même élément peut regrouper plusieurs caractéristiques
+            </p>          
+          </div>
+          
+        </div>
+<div class="detail-column" id="d0" style="display:none">
+	<div class="detail">
+			<div class="mock-list">
+				<b>Nom : </b>InstdAmt
+			</div>
+			<div class="mock-list">
+				<b>Description : </b>Montant en devise de transaction.
+			</div>
+
+	</div>
+	<div class="detail">
+			<div class="mock-list">
+				<b>Nom : </b> <a href="../types/ActiveOrHistoricCurrencyAndAmount.html">ActiveOrHistoricCurrencyAndAmount</a>
+			</div>
+			<div class="mock-list">
+				<b> Description : </b>Montant net exprimé en devise de transaction.
+			</div>
+
+	</div>
+
+</div>
+<div class="detail-column" id="d1" style="display:none">
+	<div class="detail">
+			<div class="mock-list">
+				<b>Nom : </b>base
+			</div>
+			<div class="mock-list">
+				<b>Description : </b>Montant.
+			</div>
+
+	</div>
+	<div class="detail">
+			<div class="mock-list">
+				<b>Nom : </b> <a href="../types/ActiveOrHistoricCurrencyAndAmount_SimpleType.html">ActiveOrHistoricCurrencyAndAmount_SimpleType</a>
+			</div>
+			<div class="mock-list">
+				<b> Description : </b>Type de montant en devise.
+			</div>
+			<div class="mock-list">
+				<b>Format : </b>decimal
+			</div>
+			<div class="mock-list">
+				<b>Min-max inclusive : </b>0 - néant
+			</div>
+			<div class="mock-list">
+				<b>Nombre total de chiffres : </b>18
+			</div>
+
+	</div>
+
+</div>
+<div class="detail-column" id="d2" style="display:none">
+	<div class="detail">
+			<div class="mock-list">
+				<b>Nom : </b>Ccy
+			</div>
+			<div class="mock-list">
+				<b>Description : </b>Code devise.
+			</div>
+
+	</div>
+	<div class="detail">
+			<div class="mock-list">
+				<b>Nom : </b> <a href="../types/ActiveOrHistoricCurrencyCode.html">ActiveOrHistoricCurrencyCode</a>
+			</div>
+			<div class="mock-list">
+				<b> Description : </b>Code devise.
+			</div>
+			<div class="mock-list">
+				<b>Format : </b>string
+			</div>
+			<li class="mock-list">
+				<b>Expression régulière : </b>[A-Z]{3,3}
+			</li>
+
+	</div>
+
+</div>
+<div class="detail-column" id="d3" style="display:none">
+	<div class="detail">
+			<div class="mock-list">
+				<b>Nom : </b>EqvtAmt
+			</div>
+			<div class="mock-list">
+				<b>Description : </b>Montant dans une devise différente de la devise de transaction.
+			</div>
+
+	</div>
+	<div class="detail">
+			<div class="mock-list">
+				<b>Nom : </b> <a href="../types/EquivalentAmount2.html">EquivalentAmount2</a>
+			</div>
+			<div class="mock-list">
+				<b> Description : </b>Informations sur le montant du paiement en devise.
+			</div>
+
+	</div>
+
+</div>
+<div class="detail-column" id="d4" style="display:none">
+	<div class="detail">
+			<div class="mock-list">
+				<b>Nom : </b>Amt
+			</div>
+			<div class="mock-list">
+				<b>Description : </b>Montant du paiement en devise.
+			</div>
+
+	</div>
+	<div class="detail">
+			<div class="mock-list">
+				<b>Nom : </b> <a href="../types/ActiveOrHistoricCurrencyAndAmount.html">ActiveOrHistoricCurrencyAndAmount</a>
+			</div>
+			<div class="mock-list">
+				<b> Description : </b>Montant net exprimé en devise de transaction.
+			</div>
+
+	</div>
+
+</div>
+<div class="detail-column" id="d5" style="display:none">
+	<div class="detail">
+			<div class="mock-list">
+				<b>Nom : </b>base
+			</div>
+			<div class="mock-list">
+				<b>Description : </b>Montant.
+			</div>
+
+	</div>
+	<div class="detail">
+			<div class="mock-list">
+				<b>Nom : </b> <a href="../types/ActiveOrHistoricCurrencyAndAmount_SimpleType.html">ActiveOrHistoricCurrencyAndAmount_SimpleType</a>
+			</div>
+			<div class="mock-list">
+				<b> Description : </b>Type de montant en devise.
+			</div>
+			<div class="mock-list">
+				<b>Format : </b>decimal
+			</div>
+			<div class="mock-list">
+				<b>Min-max inclusive : </b>0 - néant
+			</div>
+			<div class="mock-list">
+				<b>Nombre total de chiffres : </b>18
+			</div>
+
+	</div>
+
+</div>
+<div class="detail-column" id="d6" style="display:none">
+	<div class="detail">
+			<div class="mock-list">
+				<b>Nom : </b>Ccy
+			</div>
+			<div class="mock-list">
+				<b>Description : </b>Code devise.
+			</div>
+
+	</div>
+	<div class="detail">
+			<div class="mock-list">
+				<b>Nom : </b> <a href="../types/ActiveOrHistoricCurrencyCode.html">ActiveOrHistoricCurrencyCode</a>
+			</div>
+			<div class="mock-list">
+				<b> Description : </b>Code devise.
+			</div>
+			<div class="mock-list">
+				<b>Format : </b>string
+			</div>
+			<li class="mock-list">
+				<b>Expression régulière : </b>[A-Z]{3,3}
+			</li>
+
+	</div>
+
+</div>
+<div class="detail-column" id="d7" style="display:none">
+	<div class="detail">
+			<div class="mock-list">
+				<b>Nom : </b>CcyOfTrf
+			</div>
+			<div class="mock-list">
+				<b>Description : </b>Devise associée au montant du paiement en devise.
+			</div>
+
+	</div>
+	<div class="detail">
+			<div class="mock-list">
+				<b>Nom : </b> <a href="../types/ActiveOrHistoricCurrencyCode.html">ActiveOrHistoricCurrencyCode</a>
+			</div>
+			<div class="mock-list">
+				<b> Description : </b>Code devise.
+			</div>
+			<div class="mock-list">
+				<b>Format : </b>string
+			</div>
+			<li class="mock-list">
+				<b>Expression régulière : </b>[A-Z]{3,3}
+			</li>
+
+	</div>
+
+</div>
+      </div> 
+  </div>
+
+  
+  <script src="../resources/jquery.js"></script>
+  <script src="../resources/doc.js"></script>
+</body>
+</html>

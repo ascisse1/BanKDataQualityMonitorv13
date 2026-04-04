@@ -1,0 +1,98 @@
+<!DOCTYPE html >
+<html>
+<head>
+	<link rel="stylesheet" href="../resources/styleDocu.css" />
+  <link rel="stylesheet" href="../resources/font-awesome/css/font-awesome.min.css" />
+	<title>Documentation Xsd</title>
+	<meta charset="UTF-8" />
+</head>
+
+<body>
+  <div class="document">
+	<div class="header">
+		
+	</div>
+
+  <div class="tabs">
+    <div class="tabs-wrapper" onclick="window.open('../liste-ressources.html', '_self');">
+      <div class="tabs-left-content">
+        Liste des ressources
+      </div>
+    </div>
+    <div class="tabs-wrapper" onclick="window.open('../liste-services.html', '_self');">
+      <div class="tabs-left-content" >
+        Liste des services  
+      </div>
+    </div>
+    <div class="tabs-wrapper-selected" onclick="window.open('../liste-types.html', '_self');">
+      <div class="tabs-right-content">
+        Liste des types
+      </div>
+    </div>
+  </div>
+
+	
+
+	<div class="contenu">
+      <div class="breadcrumb"> 
+        <ul class="breadcrumb">
+           <li> <a href="../index.html"> Accueil </a></li>
+           <li> > </li>
+           <li> <a href="../liste-types.html"> Liste des types </a></li>
+           <li> > </li>
+           <li> pricingCode </li>
+        </ul>                    
+      </div>                    
+      
+     
+      <div class="summary">
+			<div class="mock-list">
+				<b>Nom : </b>pricingCode
+			</div>
+			<div class="mock-list">
+				<b> Description : </b>Code tarification.
+			</div>
+			<div class="mock-list">
+				<b>Format : </b>string
+			</div>
+			<div class="mock-list">
+				<b>Longueur fixe : </b>3
+			</div>
+        
+        <div> <p>Le code de tarification ne doit pas &ecirc;tre renseign&eacute; si le produit n&#39;est pas facturable.</p>
+
+<p>Un produit seul est d&eacute;fini comme facturable si le produit est param&eacute;tr&eacute; comme facturable.</p>
+
+<p>Un produit souscrit dans le cadre d&#39;un package est d&eacute;fini comme facturable selon les caract&eacute;ristiques du produit dans le package.</p>
+
+<p>Si le produit est facturable&nbsp;:</p>
+
+<ul>
+	<li>Si le code de tarification est renseign&eacute;&nbsp;: dans le cas d&rsquo;une tarification pr&eacute;f&eacute;rentielle hors package, le client doit poss&eacute;der un package donnant lieu &agrave; une tarification pr&eacute;f&eacute;rentielle, sinon dans les autres cas, le code de tarification doit exister et &ecirc;tre applicable &agrave; la date comptable.</li>
+	<li>Si le code de tarification n&#39;est pas renseign&eacute;, alors le tarif &agrave; appliquer est s&eacute;lectionn&eacute; suivant les cas et par ordre de priorit&eacute; suivant&nbsp;:
+	<ul>
+		<li>Le code package est renseign&eacute; et il existe une tarification pr&eacute;f&eacute;rentielle pour le produit.</li>
+		<li>Le code package n&rsquo;est pas renseign&eacute;&nbsp;:
+		<ul>
+			<li>Il existe une tarification pr&eacute;f&eacute;rentielle pour le produit si le client poss&egrave;de un certain package, applicable &agrave; la date comptable</li>
+			<li>Il existe une tarification de pr&eacute;f&eacute;rence pour le produit, applicable &agrave; la date comptable</li>
+			<li>Il existe au moins une tarification pour le produit, applicable &agrave; la date comptable.</li>
+		</ul>
+		</li>
+	</ul>
+	</li>
+</ul>
+
+<p>Dans le cas o&ugrave; aucune tarification n&#39;est trouv&eacute;e, alors la souscription est rejet&eacute;e.</p>
+</div>
+        
+      </div>
+                        
+  </div>
+  </div>
+
+  
+  <script src="../resources/jquery.js"></script>
+  <script src="../resources/doc.js"></script>
+</body>
+</html>

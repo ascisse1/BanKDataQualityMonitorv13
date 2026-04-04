@@ -1,0 +1,318 @@
+<!DOCTYPE html >
+<html>
+<head>
+	<link rel="stylesheet" href="../resources/styleDocu.css" />
+  <link rel="stylesheet" href="../resources/font-awesome/css/font-awesome.min.css" />
+	<title>Documentation Xsd</title>
+	<meta charset="UTF-8" />
+</head>
+
+<body>
+  <div class="document">
+	<div class="header">
+		
+	</div>
+
+  <div class="tabs">
+    <div class="tabs-wrapper" onclick="window.open('../liste-ressources.html', '_self');">
+      <div class="tabs-left-content">
+        Liste des ressources
+      </div>
+    </div>
+    <div class="tabs-wrapper" onclick="window.open('../liste-services.html', '_self');">
+      <div class="tabs-left-content" >
+        Liste des services  
+      </div>
+    </div>
+    <div class="tabs-wrapper-selected" onclick="window.open('../liste-types.html', '_self');">
+      <div class="tabs-right-content">
+        Liste des types
+      </div>
+    </div>
+  </div>
+
+	
+
+	<div class="contenu">
+      <div class="breadcrumb"> 
+        <ul class="breadcrumb">
+           <li> <a href="../index.html"> Accueil </a></li>
+           <li> > </li>
+           <li> <a href="../liste-types.html"> Liste des types </a></li>
+           <li> > </li>
+           <li> customerFinancialDataInformations </li>
+        </ul>                    
+      </div>                    
+      
+     
+      <div class="summary">
+			<div class="mock-list">
+				<b>Nom : </b>customerFinancialDataInformations
+			</div>
+			<div class="mock-list">
+				<b> Description : </b>Informations de la donnée financière d¿un client.
+			</div>
+        
+        <div> </div>
+        <div class="mock-list"> Choix : Non</div>
+        
+      </div>
+                        
+      <div class="column-content">
+        <div class="detail-column">
+          <div class="tree"> 
+<ul>
+	<li>
+<i class="fa fa-caret-down fa-fw" onclick="expand_or_collapse(this)">
+</i>		customerFinancialDataInformations		<ul style="display:block">
+			<li>
+<i class="fa fa-fw">
+</i><i class="fa fa-key fa-fw">
+</i><span class="selectable" id="e0"> dataType : charMax6
+</span>
+			</li>
+			<li>
+<i class="fa fa-caret-down fa-fw" onclick="expand_or_collapse(this)">
+</i><i class="fa fa-key fa-fw">
+</i><span class="selectable" id="e1"> values : customerFinancialDataValues
+</span>				<ul style="display:block">
+					<li>
+<i class="fa fa-fw">
+</i><span class="selectable" id="e2"> yearValue : decimal19_4
+</span>
+					</li>
+					<li>
+<i class="fa fa-fw">
+</i><span class="selectable" id="e3"> yearMinus1Value : decimal19_4
+</span>
+					</li>
+					<li>
+<i class="fa fa-fw">
+</i><span class="selectable" id="e4"> yearMinus2Value : decimal19_4
+</span>
+					</li>
+					<li>
+<i class="fa fa-fw">
+</i><span class="selectable" id="e5"> yearMinus3Value : decimal19_4
+</span>
+					</li>
+
+				</ul>
+
+			</li>
+
+		</ul>
+
+	</li>
+
+</ul>
+          </div>
+          
+          <div class="detail">
+				<p align="left">
+					Légende :<br />
+				</p>
+            <ul>
+               <li align="left">
+                  <i class="fa fa-key fa-fw">
+                  </i>
+                  = Elément obligatoire en saisie.
+               </li>
+               <li align="left">
+                  <span style="font-weight:bold"> [M]
+                  </span>
+                  = Elément multiple (0 à n occurrences).
+               </li>
+               <li align="left">
+                  <span style="font-weight:bold"> [C]
+                  </span>
+                  = Elément composé d'un choix à effectuer. Un seul choix autorisé.
+               </li>
+            </ul>
+            <p align="left">
+               Remarque : Un même élément peut regrouper plusieurs caractéristiques
+            </p>          
+          </div>
+          
+        </div>
+<div class="detail-column" id="d0" style="display:none">
+	<div class="detail">
+			<div class="mock-list">
+				<b>Nom : </b>dataType
+			</div>
+			<div class="mock-list">
+				<b>Description : </b>Type de la donnée financière.
+			</div>
+			<div class="mock-list">
+				<b>Commentaire : </b><p>Le type de la donn&eacute;e financi&egrave;re doit exister en nomenclature <strong>189</strong>.</p>
+
+<ul>
+	<li>Si le <strong>Montant&nbsp;1</strong> de la nomenclature <strong>098 </strong>pour le param&egrave;tre<strong> VDEF-DCOMP</strong> est diff&eacute;rent de <strong>1</strong> et le <strong>Taux&nbsp;1</strong> de la nomenclature<strong> 098 </strong>pour le param&egrave;tre <strong>DONFINANCE</strong> est &eacute;gal &agrave; <strong>1</strong>, alors&nbsp;:
+
+	<ul>
+		<li>Si l&rsquo;entreprise a moins de 2 ans, aucun contr&ocirc;le d&rsquo;obligation n&rsquo;est appliqu&eacute; aux donn&eacute;es financi&egrave;res.</li>
+		<li>Sinon (l&rsquo;entreprise a au moins 2 ans), pour toutes les donn&eacute;es financi&egrave;res dont les types sont param&eacute;tr&eacute;s obligatoires (<strong>Libell&eacute;&nbsp;3</strong> renseign&eacute; &agrave; <strong>O</strong> dans la nomenclature <strong>189</strong>), la valeur de la donn&eacute;e financi&egrave;re correspondant &agrave; l&rsquo;ann&eacute;e courante <strong>ou </strong>&agrave; l&rsquo;ann&eacute;e courante -1 doit &ecirc;tre fournie dans le flux d&rsquo;entr&eacute;e.</li>
+	</ul>
+	</li>
+	<li>Si le <strong>Montant&nbsp;1</strong> de la nomenclature <strong>098 </strong>pour le param&egrave;tre <strong>VDEF-DCOMP</strong> est diff&eacute;rent de <strong>1</strong> et le <strong>Taux&nbsp;1</strong> de la nomenclature <strong>098 </strong>pour le param&egrave;tre <strong>DONFINANCE</strong> est diff&eacute;rent de <strong>1</strong>, alors pour toutes les donn&eacute;es financi&egrave;res dont les types sont param&eacute;tr&eacute;s obligatoires (<strong>Libell&eacute;&nbsp;3</strong> renseign&eacute; &agrave; <strong>O</strong> dans la nomenclature <strong>189</strong>), la valeur de la donn&eacute;e financi&egrave;re de l&rsquo;ann&eacute;e courante doit &ecirc;tre fournie dans le flux entr&eacute;e<strong>.</strong></li>
+</ul>
+
+<p>Si le <strong>Montant&nbsp;1</strong> de la nomenclature<strong> 098 </strong>pour le param&egrave;tre <strong>VDEF-DCOMP</strong> est &eacute;gal &agrave; <strong>1</strong>, alors pour tous les types de donn&eacute;es financi&egrave;res de la nomenclature <strong>189 </strong>(qu&rsquo;ils soient obligatoires ou non), toutes les donn&eacute;es financi&egrave;res dont la valeur est param&eacute;tr&eacute;e comme obligatoire dans la gestion des valeurs par d&eacute;faut doivent &ecirc;tre fournies dans le flux en entr&eacute;e.</p>
+
+			</div>
+
+	</div>
+	<div class="detail">
+			<div class="mock-list">
+				<b>Nom : </b> <a href="../types/charMax6.html">charMax6</a>
+			</div>
+			<div class="mock-list">
+				<b> Description : </b>Chaîne composée d'au plus 6 caractères.
+			</div>
+			<div class="mock-list">
+				<b>Format : </b>string
+			</div>
+			<div class="mock-list">
+				<b>Longueur mini-maxi : </b>1 - 6
+			</div>
+
+	</div>
+
+</div>
+<div class="detail-column" id="d1" style="display:none">
+	<div class="detail">
+			<div class="mock-list">
+				<b>Nom : </b>values
+			</div>
+			<div class="mock-list">
+				<b>Description : </b>Valeurs sur différentes années de la donnée financière.
+			</div>
+
+	</div>
+	<div class="detail">
+			<div class="mock-list">
+				<b>Nom : </b> <a href="../types/customerFinancialDataValues.html">customerFinancialDataValues</a>
+			</div>
+			<div class="mock-list">
+				<b> Description : </b>Valeurs sur différentes années de la donnée financière.
+			</div>
+
+	</div>
+
+</div>
+<div class="detail-column" id="d2" style="display:none">
+	<div class="detail">
+			<div class="mock-list">
+				<b>Nom : </b>yearValue
+			</div>
+			<div class="mock-list">
+				<b>Description : </b>Valeur sur l'année comptable.
+			</div>
+
+	</div>
+	<div class="detail">
+			<div class="mock-list">
+				<b>Nom : </b> <a href="../types/decimal19_4.html">decimal19_4</a>
+			</div>
+			<div class="mock-list">
+				<b> Description : </b>Type décimal à 19 chiffres dont 4 décimales.
+			</div>
+			<div class="mock-list">
+				<b>Format : </b>decimal
+			</div>
+			<div class="mock-list">
+				<b>Nombre total de chiffres : </b>19
+			</div>
+
+	</div>
+
+</div>
+<div class="detail-column" id="d3" style="display:none">
+	<div class="detail">
+			<div class="mock-list">
+				<b>Nom : </b>yearMinus1Value
+			</div>
+			<div class="mock-list">
+				<b>Description : </b>Valeur sur l'année -1.
+			</div>
+
+	</div>
+	<div class="detail">
+			<div class="mock-list">
+				<b>Nom : </b> <a href="../types/decimal19_4.html">decimal19_4</a>
+			</div>
+			<div class="mock-list">
+				<b> Description : </b>Type décimal à 19 chiffres dont 4 décimales.
+			</div>
+			<div class="mock-list">
+				<b>Format : </b>decimal
+			</div>
+			<div class="mock-list">
+				<b>Nombre total de chiffres : </b>19
+			</div>
+
+	</div>
+
+</div>
+<div class="detail-column" id="d4" style="display:none">
+	<div class="detail">
+			<div class="mock-list">
+				<b>Nom : </b>yearMinus2Value
+			</div>
+			<div class="mock-list">
+				<b>Description : </b>Valeur sur l'année -2.
+			</div>
+
+	</div>
+	<div class="detail">
+			<div class="mock-list">
+				<b>Nom : </b> <a href="../types/decimal19_4.html">decimal19_4</a>
+			</div>
+			<div class="mock-list">
+				<b> Description : </b>Type décimal à 19 chiffres dont 4 décimales.
+			</div>
+			<div class="mock-list">
+				<b>Format : </b>decimal
+			</div>
+			<div class="mock-list">
+				<b>Nombre total de chiffres : </b>19
+			</div>
+
+	</div>
+
+</div>
+<div class="detail-column" id="d5" style="display:none">
+	<div class="detail">
+			<div class="mock-list">
+				<b>Nom : </b>yearMinus3Value
+			</div>
+			<div class="mock-list">
+				<b>Description : </b>Valeur sur l'année -3.
+			</div>
+
+	</div>
+	<div class="detail">
+			<div class="mock-list">
+				<b>Nom : </b> <a href="../types/decimal19_4.html">decimal19_4</a>
+			</div>
+			<div class="mock-list">
+				<b> Description : </b>Type décimal à 19 chiffres dont 4 décimales.
+			</div>
+			<div class="mock-list">
+				<b>Format : </b>decimal
+			</div>
+			<div class="mock-list">
+				<b>Nombre total de chiffres : </b>19
+			</div>
+
+	</div>
+
+</div>
+      </div> 
+  </div>
+
+  
+  <script src="../resources/jquery.js"></script>
+  <script src="../resources/doc.js"></script>
+</body>
+</html>

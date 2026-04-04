@@ -1,0 +1,208 @@
+<!DOCTYPE html>
+<html>
+<head>
+	<link rel="stylesheet" href="../resources/styleDocu.css" />
+    <link rel="stylesheet" href="../resources/font-awesome/css/font-awesome.min.css" />
+	<title>Documentation Xsd</title>
+	<meta charset="UTF-8" />
+</head>
+
+<body>
+  <div class="document">
+	<div class="header">		
+	</div>
+
+    <div class="tabs">
+        <div class="tabs-wrapper-selected" onclick="window.open('../liste-ressources.html', '_self');">
+            <div class="tabs-left-content" >Liste des ressources</div>
+        </div>
+        <div class="tabs-wrapper" onclick="window.open('../liste-services.html', '_self');">
+            <div class="tabs-left-content">Liste des services</div>
+        </div>
+        <div class="tabs-wrapper" onclick="window.open('../liste-types.html', '_self');">
+            <div class="tabs-right-content">Liste des types</div>
+        </div>
+    </div>
+
+	<div class="contenu">
+      <div class="breadcrumb"> 
+        <ul class="breadcrumb">
+           <li> <a href="../index.html"> Accueil </a></li>
+           <li> > </li>
+           <li> <a href="../liste-ressources.html"> Liste des ressources </a></li>
+           <li> > </li>
+           <li> transferfees </li>
+        </ul>                    
+      </div>                    
+      
+      <div class="summary">
+        <div class="mock-list"> Nom ressource REST : transferfees </div>
+        <div class="mock-list"> Programme Amplitude : guwrtransferfees </div>
+        <div class="mock-list"> Email : support@soprabanking.com </div>        
+        <br/>
+            <div class="mock-list"> Fees applicable to a local transfer</div>
+      </div>
+      
+      <div class="column-content" style="width:93%">
+        <div class="detail-column" style="width: 35%">
+          <div class="tree"> 
+<ul style="padding:0">
+	<li>
+<i class="fa fa-caret-down fa-fw" onclick="expand_or_collapse(this)">
+</i>		transferfees		<ul>
+			<li>
+<i class="fa fa-caret-down fa-fw" onclick="expand_or_collapse(this)">
+</i>				v1				<ul>
+					<li>
+<i class="fa fa-fw">
+</i><span class="selectable" id="e0"> GETLIST
+</span>
+					</li>
+
+				</ul>
+
+			</li>
+
+		</ul>
+
+	</li>
+
+</ul>
+          </div>
+        </div>
+                 
+        
+<div class="detail-column" id="d0" style="display:none; width: 65%">
+	<div class="detail">
+		<div class="mock-list">
+			<b>Service SOAP : </b> <a href="../services/getDomesticTransferFeeDetail.html">getDomesticTransferFeeDetail</a>
+		</div>
+		<div class="mock-list">
+			<b>Code retour succes : </b>200 - OK
+		</div>
+		<div class="mock-list">
+			<b>Uri : </b>http://soprabanking.com/amplitude/transferfees/v1/
+		</div>
+		<div class="mock-list">
+			<b>Description : </b>The service getDomesticTransferFeeDetail allows viewing the fees applicable to a local transfer.
+
+The following information is required:
+- the nature of local transfer,
+- the type of local transfer,
+- the event linked to the local transfer,
+- the ordering customer account in internal format (branch, currency, number, suffix),
+- the amount and currency of expression of the local transfer,
+- the type of local transfer sending fees.
+
+The service returns the amount:
+- of local transfer fees,
+- of the commission on local transfer,
+- of the deduction on local transfer,
+- of the sending fees,
+- of the late penalties,
+- of the fees for implementation, modification and cancellation of the standing order,
+- of the NKS sending commissions (Cycles 1, 2 and 3),
+- of the NKS sending fees (Cycles 1, 2 and 3).
+		</div>
+		<br>
+
+		</br>
+		<div class="mock-list">
+			<b>Parametres : </b>			<table class="table_param">
+				<tr>
+				<td> <i class="fa fa-key fa-fw"> </i>
+				</td>				<td title="getDomesticTransferFeeDetailRequest.amount.amount"> <a href="../types/decimal19_4.html">X-SBS-amount</a><br>Montant.
+				</td>				<td> Header
+				</td>
+				</tr>
+				<tr>
+				<td>
+				</td>				<td title="getDomesticTransferFeeDetailRequest.amount.currency.currency.alphaCode"> <a href="../types/char3.html">X-SBS-amountCurrencyAlphaCode</a><br>Code devise alphanumérique.
+				</td>				<td> Header
+				</td>
+				</tr>
+				<tr>
+				<td>
+				</td>				<td title="getDomesticTransferFeeDetailRequest.amount.currency.currency.numericCode"> <a href="../types/char3.html">X-SBS-amountCurrencyNumericCode</a><br>Code devise numérique.
+				</td>				<td> Header
+				</td>
+				</tr>
+				<tr>
+				<td> <i class="fa fa-key fa-fw"> </i>
+				</td>				<td title="getDomesticTransferFeeDetailRequest.domesticTransferNature"> <a href="../types/domesticTransferNature.html">X-SBS-domesticTransferNature</a><br>Nature du virement.
+				</td>				<td> Header
+				</td>
+				</tr>
+				<tr>
+				<td> <i class="fa fa-key fa-fw"> </i>
+				</td>				<td title="getDomesticTransferFeeDetailRequest.domesticTransferType"> <a href="../types/charMax3.html">X-SBS-domesticTransferType</a><br>Type de virement.
+				</td>				<td> Header
+				</td>
+				</tr>
+				<tr>
+				<td> <i class="fa fa-key fa-fw"> </i>
+				</td>				<td title="getDomesticTransferFeeDetailRequest.linkedEvent"> <a href="../types/char6.html">X-SBS-linkedEvent</a><br>Evènement associé au virement.
+				</td>				<td> Header
+				</td>
+				</tr>
+				<tr>
+				<td> <i class="fa fa-key fa-fw"> </i>
+				</td>				<td title="getDomesticTransferFeeDetailRequest.orderingCustomerAccount.branch"> <a href="../types/char5.html">X-SBS-orderingCustomerAccountBranch</a><br>Agence du compte.
+				</td>				<td> Header
+				</td>
+				</tr>
+				<tr>
+				<td> <i class="fa fa-key fa-fw"> </i>
+				</td>				<td title="getDomesticTransferFeeDetailRequest.orderingCustomerAccount.currency"> <a href="../types/char3.html">X-SBS-orderingCustomerAccountCurrency</a><br>Devise du compte.
+				</td>				<td> Header
+				</td>
+				</tr>
+				<tr>
+				<td> <i class="fa fa-key fa-fw"> </i>
+				</td>				<td title="getDomesticTransferFeeDetailRequest.orderingCustomerAccount.account"> <a href="../types/charMax11.html">X-SBS-orderingCustomerAccountNumber</a><br>Numéro du compte.
+				</td>				<td> Header
+				</td>
+				</tr>
+				<tr>
+				<td>
+				</td>				<td title="getDomesticTransferFeeDetailRequest.orderingCustomerAccount.suffix"> <a href="../types/charMax2.html">X-SBS-orderingCustomerAccountSuffix</a><br>Suffixe du compte.
+				</td>				<td> Header
+				</td>
+				</tr>
+				<tr>
+				<td> <i class="fa fa-key fa-fw"> </i>
+				</td>				<td title="getDomesticTransferFeeDetailRequest.sendingFeesType"> <a href="../types/sendingFeesType.html">X-SBS-sendingFeesType</a><br>Type de frais d'envoi du virement.
+				</td>				<td> Header
+				</td>
+				</tr>
+
+			</table>
+
+		</div>
+		<br>
+
+		</br>
+		<div class="mock-list">
+			<b>Codes Erreur : </b>			<table>
+				<tr>
+				<td> 400
+				</td>				<td> Bad Request
+				</td>
+				</tr>
+
+			</table>
+
+		</div>
+
+	</div>
+
+</div>
+     </div> 
+  </div>
+  </div>
+
+  
+  <script src="../resources/jquery.js"></script>
+  <script src="../resources/doc.js"></script>
+</body>
+</html>

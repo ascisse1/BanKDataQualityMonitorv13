@@ -1,0 +1,262 @@
+<!DOCTYPE html >
+<html>
+<head>
+	<link rel="stylesheet" href="../resources/styleDocu.css" />
+  <link rel="stylesheet" href="../resources/font-awesome/css/font-awesome.min.css" />
+	<title>Documentation Xsd</title>
+	<meta charset="UTF-8" />
+</head>
+
+<body>
+  <div class="document">
+	<div class="header">
+		
+	</div>
+
+  <div class="tabs">
+    <div class="tabs-wrapper" onclick="window.open('../liste-ressources.html', '_self');">
+      <div class="tabs-left-content">
+        Liste des ressources
+      </div>
+    </div>
+    <div class="tabs-wrapper" onclick="window.open('../liste-services.html', '_self');">
+      <div class="tabs-left-content" >
+        Liste des services  
+      </div>
+    </div>
+    <div class="tabs-wrapper-selected" onclick="window.open('../liste-types.html', '_self');">
+      <div class="tabs-right-content">
+        Liste des types
+      </div>
+    </div>
+  </div>
+
+	
+
+	<div class="contenu">
+      <div class="breadcrumb"> 
+        <ul class="breadcrumb">
+           <li> <a href="../index.html"> Accueil </a></li>
+           <li> > </li>
+           <li> <a href="../liste-types.html"> Liste des types </a></li>
+           <li> > </li>
+           <li> customerSituationCreate </li>
+        </ul>                    
+      </div>                    
+      
+     
+      <div class="summary">
+			<div class="mock-list">
+				<b>Nom : </b>customerSituationCreate
+			</div>
+			<div class="mock-list">
+				<b> Description : </b>Situation.
+			</div>
+        
+        <div> </div>
+        <div class="mock-list"> Choix : Non</div>
+        
+      </div>
+                        
+      <div class="column-content">
+        <div class="detail-column">
+          <div class="tree"> 
+<ul>
+	<li>
+<i class="fa fa-caret-down fa-fw" onclick="expand_or_collapse(this)">
+</i>		customerSituationCreate		<ul style="display:block">
+			<li>
+<i class="fa fa-fw">
+</i><span class="selectable" id="e0"> nationalityCode : nationalityCode
+</span>
+			</li>
+			<li>
+<i class="fa fa-fw">
+</i><span class="selectable" id="e1"> countryOfResidence : countryCode
+</span>
+			</li>
+			<li>
+<i class="fa fa-fw">
+</i><span class="selectable" id="e2"> legalSituation : legalSituationCode
+</span>
+			</li>
+			<li>
+<i class="fa fa-fw">
+</i><span class="selectable" id="e3"> applicationDateOfLegalSituation : date
+</span>
+			</li>
+
+		</ul>
+
+	</li>
+
+</ul>
+          </div>
+          
+          <div class="detail">
+				<p align="left">
+					Légende :<br />
+				</p>
+            <ul>
+               <li align="left">
+                  <i class="fa fa-key fa-fw">
+                  </i>
+                  = Elément obligatoire en saisie.
+               </li>
+               <li align="left">
+                  <span style="font-weight:bold"> [M]
+                  </span>
+                  = Elément multiple (0 à n occurrences).
+               </li>
+               <li align="left">
+                  <span style="font-weight:bold"> [C]
+                  </span>
+                  = Elément composé d'un choix à effectuer. Un seul choix autorisé.
+               </li>
+            </ul>
+            <p align="left">
+               Remarque : Un même élément peut regrouper plusieurs caractéristiques
+            </p>          
+          </div>
+          
+        </div>
+<div class="detail-column" id="d0" style="display:none">
+	<div class="detail">
+			<div class="mock-list">
+				<b>Nom : </b>nationalityCode
+			</div>
+			<div class="mock-list">
+				<b>Description : </b>Code nationalité.
+			</div>
+			<div class="mock-list">
+				<b>Commentaire : </b><p>Lors de la modification d&rsquo;un client, si le code nationalit&eacute; est modifi&eacute;, alors il est mis &agrave; jour pour les&nbsp;:</p>
+
+<ul>
+	<li>dirigeants correspondant au client dans la table des dirigeants,</li>
+	<li>actionnaires correspondant au client dans la table des actionnaires.</li>
+</ul>
+
+<p>Valeur par d&eacute;faut&nbsp;: <strong>nat</strong></p>
+
+			</div>
+
+	</div>
+	<div class="detail">
+			<div class="mock-list">
+				<b>Nom : </b> <a href="../types/nationalityCode.html">nationalityCode</a>
+			</div>
+			<div class="mock-list">
+				<b> Description : </b>Code nationalité.
+			</div>
+			<div class="mock-list">
+				<b>Format : </b>string
+			</div>
+			<div class="mock-list">
+				<b>Longueur mini-maxi : </b>1 - 3
+			</div>
+
+	</div>
+
+</div>
+<div class="detail-column" id="d1" style="display:none">
+	<div class="detail">
+			<div class="mock-list">
+				<b>Nom : </b>countryOfResidence
+			</div>
+			<div class="mock-list">
+				<b>Description : </b>Code du pays de résidence.
+			</div>
+			<div class="mock-list">
+				<b>Commentaire : </b><p>Valeur par d&eacute;faut&nbsp;: <strong>res</strong></p>
+
+			</div>
+
+	</div>
+	<div class="detail">
+			<div class="mock-list">
+				<b>Nom : </b> <a href="../types/countryCode.html">countryCode</a>
+			</div>
+			<div class="mock-list">
+				<b> Description : </b>Code pays.
+			</div>
+			<div class="mock-list">
+				<b>Format : </b>string
+			</div>
+			<div class="mock-list">
+				<b>Longueur mini-maxi : </b>1 - 3
+			</div>
+
+	</div>
+
+</div>
+<div class="detail-column" id="d2" style="display:none">
+	<div class="detail">
+			<div class="mock-list">
+				<b>Nom : </b>legalSituation
+			</div>
+			<div class="mock-list">
+				<b>Description : </b>Situation juridique.
+			</div>
+			<div class="mock-list">
+				<b>Commentaire : </b><p>Valeur par d&eacute;faut&nbsp;: <strong>sitj</strong></p>
+
+			</div>
+
+	</div>
+	<div class="detail">
+			<div class="mock-list">
+				<b>Nom : </b> <a href="../types/legalSituationCode.html">legalSituationCode</a>
+			</div>
+			<div class="mock-list">
+				<b> Description : </b>Code de situation juridique.
+			</div>
+			<div class="mock-list">
+				<b>Format : </b>string
+			</div>
+			<div class="mock-list">
+				<b>Longueur mini-maxi : </b>1 - 3
+			</div>
+
+	</div>
+
+</div>
+<div class="detail-column" id="d3" style="display:none">
+	<div class="detail">
+			<div class="mock-list">
+				<b>Nom : </b>applicationDateOfLegalSituation
+			</div>
+			<div class="mock-list">
+				<b>Description : </b>Date d'application de la situation juridique.
+			</div>
+			<div class="mock-list">
+				<b>Commentaire : </b><p>La date d&rsquo;application de la situation juridique ne peut &ecirc;tre renseign&eacute;e que si la situation juridique est renseign&eacute;e.</p>
+
+<p>Si elles sont renseign&eacute;es, la date d&#39;application de la situation juridique doit &ecirc;tre post&eacute;rieure &agrave; la date de naissance du client.</p>
+
+<p>Si elles sont renseign&eacute;es, la date d&#39;application de la situation juridique doit &ecirc;tre post&eacute;rieure &agrave; la date de cr&eacute;ation de l&rsquo;entreprise.</p>
+
+<p>Elle doit &ecirc;tre une date valide&nbsp;: l&rsquo;ann&eacute;e de la date d&rsquo;application de la situation juridique ne doit pas &ecirc;tre sup&eacute;rieure &agrave; l&rsquo;ann&eacute;e de la date comptable + 200.</p>
+
+<p>Si la date d&rsquo;application de la situation juridique est post&eacute;rieure &agrave; la date comptable, les jours f&eacute;ri&eacute;s de l&rsquo;ann&eacute;e correspondante doivent &ecirc;tre param&eacute;tr&eacute;s dans la table des jours f&eacute;ri&eacute;s.</p>
+
+<p>Valeur par d&eacute;faut (contr&ocirc;le de l&rsquo;obligation de saisie uniquement)&nbsp;: <strong>dsitj</strong></p>
+
+			</div>
+
+	</div>
+	<div class="detail">
+			<div class="mock-list">
+				<b>Nom : </b> <a href="../types/date.html">date</a>
+			</div>
+
+	</div>
+
+</div>
+      </div> 
+  </div>
+
+  
+  <script src="../resources/jquery.js"></script>
+  <script src="../resources/doc.js"></script>
+</body>
+</html>

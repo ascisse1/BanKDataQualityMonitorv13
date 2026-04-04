@@ -1,0 +1,1403 @@
+<!DOCTYPE html >
+<html>
+<head>
+	<link rel="stylesheet" href="../resources/styleDocu.css" />
+  <link rel="stylesheet" href="../resources/font-awesome/css/font-awesome.min.css" />
+	<title>Documentation Xsd</title>
+	<meta charset="UTF-8" />
+</head>
+
+<body>
+  <div class="document">
+	<div class="header">
+		
+	</div>
+
+  <div class="tabs">
+    <div class="tabs-wrapper" onclick="window.open('../liste-ressources.html', '_self');">
+      <div class="tabs-left-content">
+        Liste des ressources
+      </div>
+    </div>
+    <div class="tabs-wrapper" onclick="window.open('../liste-services.html', '_self');">
+      <div class="tabs-left-content" >
+        Liste des services  
+      </div>
+    </div>
+    <div class="tabs-wrapper-selected" onclick="window.open('../liste-types.html', '_self');">
+      <div class="tabs-right-content">
+        Liste des types
+      </div>
+    </div>
+  </div>
+
+	
+
+	<div class="contenu">
+      <div class="breadcrumb"> 
+        <ul class="breadcrumb">
+           <li> <a href="../index.html"> Accueil </a></li>
+           <li> > </li>
+           <li> <a href="../liste-types.html"> Liste des types </a></li>
+           <li> > </li>
+           <li> dosprtCreateLoanFileRepaymentInformation </li>
+        </ul>                    
+      </div>                    
+      
+     
+      <div class="summary">
+			<div class="mock-list">
+				<b>Nom : </b>dosprtCreateLoanFileRepaymentInformation
+			</div>
+			<div class="mock-list">
+				<b> Description : </b>Informations sur le remboursement d'un dossier de crédit.
+			</div>
+        
+        <div> <p>Quelque soit le compte renseign&eacute; ci-dessous, la devise de ce compte doit exister en nomenclature <strong>005 </strong>et doit &ecirc;tre autoris&eacute;e, c&rsquo;est&nbsp; dire soit &eacute;gale &agrave; la devise des comptes du dossier, soit &eacute;gale &agrave; la devise param&eacute;tr&eacute;e dans la table des sp&eacute;cificit&eacute;s du compte par type de pr&ecirc;t pour la nature <strong>005</strong> et le type de pr&ecirc;t.</p>
+
+<p style="margin-left:1.55pt">Quel que soit le choix effectu&eacute; ci-dessous, la balise ne doit pas &ecirc;tre pr&eacute;sente si le mode de gestion des comptes pour la nature <strong>CDT005</strong> pour le type de pr&ecirc;t est Cr&eacute;ation automatique et que le mode de remboursement des &eacute;ch&eacute;ances est par remboursement (<strong>Libell&eacute; 4</strong> renseign&eacute; &agrave; <strong>R</strong> en nomenclature <strong>124</strong>) ou par pr&eacute;l&egrave;vement (<strong>Libell&eacute; 4</strong> renseign&eacute; &agrave; <strong>P</strong> en nomenclature <strong>124) </strong>avec le param&egrave;tre <strong>CDTSANSBQE</strong> existe en nomenclature <strong>098</strong>&nbsp;: le compte est cr&eacute;&eacute; automatiquement dans ce cas donc pas de n&eacute;cessit&eacute; de renseigner un compte par un biais quelconque.</p>
+
+<p>Le mode de remboursement par pr&eacute;l&egrave;vement n&rsquo;est pas autoris&eacute; si le param&egrave;tre <strong>CROATIE</strong> existe en nomenclature <strong>098</strong>.</p>
+</div>
+        <div class="mock-list"> Choix : Oui</div>
+        
+      </div>
+                        
+      <div class="column-content">
+        <div class="detail-column">
+          <div class="tree"> 
+<ul>
+	<li>
+<i class="fa fa-caret-down fa-fw" onclick="expand_or_collapse(this)">
+</i>		dosprtCreateLoanFileRepaymentInformation		<ul style="display:block">
+			<li>
+<i class="fa fa-caret-down fa-fw" onclick="expand_or_collapse(this)">
+</i><span class="selectable" id="e0"> bankAccount : dosprtCreateLoanFileBankRepaymentAccount
+</span>				<ul style="display:block">
+					<li>
+<i class="fa fa-caret-down fa-fw" onclick="expand_or_collapse(this)">
+</i><i class="fa fa-key fa-fw">
+</i><span class="selectable" id="e1"> repaymentAccount : internalAccountKey
+</span>						<ul style="display:block">
+							<li>
+<i class="fa fa-fw">
+</i><i class="fa fa-key fa-fw">
+</i><span class="selectable" id="e2"> branch : char5
+</span>
+							</li>
+							<li>
+<i class="fa fa-fw">
+</i><i class="fa fa-key fa-fw">
+</i><span class="selectable" id="e3"> currency : currencyCode
+</span>
+							</li>
+							<li>
+<i class="fa fa-fw">
+</i><i class="fa fa-key fa-fw">
+</i><span class="selectable" id="e4"> account : charMax11
+</span>
+							</li>
+							<li>
+<i class="fa fa-fw">
+</i><span class="selectable" id="e5"> suffix : charMax2
+</span>
+							</li>
+
+						</ul>
+
+					</li>
+					<li>
+<i class="fa fa-fw">
+</i><span class="selectable" id="e6"> closedAccountUseOverride : boolean
+</span>
+					</li>
+
+				</ul>
+
+			</li>
+			<li>
+<i class="fa fa-caret-down fa-fw" onclick="expand_or_collapse(this)">
+</i><span style="font-weight:bold"> [C]
+</span><span class="selectable" id="e7"> otherBankAccount : dosprtCreateLoanFileOtherBankRepaymentAccount
+</span>				<ul style="display:block">
+					<li>
+<i class="fa fa-caret-down fa-fw" onclick="expand_or_collapse(this)">
+</i><span class="selectable" id="e8"> accountIdentifier : accountIdentifierOtherBank
+</span>						<ul style="display:block">
+							<li>
+<i class="fa fa-caret-down fa-fw" onclick="expand_or_collapse(this)">
+</i><span class="selectable" id="e9"> internalFormatAccount : internalFormatAccountOtherBank
+</span>								<ul style="display:block">
+									<li>
+<i class="fa fa-fw">
+</i><i class="fa fa-key fa-fw">
+</i><span class="selectable" id="e10"> establishment : charMax10
+</span>
+									</li>
+									<li>
+<i class="fa fa-fw">
+</i><i class="fa fa-key fa-fw">
+</i><span class="selectable" id="e11"> cashDesk : char5
+</span>
+									</li>
+									<li>
+<i class="fa fa-fw">
+</i><i class="fa fa-key fa-fw">
+</i><span class="selectable" id="e12"> accountNumber : charMax25
+</span>
+									</li>
+
+								</ul>
+
+							</li>
+							<li>
+<i class="fa fa-caret-down fa-fw" onclick="expand_or_collapse(this)">
+</i><span class="selectable" id="e13"> ibanFormatAccount : ibanFormatAccount
+</span>								<ul style="display:block">
+									<li>
+<i class="fa fa-fw">
+</i><i class="fa fa-key fa-fw">
+</i><span class="selectable" id="e14"> value : charMax34
+</span>
+									</li>
+
+								</ul>
+
+							</li>
+
+						</ul>
+
+					</li>
+					<li>
+<i class="fa fa-caret-down fa-fw" onclick="expand_or_collapse(this)">
+</i><span class="selectable" id="e15"> bankAccountIdentifierWithMandate : dosprtCreateLoanFilePayingBankAccountToBeDebited
+</span>						<ul style="display:block">
+							<li>
+<i class="fa fa-caret-down fa-fw" onclick="expand_or_collapse(this)">
+</i><span class="selectable" id="e16"> creditorIdentification : internationalBankIdentifier
+</span>								<ul style="display:block">
+									<li>
+<i class="fa fa-fw">
+</i><span class="selectable" id="e17"> bic : bicCode
+</span>
+									</li>
+									<li>
+<i class="fa fa-caret-down fa-fw" onclick="expand_or_collapse(this)">
+</i><span class="selectable" id="e18"> iban : ibanFormatAccount
+</span>										<ul style="display:block">
+											<li>
+<i class="fa fa-fw">
+</i><i class="fa fa-key fa-fw">
+</i><span class="selectable" id="e19"> value : charMax34
+</span>
+											</li>
+
+										</ul>
+
+									</li>
+
+								</ul>
+
+							</li>
+							<li>
+<i class="fa fa-caret-down fa-fw" onclick="expand_or_collapse(this)">
+</i><span class="selectable" id="e20"> debitMandate : dosprtCreateLoanFileDebitMandate
+</span>								<ul style="display:block">
+									<li>
+<i class="fa fa-fw">
+</i><span class="selectable" id="e21"> uniqueMandateReference : charMax35
+</span>
+									</li>
+									<li>
+<i class="fa fa-fw">
+</i><span class="selectable" id="e22"> uniqueMandateReferenceDateOfSignature : date
+</span>
+									</li>
+
+								</ul>
+
+							</li>
+
+						</ul>
+
+					</li>
+					<li>
+<i class="fa fa-caret-down fa-fw" onclick="expand_or_collapse(this)">
+</i><span class="selectable" id="e23"> SEPAMandate : dosprtCreateLoanFileSEPAMandate
+</span>						<ul style="display:block">
+							<li>
+<i class="fa fa-caret-down fa-fw" onclick="expand_or_collapse(this)">
+</i><i class="fa fa-key fa-fw">
+</i><span class="selectable" id="e24"> accountidentifier : internationalBankIdentifier
+</span>								<ul style="display:block">
+									<li>
+<i class="fa fa-fw">
+</i><span class="selectable" id="e25"> bic : bicCode
+</span>
+									</li>
+									<li>
+<i class="fa fa-caret-down fa-fw" onclick="expand_or_collapse(this)">
+</i><span class="selectable" id="e26"> iban : ibanFormatAccount
+</span>										<ul style="display:block">
+											<li>
+<i class="fa fa-fw">
+</i><i class="fa fa-key fa-fw">
+</i><span class="selectable" id="e27"> value : charMax34
+</span>
+											</li>
+
+										</ul>
+
+									</li>
+
+								</ul>
+
+							</li>
+							<li>
+<i class="fa fa-fw">
+</i><i class="fa fa-key fa-fw">
+</i><span class="selectable" id="e28"> personType : personType
+</span>
+							</li>
+							<li>
+<i class="fa fa-fw">
+</i><span class="selectable" id="e29"> tradeName : charMax255
+</span>
+							</li>
+							<li>
+<i class="fa fa-fw">
+</i><span class="selectable" id="e30"> name : charMax36
+</span>
+							</li>
+							<li>
+<i class="fa fa-fw">
+</i><span class="selectable" id="e31"> firstName : charMax30
+</span>
+							</li>
+							<li>
+<i class="fa fa-fw">
+</i><i class="fa fa-key fa-fw">
+</i><span class="selectable" id="e32"> addressLine1 : charMax255
+</span>
+							</li>
+							<li>
+<i class="fa fa-fw">
+</i><span class="selectable" id="e33"> addressLine2 : charMax255
+</span>
+							</li>
+							<li>
+<i class="fa fa-fw">
+</i><i class="fa fa-key fa-fw">
+</i><span class="selectable" id="e34"> countryCode : countryCode
+</span>
+							</li>
+							<li>
+<i class="fa fa-fw">
+</i><span class="selectable" id="e35"> emailAddress : charMax255
+</span>
+							</li>
+							<li>
+<i class="fa fa-fw">
+</i><span class="selectable" id="e36"> phoneNumber : charMax30
+</span>
+							</li>
+							<li>
+<i class="fa fa-fw">
+</i><i class="fa fa-key fa-fw">
+</i><span class="selectable" id="e37"> uniqueMandateReferenceLocationOfSignature : charMax255
+</span>
+							</li>
+							<li>
+<i class="fa fa-fw">
+</i><i class="fa fa-key fa-fw">
+</i><span class="selectable" id="e38"> uniqueMandateReferenceDateOfSignature : date
+</span>
+							</li>
+
+						</ul>
+
+					</li>
+
+				</ul>
+
+			</li>
+
+		</ul>
+
+	</li>
+
+</ul>
+          </div>
+          
+          <div class="detail">
+				<p align="left">
+					Légende :<br />
+				</p>
+            <ul>
+               <li align="left">
+                  <i class="fa fa-key fa-fw">
+                  </i>
+                  = Elément obligatoire en saisie.
+               </li>
+               <li align="left">
+                  <span style="font-weight:bold"> [M]
+                  </span>
+                  = Elément multiple (0 à n occurrences).
+               </li>
+               <li align="left">
+                  <span style="font-weight:bold"> [C]
+                  </span>
+                  = Elément composé d'un choix à effectuer. Un seul choix autorisé.
+               </li>
+            </ul>
+            <p align="left">
+               Remarque : Un même élément peut regrouper plusieurs caractéristiques
+            </p>          
+          </div>
+          
+        </div>
+<div class="detail-column" id="d0" style="display:none">
+	<div class="detail">
+			<div class="mock-list">
+				<b>Nom : </b>bankAccount
+			</div>
+			<div class="mock-list">
+				<b>Description : </b>Compte de remboursement dans la banque.
+			</div>
+			<div class="mock-list">
+				<b>Commentaire : </b><p>Le compte de remboursement peut &ecirc;tre renseign&eacute; uniquement si&nbsp;:</p>
+
+<ul>
+	<li>Le code du client associ&eacute; au dossier existe dans la table des clients,</li>
+	<li>Le mode de r&egrave;glement des &eacute;ch&eacute;ancess est par remboursement (<strong>Libell&eacute; 4</strong> renseign&eacute; &agrave; <strong>R</strong> en nomenclature <strong>124</strong> pour le mode de r&egrave;glement de l&rsquo;emprunteur principal).</li>
+</ul>
+
+			</div>
+
+	</div>
+	<div class="detail">
+			<div class="mock-list">
+				<b>Nom : </b> <a href="../types/dosprtCreateLoanFileBankRepaymentAccount.html">dosprtCreateLoanFileBankRepaymentAccount</a>
+			</div>
+			<div class="mock-list">
+				<b> Description : </b>Informations sur le compte de remboursement de la banque.
+			</div>
+
+	</div>
+
+</div>
+<div class="detail-column" id="d1" style="display:none">
+	<div class="detail">
+			<div class="mock-list">
+				<b>Nom : </b>repaymentAccount
+			</div>
+			<div class="mock-list">
+				<b>Description : </b>Compte de remboursement dans la banque.
+			</div>
+			<div class="mock-list">
+				<b>Commentaire : </b><p>Le compte de remboursement ne peut appartenir &agrave; une agence de la banque autre&nbsp; que celle du dossier de cr&eacute;dit, sauf si le <strong>Taux 2</strong> du param&egrave;tre <strong>CDTPAR</strong> en nomenclature <strong>098</strong> l&rsquo;autorise (valeur &agrave; <strong>1</strong>).</p>
+
+<p>La devise du compte de remboursement doit &ecirc;tre &eacute;gale &agrave; la devise de remboursement param&eacute;tr&eacute;e pour le type de pr&ecirc;t et la nature de compte <strong>005</strong>.</p>
+
+<p>Le nombre de caract&egrave;res du num&eacute;ro de compte doit &ecirc;tre &eacute;gal&nbsp; au nombre param&eacute;tr&eacute; dans le <strong>Montant 1</strong> du param&egrave;tre <strong>COMPTE</strong> en nomenclature <strong>999</strong>.</p>
+
+<p>Le suffixe du compte doit &ecirc;tre renseign&eacute; si le&nbsp; <strong>Libell&eacute; 5</strong> est &eacute;gal &agrave; <strong>1</strong> pour le param&egrave;tre <strong>COMPTE</strong> en nomenclature <strong>999</strong>.</p>
+
+<p>Le compte de remboursement doit exister dans la table des comptes. Le client d&eacute;tenteur du compte doit correspondre au client de remboursement.</p>
+
+<p>Le compte de remboursement ne doit &ecirc;tre ni ferm&eacute; ni en instance de fermeture si le for&ccedil;age d&rsquo;utilisation d&rsquo;un compte ferm&eacute; ou en instance de fermeture n&rsquo;est pas autoris&eacute;.</p>
+
+<p>Le chapitre comptable du compte de remboursement doit &ecirc;tre autoris&eacute;, dans la balise suivante.</p>
+
+			</div>
+
+	</div>
+	<div class="detail">
+			<div class="mock-list">
+				<b>Nom : </b> <a href="../types/internalAccountKey.html">internalAccountKey</a>
+			</div>
+			<div class="mock-list">
+				<b> Description : </b>Identifiant de compte au format interne.
+			</div>
+
+	</div>
+
+</div>
+<div class="detail-column" id="d2" style="display:none">
+	<div class="detail">
+			<div class="mock-list">
+				<b>Nom : </b>branch
+			</div>
+			<div class="mock-list">
+				<b>Description : </b>Agence du compte.
+			</div>
+			<div class="mock-list">
+				<b>Commentaire : </b><p>Les agences sont d&eacute;finies dans la nomenclature <strong>001</strong>.</p>
+
+			</div>
+
+	</div>
+	<div class="detail">
+			<div class="mock-list">
+				<b>Nom : </b> <a href="../types/char5.html">char5</a>
+			</div>
+			<div class="mock-list">
+				<b> Description : </b>Type avec un nombre de caractères égal à 5.
+			</div>
+			<div class="mock-list">
+				<b>Format : </b>string
+			</div>
+			<div class="mock-list">
+				<b>Longueur fixe : </b>5
+			</div>
+
+	</div>
+
+</div>
+<div class="detail-column" id="d3" style="display:none">
+	<div class="detail">
+			<div class="mock-list">
+				<b>Nom : </b>currency
+			</div>
+			<div class="mock-list">
+				<b>Description : </b>Devise du compte.
+			</div>
+			<div class="mock-list">
+				<b>Commentaire : </b><p>Les devises sont d&eacute;finies dans les nomenclatures <strong>002</strong> (devises alphanum&eacute;riques) et <strong>005</strong> (devises num&eacute;riques).</p>
+
+			</div>
+
+	</div>
+	<div class="detail">
+			<div class="mock-list">
+				<b>Nom : </b> <a href="../types/currencyCode.html">currencyCode</a>
+			</div>
+			<div class="mock-list">
+				<b> Description : </b>Code devise.
+			</div>
+			<div class="mock-list">
+				<b>Format : </b>string
+			</div>
+			<div class="mock-list">
+				<b>Longueur fixe : </b>3
+			</div>
+
+	</div>
+
+</div>
+<div class="detail-column" id="d4" style="display:none">
+	<div class="detail">
+			<div class="mock-list">
+				<b>Nom : </b>account
+			</div>
+			<div class="mock-list">
+				<b>Description : </b>Numéro du compte.
+			</div>
+
+	</div>
+	<div class="detail">
+			<div class="mock-list">
+				<b>Nom : </b> <a href="../types/charMax11.html">charMax11</a>
+			</div>
+			<div class="mock-list">
+				<b> Description : </b>Chaîne composée d'au plus 11 caractères.
+			</div>
+			<div class="mock-list">
+				<b>Format : </b>string
+			</div>
+			<div class="mock-list">
+				<b>Longueur mini-maxi : </b>1 - 11
+			</div>
+
+	</div>
+
+</div>
+<div class="detail-column" id="d5" style="display:none">
+	<div class="detail">
+			<div class="mock-list">
+				<b>Nom : </b>suffix
+			</div>
+			<div class="mock-list">
+				<b>Description : </b>Suffixe du compte.
+			</div>
+
+	</div>
+	<div class="detail">
+			<div class="mock-list">
+				<b>Nom : </b> <a href="../types/charMax2.html">charMax2</a>
+			</div>
+			<div class="mock-list">
+				<b> Description : </b>Chaîne composée d'au plus 2 caractères.
+			</div>
+			<div class="mock-list">
+				<b>Format : </b>string
+			</div>
+			<div class="mock-list">
+				<b>Longueur mini-maxi : </b>1 - 2
+			</div>
+
+	</div>
+
+</div>
+<div class="detail-column" id="d6" style="display:none">
+	<div class="detail">
+			<div class="mock-list">
+				<b>Nom : </b>closedAccountUseOverride
+			</div>
+			<div class="mock-list">
+				<b>Description : </b>Forçage de l'utilisation d'un compte fermé ou en instance de fermeture.
+			</div>
+
+	</div>
+	<div class="detail">
+			<div class="mock-list">
+				<b>Nom : </b> <a href="../types/boolean.html">boolean</a>
+			</div>
+
+	</div>
+
+</div>
+<div class="detail-column" id="d7" style="display:none">
+	<div class="detail">
+			<div class="mock-list">
+				<b>Nom : </b>otherBankAccount
+			</div>
+			<div class="mock-list">
+				<b>Description : </b>Compte d'une autre banque.
+			</div>
+
+	</div>
+	<div class="detail">
+			<div class="mock-list">
+				<b>Nom : </b> <a href="../types/dosprtCreateLoanFileOtherBankRepaymentAccount.html">dosprtCreateLoanFileOtherBankRepaymentAccount</a>
+			</div>
+			<div class="mock-list">
+				<b> Description : </b>Informations sur le compte de remboursement d'une autre banque.
+			</div>
+
+	</div>
+
+</div>
+<div class="detail-column" id="d8" style="display:none">
+	<div class="detail">
+			<div class="mock-list">
+				<b>Nom : </b>accountIdentifier
+			</div>
+			<div class="mock-list">
+				<b>Description : </b>Compte autre banque avec système de prélèvement télé-compensé.
+			</div>
+			<div class="mock-list">
+				<b>Commentaire : </b><p>Le format interne du compte est prioritaire par rapport au format IBAN, si une balise est renseign&eacute;e pour le format interne, alors l&rsquo;IBAN est ignor&eacute;.</p>
+
+<p>Le compte d&rsquo;une autre banque avec syst&egrave;me de pr&eacute;l&egrave;vement t&eacute;l&eacute;-compens&eacute; doit &ecirc;tre renseign&eacute; si&nbsp;:</p>
+
+<ul>
+	<li>Le param&egrave;tre <strong>CDTSANSBQE</strong> n&rsquo;existe pas en nomenclature <strong>098</strong> mais les r&egrave;gles de gestion du r&egrave;glement des impay&eacute;s par pr&eacute;l&egrave;vement pour les dossiers de cr&eacute;dits existent (pr&eacute;sence du param&egrave;tre <strong>CDTRGL</strong> en nomenclature <strong>098</strong>),</li>
+	<li>Le mode de r&egrave;glement des &eacute;ch&eacute;ances est par pr&eacute;l&egrave;vement (<strong>Libell&eacute; 4</strong> renseign&eacute; &agrave; <strong>P</strong> en nomenclature <strong>124</strong> pour le mode de r&egrave;glement de l&rsquo;emprunteur principal).</li>
+</ul>
+
+<p>Dans ce cas,</p>
+
+<ul>
+	<li>Le code du client associ&eacute; au dossier, s&rsquo;il est renseign&eacute;,&nbsp; doit exister dans la table des clients.</li>
+	<li>Le code de l&rsquo;&eacute;tablissement, le code du guichet et le num&eacute;ro de compte doivent &ecirc;tre renseign&eacute;s.</li>
+	<li>Le code de l&rsquo;&eacute;tablissement ne doit pas correspondre &agrave; celui de la banque.</li>
+	<li>Le code de l&rsquo;agence du dossier, le code de l&rsquo;&eacute;tablissement et le code du guichet&nbsp; de ce compte doivent correspondre &agrave; une banque existante dans la table des banques.</li>
+	<li>Le num&eacute;ro de compte doit obligatoirement contenir la cl&eacute; de contr&ocirc;le sur les 2 derni&egrave;res positions. Cette cl&eacute; RIB est contr&ocirc;l&eacute;e si le param&egrave;tre <strong>CTRL-RIB</strong> existe en nomenclature <strong>098</strong> avec le <strong>Montant 1</strong> &eacute;gal &agrave; <strong>1</strong>, en fonction du code algorithme param&eacute;tr&eacute; dans le<strong> Montant 2.</strong></li>
+</ul>
+
+			</div>
+
+	</div>
+	<div class="detail">
+			<div class="mock-list">
+				<b>Nom : </b> <a href="../types/accountIdentifierOtherBank.html">accountIdentifierOtherBank</a>
+			</div>
+			<div class="mock-list">
+				<b> Description : </b>Compte autres banques.
+			</div>
+
+	</div>
+
+</div>
+<div class="detail-column" id="d9" style="display:none">
+	<div class="detail">
+			<div class="mock-list">
+				<b>Nom : </b>internalFormatAccount
+			</div>
+			<div class="mock-list">
+				<b>Description : </b>Compte autres banques au format Amplitude.
+			</div>
+
+	</div>
+	<div class="detail">
+			<div class="mock-list">
+				<b>Nom : </b> <a href="../types/internalFormatAccountOtherBank.html">internalFormatAccountOtherBank</a>
+			</div>
+			<div class="mock-list">
+				<b> Description : </b>Compte d'une autre banque.
+			</div>
+
+	</div>
+
+</div>
+<div class="detail-column" id="d10" style="display:none">
+	<div class="detail">
+			<div class="mock-list">
+				<b>Nom : </b>establishment
+			</div>
+			<div class="mock-list">
+				<b>Description : </b>Établissement bancaire.
+			</div>
+
+	</div>
+	<div class="detail">
+			<div class="mock-list">
+				<b>Nom : </b> <a href="../types/charMax10.html">charMax10</a>
+			</div>
+			<div class="mock-list">
+				<b> Description : </b>Chaîne composée d'au plus 10 caractères.
+			</div>
+			<div class="mock-list">
+				<b>Format : </b>string
+			</div>
+			<div class="mock-list">
+				<b>Longueur mini-maxi : </b>1 - 10
+			</div>
+
+	</div>
+
+</div>
+<div class="detail-column" id="d11" style="display:none">
+	<div class="detail">
+			<div class="mock-list">
+				<b>Nom : </b>cashDesk
+			</div>
+			<div class="mock-list">
+				<b>Description : </b>Guichet.
+			</div>
+
+	</div>
+	<div class="detail">
+			<div class="mock-list">
+				<b>Nom : </b> <a href="../types/char5.html">char5</a>
+			</div>
+			<div class="mock-list">
+				<b> Description : </b>Type avec un nombre de caractères égal à 5.
+			</div>
+			<div class="mock-list">
+				<b>Format : </b>string
+			</div>
+			<div class="mock-list">
+				<b>Longueur fixe : </b>5
+			</div>
+
+	</div>
+
+</div>
+<div class="detail-column" id="d12" style="display:none">
+	<div class="detail">
+			<div class="mock-list">
+				<b>Nom : </b>accountNumber
+			</div>
+			<div class="mock-list">
+				<b>Description : </b>Numéro de compte.
+			</div>
+
+	</div>
+	<div class="detail">
+			<div class="mock-list">
+				<b>Nom : </b> <a href="../types/charMax25.html">charMax25</a>
+			</div>
+			<div class="mock-list">
+				<b> Description : </b>Chaîne composée d'au plus 25 caractères.
+			</div>
+			<div class="mock-list">
+				<b>Format : </b>string
+			</div>
+			<div class="mock-list">
+				<b>Longueur mini-maxi : </b>1 - 25
+			</div>
+
+	</div>
+
+</div>
+<div class="detail-column" id="d13" style="display:none">
+	<div class="detail">
+			<div class="mock-list">
+				<b>Nom : </b>ibanFormatAccount
+			</div>
+			<div class="mock-list">
+				<b>Description : </b>Compte au format IBAN.
+			</div>
+
+	</div>
+	<div class="detail">
+			<div class="mock-list">
+				<b>Nom : </b> <a href="../types/ibanFormatAccount.html">ibanFormatAccount</a>
+			</div>
+			<div class="mock-list">
+				<b> Description : </b>Identifiant de compte au format IBAN.
+			</div>
+
+	</div>
+
+</div>
+<div class="detail-column" id="d14" style="display:none">
+	<div class="detail">
+			<div class="mock-list">
+				<b>Nom : </b>value
+			</div>
+			<div class="mock-list">
+				<b>Description : </b>Valeur de l'IBAN.
+			</div>
+
+	</div>
+	<div class="detail">
+			<div class="mock-list">
+				<b>Nom : </b> <a href="../types/charMax34.html">charMax34</a>
+			</div>
+			<div class="mock-list">
+				<b> Description : </b>Chaîne composée d'au plus 34 caractères.
+			</div>
+			<div class="mock-list">
+				<b>Format : </b>string
+			</div>
+			<div class="mock-list">
+				<b>Longueur mini-maxi : </b>1 - 34
+			</div>
+
+	</div>
+
+</div>
+<div class="detail-column" id="d15" style="display:none">
+	<div class="detail">
+			<div class="mock-list">
+				<b>Nom : </b>bankAccountIdentifierWithMandate
+			</div>
+			<div class="mock-list">
+				<b>Description : </b>Compte autre banque avec prélèvements SEPA non compensés.
+			</div>
+			<div class="mock-list">
+				<b>Commentaire : </b><p>Si&nbsp; le param&egrave;tre <strong>CDTSANSBQE</strong> existe en nomenclature <strong>098</strong> et si le mode de r&egrave;glement des &eacute;ch&eacute;ances est par pr&eacute;l&egrave;vement (si le <strong>Libell&eacute; 4 </strong>est renseign&eacute; &agrave; <strong>P</strong> en nomenclature <strong>124</strong> pour le mode de r&egrave;glement de l&rsquo;emprunteur principal), le compte autre banque avec pr&eacute;l&egrave;vements SEPA non compens&eacute;s doit &ecirc;tre renseign&eacute;.</p>
+
+			</div>
+
+	</div>
+	<div class="detail">
+			<div class="mock-list">
+				<b>Nom : </b> <a href="../types/dosprtCreateLoanFilePayingBankAccountToBeDebited.html">dosprtCreateLoanFilePayingBankAccountToBeDebited</a>
+			</div>
+			<div class="mock-list">
+				<b> Description : </b>Coordonnées bancaires du compte à débiter.
+			</div>
+
+	</div>
+
+</div>
+<div class="detail-column" id="d16" style="display:none">
+	<div class="detail">
+			<div class="mock-list">
+				<b>Nom : </b>creditorIdentification
+			</div>
+			<div class="mock-list">
+				<b>Description : </b>Identification du compte.
+			</div>
+			<div class="mock-list">
+				<b>Commentaire : </b><p>A l&#39;int&eacute;rieur de ce type, la saisie d&#39;un code BIC implique la saisie d&#39;un code IBAN et inversement.</p>
+
+<p>Ces informations ne doivent &ecirc;tre renseign&eacute;es que si le param&egrave;tre <strong>CDTSANSBQE</strong> est positionn&eacute; en nomenclature <strong>098</strong>.</p>
+
+			</div>
+
+	</div>
+	<div class="detail">
+			<div class="mock-list">
+				<b>Nom : </b> <a href="../types/internationalBankIdentifier.html">internationalBankIdentifier</a>
+			</div>
+			<div class="mock-list">
+				<b> Description : </b>Coordonnées bancaires au format international.
+			</div>
+
+	</div>
+
+</div>
+<div class="detail-column" id="d17" style="display:none">
+	<div class="detail">
+			<div class="mock-list">
+				<b>Nom : </b>bic
+			</div>
+			<div class="mock-list">
+				<b>Description : </b>Code BIC.
+			</div>
+
+	</div>
+	<div class="detail">
+			<div class="mock-list">
+				<b>Nom : </b> <a href="../types/bicCode.html">bicCode</a>
+			</div>
+			<div class="mock-list">
+				<b> Description : </b>Code BIC.
+			</div>
+			<div class="mock-list">
+				<b>Format : </b>string
+			</div>
+			<div class="mock-list">
+				<b>Longueur mini-maxi : </b>8 - 11
+			</div>
+
+	</div>
+
+</div>
+<div class="detail-column" id="d18" style="display:none">
+	<div class="detail">
+			<div class="mock-list">
+				<b>Nom : </b>iban
+			</div>
+			<div class="mock-list">
+				<b>Description : </b>Compte au format IBAN.
+			</div>
+
+	</div>
+	<div class="detail">
+			<div class="mock-list">
+				<b>Nom : </b> <a href="../types/ibanFormatAccount.html">ibanFormatAccount</a>
+			</div>
+			<div class="mock-list">
+				<b> Description : </b>Identifiant de compte au format IBAN.
+			</div>
+
+	</div>
+
+</div>
+<div class="detail-column" id="d19" style="display:none">
+	<div class="detail">
+			<div class="mock-list">
+				<b>Nom : </b>value
+			</div>
+			<div class="mock-list">
+				<b>Description : </b>Valeur de l'IBAN.
+			</div>
+
+	</div>
+	<div class="detail">
+			<div class="mock-list">
+				<b>Nom : </b> <a href="../types/charMax34.html">charMax34</a>
+			</div>
+			<div class="mock-list">
+				<b> Description : </b>Chaîne composée d'au plus 34 caractères.
+			</div>
+			<div class="mock-list">
+				<b>Format : </b>string
+			</div>
+			<div class="mock-list">
+				<b>Longueur mini-maxi : </b>1 - 34
+			</div>
+
+	</div>
+
+</div>
+<div class="detail-column" id="d20" style="display:none">
+	<div class="detail">
+			<div class="mock-list">
+				<b>Nom : </b>debitMandate
+			</div>
+			<div class="mock-list">
+				<b>Description : </b>Mandat de prélèvement.
+			</div>
+			<div class="mock-list">
+				<b>Commentaire : </b><p>Ces informations ne doivent &ecirc;tre renseign&eacute;es que si le param&egrave;tre <strong>CDTSANSBQE</strong> est positionn&eacute; en nomenclature <strong>098</strong>.</p>
+
+			</div>
+
+	</div>
+	<div class="detail">
+			<div class="mock-list">
+				<b>Nom : </b> <a href="../types/dosprtCreateLoanFileDebitMandate.html">dosprtCreateLoanFileDebitMandate</a>
+			</div>
+			<div class="mock-list">
+				<b> Description : </b>Mandat de prélèvement.
+			</div>
+
+	</div>
+
+</div>
+<div class="detail-column" id="d21" style="display:none">
+	<div class="detail">
+			<div class="mock-list">
+				<b>Nom : </b>uniqueMandateReference
+			</div>
+			<div class="mock-list">
+				<b>Description : </b>Référence unique de mandat de prélèvement.
+			</div>
+			<div class="mock-list">
+				<b>Commentaire : </b><p>Si la r&eacute;f&eacute;rence n&rsquo;est pas donn&eacute;e, alors elle est renseign&eacute;e avec <strong>REF¿MANDAT</strong> suivi du num&eacute;ro d&rsquo;&eacute;v&eacute;nement.</p>
+
+			</div>
+
+	</div>
+	<div class="detail">
+			<div class="mock-list">
+				<b>Nom : </b> <a href="../types/charMax35.html">charMax35</a>
+			</div>
+			<div class="mock-list">
+				<b> Description : </b>Chaîne composée d'au plus 35 caractères.
+			</div>
+			<div class="mock-list">
+				<b>Format : </b>string
+			</div>
+			<div class="mock-list">
+				<b>Longueur mini-maxi : </b>1 - 35
+			</div>
+
+	</div>
+
+</div>
+<div class="detail-column" id="d22" style="display:none">
+	<div class="detail">
+			<div class="mock-list">
+				<b>Nom : </b>uniqueMandateReferenceDateOfSignature
+			</div>
+			<div class="mock-list">
+				<b>Description : </b>Date de signature référence unique de mandat de prélèvement.
+			</div>
+			<div class="mock-list">
+				<b>Commentaire : </b><p>Contr&ocirc;le de la validit&eacute; de la date.</p>
+
+			</div>
+
+	</div>
+	<div class="detail">
+			<div class="mock-list">
+				<b>Nom : </b> <a href="../types/date.html">date</a>
+			</div>
+
+	</div>
+
+</div>
+<div class="detail-column" id="d23" style="display:none">
+	<div class="detail">
+			<div class="mock-list">
+				<b>Nom : </b>SEPAMandate
+			</div>
+			<div class="mock-list">
+				<b>Description : </b>Mandat de prélèvement SEPA.
+			</div>
+
+	</div>
+	<div class="detail">
+			<div class="mock-list">
+				<b>Nom : </b> <a href="../types/dosprtCreateLoanFileSEPAMandate.html">dosprtCreateLoanFileSEPAMandate</a>
+			</div>
+			<div class="mock-list">
+				<b> Description : </b>Mandat de prélèvement SEPA d'un dossier de crédit.
+			</div>
+
+	</div>
+
+</div>
+<div class="detail-column" id="d24" style="display:none">
+	<div class="detail">
+			<div class="mock-list">
+				<b>Nom : </b>accountidentifier
+			</div>
+			<div class="mock-list">
+				<b>Description : </b>Identifiant de compte
+			</div>
+
+	</div>
+	<div class="detail">
+			<div class="mock-list">
+				<b>Nom : </b> <a href="../types/internationalBankIdentifier.html">internationalBankIdentifier</a>
+			</div>
+			<div class="mock-list">
+				<b> Description : </b>Coordonnées bancaires au format international.
+			</div>
+
+	</div>
+
+</div>
+<div class="detail-column" id="d25" style="display:none">
+	<div class="detail">
+			<div class="mock-list">
+				<b>Nom : </b>bic
+			</div>
+			<div class="mock-list">
+				<b>Description : </b>Code BIC.
+			</div>
+
+	</div>
+	<div class="detail">
+			<div class="mock-list">
+				<b>Nom : </b> <a href="../types/bicCode.html">bicCode</a>
+			</div>
+			<div class="mock-list">
+				<b> Description : </b>Code BIC.
+			</div>
+			<div class="mock-list">
+				<b>Format : </b>string
+			</div>
+			<div class="mock-list">
+				<b>Longueur mini-maxi : </b>8 - 11
+			</div>
+
+	</div>
+
+</div>
+<div class="detail-column" id="d26" style="display:none">
+	<div class="detail">
+			<div class="mock-list">
+				<b>Nom : </b>iban
+			</div>
+			<div class="mock-list">
+				<b>Description : </b>Compte au format IBAN.
+			</div>
+
+	</div>
+	<div class="detail">
+			<div class="mock-list">
+				<b>Nom : </b> <a href="../types/ibanFormatAccount.html">ibanFormatAccount</a>
+			</div>
+			<div class="mock-list">
+				<b> Description : </b>Identifiant de compte au format IBAN.
+			</div>
+
+	</div>
+
+</div>
+<div class="detail-column" id="d27" style="display:none">
+	<div class="detail">
+			<div class="mock-list">
+				<b>Nom : </b>value
+			</div>
+			<div class="mock-list">
+				<b>Description : </b>Valeur de l'IBAN.
+			</div>
+
+	</div>
+	<div class="detail">
+			<div class="mock-list">
+				<b>Nom : </b> <a href="../types/charMax34.html">charMax34</a>
+			</div>
+			<div class="mock-list">
+				<b> Description : </b>Chaîne composée d'au plus 34 caractères.
+			</div>
+			<div class="mock-list">
+				<b>Format : </b>string
+			</div>
+			<div class="mock-list">
+				<b>Longueur mini-maxi : </b>1 - 34
+			</div>
+
+	</div>
+
+</div>
+<div class="detail-column" id="d28" style="display:none">
+	<div class="detail">
+			<div class="mock-list">
+				<b>Nom : </b>personType
+			</div>
+			<div class="mock-list">
+				<b>Description : </b>Type de personne.
+			</div>
+
+	</div>
+	<div class="detail">
+			<div class="mock-list">
+				<b>Nom : </b> <a href="../types/personType.html">personType</a>
+			</div>
+			<div class="mock-list">
+				<b> Description : </b>Type de personne.
+			</div>
+			<div class="mock-list">
+				<b>Format : </b>string
+			</div>
+			<div class="mock-list">
+				<b>Valeurs possibles : </b>					<table class="table_enum" class="table_enum">
+						<tr>
+						<td> M
+						</td>						<td class="td_right"> Personne Morale
+						</td>
+						</tr>
+						<tr>
+						<td> P
+						</td>						<td class="td_right"> Personne physique
+						</td>
+						</tr>
+
+					</table>
+
+			</div>
+
+	</div>
+
+</div>
+<div class="detail-column" id="d29" style="display:none">
+	<div class="detail">
+			<div class="mock-list">
+				<b>Nom : </b>tradeName
+			</div>
+			<div class="mock-list">
+				<b>Description : </b>Dénomination sociale.
+			</div>
+
+	</div>
+	<div class="detail">
+			<div class="mock-list">
+				<b>Nom : </b> <a href="../types/charMax255.html">charMax255</a>
+			</div>
+			<div class="mock-list">
+				<b> Description : </b>Chaîne composée d'au plus 255 caractères.
+			</div>
+			<div class="mock-list">
+				<b>Format : </b>string
+			</div>
+			<div class="mock-list">
+				<b>Longueur mini-maxi : </b>1 - 255
+			</div>
+
+	</div>
+
+</div>
+<div class="detail-column" id="d30" style="display:none">
+	<div class="detail">
+			<div class="mock-list">
+				<b>Nom : </b>name
+			</div>
+			<div class="mock-list">
+				<b>Description : </b>Nom du client.
+			</div>
+
+	</div>
+	<div class="detail">
+			<div class="mock-list">
+				<b>Nom : </b> <a href="../types/charMax36.html">charMax36</a>
+			</div>
+			<div class="mock-list">
+				<b> Description : </b>Chaîne composée d'au plus 36 caractères.
+			</div>
+			<div class="mock-list">
+				<b>Format : </b>string
+			</div>
+			<div class="mock-list">
+				<b>Longueur mini-maxi : </b>1 - 36
+			</div>
+
+	</div>
+
+</div>
+<div class="detail-column" id="d31" style="display:none">
+	<div class="detail">
+			<div class="mock-list">
+				<b>Nom : </b>firstName
+			</div>
+			<div class="mock-list">
+				<b>Description : </b>Prénom du client.
+			</div>
+
+	</div>
+	<div class="detail">
+			<div class="mock-list">
+				<b>Nom : </b> <a href="../types/charMax30.html">charMax30</a>
+			</div>
+			<div class="mock-list">
+				<b> Description : </b>Chaîne composée d'au plus 30 caractères.
+			</div>
+			<div class="mock-list">
+				<b>Format : </b>string
+			</div>
+			<div class="mock-list">
+				<b>Longueur mini-maxi : </b>1 - 30
+			</div>
+
+	</div>
+
+</div>
+<div class="detail-column" id="d32" style="display:none">
+	<div class="detail">
+			<div class="mock-list">
+				<b>Nom : </b>addressLine1
+			</div>
+			<div class="mock-list">
+				<b>Description : </b>Ligne 1 d'adresse.
+			</div>
+
+	</div>
+	<div class="detail">
+			<div class="mock-list">
+				<b>Nom : </b> <a href="../types/charMax255.html">charMax255</a>
+			</div>
+			<div class="mock-list">
+				<b> Description : </b>Chaîne composée d'au plus 255 caractères.
+			</div>
+			<div class="mock-list">
+				<b>Format : </b>string
+			</div>
+			<div class="mock-list">
+				<b>Longueur mini-maxi : </b>1 - 255
+			</div>
+
+	</div>
+
+</div>
+<div class="detail-column" id="d33" style="display:none">
+	<div class="detail">
+			<div class="mock-list">
+				<b>Nom : </b>addressLine2
+			</div>
+			<div class="mock-list">
+				<b>Description : </b>Ligne 2 d'adresse.
+			</div>
+
+	</div>
+	<div class="detail">
+			<div class="mock-list">
+				<b>Nom : </b> <a href="../types/charMax255.html">charMax255</a>
+			</div>
+			<div class="mock-list">
+				<b> Description : </b>Chaîne composée d'au plus 255 caractères.
+			</div>
+			<div class="mock-list">
+				<b>Format : </b>string
+			</div>
+			<div class="mock-list">
+				<b>Longueur mini-maxi : </b>1 - 255
+			</div>
+
+	</div>
+
+</div>
+<div class="detail-column" id="d34" style="display:none">
+	<div class="detail">
+			<div class="mock-list">
+				<b>Nom : </b>countryCode
+			</div>
+			<div class="mock-list">
+				<b>Description : </b>Code pays.
+			</div>
+
+	</div>
+	<div class="detail">
+			<div class="mock-list">
+				<b>Nom : </b> <a href="../types/countryCode.html">countryCode</a>
+			</div>
+			<div class="mock-list">
+				<b> Description : </b>Code pays.
+			</div>
+			<div class="mock-list">
+				<b>Format : </b>string
+			</div>
+			<div class="mock-list">
+				<b>Longueur mini-maxi : </b>1 - 3
+			</div>
+
+	</div>
+
+</div>
+<div class="detail-column" id="d35" style="display:none">
+	<div class="detail">
+			<div class="mock-list">
+				<b>Nom : </b>emailAddress
+			</div>
+			<div class="mock-list">
+				<b>Description : </b>E-mail.
+			</div>
+
+	</div>
+	<div class="detail">
+			<div class="mock-list">
+				<b>Nom : </b> <a href="../types/charMax255.html">charMax255</a>
+			</div>
+			<div class="mock-list">
+				<b> Description : </b>Chaîne composée d'au plus 255 caractères.
+			</div>
+			<div class="mock-list">
+				<b>Format : </b>string
+			</div>
+			<div class="mock-list">
+				<b>Longueur mini-maxi : </b>1 - 255
+			</div>
+
+	</div>
+
+</div>
+<div class="detail-column" id="d36" style="display:none">
+	<div class="detail">
+			<div class="mock-list">
+				<b>Nom : </b>phoneNumber
+			</div>
+			<div class="mock-list">
+				<b>Description : </b>Téléphone.
+			</div>
+
+	</div>
+	<div class="detail">
+			<div class="mock-list">
+				<b>Nom : </b> <a href="../types/charMax30.html">charMax30</a>
+			</div>
+			<div class="mock-list">
+				<b> Description : </b>Chaîne composée d'au plus 30 caractères.
+			</div>
+			<div class="mock-list">
+				<b>Format : </b>string
+			</div>
+			<div class="mock-list">
+				<b>Longueur mini-maxi : </b>1 - 30
+			</div>
+
+	</div>
+
+</div>
+<div class="detail-column" id="d37" style="display:none">
+	<div class="detail">
+			<div class="mock-list">
+				<b>Nom : </b>uniqueMandateReferenceLocationOfSignature
+			</div>
+			<div class="mock-list">
+				<b>Description : </b>Lieu de signature de la référence unique de mandat.
+			</div>
+
+	</div>
+	<div class="detail">
+			<div class="mock-list">
+				<b>Nom : </b> <a href="../types/charMax255.html">charMax255</a>
+			</div>
+			<div class="mock-list">
+				<b> Description : </b>Chaîne composée d'au plus 255 caractères.
+			</div>
+			<div class="mock-list">
+				<b>Format : </b>string
+			</div>
+			<div class="mock-list">
+				<b>Longueur mini-maxi : </b>1 - 255
+			</div>
+
+	</div>
+
+</div>
+<div class="detail-column" id="d38" style="display:none">
+	<div class="detail">
+			<div class="mock-list">
+				<b>Nom : </b>uniqueMandateReferenceDateOfSignature
+			</div>
+			<div class="mock-list">
+				<b>Description : </b>Date de signature de la référence unique de mandat.
+			</div>
+
+	</div>
+	<div class="detail">
+			<div class="mock-list">
+				<b>Nom : </b> <a href="../types/date.html">date</a>
+			</div>
+
+	</div>
+
+</div>
+      </div> 
+  </div>
+
+  
+  <script src="../resources/jquery.js"></script>
+  <script src="../resources/doc.js"></script>
+</body>
+</html>

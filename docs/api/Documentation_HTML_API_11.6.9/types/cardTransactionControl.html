@@ -1,0 +1,505 @@
+<!DOCTYPE html >
+<html>
+<head>
+	<link rel="stylesheet" href="../resources/styleDocu.css" />
+  <link rel="stylesheet" href="../resources/font-awesome/css/font-awesome.min.css" />
+	<title>Documentation Xsd</title>
+	<meta charset="UTF-8" />
+</head>
+
+<body>
+  <div class="document">
+	<div class="header">
+		
+	</div>
+
+  <div class="tabs">
+    <div class="tabs-wrapper" onclick="window.open('../liste-ressources.html', '_self');">
+      <div class="tabs-left-content">
+        Liste des ressources
+      </div>
+    </div>
+    <div class="tabs-wrapper" onclick="window.open('../liste-services.html', '_self');">
+      <div class="tabs-left-content" >
+        Liste des services  
+      </div>
+    </div>
+    <div class="tabs-wrapper-selected" onclick="window.open('../liste-types.html', '_self');">
+      <div class="tabs-right-content">
+        Liste des types
+      </div>
+    </div>
+  </div>
+
+	
+
+	<div class="contenu">
+      <div class="breadcrumb"> 
+        <ul class="breadcrumb">
+           <li> <a href="../index.html"> Accueil </a></li>
+           <li> > </li>
+           <li> <a href="../liste-types.html"> Liste des types </a></li>
+           <li> > </li>
+           <li> cardTransactionControl </li>
+        </ul>                    
+      </div>                    
+      
+     
+      <div class="summary">
+			<div class="mock-list">
+				<b>Nom : </b>cardTransactionControl
+			</div>
+			<div class="mock-list">
+				<b> Description : </b>Définition du niveau de contrôle sur une transaction monétique.
+			</div>
+        
+        <div> </div>
+        <div class="mock-list"> Choix : Non</div>
+        
+      </div>
+                        
+      <div class="column-content">
+        <div class="detail-column">
+          <div class="tree"> 
+<ul>
+	<li>
+<i class="fa fa-caret-down fa-fw" onclick="expand_or_collapse(this)">
+</i>		cardTransactionControl		<ul style="display:block">
+			<li>
+<i class="fa fa-fw">
+</i><span class="selectable" id="e0"> checkDisapprovals : boolean
+</span>
+			</li>
+			<li>
+<i class="fa fa-caret-down fa-fw" onclick="expand_or_collapse(this)">
+</i><span class="selectable" id="e1"> consistencyWithFundsReservation : cardTransactionConsistencyWithFundsReservation
+</span>				<ul style="display:block">
+					<li>
+<i class="fa fa-fw">
+</i><span class="selectable" id="e2"> consistencyWithFundsReservationAmount : boolean
+</span>
+					</li>
+					<li>
+<i class="fa fa-fw">
+</i><span class="selectable" id="e3"> comparisonAmountVarianceRate : decimal15_7
+</span>
+					</li>
+					<li>
+<i class="fa fa-caret-down fa-fw" onclick="expand_or_collapse(this)">
+</i><span style="font-weight:bold"> [C]
+</span><span class="selectable" id="e4"> behaviourIfNonConsistencyWithFundsReservation : cardTransactionAccountBehaviour
+</span>						<ul style="display:block">
+							<li>
+<i class="fa fa-fw">
+</i><span class="selectable" id="e5"> useRejectAccount : boolean
+</span>
+							</li>
+							<li>
+<i class="fa fa-fw">
+</i><span class="selectable" id="e6"> useSuspenseAccount : boolean
+</span>
+							</li>
+							<li>
+<i class="fa fa-fw">
+</i><span class="selectable" id="e7"> useUnpaidAccount : boolean
+</span>
+							</li>
+							<li>
+<i class="fa fa-fw">
+</i><span class="selectable" id="e8"> rejectTransaction : boolean
+</span>
+							</li>
+
+						</ul>
+
+					</li>
+
+				</ul>
+
+			</li>
+			<li>
+<i class="fa fa-caret-down fa-fw" onclick="expand_or_collapse(this)">
+</i><span class="selectable" id="e9"> fundsReservationsCancellationRules : cardFundsReservationCancellationRules
+</span>				<ul style="display:block">
+					<li>
+<i class="fa fa-fw">
+</i><span class="selectable" id="e10"> fundsReservationCancellationIfNonBlockingDisapprovals : boolean
+</span>
+					</li>
+					<li>
+<i class="fa fa-fw">
+</i><span class="selectable" id="e11"> eventStatusIfNotCancelledFundsReservation : eventStatus
+</span>
+					</li>
+
+				</ul>
+
+			</li>
+
+		</ul>
+
+	</li>
+
+</ul>
+          </div>
+          
+          <div class="detail">
+				<p align="left">
+					Légende :<br />
+				</p>
+            <ul>
+               <li align="left">
+                  <i class="fa fa-key fa-fw">
+                  </i>
+                  = Elément obligatoire en saisie.
+               </li>
+               <li align="left">
+                  <span style="font-weight:bold"> [M]
+                  </span>
+                  = Elément multiple (0 à n occurrences).
+               </li>
+               <li align="left">
+                  <span style="font-weight:bold"> [C]
+                  </span>
+                  = Elément composé d'un choix à effectuer. Un seul choix autorisé.
+               </li>
+            </ul>
+            <p align="left">
+               Remarque : Un même élément peut regrouper plusieurs caractéristiques
+            </p>          
+          </div>
+          
+        </div>
+<div class="detail-column" id="d0" style="display:none">
+	<div class="detail">
+			<div class="mock-list">
+				<b>Nom : </b>checkDisapprovals
+			</div>
+			<div class="mock-list">
+				<b>Description : </b>Contrôle des désaccords pour la transaction et ses comptes ?
+			</div>
+			<div class="mock-list">
+				<b>Commentaire : </b><p>Par d&eacute;faut &agrave; <strong>FALSE</strong>&nbsp;: les d&eacute;saccords ne sont pas contr&ocirc;l&eacute;s.</p>
+
+			</div>
+
+	</div>
+	<div class="detail">
+			<div class="mock-list">
+				<b>Nom : </b> <a href="../types/boolean.html">boolean</a>
+			</div>
+
+	</div>
+
+</div>
+<div class="detail-column" id="d1" style="display:none">
+	<div class="detail">
+			<div class="mock-list">
+				<b>Nom : </b>consistencyWithFundsReservation
+			</div>
+			<div class="mock-list">
+				<b>Description : </b>Cohérence avec la réservation de fonds
+			</div>
+			<div class="mock-list">
+				<b>Commentaire : </b><p>Par d&eacute;faut, aucun contr&ocirc;le de coh&eacute;rence avec la r&eacute;servation de fonds n&rsquo;est r&eacute;alis&eacute;.</p>
+
+<p>Cette balise n&#39;est consid&eacute;r&eacute;e que si la cl&eacute; de rapprochement avec la r&eacute;servation de fonds est fournie dans le flux.</p>
+
+			</div>
+
+	</div>
+	<div class="detail">
+			<div class="mock-list">
+				<b>Nom : </b> <a href="../types/cardTransactionConsistencyWithFundsReservation.html">cardTransactionConsistencyWithFundsReservation</a>
+			</div>
+			<div class="mock-list">
+				<b> Description : </b>Cohérence avec l'AVIDAB.
+			</div>
+
+	</div>
+
+</div>
+<div class="detail-column" id="d2" style="display:none">
+	<div class="detail">
+			<div class="mock-list">
+				<b>Nom : </b>consistencyWithFundsReservationAmount
+			</div>
+			<div class="mock-list">
+				<b>Description : </b>Contrôle de cohérence du montant de la transaction avec le montant de l'AVIDAB.
+			</div>
+			<div class="mock-list">
+				<b>Commentaire : </b><p>Par d&eacute;faut&nbsp;<strong>FALSE</strong> : pas de contr&ocirc;le de coh&eacute;rence avec le montant de l&rsquo;AVIDAB.</p>
+
+			</div>
+
+	</div>
+	<div class="detail">
+			<div class="mock-list">
+				<b>Nom : </b> <a href="../types/boolean.html">boolean</a>
+			</div>
+
+	</div>
+
+</div>
+<div class="detail-column" id="d3" style="display:none">
+	<div class="detail">
+			<div class="mock-list">
+				<b>Nom : </b>comparisonAmountVarianceRate
+			</div>
+			<div class="mock-list">
+				<b>Description : </b>Taux de variation autorisée pour le contrôle.
+			</div>
+			<div class="mock-list">
+				<b>Commentaire : </b><p>Utilis&eacute; uniquement si le contr&ocirc;le de coh&eacute;rence des montants est demand&eacute;.</p>
+
+<p>Plus le taux est bas, plus les montants doivent &ecirc;tre identiques.</p>
+
+<p>Si non renseign&eacute;, un taux de variation autoris&eacute;e par d&eacute;faut de 0% est utilis&eacute; (correspondant &agrave; un contr&ocirc;le d&rsquo;&eacute;galit&eacute; stricte).</p>
+
+			</div>
+
+	</div>
+	<div class="detail">
+			<div class="mock-list">
+				<b>Nom : </b> <a href="../types/decimal15_7.html">decimal15_7</a>
+			</div>
+			<div class="mock-list">
+				<b> Description : </b>Type décimal à 15 chiffres dont 7 décimales.
+			</div>
+			<div class="mock-list">
+				<b>Format : </b>decimal
+			</div>
+			<div class="mock-list">
+				<b>Nombre total de chiffres : </b>15
+			</div>
+
+	</div>
+
+</div>
+<div class="detail-column" id="d4" style="display:none">
+	<div class="detail">
+			<div class="mock-list">
+				<b>Nom : </b>behaviourIfNonConsistencyWithFundsReservation
+			</div>
+			<div class="mock-list">
+				<b>Description : </b>Comportement en cas d'incohérence avec l'AVIDAB.
+			</div>
+			<div class="mock-list">
+				<b>Commentaire : </b><p>Par d&eacute;faut, la transaction est rejet&eacute;e.</p>
+
+			</div>
+
+	</div>
+	<div class="detail">
+			<div class="mock-list">
+				<b>Nom : </b> <a href="../types/cardTransactionAccountBehaviour.html">cardTransactionAccountBehaviour</a>
+			</div>
+			<div class="mock-list">
+				<b> Description : </b>Comportement attendu en cas de défaut du compte.
+			</div>
+
+	</div>
+
+</div>
+<div class="detail-column" id="d5" style="display:none">
+	<div class="detail">
+			<div class="mock-list">
+				<b>Nom : </b>useRejectAccount
+			</div>
+			<div class="mock-list">
+				<b>Description : </b>Utiliser le compte de rejet.
+			</div>
+
+	</div>
+	<div class="detail">
+			<div class="mock-list">
+				<b>Nom : </b> <a href="../types/boolean.html">boolean</a>
+			</div>
+
+	</div>
+
+</div>
+<div class="detail-column" id="d6" style="display:none">
+	<div class="detail">
+			<div class="mock-list">
+				<b>Nom : </b>useSuspenseAccount
+			</div>
+			<div class="mock-list">
+				<b>Description : </b>Utiliser le compte de suspens.
+			</div>
+
+	</div>
+	<div class="detail">
+			<div class="mock-list">
+				<b>Nom : </b> <a href="../types/boolean.html">boolean</a>
+			</div>
+
+	</div>
+
+</div>
+<div class="detail-column" id="d7" style="display:none">
+	<div class="detail">
+			<div class="mock-list">
+				<b>Nom : </b>useUnpaidAccount
+			</div>
+			<div class="mock-list">
+				<b>Description : </b>Utiliser le compte d'impayé.
+			</div>
+
+	</div>
+	<div class="detail">
+			<div class="mock-list">
+				<b>Nom : </b> <a href="../types/boolean.html">boolean</a>
+			</div>
+
+	</div>
+
+</div>
+<div class="detail-column" id="d8" style="display:none">
+	<div class="detail">
+			<div class="mock-list">
+				<b>Nom : </b>rejectTransaction
+			</div>
+			<div class="mock-list">
+				<b>Description : </b>Rejeter la transaction.
+			</div>
+
+	</div>
+	<div class="detail">
+			<div class="mock-list">
+				<b>Nom : </b> <a href="../types/boolean.html">boolean</a>
+			</div>
+
+	</div>
+
+</div>
+<div class="detail-column" id="d9" style="display:none">
+	<div class="detail">
+			<div class="mock-list">
+				<b>Nom : </b>fundsReservationsCancellationRules
+			</div>
+			<div class="mock-list">
+				<b>Description : </b>Règles d'annulation de la réservation de fonds.
+			</div>
+
+	</div>
+	<div class="detail">
+			<div class="mock-list">
+				<b>Nom : </b> <a href="../types/cardFundsReservationCancellationRules.html">cardFundsReservationCancellationRules</a>
+			</div>
+			<div class="mock-list">
+				<b> Description : </b>Règles d¿annulation de l'AVIDAB.
+			</div>
+
+	</div>
+
+</div>
+<div class="detail-column" id="d10" style="display:none">
+	<div class="detail">
+			<div class="mock-list">
+				<b>Nom : </b>fundsReservationCancellationIfNonBlockingDisapprovals
+			</div>
+			<div class="mock-list">
+				<b>Description : </b>Annulation de l'AVIDAB si désaccords non bloquants ?
+			</div>
+			<div class="mock-list">
+				<b>Commentaire : </b><p>Par d&eacute;faut&nbsp;<strong>TRUE</strong> : annulation de l&#39;AVIDAB si des d&eacute;saccords non bloquants sont rencontr&eacute;s lors du traitement de l&rsquo;&eacute;v&eacute;nement de la transaction.</p>
+
+			</div>
+
+	</div>
+	<div class="detail">
+			<div class="mock-list">
+				<b>Nom : </b> <a href="../types/boolean.html">boolean</a>
+			</div>
+
+	</div>
+
+</div>
+<div class="detail-column" id="d11" style="display:none">
+	<div class="detail">
+			<div class="mock-list">
+				<b>Nom : </b>eventStatusIfNotCancelledFundsReservation
+			</div>
+			<div class="mock-list">
+				<b>Description : </b>Etat de l'événement de transaction si l'AVIDAB n¿a pas été annulé.
+			</div>
+			<div class="mock-list">
+				<b>Commentaire : </b><p>Par d&eacute;faut&nbsp;<strong>IG</strong> : ignor&eacute;.</p>
+
+			</div>
+
+	</div>
+	<div class="detail">
+			<div class="mock-list">
+				<b>Nom : </b> <a href="../types/eventStatus.html">eventStatus</a>
+			</div>
+			<div class="mock-list">
+				<b> Description : </b>Etat d'un événement.
+			</div>
+			<div class="mock-list">
+				<b>Format : </b>string
+			</div>
+			<div class="mock-list">
+				<b>Valeurs possibles : </b>					<table class="table_enum" class="table_enum" class="table_enum" class="table_enum" class="table_enum" class="table_enum" class="table_enum" class="table_enum" class="table_enum">
+						<tr>
+						<td> AT
+						</td>						<td class="td_right"> En attente
+						</td>
+						</tr>
+						<tr>
+						<td> VF
+						</td>						<td class="td_right"> Validé forcé
+						</td>
+						</tr>
+						<tr>
+						<td> AB
+						</td>						<td class="td_right"> Abandonné
+						</td>
+						</tr>
+						<tr>
+						<td> VA
+						</td>						<td class="td_right"> Validé
+						</td>
+						</tr>
+						<tr>
+						<td> IF
+						</td>						<td class="td_right"> Ignoré forcé
+						</td>
+						</tr>
+						<tr>
+						<td> IG
+						</td>						<td class="td_right"> Ignoré
+						</td>
+						</tr>
+						<tr>
+						<td> FO
+						</td>						<td class="td_right"> Forcé
+						</td>
+						</tr>
+						<tr>
+						<td> TR
+						</td>						<td class="td_right"> Transféré
+						</td>
+						</tr>
+						<tr>
+						<td> AN
+						</td>						<td class="td_right"> Annulé
+						</td>
+						</tr>
+
+					</table>
+
+			</div>
+
+	</div>
+
+</div>
+      </div> 
+  </div>
+
+  
+  <script src="../resources/jquery.js"></script>
+  <script src="../resources/doc.js"></script>
+</body>
+</html>

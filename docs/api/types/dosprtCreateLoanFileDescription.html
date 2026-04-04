@@ -1,0 +1,2279 @@
+<!DOCTYPE html >
+<html>
+<head>
+	<link rel="stylesheet" href="../resources/styleDocu.css" />
+  <link rel="stylesheet" href="../resources/font-awesome/css/font-awesome.min.css" />
+	<title>Documentation Xsd</title>
+	<meta charset="UTF-8" />
+</head>
+
+<body>
+  <div class="document">
+	<div class="header">
+		
+	</div>
+
+  <div class="tabs">
+    <div class="tabs-wrapper" onclick="window.open('../liste-ressources.html', '_self');">
+      <div class="tabs-left-content">
+        Liste des ressources
+      </div>
+    </div>
+    <div class="tabs-wrapper" onclick="window.open('../liste-services.html', '_self');">
+      <div class="tabs-left-content" >
+        Liste des services  
+      </div>
+    </div>
+    <div class="tabs-wrapper-selected" onclick="window.open('../liste-types.html', '_self');">
+      <div class="tabs-right-content">
+        Liste des types
+      </div>
+    </div>
+  </div>
+
+	
+
+	<div class="contenu">
+      <div class="breadcrumb"> 
+        <ul class="breadcrumb">
+           <li> <a href="../index.html"> Accueil </a></li>
+           <li> > </li>
+           <li> <a href="../liste-types.html"> Liste des types </a></li>
+           <li> > </li>
+           <li> dosprtCreateLoanFileDescription </li>
+        </ul>                    
+      </div>                    
+      
+     
+      <div class="summary">
+			<div class="mock-list">
+				<b>Nom : </b>dosprtCreateLoanFileDescription
+			</div>
+			<div class="mock-list">
+				<b> Description : </b>Description d'un dossier de crédit.
+			</div>
+        
+        <div> </div>
+        <div class="mock-list"> Choix : Non</div>
+        
+      </div>
+                        
+      <div class="column-content">
+        <div class="detail-column">
+          <div class="tree"> 
+<ul>
+	<li>
+<i class="fa fa-caret-down fa-fw" onclick="expand_or_collapse(this)">
+</i>		dosprtCreateLoanFileDescription		<ul style="display:block">
+			<li>
+<i class="fa fa-fw">
+</i><span class="selectable" id="e0"> establishmentDate : date
+</span>
+			</li>
+			<li>
+<i class="fa fa-fw">
+</i><span class="selectable" id="e1"> firstInstallmentDate : date
+</span>
+			</li>
+			<li>
+<i class="fa fa-fw">
+</i><span class="selectable" id="e2"> lastInstallmentDate : date
+</span>
+			</li>
+			<li>
+<i class="fa fa-fw">
+</i><span class="selectable" id="e3"> installmentsNumber : integer
+</span>
+			</li>
+			<li>
+<i class="fa fa-fw">
+</i><span class="selectable" id="e4"> endOfMonthInstallment : boolean
+</span>
+			</li>
+			<li>
+<i class="fa fa-fw">
+</i><span class="selectable" id="e5"> calculationBasedOnRealNumber : boolean
+</span>
+			</li>
+			<li>
+<i class="fa fa-fw">
+</i><span class="selectable" id="e6"> bankHolidaysUpdating : boolean
+</span>
+			</li>
+			<li>
+<i class="fa fa-fw">
+</i><span class="selectable" id="e7"> deferralPeriodManagement : detaildeferralPeriodManagement
+</span>
+			</li>
+			<li>
+<i class="fa fa-caret-down fa-fw" onclick="expand_or_collapse(this)">
+</i><span class="selectable" id="e8"> deferredAmountDistribution : dosprtCreateLoanFileDeferredAmountDistribution
+</span>				<ul style="display:block">
+					<li>
+<i class="fa fa-fw">
+</i><i class="fa fa-key fa-fw">
+</i><span class="selectable" id="e9"> numberOfInstallments : integer
+</span>
+					</li>
+					<li>
+<i class="fa fa-fw">
+</i><span class="selectable" id="e10"> firstInstallment : integer
+</span>
+					</li>
+
+				</ul>
+
+			</li>
+			<li>
+<i class="fa fa-fw">
+</i><span class="selectable" id="e11"> interestType : interestType
+</span>
+			</li>
+			<li>
+<i class="fa fa-caret-down fa-fw" onclick="expand_or_collapse(this)">
+</i><span style="font-weight:bold"> [C]
+</span><span class="selectable" id="e12"> interestInformation : dosprtInterestInformation
+</span>				<ul style="display:block">
+					<li>
+<i class="fa fa-caret-down fa-fw" onclick="expand_or_collapse(this)">
+</i><span class="selectable" id="e13"> floatingOrProgressiveRate : dosprtCreateFloatingOrProgressiveRate
+</span>						<ul style="display:block">
+							<li>
+<i class="fa fa-fw">
+</i><span class="selectable" id="e14"> reviewMethod : dosprtReviewMethod
+</span>
+							</li>
+							<li>
+<i class="fa fa-fw">
+</i><span class="selectable" id="e15"> nextInstallmentIncluded : boolean
+</span>
+							</li>
+							<li>
+<i class="fa fa-fw">
+</i><span class="selectable" id="e16"> firstReview : date
+</span>
+							</li>
+							<li>
+<i class="fa fa-fw">
+</i><span class="selectable" id="e17"> lastReview : date
+</span>
+							</li>
+							<li>
+<i class="fa fa-fw">
+</i><span class="selectable" id="e18"> reviewFrequency : dosprtDetailReviewPeriodicityType
+</span>
+							</li>
+							<li>
+<i class="fa fa-fw">
+</i><span class="selectable" id="e19"> minimumVariation : decimal9_6
+</span>
+							</li>
+							<li>
+<i class="fa fa-fw">
+</i><span class="selectable" id="e20"> minimumRate : decimal9_6
+</span>
+							</li>
+							<li>
+<i class="fa fa-fw">
+</i><span class="selectable" id="e21"> maximumRate : decimal9_6
+</span>
+							</li>
+							<li>
+<i class="fa fa-fw">
+</i><span class="selectable" id="e22"> minimumMargin : decimal9_6
+</span>
+							</li>
+							<li>
+<i class="fa fa-fw">
+</i><span class="selectable" id="e23"> maximumMargin : decimal9_6
+</span>
+							</li>
+							<li>
+<i class="fa fa-fw">
+</i><span class="selectable" id="e24"> numberOfMonthsForMinimumMargin : decimal2_0
+</span>
+							</li>
+							<li>
+<i class="fa fa-fw">
+</i><span class="selectable" id="e25"> reviewCode : char4
+</span>
+							</li>
+							<li>
+<i class="fa fa-caret-down fa-fw" onclick="expand_or_collapse(this)">
+</i><span class="selectable" id="e26"> progressionOfInterests : dosprtProgressionOfInterests
+</span>								<ul style="display:block">
+									<li>
+<i class="fa fa-caret-down fa-fw" onclick="expand_or_collapse(this)">
+</i><i class="fa fa-key fa-fw">
+</i><span style="font-weight:bold"> [M]
+</span><span class="selectable" id="e27"> rateChange : dosprtFloatingOrProgressiveRateChange
+</span>										<ul style="display:block">
+											<li>
+<i class="fa fa-fw">
+</i><i class="fa fa-key fa-fw">
+</i><span class="selectable" id="e28"> applicationDate : date
+</span>
+											</li>
+											<li>
+<i class="fa fa-fw">
+</i><span class="selectable" id="e29"> baseRate : char3
+</span>
+											</li>
+											<li>
+<i class="fa fa-fw">
+</i><span class="selectable" id="e30"> margin : decimal9_6
+</span>
+											</li>
+											<li>
+<i class="fa fa-fw">
+</i><span class="selectable" id="e31"> finalRate : decimal9_6
+</span>
+											</li>
+											<li>
+<i class="fa fa-fw">
+</i><span class="selectable" id="e32"> fixRate : decimal9_6
+</span>
+											</li>
+
+										</ul>
+
+									</li>
+
+								</ul>
+
+							</li>
+
+						</ul>
+
+					</li>
+					<li>
+<i class="fa fa-caret-down fa-fw" onclick="expand_or_collapse(this)">
+</i><span class="selectable" id="e33"> indexedRate : dosprtCreateIndexedRate
+</span>						<ul style="display:block">
+							<li>
+<i class="fa fa-fw">
+</i><span class="selectable" id="e34"> baseRateCode : loanBaseRateCode
+</span>
+							</li>
+							<li>
+<i class="fa fa-fw">
+</i><span class="selectable" id="e35"> marginValue : decimal8_6
+</span>
+							</li>
+
+						</ul>
+
+					</li>
+					<li>
+<i class="fa fa-caret-down fa-fw" onclick="expand_or_collapse(this)">
+</i><span class="selectable" id="e36"> negociatedRate : dosprtCreateNegociatedRate
+</span>						<ul style="display:block">
+							<li>
+<i class="fa fa-fw">
+</i><span class="selectable" id="e37"> effectiveDate : date
+</span>
+							</li>
+							<li>
+<i class="fa fa-fw">
+</i><span class="selectable" id="e38"> rateValue : decimal9_6
+</span>
+							</li>
+							<li>
+<i class="fa fa-fw">
+</i><span class="selectable" id="e39"> marginValue : decimal9_6
+</span>
+							</li>
+							<li>
+<i class="fa fa-fw">
+</i><span class="selectable" id="e40"> internalRate : decimal9_6
+</span>
+							</li>
+							<li>
+<i class="fa fa-fw">
+</i><span class="selectable" id="e41"> nextNegociationDate : date
+</span>
+							</li>
+
+						</ul>
+
+					</li>
+
+				</ul>
+
+			</li>
+			<li>
+<i class="fa fa-fw">
+</i><span class="selectable" id="e42"> scheduleType : scheduleType
+</span>
+			</li>
+			<li>
+<i class="fa fa-caret-down fa-fw" onclick="expand_or_collapse(this)">
+</i><span class="selectable" id="e43"> installmentsProgression : dosprtCreateLoanFileInstallmentsProgression
+</span>				<ul style="display:block">
+					<li>
+<i class="fa fa-caret-down fa-fw" onclick="expand_or_collapse(this)">
+</i><i class="fa fa-key fa-fw">
+</i><span style="font-weight:bold"> [M]
+</span><span class="selectable" id="e44"> loanFileInstallmentStage : dosprtCreateLoanFileInstallmentStage
+</span>						<ul style="display:block">
+							<li>
+<i class="fa fa-fw">
+</i><i class="fa fa-key fa-fw">
+</i><span class="selectable" id="e45"> numberOfInstallments : integer
+</span>
+							</li>
+							<li>
+<i class="fa fa-fw">
+</i><i class="fa fa-key fa-fw">
+</i><span class="selectable" id="e46"> installmentsAmount : decimal19_4
+</span>
+							</li>
+
+						</ul>
+
+					</li>
+
+				</ul>
+
+			</li>
+			<li>
+<i class="fa fa-fw">
+</i><span class="selectable" id="e47"> periodicityUnit : periodicityUnit
+</span>
+			</li>
+			<li>
+<i class="fa fa-fw">
+</i><span class="selectable" id="e48"> equivalentRateLoan : boolean
+</span>
+			</li>
+			<li>
+<i class="fa fa-fw">
+</i><span class="selectable" id="e49"> compoundInterestCalculationFrequency : dosprtDetailPeriodicityType
+</span>
+			</li>
+			<li>
+<i class="fa fa-fw">
+</i><span class="selectable" id="e50"> realAnnualNumberOfDays : realAnnualNumberOfDays
+</span>
+			</li>
+			<li>
+<i class="fa fa-fw">
+</i><span class="selectable" id="e51"> periodUsedForCalculationInterestUnpaidAmount : periodUsedForCalculationInterestUnpaidAmount
+</span>
+			</li>
+			<li>
+<i class="fa fa-fw">
+</i><span class="selectable" id="e52"> shiftPeriodForCalculationInterestUnpaidAmount : decimal2_0
+</span>
+			</li>
+			<li>
+<i class="fa fa-fw">
+</i><span class="selectable" id="e53"> deadlineCreditUse : date
+</span>
+			</li>
+			<li>
+<i class="fa fa-fw">
+</i><span class="selectable" id="e54"> fullScheduleCalculation : boolean
+</span>
+			</li>
+
+		</ul>
+
+	</li>
+
+</ul>
+          </div>
+          
+          <div class="detail">
+				<p align="left">
+					Légende :<br />
+				</p>
+            <ul>
+               <li align="left">
+                  <i class="fa fa-key fa-fw">
+                  </i>
+                  = Elément obligatoire en saisie.
+               </li>
+               <li align="left">
+                  <span style="font-weight:bold"> [M]
+                  </span>
+                  = Elément multiple (0 à n occurrences).
+               </li>
+               <li align="left">
+                  <span style="font-weight:bold"> [C]
+                  </span>
+                  = Elément composé d'un choix à effectuer. Un seul choix autorisé.
+               </li>
+            </ul>
+            <p align="left">
+               Remarque : Un même élément peut regrouper plusieurs caractéristiques
+            </p>          
+          </div>
+          
+        </div>
+<div class="detail-column" id="d0" style="display:none">
+	<div class="detail">
+			<div class="mock-list">
+				<b>Nom : </b>establishmentDate
+			</div>
+			<div class="mock-list">
+				<b>Description : </b>Date de mise en place.
+			</div>
+			<div class="mock-list">
+				<b>Commentaire : </b><ul>
+	<li>Si la date de mise en place n&rsquo;est pas donn&eacute;e, alors elle est renseign&eacute;e avec la date comptable.</li>
+	<li>Si le niveau de for&ccedil;age de l&rsquo;utilisateur est inf&eacute;rieur au niveau de for&ccedil;age param&eacute;tr&eacute; dans le <strong>Montant 1</strong> du param&egrave;tre <strong>PRTDMP</strong> en nomenclature <strong>099</strong> alors la date de mise en place doit &ecirc;tre sup&eacute;rieure ou &eacute;gale &agrave; la date comptable.</li>
+	<li>Si le niveau de for&ccedil;age de l&rsquo;utilisateur est inf&eacute;rieur au niveau de for&ccedil;age param&eacute;tr&eacute; dans le <strong>Montant 1</strong> du param&egrave;tre <strong>PRTDMP2</strong> en nomenclature <strong>099</strong> alors la date de mise en place doit &ecirc;tre inf&eacute;rieure ou &eacute;gale &agrave; la date comptable plus un mois</li>
+	<li>Si le niveau de for&ccedil;age de l&rsquo;utilisateur est inf&eacute;rieur au niveau de for&ccedil;age param&eacute;tr&eacute; dans le <strong>Montant 1</strong> du param&egrave;tre <strong>PRTDMPSIM</strong> en nomenclature <strong>099</strong> alors la date de mise en place doit &ecirc;tre inf&eacute;rieure ou &eacute;gale &agrave; la date comptable.</li>
+</ul>
+
+			</div>
+
+	</div>
+	<div class="detail">
+			<div class="mock-list">
+				<b>Nom : </b> <a href="../types/date.html">date</a>
+			</div>
+
+	</div>
+
+</div>
+<div class="detail-column" id="d1" style="display:none">
+	<div class="detail">
+			<div class="mock-list">
+				<b>Nom : </b>firstInstallmentDate
+			</div>
+			<div class="mock-list">
+				<b>Description : </b>Date de première échéance.
+			</div>
+			<div class="mock-list">
+				<b>Commentaire : </b><p>Si elle est renseign&eacute;e, alors&nbsp;:</p>
+
+<ul>
+	<li>La date de premi&egrave;re &eacute;ch&eacute;ance doit &ecirc;tre sup&eacute;rieure &agrave; la date de mise en place.</li>
+	<li>Le nombre d&rsquo;&eacute;ch&eacute;ances doit &ecirc;tre renseign&eacute; et non nul.</li>
+</ul>
+
+			</div>
+
+	</div>
+	<div class="detail">
+			<div class="mock-list">
+				<b>Nom : </b> <a href="../types/date.html">date</a>
+			</div>
+
+	</div>
+
+</div>
+<div class="detail-column" id="d2" style="display:none">
+	<div class="detail">
+			<div class="mock-list">
+				<b>Nom : </b>lastInstallmentDate
+			</div>
+			<div class="mock-list">
+				<b>Description : </b>Date de dernière échéance.
+			</div>
+			<div class="mock-list">
+				<b>Commentaire : </b><p>Si elle est renseign&eacute;e, la date de derni&egrave;re &eacute;ch&eacute;ance doit &ecirc;tre sup&eacute;rieure ou &eacute;gale &agrave; la date de premi&egrave;re &eacute;ch&eacute;ance.</p>
+
+<p>Le jour de la derni&egrave;re &eacute;ch&eacute;ance doit &ecirc;tre un jour valide.</p>
+
+<p>La date de derni&egrave;re &eacute;ch&eacute;ance doit &ecirc;tre diff&eacute;rente de la date de premi&egrave;re &eacute;ch&eacute;ance si la valeur de l&rsquo;&eacute;l&eacute;ment &quot;endOfMonthInstallment&quot; est &agrave; <strong>FALSE</strong> et non modifiable d&rsquo;apr&egrave;s le param&eacute;trage &eacute;tabli pour le type de pr&ecirc;t.</p>
+
+<p>Si la date de premi&egrave;re &eacute;ch&eacute;ance n&#39;est pas renseign&eacute;e, la date de derni&egrave;re &eacute;ch&eacute;ance ne doit pas &ecirc;tre renseign&eacute;e.</p>
+
+			</div>
+
+	</div>
+	<div class="detail">
+			<div class="mock-list">
+				<b>Nom : </b> <a href="../types/date.html">date</a>
+			</div>
+
+	</div>
+
+</div>
+<div class="detail-column" id="d3" style="display:none">
+	<div class="detail">
+			<div class="mock-list">
+				<b>Nom : </b>installmentsNumber
+			</div>
+			<div class="mock-list">
+				<b>Description : </b>Nombre d'échéances.
+			</div>
+			<div class="mock-list">
+				<b>Commentaire : </b><p>Le nombre d&rsquo;&eacute;ch&eacute;ances ne doit pas &ecirc;tre nul ni sup&eacute;rieur &agrave; 500. Il doit aussi &ecirc;tre compris entre la valeur maximum et la valeur minimum des conditions <strong>VARttt </strong>et <strong>VARECH</strong>, o&ugrave; <strong>ttt</strong> correspond au code du type de pr&ecirc;t.</p>
+
+<p>En fonction du param&egrave;tre <strong>CDTPAR5</strong> en nomenclature <strong>098</strong>&nbsp;:</p>
+
+<ul>
+	<li>Si le <strong>Montant&nbsp;8</strong> est &eacute;gal &agrave; <strong>1</strong>, alors le nombre d&#39;&eacute;ch&eacute;ances d&#39;amortissement doit &ecirc;tre compris entre le nombre d&#39;&eacute;ch&eacute;ances minimum et maximum param&eacute;tr&eacute;s au niveau du type de pr&ecirc;t.</li>
+	<li>Si le <strong>Montant&nbsp;8</strong> est diff&eacute;rent de <strong>1</strong>, alors le nombre d&#39;&eacute;ch&eacute;ances total (amortissement + diff&eacute;r&eacute;) doit &ecirc;tre compris entre le nombre d&#39;&eacute;ch&eacute;ances minimum et maximum param&eacute;tr&eacute;s au niveau du type de pr&ecirc;t.</li>
+</ul>
+
+<p>Si la date de premi&egrave;re &eacute;ch&eacute;ance et la date de derni&egrave;re &eacute;ch&eacute;ance sont renseign&eacute;es, le nombre d&#39;&eacute;ch&eacute;ances ne doit pas &ecirc;tre renseign&eacute; car il sera d&eacute;termin&eacute; automatiquement.</p>
+
+<p>Si la date de premi&egrave;re &eacute;ch&eacute;ance est renseign&eacute;e mais que la date de derni&egrave;re &eacute;ch&eacute;ance n&#39;est pas renseign&eacute;e, le nombre d&#39;&eacute;ch&eacute;ances doit obligatoirement &ecirc;tre renseign&eacute;.</p>
+
+			</div>
+
+	</div>
+	<div class="detail">
+			<div class="mock-list">
+				<b>Nom : </b> <a href="../types/integer.html">integer</a>
+			</div>
+
+	</div>
+
+</div>
+<div class="detail-column" id="d4" style="display:none">
+	<div class="detail">
+			<div class="mock-list">
+				<b>Nom : </b>endOfMonthInstallment
+			</div>
+			<div class="mock-list">
+				<b>Description : </b>Echéance fin de mois.
+			</div>
+			<div class="mock-list">
+				<b>Commentaire : </b><p>Selon le param&eacute;trage en place pour le type de pr&ecirc;t&nbsp;:</p>
+
+<ul>
+	<li>Si l&rsquo;&eacute;ch&eacute;ance fin de mois est obligatoire, alors elle doit &ecirc;tre renseign&eacute;e.</li>
+	<li>Sinon, si elle n&rsquo;est pas renseign&eacute;e alors elle est aliment&eacute;e avec la valeur par d&eacute;faut (<strong>fdm</strong>) d&eacute;finie pour le type de pr&ecirc;t.</li>
+</ul>
+
+<p>Si le param&eacute;trage indique que la zone est non modifiable, alors la valeur de l&rsquo;&eacute;ch&eacute;ance fin de mois doit &ecirc;tre &eacute;gale &agrave; sa valeur par d&eacute;faut.</p>
+
+			</div>
+
+	</div>
+	<div class="detail">
+			<div class="mock-list">
+				<b>Nom : </b> <a href="../types/boolean.html">boolean</a>
+			</div>
+
+	</div>
+
+</div>
+<div class="detail-column" id="d5" style="display:none">
+	<div class="detail">
+			<div class="mock-list">
+				<b>Nom : </b>calculationBasedOnRealNumber
+			</div>
+			<div class="mock-list">
+				<b>Description : </b>Calcul en nombre de jours réels.
+			</div>
+			<div class="mock-list">
+				<b>Commentaire : </b><p>Selon le param&eacute;trage en place pour le type de pr&ecirc;t&nbsp;:</p>
+
+<ul>
+	<li>Si l&rsquo;information sur le calcul en nombre de jours r&eacute;els est obligatoire, alors elle doit &ecirc;tre renseign&eacute;e.</li>
+	<li>Sinon, si elle n&rsquo;est pas renseign&eacute;e alors elle est aliment&eacute;e avec la valeur par d&eacute;faut (<strong>cal</strong>) d&eacute;finie pour le type de pr&ecirc;t.</li>
+</ul>
+
+<p>Si le param&eacute;trage indique que la zone est non modifiable, alors la valeur du calcul en nombre de jours r&eacute;els doit &ecirc;tre &eacute;gale &agrave; sa valeur par d&eacute;faut.</p>
+
+			</div>
+
+	</div>
+	<div class="detail">
+			<div class="mock-list">
+				<b>Nom : </b> <a href="../types/boolean.html">boolean</a>
+			</div>
+
+	</div>
+
+</div>
+<div class="detail-column" id="d6" style="display:none">
+	<div class="detail">
+			<div class="mock-list">
+				<b>Nom : </b>bankHolidaysUpdating
+			</div>
+			<div class="mock-list">
+				<b>Description : </b>Actualisation des jours fériés.
+			</div>
+			<div class="mock-list">
+				<b>Commentaire : </b><p>Selon le param&eacute;trage en place pour le type de pr&ecirc;t&nbsp;:</p>
+
+<ul>
+	<li>Si l&rsquo;actualisation des jours f&eacute;ri&eacute;s est obligatoire, alors elle doit &ecirc;tre renseign&eacute;e.</li>
+	<li>Sinon, si elle n&rsquo;est pas renseign&eacute;e alors elle est aliment&eacute;e avec la valeur par d&eacute;faut (<strong>actuafer</strong>) d&eacute;finie pour le type de pr&ecirc;t.</li>
+</ul>
+
+<p>Si le param&eacute;trage indique que la zone est non modifiable, alors la valeur de l&rsquo;actualisation des jours f&eacute;ri&eacute;s doit &ecirc;tre &eacute;gale &agrave; sa valeur par d&eacute;faut.</p>
+
+<p>Egalement, si le calcul en nombre de jours r&eacute;els (balise &quot;calculationBasedOnRealNumber&quot;) vaut <strong>FALSE</strong>, alors l&rsquo;actualisation des jours f&eacute;ri&eacute;s doit valoir <strong>FALSE</strong>.</p>
+
+			</div>
+
+	</div>
+	<div class="detail">
+			<div class="mock-list">
+				<b>Nom : </b> <a href="../types/boolean.html">boolean</a>
+			</div>
+
+	</div>
+
+</div>
+<div class="detail-column" id="d7" style="display:none">
+	<div class="detail">
+			<div class="mock-list">
+				<b>Nom : </b>deferralPeriodManagement
+			</div>
+			<div class="mock-list">
+				<b>Description : </b>Gestion du différé.
+			</div>
+			<div class="mock-list">
+				<b>Commentaire : </b><p>Selon le param&eacute;trage en place pour le type de pr&ecirc;t&nbsp;:</p>
+
+<ul>
+	<li>Si la gestion du diff&eacute;r&eacute; est obligatoire, alors elle doit &ecirc;tre renseign&eacute;e.</li>
+	<li>Sinon, si elle n&rsquo;est pas renseign&eacute;e alors elle est aliment&eacute;e avec la valeur par d&eacute;faut (<strong>cap</strong>) d&eacute;finie pour le type de pr&ecirc;t.</li>
+</ul>
+
+<p>Si le param&eacute;trage indique que le champ est non modifiable, alors la valeur de la gestion du diff&eacute;r&eacute; doit &ecirc;tre &eacute;gale &agrave; sa valeur par d&eacute;faut.</p>
+
+<p>Si le mode de gestion est Capitalisation avec calcul compos&eacute; (<strong>P</strong>) alors la m&eacute;thode de calcul des arr&ecirc;t&eacute;s est effect&eacute;e &agrave; <strong>N</strong>.</p>
+
+<p>Il est possible de restreindre le choix du type de diff&eacute;r&eacute; &agrave; une liste param&eacute;tr&eacute;e en <strong>Libell&eacute;&nbsp;3</strong> du param&egrave;tre <strong>CDTPAR4</strong>.</p>
+
+			</div>
+
+	</div>
+	<div class="detail">
+			<div class="mock-list">
+				<b>Nom : </b> <a href="../types/detaildeferralPeriodManagement.html">detaildeferralPeriodManagement</a>
+			</div>
+			<div class="mock-list">
+				<b> Description : </b>Gestion du différé.
+			</div>
+			<div class="mock-list">
+				<b>Format : </b>string
+			</div>
+			<div class="mock-list">
+				<b>Valeurs possibles : </b>					<table class="table_enum" class="table_enum" class="table_enum" class="table_enum" class="table_enum" class="table_enum" class="table_enum" class="table_enum" class="table_enum">
+						<tr>
+						<td> U
+						</td>						<td class="td_right"> Capitalisation avec DLU
+						</td>
+						</tr>
+						<tr>
+						<td> R
+						</td>						<td class="td_right"> Réparti
+						</td>
+						</tr>
+						<tr>
+						<td> C
+						</td>						<td class="td_right"> Capital
+						</td>
+						</tr>
+						<tr>
+						<td> I
+						</td>						<td class="td_right"> Echéances intercalaires avec DLU
+						</td>
+						</tr>
+						<tr>
+						<td> P
+						</td>						<td class="td_right"> Capitalisation avec calcul composé
+						</td>
+						</tr>
+						<tr>
+						<td> S
+						</td>						<td class="td_right"> Spécial
+						</td>
+						</tr>
+						<tr>
+						<td> D
+						</td>						<td class="td_right"> Capitalisation avec DLU confirmée
+						</td>
+						</tr>
+						<tr>
+						<td> E
+						</td>						<td class="td_right"> Echéance
+						</td>
+						</tr>
+						<tr>
+						<td> G
+						</td>						<td class="td_right"> Grâce
+						</td>
+						</tr>
+
+					</table>
+
+			</div>
+
+	</div>
+
+</div>
+<div class="detail-column" id="d8" style="display:none">
+	<div class="detail">
+			<div class="mock-list">
+				<b>Nom : </b>deferredAmountDistribution
+			</div>
+			<div class="mock-list">
+				<b>Description : </b>Répartition du différé.
+			</div>
+
+	</div>
+	<div class="detail">
+			<div class="mock-list">
+				<b>Nom : </b> <a href="../types/dosprtCreateLoanFileDeferredAmountDistribution.html">dosprtCreateLoanFileDeferredAmountDistribution</a>
+			</div>
+			<div class="mock-list">
+				<b> Description : </b>Répartition du différé.
+			</div>
+
+	</div>
+
+</div>
+<div class="detail-column" id="d9" style="display:none">
+	<div class="detail">
+			<div class="mock-list">
+				<b>Nom : </b>numberOfInstallments
+			</div>
+			<div class="mock-list">
+				<b>Description : </b>Nombre d'échéances.
+			</div>
+
+	</div>
+	<div class="detail">
+			<div class="mock-list">
+				<b>Nom : </b> <a href="../types/integer.html">integer</a>
+			</div>
+
+	</div>
+
+</div>
+<div class="detail-column" id="d10" style="display:none">
+	<div class="detail">
+			<div class="mock-list">
+				<b>Nom : </b>firstInstallment
+			</div>
+			<div class="mock-list">
+				<b>Description : </b>Première échéance.
+			</div>
+
+	</div>
+	<div class="detail">
+			<div class="mock-list">
+				<b>Nom : </b> <a href="../types/integer.html">integer</a>
+			</div>
+
+	</div>
+
+</div>
+<div class="detail-column" id="d11" style="display:none">
+	<div class="detail">
+			<div class="mock-list">
+				<b>Nom : </b>interestType
+			</div>
+			<div class="mock-list">
+				<b>Description : </b>Type d'intérêts.
+			</div>
+			<div class="mock-list">
+				<b>Commentaire : </b><p>Selon le param&eacute;trage en place pour le type de pr&ecirc;t&nbsp;:</p>
+
+<ul>
+	<li>Si le type d&#39;int&eacute;r&ecirc;ts est obligatoire, alors il doit &ecirc;tre renseign&eacute;.</li>
+	<li>Sinon, s&#39;il n&rsquo;est pas renseign&eacute; alors il est aliment&eacute; avec la valeur par d&eacute;faut (<strong>ind</strong>) d&eacute;finie pour le type de pr&ecirc;t. Cette valeur par d&eacute;faut ne doit pas faire partie de la liste des types d&#39;int&eacute;r&ecirc;ts exclus, telle qu&rsquo;elle est d&eacute;finie dans le param&egrave;tre <strong>CDTTYPINT</strong> en nomenclature <strong>098 </strong>(<strong>Montant x</strong> param&eacute;tr&eacute; &agrave; <strong>0</strong> avec <strong>x</strong> = 1 &agrave; 5 pour taux fixe, index&eacute;, r&eacute;visable, progressif ou n&eacute;goci&eacute;).</li>
+</ul>
+
+<p>Si le param&eacute;trage indique que le champ est non modifiable, alors la valeur du type d&#39;int&eacute;r&ecirc;ts doit &ecirc;tre &eacute;gale &agrave; sa valeur par d&eacute;faut.</p>
+
+			</div>
+
+	</div>
+	<div class="detail">
+			<div class="mock-list">
+				<b>Nom : </b> <a href="../types/interestType.html">interestType</a>
+			</div>
+			<div class="mock-list">
+				<b> Description : </b>Type d¿intérêts.
+			</div>
+			<div class="mock-list">
+				<b>Format : </b>string
+			</div>
+			<div class="mock-list">
+				<b>Valeurs possibles : </b>					<table class="table_enum" class="table_enum" class="table_enum" class="table_enum" class="table_enum">
+						<tr>
+						<td> I
+						</td>						<td class="td_right"> Indexé
+						</td>
+						</tr>
+						<tr>
+						<td> F
+						</td>						<td class="td_right"> Fixe
+						</td>
+						</tr>
+						<tr>
+						<td> N
+						</td>						<td class="td_right"> Négocié
+						</td>
+						</tr>
+						<tr>
+						<td> R
+						</td>						<td class="td_right"> Révisable
+						</td>
+						</tr>
+						<tr>
+						<td> P
+						</td>						<td class="td_right"> Progressif
+						</td>
+						</tr>
+
+					</table>
+
+			</div>
+
+	</div>
+
+</div>
+<div class="detail-column" id="d12" style="display:none">
+	<div class="detail">
+			<div class="mock-list">
+				<b>Nom : </b>interestInformation
+			</div>
+			<div class="mock-list">
+				<b>Description : </b>Informations sur les intérêts.
+			</div>
+
+	</div>
+	<div class="detail">
+			<div class="mock-list">
+				<b>Nom : </b> <a href="../types/dosprtInterestInformation.html">dosprtInterestInformation</a>
+			</div>
+			<div class="mock-list">
+				<b> Description : </b>Informations sur les intérêts d'un dossier de crédit.
+			</div>
+
+	</div>
+
+</div>
+<div class="detail-column" id="d13" style="display:none">
+	<div class="detail">
+			<div class="mock-list">
+				<b>Nom : </b>floatingOrProgressiveRate
+			</div>
+			<div class="mock-list">
+				<b>Description : </b>Taux d'intérêts révisables ou progressifs.
+			</div>
+			<div class="mock-list">
+				<b>Commentaire : </b><p>Par d&eacute;faut,</p>
+
+<ul>
+	<li>Le code du taux de base est recherch&eacute; &agrave; partir de la condition <strong>TBssss </strong>(<strong>ssss</strong> = source de financement) ou <strong>TBPRET</strong> (si non trouv&eacute;), et</li>
+	<li>La marge est recherch&eacute;e &agrave; partir de la condition <strong>VBssss </strong>(<strong>ssss</strong> = source de financement) ou <strong>INTPRI</strong>.</li>
+</ul>
+
+			</div>
+
+	</div>
+	<div class="detail">
+			<div class="mock-list">
+				<b>Nom : </b> <a href="../types/dosprtCreateFloatingOrProgressiveRate.html">dosprtCreateFloatingOrProgressiveRate</a>
+			</div>
+			<div class="mock-list">
+				<b> Description : </b>Taux d'intérêts révisables ou progressifs.
+			</div>
+
+	</div>
+
+</div>
+<div class="detail-column" id="d14" style="display:none">
+	<div class="detail">
+			<div class="mock-list">
+				<b>Nom : </b>reviewMethod
+			</div>
+			<div class="mock-list">
+				<b>Description : </b>Méthode de révision.
+			</div>
+			<div class="mock-list">
+				<b>Commentaire : </b><p>Valeur par d&eacute;faut&nbsp;: <strong>methode</strong></p>
+
+<p>Si le dossier est &agrave; taux r&eacute;visable et que la m&eacute;thode de r&eacute;vision n&rsquo;est pas renseign&eacute;e alors la valeur par d&eacute;faut de la m&eacute;thode est recherch&eacute;e.</p>
+
+<p>Si le dossier est &agrave; taux r&eacute;visable et avec re-calcul de plan en avance,la m&eacute;thode de r&eacute;vision est forc&eacute;ment sur tous les changements (<strong>C</strong>) pour appliquer le nouveau taux &agrave; sa date d&#39;application (non modifiable).</p>
+
+			</div>
+
+	</div>
+	<div class="detail">
+			<div class="mock-list">
+				<b>Nom : </b> <a href="../types/dosprtReviewMethod.html">dosprtReviewMethod</a>
+			</div>
+			<div class="mock-list">
+				<b> Description : </b>Méthode de révision.
+			</div>
+			<div class="mock-list">
+				<b>Format : </b>string
+			</div>
+			<div class="mock-list">
+				<b>Valeurs possibles : </b>					<table class="table_enum" class="table_enum" class="table_enum">
+						<tr>
+						<td> P
+						</td>						<td class="td_right"> Taux à la date de début de période
+						</td>
+						</tr>
+						<tr>
+						<td> R
+						</td>						<td class="td_right"> Taux à la date de révision
+						</td>
+						</tr>
+						<tr>
+						<td> C
+						</td>						<td class="td_right"> Tous les changements
+						</td>
+						</tr>
+
+					</table>
+
+			</div>
+
+	</div>
+
+</div>
+<div class="detail-column" id="d15" style="display:none">
+	<div class="detail">
+			<div class="mock-list">
+				<b>Nom : </b>nextInstallmentIncluded
+			</div>
+			<div class="mock-list">
+				<b>Description : </b>Prochaine échéance incluse.
+			</div>
+			<div class="mock-list">
+				<b>Commentaire : </b><p>Valeur par d&eacute;faut&nbsp;: <strong>revproech</strong></p>
+
+<p>Si le dossier est &agrave; taux r&eacute;visable et que la m&eacute;thode choisie est sur tous les changements&nbsp; (<strong>C</strong>), la prochaine &eacute;ch&eacute;ance incluse&nbsp; est forc&eacute;e &agrave; <strong>TRUE</strong>.</p>
+
+<p>La prochaine &eacute;ch&eacute;ance incluse doit &ecirc;tre &eacute;gale &agrave; <strong>TRUE</strong> si la donn&eacute;e est non modifiable (param&eacute;trage de la valeur par d&eacute;faut), et si le <strong>Libell&eacute; 4</strong> du param&egrave;tre <strong>CDTREVIS</strong> en nomenclature <strong>098</strong> est &eacute;gal &agrave; <strong>P</strong>.</p>
+
+			</div>
+
+	</div>
+	<div class="detail">
+			<div class="mock-list">
+				<b>Nom : </b> <a href="../types/boolean.html">boolean</a>
+			</div>
+
+	</div>
+
+</div>
+<div class="detail-column" id="d16" style="display:none">
+	<div class="detail">
+			<div class="mock-list">
+				<b>Nom : </b>firstReview
+			</div>
+			<div class="mock-list">
+				<b>Description : </b>Date de la première révision.
+			</div>
+			<div class="mock-list">
+				<b>Commentaire : </b><p>La date de la premi&egrave;re r&eacute;vision n&rsquo;est pas modifiable si&nbsp;:</p>
+
+<ul>
+	<li>le mode de gestion de la date de premi&egrave;re &eacute;ch&eacute;ance pour le type de dossier est <strong>M</strong> ou <strong>D</strong> et les dates minimum et maximum de premi&egrave;re r&eacute;vision par d&eacute;faut sont nulles ou &eacute;gales (les dates minimum et maximum de premi&egrave;re r&eacute;vision sont calcul&eacute;es en fonction de la date de mise en place du dossier et de la condition <strong>NBPREV</strong> si le mode de gestion de la date de premi&egrave;re &eacute;ch&eacute;ance pour le type de dossier est <strong>M</strong> ou <strong>D</strong>, sont affect&eacute;es &agrave; NULL sinon) &ndash; ind&eacute;pendamment du <strong>Libell&eacute; 3</strong> du param&egrave;tre <strong>CDTREVIS</strong> en nomenclature <strong>098</strong></li>
+	<li>la m&eacute;thode est Taux &agrave; la date de r&eacute;vision (<strong>R</strong>) et le&nbsp; <strong>Libell&eacute; 1</strong> est &eacute;gal &agrave; <strong>N</strong> du param&egrave;tre <strong>CDTREVIS</strong> en nomenclature <strong>098</strong></li>
+	<li>la m&eacute;thode est Taux &agrave; la date de d&eacute;but de p&eacute;riode (<strong>P</strong>) et le&nbsp; <strong>Libell&eacute; 2</strong> est &eacute;gal &agrave; <strong>N</strong> du param&egrave;tre <strong>CDTREVIS</strong> en nomenclature <strong>098,</strong></li>
+	<li>la m&eacute;thode est Tous les changements (<strong>C</strong>) et le&nbsp; <strong>Libell&eacute; 3</strong> est &eacute;gal &agrave; <strong>N</strong> du param&egrave;tre <strong>CDTREVIS</strong> en nomenclature <strong>098</strong></li>
+</ul>
+
+<p>Dans ce cas,</p>
+
+<ul>
+	<li>si la m&eacute;thode de r&eacute;vision est Taux &agrave; la date de d&eacute;but de p&eacute;riode (<strong>P</strong>) et que le <strong>Libell&eacute; 4</strong> du param&egrave;tre <strong>CDTREVIS</strong> en nomenclature <strong>098</strong> est &eacute;gal &agrave; <strong>O</strong>, la date de premi&egrave;re r&eacute;vision est affect&eacute;e &agrave; la date de mise en place du dossier (ou premier jour ouvr&eacute; suivant),</li>
+	<li>sinon, si la date de premi&egrave;re &eacute;ch&eacute;ance du dossier n&#39;est pas nulle et que la m&eacute;thode de gestion du diff&eacute;r&eacute; est ni&nbsp;&nbsp; Ech&eacute;ance (<strong>E</strong>), ni Sp&eacute;cial (<strong>S</strong>) et ni Ech&eacute;ances intercalaires avec date limite d&rsquo;utilisation (<strong>I</strong>), alors la date de premi&egrave;re r&eacute;vision est affect&eacute;e &agrave; la date de premi&egrave;re &eacute;ch&eacute;ance.</li>
+	<li>Dans tous les autres cas, elle est initailis&eacute;e nulle</li>
+</ul>
+
+<p>Dans le cas o&ugrave; la date de premi&egrave;re r&eacute;vision est modifiable :</p>
+
+<ul>
+	<li>Si&nbsp; la date de premi&egrave;re r&eacute;vision n&rsquo;est pas renseign&eacute;e, que le dossier est avec taux r&eacute;visable et que le mode de gestion de la date de premi&egrave;re &eacute;ch&eacute;ance pour le type de dossier est <strong>D</strong>, alors la date de premi&egrave;re r&eacute;vison est affect&eacute;e &agrave; la date de premi&egrave;re &eacute;ch&eacute;ance.</li>
+	<li>La date de premi&egrave;re r&eacute;vision doit &ecirc;tre sup&eacute;rieure ou &eacute;gale &agrave; la date de mise en place du dossier.</li>
+	<li>Si le mode de gestion de la date de premi&egrave;re &eacute;ch&eacute;ance pour le type de dossier est <strong>D</strong> ou <strong>M</strong>, alors la date de premi&egrave;re r&eacute;vision doit &ecirc;tre comprise dans les bornes minimum et maximum param&eacute;tr&eacute;es dans la condition <strong>NBPREV</strong>.</li>
+</ul>
+
+			</div>
+
+	</div>
+	<div class="detail">
+			<div class="mock-list">
+				<b>Nom : </b> <a href="../types/date.html">date</a>
+			</div>
+
+	</div>
+
+</div>
+<div class="detail-column" id="d17" style="display:none">
+	<div class="detail">
+			<div class="mock-list">
+				<b>Nom : </b>lastReview
+			</div>
+			<div class="mock-list">
+				<b>Description : </b>Date de la dernière révision.
+			</div>
+			<div class="mock-list">
+				<b>Commentaire : </b><p>La date de la derni&egrave;re r&eacute;vision n&rsquo;est pas modifiable si&nbsp;:</p>
+
+<ul>
+	<li>la m&eacute;thode est Taux &agrave; la date de r&eacute;vision (<strong>R</strong>) et le&nbsp; <strong>Libell&eacute; 1</strong> est &eacute;gal &agrave; <strong>N</strong> du param&egrave;tre <strong>CDTREVIS</strong> en nomenclature <strong>098</strong></li>
+	<li>la m&eacute;thode est Taux &agrave; la date de d&eacute;but de p&eacute;riode (<strong>P</strong>) et le&nbsp; <strong>Libell&eacute; 2</strong> est &eacute;gal &agrave; <strong>N</strong> du param&egrave;tre <strong>CDTREVIS</strong> en nomenclature <strong>098,</strong></li>
+	<li>la m&eacute;thode est Tous les changements (<strong>C</strong>) et le&nbsp; <strong>Libell&eacute; 3</strong> est &eacute;gal &agrave; <strong>N</strong> du param&egrave;tre <strong>CDTREVIS</strong> en nomenclature <strong>098</strong></li>
+</ul>
+
+<p>Dans ce cas, elle est affect&eacute;e avec la date de derni&egrave;re &eacute;ch&eacute;ance si elle existe.</p>
+
+<p>Dans le cas o&ugrave; la date de derni&egrave;re r&eacute;vision est modifable, elle doit &ecirc;tre&nbsp;:</p>
+
+<ul>
+	<li>renseign&eacute;e si la date de premi&egrave;re r&eacute;vision est renseign&eacute;e,</li>
+	<li>sup&eacute;rieure ou &eacute;gale &agrave; la date de premi&egrave;re r&eacute;vision,</li>
+	<li>inf&eacute;rieure ou &eacute;gale &agrave; la date de derni&egrave;re &eacute;ch&eacute;ance du dossier.</li>
+</ul>
+
+			</div>
+
+	</div>
+	<div class="detail">
+			<div class="mock-list">
+				<b>Nom : </b> <a href="../types/date.html">date</a>
+			</div>
+
+	</div>
+
+</div>
+<div class="detail-column" id="d18" style="display:none">
+	<div class="detail">
+			<div class="mock-list">
+				<b>Nom : </b>reviewFrequency
+			</div>
+			<div class="mock-list">
+				<b>Description : </b>Périodicité de révisions
+			</div>
+
+	</div>
+	<div class="detail">
+			<div class="mock-list">
+				<b>Nom : </b> <a href="../types/dosprtDetailReviewPeriodicityType.html">dosprtDetailReviewPeriodicityType</a>
+			</div>
+			<div class="mock-list">
+				<b> Description : </b>Ce type définit le détail de la périodicité d'une révision
+			</div>
+			<div class="mock-list">
+				<b>Format : </b>integer
+			</div>
+			<div class="mock-list">
+				<b>Min-max inclusive : </b>0 - 999
+			</div>
+
+	</div>
+
+</div>
+<div class="detail-column" id="d19" style="display:none">
+	<div class="detail">
+			<div class="mock-list">
+				<b>Nom : </b>minimumVariation
+			</div>
+			<div class="mock-list">
+				<b>Description : </b>Minimum de variation.
+			</div>
+			<div class="mock-list">
+				<b>Commentaire : </b><p>Le minimum de variation ne doit pas &ecirc;tre renseign&eacute; pour un dossier avec taux r&eacute;visable et un dossier avec marge variable.</p>
+
+<p>Dans ce cas, s&rsquo;il n&rsquo;est pas renseign&eacute;, le&nbsp; minimum de variation est affect&eacute; avec le seuil de la condition <strong>REVMIN</strong> ou &agrave; <strong>0</strong> si la condition n&rsquo;est pas&nbsp; param&eacute;tr&eacute;e.</p>
+
+<p>La valeur renseign&eacute;e doit &ecirc;tre comprise dans les bornes minimum et maximum&nbsp; param&eacute;tr&eacute;es dans&nbsp; la condition <strong>REVMIN</strong> ou entre <strong>0</strong> et <strong>999,999999</strong> si la condition n&rsquo;est pas&nbsp; param&eacute;tr&eacute;e.</p>
+
+			</div>
+
+	</div>
+	<div class="detail">
+			<div class="mock-list">
+				<b>Nom : </b> <a href="../types/decimal9_6.html">decimal9_6</a>
+			</div>
+			<div class="mock-list">
+				<b> Description : </b>Type décimal à 9 chiffres dont 6 décimales.
+			</div>
+			<div class="mock-list">
+				<b>Format : </b>decimal
+			</div>
+			<div class="mock-list">
+				<b>Nombre total de chiffres : </b>9
+			</div>
+
+	</div>
+
+</div>
+<div class="detail-column" id="d20" style="display:none">
+	<div class="detail">
+			<div class="mock-list">
+				<b>Nom : </b>minimumRate
+			</div>
+			<div class="mock-list">
+				<b>Description : </b>Taux minimum.
+			</div>
+			<div class="mock-list">
+				<b>Commentaire : </b><p>Le taux minimum ne peut &ecirc;tre renseign&eacute; que pour un dossier avec marge variable ou un dossier avec taux r&eacute;visable.</p>
+
+<p>Dans ce cas, s&rsquo;il n&rsquo;est pas renseign&eacute;, le taux&nbsp; minimum est affect&eacute; avec la borne minimum de&nbsp; la condition <strong>TAUMIN</strong> ou &agrave; <strong>0</strong> si la condition n&rsquo;est pas&nbsp; param&eacute;tr&eacute;e.</p>
+
+			</div>
+
+	</div>
+	<div class="detail">
+			<div class="mock-list">
+				<b>Nom : </b> <a href="../types/decimal9_6.html">decimal9_6</a>
+			</div>
+			<div class="mock-list">
+				<b> Description : </b>Type décimal à 9 chiffres dont 6 décimales.
+			</div>
+			<div class="mock-list">
+				<b>Format : </b>decimal
+			</div>
+			<div class="mock-list">
+				<b>Nombre total de chiffres : </b>9
+			</div>
+
+	</div>
+
+</div>
+<div class="detail-column" id="d21" style="display:none">
+	<div class="detail">
+			<div class="mock-list">
+				<b>Nom : </b>maximumRate
+			</div>
+			<div class="mock-list">
+				<b>Description : </b>Taux maximum.
+			</div>
+			<div class="mock-list">
+				<b>Commentaire : </b><p>Le taux maximum ne peut &ecirc;tre renseign&eacute; que pour un dossier avec&nbsp; marge variable ou un dossier avec taux r&eacute;visable.</p>
+
+<p>Dans ce cas, s&rsquo;il n&rsquo;est pas renseign&eacute;, le taux&nbsp; maximum est affect&eacute; avec la borne maximum de&nbsp; la condition <strong>TAUMAX</strong> ou &agrave; <strong>999,999999</strong> si la condition n&rsquo;est pas param&eacute;tr&eacute;e.</p>
+
+			</div>
+
+	</div>
+	<div class="detail">
+			<div class="mock-list">
+				<b>Nom : </b> <a href="../types/decimal9_6.html">decimal9_6</a>
+			</div>
+			<div class="mock-list">
+				<b> Description : </b>Type décimal à 9 chiffres dont 6 décimales.
+			</div>
+			<div class="mock-list">
+				<b>Format : </b>decimal
+			</div>
+			<div class="mock-list">
+				<b>Nombre total de chiffres : </b>9
+			</div>
+
+	</div>
+
+</div>
+<div class="detail-column" id="d22" style="display:none">
+	<div class="detail">
+			<div class="mock-list">
+				<b>Nom : </b>minimumMargin
+			</div>
+			<div class="mock-list">
+				<b>Description : </b>Marge minimum.
+			</div>
+			<div class="mock-list">
+				<b>Commentaire : </b><p>La marge minimum ne peut &ecirc;tre renseign&eacute;e que pour un dossier avec&nbsp; marge variable et avec taux r&eacute;visable.</p>
+
+<p>Dans ce cas, si elle n&rsquo;est pas renseign&eacute;e alors la marge minimum est affect&eacute;e avec la valeur minimale de&nbsp; la condition <strong>MSGMIN</strong> pour le client de remboursement (s&rsquo;il est renseign&eacute; ou si le <strong>Montant 1</strong> du&nbsp; param&egrave;tre <strong>SGPARTNER</strong> en nomenclature <strong>098</strong>&nbsp; est &eacute;gal &agrave; <strong>1</strong>) ou pour le client du dossier.</p>
+
+			</div>
+
+	</div>
+	<div class="detail">
+			<div class="mock-list">
+				<b>Nom : </b> <a href="../types/decimal9_6.html">decimal9_6</a>
+			</div>
+			<div class="mock-list">
+				<b> Description : </b>Type décimal à 9 chiffres dont 6 décimales.
+			</div>
+			<div class="mock-list">
+				<b>Format : </b>decimal
+			</div>
+			<div class="mock-list">
+				<b>Nombre total de chiffres : </b>9
+			</div>
+
+	</div>
+
+</div>
+<div class="detail-column" id="d23" style="display:none">
+	<div class="detail">
+			<div class="mock-list">
+				<b>Nom : </b>maximumMargin
+			</div>
+			<div class="mock-list">
+				<b>Description : </b>Marge maximum.
+			</div>
+			<div class="mock-list">
+				<b>Commentaire : </b><p>La marge maximum ne peut &ecirc;tre renseign&eacute;e que si&nbsp; le dossier est avec marge variable et taux r&eacute;visable.</p>
+
+<p>Dans ce cas, si elle n&rsquo;est pas renseign&eacute;e alors la marge maximum est affect&eacute;e avec la valeur maximale de&nbsp; la condition <strong>MSGMAX</strong> pour le client de remboursement (s&rsquo;il est renseign&eacute; ou si le <strong>Montant 1</strong> du&nbsp; param&egrave;tre <strong>SGPARTNER</strong> en nomenclature <strong>098</strong>&nbsp; est &eacute;gal &agrave; <strong>1</strong>) ou pour le client du dossier.</p>
+
+			</div>
+
+	</div>
+	<div class="detail">
+			<div class="mock-list">
+				<b>Nom : </b> <a href="../types/decimal9_6.html">decimal9_6</a>
+			</div>
+			<div class="mock-list">
+				<b> Description : </b>Type décimal à 9 chiffres dont 6 décimales.
+			</div>
+			<div class="mock-list">
+				<b>Format : </b>decimal
+			</div>
+			<div class="mock-list">
+				<b>Nombre total de chiffres : </b>9
+			</div>
+
+	</div>
+
+</div>
+<div class="detail-column" id="d24" style="display:none">
+	<div class="detail">
+			<div class="mock-list">
+				<b>Nom : </b>numberOfMonthsForMinimumMargin
+			</div>
+			<div class="mock-list">
+				<b>Description : </b>Nombre de mois pour l'application de la marge minimum.
+			</div>
+			<div class="mock-list">
+				<b>Commentaire : </b><p>Si le nombre de mois pour l&rsquo;application de la marge minimum n&rsquo;est pas renseign&eacute;, alors si le dossier est avec taux r&eacute;visable et avec marge variable, le nombre de mois pour l&rsquo;application de la marge minimum est affect&eacute; avec le nombre param&eacute;tr&eacute; dans la condition <strong>NBMVTB</strong>.</p>
+
+<p>Le nombre de mois pour l&rsquo;application de la marge minimum doit &ecirc;tre compris dans les bornes minimum et maximum param&eacute;tr&eacute;es dans la condition <strong>NBMVTB</strong>.</p>
+
+			</div>
+
+	</div>
+	<div class="detail">
+			<div class="mock-list">
+				<b>Nom : </b> <a href="../types/decimal2_0.html">decimal2_0</a>
+			</div>
+			<div class="mock-list">
+				<b> Description : </b>Type décimal à 2 chiffres dont 0 décimales.
+			</div>
+			<div class="mock-list">
+				<b>Format : </b>decimal
+			</div>
+			<div class="mock-list">
+				<b>Nombre total de chiffres : </b>2
+			</div>
+
+	</div>
+
+</div>
+<div class="detail-column" id="d25" style="display:none">
+	<div class="detail">
+			<div class="mock-list">
+				<b>Nom : </b>reviewCode
+			</div>
+			<div class="mock-list">
+				<b>Description : </b>Code de révision.
+			</div>
+			<div class="mock-list">
+				<b>Commentaire : </b><p>Le fait de renseigner un code de r&eacute;vision implique que le tableau de progression des int&eacute;r&ecirc;ts va &ecirc;tre calcul&eacute; automatiquement.</p>
+
+<p>Les donn&eacute;es du tableau de progression des int&eacute;r&ecirc;ts ne doivent donc pas &ecirc;tre renseign&eacute;es dans ce cas.</p>
+
+<p>Si ni le code de r&eacute;vision, ni le tableau de progression des int&eacute;r&ecirc;ts sont renseign&eacute;s, le code de r&eacute;vision sera affect&eacute; par d&eacute;faut avec un code de r&eacute;vision du type de pr&ecirc;t (un code de r&eacute;vision dont le(s) code(s) de taux de base li&eacute;(s) au code de r&eacute;vision sont coh&eacute;rents avec la devise du dossier).</p>
+
+<p>Le code de r&eacute;vision renseign&eacute; doit exister&nbsp;:</p>
+
+<ul>
+	<li>dans la table des codes pour les taux d&rsquo;int&eacute;r&ecirc;ts r&eacute;visables associ&eacute;s au type de pr&ecirc;t (soit au niveau de l&#39;agence du dossier soit au niveau du site central),</li>
+	<li>dans la table des ent&ecirc;tes des codes de taux pour les int&eacute;r&ecirc;ts r&eacute;visables.</li>
+</ul>
+
+<p>Le d&eacute;tail du code r&eacute;vision doit &ecirc;tre param&eacute;tr&eacute; dans la table du d&eacute;tail des lignes des taux. Un code taux, taux de base, doit exister dans au moins un enregistrement de cette table parmi tous les enregistrements existants pour le code r&eacute;vision.</p>
+
+<p>Ce code de taux de base doit &eacute;galement exister pour la devise du pr&ecirc;t et le type de pr&ecirc;t, dans la table des codes de taux de base li&eacute;s &agrave; un type et une devise.</p>
+
+			</div>
+
+	</div>
+	<div class="detail">
+			<div class="mock-list">
+				<b>Nom : </b> <a href="../types/char4.html">char4</a>
+			</div>
+			<div class="mock-list">
+				<b> Description : </b>Type avec un nombre de caractères égal à 4.
+			</div>
+			<div class="mock-list">
+				<b>Format : </b>string
+			</div>
+			<div class="mock-list">
+				<b>Longueur fixe : </b>4
+			</div>
+
+	</div>
+
+</div>
+<div class="detail-column" id="d26" style="display:none">
+	<div class="detail">
+			<div class="mock-list">
+				<b>Nom : </b>progressionOfInterests
+			</div>
+			<div class="mock-list">
+				<b>Description : </b>Tableau de progression des intérêts.
+			</div>
+			<div class="mock-list">
+				<b>Commentaire : </b><p>Le tableau de progression des int&eacute;r&ecirc;ts sera ignor&eacute; si le code de r&eacute;vison est renseign&eacute; et valide.</p>
+
+			</div>
+
+	</div>
+	<div class="detail">
+			<div class="mock-list">
+				<b>Nom : </b> <a href="../types/dosprtProgressionOfInterests.html">dosprtProgressionOfInterests</a>
+			</div>
+			<div class="mock-list">
+				<b> Description : </b>Tableau de progression des intérêts.
+			</div>
+
+	</div>
+
+</div>
+<div class="detail-column" id="d27" style="display:none">
+	<div class="detail">
+			<div class="mock-list">
+				<b>Nom : </b>rateChange
+			</div>
+			<div class="mock-list">
+				<b>Description : </b>Changement de taux.
+			</div>
+			<div class="mock-list">
+				<b>Limite du nombre d'occurences mini-maxi : </b>aucune aucune
+			</div>
+
+	</div>
+	<div class="detail">
+			<div class="mock-list">
+				<b>Nom : </b> <a href="../types/dosprtFloatingOrProgressiveRateChange.html">dosprtFloatingOrProgressiveRateChange</a>
+			</div>
+			<div class="mock-list">
+				<b> Description : </b>Détail d'un changement de taux progressif ou révisable.
+			</div>
+
+	</div>
+
+</div>
+<div class="detail-column" id="d28" style="display:none">
+	<div class="detail">
+			<div class="mock-list">
+				<b>Nom : </b>applicationDate
+			</div>
+			<div class="mock-list">
+				<b>Description : </b>Date d'application du taux.
+			</div>
+			<div class="mock-list">
+				<b>Commentaire : </b><p>La premi&egrave;re date d&rsquo;application du taux&nbsp; (la date la plus ancienne parmi toutes les lignes de r&eacute;vision &agrave; traiter) doit &ecirc;tre &eacute;gale &agrave; la date de mise en place du dossier.</p>
+
+<p>La date d&rsquo;application du taux doit &ecirc;tre sup&eacute;rieure strictement &agrave; la date d&rsquo;application du taux pr&eacute;c&eacute;dent (&agrave; partir de la&nbsp; 2<sup>&egrave;me</sup> ligne du tableau).</p>
+
+<p>La date d&rsquo;application du taux doit &ecirc;tre sup&eacute;rieure ou &eacute;gale &agrave; la date comptable.</p>
+
+<p>La date d&rsquo;application du taux doit &ecirc;tre inf&eacute;rieure ou &eacute;gale &agrave; la date de derni&egrave;re r&eacute;vision.</p>
+
+			</div>
+
+	</div>
+	<div class="detail">
+			<div class="mock-list">
+				<b>Nom : </b> <a href="../types/date.html">date</a>
+			</div>
+
+	</div>
+
+</div>
+<div class="detail-column" id="d29" style="display:none">
+	<div class="detail">
+			<div class="mock-list">
+				<b>Nom : </b>baseRate
+			</div>
+			<div class="mock-list">
+				<b>Description : </b>Code du taux de base.
+			</div>
+			<div class="mock-list">
+				<b>Commentaire : </b><p>Pour la r&eacute;vision, soit le code du taux de base, soit un taux fixe doit &ecirc;tre renseign&eacute;.</p>
+
+<p>Pour la premi&egrave;re r&eacute;vision de taux renseign&eacute;e (celle dont la date d&#39;application est &eacute;gale &agrave; la date de mise en place du dossier), si ni le code du taux de base n&rsquo;est renseign&eacute; ni le taux fixe, alors le code du taux de base sera affect&eacute; par d&eacute;faut avec le code param&eacute;tr&eacute; pour la condition <strong>TBPRET</strong>.</p>
+
+<p>Si un code du taux de base est modifi&eacute; mais que le niveau de for&ccedil;age de l&#39;utilisateur ne lui permet pas de le modifier par rapport au niveau de for&ccedil;age param&eacute;tr&eacute; pour le type de pr&ecirc;t, alors le code du taux de base sera affect&eacute; avec celui par d&eacute;faut.</p>
+
+<p>Si le code du taux de base n&rsquo;est pas g&eacute;r&eacute; par condition (<strong>Libell&eacute; 2</strong> &eacute;gal &agrave; <strong>N</strong> dans le param&egrave;tre <strong>CDTPAR2</strong> en nomenclature <strong>098</strong>) alors le code du taux de base doit &ecirc;tre autoris&eacute; parmi une liste de codes possibles en fonction de la devise et du type de cr&eacute;dit (dans la table des ent&ecirc;tes des taux de base et dans la table des codes des taux li&eacute;s &agrave; un type de pr&ecirc;t et une devise).</p>
+
+<p>Sinon, le code du taux de base doit exister uniquement dans la table des ent&ecirc;tes des taux de base.</p>
+
+<p>Si la gestion des tranches de maturit&eacute; est activ&eacute;e (param&eacute;trage des tranches en nomenclature <strong>156</strong>), alors le code maturit&eacute; du taux de base doit &ecirc;tre &eacute;gal au code maturit&eacute; du dossier.</p>
+
+<p>Si le code du taux de base est renseign&eacute; :</p>
+
+<ul>
+	<li>Si le <strong>Montant 4</strong> du param&egrave;tre <strong>CDTREVIS</strong> en nomenclature <strong>098</strong> est &eacute;gal &agrave; <strong>1</strong>, alors la marge ne doit pas &ecirc;tre renseign&eacute;e mais uniquement le taux final (la valeur de la marge est alors calcul&eacute;e par diff&eacute;rence entre le taux final et la valeur du taux de base)</li>
+	<li>Si le <strong>Montant 4</strong> du param&egrave;tre <strong>CDTREVIS</strong> en nomenclature <strong>098</strong> vaut <strong>0</strong> ou <strong>NULL</strong>, alors le taux final ne doit pas &ecirc;tre renseign&eacute; mais uniquement la marge (a valeur du taux final est alors calcul&eacute;e par addition entre la valeur du taux de base et la marge)</li>
+</ul>
+
+<p>Si le code du taux de base n&#39;est pas renseign&eacute;, alors ni la marge ni le taux final ne doivent &ecirc;tre renseign&eacute;s. Seul le taux fixe doit &ecirc;tre aliment&eacute;.</p>
+
+			</div>
+
+	</div>
+	<div class="detail">
+			<div class="mock-list">
+				<b>Nom : </b> <a href="../types/char3.html">char3</a>
+			</div>
+			<div class="mock-list">
+				<b> Description : </b>Type avec un nombre de caractères égal à 3.
+			</div>
+			<div class="mock-list">
+				<b>Format : </b>string
+			</div>
+			<div class="mock-list">
+				<b>Longueur fixe : </b>3
+			</div>
+
+	</div>
+
+</div>
+<div class="detail-column" id="d30" style="display:none">
+	<div class="detail">
+			<div class="mock-list">
+				<b>Nom : </b>margin
+			</div>
+			<div class="mock-list">
+				<b>Description : </b>Marge.
+			</div>
+			<div class="mock-list">
+				<b>Commentaire : </b><p>La marge ne doit &ecirc;tre renseign&eacute;e que si le taux de base est renseign&eacute; pour la r&eacute;vison et que la marge est autoris&eacute;e (<strong>Montant 4</strong> du param&egrave;tre <strong>CDTREVIS</strong> en nomenclature <strong>098</strong> diff&eacute;rent de <strong>1</strong>).</p>
+
+<p>Si la marge peut &ecirc;tre renseign&eacute;e mais qu&rsquo;elle ne l&rsquo;est pas, alors elle est affect&eacute;e &agrave; la valeur&nbsp; de la condition <strong>VTBPRG</strong>.</p>
+
+<p>Si le dossier est avec marge variable et type d&#39;int&eacute;r&ecirc;ts r&eacute;visables alors la marge est forc&eacute;e &agrave; <strong>0</strong>.</p>
+
+<p>La marge doit &ecirc;tre comprise dans les bornes minimum et maximum param&eacute;tr&eacute;es dans la condition <strong>VTBPRG</strong>.</p>
+
+<p>Le taux final est alors calcul&eacute; automatiquement. Et il doit &ecirc;tre&nbsp;:</p>
+
+<ul>
+	<li>Sup&eacute;rieur ou &eacute;gal au taux de r&eacute;vision minimum,</li>
+	<li>Inf&eacute;rieur ou &eacute;gal au taux de r&eacute;vision maximum.</li>
+</ul>
+
+			</div>
+
+	</div>
+	<div class="detail">
+			<div class="mock-list">
+				<b>Nom : </b> <a href="../types/decimal9_6.html">decimal9_6</a>
+			</div>
+			<div class="mock-list">
+				<b> Description : </b>Type décimal à 9 chiffres dont 6 décimales.
+			</div>
+			<div class="mock-list">
+				<b>Format : </b>decimal
+			</div>
+			<div class="mock-list">
+				<b>Nombre total de chiffres : </b>9
+			</div>
+
+	</div>
+
+</div>
+<div class="detail-column" id="d31" style="display:none">
+	<div class="detail">
+			<div class="mock-list">
+				<b>Nom : </b>finalRate
+			</div>
+			<div class="mock-list">
+				<b>Description : </b>Taux final.
+			</div>
+			<div class="mock-list">
+				<b>Commentaire : </b><p>Le taux final ne peut &ecirc;tre renseign&eacute; que si le taux de base est renseign&eacute;.</p>
+
+<p>Il doit &ecirc;tre renseign&eacute; si la marge n&rsquo;est pas renseign&eacute;e.</p>
+
+<p>Le taux final doit &ecirc;tre&nbsp;:</p>
+
+<ul>
+	<li>Sup&eacute;rieur ou &eacute;gal au taux de r&eacute;vision miniimum,</li>
+	<li>Inf&eacute;rieur ou &eacute;gal au taux de r&eacute;vision maximum.</li>
+</ul>
+
+<p>La marge est alors calcul&eacute;e automatiquement et doit &ecirc;tre comprise dans les bornes minimum et maximum param&eacute;tr&eacute;es dans la condition <strong>VTBPRG</strong>.</p>
+
+			</div>
+
+	</div>
+	<div class="detail">
+			<div class="mock-list">
+				<b>Nom : </b> <a href="../types/decimal9_6.html">decimal9_6</a>
+			</div>
+			<div class="mock-list">
+				<b> Description : </b>Type décimal à 9 chiffres dont 6 décimales.
+			</div>
+			<div class="mock-list">
+				<b>Format : </b>decimal
+			</div>
+			<div class="mock-list">
+				<b>Nombre total de chiffres : </b>9
+			</div>
+
+	</div>
+
+</div>
+<div class="detail-column" id="d32" style="display:none">
+	<div class="detail">
+			<div class="mock-list">
+				<b>Nom : </b>fixRate
+			</div>
+			<div class="mock-list">
+				<b>Description : </b>Taux fixe.
+			</div>
+			<div class="mock-list">
+				<b>Commentaire : </b><p>Pour la r&eacute;vison, soit le code du taux de base, soit le taux fixe doit &ecirc;tre renseign&eacute;.</p>
+
+<p>S&rsquo;il est renseign&eacute;, le taux fixe doit &ecirc;tre compris dans les bornes minimum et maximum param&eacute;tr&eacute;es dans la condition <strong>INssss </strong>(<strong>ssss</strong> = source de financement) ou&nbsp; <strong>INTttt </strong>(<strong>ttt</strong> = type de pr&ecirc;t) ou <strong>INTPRT</strong>.</p>
+
+			</div>
+
+	</div>
+	<div class="detail">
+			<div class="mock-list">
+				<b>Nom : </b> <a href="../types/decimal9_6.html">decimal9_6</a>
+			</div>
+			<div class="mock-list">
+				<b> Description : </b>Type décimal à 9 chiffres dont 6 décimales.
+			</div>
+			<div class="mock-list">
+				<b>Format : </b>decimal
+			</div>
+			<div class="mock-list">
+				<b>Nombre total de chiffres : </b>9
+			</div>
+
+	</div>
+
+</div>
+<div class="detail-column" id="d33" style="display:none">
+	<div class="detail">
+			<div class="mock-list">
+				<b>Nom : </b>indexedRate
+			</div>
+			<div class="mock-list">
+				<b>Description : </b>Taux d'intérêts indexés.
+			</div>
+
+	</div>
+	<div class="detail">
+			<div class="mock-list">
+				<b>Nom : </b> <a href="../types/dosprtCreateIndexedRate.html">dosprtCreateIndexedRate</a>
+			</div>
+			<div class="mock-list">
+				<b> Description : </b>Taux d'intérêts indexés.
+			</div>
+
+	</div>
+
+</div>
+<div class="detail-column" id="d34" style="display:none">
+	<div class="detail">
+			<div class="mock-list">
+				<b>Nom : </b>baseRateCode
+			</div>
+			<div class="mock-list">
+				<b>Description : </b>Code du taux de base.
+			</div>
+			<div class="mock-list">
+				<b>Commentaire : </b><p>Le code du taux de base ne doit &ecirc;tre renseign&eacute; que dans le cas d&#39;un taux index&eacute; et dans le cas o&ugrave; la gestion des codes de taux de base ne se fait pas par le biais de conditions (le <strong>Libell&eacute; 2</strong> du param&egrave;tre <strong>CDTPAR2</strong> doit &ecirc;tre &eacute;gal &agrave; <strong>O</strong>).</p>
+
+<p>Le code du taux de base renseign&eacute; doit&nbsp;:</p>
+
+<ul>
+	<li>exister dans la table des taux de base,</li>
+	<li>&ecirc;tre autoris&eacute; pour le type de pr&ecirc;t et la devise du pr&ecirc;t.</li>
+</ul>
+
+<p>Si aucun code de taux de base n&#39;est renseign&eacute; en entr&eacute;e, alors le code du taux de base param&eacute;tr&eacute; pour le type et la devise du pr&ecirc;t est affect&eacute; par d&eacute;faut s&rsquo;il est unique, sinon la saisie du taux de base est obligatoire.</p>
+
+			</div>
+
+	</div>
+	<div class="detail">
+			<div class="mock-list">
+				<b>Nom : </b> <a href="../types/loanBaseRateCode.html">loanBaseRateCode</a>
+			</div>
+			<div class="mock-list">
+				<b> Description : </b>Code du taux de base.
+			</div>
+			<div class="mock-list">
+				<b>Format : </b>string
+			</div>
+			<div class="mock-list">
+				<b>Longueur fixe : </b>3
+			</div>
+
+	</div>
+
+</div>
+<div class="detail-column" id="d35" style="display:none">
+	<div class="detail">
+			<div class="mock-list">
+				<b>Nom : </b>marginValue
+			</div>
+			<div class="mock-list">
+				<b>Description : </b>Valeur de la marge.
+			</div>
+			<div class="mock-list">
+				<b>Commentaire : </b><p>La valeur de la marge peut &ecirc;tre renseign&eacute;e uniquement si elle est saisissable (<strong>Libell&eacute; 2</strong> du param&egrave;tre <strong>PRET</strong> en nomenclature <strong>098 </strong>&eacute;gal &agrave; <strong>O</strong>). Si le taux est index&eacute;, alors le taux d&rsquo;int&eacute;r&ecirc;ts final est automatiquement recalcul&eacute; en fonction de la marge renseign&eacute;e et du taux de base recherch&eacute; &agrave; partir du code de taux de base lu dans la condition <strong>TBssss </strong>(<strong>ssss</strong> = source de financement) ou &agrave; d&eacute;faut <strong>TBPRET</strong>.</p>
+
+<p>Si la valeur de la marge ne peut pas &ecirc;tre renseign&eacute;e (<strong>Libell&eacute; 2</strong> du param&egrave;tre <strong>PRET</strong> en nomenclature <strong>098 </strong>&eacute;gal &agrave; <strong>N</strong>), alors elle est positionn&eacute;e &agrave; la valeur de la condition <strong>VBssss </strong>(<strong>ssss</strong> = source de financement) ou &agrave; d&eacute;faut <strong>INTPRI</strong>.</p>
+
+			</div>
+
+	</div>
+	<div class="detail">
+			<div class="mock-list">
+				<b>Nom : </b> <a href="../types/decimal8_6.html">decimal8_6</a>
+			</div>
+			<div class="mock-list">
+				<b> Description : </b>Type décimal à 8 chiffres dont 6 décimales.
+			</div>
+			<div class="mock-list">
+				<b>Format : </b>decimal
+			</div>
+			<div class="mock-list">
+				<b>Nombre total de chiffres : </b>8
+			</div>
+
+	</div>
+
+</div>
+<div class="detail-column" id="d36" style="display:none">
+	<div class="detail">
+			<div class="mock-list">
+				<b>Nom : </b>negociatedRate
+			</div>
+			<div class="mock-list">
+				<b>Description : </b>Taux d'intérêts négociés.
+			</div>
+
+	</div>
+	<div class="detail">
+			<div class="mock-list">
+				<b>Nom : </b> <a href="../types/dosprtCreateNegociatedRate.html">dosprtCreateNegociatedRate</a>
+			</div>
+			<div class="mock-list">
+				<b> Description : </b>Taux d'intérêts négociés.
+			</div>
+
+	</div>
+
+</div>
+<div class="detail-column" id="d37" style="display:none">
+	<div class="detail">
+			<div class="mock-list">
+				<b>Nom : </b>effectiveDate
+			</div>
+			<div class="mock-list">
+				<b>Description : </b>Date d¿effet du taux.
+			</div>
+			<div class="mock-list">
+				<b>Commentaire : </b><p>La date d&rsquo;effet du taux doit &ecirc;tre &eacute;gale &agrave; la date de mise en place du dossier.</p>
+
+			</div>
+
+	</div>
+	<div class="detail">
+			<div class="mock-list">
+				<b>Nom : </b> <a href="../types/date.html">date</a>
+			</div>
+
+	</div>
+
+</div>
+<div class="detail-column" id="d38" style="display:none">
+	<div class="detail">
+			<div class="mock-list">
+				<b>Nom : </b>rateValue
+			</div>
+			<div class="mock-list">
+				<b>Description : </b>Valeur du taux.
+			</div>
+			<div class="mock-list">
+				<b>Commentaire : </b><p>Si la valeur du taux n&rsquo;est pas&nbsp; renseign&eacute;e, elle est affect&eacute;e avec la valeur de la condition <strong>INNttt</strong> o&ugrave; <strong>ttt</strong> correspond au code du type de pr&ecirc;t ou <strong>INNPRT</strong>.</p>
+
+<p>La valeur du taux doit &ecirc;tre comprise dans les bornes minimum et maximum param&eacute;tr&eacute;es dans la condition<strong> INNttt</strong> o&ugrave; <strong>ttt</strong> correspond au code du type de pr&ecirc;t ou <strong>INNPRT</strong>.</p>
+
+<p>La somme des valeurs du taux&nbsp;et de la marge doit &ecirc;tre diff&eacute;rente de <strong>0</strong>.</p>
+
+			</div>
+
+	</div>
+	<div class="detail">
+			<div class="mock-list">
+				<b>Nom : </b> <a href="../types/decimal9_6.html">decimal9_6</a>
+			</div>
+			<div class="mock-list">
+				<b> Description : </b>Type décimal à 9 chiffres dont 6 décimales.
+			</div>
+			<div class="mock-list">
+				<b>Format : </b>decimal
+			</div>
+			<div class="mock-list">
+				<b>Nombre total de chiffres : </b>9
+			</div>
+
+	</div>
+
+</div>
+<div class="detail-column" id="d39" style="display:none">
+	<div class="detail">
+			<div class="mock-list">
+				<b>Nom : </b>marginValue
+			</div>
+			<div class="mock-list">
+				<b>Description : </b>Valeur de la marge.
+			</div>
+			<div class="mock-list">
+				<b>Commentaire : </b><p>Si la valeur de la marge n&rsquo;est pas&nbsp; renseign&eacute;e, elle est affect&eacute;e avec la valeur de la condition <strong>VINttt</strong> o&ugrave; <strong>ttt</strong> correspond au code du type de pr&ecirc;t ou <strong>VINPRT</strong>.</p>
+
+<p>La valeur du taux doit &ecirc;tre comprise dans les bornes minimum et maximum param&eacute;tr&eacute;es dans la condition<strong> VINttt</strong> o&ugrave; <strong>ttt</strong> correspond au code du type de pr&ecirc;t ou <strong>VINPRT</strong>.</p>
+
+<p>La somme des valeurs du taux&nbsp; et de la marge doit &ecirc;tre diff&eacute;rente de <strong>0</strong>.</p>
+
+			</div>
+
+	</div>
+	<div class="detail">
+			<div class="mock-list">
+				<b>Nom : </b> <a href="../types/decimal9_6.html">decimal9_6</a>
+			</div>
+			<div class="mock-list">
+				<b> Description : </b>Type décimal à 9 chiffres dont 6 décimales.
+			</div>
+			<div class="mock-list">
+				<b>Format : </b>decimal
+			</div>
+			<div class="mock-list">
+				<b>Nombre total de chiffres : </b>9
+			</div>
+
+	</div>
+
+</div>
+<div class="detail-column" id="d40" style="display:none">
+	<div class="detail">
+			<div class="mock-list">
+				<b>Nom : </b>internalRate
+			</div>
+			<div class="mock-list">
+				<b>Description : </b>Taux interne.
+			</div>
+
+	</div>
+	<div class="detail">
+			<div class="mock-list">
+				<b>Nom : </b> <a href="../types/decimal9_6.html">decimal9_6</a>
+			</div>
+			<div class="mock-list">
+				<b> Description : </b>Type décimal à 9 chiffres dont 6 décimales.
+			</div>
+			<div class="mock-list">
+				<b>Format : </b>decimal
+			</div>
+			<div class="mock-list">
+				<b>Nombre total de chiffres : </b>9
+			</div>
+
+	</div>
+
+</div>
+<div class="detail-column" id="d41" style="display:none">
+	<div class="detail">
+			<div class="mock-list">
+				<b>Nom : </b>nextNegociationDate
+			</div>
+			<div class="mock-list">
+				<b>Description : </b>Date de prochaine négociation.
+			</div>
+			<div class="mock-list">
+				<b>Commentaire : </b><p>La date de prochaine n&eacute;gociation doit &ecirc;tre sup&eacute;rieure ou &eacute;gale &agrave; la date de traitement comptable.</p>
+
+			</div>
+
+	</div>
+	<div class="detail">
+			<div class="mock-list">
+				<b>Nom : </b> <a href="../types/date.html">date</a>
+			</div>
+
+	</div>
+
+</div>
+<div class="detail-column" id="d42" style="display:none">
+	<div class="detail">
+			<div class="mock-list">
+				<b>Nom : </b>scheduleType
+			</div>
+			<div class="mock-list">
+				<b>Description : </b>Type de plan.
+			</div>
+			<div class="mock-list">
+				<b>Commentaire : </b><p>Selon le param&eacute;trage en place pour le type de pr&ecirc;t&nbsp;:</p>
+
+<ul>
+	<li>Si le type de plan est obligatoire, alors il doit &ecirc;tre renseign&eacute;.</li>
+	<li>Sinon, s&#39;il n&rsquo;est pas renseign&eacute; alors il est aliment&eacute; avec la valeur par d&eacute;faut (<strong>tya</strong>) d&eacute;finie pour le type de pr&ecirc;t.</li>
+</ul>
+
+<p>Si le param&eacute;trage indique que le champ est non modifiable, alors la valeur du type de plan doit &ecirc;tre &eacute;gale &agrave; sa valeur par d&eacute;faut.</p>
+
+<p>Si le calcul en nombre de jours r&eacute;els est d&eacute;sactiv&eacute; alors le type de plan doit &ecirc;tre Compos&eacute; constant (<strong>N</strong>) ou Compos&eacute; d&eacute;gressif (<strong>O</strong>).</p>
+
+<p>Si la gestion du diff&eacute;r&eacute; vaut Capital (<strong>C</strong>), Capitalisation avec DLU (<strong>U</strong>), Capitalisation avec DLU confirm&eacute;e (<strong>D</strong>), R&eacute;parti (<strong>R</strong>) ou Capitalisation avec calcul compos&eacute; (<strong>P</strong>) alors le type de plan ne doit &ecirc;tre ni Compos&eacute; constant (<strong>N</strong>), ni Compos&eacute; d&eacute;gressif (<strong>O</strong>).</p>
+
+<p>Dans le cas o&ugrave; le type de plan est Compos&eacute; constant (<strong>N</strong>) ou Compos&eacute; d&eacute;gressif (<strong>O</strong>), le calcul p&eacute;riodique des int&eacute;r&ecirc;ts compos&eacute;s, param&eacute;tr&eacute; dans le <strong>Montant 8</strong> du param&egrave;tre <strong>CDTPAR</strong> en nomenclature <strong>098</strong>, ne doit pas &ecirc;tre &agrave; la date anniversaire (<strong>1</strong>) ni en fin de mois (<strong>2</strong>).</p>
+
+<p>Si le calcul p&eacute;riodique des int&eacute;r&ecirc;ts compos&eacute;s est effectu&eacute; en fin de mois (le <strong>Montant 8</strong> du param&egrave;tre <strong>CDTPAR</strong> en nomenclature <strong>098 </strong>ne doit pas &ecirc;tre &eacute;gal &agrave; <strong>2</strong>) et que l&rsquo;indicateur d&rsquo;&eacute;ch&eacute;ance fin de mois est &agrave; <strong>FALSE</strong> alors les jours r&eacute;els (indicateur de calcul en nombre de jours r&eacute;els forc&eacute; &agrave; <strong>TRUE</strong>) sont obligatoirement pris en compte.</p>
+
+			</div>
+
+	</div>
+	<div class="detail">
+			<div class="mock-list">
+				<b>Nom : </b> <a href="../types/scheduleType.html">scheduleType</a>
+			</div>
+			<div class="mock-list">
+				<b> Description : </b>Type de plan.
+			</div>
+			<div class="mock-list">
+				<b>Format : </b>string
+			</div>
+			<div class="mock-list">
+				<b>Valeurs possibles : </b>					<table class="table_enum" class="table_enum" class="table_enum" class="table_enum" class="table_enum">
+						<tr>
+						<td> N
+						</td>						<td class="td_right"> Composé constant
+						</td>
+						</tr>
+						<tr>
+						<td> C
+						</td>						<td class="td_right"> Constant
+						</td>
+						</tr>
+						<tr>
+						<td> D
+						</td>						<td class="td_right"> Dégressif
+						</td>
+						</tr>
+						<tr>
+						<td> O
+						</td>						<td class="td_right"> Composé dégressif
+						</td>
+						</tr>
+						<tr>
+						<td> P
+						</td>						<td class="td_right"> Progressif
+						</td>
+						</tr>
+
+					</table>
+
+			</div>
+
+	</div>
+
+</div>
+<div class="detail-column" id="d43" style="display:none">
+	<div class="detail">
+			<div class="mock-list">
+				<b>Nom : </b>installmentsProgression
+			</div>
+			<div class="mock-list">
+				<b>Description : </b>Progression des échéances.
+			</div>
+
+	</div>
+	<div class="detail">
+			<div class="mock-list">
+				<b>Nom : </b> <a href="../types/dosprtCreateLoanFileInstallmentsProgression.html">dosprtCreateLoanFileInstallmentsProgression</a>
+			</div>
+			<div class="mock-list">
+				<b> Description : </b>Progression des échéances.
+			</div>
+
+	</div>
+
+</div>
+<div class="detail-column" id="d44" style="display:none">
+	<div class="detail">
+			<div class="mock-list">
+				<b>Nom : </b>loanFileInstallmentStage
+			</div>
+			<div class="mock-list">
+				<b>Description : </b>Palier d'échéances.
+			</div>
+			<div class="mock-list">
+				<b>Limite du nombre d'occurences mini-maxi : </b>1 aucune
+			</div>
+			<div class="mock-list">
+				<b>Commentaire : </b><p>Aucun palier d&rsquo;&eacute;ch&eacute;ances ne doit &ecirc;tre renseign&eacute; si le dossier n&rsquo;est pas caract&eacute;ris&eacute; par un type de plan progressif.</p>
+
+			</div>
+
+	</div>
+	<div class="detail">
+			<div class="mock-list">
+				<b>Nom : </b> <a href="../types/dosprtCreateLoanFileInstallmentStage.html">dosprtCreateLoanFileInstallmentStage</a>
+			</div>
+			<div class="mock-list">
+				<b> Description : </b>Palier d'échéances.
+			</div>
+
+	</div>
+
+</div>
+<div class="detail-column" id="d45" style="display:none">
+	<div class="detail">
+			<div class="mock-list">
+				<b>Nom : </b>numberOfInstallments
+			</div>
+			<div class="mock-list">
+				<b>Description : </b>Nombre d'échéances.
+			</div>
+
+	</div>
+	<div class="detail">
+			<div class="mock-list">
+				<b>Nom : </b> <a href="../types/integer.html">integer</a>
+			</div>
+
+	</div>
+
+</div>
+<div class="detail-column" id="d46" style="display:none">
+	<div class="detail">
+			<div class="mock-list">
+				<b>Nom : </b>installmentsAmount
+			</div>
+			<div class="mock-list">
+				<b>Description : </b>Montant des échéances.
+			</div>
+
+	</div>
+	<div class="detail">
+			<div class="mock-list">
+				<b>Nom : </b> <a href="../types/decimal19_4.html">decimal19_4</a>
+			</div>
+			<div class="mock-list">
+				<b> Description : </b>Type décimal à 19 chiffres dont 4 décimales.
+			</div>
+			<div class="mock-list">
+				<b>Format : </b>decimal
+			</div>
+			<div class="mock-list">
+				<b>Nombre total de chiffres : </b>19
+			</div>
+
+	</div>
+
+</div>
+<div class="detail-column" id="d47" style="display:none">
+	<div class="detail">
+			<div class="mock-list">
+				<b>Nom : </b>periodicityUnit
+			</div>
+			<div class="mock-list">
+				<b>Description : </b>Unité de la périodicité.
+			</div>
+			<div class="mock-list">
+				<b>Commentaire : </b><p>Selon le param&eacute;trage en place pour le type de pr&ecirc;t&nbsp;:</p>
+
+<ul>
+	<li>Si l&#39;unicit&eacute; de la p&eacute;riodicit&eacute; est obligatoire, alors elle doit &ecirc;tre renseign&eacute;e.</li>
+	<li>Sinon, si elle n&rsquo;est pas renseign&eacute;e alors elle est aliment&eacute;e avec la valeur par d&eacute;faut (<strong>unper</strong>) d&eacute;finie pour le type de pr&ecirc;t.</li>
+</ul>
+
+<p>Si le param&eacute;trage indique que le champ est non modifiable, alors la valeur de l&#39;unicit&eacute; de la p&eacute;riodicit&eacute; doit &ecirc;tre &eacute;gale &agrave; sa valeur par d&eacute;faut.</p>
+
+			</div>
+
+	</div>
+	<div class="detail">
+			<div class="mock-list">
+				<b>Nom : </b> <a href="../types/periodicityUnit.html">periodicityUnit</a>
+			</div>
+			<div class="mock-list">
+				<b> Description : </b>Unité de périodicité.
+			</div>
+			<div class="mock-list">
+				<b>Format : </b>string
+			</div>
+			<div class="mock-list">
+				<b>Valeurs possibles : </b>					<table class="table_enum" class="table_enum">
+						<tr>
+						<td> M
+						</td>						<td class="td_right"> Mois
+						</td>
+						</tr>
+						<tr>
+						<td> J
+						</td>						<td class="td_right"> Jour
+						</td>
+						</tr>
+
+					</table>
+
+			</div>
+
+	</div>
+
+</div>
+<div class="detail-column" id="d48" style="display:none">
+	<div class="detail">
+			<div class="mock-list">
+				<b>Nom : </b>equivalentRateLoan
+			</div>
+			<div class="mock-list">
+				<b>Description : </b>Prêt à taux équivalent.
+			</div>
+			<div class="mock-list">
+				<b>Commentaire : </b><p>Si le pr&ecirc;t est &agrave; Taux &eacute;quivalent&nbsp; (<strong>O</strong>), alors le type de plan est forc&eacute; &agrave; Constant (<strong>C</strong>) et le type d&#39;int&eacute;r&ecirc;ts est forc&eacute; &agrave; Index&eacute; (<strong>I</strong>).</p>
+
+<p>Valeur par d&eacute;faut&nbsp;: <strong>equiv</strong></p>
+
+			</div>
+
+	</div>
+	<div class="detail">
+			<div class="mock-list">
+				<b>Nom : </b> <a href="../types/boolean.html">boolean</a>
+			</div>
+
+	</div>
+
+</div>
+<div class="detail-column" id="d49" style="display:none">
+	<div class="detail">
+			<div class="mock-list">
+				<b>Nom : </b>compoundInterestCalculationFrequency
+			</div>
+			<div class="mock-list">
+				<b>Description : </b>Périodicité de calcul des intérêts composés.
+			</div>
+			<div class="mock-list">
+				<b>Commentaire : </b><p>Si le dossier de pr&ecirc;t est &agrave; diff&eacute;r&eacute; capitalis&eacute; avec mode de calcul compos&eacute; (<strong>P</strong>) alors la p&eacute;riodicit&eacute; est enregistr&eacute;e dans la table des diff&eacute;r&eacute;s capitalis&eacute;s avec mode de calcul compos&eacute;.</p>
+
+			</div>
+
+	</div>
+	<div class="detail">
+			<div class="mock-list">
+				<b>Nom : </b> <a href="../types/dosprtDetailPeriodicityType.html">dosprtDetailPeriodicityType</a>
+			</div>
+			<div class="mock-list">
+				<b> Description : </b>Périodicité.
+			</div>
+			<div class="mock-list">
+				<b>Format : </b>integer
+			</div>
+			<div class="mock-list">
+				<b>Min-max inclusive : </b>1 - 12
+			</div>
+
+	</div>
+
+</div>
+<div class="detail-column" id="d50" style="display:none">
+	<div class="detail">
+			<div class="mock-list">
+				<b>Nom : </b>realAnnualNumberOfDays
+			</div>
+			<div class="mock-list">
+				<b>Description : </b>Nombre de jours réels annuels.
+			</div>
+			<div class="mock-list">
+				<b>Commentaire : </b><p>Selon le param&eacute;trage en place pour le type de pr&ecirc;t&nbsp;:</p>
+
+<ul>
+	<li>Si le nombre de jours r&eacute;els annuels est obligatoire, alors il doit &ecirc;tre renseign&eacute;.</li>
+	<li>Sinon, s&#39;il n&rsquo;est pas renseign&eacute; alors il est aliment&eacute; avec la valeur par d&eacute;faut (<strong>nbjrsan</strong>) d&eacute;finie pour le type de pr&ecirc;t.</li>
+</ul>
+
+<p>Si le param&eacute;trage indique que le champ est non modifiable, alors la valeur du nombre de jours r&eacute;els annuels doit &ecirc;tre &eacute;gale &agrave; sa valeur par d&eacute;faut.</p>
+
+<p>Ce nombre doit &ecirc;tre renseign&eacute; avec <strong>360</strong> si le calcul en nombre de jours r&eacute;els (balise &quot;calculationBasedOnRealNumber&quot;) vaut <strong>FALSE</strong>.</p>
+
+			</div>
+
+	</div>
+	<div class="detail">
+			<div class="mock-list">
+				<b>Nom : </b> <a href="../types/realAnnualNumberOfDays.html">realAnnualNumberOfDays</a>
+			</div>
+			<div class="mock-list">
+				<b> Description : </b>Nombre de jours réels annuels.
+			</div>
+			<div class="mock-list">
+				<b>Format : </b>string
+			</div>
+			<div class="mock-list">
+				<b>Valeurs possibles : </b>					<table class="table_enum" class="table_enum">
+						<tr>
+						<td> 360
+						</td>						<td class="td_right"> 360 jours
+						</td>
+						</tr>
+						<tr>
+						<td> 365
+						</td>						<td class="td_right"> 365 jours
+						</td>
+						</tr>
+
+					</table>
+
+			</div>
+
+	</div>
+
+</div>
+<div class="detail-column" id="d51" style="display:none">
+	<div class="detail">
+			<div class="mock-list">
+				<b>Nom : </b>periodUsedForCalculationInterestUnpaidAmount
+			</div>
+			<div class="mock-list">
+				<b>Description : </b>Nombre de jours utilisés pour le calcul des intérêts d'impayés.
+			</div>
+			<div class="mock-list">
+				<b>Commentaire : </b><p>Selon le param&eacute;trage en place pour le type de pr&ecirc;t&nbsp;:</p>
+
+<ul>
+	<li>Si le nombre de jours utilis&eacute;s pour le calcul des int&eacute;r&ecirc;ts d&rsquo;impay&eacute;s est obligatoire, alors il doit &ecirc;tre renseign&eacute;.</li>
+	<li>Sinon, s&#39;il n&rsquo;est pas renseign&eacute; alors il est aliment&eacute; avec la valeur par d&eacute;faut (<strong>nbjrsin</strong>) d&eacute;finie pour le type de pr&ecirc;t.</li>
+</ul>
+
+<p>Si le param&eacute;trage indique que le champ est non modifiable, alors la valeur du nombre de jours utilis&eacute;s pour le calcul des int&eacute;r&ecirc;ts d&rsquo;impay&eacute;s doit &ecirc;tre &eacute;gale &agrave; sa valeur par d&eacute;faut.</p>
+
+			</div>
+
+	</div>
+	<div class="detail">
+			<div class="mock-list">
+				<b>Nom : </b> <a href="../types/periodUsedForCalculationInterestUnpaidAmount.html">periodUsedForCalculationInterestUnpaidAmount</a>
+			</div>
+			<div class="mock-list">
+				<b> Description : </b>Nombre de jours utilisés pour le calcul des intérêts d¿impayés.
+			</div>
+			<div class="mock-list">
+				<b>Format : </b>string
+			</div>
+			<div class="mock-list">
+				<b>Valeurs possibles : </b>					<table class="table_enum" class="table_enum">
+						<tr>
+						<td> 360
+						</td>						<td class="td_right"> 360 jours
+						</td>
+						</tr>
+						<tr>
+						<td> 365
+						</td>						<td class="td_right"> 365 jours
+						</td>
+						</tr>
+
+					</table>
+
+			</div>
+
+	</div>
+
+</div>
+<div class="detail-column" id="d52" style="display:none">
+	<div class="detail">
+			<div class="mock-list">
+				<b>Nom : </b>shiftPeriodForCalculationInterestUnpaidAmount
+			</div>
+			<div class="mock-list">
+				<b>Description : </b>Délai pour le calcul des intérêts d'impayés.
+			</div>
+			<div class="mock-list">
+				<b>Commentaire : </b><p>La valeur du d&eacute;lai pour le calcul des int&eacute;r&ecirc;ts d&rsquo;impay&eacute;s doit &ecirc;tre non nulle. Elle doit aussi &ecirc;tre comprise entre la valeur maximum et la valeur minimum des conditions <strong>INIttt</strong> et <strong>INIIMP</strong> o&ugrave; <strong>ttt</strong> correspond au code du type de pr&ecirc;t.</p>
+
+			</div>
+
+	</div>
+	<div class="detail">
+			<div class="mock-list">
+				<b>Nom : </b> <a href="../types/decimal2_0.html">decimal2_0</a>
+			</div>
+			<div class="mock-list">
+				<b> Description : </b>Type décimal à 2 chiffres dont 0 décimales.
+			</div>
+			<div class="mock-list">
+				<b>Format : </b>decimal
+			</div>
+			<div class="mock-list">
+				<b>Nombre total de chiffres : </b>2
+			</div>
+
+	</div>
+
+</div>
+<div class="detail-column" id="d53" style="display:none">
+	<div class="detail">
+			<div class="mock-list">
+				<b>Nom : </b>deadlineCreditUse
+			</div>
+			<div class="mock-list">
+				<b>Description : </b>Date limite d'utilisation.
+			</div>
+			<div class="mock-list">
+				<b>Commentaire : </b><p>Si le type de commission d&rsquo;engagement param&eacute;tr&eacute; pour le type de dossier vaut<strong> C</strong>, <strong>M</strong>, <strong>T</strong> ou <strong>P</strong>, ou si la gestion du diff&eacute;r&eacute; (balise &quot;deferralPeriodManagement&quot;) vaut <strong>U</strong>, <strong>D</strong> ou <strong>I</strong>, alors la date limite de premi&egrave;re utilisation doit &ecirc;tre sup&eacute;rieure &agrave; la date de mise en place.</p>
+
+			</div>
+
+	</div>
+	<div class="detail">
+			<div class="mock-list">
+				<b>Nom : </b> <a href="../types/date.html">date</a>
+			</div>
+
+	</div>
+
+</div>
+<div class="detail-column" id="d54" style="display:none">
+	<div class="detail">
+			<div class="mock-list">
+				<b>Nom : </b>fullScheduleCalculation
+			</div>
+			<div class="mock-list">
+				<b>Description : </b>Calcul du plan total.
+			</div>
+			<div class="mock-list">
+				<b>Commentaire : </b><p>Le calcul du plan total doit &ecirc;tre positionn&eacute; &agrave; <strong>TRUE</strong> si le calcul du plan total est demand&eacute; au niveau du type de pr&ecirc;t ou si le type de plan n&#39;est pas progressif (<strong>P</strong>) ou si le type d&#39;int&eacute;r&ecirc;ts n&#39;est pas index&eacute; (<strong>I</strong>).</p>
+
+			</div>
+
+	</div>
+	<div class="detail">
+			<div class="mock-list">
+				<b>Nom : </b> <a href="../types/boolean.html">boolean</a>
+			</div>
+
+	</div>
+
+</div>
+      </div> 
+  </div>
+
+  
+  <script src="../resources/jquery.js"></script>
+  <script src="../resources/doc.js"></script>
+</body>
+</html>

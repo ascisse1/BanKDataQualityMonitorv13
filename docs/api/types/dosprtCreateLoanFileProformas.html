@@ -1,0 +1,509 @@
+<!DOCTYPE html >
+<html>
+<head>
+	<link rel="stylesheet" href="../resources/styleDocu.css" />
+  <link rel="stylesheet" href="../resources/font-awesome/css/font-awesome.min.css" />
+	<title>Documentation Xsd</title>
+	<meta charset="UTF-8" />
+</head>
+
+<body>
+  <div class="document">
+	<div class="header">
+		
+	</div>
+
+  <div class="tabs">
+    <div class="tabs-wrapper" onclick="window.open('../liste-ressources.html', '_self');">
+      <div class="tabs-left-content">
+        Liste des ressources
+      </div>
+    </div>
+    <div class="tabs-wrapper" onclick="window.open('../liste-services.html', '_self');">
+      <div class="tabs-left-content" >
+        Liste des services  
+      </div>
+    </div>
+    <div class="tabs-wrapper-selected" onclick="window.open('../liste-types.html', '_self');">
+      <div class="tabs-right-content">
+        Liste des types
+      </div>
+    </div>
+  </div>
+
+	
+
+	<div class="contenu">
+      <div class="breadcrumb"> 
+        <ul class="breadcrumb">
+           <li> <a href="../index.html"> Accueil </a></li>
+           <li> > </li>
+           <li> <a href="../liste-types.html"> Liste des types </a></li>
+           <li> > </li>
+           <li> dosprtCreateLoanFileProformas </li>
+        </ul>                    
+      </div>                    
+      
+     
+      <div class="summary">
+			<div class="mock-list">
+				<b>Nom : </b>dosprtCreateLoanFileProformas
+			</div>
+			<div class="mock-list">
+				<b> Description : </b>Pro-formats d¿un dossier de prêt.
+			</div>
+        
+        <div> </div>
+        <div class="mock-list"> Choix : Non</div>
+        
+      </div>
+                        
+      <div class="column-content">
+        <div class="detail-column">
+          <div class="tree"> 
+<ul>
+	<li>
+<i class="fa fa-caret-down fa-fw" onclick="expand_or_collapse(this)">
+</i>		dosprtCreateLoanFileProformas		<ul style="display:block">
+			<li>
+<i class="fa fa-caret-down fa-fw" onclick="expand_or_collapse(this)">
+</i><i class="fa fa-key fa-fw">
+</i><span style="font-weight:bold"> [M]
+</span><span class="selectable" id="e0"> loanFileProforma : dosprtCreateLoanFileProforma
+</span>				<ul style="display:block">
+					<li>
+<i class="fa fa-fw">
+</i><i class="fa fa-key fa-fw">
+</i><span class="selectable" id="e1"> accountType : proformaAccountType
+</span>
+					</li>
+					<li>
+<i class="fa fa-fw">
+</i><span class="selectable" id="e2"> supplierCode : dosprtSupplierCode
+</span>
+					</li>
+					<li>
+<i class="fa fa-fw">
+</i><span class="selectable" id="e3"> model : proformaModel
+</span>
+					</li>
+					<li>
+<i class="fa fa-fw">
+</i><i class="fa fa-key fa-fw">
+</i><span class="selectable" id="e4"> reference : charMax30
+</span>
+					</li>
+					<li>
+<i class="fa fa-fw">
+</i><i class="fa fa-key fa-fw">
+</i><span class="selectable" id="e5"> proformaAmount : decimal19_4
+</span>
+					</li>
+					<li>
+<i class="fa fa-fw">
+</i><span class="selectable" id="e6"> downPaymentAlreadyPaid : decimal19_4
+</span>
+					</li>
+					<li>
+<i class="fa fa-fw">
+</i><span class="selectable" id="e7"> downPaymentToBePaid : decimal19_4
+</span>
+					</li>
+					<li>
+<i class="fa fa-fw">
+</i><i class="fa fa-key fa-fw">
+</i><span class="selectable" id="e8"> receiptDate : date
+</span>
+					</li>
+
+				</ul>
+
+			</li>
+			<li>
+<i class="fa fa-fw">
+</i><span class="selectable" id="e9"> downPaymentMinimumAmountOverride : boolean
+</span>
+			</li>
+
+		</ul>
+
+	</li>
+
+</ul>
+          </div>
+          
+          <div class="detail">
+				<p align="left">
+					Légende :<br />
+				</p>
+            <ul>
+               <li align="left">
+                  <i class="fa fa-key fa-fw">
+                  </i>
+                  = Elément obligatoire en saisie.
+               </li>
+               <li align="left">
+                  <span style="font-weight:bold"> [M]
+                  </span>
+                  = Elément multiple (0 à n occurrences).
+               </li>
+               <li align="left">
+                  <span style="font-weight:bold"> [C]
+                  </span>
+                  = Elément composé d'un choix à effectuer. Un seul choix autorisé.
+               </li>
+            </ul>
+            <p align="left">
+               Remarque : Un même élément peut regrouper plusieurs caractéristiques
+            </p>          
+          </div>
+          
+        </div>
+<div class="detail-column" id="d0" style="display:none">
+	<div class="detail">
+			<div class="mock-list">
+				<b>Nom : </b>loanFileProforma
+			</div>
+			<div class="mock-list">
+				<b>Description : </b>Pro-format.
+			</div>
+			<div class="mock-list">
+				<b>Limite du nombre d'occurences mini-maxi : </b>1 aucune
+			</div>
+			<div class="mock-list">
+				<b>Commentaire : </b><p>Si le param&egrave;tre <strong>CDTLOGIC1</strong> existe en nomenclature <strong>098 </strong>et que le<strong> Libell&eacute; 2 </strong>correspond &agrave; l&rsquo;utilisateur, alors au moins un d&eacute;blocage de fonds doit s&rsquo;effectuer sur un compte fournisseur dont le type est autre que compte courant du client.</p>
+
+<p>La somme des montants des pro-formats doit &ecirc;tre &eacute;gale au montant du pr&ecirc;t.</p>
+
+			</div>
+
+	</div>
+	<div class="detail">
+			<div class="mock-list">
+				<b>Nom : </b> <a href="../types/dosprtCreateLoanFileProforma.html">dosprtCreateLoanFileProforma</a>
+			</div>
+			<div class="mock-list">
+				<b> Description : </b>Pro-format.
+			</div>
+
+	</div>
+
+</div>
+<div class="detail-column" id="d1" style="display:none">
+	<div class="detail">
+			<div class="mock-list">
+				<b>Nom : </b>accountType
+			</div>
+			<div class="mock-list">
+				<b>Description : </b>Type de compte.
+			</div>
+
+	</div>
+	<div class="detail">
+			<div class="mock-list">
+				<b>Nom : </b> <a href="../types/proformaAccountType.html">proformaAccountType</a>
+			</div>
+			<div class="mock-list">
+				<b> Description : </b>Type de compte pour un pro-format.
+			</div>
+			<div class="mock-list">
+				<b>Format : </b>string
+			</div>
+			<div class="mock-list">
+				<b>Valeurs possibles : </b>					<table class="table_enum" class="table_enum" class="table_enum">
+						<tr>
+						<td> E
+						</td>						<td class="td_right"> Compte externe (Format NBS)
+						</td>
+						</tr>
+						<tr>
+						<td> F
+						</td>						<td class="td_right"> Autre compte de la banque
+						</td>
+						</tr>
+						<tr>
+						<td> C
+						</td>						<td class="td_right"> Compte courant du client
+						</td>
+						</tr>
+
+					</table>
+
+			</div>
+
+	</div>
+
+</div>
+<div class="detail-column" id="d2" style="display:none">
+	<div class="detail">
+			<div class="mock-list">
+				<b>Nom : </b>supplierCode
+			</div>
+			<div class="mock-list">
+				<b>Description : </b>Fournisseur.
+			</div>
+			<div class="mock-list">
+				<b>Commentaire : </b><p>Si le type de compte n&rsquo;est pas le compte courant (<strong>C</strong>) du client, alors le code fournisseur est obligatoire. Dans ce cas,</p>
+
+<ul>
+	<li>Il doit exister dans la table des fournisseurs,</li>
+	<li>La devise du fournisseur doit &ecirc;tre la m&ecirc;me que celle du dossier,</li>
+	<li>Si le type de compte est Compte externe (<strong>E</strong>), alors le code de l&rsquo;&eacute;tablissement du fournisseur ne doit pas &ecirc;tre identique &agrave; celui de la banque,</li>
+	<li>Si le type de compte est Compte externe (<strong>E</strong>) ou Autre compte de la banque&nbsp; (<strong>F</strong>), alors le compte du fournisseur ne doit pas &ecirc;tre renseign&eacute; dans la table des fournisseurs.</li>
+</ul>
+
+			</div>
+
+	</div>
+	<div class="detail">
+			<div class="mock-list">
+				<b>Nom : </b> <a href="../types/dosprtSupplierCode.html">dosprtSupplierCode</a>
+			</div>
+			<div class="mock-list">
+				<b> Description : </b>Code fournisseur.
+			</div>
+			<div class="mock-list">
+				<b>Format : </b>string
+			</div>
+			<div class="mock-list">
+				<b>Longueur mini-maxi : </b>1 - 6
+			</div>
+
+	</div>
+
+</div>
+<div class="detail-column" id="d3" style="display:none">
+	<div class="detail">
+			<div class="mock-list">
+				<b>Nom : </b>model
+			</div>
+			<div class="mock-list">
+				<b>Description : </b>Modèle.
+			</div>
+
+	</div>
+	<div class="detail">
+			<div class="mock-list">
+				<b>Nom : </b> <a href="../types/proformaModel.html">proformaModel</a>
+			</div>
+			<div class="mock-list">
+				<b> Description : </b>Modèle de pro-format.
+			</div>
+			<div class="mock-list">
+				<b>Format : </b>string
+			</div>
+			<div class="mock-list">
+				<b>Valeurs possibles : </b>					<table class="table_enum" class="table_enum" class="table_enum">
+						<tr>
+						<td> 00
+						</td>						<td class="td_right"> Modèle de pro-format "00"
+						</td>
+						</tr>
+						<tr>
+						<td> 05
+						</td>						<td class="td_right"> Modèle de pro-format "05"
+						</td>
+						</tr>
+						<tr>
+						<td> 97
+						</td>						<td class="td_right"> Modèle de pro-format "97"
+						</td>
+						</tr>
+
+					</table>
+
+			</div>
+
+	</div>
+
+</div>
+<div class="detail-column" id="d4" style="display:none">
+	<div class="detail">
+			<div class="mock-list">
+				<b>Nom : </b>reference
+			</div>
+			<div class="mock-list">
+				<b>Description : </b>Référence.
+			</div>
+			<div class="mock-list">
+				<b>Commentaire : </b><p>Si le mod&egrave;le est un mod&egrave;le de pro-format &quot;97&quot;, alors la r&eacute;f&eacute;rence doit &ecirc;tre compatible avec le code algorithme 001.</p>
+
+			</div>
+
+	</div>
+	<div class="detail">
+			<div class="mock-list">
+				<b>Nom : </b> <a href="../types/charMax30.html">charMax30</a>
+			</div>
+			<div class="mock-list">
+				<b> Description : </b>Chaîne composée d'au plus 30 caractères.
+			</div>
+			<div class="mock-list">
+				<b>Format : </b>string
+			</div>
+			<div class="mock-list">
+				<b>Longueur mini-maxi : </b>1 - 30
+			</div>
+
+	</div>
+
+</div>
+<div class="detail-column" id="d5" style="display:none">
+	<div class="detail">
+			<div class="mock-list">
+				<b>Nom : </b>proformaAmount
+			</div>
+			<div class="mock-list">
+				<b>Description : </b>Montant de pro-format.
+			</div>
+			<div class="mock-list">
+				<b>Commentaire : </b><p>Le montant de pro-format doit &ecirc;tre sup&eacute;rieur &agrave; 0.</p>
+
+			</div>
+
+	</div>
+	<div class="detail">
+			<div class="mock-list">
+				<b>Nom : </b> <a href="../types/decimal19_4.html">decimal19_4</a>
+			</div>
+			<div class="mock-list">
+				<b> Description : </b>Type décimal à 19 chiffres dont 4 décimales.
+			</div>
+			<div class="mock-list">
+				<b>Format : </b>decimal
+			</div>
+			<div class="mock-list">
+				<b>Nombre total de chiffres : </b>19
+			</div>
+
+	</div>
+
+</div>
+<div class="detail-column" id="d6" style="display:none">
+	<div class="detail">
+			<div class="mock-list">
+				<b>Nom : </b>downPaymentAlreadyPaid
+			</div>
+			<div class="mock-list">
+				<b>Description : </b>Acompte déjà payé.
+			</div>
+			<div class="mock-list">
+				<b>Commentaire : </b><p>Si le type de compte correspond au compte courant du client (<strong>C</strong>), alors l&rsquo;acompte d&eacute;j&agrave; pay&eacute; ne doit pas &ecirc;tre renseign&eacute;.</p>
+
+<p>Sinon, il doit&nbsp; &ecirc;tre&nbsp;:</p>
+
+<ul>
+	<li>obligatoirement renseign&eacute;,</li>
+	<li>sup&eacute;rieur ou &eacute;gal &agrave; 0,</li>
+	<li>inf&eacute;rieur au montant de pro-format.</li>
+</ul>
+
+			</div>
+
+	</div>
+	<div class="detail">
+			<div class="mock-list">
+				<b>Nom : </b> <a href="../types/decimal19_4.html">decimal19_4</a>
+			</div>
+			<div class="mock-list">
+				<b> Description : </b>Type décimal à 19 chiffres dont 4 décimales.
+			</div>
+			<div class="mock-list">
+				<b>Format : </b>decimal
+			</div>
+			<div class="mock-list">
+				<b>Nombre total de chiffres : </b>19
+			</div>
+
+	</div>
+
+</div>
+<div class="detail-column" id="d7" style="display:none">
+	<div class="detail">
+			<div class="mock-list">
+				<b>Nom : </b>downPaymentToBePaid
+			</div>
+			<div class="mock-list">
+				<b>Description : </b>Acompte à payer.
+			</div>
+			<div class="mock-list">
+				<b>Commentaire : </b><p>Si le type de compte correspond au compte courant du client (<strong>C</strong>), alors l&rsquo;acompte &agrave; payer ne doit pas &ecirc;tre renseign&eacute;.</p>
+
+<p>Sinon, il doit&nbsp; &ecirc;tre&nbsp;:</p>
+
+<ul>
+	<li>obligatoirement renseign&eacute;,</li>
+	<li>sup&eacute;rieur ou &eacute;gal &agrave; 0,</li>
+	<li>inf&eacute;rieur au montant de pro-format.</li>
+</ul>
+
+			</div>
+
+	</div>
+	<div class="detail">
+			<div class="mock-list">
+				<b>Nom : </b> <a href="../types/decimal19_4.html">decimal19_4</a>
+			</div>
+			<div class="mock-list">
+				<b> Description : </b>Type décimal à 19 chiffres dont 4 décimales.
+			</div>
+			<div class="mock-list">
+				<b>Format : </b>decimal
+			</div>
+			<div class="mock-list">
+				<b>Nombre total de chiffres : </b>19
+			</div>
+
+	</div>
+
+</div>
+<div class="detail-column" id="d8" style="display:none">
+	<div class="detail">
+			<div class="mock-list">
+				<b>Nom : </b>receiptDate
+			</div>
+			<div class="mock-list">
+				<b>Description : </b>Date de réception du pro-format.
+			</div>
+
+	</div>
+	<div class="detail">
+			<div class="mock-list">
+				<b>Nom : </b> <a href="../types/date.html">date</a>
+			</div>
+
+	</div>
+
+</div>
+<div class="detail-column" id="d9" style="display:none">
+	<div class="detail">
+			<div class="mock-list">
+				<b>Nom : </b>downPaymentMinimumAmountOverride
+			</div>
+			<div class="mock-list">
+				<b>Description : </b>Forçage du montant minimum d'acompte.
+			</div>
+			<div class="mock-list">
+				<b>Commentaire : </b><p>Si le for&ccedil;age du montant minimum d&rsquo;acompte n&rsquo;est pas voulu (<strong>FALSE</strong>) alors le montant de l&rsquo;acompte total (d&eacute;j&agrave; pay&eacute; et restant &agrave; payer) doit &ecirc;tre strictement inf&eacute;rieur au montant minimum param&eacute;tr&eacute; pour la condition de nature <strong>MINPRF</strong>.</p>
+
+<p>Le for&ccedil;age du montant minimum d&rsquo;acompte n&rsquo;est pris en compte que si le niveau de for&ccedil;age de l&rsquo;utilisateur est sup&eacute;rieur ou &eacute;gal au niveau de for&ccedil;age param&eacute;tr&eacute; dans le <strong>Montant 1</strong> du param&egrave;tre&nbsp;<strong>PRFSAI</strong> en nomenclature <strong>099</strong>.</p>
+
+			</div>
+
+	</div>
+	<div class="detail">
+			<div class="mock-list">
+				<b>Nom : </b> <a href="../types/boolean.html">boolean</a>
+			</div>
+
+	</div>
+
+</div>
+      </div> 
+  </div>
+
+  
+  <script src="../resources/jquery.js"></script>
+  <script src="../resources/doc.js"></script>
+</body>
+</html>

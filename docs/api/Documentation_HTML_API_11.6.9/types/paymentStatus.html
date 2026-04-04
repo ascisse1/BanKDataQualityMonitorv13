@@ -1,0 +1,116 @@
+<!DOCTYPE html >
+<html>
+<head>
+	<link rel="stylesheet" href="../resources/styleDocu.css" />
+  <link rel="stylesheet" href="../resources/font-awesome/css/font-awesome.min.css" />
+	<title>Documentation Xsd</title>
+	<meta charset="UTF-8" />
+</head>
+
+<body>
+  <div class="document">
+	<div class="header">
+		
+	</div>
+
+  <div class="tabs">
+    <div class="tabs-wrapper" onclick="window.open('../liste-ressources.html', '_self');">
+      <div class="tabs-left-content">
+        Liste des ressources
+      </div>
+    </div>
+    <div class="tabs-wrapper" onclick="window.open('../liste-services.html', '_self');">
+      <div class="tabs-left-content" >
+        Liste des services  
+      </div>
+    </div>
+    <div class="tabs-wrapper-selected" onclick="window.open('../liste-types.html', '_self');">
+      <div class="tabs-right-content">
+        Liste des types
+      </div>
+    </div>
+  </div>
+
+	
+
+	<div class="contenu">
+      <div class="breadcrumb"> 
+        <ul class="breadcrumb">
+           <li> <a href="../index.html"> Accueil </a></li>
+           <li> > </li>
+           <li> <a href="../liste-types.html"> Liste des types </a></li>
+           <li> > </li>
+           <li> paymentStatus </li>
+        </ul>                    
+      </div>                    
+      
+     
+      <div class="summary">
+			<div class="mock-list">
+				<b>Nom : </b>paymentStatus
+			</div>
+			<div class="mock-list">
+				<b> Description : </b>Etat d'un règlement.
+			</div>
+			<div class="mock-list">
+				<b>Format : </b>string
+			</div>
+			<div class="mock-list">
+				<b>Valeurs possibles : </b>					<table class="table_enum" class="table_enum" class="table_enum" class="table_enum" class="table_enum" class="table_enum">
+						<tr>
+						<td> 10
+						</td>						<td class="td_right"> Règlement en attente d'exécution
+						</td>
+						</tr>
+						<tr>
+						<td> 00
+						</td>						<td class="td_right"> Règlement initié
+						</td>
+						</tr>
+						<tr>
+						<td> 90
+						</td>						<td class="td_right"> Règlement abandonné
+						</td>
+						</tr>
+						<tr>
+						<td> 40
+						</td>						<td class="td_right"> Règlement reversé au fournisseur
+						</td>
+						</tr>
+						<tr>
+						<td> 30
+						</td>						<td class="td_right"> Règlement exécuté validé
+						</td>
+						</tr>
+						<tr>
+						<td> 20
+						</td>						<td class="td_right"> Règlement exécuté en attente de forçage
+						</td>
+						</tr>
+
+					</table>
+
+			</div>
+        
+        <div> <p>Liste des valeurs possibles&nbsp;:</p>
+
+<ul>
+	<li><strong>00 = </strong>R&egrave;glement initi&eacute;</li>
+	<li><strong>10 =</strong> R&egrave;glement en attente d&#39;ex&eacute;cution</li>
+	<li><strong>20 = </strong>R&egrave;glement ex&eacute;cut&eacute; en attente de for&ccedil;age</li>
+	<li><strong>30 = </strong>R&egrave;glement ex&eacute;cut&eacute; valid&eacute;</li>
+	<li><strong>40 = </strong>R&egrave;glement revers&eacute; au fournisseur</li>
+	<li><strong>90 = </strong>R&egrave;glement abandonn&eacute;</li>
+</ul>
+</div>
+        
+      </div>
+                        
+  </div>
+  </div>
+
+  
+  <script src="../resources/jquery.js"></script>
+  <script src="../resources/doc.js"></script>
+</body>
+</html>

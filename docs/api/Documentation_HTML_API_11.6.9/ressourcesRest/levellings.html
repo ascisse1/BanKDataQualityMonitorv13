@@ -1,0 +1,544 @@
+<!DOCTYPE html>
+<html>
+<head>
+	<link rel="stylesheet" href="../resources/styleDocu.css" />
+    <link rel="stylesheet" href="../resources/font-awesome/css/font-awesome.min.css" />
+	<title>Documentation Xsd</title>
+	<meta charset="UTF-8" />
+</head>
+
+<body>
+  <div class="document">
+	<div class="header">		
+	</div>
+
+    <div class="tabs">
+        <div class="tabs-wrapper-selected" onclick="window.open('../liste-ressources.html', '_self');">
+            <div class="tabs-left-content" >Liste des ressources</div>
+        </div>
+        <div class="tabs-wrapper" onclick="window.open('../liste-services.html', '_self');">
+            <div class="tabs-left-content">Liste des services</div>
+        </div>
+        <div class="tabs-wrapper" onclick="window.open('../liste-types.html', '_self');">
+            <div class="tabs-right-content">Liste des types</div>
+        </div>
+    </div>
+
+	<div class="contenu">
+      <div class="breadcrumb"> 
+        <ul class="breadcrumb">
+           <li> <a href="../index.html"> Accueil </a></li>
+           <li> > </li>
+           <li> <a href="../liste-ressources.html"> Liste des ressources </a></li>
+           <li> > </li>
+           <li> levellings </li>
+        </ul>                    
+      </div>                    
+      
+      <div class="summary">
+        <div class="mock-list"> Nom ressource REST : levellings </div>
+        <div class="mock-list"> Programme Amplitude : guwrlevellings </div>
+        <div class="mock-list"> Email : support@soprabanking.com </div>        
+        <br/>
+            <div class="mock-list"> Account sweeping files and account-to-account transfer files</div>
+      </div>
+      
+      <div class="column-content" style="width:93%">
+        <div class="detail-column" style="width: 35%">
+          <div class="tree"> 
+<ul style="padding:0">
+	<li>
+<i class="fa fa-caret-down fa-fw" onclick="expand_or_collapse(this)">
+</i>		levellings		<ul>
+			<li>
+<i class="fa fa-caret-down fa-fw" onclick="expand_or_collapse(this)">
+</i>				v1				<ul>
+					<li>
+<i class="fa fa-fw">
+</i><span class="selectable" id="e0"> GETLIST
+</span>
+					</li>
+
+				</ul>
+
+			</li>
+
+		</ul>
+
+	</li>
+
+</ul>
+          </div>
+        </div>
+                 
+        
+<div class="detail-column" id="d0" style="display:none; width: 65%">
+	<div class="detail">
+		<div class="mock-list">
+			<b>Service SOAP : </b> <a href="../services/getLevellingList.html">getLevellingList</a>
+		</div>
+		<div class="mock-list">
+			<b>Code retour succes : </b>200 - OK
+		</div>
+		<div class="mock-list">
+			<b>Uri : </b>http://soprabanking.com/amplitude/levellings/v1/
+		</div>
+		<div class="mock-list">
+			<b>Description : </b>The service getLevellingList allows returning a list of account sweeping files and account-to-account transfer files matching the search criteria received.
+
+The search is based on the optional criteria below:
+- the account sweeping identifier: branch (code and/or designation), operation (code and/or designation), event number,
+- the account sweeping type (code and/or designation),
+- the triggering account: number (internal and/or IBAN and/or external format) and/or class and/or customer (code and/or name to be displayed, type, profile (code and/or designation), national identifier, account officer (code and/or name), additional information (identifier and/or value (or value range) and/or designation), external reference) and/or additional information (identifier and/or value (or value range) and/or designation),
+- the contra account (internal or other bank or international account),
+- the application date (or a date range),
+- the due date (or a date range),
+- the account sweeping type indicator.
+
+For each account sweeping or funds transfer returned, all data used in the search criteria will be indicated as well as:
+- the triggering type,
+- the rules for triggering a transfer with one debit and several credits: indicator of all credits, type of account sweeping amount,
+- the triggering threshold,
+- the last transfer date,
+- the priority,
+- the frequency,
+- the multi-beneficiary indicator.
+		</div>
+		<br>
+
+		</br>
+		<div class="mock-list">
+			<b>Parametres : </b>			<table class="table_param">
+				<tr>
+				<td>
+				</td>				<td title="getLevellingListRequest.triggeringAccount.additionalInformation.designation"> <a href="../types/charMax30.html">X-SBS-accountAdditionalInformationDesignation</a><br>Désignation.
+				</td>				<td> Header
+				</td>
+				</tr>
+				<tr>
+				<td>
+				</td>				<td title="getLevellingListRequest.triggeringAccount.accountNumber.internalFormatAccountOurBranch.branch.code"> <a href="../types/char5.html">X-SBS-accountBranchCode</a><br>Code de l'agence.
+				</td>				<td> Header
+				</td>
+				</tr>
+				<tr>
+				<td>
+				</td>				<td title="getLevellingListRequest.triggeringAccount.accountNumber.internalFormatAccountOurBranch.branch.designation"> <a href="../types/charMax30.html">X-SBS-accountBranchDesignation</a><br>Désignation de l'agence.
+				</td>				<td> Header
+				</td>
+				</tr>
+				<tr>
+				<td>
+				</td>				<td title="getLevellingListRequest.triggeringAccount.accountClass.comparisonOperator"> <a href="../types/comparisonOperator.html">X-SBS-accountClassComparisonOperator</a><br>Opérateur de comparaison.
+				</td>				<td> Header
+				</td>
+				</tr>
+				<tr>
+				<td>
+				</td>				<td title="getLevellingListRequest.triggeringAccount.accountClass.value"> <a href="../types/string.html">X-SBS-accountClassValue</a><br>Valeur de la désignation.
+				</td>				<td> Header
+				</td>
+				</tr>
+				<tr>
+				<td>
+				</td>				<td title="getLevellingListRequest.triggeringAccount.additionalInformation.complementaryInformation.value.alphanumeric.comparisonOperator"> <a href="../types/comparisonOperator.html">X-SBS-accountComplementaryInformationAlphanumericComparisonOperator</a><br>Opérateur de comparaison.
+				</td>				<td> Header
+				</td>
+				</tr>
+				<tr>
+				<td>
+				</td>				<td title="getLevellingListRequest.triggeringAccount.additionalInformation.complementaryInformation.value.alphanumeric.value"> <a href="../types/string.html">X-SBS-accountComplementaryInformationAlphanumericValue</a><br>Valeur de la désignation.
+				</td>				<td> Header
+				</td>
+				</tr>
+				<tr>
+				<td>
+				</td>				<td title="getLevellingListRequest.triggeringAccount.additionalInformation.complementaryInformation.value.date.date1"> <a href="../types/date.html">X-SBS-accountComplementaryInformationDate1</a><br>1ère date.
+				</td>				<td> Header
+				</td>
+				</tr>
+				<tr>
+				<td>
+				</td>				<td title="getLevellingListRequest.triggeringAccount.additionalInformation.complementaryInformation.value.date.date2"> <a href="../types/date.html">X-SBS-accountComplementaryInformationDate2</a><br>2ème date.
+				</td>				<td> Header
+				</td>
+				</tr>
+				<tr>
+				<td>
+				</td>				<td title="getLevellingListRequest.triggeringAccount.additionalInformation.complementaryInformation.value.date.comparator"> <a href="../types/comparator.html">X-SBS-accountComplementaryInformationDateComparator</a><br>Opérateur de comparaison.
+				</td>				<td> Header
+				</td>
+				</tr>
+				<tr>
+				<td>
+				</td>				<td title="getLevellingListRequest.triggeringAccount.additionalInformation.complementaryInformation.value.amountOrRate.decimal1"> <a href="../types/decimal32_16.html">X-SBS-accountComplementaryInformationDecimal1</a><br>1ère décimale.
+				</td>				<td> Header
+				</td>
+				</tr>
+				<tr>
+				<td>
+				</td>				<td title="getLevellingListRequest.triggeringAccount.additionalInformation.complementaryInformation.value.amountOrRate.comparator"> <a href="../types/comparator.html">X-SBS-accountComplementaryInformationDecimal1Comparator</a><br>Opérateur de comparaison.
+				</td>				<td> Header
+				</td>
+				</tr>
+				<tr>
+				<td>
+				</td>				<td title="getLevellingListRequest.triggeringAccount.additionalInformation.complementaryInformation.value.amountOrRate.decimal2"> <a href="../types/decimal32_16.html">X-SBS-accountComplementaryInformationDecimal2</a><br>2ème décimale.
+				</td>				<td> Header
+				</td>
+				</tr>
+				<tr>
+				<td>
+				</td>				<td title="getLevellingListRequest.triggeringAccount.additionalInformation.complementaryInformation.identifier"> <a href="../types/charMax10.html">X-SBS-accountComplementaryInformationIdentifier</a><br>Identifiant de la donnée complémentaire.
+				</td>				<td> Header
+				</td>
+				</tr>
+				<tr>
+				<td>
+				</td>				<td title="getLevellingListRequest.accountConsideration.foreignAccount.bankIdentification.bic"> <a href="../types/bicCode.html">X-SBS-accountConsiderationForeignBic</a><br>Code BIC.
+				</td>				<td> Header
+				</td>
+				</tr>
+				<tr>
+				<td>
+				</td>				<td title="getLevellingListRequest.accountConsideration.foreignAccount.bankIdentification.branch.branch"> <a href="../types/charMax10.html">X-SBS-accountConsiderationForeignBranch</a><br>Etablissement.
+				</td>				<td> Header
+				</td>
+				</tr>
+				<tr>
+				<td>
+				</td>				<td title="getLevellingListRequest.accountConsideration.foreignAccount.bankIdentification.branch.cashRegister"> <a href="../types/char5.html">X-SBS-accountConsiderationForeignCashRegister</a><br>Guichet.
+				</td>				<td> Header
+				</td>
+				</tr>
+				<tr>
+				<td>
+				</td>				<td title="getLevellingListRequest.accountConsideration.foreignAccount.account.freeFormatAccount"> <a href="../types/charMax34.html">X-SBS-accountConsiderationForeignFreeFormatAccount</a><br>Compte au format libre.
+				</td>				<td> Header
+				</td>
+				</tr>
+				<tr>
+				<td>
+				</td>				<td title="getLevellingListRequest.accountConsideration.foreignAccount.account.ibanFormatAccount.value"> <a href="../types/charMax34.html">X-SBS-accountConsiderationForeignIbanFormatAccount</a><br>Valeur de l'IBAN.
+				</td>				<td> Header
+				</td>
+				</tr>
+				<tr>
+				<td>
+				</td>				<td title="getLevellingListRequest.accountConsideration.accountOtherBank.internalFormatAccount.accountNumber"> <a href="../types/charMax25.html">X-SBS-accountConsiderationOtherBankAccountNumber</a><br>Numéro de compte.
+				</td>				<td> Header
+				</td>
+				</tr>
+				<tr>
+				<td>
+				</td>				<td title="getLevellingListRequest.accountConsideration.accountOtherBank.internalFormatAccount.cashDesk"> <a href="../types/char5.html">X-SBS-accountConsiderationOtherBankCashDesk</a><br>Guichet.
+				</td>				<td> Header
+				</td>
+				</tr>
+				<tr>
+				<td>
+				</td>				<td title="getLevellingListRequest.accountConsideration.accountOtherBank.internalFormatAccount.establishment"> <a href="../types/charMax10.html">X-SBS-accountConsiderationOtherBankEstablishment</a><br>Établissement bancaire.
+				</td>				<td> Header
+				</td>
+				</tr>
+				<tr>
+				<td>
+				</td>				<td title="getLevellingListRequest.accountConsideration.accountOtherBank.ibanFormatAccount.value"> <a href="../types/charMax34.html">X-SBS-accountConsiderationOtherBankIbanFormatAccount</a><br>Valeur de l'IBAN.
+				</td>				<td> Header
+				</td>
+				</tr>
+				<tr>
+				<td>
+				</td>				<td title="getLevellingListRequest.accountConsideration.accountOurBranch.internalFormatAccountOurBranch.account"> <a href="../types/charMax11.html">X-SBS-accountConsiderationOurBranchAccountNumber</a><br>Numéro du compte.
+				</td>				<td> Header
+				</td>
+				</tr>
+				<tr>
+				<td>
+				</td>				<td title="getLevellingListRequest.accountConsideration.accountOurBranch.internalFormatAccountOurBranch.suffix"> <a href="../types/charMax2.html">X-SBS-accountConsiderationOurBranchAccountSuffix</a><br>Suffixe du compte.
+				</td>				<td> Header
+				</td>
+				</tr>
+				<tr>
+				<td>
+				</td>				<td title="getLevellingListRequest.accountConsideration.accountOurBranch.internalFormatAccountOurBranch.branch.code"> <a href="../types/char5.html">X-SBS-accountConsiderationOurBranchBranchCode</a><br>Code de l'agence.
+				</td>				<td> Header
+				</td>
+				</tr>
+				<tr>
+				<td>
+				</td>				<td title="getLevellingListRequest.accountConsideration.accountOurBranch.internalFormatAccountOurBranch.currency.alphaCode"> <a href="../types/char3.html">X-SBS-accountConsiderationOurBranchCurrencyAlphaCode</a><br>Code devise alphanumérique.
+				</td>				<td> Header
+				</td>
+				</tr>
+				<tr>
+				<td>
+				</td>				<td title="getLevellingListRequest.accountConsideration.accountOurBranch.internalFormatAccountOurBranch.currency.numericCode"> <a href="../types/char3.html">X-SBS-accountConsiderationOurBranchCurrencyNumericCode</a><br>Code devise numérique.
+				</td>				<td> Header
+				</td>
+				</tr>
+				<tr>
+				<td>
+				</td>				<td title="getLevellingListRequest.accountConsideration.accountOurBranch.externalFormatAccount.value"> <a href="../types/charMax34.html">X-SBS-accountConsiderationOurBranchExternalFormatAccount</a><br>Valeur de l'identifiant externe du compte.
+				</td>				<td> Header
+				</td>
+				</tr>
+				<tr>
+				<td>
+				</td>				<td title="getLevellingListRequest.accountConsideration.accountOurBranch.ibanFormatAccount.value"> <a href="../types/charMax34.html">X-SBS-accountConsiderationOurBranchIbanFormatAccount</a><br>Valeur de l'IBAN.
+				</td>				<td> Header
+				</td>
+				</tr>
+				<tr>
+				<td>
+				</td>				<td title="getLevellingListRequest.triggeringAccount.accountNumber.internalFormatAccountOurBranch.currency.alphaCode"> <a href="../types/char3.html">X-SBS-accountCurrencyAlphaCode</a><br>Code devise alphanumérique.
+				</td>				<td> Header
+				</td>
+				</tr>
+				<tr>
+				<td>
+				</td>				<td title="getLevellingListRequest.triggeringAccount.accountNumber.internalFormatAccountOurBranch.currency.numericCode"> <a href="../types/char3.html">X-SBS-accountCurrencyNumericCode</a><br>Code devise numérique.
+				</td>				<td> Header
+				</td>
+				</tr>
+				<tr>
+				<td>
+				</td>				<td title="getLevellingListRequest.triggeringAccount.customer.activeProfile.code"> <a href="../types/charMax3.html">X-SBS-accountCustomerActiveProfileCode</a><br>Code profil.
+				</td>				<td> Header
+				</td>
+				</tr>
+				<tr>
+				<td>
+				</td>				<td title="getLevellingListRequest.triggeringAccount.customer.activeProfile.designation"> <a href="../types/charMax30.html">X-SBS-accountCustomerActiveProfileDesignation</a><br>Désignation du profil.
+				</td>				<td> Header
+				</td>
+				</tr>
+				<tr>
+				<td>
+				</td>				<td title="getLevellingListRequest.triggeringAccount.customer.additionalInformation.designation"> <a href="../types/charMax30.html">X-SBS-accountCustomerAdditionalInformationDesignation</a><br>Désignation.
+				</td>				<td> Header
+				</td>
+				</tr>
+				<tr>
+				<td>
+				</td>				<td title="getLevellingListRequest.triggeringAccount.customer.additionalInformation.complementaryInformation.value.alphanumeric.comparisonOperator"> <a href="../types/comparisonOperator.html">X-SBS-accountCustomerComplementaryInformationAlphanumericComparisonOperator</a><br>Opérateur de comparaison.
+				</td>				<td> Header
+				</td>
+				</tr>
+				<tr>
+				<td>
+				</td>				<td title="getLevellingListRequest.triggeringAccount.customer.additionalInformation.complementaryInformation.value.alphanumeric.value"> <a href="../types/string.html">X-SBS-accountCustomerComplementaryInformationAlphanumericValue</a><br>Valeur de la désignation.
+				</td>				<td> Header
+				</td>
+				</tr>
+				<tr>
+				<td>
+				</td>				<td title="getLevellingListRequest.triggeringAccount.customer.additionalInformation.complementaryInformation.value.date.date1"> <a href="../types/date.html">X-SBS-accountCustomerComplementaryInformationDate1</a><br>1ère date.
+				</td>				<td> Header
+				</td>
+				</tr>
+				<tr>
+				<td>
+				</td>				<td title="getLevellingListRequest.triggeringAccount.customer.additionalInformation.complementaryInformation.value.date.date2"> <a href="../types/date.html">X-SBS-accountCustomerComplementaryInformationDate2</a><br>2ème date.
+				</td>				<td> Header
+				</td>
+				</tr>
+				<tr>
+				<td>
+				</td>				<td title="getLevellingListRequest.triggeringAccount.customer.additionalInformation.complementaryInformation.value.date.comparator"> <a href="../types/comparator.html">X-SBS-accountCustomerComplementaryInformationDateComparator</a><br>Opérateur de comparaison.
+				</td>				<td> Header
+				</td>
+				</tr>
+				<tr>
+				<td>
+				</td>				<td title="getLevellingListRequest.triggeringAccount.customer.additionalInformation.complementaryInformation.value.amountOrRate.decimal1"> <a href="../types/decimal32_16.html">X-SBS-accountCustomerComplementaryInformationDecimal1</a><br>1ère décimale.
+				</td>				<td> Header
+				</td>
+				</tr>
+				<tr>
+				<td>
+				</td>				<td title="getLevellingListRequest.triggeringAccount.customer.additionalInformation.complementaryInformation.value.amountOrRate.comparator"> <a href="../types/comparator.html">X-SBS-accountCustomerComplementaryInformationDecimal1Comparator</a><br>Opérateur de comparaison.
+				</td>				<td> Header
+				</td>
+				</tr>
+				<tr>
+				<td>
+				</td>				<td title="getLevellingListRequest.triggeringAccount.customer.additionalInformation.complementaryInformation.value.amountOrRate.decimal2"> <a href="../types/decimal32_16.html">X-SBS-accountCustomerComplementaryInformationDecimal2</a><br>2ème décimale.
+				</td>				<td> Header
+				</td>
+				</tr>
+				<tr>
+				<td>
+				</td>				<td title="getLevellingListRequest.triggeringAccount.customer.additionalInformation.complementaryInformation.identifier"> <a href="../types/charMax10.html">X-SBS-accountCustomerComplementaryInformationIdentifier</a><br>Identifiant de la donnée complémentaire.
+				</td>				<td> Header
+				</td>
+				</tr>
+				<tr>
+				<td>
+				</td>				<td title="getLevellingListRequest.triggeringAccount.customer.customer.displayedName"> <a href="../types/charMax67.html">X-SBS-accountCustomerDisplayedName</a><br>Nom de restitution du client.
+				</td>				<td> Header
+				</td>
+				</tr>
+				<tr>
+				<td>
+				</td>				<td title="getLevellingListRequest.triggeringAccount.customer.externalReference"> <a href="../types/charMax25.html">X-SBS-accountCustomerExternalReference</a><br>Référence externe.
+				</td>				<td> Header
+				</td>
+				</tr>
+				<tr>
+				<td>
+				</td>				<td title="getLevellingListRequest.triggeringAccount.customer.nationalIdentifier"> <a href="../types/charMax20.html">X-SBS-accountCustomerNationalIdentifier</a><br>Identifiant national.
+				</td>				<td> Header
+				</td>
+				</tr>
+				<tr>
+				<td>
+				</td>				<td title="getLevellingListRequest.triggeringAccount.customer.customer.customerNumber"> <a href="../types/charMax15.html">X-SBS-accountCustomerNumber</a><br>Code du client.
+				</td>				<td> Header
+				</td>
+				</tr>
+				<tr>
+				<td>
+				</td>				<td title="getLevellingListRequest.triggeringAccount.customer.customerOfficer.code"> <a href="../types/charMax3.html">X-SBS-accountCustomerOfficerCode</a><br>Code gestionnaire.
+				</td>				<td> Header
+				</td>
+				</tr>
+				<tr>
+				<td>
+				</td>				<td title="getLevellingListRequest.triggeringAccount.customer.customerOfficer.name"> <a href="../types/charMax30.html">X-SBS-accountCustomerOfficerName</a><br>Nom du gestionnaire.
+				</td>				<td> Header
+				</td>
+				</tr>
+				<tr>
+				<td>
+				</td>				<td title="getLevellingListRequest.triggeringAccount.customer.customerType"> <a href="../types/customerType.html">X-SBS-accountCustomerType</a><br>Type de client.
+				</td>				<td> Header
+				</td>
+				</tr>
+				<tr>
+				<td>
+				</td>				<td title="getLevellingListRequest.triggeringAccount.accountNumber.internalFormatAccountOurBranch.account"> <a href="../types/charMax11.html">X-SBS-accountNumber</a><br>Numéro du compte.
+				</td>				<td> Header
+				</td>
+				</tr>
+				<tr>
+				<td>
+				</td>				<td title="getLevellingListRequest.triggeringAccount.accountNumber.internalFormatAccountOurBranch.suffix"> <a href="../types/charMax2.html">X-SBS-accountSuffix</a><br>Suffixe du compte.
+				</td>				<td> Header
+				</td>
+				</tr>
+				<tr>
+				<td>
+				</td>				<td title="getLevellingListRequest.applicationDate.date1"> <a href="../types/date.html">X-SBS-applicationDate1</a><br>1ère date.
+				</td>				<td> Header
+				</td>
+				</tr>
+				<tr>
+				<td>
+				</td>				<td title="getLevellingListRequest.applicationDate.date2"> <a href="../types/date.html">X-SBS-applicationDate2</a><br>2ème date.
+				</td>				<td> Header
+				</td>
+				</tr>
+				<tr>
+				<td>
+				</td>				<td title="getLevellingListRequest.applicationDate.comparator"> <a href="../types/comparator.html">X-SBS-applicationDateComparator</a><br>Opérateur de comparaison.
+				</td>				<td> Header
+				</td>
+				</tr>
+				<tr>
+				<td>
+				</td>				<td title="getLevellingListRequest.identifier.branch.code"> <a href="../types/char5.html">X-SBS-branchCode</a><br>Code de l'agence.
+				</td>				<td> Header
+				</td>
+				</tr>
+				<tr>
+				<td>
+				</td>				<td title="getLevellingListRequest.identifier.event"> <a href="../types/eventNumber.html">X-SBS-event</a><br>Numéro d'évènement
+				</td>				<td> Header
+				</td>
+				</tr>
+				<tr>
+				<td>
+				</td>				<td title="getLevellingListRequest.triggeringAccount.accountNumber.externalFormatAccount.value"> <a href="../types/charMax34.html">X-SBS-externalFormatAccount</a><br>Valeur de l'identifiant externe du compte.
+				</td>				<td> Header
+				</td>
+				</tr>
+				<tr>
+				<td>
+				</td>				<td title="getLevellingListRequest.triggeringAccount.accountNumber.ibanFormatAccount.value"> <a href="../types/charMax34.html">X-SBS-ibanFormatAccount</a><br>Valeur de l'IBAN.
+				</td>				<td> Header
+				</td>
+				</tr>
+				<tr>
+				<td>
+				</td>				<td title="getLevellingListRequest.maturityDate.comparator"> <a href="../types/comparator.html">X-SBS-maturityDateComparator</a><br>Opérateur de comparaison.
+				</td>				<td> Header
+				</td>
+				</tr>
+				<tr>
+				<td>
+				</td>				<td title="getLevellingListRequest.identifier.operation.code"> <a href="../types/char3.html">X-SBS-operationCode</a><br>Code de l'opération.
+				</td>				<td> Header
+				</td>
+				</tr>
+				<tr>
+				<td>
+				</td>				<td title="getLevellingListRequest.transferType.code"> <a href="../types/char3.html">X-SBS-transferTypeCode</a><br>null
+				</td>				<td> Header
+				</td>
+				</tr>
+				<tr>
+				<td>
+				</td>				<td title="getLevellingListRequest.transferType.designation"> <a href="../types/charMax30.html">X-SBS-transferTypeDesignation</a><br>null
+				</td>				<td> Header
+				</td>
+				</tr>
+				<tr>
+				<td>
+				</td>				<td title="getLevellingListRequest.indicator"> <a href="../types/levellingIndicatorType.html">X-SBS-indicator</a><br>Indicateur de type de nivellement.
+				</td>				<td> Header
+				</td>
+				</tr>
+				<tr>
+				<td>
+				</td>				<td title="getLevellingListRequest.maturityDate.date1"> <a href="../types/date.html">X-SBS-maturityDate1</a><br>1ère date.
+				</td>				<td> Header
+				</td>
+				</tr>
+				<tr>
+				<td>
+				</td>				<td title="getLevellingListRequest.maturityDate.date2"> <a href="../types/date.html">X-SBS-maturityDate2</a><br>2ème date.
+				</td>				<td> Header
+				</td>
+				</tr>
+
+			</table>
+
+		</div>
+		<br>
+
+		</br>
+		<div class="mock-list">
+			<b>Codes Erreur : </b>			<table>
+				<tr>
+				<td> 400
+				</td>				<td> Bad Request
+				</td>
+				</tr>
+
+			</table>
+
+		</div>
+
+	</div>
+
+</div>
+     </div> 
+  </div>
+  </div>
+
+  
+  <script src="../resources/jquery.js"></script>
+  <script src="../resources/doc.js"></script>
+</body>
+</html>

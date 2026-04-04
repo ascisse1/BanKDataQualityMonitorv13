@@ -1,0 +1,600 @@
+<!DOCTYPE html >
+<html>
+<head>
+	<link rel="stylesheet" href="../resources/styleDocu.css" />
+  <link rel="stylesheet" href="../resources/font-awesome/css/font-awesome.min.css" />
+	<title>Documentation Xsd</title>
+	<meta charset="UTF-8" />
+</head>
+
+<body>
+  <div class="document">
+	<div class="header">
+		
+	</div>
+
+  <div class="tabs">
+    <div class="tabs-wrapper" onclick="window.open('../liste-ressources.html', '_self');">
+      <div class="tabs-left-content">
+        Liste des ressources
+      </div>
+    </div>
+    <div class="tabs-wrapper" onclick="window.open('../liste-services.html', '_self');">
+      <div class="tabs-left-content" >
+        Liste des services  
+      </div>
+    </div>
+    <div class="tabs-wrapper-selected" onclick="window.open('../liste-types.html', '_self');">
+      <div class="tabs-right-content">
+        Liste des types
+      </div>
+    </div>
+  </div>
+
+	
+
+	<div class="contenu">
+      <div class="breadcrumb"> 
+        <ul class="breadcrumb">
+           <li> <a href="../index.html"> Accueil </a></li>
+           <li> > </li>
+           <li> <a href="../liste-types.html"> Liste des types </a></li>
+           <li> > </li>
+           <li> accountFreeAttributesModify </li>
+        </ul>                    
+      </div>                    
+      
+     
+      <div class="summary">
+			<div class="mock-list">
+				<b>Nom : </b>accountFreeAttributesModify
+			</div>
+			<div class="mock-list">
+				<b> Description : </b>Modification des données complémentaires d'un compte.
+			</div>
+        
+        <div> </div>
+        <div class="mock-list"> Choix : Non</div>
+        
+      </div>
+                        
+      <div class="column-content">
+        <div class="detail-column">
+          <div class="tree"> 
+<ul>
+	<li>
+<i class="fa fa-caret-down fa-fw" onclick="expand_or_collapse(this)">
+</i>		accountFreeAttributesModify		<ul style="display:block">
+			<li>
+<i class="fa fa-caret-down fa-fw" onclick="expand_or_collapse(this)">
+</i><i class="fa fa-key fa-fw">
+</i><span style="font-weight:bold"> [M]
+</span><span class="selectable" id="e0"> freeAttribute : modifyAccountFreeAttributeRequest
+</span>				<ul style="display:block">
+					<li>
+<i class="fa fa-caret-down fa-fw" onclick="expand_or_collapse(this)">
+</i><i class="fa fa-key fa-fw">
+</i><span class="selectable" id="e1"> accountFreeAttribute : createAccountFreeAttributeRequest
+</span>						<ul style="display:block">
+							<li>
+<i class="fa fa-caret-down fa-fw" onclick="expand_or_collapse(this)">
+</i><i class="fa fa-key fa-fw">
+</i><span class="selectable" id="e2"> accountFreeAttribute : accountFreeAttribute
+</span>								<ul style="display:block">
+									<li>
+<i class="fa fa-caret-down fa-fw" onclick="expand_or_collapse(this)">
+</i><span class="selectable" id="e3"> accountIdentifier : internalAccountKey
+</span>										<ul style="display:block">
+											<li>
+<i class="fa fa-fw">
+</i><i class="fa fa-key fa-fw">
+</i><span class="selectable" id="e4"> branch : char5
+</span>
+											</li>
+											<li>
+<i class="fa fa-fw">
+</i><i class="fa fa-key fa-fw">
+</i><span class="selectable" id="e5"> currency : currencyCode
+</span>
+											</li>
+											<li>
+<i class="fa fa-fw">
+</i><i class="fa fa-key fa-fw">
+</i><span class="selectable" id="e6"> account : charMax11
+</span>
+											</li>
+											<li>
+<i class="fa fa-fw">
+</i><span class="selectable" id="e7"> suffix : charMax2
+</span>
+											</li>
+
+										</ul>
+
+									</li>
+									<li>
+<i class="fa fa-caret-down fa-fw" onclick="expand_or_collapse(this)">
+</i><i class="fa fa-key fa-fw">
+</i><span class="selectable" id="e8"> additionalData : additionalData
+</span>										<ul style="display:block">
+											<li>
+<i class="fa fa-fw">
+</i><i class="fa fa-key fa-fw">
+</i><span class="selectable" id="e9"> identifier : charMax10
+</span>
+											</li>
+											<li>
+<i class="fa fa-caret-down fa-fw" onclick="expand_or_collapse(this)">
+</i><span style="font-weight:bold"> [C]
+</span><span class="selectable" id="e10"> value : additionalDataValue
+</span>												<ul style="display:block">
+													<li>
+<i class="fa fa-fw">
+</i><span class="selectable" id="e11"> alphanumeric : charMax40
+</span>
+													</li>
+													<li>
+<i class="fa fa-fw">
+</i><span class="selectable" id="e12"> amountOrRate : decimal22_7
+</span>
+													</li>
+													<li>
+<i class="fa fa-fw">
+</i><span class="selectable" id="e13"> date : date
+</span>
+													</li>
+
+												</ul>
+
+											</li>
+
+										</ul>
+
+									</li>
+
+								</ul>
+
+							</li>
+
+						</ul>
+
+					</li>
+
+				</ul>
+
+			</li>
+
+		</ul>
+
+	</li>
+
+</ul>
+          </div>
+          
+          <div class="detail">
+				<p align="left">
+					Légende :<br />
+				</p>
+            <ul>
+               <li align="left">
+                  <i class="fa fa-key fa-fw">
+                  </i>
+                  = Elément obligatoire en saisie.
+               </li>
+               <li align="left">
+                  <span style="font-weight:bold"> [M]
+                  </span>
+                  = Elément multiple (0 à n occurrences).
+               </li>
+               <li align="left">
+                  <span style="font-weight:bold"> [C]
+                  </span>
+                  = Elément composé d'un choix à effectuer. Un seul choix autorisé.
+               </li>
+            </ul>
+            <p align="left">
+               Remarque : Un même élément peut regrouper plusieurs caractéristiques
+            </p>          
+          </div>
+          
+        </div>
+<div class="detail-column" id="d0" style="display:none">
+	<div class="detail">
+			<div class="mock-list">
+				<b>Nom : </b>freeAttribute
+			</div>
+			<div class="mock-list">
+				<b>Description : </b>Donnée complémentaire d'un compte.
+			</div>
+			<div class="mock-list">
+				<b>Limite du nombre d'occurences mini-maxi : </b>aucune aucune
+			</div>
+
+	</div>
+	<div class="detail">
+			<div class="mock-list">
+				<b>Nom : </b> <a href="../types/modifyAccountFreeAttributeRequest.html">modifyAccountFreeAttributeRequest</a>
+			</div>
+			<div class="mock-list">
+				<b> Description : </b>Requête de modification d'une donnée complémentaire d'un compte.
+			</div>
+
+	</div>
+
+</div>
+<div class="detail-column" id="d1" style="display:none">
+	<div class="detail">
+			<div class="mock-list">
+				<b>Nom : </b>accountFreeAttribute
+			</div>
+			<div class="mock-list">
+				<b>Description : </b>Donnée complémentaire du compte.
+			</div>
+			<div class="mock-list">
+				<b>Commentaire : </b><p>Pour chaque donn&eacute;e compl&eacute;mentaire, l&rsquo;identifiant et la valeur de la donn&eacute;e compl&eacute;mentaire sont obligatoires.</p>
+
+			</div>
+
+	</div>
+	<div class="detail">
+			<div class="mock-list">
+				<b>Nom : </b> <a href="../types/createAccountFreeAttributeRequest.html">createAccountFreeAttributeRequest</a>
+			</div>
+			<div class="mock-list">
+				<b> Description : </b>Requête de création d'une donnée complémentaire liée à un compte.
+			</div>
+
+	</div>
+
+</div>
+<div class="detail-column" id="d2" style="display:none">
+	<div class="detail">
+			<div class="mock-list">
+				<b>Nom : </b>accountFreeAttribute
+			</div>
+			<div class="mock-list">
+				<b>Description : </b>Donnée complémentaire d"un compte.
+			</div>
+			<div class="mock-list">
+				<b>Commentaire : </b><p>Pour chaque donn&eacute;e compl&eacute;mentaire, l&#39;identifiant et la valeur de la donn&eacute;e compl&eacute;mentaire sont obligatoires.</p>
+
+			</div>
+
+	</div>
+	<div class="detail">
+			<div class="mock-list">
+				<b>Nom : </b> <a href="../types/accountFreeAttribute.html">accountFreeAttribute</a>
+			</div>
+			<div class="mock-list">
+				<b> Description : </b>Donnée complémentaire d'un compte.
+			</div>
+
+	</div>
+
+</div>
+<div class="detail-column" id="d3" style="display:none">
+	<div class="detail">
+			<div class="mock-list">
+				<b>Nom : </b>accountIdentifier
+			</div>
+			<div class="mock-list">
+				<b>Description : </b>Identifiant du compte.
+			</div>
+			<div class="mock-list">
+				<b>Commentaire : </b><p>L&rsquo;identifiant du compte n&rsquo;est pas obligatoire si le service est appel&eacute; par les services <strong>createAccount </strong>et<strong> modifyAccount</strong>, et est obligatoire dans tous les autres cas.</p>
+
+<p>S&rsquo;il est renseign&eacute;, le compte doit exister dans la table des comptes.</p>
+
+			</div>
+
+	</div>
+	<div class="detail">
+			<div class="mock-list">
+				<b>Nom : </b> <a href="../types/internalAccountKey.html">internalAccountKey</a>
+			</div>
+			<div class="mock-list">
+				<b> Description : </b>Identifiant de compte au format interne.
+			</div>
+
+	</div>
+
+</div>
+<div class="detail-column" id="d4" style="display:none">
+	<div class="detail">
+			<div class="mock-list">
+				<b>Nom : </b>branch
+			</div>
+			<div class="mock-list">
+				<b>Description : </b>Agence du compte.
+			</div>
+			<div class="mock-list">
+				<b>Commentaire : </b><p>Les agences sont d&eacute;finies dans la nomenclature <strong>001</strong>.</p>
+
+			</div>
+
+	</div>
+	<div class="detail">
+			<div class="mock-list">
+				<b>Nom : </b> <a href="../types/char5.html">char5</a>
+			</div>
+			<div class="mock-list">
+				<b> Description : </b>Type avec un nombre de caractères égal à 5.
+			</div>
+			<div class="mock-list">
+				<b>Format : </b>string
+			</div>
+			<div class="mock-list">
+				<b>Longueur fixe : </b>5
+			</div>
+
+	</div>
+
+</div>
+<div class="detail-column" id="d5" style="display:none">
+	<div class="detail">
+			<div class="mock-list">
+				<b>Nom : </b>currency
+			</div>
+			<div class="mock-list">
+				<b>Description : </b>Devise du compte.
+			</div>
+			<div class="mock-list">
+				<b>Commentaire : </b><p>Les devises sont d&eacute;finies dans les nomenclatures <strong>002</strong> (devises alphanum&eacute;riques) et <strong>005</strong> (devises num&eacute;riques).</p>
+
+			</div>
+
+	</div>
+	<div class="detail">
+			<div class="mock-list">
+				<b>Nom : </b> <a href="../types/currencyCode.html">currencyCode</a>
+			</div>
+			<div class="mock-list">
+				<b> Description : </b>Code devise.
+			</div>
+			<div class="mock-list">
+				<b>Format : </b>string
+			</div>
+			<div class="mock-list">
+				<b>Longueur fixe : </b>3
+			</div>
+
+	</div>
+
+</div>
+<div class="detail-column" id="d6" style="display:none">
+	<div class="detail">
+			<div class="mock-list">
+				<b>Nom : </b>account
+			</div>
+			<div class="mock-list">
+				<b>Description : </b>Numéro du compte.
+			</div>
+
+	</div>
+	<div class="detail">
+			<div class="mock-list">
+				<b>Nom : </b> <a href="../types/charMax11.html">charMax11</a>
+			</div>
+			<div class="mock-list">
+				<b> Description : </b>Chaîne composée d'au plus 11 caractères.
+			</div>
+			<div class="mock-list">
+				<b>Format : </b>string
+			</div>
+			<div class="mock-list">
+				<b>Longueur mini-maxi : </b>1 - 11
+			</div>
+
+	</div>
+
+</div>
+<div class="detail-column" id="d7" style="display:none">
+	<div class="detail">
+			<div class="mock-list">
+				<b>Nom : </b>suffix
+			</div>
+			<div class="mock-list">
+				<b>Description : </b>Suffixe du compte.
+			</div>
+
+	</div>
+	<div class="detail">
+			<div class="mock-list">
+				<b>Nom : </b> <a href="../types/charMax2.html">charMax2</a>
+			</div>
+			<div class="mock-list">
+				<b> Description : </b>Chaîne composée d'au plus 2 caractères.
+			</div>
+			<div class="mock-list">
+				<b>Format : </b>string
+			</div>
+			<div class="mock-list">
+				<b>Longueur mini-maxi : </b>1 - 2
+			</div>
+
+	</div>
+
+</div>
+<div class="detail-column" id="d8" style="display:none">
+	<div class="detail">
+			<div class="mock-list">
+				<b>Nom : </b>additionalData
+			</div>
+			<div class="mock-list">
+				<b>Description : </b>Donnée complémentaire d'un compte.
+			</div>
+			<div class="mock-list">
+				<b>Commentaire : </b><p>L&rsquo;identifiant de la donn&eacute;e compl&eacute;mentaire d&rsquo;un compte ne peut pas &ecirc;tre celui param&eacute;tr&eacute;e dans le <strong>Libell&eacute;&nbsp;2</strong> en nomenclature <strong>098 </strong>pour <strong>CBRACCOUNT.</strong></p>
+
+<p>L&rsquo;identifiant de la donn&eacute;e compl&eacute;mentaire d&rsquo;un compte doit&nbsp;:</p>
+
+<ul>
+	<li>exister en nomenclature <strong>168</strong>,</li>
+	<li>correspondre &agrave; une donn&eacute;e compl&eacute;mentaire saisissable (<strong>Montant&nbsp;2 </strong>diff&eacute;rent de <strong>2</strong>),</li>
+	<li>&ecirc;tre autoris&eacute; pour le type de compte de client&egrave;le (<strong>Libell&eacute;&nbsp;4 </strong>valoris&eacute; &agrave; <strong>C</strong> ou <strong>T</strong>).</li>
+</ul>
+
+<p>La valeur de la donn&eacute;e compl&eacute;mentaire renseign&eacute;e doit&nbsp;:</p>
+
+<ul>
+	<li>correspondre au format pr&eacute;vu dans le <strong>Libell&eacute;&nbsp;5</strong>,</li>
+	<li>si son format est num&eacute;rique, avoir un nombre de d&eacute;cimales inf&eacute;rieur ou &eacute;gal au <strong>Montant&nbsp;4</strong>,</li>
+	<li>si son format est alphanum&eacute;rique, avoir une longueur maximum au <strong>Montant&nbsp;3</strong>, et exister dans la nomenclature dont le num&eacute;ro est indiqu&eacute; dans le <strong>Libell&eacute;&nbsp;6</strong>.</li>
+</ul>
+
+<p>Si le service est appel&eacute; par le service <strong>createAccount, </strong>une v&eacute;rification de l&rsquo;existence de toutes les donn&eacute;es compl&eacute;mentaires obligatoires (<strong>Montant&nbsp;1</strong> renseign&eacute; &agrave;<strong> 1</strong> dans la nomenclature <strong>168</strong>) et saisissables (<strong>Montant&nbsp;2</strong> renseign&eacute; &agrave;<strong> 1</strong> dans la nomenclature <strong>168</strong>) d&rsquo;un compte est effectu&eacute;e.</p>
+
+<p>Valeur par d&eacute;faut&nbsp;: identifiant de la donn&eacute;e compl&eacute;mentaire (uniquement pour la cr&eacute;ation d&rsquo;une donn&eacute;e compl&eacute;mentaire).</p>
+
+			</div>
+
+	</div>
+	<div class="detail">
+			<div class="mock-list">
+				<b>Nom : </b> <a href="../types/additionalData.html">additionalData</a>
+			</div>
+			<div class="mock-list">
+				<b> Description : </b>Donnée complémentaire.
+			</div>
+
+	</div>
+
+</div>
+<div class="detail-column" id="d9" style="display:none">
+	<div class="detail">
+			<div class="mock-list">
+				<b>Nom : </b>identifier
+			</div>
+			<div class="mock-list">
+				<b>Description : </b>Identifiant de la donnée complémentaire.
+			</div>
+			<div class="mock-list">
+				<b>Commentaire : </b><p>Les donn&eacute;es compl&eacute;mentaires sont param&eacute;tr&eacute;es en nomenclatures, chaque module ayant une nomenclature sp&eacute;cifique d&eacute;di&eacute;e.</p>
+
+			</div>
+
+	</div>
+	<div class="detail">
+			<div class="mock-list">
+				<b>Nom : </b> <a href="../types/charMax10.html">charMax10</a>
+			</div>
+			<div class="mock-list">
+				<b> Description : </b>Chaîne composée d'au plus 10 caractères.
+			</div>
+			<div class="mock-list">
+				<b>Format : </b>string
+			</div>
+			<div class="mock-list">
+				<b>Longueur mini-maxi : </b>1 - 10
+			</div>
+
+	</div>
+
+</div>
+<div class="detail-column" id="d10" style="display:none">
+	<div class="detail">
+			<div class="mock-list">
+				<b>Nom : </b>value
+			</div>
+			<div class="mock-list">
+				<b>Description : </b>Valeur de la donnée complémentaire.
+			</div>
+			<div class="mock-list">
+				<b>Commentaire : </b><p>La valeur de la donn&eacute;e compl&eacute;mentaire peut &ecirc;tre une donn&eacute;e textuelle, une donn&eacute;e num&eacute;rique ou bien une date.</p>
+
+<p>Un contr&ocirc;le de saisie obligatoire est effectu&eacute; selon le contexte d&rsquo;utilisation du type &quot;additionalData&quot;.</p>
+
+			</div>
+
+	</div>
+	<div class="detail">
+			<div class="mock-list">
+				<b>Nom : </b> <a href="../types/additionalDataValue.html">additionalDataValue</a>
+			</div>
+			<div class="mock-list">
+				<b> Description : </b>Valeur d'une donnée complémentaire.
+			</div>
+
+	</div>
+
+</div>
+<div class="detail-column" id="d11" style="display:none">
+	<div class="detail">
+			<div class="mock-list">
+				<b>Nom : </b>alphanumeric
+			</div>
+			<div class="mock-list">
+				<b>Description : </b>Valeur alphanumérique.
+			</div>
+
+	</div>
+	<div class="detail">
+			<div class="mock-list">
+				<b>Nom : </b> <a href="../types/charMax40.html">charMax40</a>
+			</div>
+			<div class="mock-list">
+				<b> Description : </b>Chaîne composée d'au plus 40 caractères.
+			</div>
+			<div class="mock-list">
+				<b>Format : </b>string
+			</div>
+			<div class="mock-list">
+				<b>Longueur mini-maxi : </b>1 - 40
+			</div>
+
+	</div>
+
+</div>
+<div class="detail-column" id="d12" style="display:none">
+	<div class="detail">
+			<div class="mock-list">
+				<b>Nom : </b>amountOrRate
+			</div>
+			<div class="mock-list">
+				<b>Description : </b>Valeur numérique (montant ou taux).
+			</div>
+
+	</div>
+	<div class="detail">
+			<div class="mock-list">
+				<b>Nom : </b> <a href="../types/decimal22_7.html">decimal22_7</a>
+			</div>
+			<div class="mock-list">
+				<b> Description : </b>Type décimal à 22 chiffres dont 7 décimales.
+			</div>
+			<div class="mock-list">
+				<b>Format : </b>decimal
+			</div>
+			<div class="mock-list">
+				<b>Nombre total de chiffres : </b>22
+			</div>
+
+	</div>
+
+</div>
+<div class="detail-column" id="d13" style="display:none">
+	<div class="detail">
+			<div class="mock-list">
+				<b>Nom : </b>date
+			</div>
+			<div class="mock-list">
+				<b>Description : </b>Date.
+			</div>
+
+	</div>
+	<div class="detail">
+			<div class="mock-list">
+				<b>Nom : </b> <a href="../types/date.html">date</a>
+			</div>
+
+	</div>
+
+</div>
+      </div> 
+  </div>
+
+  
+  <script src="../resources/jquery.js"></script>
+  <script src="../resources/doc.js"></script>
+</body>
+</html>

@@ -1,0 +1,131 @@
+<!DOCTYPE html >
+<html>
+<head>
+	<link rel="stylesheet" href="../resources/styleDocu.css" />
+  <link rel="stylesheet" href="../resources/font-awesome/css/font-awesome.min.css" />
+	<title>Documentation Xsd</title>
+	<meta charset="UTF-8" />
+</head>
+
+<body>
+  <div class="document">
+	<div class="header">
+		
+	</div>
+
+  <div class="tabs">
+    <div class="tabs-wrapper" onclick="window.open('../liste-ressources.html', '_self');">
+      <div class="tabs-left-content">
+        Liste des ressources
+      </div>
+    </div>
+    <div class="tabs-wrapper" onclick="window.open('../liste-services.html', '_self');">
+      <div class="tabs-left-content" >
+        Liste des services  
+      </div>
+    </div>
+    <div class="tabs-wrapper-selected" onclick="window.open('../liste-types.html', '_self');">
+      <div class="tabs-right-content">
+        Liste des types
+      </div>
+    </div>
+  </div>
+
+	
+
+	<div class="contenu">
+      <div class="breadcrumb"> 
+        <ul class="breadcrumb">
+           <li> <a href="../index.html"> Accueil </a></li>
+           <li> > </li>
+           <li> <a href="../liste-types.html"> Liste des types </a></li>
+           <li> > </li>
+           <li> amortizableLoanFileProcessingCode </li>
+        </ul>                    
+      </div>                    
+      
+     
+      <div class="summary">
+			<div class="mock-list">
+				<b>Nom : </b>amortizableLoanFileProcessingCode
+			</div>
+			<div class="mock-list">
+				<b> Description : </b>Code de traitement.
+			</div>
+			<div class="mock-list">
+				<b>Format : </b>string
+			</div>
+			<div class="mock-list">
+				<b>Valeurs possibles : </b>					<table class="table_enum" class="table_enum" class="table_enum" class="table_enum" class="table_enum" class="table_enum" class="table_enum">
+						<tr>
+						<td> 0
+						</td>						<td class="td_right"> Selon combinaison, voir partie complément de documentation.
+						</td>
+						</tr>
+						<tr>
+						<td> 1
+						</td>						<td class="td_right"> Selon combinaison, voir partie complément de documentation.
+						</td>
+						</tr>
+						<tr>
+						<td> 2
+						</td>						<td class="td_right"> Selon combinaison, voir partie complément de documentation.
+						</td>
+						</tr>
+						<tr>
+						<td> 3
+						</td>						<td class="td_right"> Selon combinaison, voir partie complément de documentation.
+						</td>
+						</tr>
+						<tr>
+						<td> 4
+						</td>						<td class="td_right"> Selon combinaison, voir partie complément de documentation.
+						</td>
+						</tr>
+						<tr>
+						<td> 5
+						</td>						<td class="td_right"> Selon combinaison, voir partie complément de documentation.
+						</td>
+						</tr>
+						<tr>
+						<td> 9
+						</td>						<td class="td_right"> Selon combinaison, voir partie complément de documentation.
+						</td>
+						</tr>
+
+					</table>
+
+			</div>
+        
+        <div> <p>Ces valeurs se combinent avec l&rsquo;&eacute;tat du dossier (type &quot;amortizableLoanFileStatus&quot;) pour donner des sens diff&eacute;rents&nbsp;:</p>
+
+<ul>
+	<li><strong>DE et 0</strong> = Dossier en d&eacute;ch&eacute;ance du terme avec des &eacute;ch&eacute;ances non appel&eacute;es</li>
+	<li><strong>DE et 2</strong> = Dossier en d&eacute;ch&eacute;ance du terme avec toutes les &eacute;ch&eacute;ances appel&eacute;es</li>
+	<li><strong>SI et 0</strong> = Dossier incomplet en cours d&rsquo;&eacute;tude</li>
+	<li><strong>SI et 1</strong> = Dossier complet en cours d&rsquo;&eacute;tude</li>
+	<li><strong>VA et 0</strong> = Dossier valid&eacute; en attente de mise en place</li>
+	<li><strong>VA et 1</strong> = Dossier valid&eacute; et mis en place</li>
+	<li><strong>VA et 3</strong> = Dossier en attente de comptabilisation d&rsquo;un remboursement anticip&eacute;</li>
+	<li><strong>VA et 4</strong> = Avenant en attente de mise en place</li>
+	<li><strong>VA et 5</strong> = Remboursement anticip&eacute; en cours</li>
+	<li><strong>VA et 9</strong> = Dossier &eacute;chu ou sold&eacute;</li>
+	<li><strong>VC et 1</strong> = Dossier accept&eacute; par le client</li>
+	<li><strong>VC et 2</strong> = Dossier refus&eacute; par le client</li>
+	<li><strong>VB et 1</strong> = Dossier accept&eacute; par la banque</li>
+	<li><strong>VB et 2</strong> = Dossier rejet&eacute; par la banque</li>
+	<li><strong>VB et 3</strong> = Dossier avec refus de financement</li>
+	<li><strong>VD </strong>= Dossier en validation interm&eacute;diaire</li>
+</ul>
+</div>
+        
+      </div>
+                        
+  </div>
+  </div>
+
+  
+  <script src="../resources/jquery.js"></script>
+  <script src="../resources/doc.js"></script>
+</body>
+</html>

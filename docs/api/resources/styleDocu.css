@@ -1,0 +1,286 @@
+/* CSS Document */
+
+/* Layout */
+.header{
+  height:140px;
+  padding-left:10px;
+  background: url(header-left.png) left no-repeat, url(header-right.png) right no-repeat;
+}
+
+.document{
+}
+
+
+.td_right{
+	text-align:left;
+}
+
+.table_enum{
+	width:100%;
+	display:inline-table;
+}
+
+.table_enum > tr > td{
+	width:50%;
+}
+
+.table_param { border-collapse:collapse}
+.table_param td, .table_param th { padding:5px;border:0; }
+.table_param td { border-bottom:1px dotted #BDB76B; }
+
+.tabs {     
+    overflow:auto;
+    border-left: 1px solid;
+    border-right:1px solid;
+    border-top:1px solid;
+    margin: 0 auto;
+    text-align: center;
+}
+
+.tabs-wrapper {
+    float: left;
+    height: 100%;
+    margin: 0 auto;
+    width: 33%;
+}
+
+.tabs-wrapper:hover{
+  background-color: #f2dcdb;
+  cursor:pointer;
+}
+
+.tabs-wrapper-selected{
+    float: left;
+    height: 100%;
+    margin: 0 auto;
+    width: 33%;
+    background-color: #f2dcdb;
+}
+.tabs-left-content {
+    border-right:1px solid;
+    height: 60px;
+    line-height: 60px;
+    text-align: center;
+    font-weight:bold;
+}
+.tabs-right-content {
+    height: 60px;
+    line-height: 60px;
+    text-align: center;
+    font-weight:bold;
+}
+div.breadcrumb{
+  height: 30px;
+  line-height: 30px;
+  padding : 0 0 0 20px;
+}
+
+ul.breadcrumb{
+  margin:0;
+}
+
+ul.breadcrumb li{
+  display:inline;
+  text-align:center;
+  margin:0;
+  padding:2px;
+  color:#242526;
+}
+
+.contenu{
+    border:1px solid;
+    min-height:800px;
+    overflow:auto;
+    padding-bottom:100px;
+}
+
+/*titre*/
+.title{
+    margin:auto;
+    text-align:center;
+    width:500px;
+    border:1px solid;
+    padding : 7px;
+    position: relative;
+    top:150;
+}
+
+.title h2{
+    line-height:normal;
+}
+
+/*liste des types et services*/
+.list{
+    width:75%;
+    margin:30px auto;
+    border:1px solid;
+}
+
+.list ul{
+    list-style-type:none;
+}
+
+.list a:link,.list a:visited{
+  color:black;
+  text-decoration:under-line;
+  margin-right:30px;
+  cursor:pointer;   
+}
+
+.summary{
+  width:90%;
+  margin:30px auto;
+  border:1px solid;
+	
+}
+
+.summary > ul{
+  list-style-type:none;
+}
+
+.mock-list{
+	display: list-item;
+	list-style-type: none;
+	margin-left: 1.3em;
+}
+/*detail d'un type ou service*/
+.detail{
+  width:90%;
+  margin:30px auto;
+  border:1px solid;
+}
+
+
+ul.enum{
+  list-style-type:disc;
+}
+
+.column-content{   
+  width:95%;
+  margin:30px auto;
+}
+.detail-column{
+    float: left;
+    height: 100%;
+    margin: 0 auto;
+    width: 50%;
+}
+
+.tree{
+  margin:0 auto;
+  width:90%;
+  font-size:97%;
+  overflow-x:auto;
+  overflow-y:hidden;
+  white-space:nowrap;
+}
+
+.tree ul{
+  list-style-type:none;
+}
+
+.sample-button{
+  margin:0 auto;
+  margin-top:80px;
+  width:30%;
+  border:1px solid;
+  height:50px;
+  line-height:50px;
+  text-align:center;
+}
+
+.tree .fa-caret-down, .tree .fa-caret-right, .selectable{
+  cursor:pointer;
+}
+
+.selectable:hover{
+	background-color: #f2dcdb;
+}
+
+
+body {
+    background-color: #fff;
+    color: #333;
+    font-family: sans-serif,Arial,Verdana,"Trebuchet MS";
+    font-size: 12px;
+    margin: 20px;
+}
+.cke_editable {
+    font-size: 13px;
+    line-height: 1.6;
+}
+blockquote {
+    border-color: #ccc;
+    border-style: solid;
+    border-width: 0;
+    font-family: Georgia,Times,"Times New Roman",serif;
+    font-style: italic;
+    padding: 2px 0;
+	    border-left-width: 5px;
+    padding-left: 20px;
+    padding-right: 8px;
+}
+
+}
+a {
+    color: #0782c1;
+}
+ol, ul, dl {
+    padding: 0 40px;
+}
+h1, h2, h3, h4, h5, h6 {
+    font-weight: normal;
+    line-height: 1.2;
+}
+hr {
+    -moz-border-bottom-colors: none;
+    -moz-border-left-colors: none;
+    -moz-border-right-colors: none;
+    -moz-border-top-colors: none;
+    border-color: #ccc -moz-use-text-color -moz-use-text-color;
+    border-image: none;
+    border-style: solid none none;
+    border-width: 1px 0 0;
+}
+img.right {
+    border: 1px solid #ccc;
+    float: right;
+    margin-left: 15px;
+    padding: 5px;
+}
+img.left {
+    border: 1px solid #ccc;
+    float: left;
+    margin-right: 15px;
+    padding: 5px;
+}
+pre {
+    -moz-tab-size: 4;
+    white-space: pre-wrap;
+    word-wrap: break-word;
+}
+.marker {
+    background-color: Yellow;
+}
+span[lang] {
+    font-style: italic;
+}
+figure {
+    background: rgba(0, 0, 0, 0.05) none repeat scroll 0 0;
+    border: 1px solid #ccc;
+    border-radius: 2px;
+    display: inline-block;
+    margin: 10px 20px;
+    padding: 10px;
+    text-align: center;
+}
+figure > figcaption {
+    display: block;
+    text-align: center;
+}
+a > img {
+    border: medium none;
+    margin: 1px;
+    outline: 1px solid #0782c1;
+    padding: 1px;
+}

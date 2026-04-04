@@ -1,0 +1,635 @@
+<!DOCTYPE html >
+<html>
+<head>
+	<link rel="stylesheet" href="../resources/styleDocu.css" />
+  <link rel="stylesheet" href="../resources/font-awesome/css/font-awesome.min.css" />
+	<title>Documentation Xsd</title>
+	<meta charset="UTF-8" />
+</head>
+
+<body>
+  <div class="document">
+	<div class="header">
+		
+	</div>
+
+  <div class="tabs">
+    <div class="tabs-wrapper" onclick="window.open('../liste-ressources.html', '_self');">
+      <div class="tabs-left-content">
+        Liste des ressources
+      </div>
+    </div>
+    <div class="tabs-wrapper" onclick="window.open('../liste-services.html', '_self');">
+      <div class="tabs-left-content" >
+        Liste des services  
+      </div>
+    </div>
+    <div class="tabs-wrapper-selected" onclick="window.open('../liste-types.html', '_self');">
+      <div class="tabs-right-content">
+        Liste des types
+      </div>
+    </div>
+  </div>
+
+	
+
+	<div class="contenu">
+      <div class="breadcrumb"> 
+        <ul class="breadcrumb">
+           <li> <a href="../index.html"> Accueil </a></li>
+           <li> > </li>
+           <li> <a href="../liste-types.html"> Liste des types </a></li>
+           <li> > </li>
+           <li> dosprtImplementationFundsReleaseMethodInformation </li>
+        </ul>                    
+      </div>                    
+      
+     
+      <div class="summary">
+			<div class="mock-list">
+				<b>Nom : </b>dosprtImplementationFundsReleaseMethodInformation
+			</div>
+			<div class="mock-list">
+				<b> Description : </b>Informations sur la méthode de déblocage des fonds à la mise en place d'un dossier de crédit.
+			</div>
+        
+        <div> </div>
+        <div class="mock-list"> Choix : Non</div>
+        
+      </div>
+                        
+      <div class="column-content">
+        <div class="detail-column">
+          <div class="tree"> 
+<ul>
+	<li>
+<i class="fa fa-caret-down fa-fw" onclick="expand_or_collapse(this)">
+</i>		dosprtImplementationFundsReleaseMethodInformation		<ul style="display:block">
+			<li>
+<i class="fa fa-fw">
+</i><span class="selectable" id="e0"> paymentMethod : dosprtDefaultFundsReleasePaymentMethod
+</span>
+			</li>
+			<li>
+<i class="fa fa-caret-down fa-fw" onclick="expand_or_collapse(this)">
+</i><span style="font-weight:bold"> [C]
+</span><span class="selectable" id="e1"> paymentInformation : dosprtFundsReleasePaymentInformation
+</span>				<ul style="display:block">
+					<li>
+<i class="fa fa-caret-down fa-fw" onclick="expand_or_collapse(this)">
+</i><span class="selectable" id="e2"> transferDomiciliation : accountIdentifierOtherBank
+</span>						<ul style="display:block">
+							<li>
+<i class="fa fa-caret-down fa-fw" onclick="expand_or_collapse(this)">
+</i><span class="selectable" id="e3"> internalFormatAccount : internalFormatAccountOtherBank
+</span>								<ul style="display:block">
+									<li>
+<i class="fa fa-fw">
+</i><i class="fa fa-key fa-fw">
+</i><span class="selectable" id="e4"> establishment : charMax10
+</span>
+									</li>
+									<li>
+<i class="fa fa-fw">
+</i><i class="fa fa-key fa-fw">
+</i><span class="selectable" id="e5"> cashDesk : char5
+</span>
+									</li>
+									<li>
+<i class="fa fa-fw">
+</i><i class="fa fa-key fa-fw">
+</i><span class="selectable" id="e6"> accountNumber : charMax25
+</span>
+									</li>
+
+								</ul>
+
+							</li>
+							<li>
+<i class="fa fa-caret-down fa-fw" onclick="expand_or_collapse(this)">
+</i><span class="selectable" id="e7"> ibanFormatAccount : ibanFormatAccount
+</span>								<ul style="display:block">
+									<li>
+<i class="fa fa-fw">
+</i><i class="fa fa-key fa-fw">
+</i><span class="selectable" id="e8"> value : charMax34
+</span>
+									</li>
+
+								</ul>
+
+							</li>
+
+						</ul>
+
+					</li>
+					<li>
+<i class="fa fa-caret-down fa-fw" onclick="expand_or_collapse(this)">
+</i><span class="selectable" id="e9"> otherAccount : internalAccountKey
+</span>						<ul style="display:block">
+							<li>
+<i class="fa fa-fw">
+</i><i class="fa fa-key fa-fw">
+</i><span class="selectable" id="e10"> branch : char5
+</span>
+							</li>
+							<li>
+<i class="fa fa-fw">
+</i><i class="fa fa-key fa-fw">
+</i><span class="selectable" id="e11"> currency : currencyCode
+</span>
+							</li>
+							<li>
+<i class="fa fa-fw">
+</i><i class="fa fa-key fa-fw">
+</i><span class="selectable" id="e12"> account : charMax11
+</span>
+							</li>
+							<li>
+<i class="fa fa-fw">
+</i><span class="selectable" id="e13"> suffix : charMax2
+</span>
+							</li>
+
+						</ul>
+
+					</li>
+
+				</ul>
+
+			</li>
+
+		</ul>
+
+	</li>
+
+</ul>
+          </div>
+          
+          <div class="detail">
+				<p align="left">
+					Légende :<br />
+				</p>
+            <ul>
+               <li align="left">
+                  <i class="fa fa-key fa-fw">
+                  </i>
+                  = Elément obligatoire en saisie.
+               </li>
+               <li align="left">
+                  <span style="font-weight:bold"> [M]
+                  </span>
+                  = Elément multiple (0 à n occurrences).
+               </li>
+               <li align="left">
+                  <span style="font-weight:bold"> [C]
+                  </span>
+                  = Elément composé d'un choix à effectuer. Un seul choix autorisé.
+               </li>
+            </ul>
+            <p align="left">
+               Remarque : Un même élément peut regrouper plusieurs caractéristiques
+            </p>          
+          </div>
+          
+        </div>
+<div class="detail-column" id="d0" style="display:none">
+	<div class="detail">
+			<div class="mock-list">
+				<b>Nom : </b>paymentMethod
+			</div>
+			<div class="mock-list">
+				<b>Description : </b>Mode de règlement.
+			</div>
+			<div class="mock-list">
+				<b>Commentaire : </b><p>La m&eacute;thode de d&eacute;blocage des fonds n&rsquo;est autoris&eacute;e que si le dossier de pr&ecirc;t ne concerne pas un logement social.</p>
+
+<p>La m&eacute;thode de d&eacute;blocage des fonds par remboursement n&rsquo;est autoris&eacute;e que si le dossier de cr&eacute;dit amortissable a un remboursement des &eacute;ch&eacute;ances par remboursement.</p>
+
+<p>Si&nbsp;le mode de r&egrave;glement n&rsquo;est pas renseign&eacute;, alors il est aliment&eacute; avec&nbsp;:</p>
+
+<ul>
+	<li>Autre compte (<strong>A</strong>) si le dossier de pr&ecirc;t est un dossier de pr&ecirc;t pour logement social</li>
+	<li>Le <strong>Libell&eacute; 2</strong> du param&egrave;tre <strong>CDTMODREGL</strong> en nomenclature<strong> 098</strong>, ou par d&eacute;faut avec Esp&egrave;ces (<strong>E</strong>), sinon.</li>
+</ul>
+
+<p>L&rsquo;&eacute;tiquette comptable correspondante doit &ecirc;tre param&eacute;tr&eacute;e en nomenclature <strong>094</strong> pour la cl&eacute;&nbsp;:</p>
+
+<ul>
+	<li><strong>ESPPRETttt</strong> (avec <strong>ttt</strong> = type de pr&ecirc;t) si le mode de r&egrave;glement est Esp&egrave;ces (<strong>E</strong>),</li>
+	<li><strong>VRTPRETttt</strong> (avec <strong>ttt</strong> = type de pr&ecirc;t) si le mode de r&egrave;glement est Virement (<strong>V</strong>),</li>
+	<li><strong>CHQPRETttt </strong>(avec<strong> ttt </strong>= type de pr&ecirc;t) si le mode de r&egrave;glement est Ch&egrave;que (<strong>C</strong>).</li>
+</ul>
+
+			</div>
+
+	</div>
+	<div class="detail">
+			<div class="mock-list">
+				<b>Nom : </b> <a href="../types/dosprtDefaultFundsReleasePaymentMethod.html">dosprtDefaultFundsReleasePaymentMethod</a>
+			</div>
+			<div class="mock-list">
+				<b> Description : </b>Méthode de déblocage des fonds par défaut.
+			</div>
+			<div class="mock-list">
+				<b>Format : </b>string
+			</div>
+			<div class="mock-list">
+				<b>Valeurs possibles : </b>					<table class="table_enum" class="table_enum" class="table_enum" class="table_enum" class="table_enum">
+						<tr>
+						<td> E
+						</td>						<td class="td_right"> Espèces
+						</td>
+						</tr>
+						<tr>
+						<td> V
+						</td>						<td class="td_right"> Virement
+						</td>
+						</tr>
+						<tr>
+						<td> A
+						</td>						<td class="td_right"> Autre compte
+						</td>
+						</tr>
+						<tr>
+						<td> R
+						</td>						<td class="td_right"> Remboursement
+						</td>
+						</tr>
+						<tr>
+						<td> C
+						</td>						<td class="td_right"> Chèque
+						</td>
+						</tr>
+
+					</table>
+
+			</div>
+
+	</div>
+
+</div>
+<div class="detail-column" id="d1" style="display:none">
+	<div class="detail">
+			<div class="mock-list">
+				<b>Nom : </b>paymentInformation
+			</div>
+			<div class="mock-list">
+				<b>Description : </b>Informations nécessaires au paiement.
+			</div>
+
+	</div>
+	<div class="detail">
+			<div class="mock-list">
+				<b>Nom : </b> <a href="../types/dosprtFundsReleasePaymentInformation.html">dosprtFundsReleasePaymentInformation</a>
+			</div>
+			<div class="mock-list">
+				<b> Description : </b>Informations sur le paiement lors du déblocage des fonds d¿un dossier de crédit.
+			</div>
+
+	</div>
+
+</div>
+<div class="detail-column" id="d2" style="display:none">
+	<div class="detail">
+			<div class="mock-list">
+				<b>Nom : </b>transferDomiciliation
+			</div>
+			<div class="mock-list">
+				<b>Description : </b>Domiciliation du virement.
+			</div>
+			<div class="mock-list">
+				<b>Commentaire : </b><p>Les informations de domiciliation du virement ne sont prises en compte que pour un mode de r&egrave;glement par virement (<strong>V</strong>). Elles sont interdites le cas &eacute;ch&eacute;ant.</p>
+
+<p>Le code &eacute;tablissement et le code guichet doivent exister dans la table des banques pour le site central.</p>
+
+			</div>
+
+	</div>
+	<div class="detail">
+			<div class="mock-list">
+				<b>Nom : </b> <a href="../types/accountIdentifierOtherBank.html">accountIdentifierOtherBank</a>
+			</div>
+			<div class="mock-list">
+				<b> Description : </b>Compte autres banques.
+			</div>
+
+	</div>
+
+</div>
+<div class="detail-column" id="d3" style="display:none">
+	<div class="detail">
+			<div class="mock-list">
+				<b>Nom : </b>internalFormatAccount
+			</div>
+			<div class="mock-list">
+				<b>Description : </b>Compte autres banques au format Amplitude.
+			</div>
+
+	</div>
+	<div class="detail">
+			<div class="mock-list">
+				<b>Nom : </b> <a href="../types/internalFormatAccountOtherBank.html">internalFormatAccountOtherBank</a>
+			</div>
+			<div class="mock-list">
+				<b> Description : </b>Compte d'une autre banque.
+			</div>
+
+	</div>
+
+</div>
+<div class="detail-column" id="d4" style="display:none">
+	<div class="detail">
+			<div class="mock-list">
+				<b>Nom : </b>establishment
+			</div>
+			<div class="mock-list">
+				<b>Description : </b>Établissement bancaire.
+			</div>
+
+	</div>
+	<div class="detail">
+			<div class="mock-list">
+				<b>Nom : </b> <a href="../types/charMax10.html">charMax10</a>
+			</div>
+			<div class="mock-list">
+				<b> Description : </b>Chaîne composée d'au plus 10 caractères.
+			</div>
+			<div class="mock-list">
+				<b>Format : </b>string
+			</div>
+			<div class="mock-list">
+				<b>Longueur mini-maxi : </b>1 - 10
+			</div>
+
+	</div>
+
+</div>
+<div class="detail-column" id="d5" style="display:none">
+	<div class="detail">
+			<div class="mock-list">
+				<b>Nom : </b>cashDesk
+			</div>
+			<div class="mock-list">
+				<b>Description : </b>Guichet.
+			</div>
+
+	</div>
+	<div class="detail">
+			<div class="mock-list">
+				<b>Nom : </b> <a href="../types/char5.html">char5</a>
+			</div>
+			<div class="mock-list">
+				<b> Description : </b>Type avec un nombre de caractères égal à 5.
+			</div>
+			<div class="mock-list">
+				<b>Format : </b>string
+			</div>
+			<div class="mock-list">
+				<b>Longueur fixe : </b>5
+			</div>
+
+	</div>
+
+</div>
+<div class="detail-column" id="d6" style="display:none">
+	<div class="detail">
+			<div class="mock-list">
+				<b>Nom : </b>accountNumber
+			</div>
+			<div class="mock-list">
+				<b>Description : </b>Numéro de compte.
+			</div>
+
+	</div>
+	<div class="detail">
+			<div class="mock-list">
+				<b>Nom : </b> <a href="../types/charMax25.html">charMax25</a>
+			</div>
+			<div class="mock-list">
+				<b> Description : </b>Chaîne composée d'au plus 25 caractères.
+			</div>
+			<div class="mock-list">
+				<b>Format : </b>string
+			</div>
+			<div class="mock-list">
+				<b>Longueur mini-maxi : </b>1 - 25
+			</div>
+
+	</div>
+
+</div>
+<div class="detail-column" id="d7" style="display:none">
+	<div class="detail">
+			<div class="mock-list">
+				<b>Nom : </b>ibanFormatAccount
+			</div>
+			<div class="mock-list">
+				<b>Description : </b>Compte au format IBAN.
+			</div>
+
+	</div>
+	<div class="detail">
+			<div class="mock-list">
+				<b>Nom : </b> <a href="../types/ibanFormatAccount.html">ibanFormatAccount</a>
+			</div>
+			<div class="mock-list">
+				<b> Description : </b>Identifiant de compte au format IBAN.
+			</div>
+
+	</div>
+
+</div>
+<div class="detail-column" id="d8" style="display:none">
+	<div class="detail">
+			<div class="mock-list">
+				<b>Nom : </b>value
+			</div>
+			<div class="mock-list">
+				<b>Description : </b>Valeur de l'IBAN.
+			</div>
+
+	</div>
+	<div class="detail">
+			<div class="mock-list">
+				<b>Nom : </b> <a href="../types/charMax34.html">charMax34</a>
+			</div>
+			<div class="mock-list">
+				<b> Description : </b>Chaîne composée d'au plus 34 caractères.
+			</div>
+			<div class="mock-list">
+				<b>Format : </b>string
+			</div>
+			<div class="mock-list">
+				<b>Longueur mini-maxi : </b>1 - 34
+			</div>
+
+	</div>
+
+</div>
+<div class="detail-column" id="d9" style="display:none">
+	<div class="detail">
+			<div class="mock-list">
+				<b>Nom : </b>otherAccount
+			</div>
+			<div class="mock-list">
+				<b>Description : </b>Autre compte.
+			</div>
+			<div class="mock-list">
+				<b>Commentaire : </b><p>Les informations d&rsquo;un autre compte ne sont prises en compte que pour un mode de r&egrave;glement Autre compte (<strong>A</strong>). Elles sont interdites le cas &eacute;ch&eacute;ant.</p>
+
+<p>Le compte renseign&eacute;&nbsp;:</p>
+
+<ul>
+	<li>Doit exister,</li>
+	<li>Ne doit pas &ecirc;tre ferm&eacute; si le blocage sur compte ferm&eacute; est param&eacute;tr&eacute; (<strong>Montant 1</strong> &eacute;gal &agrave; <strong>1</strong> pour le param&egrave;tre <strong>DESACCORDS</strong> en nomenclature <strong>098</strong>),</li>
+	<li>Ne doit pas &ecirc;tre en instance de fermeture si le blocage sur compte en instance de fermeture est param&eacute;tr&eacute; (<strong>Montant 2</strong> &eacute;gal &agrave; <strong>1</strong> pour le param&egrave;tre <strong>DESACCORDS</strong> en nomenclature <strong>098</strong>),</li>
+	<li>Ne doit pas &ecirc;tre d&eacute;j&agrave; rattach&eacute; au dossier de pr&ecirc;t.</li>
+</ul>
+
+<p>Dans le cas d&rsquo;un dossier pour logement social, sont renseign&eacute;s&nbsp;par d&eacute;faut (et donc non saisissables) :</p>
+
+<ul>
+	<li>L&rsquo;agence avec l&rsquo;agence du dossier,</li>
+	<li>La devise avec la devise du dossier,</li>
+	<li>Le num&eacute;ro de compte et le suffixe &agrave; partir du&nbsp; <strong>Libell&eacute; 5</strong> du param&egrave;tre <strong>PSCPENGttt</strong> (avec <strong>ttt</strong> = type de pr&ecirc;t) en nomenclature <strong>094 </strong>(ou &nbsp;<strong>PSCPENGPRT</strong> par d&eacute;faut).</li>
+</ul>
+
+			</div>
+
+	</div>
+	<div class="detail">
+			<div class="mock-list">
+				<b>Nom : </b> <a href="../types/internalAccountKey.html">internalAccountKey</a>
+			</div>
+			<div class="mock-list">
+				<b> Description : </b>Identifiant de compte au format interne.
+			</div>
+
+	</div>
+
+</div>
+<div class="detail-column" id="d10" style="display:none">
+	<div class="detail">
+			<div class="mock-list">
+				<b>Nom : </b>branch
+			</div>
+			<div class="mock-list">
+				<b>Description : </b>Agence du compte.
+			</div>
+			<div class="mock-list">
+				<b>Commentaire : </b><p>Les agences sont d&eacute;finies dans la nomenclature <strong>001</strong>.</p>
+
+			</div>
+
+	</div>
+	<div class="detail">
+			<div class="mock-list">
+				<b>Nom : </b> <a href="../types/char5.html">char5</a>
+			</div>
+			<div class="mock-list">
+				<b> Description : </b>Type avec un nombre de caractères égal à 5.
+			</div>
+			<div class="mock-list">
+				<b>Format : </b>string
+			</div>
+			<div class="mock-list">
+				<b>Longueur fixe : </b>5
+			</div>
+
+	</div>
+
+</div>
+<div class="detail-column" id="d11" style="display:none">
+	<div class="detail">
+			<div class="mock-list">
+				<b>Nom : </b>currency
+			</div>
+			<div class="mock-list">
+				<b>Description : </b>Devise du compte.
+			</div>
+			<div class="mock-list">
+				<b>Commentaire : </b><p>Les devises sont d&eacute;finies dans les nomenclatures <strong>002</strong> (devises alphanum&eacute;riques) et <strong>005</strong> (devises num&eacute;riques).</p>
+
+			</div>
+
+	</div>
+	<div class="detail">
+			<div class="mock-list">
+				<b>Nom : </b> <a href="../types/currencyCode.html">currencyCode</a>
+			</div>
+			<div class="mock-list">
+				<b> Description : </b>Code devise.
+			</div>
+			<div class="mock-list">
+				<b>Format : </b>string
+			</div>
+			<div class="mock-list">
+				<b>Longueur fixe : </b>3
+			</div>
+
+	</div>
+
+</div>
+<div class="detail-column" id="d12" style="display:none">
+	<div class="detail">
+			<div class="mock-list">
+				<b>Nom : </b>account
+			</div>
+			<div class="mock-list">
+				<b>Description : </b>Numéro du compte.
+			</div>
+
+	</div>
+	<div class="detail">
+			<div class="mock-list">
+				<b>Nom : </b> <a href="../types/charMax11.html">charMax11</a>
+			</div>
+			<div class="mock-list">
+				<b> Description : </b>Chaîne composée d'au plus 11 caractères.
+			</div>
+			<div class="mock-list">
+				<b>Format : </b>string
+			</div>
+			<div class="mock-list">
+				<b>Longueur mini-maxi : </b>1 - 11
+			</div>
+
+	</div>
+
+</div>
+<div class="detail-column" id="d13" style="display:none">
+	<div class="detail">
+			<div class="mock-list">
+				<b>Nom : </b>suffix
+			</div>
+			<div class="mock-list">
+				<b>Description : </b>Suffixe du compte.
+			</div>
+
+	</div>
+	<div class="detail">
+			<div class="mock-list">
+				<b>Nom : </b> <a href="../types/charMax2.html">charMax2</a>
+			</div>
+			<div class="mock-list">
+				<b> Description : </b>Chaîne composée d'au plus 2 caractères.
+			</div>
+			<div class="mock-list">
+				<b>Format : </b>string
+			</div>
+			<div class="mock-list">
+				<b>Longueur mini-maxi : </b>1 - 2
+			</div>
+
+	</div>
+
+</div>
+      </div> 
+  </div>
+
+  
+  <script src="../resources/jquery.js"></script>
+  <script src="../resources/doc.js"></script>
+</body>
+</html>

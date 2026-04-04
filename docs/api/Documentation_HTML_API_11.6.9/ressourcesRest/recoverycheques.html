@@ -1,0 +1,1081 @@
+<!DOCTYPE html>
+<html>
+<head>
+	<link rel="stylesheet" href="../resources/styleDocu.css" />
+    <link rel="stylesheet" href="../resources/font-awesome/css/font-awesome.min.css" />
+	<title>Documentation Xsd</title>
+	<meta charset="UTF-8" />
+</head>
+
+<body>
+  <div class="document">
+	<div class="header">		
+	</div>
+
+    <div class="tabs">
+        <div class="tabs-wrapper-selected" onclick="window.open('../liste-ressources.html', '_self');">
+            <div class="tabs-left-content" >Liste des ressources</div>
+        </div>
+        <div class="tabs-wrapper" onclick="window.open('../liste-services.html', '_self');">
+            <div class="tabs-left-content">Liste des services</div>
+        </div>
+        <div class="tabs-wrapper" onclick="window.open('../liste-types.html', '_self');">
+            <div class="tabs-right-content">Liste des types</div>
+        </div>
+    </div>
+
+	<div class="contenu">
+      <div class="breadcrumb"> 
+        <ul class="breadcrumb">
+           <li> <a href="../index.html"> Accueil </a></li>
+           <li> > </li>
+           <li> <a href="../liste-ressources.html"> Liste des ressources </a></li>
+           <li> > </li>
+           <li> recoverycheques </li>
+        </ul>                    
+      </div>                    
+      
+      <div class="summary">
+        <div class="mock-list"> Nom ressource REST : recoverycheques </div>
+        <div class="mock-list"> Programme Amplitude : guwrrecoverycheques </div>
+        <div class="mock-list"> Email : support@soprabanking.com </div>        
+        <br/>
+            <div class="mock-list"> Cheques for recovery</div>
+      </div>
+      
+      <div class="column-content" style="width:93%">
+        <div class="detail-column" style="width: 35%">
+          <div class="tree"> 
+<ul style="padding:0">
+	<li>
+<i class="fa fa-caret-down fa-fw" onclick="expand_or_collapse(this)">
+</i>		recoverycheques		<ul>
+			<li>
+<i class="fa fa-caret-down fa-fw" onclick="expand_or_collapse(this)">
+</i>				v1				<ul>
+					<li>
+<i class="fa fa-fw">
+</i><span class="selectable" id="e0"> GETLIST
+</span>
+					</li>
+
+				</ul>
+
+			</li>
+
+		</ul>
+
+	</li>
+
+</ul>
+          </div>
+        </div>
+                 
+        
+<div class="detail-column" id="d0" style="display:none; width: 65%">
+	<div class="detail">
+		<div class="mock-list">
+			<b>Service SOAP : </b> <a href="../services/getRecoveryChequesList.html">getRecoveryChequesList</a>
+		</div>
+		<div class="mock-list">
+			<b>Code retour succes : </b>200 - OK
+		</div>
+		<div class="mock-list">
+			<b>Uri : </b>http://soprabanking.com/amplitude/recoverycheques/v1/
+		</div>
+		<div class="mock-list">
+			<b>Description : </b>The service getRecoveryChequesList allows returning a list of cheques for recovery matching the search criteria received.
+
+The search is based on the optional criteria below:
+- information on the cheque remittance: branch (code and/or designation), reference, remittance date (or date range), remitting customer (code and/or name to be displayed, type, profile (code and/or designation), national identifier, account officer (code and/or name), additional information (identifier and/or value (or value range) and/or designation), external reference), remitter's account (number (internal or IBAN or external format) and/or class and/or additional information (identifier and/or value (or value range) and/or designation)), credit value date (or date range), remittance slip number,
+- information on the cheque issuer: bank institution (code and/or designation), branch (code and/or designation), account (number (internal and/or IBAN and/or external format) and/or class and/or customer (code and/or name to be displayed, type, profile (code and/or designation), national identifier, account officer (code and/or name), additional information (identifier and/or value (or value range) and/or designation), external reference) and/or additional information (identifier and/or value (or value range) and/or designation), or other bank account),
+- information on the cheque for recovery: serial number, cheque number (or number range), currency (code and/or designation), amount (or amount range),
+- information on the remittance processing: event number, origin, operation (code and/or designation), operation nature (code and/or designation), recovery branch (code and/or designation), presentation date (or date range), collection method, cheque fate (code and/or date (or date range)), rejection reason (code and/or designation),
+- information on the cheque collection: Direct Credit outstanding account (number (internal or IBAN or external format) and/or class and/or customer (code and/or name to be displayed, type, profile (code and/or designation), national identifier, account officer (code and/or name), additional information (identifier and/or value (or value range) and/or designation), external reference) and/or additional information (identifier and/or value (or value range) and/or designation), unavailability date or date range), collection account (number (internal and/or IBAN and/or external format) and/or class and/or customer (code and/or name to be displayed, type, profile (code and/or designation), national identifier, account officer (code and/or name), additional information (identifier and/or value (or value range) and/or designation), external reference) and/or additional information (identifier and/or value (or value range) and/or designation).
+
+For each cheque returned, all data used in the search criteria will be indicated.
+		</div>
+		<br>
+
+		</br>
+		<div class="mock-list">
+			<b>Parametres : </b>			<table class="table_param">
+				<tr>
+				<td>
+				</td>				<td title="getRecoveryChequesListRequest.chequeRemittanceInformation.accountToBeCredited.accountNumber.internalFormatAccountOurBranch.branch.code"> <a href="../types/char5.html">X-SBS-accountToBeCreditedBranchCode</a><br>Code de l'agence.
+				</td>				<td> Header
+				</td>
+				</tr>
+				<tr>
+				<td>
+				</td>				<td title="getRecoveryChequesListRequest.chequeRemittanceInformation.accountToBeCredited.accountNumber.internalFormatAccountOurBranch.branch.designation"> <a href="../types/charMax30.html">X-SBS-accountToBeCreditedBranchDesignation</a><br>Désignation de l'agence.
+				</td>				<td> Header
+				</td>
+				</tr>
+				<tr>
+				<td>
+				</td>				<td title="getRecoveryChequesListRequest.chequeRemittanceInformation.accountToBeCredited.accountClass.comparisonOperator"> <a href="../types/comparisonOperator.html">X-SBS-accountToBeCreditedClassComparisonOperator</a><br>Opérateur de comparaison.
+				</td>				<td> Header
+				</td>
+				</tr>
+				<tr>
+				<td>
+				</td>				<td title="getRecoveryChequesListRequest.chequeRemittanceInformation.accountToBeCredited.accountClass.value"> <a href="../types/string.html">X-SBS-accountToBeCreditedClassValue</a><br>Valeur de la désignation.
+				</td>				<td> Header
+				</td>
+				</tr>
+				<tr>
+				<td>
+				</td>				<td title="getRecoveryChequesListRequest.chequeRemittanceInformation.accountToBeCredited.additionalInformation.complementaryInformation.value.alphanumeric.comparisonOperator"> <a href="../types/comparisonOperator.html">X-SBS-accountToBeCreditedComplementaryInformationAlphanumericComparisonOperator</a><br>Opérateur de comparaison.
+				</td>				<td> Header
+				</td>
+				</tr>
+				<tr>
+				<td>
+				</td>				<td title="getRecoveryChequesListRequest.chequeRemittanceInformation.accountToBeCredited.additionalInformation.complementaryInformation.value.alphanumeric.value"> <a href="../types/string.html">X-SBS-accountToBeCreditedComplementaryInformationAlphanumericValue</a><br>Valeur de la désignation.
+				</td>				<td> Header
+				</td>
+				</tr>
+				<tr>
+				<td>
+				</td>				<td title="getRecoveryChequesListRequest.chequeRemittanceInformation.accountToBeCredited.additionalInformation.complementaryInformation.identifier"> <a href="../types/charMax10.html">X-SBS-accountToBeCreditedComplementaryInformationIdentifier</a><br>Identifiant de la donnée complémentaire.
+				</td>				<td> Header
+				</td>
+				</tr>
+				<tr>
+				<td>
+				</td>				<td title="getRecoveryChequesListRequest.chequeRemittanceInformation.accountToBeCredited.accountNumber.internalFormatAccountOurBranch.currency.alphaCode"> <a href="../types/char3.html">X-SBS-accountToBeCreditedCurrencyAlphaCode</a><br>Code devise alphanumérique.
+				</td>				<td> Header
+				</td>
+				</tr>
+				<tr>
+				<td>
+				</td>				<td title="getRecoveryChequesListRequest.chequeRemittanceInformation.accountToBeCredited.accountNumber.internalFormatAccountOurBranch.currency.numericCode"> <a href="../types/char3.html">X-SBS-accountToBeCreditedCurrencyNumericCode</a><br>Code devise numérique.
+				</td>				<td> Header
+				</td>
+				</tr>
+				<tr>
+				<td>
+				</td>				<td title="getRecoveryChequesListRequest.chequeRemittanceInformation.accountToBeCredited.customer.activeProfile.code"> <a href="../types/charMax3.html">X-SBS-accountToBeCreditedCustomerActiveProfileCode</a><br>Code profil.
+				</td>				<td> Header
+				</td>
+				</tr>
+				<tr>
+				<td>
+				</td>				<td title="getRecoveryChequesListRequest.chequeRemittanceInformation.accountToBeCredited.customer.activeProfile.designation"> <a href="../types/charMax30.html">X-SBS-accountToBeCreditedCustomerActiveProfileDesignation</a><br>Désignation du profil.
+				</td>				<td> Header
+				</td>
+				</tr>
+				<tr>
+				<td>
+				</td>				<td title="getRecoveryChequesListRequest.chequeRemittanceInformation.accountToBeCredited.customer.additionalInformation.complementaryInformation.value.alphanumeric.comparisonOperator"> <a href="../types/comparisonOperator.html">X-SBS-accountToBeCreditedCustomerComplementaryInformationAlphanumericComparisonOperator</a><br>Opérateur de comparaison.
+				</td>				<td> Header
+				</td>
+				</tr>
+				<tr>
+				<td>
+				</td>				<td title="getRecoveryChequesListRequest.chequeRemittanceInformation.accountToBeCredited.customer.additionalInformation.complementaryInformation.value.alphanumeric.value"> <a href="../types/string.html">X-SBS-accountToBeCreditedCustomerComplementaryInformationAlphanumericValue</a><br>Valeur de la désignation.
+				</td>				<td> Header
+				</td>
+				</tr>
+				<tr>
+				<td>
+				</td>				<td title="getRecoveryChequesListRequest.chequeRemittanceInformation.accountToBeCredited.customer.additionalInformation.complementaryInformation.identifier"> <a href="../types/charMax10.html">X-SBS-accountToBeCreditedCustomerComplementaryInformationIdentifier</a><br>Identifiant de la donnée complémentaire.
+				</td>				<td> Header
+				</td>
+				</tr>
+				<tr>
+				<td>
+				</td>				<td title="getRecoveryChequesListRequest.chequeRemittanceInformation.accountToBeCredited.customer.customer.displayedName"> <a href="../types/charMax67.html">X-SBS-accountToBeCreditedCustomerDisplayedName</a><br>Nom de restitution du client.
+				</td>				<td> Header
+				</td>
+				</tr>
+				<tr>
+				<td>
+				</td>				<td title="getRecoveryChequesListRequest.chequeRemittanceInformation.accountToBeCredited.customer.externalReference"> <a href="../types/charMax25.html">X-SBS-accountToBeCreditedCustomerExternalReference</a><br>Référence externe.
+				</td>				<td> Header
+				</td>
+				</tr>
+				<tr>
+				<td>
+				</td>				<td title="getRecoveryChequesListRequest.chequeRemittanceInformation.accountToBeCredited.customer.nationalIdentifier"> <a href="../types/charMax20.html">X-SBS-accountToBeCreditedCustomerNationalIdentifier</a><br>Identifiant national.
+				</td>				<td> Header
+				</td>
+				</tr>
+				<tr>
+				<td>
+				</td>				<td title="getRecoveryChequesListRequest.chequeRemittanceInformation.accountToBeCredited.customer.customer.customerNumber"> <a href="../types/charMax15.html">X-SBS-accountToBeCreditedCustomerNumber</a><br>Code du client.
+				</td>				<td> Header
+				</td>
+				</tr>
+				<tr>
+				<td>
+				</td>				<td title="getRecoveryChequesListRequest.chequeRemittanceInformation.accountToBeCredited.customer.customerOfficer.code"> <a href="../types/charMax3.html">X-SBS-accountToBeCreditedCustomerOfficerCode</a><br>Code gestionnaire.
+				</td>				<td> Header
+				</td>
+				</tr>
+				<tr>
+				<td>
+				</td>				<td title="getRecoveryChequesListRequest.chequeRemittanceInformation.accountToBeCredited.customer.customerOfficer.name"> <a href="../types/charMax30.html">X-SBS-accountToBeCreditedCustomerOfficerName</a><br>Nom du gestionnaire.
+				</td>				<td> Header
+				</td>
+				</tr>
+				<tr>
+				<td>
+				</td>				<td title="getRecoveryChequesListRequest.chequeRemittanceInformation.accountToBeCredited.customer.customerType"> <a href="../types/customerType.html">X-SBS-accountToBeCreditedCustomerType</a><br>Type de client.
+				</td>				<td> Header
+				</td>
+				</tr>
+				<tr>
+				<td>
+				</td>				<td title="getRecoveryChequesListRequest.chequeRemittanceInformation.accountToBeCredited.accountNumber.externalFormatAccount.value"> <a href="../types/charMax34.html">X-SBS-accountToBeCreditedExternalFormat</a><br>Valeur de l'identifiant externe du compte.
+				</td>				<td> Header
+				</td>
+				</tr>
+				<tr>
+				<td>
+				</td>				<td title="getRecoveryChequesListRequest.chequeRemittanceInformation.accountToBeCredited.accountNumber.ibanFormatAccount.value"> <a href="../types/charMax34.html">X-SBS-accountToBeCreditedIbanFormat</a><br>Valeur de l'IBAN.
+				</td>				<td> Header
+				</td>
+				</tr>
+				<tr>
+				<td>
+				</td>				<td title="getRecoveryChequesListRequest.chequeRemittanceInformation.accountToBeCredited.accountNumber.internalFormatAccountOurBranch.account"> <a href="../types/charMax11.html">X-SBS-accountToBeCreditedNumber</a><br>Numéro du compte.
+				</td>				<td> Header
+				</td>
+				</tr>
+				<tr>
+				<td>
+				</td>				<td title="getRecoveryChequesListRequest.chequeRemittanceInformation.accountToBeCredited.accountNumber.internalFormatAccountOurBranch.suffix"> <a href="../types/charMax2.html">X-SBS-accountToBeCreditedSuffix</a><br>Suffixe du compte.
+				</td>				<td> Header
+				</td>
+				</tr>
+				<tr>
+				<td>
+				</td>				<td title="getRecoveryChequesListRequest.chequeInformation.chequeAmount.amount1"> <a href="../types/decimal19_4.html">X-SBS-chequeAmount1</a><br>1er montant.
+				</td>				<td> Header
+				</td>
+				</tr>
+				<tr>
+				<td>
+				</td>				<td title="getRecoveryChequesListRequest.chequeInformation.chequeAmount.amount2"> <a href="../types/decimal19_4.html">X-SBS-chequeAmount2</a><br>2ème montant.
+				</td>				<td> Header
+				</td>
+				</tr>
+				<tr>
+				<td>
+				</td>				<td title="getRecoveryChequesListRequest.chequeInformation.chequeAmount.comparator"> <a href="../types/comparator.html">X-SBS-chequeAmountComparator</a><br>Opérateur de comparaison.
+				</td>				<td> Header
+				</td>
+				</tr>
+				<tr>
+				<td>
+				</td>				<td title="getRecoveryChequesListRequest.chequeInformation.chequeAmount.currency.currency.alphaCode"> <a href="../types/char3.html">X-SBS-chequeAmountCurrencyAlphaCode</a><br>Code devise alphanumérique.
+				</td>				<td> Header
+				</td>
+				</tr>
+				<tr>
+				<td>
+				</td>				<td title="getRecoveryChequesListRequest.chequeInformation.chequeAmount.currency.currency.numericCode"> <a href="../types/char3.html">X-SBS-chequeAmountCurrencyNumericCode</a><br>Code devise numérique.
+				</td>				<td> Header
+				</td>
+				</tr>
+				<tr>
+				<td>
+				</td>				<td title="getRecoveryChequesListRequest.chequeInformation.chequeCurrency.alphaCode"> <a href="../types/char3.html">X-SBS-chequeCurrencyAlphaCode</a><br>Code devise alphanumérique.
+				</td>				<td> Header
+				</td>
+				</tr>
+				<tr>
+				<td>
+				</td>				<td title="getRecoveryChequesListRequest.chequeInformation.chequeCurrency.numericCode"> <a href="../types/char3.html">X-SBS-chequeCurrencyNumericCode</a><br>Code devise numérique.
+				</td>				<td> Header
+				</td>
+				</tr>
+				<tr>
+				<td>
+				</td>				<td title="getRecoveryChequesListRequest.chequeRemittanceProcessingInformation.chequeFateInformation.chequeFate"> <a href="../types/clearingDecision.html">X-SBS-chequeFate</a><br>Sort du chèque.
+				</td>				<td> Header
+				</td>
+				</tr>
+				<tr>
+				<td>
+				</td>				<td title="getRecoveryChequesListRequest.chequeInformation.chequeNumber.value1"> <a href="../types/charMax8.html">X-SBS-chequeNumber1</a><br>Première valeur
+				</td>				<td> Header
+				</td>
+				</tr>
+				<tr>
+				<td>
+				</td>				<td title="getRecoveryChequesListRequest.chequeInformation.chequeNumber.value1"> <a href="../types/charMax8.html">X-SBS-chequeNumber2</a><br>Première valeur
+				</td>				<td> Header
+				</td>
+				</tr>
+				<tr>
+				<td>
+				</td>				<td title="getRecoveryChequesListRequest.chequeInformation.chequeNumber.comparator"> <a href="../types/comparator.html">X-SBS-chequeNumberComparator</a><br>null
+				</td>				<td> Header
+				</td>
+				</tr>
+				<tr>
+				<td>
+				</td>				<td title="getRecoveryChequesListRequest.chequeRemittanceProcessingInformation.chequePresentationDate.date1"> <a href="../types/date.html">X-SBS-chequePresentationDate1</a><br>1ère date.
+				</td>				<td> Header
+				</td>
+				</tr>
+				<tr>
+				<td>
+				</td>				<td title="getRecoveryChequesListRequest.chequeRemittanceProcessingInformation.chequePresentationDate.date2"> <a href="../types/date.html">X-SBS-chequePresentationDate2</a><br>2ème date.
+				</td>				<td> Header
+				</td>
+				</tr>
+				<tr>
+				<td>
+				</td>				<td title="getRecoveryChequesListRequest.chequeRemittanceProcessingInformation.chequePresentationDate.comparator"> <a href="../types/comparator.html">X-SBS-chequePresentationDateComparator</a><br>Opérateur de comparaison.
+				</td>				<td> Header
+				</td>
+				</tr>
+				<tr>
+				<td>
+				</td>				<td title="getRecoveryChequesListRequest.chequeInformation.chequeSerialNumber"> <a href="../types/char2.html">X-SBS-chequeSerialNumber</a><br>Numéro de série du chèque.
+				</td>				<td> Header
+				</td>
+				</tr>
+				<tr>
+				<td>
+				</td>				<td title="getRecoveryChequesListRequest.chequeCollectionAccountInformation.collectionAccount.accountNumber.internalFormatAccountOurBranch.branch.code"> <a href="../types/char5.html">X-SBS-collectionAccountBranchCode</a><br>Code de l'agence.
+				</td>				<td> Header
+				</td>
+				</tr>
+				<tr>
+				<td>
+				</td>				<td title="getRecoveryChequesListRequest.chequeCollectionAccountInformation.collectionAccount.accountNumber.internalFormatAccountOurBranch.branch.designation"> <a href="../types/charMax30.html">X-SBS-collectionAccountBranchDesignation</a><br>Désignation de l'agence.
+				</td>				<td> Header
+				</td>
+				</tr>
+				<tr>
+				<td>
+				</td>				<td title="getRecoveryChequesListRequest.chequeCollectionAccountInformation.collectionAccount.accountClass.comparisonOperator"> <a href="../types/comparisonOperator.html">X-SBS-collectionAccountClassComparisonOperator</a><br>Opérateur de comparaison.
+				</td>				<td> Header
+				</td>
+				</tr>
+				<tr>
+				<td>
+				</td>				<td title="getRecoveryChequesListRequest.chequeCollectionAccountInformation.collectionAccount.accountClass.value"> <a href="../types/string.html">X-SBS-collectionAccountClassValue</a><br>Valeur de la désignation.
+				</td>				<td> Header
+				</td>
+				</tr>
+				<tr>
+				<td>
+				</td>				<td title="getRecoveryChequesListRequest.chequeCollectionAccountInformation.collectionAccount.additionalInformation.complementaryInformation.value.alphanumeric.comparisonOperator"> <a href="../types/comparisonOperator.html">X-SBS-collectionAccountComplementaryInformationAlphanumericComparisonOperator</a><br>Opérateur de comparaison.
+				</td>				<td> Header
+				</td>
+				</tr>
+				<tr>
+				<td>
+				</td>				<td title="getRecoveryChequesListRequest.chequeCollectionAccountInformation.collectionAccount.additionalInformation.complementaryInformation.value.alphanumeric.value"> <a href="../types/string.html">X-SBS-collectionAccountComplementaryInformationAlphanumericValue</a><br>Valeur de la désignation.
+				</td>				<td> Header
+				</td>
+				</tr>
+				<tr>
+				<td>
+				</td>				<td title="getRecoveryChequesListRequest.chequeCollectionAccountInformation.collectionAccount.additionalInformation.complementaryInformation.identifier"> <a href="../types/charMax10.html">X-SBS-collectionAccountComplementaryInformationIdentifier</a><br>Identifiant de la donnée complémentaire.
+				</td>				<td> Header
+				</td>
+				</tr>
+				<tr>
+				<td>
+				</td>				<td title="getRecoveryChequesListRequest.chequeCollectionAccountInformation.collectionAccount.accountNumber.internalFormatAccountOurBranch.currency.alphaCode"> <a href="../types/char3.html">X-SBS-collectionAccountCurrencyAlphaCode</a><br>Code devise alphanumérique.
+				</td>				<td> Header
+				</td>
+				</tr>
+				<tr>
+				<td>
+				</td>				<td title="getRecoveryChequesListRequest.chequeCollectionAccountInformation.collectionAccount.accountNumber.internalFormatAccountOurBranch.currency.numericCode"> <a href="../types/char3.html">X-SBS-collectionAccountCurrencyNumericCode</a><br>Code devise numérique.
+				</td>				<td> Header
+				</td>
+				</tr>
+				<tr>
+				<td>
+				</td>				<td title="getRecoveryChequesListRequest.chequeCollectionAccountInformation.collectionAccount.customer.activeProfile.code"> <a href="../types/charMax3.html">X-SBS-collectionAccountCustomerActiveProfileCode</a><br>Code profil.
+				</td>				<td> Header
+				</td>
+				</tr>
+				<tr>
+				<td>
+				</td>				<td title="getRecoveryChequesListRequest.chequeCollectionAccountInformation.collectionAccount.customer.activeProfile.designation"> <a href="../types/charMax30.html">X-SBS-collectionAccountCustomerActiveProfileDesignation</a><br>Désignation du profil.
+				</td>				<td> Header
+				</td>
+				</tr>
+				<tr>
+				<td>
+				</td>				<td title="getRecoveryChequesListRequest.chequeCollectionAccountInformation.collectionAccount.customer.additionalInformation.complementaryInformation.value.alphanumeric.comparisonOperator"> <a href="../types/comparisonOperator.html">X-SBS-collectionAccountCustomerComplementaryInformationAlphanumericComparisonOperator</a><br>Opérateur de comparaison.
+				</td>				<td> Header
+				</td>
+				</tr>
+				<tr>
+				<td>
+				</td>				<td title="getRecoveryChequesListRequest.chequeCollectionAccountInformation.collectionAccount.customer.additionalInformation.complementaryInformation.value.alphanumeric.value"> <a href="../types/string.html">X-SBS-collectionAccountCustomerComplementaryInformationAlphanumericValue</a><br>Valeur de la désignation.
+				</td>				<td> Header
+				</td>
+				</tr>
+				<tr>
+				<td>
+				</td>				<td title="getRecoveryChequesListRequest.chequeCollectionAccountInformation.collectionAccount.customer.additionalInformation.complementaryInformation.identifier"> <a href="../types/charMax10.html">X-SBS-collectionAccountCustomerComplementaryInformationIdentifier</a><br>Identifiant de la donnée complémentaire.
+				</td>				<td> Header
+				</td>
+				</tr>
+				<tr>
+				<td>
+				</td>				<td title="getRecoveryChequesListRequest.chequeCollectionAccountInformation.collectionAccount.customer.customer.displayedName"> <a href="../types/charMax67.html">X-SBS-collectionAccountCustomerDisplayedName</a><br>Nom de restitution du client.
+				</td>				<td> Header
+				</td>
+				</tr>
+				<tr>
+				<td>
+				</td>				<td title="getRecoveryChequesListRequest.chequeCollectionAccountInformation.collectionAccount.customer.externalReference"> <a href="../types/charMax25.html">X-SBS-collectionAccountCustomerExternalReference</a><br>Référence externe.
+				</td>				<td> Header
+				</td>
+				</tr>
+				<tr>
+				<td>
+				</td>				<td title="getRecoveryChequesListRequest.chequeCollectionAccountInformation.collectionAccount.customer.nationalIdentifier"> <a href="../types/charMax20.html">X-SBS-collectionAccountCustomerNationalIdentifier</a><br>Identifiant national.
+				</td>				<td> Header
+				</td>
+				</tr>
+				<tr>
+				<td>
+				</td>				<td title="getRecoveryChequesListRequest.chequeCollectionAccountInformation.collectionAccount.customer.customer.customerNumber"> <a href="../types/charMax15.html">X-SBS-collectionAccountCustomerNumber</a><br>Code du client.
+				</td>				<td> Header
+				</td>
+				</tr>
+				<tr>
+				<td>
+				</td>				<td title="getRecoveryChequesListRequest.chequeCollectionAccountInformation.collectionAccount.customer.customerOfficer.code"> <a href="../types/charMax3.html">X-SBS-collectionAccountCustomerOfficerCode</a><br>Code gestionnaire.
+				</td>				<td> Header
+				</td>
+				</tr>
+				<tr>
+				<td>
+				</td>				<td title="getRecoveryChequesListRequest.chequeCollectionAccountInformation.collectionAccount.customer.customerOfficer.name"> <a href="../types/charMax30.html">X-SBS-collectionAccountCustomerOfficerName</a><br>Nom du gestionnaire.
+				</td>				<td> Header
+				</td>
+				</tr>
+				<tr>
+				<td>
+				</td>				<td title="getRecoveryChequesListRequest.chequeCollectionAccountInformation.collectionAccount.customer.customerType"> <a href="../types/customerType.html">X-SBS-collectionAccountCustomerType</a><br>Type de client.
+				</td>				<td> Header
+				</td>
+				</tr>
+				<tr>
+				<td>
+				</td>				<td title="getRecoveryChequesListRequest.chequeCollectionAccountInformation.collectionAccount.accountNumber.externalFormatAccount.value"> <a href="../types/charMax34.html">X-SBS-collectionAccountExternalFormat</a><br>Valeur de l'identifiant externe du compte.
+				</td>				<td> Header
+				</td>
+				</tr>
+				<tr>
+				<td>
+				</td>				<td title="getRecoveryChequesListRequest.chequeCollectionAccountInformation.collectionAccount.accountNumber.ibanFormatAccount.value"> <a href="../types/charMax34.html">X-SBS-collectionAccountIbanFormat</a><br>Valeur de l'IBAN.
+				</td>				<td> Header
+				</td>
+				</tr>
+				<tr>
+				<td>
+				</td>				<td title="getRecoveryChequesListRequest.chequeCollectionAccountInformation.collectionAccount.accountNumber.internalFormatAccountOurBranch.account"> <a href="../types/charMax11.html">X-SBS-collectionAccountNumber</a><br>Numéro du compte.
+				</td>				<td> Header
+				</td>
+				</tr>
+				<tr>
+				<td>
+				</td>				<td title="getRecoveryChequesListRequest.chequeCollectionAccountInformation.collectionAccount.accountNumber.internalFormatAccountOurBranch.suffix"> <a href="../types/charMax2.html">X-SBS-collectionAccountSuffix</a><br>Suffixe du compte.
+				</td>				<td> Header
+				</td>
+				</tr>
+				<tr>
+				<td>
+				</td>				<td title="getRecoveryChequesListRequest.chequeRemittanceProcessingInformation.collectionMethod"> <a href="../types/recoveryChequeCollectionMethod.html">X-SBS-collectionMethod</a><br>Mode d'encaissement du chèque.
+				</td>				<td> Header
+				</td>
+				</tr>
+				<tr>
+				<td>
+				</td>				<td title="getRecoveryChequesListRequest.chequeRemittanceInformation.creditValueDate.date1"> <a href="../types/date.html">X-SBS-creditValueDate1</a><br>1ère date.
+				</td>				<td> Header
+				</td>
+				</tr>
+				<tr>
+				<td>
+				</td>				<td title="getRecoveryChequesListRequest.chequeRemittanceInformation.creditValueDate.date2"> <a href="../types/date.html">X-SBS-creditValueDate2</a><br>2ème date.
+				</td>				<td> Header
+				</td>
+				</tr>
+				<tr>
+				<td>
+				</td>				<td title="getRecoveryChequesListRequest.chequeRemittanceInformation.creditValueDate.comparator"> <a href="../types/comparator.html">X-SBS-creditValueDateComparator</a><br>Opérateur de comparaison.
+				</td>				<td> Header
+				</td>
+				</tr>
+				<tr>
+				<td>
+				</td>				<td title="getRecoveryChequesListRequest.chequeRemittanceInformation.depositDate.date1"> <a href="../types/date.html">X-SBS-depositDate1</a><br>1ère date.
+				</td>				<td> Header
+				</td>
+				</tr>
+				<tr>
+				<td>
+				</td>				<td title="getRecoveryChequesListRequest.chequeRemittanceInformation.depositDate.date2"> <a href="../types/date.html">X-SBS-depositDate2</a><br>2ème date.
+				</td>				<td> Header
+				</td>
+				</tr>
+				<tr>
+				<td>
+				</td>				<td title="getRecoveryChequesListRequest.chequeRemittanceInformation.depositDate.comparator"> <a href="../types/comparator.html">X-SBS-depositDateComparator</a><br>Opérateur de comparaison.
+				</td>				<td> Header
+				</td>
+				</tr>
+				<tr>
+				<td>
+				</td>				<td title="getRecoveryChequesListRequest.chequeCollectionAccountInformation.directCreditOutstandingAccount.account.accountNumber.internalFormatAccountOurBranch.branch.code"> <a href="../types/char5.html">X-SBS-directCreditOutstandingAccountBranchCode</a><br>Code de l'agence.
+				</td>				<td> Header
+				</td>
+				</tr>
+				<tr>
+				<td>
+				</td>				<td title="getRecoveryChequesListRequest.chequeCollectionAccountInformation.directCreditOutstandingAccount.account.accountNumber.internalFormatAccountOurBranch.branch.designation"> <a href="../types/charMax30.html">X-SBS-directCreditOutstandingAccountBranchDesignation</a><br>Désignation de l'agence.
+				</td>				<td> Header
+				</td>
+				</tr>
+				<tr>
+				<td>
+				</td>				<td title="getRecoveryChequesListRequest.chequeCollectionAccountInformation.directCreditOutstandingAccount.account.accountClass.comparisonOperator"> <a href="../types/comparisonOperator.html">X-SBS-directCreditOutstandingAccountClassComparisonOperator</a><br>Opérateur de comparaison.
+				</td>				<td> Header
+				</td>
+				</tr>
+				<tr>
+				<td>
+				</td>				<td title="getRecoveryChequesListRequest.chequeCollectionAccountInformation.directCreditOutstandingAccount.account.accountClass.value"> <a href="../types/string.html">X-SBS-directCreditOutstandingAccountClassValue</a><br>Valeur de la désignation.
+				</td>				<td> Header
+				</td>
+				</tr>
+				<tr>
+				<td>
+				</td>				<td title="getRecoveryChequesListRequest.chequeCollectionAccountInformation.directCreditOutstandingAccount.account.additionalInformation.complementaryInformation.value.alphanumeric.comparisonOperator"> <a href="../types/comparisonOperator.html">X-SBS-directCreditOutstandingAccountComplementaryInformationAlphanumericComparisonOperator</a><br>Opérateur de comparaison.
+				</td>				<td> Header
+				</td>
+				</tr>
+				<tr>
+				<td>
+				</td>				<td title="getRecoveryChequesListRequest.chequeCollectionAccountInformation.directCreditOutstandingAccount.account.additionalInformation.complementaryInformation.value.alphanumeric.value"> <a href="../types/string.html">X-SBS-directCreditOutstandingAccountComplementaryInformationAlphanumericValue</a><br>Valeur de la désignation.
+				</td>				<td> Header
+				</td>
+				</tr>
+				<tr>
+				<td>
+				</td>				<td title="getRecoveryChequesListRequest.chequeCollectionAccountInformation.directCreditOutstandingAccount.account.additionalInformation.complementaryInformation.identifier"> <a href="../types/charMax10.html">X-SBS-directCreditOutstandingAccountComplementaryInformationIdentifier</a><br>Identifiant de la donnée complémentaire.
+				</td>				<td> Header
+				</td>
+				</tr>
+				<tr>
+				<td>
+				</td>				<td title="getRecoveryChequesListRequest.chequeCollectionAccountInformation.directCreditOutstandingAccount.account.accountNumber.internalFormatAccountOurBranch.currency.alphaCode"> <a href="../types/char3.html">X-SBS-directCreditOutstandingAccountCurrencyAlphaCode</a><br>Code devise alphanumérique.
+				</td>				<td> Header
+				</td>
+				</tr>
+				<tr>
+				<td>
+				</td>				<td title="getRecoveryChequesListRequest.chequeCollectionAccountInformation.directCreditOutstandingAccount.account.accountNumber.internalFormatAccountOurBranch.currency.numericCode"> <a href="../types/char3.html">X-SBS-directCreditOutstandingAccountCurrencyNumericCode</a><br>Code devise numérique.
+				</td>				<td> Header
+				</td>
+				</tr>
+				<tr>
+				<td>
+				</td>				<td title="getRecoveryChequesListRequest.chequeCollectionAccountInformation.directCreditOutstandingAccount.account.customer.activeProfile.code"> <a href="../types/charMax3.html">X-SBS-directCreditOutstandingAccountCustomerActiveProfileCode</a><br>Code profil.
+				</td>				<td> Header
+				</td>
+				</tr>
+				<tr>
+				<td>
+				</td>				<td title="getRecoveryChequesListRequest.chequeCollectionAccountInformation.directCreditOutstandingAccount.account.customer.activeProfile.designation"> <a href="../types/charMax30.html">X-SBS-directCreditOutstandingAccountCustomerActiveProfileDesignation</a><br>Désignation du profil.
+				</td>				<td> Header
+				</td>
+				</tr>
+				<tr>
+				<td>
+				</td>				<td title="getRecoveryChequesListRequest.chequeCollectionAccountInformation.directCreditOutstandingAccount.account.customer.additionalInformation.complementaryInformation.value.alphanumeric.comparisonOperator"> <a href="../types/comparisonOperator.html">X-SBS-directCreditOutstandingAccountCustomerComplementaryInformationAlphanumericComparisonOperator</a><br>Opérateur de comparaison.
+				</td>				<td> Header
+				</td>
+				</tr>
+				<tr>
+				<td>
+				</td>				<td title="getRecoveryChequesListRequest.chequeCollectionAccountInformation.directCreditOutstandingAccount.account.customer.additionalInformation.complementaryInformation.value.alphanumeric.value"> <a href="../types/string.html">X-SBS-directCreditOutstandingAccountCustomerComplementaryInformationAlphanumericValue</a><br>Valeur de la désignation.
+				</td>				<td> Header
+				</td>
+				</tr>
+				<tr>
+				<td>
+				</td>				<td title="getRecoveryChequesListRequest.chequeCollectionAccountInformation.directCreditOutstandingAccount.account.customer.additionalInformation.complementaryInformation.identifier"> <a href="../types/charMax10.html">X-SBS-directCreditOutstandingAccountCustomerComplementaryInformationIdentifier</a><br>Identifiant de la donnée complémentaire.
+				</td>				<td> Header
+				</td>
+				</tr>
+				<tr>
+				<td>
+				</td>				<td title="getRecoveryChequesListRequest.chequeCollectionAccountInformation.directCreditOutstandingAccount.account.customer.customer.displayedName"> <a href="../types/charMax67.html">X-SBS-directCreditOutstandingAccountCustomerDisplayedName</a><br>Nom de restitution du client.
+				</td>				<td> Header
+				</td>
+				</tr>
+				<tr>
+				<td>
+				</td>				<td title="getRecoveryChequesListRequest.chequeCollectionAccountInformation.directCreditOutstandingAccount.account.customer.externalReference"> <a href="../types/charMax25.html">X-SBS-directCreditOutstandingAccountCustomerExternalReference</a><br>Référence externe.
+				</td>				<td> Header
+				</td>
+				</tr>
+				<tr>
+				<td>
+				</td>				<td title="getRecoveryChequesListRequest.chequeCollectionAccountInformation.directCreditOutstandingAccount.account.customer.nationalIdentifier"> <a href="../types/charMax20.html">X-SBS-directCreditOutstandingAccountCustomerNationalIdentifier</a><br>Identifiant national.
+				</td>				<td> Header
+				</td>
+				</tr>
+				<tr>
+				<td>
+				</td>				<td title="getRecoveryChequesListRequest.chequeCollectionAccountInformation.directCreditOutstandingAccount.account.customer.customer.customerNumber"> <a href="../types/charMax15.html">X-SBS-directCreditOutstandingAccountCustomerNumber</a><br>Code du client.
+				</td>				<td> Header
+				</td>
+				</tr>
+				<tr>
+				<td>
+				</td>				<td title="getRecoveryChequesListRequest.chequeCollectionAccountInformation.directCreditOutstandingAccount.account.customer.customerOfficer.code"> <a href="../types/charMax3.html">X-SBS-directCreditOutstandingAccountCustomerOfficerCode</a><br>Code gestionnaire.
+				</td>				<td> Header
+				</td>
+				</tr>
+				<tr>
+				<td>
+				</td>				<td title="getRecoveryChequesListRequest.chequeCollectionAccountInformation.directCreditOutstandingAccount.account.customer.customerOfficer.name"> <a href="../types/charMax30.html">X-SBS-directCreditOutstandingAccountCustomerOfficerName</a><br>Nom du gestionnaire.
+				</td>				<td> Header
+				</td>
+				</tr>
+				<tr>
+				<td>
+				</td>				<td title="getRecoveryChequesListRequest.chequeCollectionAccountInformation.directCreditOutstandingAccount.account.customer.customerType"> <a href="../types/customerType.html">X-SBS-directCreditOutstandingAccountCustomerType</a><br>Type de client.
+				</td>				<td> Header
+				</td>
+				</tr>
+				<tr>
+				<td>
+				</td>				<td title="getRecoveryChequesListRequest.chequeCollectionAccountInformation.directCreditOutstandingAccount.account.accountNumber.externalFormatAccount.value"> <a href="../types/charMax34.html">X-SBS-directCreditOutstandingAccountExternalFormat</a><br>Valeur de l'identifiant externe du compte.
+				</td>				<td> Header
+				</td>
+				</tr>
+				<tr>
+				<td>
+				</td>				<td title="getRecoveryChequesListRequest.chequeCollectionAccountInformation.directCreditOutstandingAccount.account.accountNumber.ibanFormatAccount.value"> <a href="../types/charMax34.html">X-SBS-directCreditOutstandingAccountIbanFormat</a><br>Valeur de l'IBAN.
+				</td>				<td> Header
+				</td>
+				</tr>
+				<tr>
+				<td>
+				</td>				<td title="getRecoveryChequesListRequest.chequeCollectionAccountInformation.directCreditOutstandingAccount.account.accountNumber.internalFormatAccountOurBranch.account"> <a href="../types/charMax11.html">X-SBS-directCreditOutstandingAccountNumber</a><br>Numéro du compte.
+				</td>				<td> Header
+				</td>
+				</tr>
+				<tr>
+				<td>
+				</td>				<td title="getRecoveryChequesListRequest.chequeCollectionAccountInformation.directCreditOutstandingAccount.account.accountNumber.internalFormatAccountOurBranch.suffix"> <a href="../types/charMax2.html">X-SBS-directCreditOutstandingAccountSuffix</a><br>Suffixe du compte.
+				</td>				<td> Header
+				</td>
+				</tr>
+				<tr>
+				<td>
+				</td>				<td title="getRecoveryChequesListRequest.chequeRemittanceProcessingInformation.eventNumber"> <a href="../types/eventNumber.html">X-SBS-eventNumber</a><br>Numéro d'évènement.
+				</td>				<td> Header
+				</td>
+				</tr>
+				<tr>
+				<td>
+				</td>				<td title="getRecoveryChequesListRequest.chequeRemittanceProcessingInformation.eventOrigin"> <a href="../types/recoveryChequeEventOrigin.html">X-SBS-eventOrigin</a><br>Origine de l'évènement.
+				</td>				<td> Header
+				</td>
+				</tr>
+				<tr>
+				<td>
+				</td>				<td title="getRecoveryChequesListRequest.chequeRemittanceProcessingInformation.chequeFateInformation.fateDate.date1"> <a href="../types/date.html">X-SBS-fateDate1</a><br>1ère date.
+				</td>				<td> Header
+				</td>
+				</tr>
+				<tr>
+				<td>
+				</td>				<td title="getRecoveryChequesListRequest.chequeRemittanceProcessingInformation.chequeFateInformation.fateDate.date2"> <a href="../types/date.html">X-SBS-fateDate2</a><br>2ème date.
+				</td>				<td> Header
+				</td>
+				</tr>
+				<tr>
+				<td>
+				</td>				<td title="getRecoveryChequesListRequest.chequeRemittanceProcessingInformation.chequeFateInformation.fateDate.comparator"> <a href="../types/comparator.html">X-SBS-fateDateComparator</a><br>Opérateur de comparaison.
+				</td>				<td> Header
+				</td>
+				</tr>
+				<tr>
+				<td>
+				</td>				<td title="getRecoveryChequesListRequest.chequeIssuerInformation.issuerAccountInformation.otherBankAccount.accountNumber"> <a href="../types/charMax25.html">X-SBS-issuerAccountOtherBankAccountNumber</a><br>Numéro de compte.
+				</td>				<td> Header
+				</td>
+				</tr>
+				<tr>
+				<td>
+				</td>				<td title="getRecoveryChequesListRequest.chequeIssuerInformation.issuerAccountInformation.otherBankAccount.checkDigit"> <a href="../types/checkDigit.html">X-SBS-issuerAccountOtherBankCheckDigit</a><br>Clé RIB du compte.
+				</td>				<td> Header
+				</td>
+				</tr>
+				<tr>
+				<td>
+				</td>				<td title="getRecoveryChequesListRequest.chequeIssuerInformation.issuerAccountInformation.otherBankAccount.issuerName"> <a href="../types/charMax36.html">X-SBS-issuerAccountOtherBankIssuerName</a><br>Nom de l'émetteur du chèque.
+				</td>				<td> Header
+				</td>
+				</tr>
+				<tr>
+				<td>
+				</td>				<td title="getRecoveryChequesListRequest.chequeIssuerInformation.issuerAccountInformation.ourBranchAccount.accountNumber.internalFormatAccountOurBranch.branch.code"> <a href="../types/char5.html">X-SBS-issuerAccountOurBranchBranchCode</a><br>Code de l'agence.
+				</td>				<td> Header
+				</td>
+				</tr>
+				<tr>
+				<td>
+				</td>				<td title="getRecoveryChequesListRequest.chequeIssuerInformation.issuerAccountInformation.ourBranchAccount.accountNumber.internalFormatAccountOurBranch.branch.designation"> <a href="../types/charMax30.html">X-SBS-issuerAccountOurBranchBranchDesignation</a><br>Désignation de l'agence.
+				</td>				<td> Header
+				</td>
+				</tr>
+				<tr>
+				<td>
+				</td>				<td title="getRecoveryChequesListRequest.chequeIssuerInformation.issuerAccountInformation.ourBranchAccount.accountClass.comparisonOperator"> <a href="../types/comparisonOperator.html">X-SBS-issuerAccountOurBranchClassComparisonOperator</a><br>Opérateur de comparaison.
+				</td>				<td> Header
+				</td>
+				</tr>
+				<tr>
+				<td>
+				</td>				<td title="getRecoveryChequesListRequest.chequeIssuerInformation.issuerAccountInformation.ourBranchAccount.accountClass.value"> <a href="../types/string.html">X-SBS-issuerAccountOurBranchClassValue</a><br>Valeur de la désignation.
+				</td>				<td> Header
+				</td>
+				</tr>
+				<tr>
+				<td>
+				</td>				<td title="getRecoveryChequesListRequest.chequeIssuerInformation.issuerAccountInformation.ourBranchAccount.additionalInformation.complementaryInformation.value.alphanumeric.comparisonOperator"> <a href="../types/comparisonOperator.html">X-SBS-issuerAccountOurBranchComplementaryInformationAlphanumericComparisonOperator</a><br>Opérateur de comparaison.
+				</td>				<td> Header
+				</td>
+				</tr>
+				<tr>
+				<td>
+				</td>				<td title="getRecoveryChequesListRequest.chequeIssuerInformation.issuerAccountInformation.ourBranchAccount.additionalInformation.complementaryInformation.value.alphanumeric.value"> <a href="../types/string.html">X-SBS-issuerAccountOurBranchComplementaryInformationAlphanumericValue</a><br>Valeur de la désignation.
+				</td>				<td> Header
+				</td>
+				</tr>
+				<tr>
+				<td>
+				</td>				<td title="getRecoveryChequesListRequest.chequeIssuerInformation.issuerAccountInformation.ourBranchAccount.additionalInformation.complementaryInformation.identifier"> <a href="../types/charMax10.html">X-SBS-issuerAccountOurBranchComplementaryInformationIdentifier</a><br>Identifiant de la donnée complémentaire.
+				</td>				<td> Header
+				</td>
+				</tr>
+				<tr>
+				<td>
+				</td>				<td title="getRecoveryChequesListRequest.chequeIssuerInformation.issuerAccountInformation.ourBranchAccount.accountNumber.internalFormatAccountOurBranch.currency.alphaCode"> <a href="../types/char3.html">X-SBS-issuerAccountOurBranchCurrencyAlphaCode</a><br>Code devise alphanumérique.
+				</td>				<td> Header
+				</td>
+				</tr>
+				<tr>
+				<td>
+				</td>				<td title="getRecoveryChequesListRequest.chequeIssuerInformation.issuerAccountInformation.ourBranchAccount.accountNumber.internalFormatAccountOurBranch.currency.numericCode"> <a href="../types/char3.html">X-SBS-issuerAccountOurBranchCurrencyNumericCode</a><br>Code devise numérique.
+				</td>				<td> Header
+				</td>
+				</tr>
+				<tr>
+				<td>
+				</td>				<td title="getRecoveryChequesListRequest.chequeIssuerInformation.issuerAccountInformation.ourBranchAccount.customer.activeProfile.code"> <a href="../types/charMax3.html">X-SBS-issuerAccountOurBranchCustomerActiveProfileCode</a><br>Code profil.
+				</td>				<td> Header
+				</td>
+				</tr>
+				<tr>
+				<td>
+				</td>				<td title="getRecoveryChequesListRequest.chequeIssuerInformation.issuerAccountInformation.ourBranchAccount.customer.activeProfile.designation"> <a href="../types/charMax30.html">X-SBS-issuerAccountOurBranchCustomerActiveProfileDesignation</a><br>Désignation du profil.
+				</td>				<td> Header
+				</td>
+				</tr>
+				<tr>
+				<td>
+				</td>				<td title="getRecoveryChequesListRequest.chequeIssuerInformation.issuerAccountInformation.ourBranchAccount.customer.additionalInformation.complementaryInformation.value.alphanumeric.comparisonOperator"> <a href="../types/comparisonOperator.html">X-SBS-issuerAccountOurBranchCustomerComplementaryInformationAlphanumericComparisonOperator</a><br>Opérateur de comparaison.
+				</td>				<td> Header
+				</td>
+				</tr>
+				<tr>
+				<td>
+				</td>				<td title="getRecoveryChequesListRequest.chequeIssuerInformation.issuerAccountInformation.ourBranchAccount.customer.additionalInformation.complementaryInformation.value.alphanumeric.value"> <a href="../types/string.html">X-SBS-issuerAccountOurBranchCustomerComplementaryInformationAlphanumericValue</a><br>Valeur de la désignation.
+				</td>				<td> Header
+				</td>
+				</tr>
+				<tr>
+				<td>
+				</td>				<td title="getRecoveryChequesListRequest.chequeIssuerInformation.issuerAccountInformation.ourBranchAccount.customer.additionalInformation.complementaryInformation.identifier"> <a href="../types/charMax10.html">X-SBS-issuerAccountOurBranchCustomerComplementaryInformationIdentifier</a><br>Identifiant de la donnée complémentaire.
+				</td>				<td> Header
+				</td>
+				</tr>
+				<tr>
+				<td>
+				</td>				<td title="getRecoveryChequesListRequest.chequeIssuerInformation.issuerAccountInformation.ourBranchAccount.customer.customer.displayedName"> <a href="../types/charMax67.html">X-SBS-issuerAccountOurBranchCustomerDisplayedName</a><br>Nom de restitution du client.
+				</td>				<td> Header
+				</td>
+				</tr>
+				<tr>
+				<td>
+				</td>				<td title="getRecoveryChequesListRequest.chequeIssuerInformation.issuerAccountInformation.ourBranchAccount.customer.externalReference"> <a href="../types/charMax25.html">X-SBS-issuerAccountOurBranchCustomerExternalReference</a><br>Référence externe.
+				</td>				<td> Header
+				</td>
+				</tr>
+				<tr>
+				<td>
+				</td>				<td title="getRecoveryChequesListRequest.chequeIssuerInformation.issuerAccountInformation.ourBranchAccount.customer.nationalIdentifier"> <a href="../types/charMax20.html">X-SBS-issuerAccountOurBranchCustomerNationalIdentifier</a><br>Identifiant national.
+				</td>				<td> Header
+				</td>
+				</tr>
+				<tr>
+				<td>
+				</td>				<td title="getRecoveryChequesListRequest.chequeIssuerInformation.issuerAccountInformation.ourBranchAccount.customer.customer.customerNumber"> <a href="../types/charMax15.html">X-SBS-issuerAccountOurBranchCustomerNumber</a><br>Code du client.
+				</td>				<td> Header
+				</td>
+				</tr>
+				<tr>
+				<td>
+				</td>				<td title="getRecoveryChequesListRequest.chequeIssuerInformation.issuerAccountInformation.ourBranchAccount.customer.customerOfficer.code"> <a href="../types/charMax3.html">X-SBS-issuerAccountOurBranchCustomerOfficerCode</a><br>Code gestionnaire.
+				</td>				<td> Header
+				</td>
+				</tr>
+				<tr>
+				<td>
+				</td>				<td title="getRecoveryChequesListRequest.chequeIssuerInformation.issuerAccountInformation.ourBranchAccount.customer.customerOfficer.name"> <a href="../types/charMax30.html">X-SBS-issuerAccountOurBranchCustomerOfficerName</a><br>Nom du gestionnaire.
+				</td>				<td> Header
+				</td>
+				</tr>
+				<tr>
+				<td>
+				</td>				<td title="getRecoveryChequesListRequest.chequeIssuerInformation.issuerAccountInformation.ourBranchAccount.customer.customerType"> <a href="../types/customerType.html">X-SBS-issuerAccountOurBranchCustomerType</a><br>Type de client.
+				</td>				<td> Header
+				</td>
+				</tr>
+				<tr>
+				<td>
+				</td>				<td title="getRecoveryChequesListRequest.chequeIssuerInformation.issuerAccountInformation.ourBranchAccount.accountNumber.externalFormatAccount.value"> <a href="../types/charMax34.html">X-SBS-issuerAccountOurBranchExternalFormat</a><br>Valeur de l'identifiant externe du compte.
+				</td>				<td> Header
+				</td>
+				</tr>
+				<tr>
+				<td>
+				</td>				<td title="getRecoveryChequesListRequest.chequeIssuerInformation.issuerAccountInformation.ourBranchAccount.accountNumber.ibanFormatAccount.value"> <a href="../types/charMax34.html">X-SBS-issuerAccountOurBranchIbanFormat</a><br>Valeur de l'IBAN.
+				</td>				<td> Header
+				</td>
+				</tr>
+				<tr>
+				<td>
+				</td>				<td title="getRecoveryChequesListRequest.chequeIssuerInformation.issuerAccountInformation.ourBranchAccount.accountNumber.internalFormatAccountOurBranch.account"> <a href="../types/charMax11.html">X-SBS-issuerAccountOurBranchNumber</a><br>Numéro du compte.
+				</td>				<td> Header
+				</td>
+				</tr>
+				<tr>
+				<td>
+				</td>				<td title="getRecoveryChequesListRequest.chequeIssuerInformation.issuerAccountInformation.ourBranchAccount.accountNumber.internalFormatAccountOurBranch.suffix"> <a href="../types/charMax2.html">X-SBS-issuerAccountOurBranchSuffix</a><br>Suffixe du compte.
+				</td>				<td> Header
+				</td>
+				</tr>
+				<tr>
+				<td>
+				</td>				<td title="getRecoveryChequesListRequest.chequeIssuerInformation.issuingBankInstitution.code"> <a href="../types/charMax10.html">X-SBS-issuingBankInstitutionCode</a><br>Code de l'établissement.
+				</td>				<td> Header
+				</td>
+				</tr>
+				<tr>
+				<td>
+				</td>				<td title="getRecoveryChequesListRequest.chequeIssuerInformation.issuingBankInstitution.designation"> <a href="../types/charMax40.html">X-SBS-issuingBankInstitutionDesignation</a><br>Nom de l'établissement.
+				</td>				<td> Header
+				</td>
+				</tr>
+				<tr>
+				<td>
+				</td>				<td title="getRecoveryChequesListRequest.chequeIssuerInformation.issuingCounter.code"> <a href="../types/char5.html">X-SBS-issuingCounterCode</a><br>Code de l'agence.
+				</td>				<td> Header
+				</td>
+				</tr>
+				<tr>
+				<td>
+				</td>				<td title="getRecoveryChequesListRequest.chequeIssuerInformation.issuingCounter.designation"> <a href="../types/charMax30.html">X-SBS-issuingCounterDesignation</a><br>Désignation de l'agence.
+				</td>				<td> Header
+				</td>
+				</tr>
+				<tr>
+				<td>
+				</td>				<td title="getRecoveryChequesListRequest.chequeRemittanceProcessingInformation.operation.code"> <a href="../types/char3.html">X-SBS-operationCode</a><br>Code de l'opération.
+				</td>				<td> Header
+				</td>
+				</tr>
+				<tr>
+				<td>
+				</td>				<td title="getRecoveryChequesListRequest.chequeRemittanceProcessingInformation.operation.designation"> <a href="../types/charMax30.html">X-SBS-operationDesignation</a><br>Désignation de l'opération.
+				</td>				<td> Header
+				</td>
+				</tr>
+				<tr>
+				<td>
+				</td>				<td title="getRecoveryChequesListRequest.chequeRemittanceProcessingInformation.operationNature.operationNatureCode"> <a href="../types/operationNatureCode.html">X-SBS-operationNatureCode</a><br>null
+				</td>				<td> Header
+				</td>
+				</tr>
+				<tr>
+				<td>
+				</td>				<td title="getRecoveryChequesListRequest.chequeRemittanceProcessingInformation.operationNature.designation"> <a href="../types/charMax30.html">X-SBS-operationNatureDesignation</a><br>null
+				</td>				<td> Header
+				</td>
+				</tr>
+				<tr>
+				<td>
+				</td>				<td title="getRecoveryChequesListRequest.chequeRemittanceProcessingInformation.recoveryBranch.code"> <a href="../types/char5.html">X-SBS-recoveryBranchCode</a><br>Code de l'agence.
+				</td>				<td> Header
+				</td>
+				</tr>
+				<tr>
+				<td>
+				</td>				<td title="getRecoveryChequesListRequest.chequeRemittanceProcessingInformation.chequeFateInformation.rejectionReason.code"> <a href="../types/disapprovalCode.html">X-SBS-rejectionReasonCode</a><br>Code du désaccord.
+				</td>				<td> Header
+				</td>
+				</tr>
+				<tr>
+				<td>
+				</td>				<td title="getRecoveryChequesListRequest.chequeRemittanceProcessingInformation.chequeFateInformation.rejectionReason.designation"> <a href="../types/charMax30.html">X-SBS-rejectionReasonDesignation</a><br>Désignation du désaccord.
+				</td>				<td> Header
+				</td>
+				</tr>
+				<tr>
+				<td>
+				</td>				<td title="getRecoveryChequesListRequest.chequeRemittanceInformation.remittanceBranch.code"> <a href="../types/char5.html">X-SBS-remittanceBranchCode</a><br>Code de l'agence.
+				</td>				<td> Header
+				</td>
+				</tr>
+				<tr>
+				<td>
+				</td>				<td title="getRecoveryChequesListRequest.chequeRemittanceInformation.remittanceReference"> <a href="../types/charMax30.html">X-SBS-remittanceReference</a><br>Référence de la remise.
+				</td>				<td> Header
+				</td>
+				</tr>
+				<tr>
+				<td>
+				</td>				<td title="getRecoveryChequesListRequest.chequeRemittanceInformation.remittingCustomer.activeProfile.code"> <a href="../types/charMax3.html">X-SBS-remittingCustomerActiveProfileCode</a><br>Code profil.
+				</td>				<td> Header
+				</td>
+				</tr>
+				<tr>
+				<td>
+				</td>				<td title="getRecoveryChequesListRequest.chequeRemittanceInformation.remittingCustomer.activeProfile.designation"> <a href="../types/charMax30.html">X-SBS-remittingCustomerActiveProfileDesignation</a><br>Désignation du profil.
+				</td>				<td> Header
+				</td>
+				</tr>
+				<tr>
+				<td>
+				</td>				<td title="getRecoveryChequesListRequest.chequeRemittanceInformation.remittingCustomer.additionalInformation.complementaryInformation.value.alphanumeric.comparisonOperator"> <a href="../types/comparisonOperator.html">X-SBS-remittingCustomerComplementaryInformationAlphanumericComparisonOperator</a><br>Opérateur de comparaison.
+				</td>				<td> Header
+				</td>
+				</tr>
+				<tr>
+				<td>
+				</td>				<td title="getRecoveryChequesListRequest.chequeRemittanceInformation.remittingCustomer.additionalInformation.complementaryInformation.value.alphanumeric.value"> <a href="../types/string.html">X-SBS-remittingCustomerComplementaryInformationAlphanumericValue</a><br>Valeur de la désignation.
+				</td>				<td> Header
+				</td>
+				</tr>
+				<tr>
+				<td>
+				</td>				<td title="getRecoveryChequesListRequest.chequeRemittanceInformation.remittingCustomer.additionalInformation.complementaryInformation.identifier"> <a href="../types/charMax10.html">X-SBS-remittingCustomerComplementaryInformationIdentifier</a><br>Identifiant de la donnée complémentaire.
+				</td>				<td> Header
+				</td>
+				</tr>
+				<tr>
+				<td>
+				</td>				<td title="getRecoveryChequesListRequest.chequeRemittanceInformation.remittingCustomer.customer.displayedName"> <a href="../types/charMax67.html">X-SBS-remittingCustomerDisplayedName</a><br>Nom de restitution du client.
+				</td>				<td> Header
+				</td>
+				</tr>
+				<tr>
+				<td>
+				</td>				<td title="getRecoveryChequesListRequest.chequeRemittanceInformation.remittingCustomer.externalReference"> <a href="../types/charMax25.html">X-SBS-remittingCustomerExternalReference</a><br>Référence externe.
+				</td>				<td> Header
+				</td>
+				</tr>
+				<tr>
+				<td>
+				</td>				<td title="getRecoveryChequesListRequest.chequeRemittanceInformation.remittingCustomer.nationalIdentifier"> <a href="../types/charMax20.html">X-SBS-remittingCustomerNationalIdentifier</a><br>Identifiant national.
+				</td>				<td> Header
+				</td>
+				</tr>
+				<tr>
+				<td>
+				</td>				<td title="getRecoveryChequesListRequest.chequeRemittanceInformation.remittingCustomer.customer.customerNumber"> <a href="../types/charMax15.html">X-SBS-remittingCustomerNumber</a><br>Code du client.
+				</td>				<td> Header
+				</td>
+				</tr>
+				<tr>
+				<td>
+				</td>				<td title="getRecoveryChequesListRequest.chequeRemittanceInformation.remittingCustomer.customerOfficer.code"> <a href="../types/charMax3.html">X-SBS-remittingCustomerOfficerCode</a><br>Code gestionnaire.
+				</td>				<td> Header
+				</td>
+				</tr>
+				<tr>
+				<td>
+				</td>				<td title="getRecoveryChequesListRequest.chequeRemittanceInformation.remittingCustomer.customerOfficer.name"> <a href="../types/charMax30.html">X-SBS-remittingCustomerOfficerName</a><br>Nom du gestionnaire.
+				</td>				<td> Header
+				</td>
+				</tr>
+				<tr>
+				<td>
+				</td>				<td title="getRecoveryChequesListRequest.chequeRemittanceInformation.remittingCustomer.customerType"> <a href="../types/customerType.html">X-SBS-remittingCustomerType</a><br>Type de client.
+				</td>				<td> Header
+				</td>
+				</tr>
+				<tr>
+				<td>
+				</td>				<td title="getRecoveryChequesListRequest.chequeCollectionAccountInformation.directCreditOutstandingAccount.unavailabilityDate.date1"> <a href="../types/date.html">X-SBS-unavailabilityDate1</a><br>1ère date.
+				</td>				<td> Header
+				</td>
+				</tr>
+				<tr>
+				<td>
+				</td>				<td title="getRecoveryChequesListRequest.chequeCollectionAccountInformation.directCreditOutstandingAccount.unavailabilityDate.date2"> <a href="../types/date.html">X-SBS-unavailabilityDate2</a><br>2ème date.
+				</td>				<td> Header
+				</td>
+				</tr>
+				<tr>
+				<td>
+				</td>				<td title="getRecoveryChequesListRequest.chequeCollectionAccountInformation.directCreditOutstandingAccount.unavailabilityDate.comparator"> <a href="../types/comparator.html">X-SBS-unavailabilityDateComparator</a><br>Opérateur de comparaison.
+				</td>				<td> Header
+				</td>
+				</tr>
+
+			</table>
+
+		</div>
+		<br>
+
+		</br>
+		<div class="mock-list">
+			<b>Codes Erreur : </b>			<table>
+				<tr>
+				<td> 400
+				</td>				<td> Bad Request
+				</td>
+				</tr>
+
+			</table>
+
+		</div>
+
+	</div>
+
+</div>
+     </div> 
+  </div>
+  </div>
+
+  
+  <script src="../resources/jquery.js"></script>
+  <script src="../resources/doc.js"></script>
+</body>
+</html>

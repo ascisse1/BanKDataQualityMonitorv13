@@ -1,0 +1,1053 @@
+<!DOCTYPE html>
+<html>
+<head>
+	<link rel="stylesheet" href="../resources/styleDocu.css" />
+    <link rel="stylesheet" href="../resources/font-awesome/css/font-awesome.min.css" />
+	<title>Documentation Xsd</title>
+	<meta charset="UTF-8" />
+</head>
+
+<body>
+  <div class="document">
+	<div class="header">		
+	</div>
+
+    <div class="tabs">
+        <div class="tabs-wrapper-selected" onclick="window.open('../liste-ressources.html', '_self');">
+            <div class="tabs-left-content" >Liste des ressources</div>
+        </div>
+        <div class="tabs-wrapper" onclick="window.open('../liste-services.html', '_self');">
+            <div class="tabs-left-content">Liste des services</div>
+        </div>
+        <div class="tabs-wrapper" onclick="window.open('../liste-types.html', '_self');">
+            <div class="tabs-right-content">Liste des types</div>
+        </div>
+    </div>
+
+	<div class="contenu">
+      <div class="breadcrumb"> 
+        <ul class="breadcrumb">
+           <li> <a href="../index.html"> Accueil </a></li>
+           <li> > </li>
+           <li> <a href="../liste-ressources.html"> Liste des ressources </a></li>
+           <li> > </li>
+           <li> loaninstructions </li>
+        </ul>                    
+      </div>                    
+      
+      <div class="summary">
+        <div class="mock-list"> Nom ressource REST : loaninstructions </div>
+        <div class="mock-list"> Programme Amplitude : icwrloaninstructions </div>
+        <div class="mock-list"> Email : support@soprabanking.com </div>        
+        <br/>
+            <div class="mock-list"> Loan Instruction.</div>
+      </div>
+      
+      <div class="column-content" style="width:93%">
+        <div class="detail-column" style="width: 35%">
+          <div class="tree"> 
+<ul style="padding:0">
+	<li>
+<i class="fa fa-caret-down fa-fw" onclick="expand_or_collapse(this)">
+</i>		loaninstructions		<ul>
+			<li>
+<i class="fa fa-caret-down fa-fw" onclick="expand_or_collapse(this)">
+</i>				v1				<ul>
+					<li>
+<i class="fa fa-fw">
+</i><span class="selectable" id="e0"> PUT
+</span>
+					</li>
+					<li>
+<i class="fa fa-fw">
+</i><span class="selectable" id="e1"> POST
+</span>
+					</li>
+					<li>
+<i class="fa fa-fw">
+</i><span class="selectable" id="e2"> GETLIST
+</span>
+					</li>
+
+				</ul>
+				<ul>
+					<li>
+<i class="fa fa-caret-down fa-fw" onclick="expand_or_collapse(this)">
+</i><span class="selectable" id="e3"> additionaldata
+</span>						<ul>
+							<li>
+<i class="fa fa-fw">
+</i><span class="selectable" id="e4"> POST
+</span>
+							</li>
+
+						</ul>
+
+					</li>
+					<li>
+<i class="fa fa-caret-down fa-fw" onclick="expand_or_collapse(this)">
+</i><span class="selectable" id="e5"> goodsforsale
+</span>						<ul>
+							<li>
+<i class="fa fa-fw">
+</i><span class="selectable" id="e6"> GETLIST
+</span>
+							</li>
+
+						</ul>
+
+					</li>
+					<li>
+<i class="fa fa-caret-down fa-fw" onclick="expand_or_collapse(this)">
+</i><span class="selectable" id="e7"> linkingtoamortizableloans
+</span>						<ul>
+							<li>
+<i class="fa fa-fw">
+</i><span class="selectable" id="e8"> POST
+</span>
+							</li>
+
+						</ul>
+
+					</li>
+					<li>
+<i class="fa fa-caret-down fa-fw" onclick="expand_or_collapse(this)">
+</i><span class="selectable" id="e9"> objects
+</span>						<ul>
+							<li>
+<i class="fa fa-fw">
+</i><span class="selectable" id="e10"> POST
+</span>
+							</li>
+
+						</ul>
+
+					</li>
+					<li>
+<i class="fa fa-caret-down fa-fw" onclick="expand_or_collapse(this)">
+</i><span class="selectable" id="e11"> possiblepersonsincharge
+</span>						<ul>
+							<li>
+<i class="fa fa-fw">
+</i><span class="selectable" id="e12"> GETLIST
+</span>
+							</li>
+
+						</ul>
+
+					</li>
+					<li>
+<i class="fa fa-caret-down fa-fw" onclick="expand_or_collapse(this)">
+</i><span class="selectable" id="e13"> requesteddocuments
+</span>						<ul>
+							<li>
+<i class="fa fa-fw">
+</i><span class="selectable" id="e14"> GETLIST
+</span>
+							</li>
+							<li>
+<i class="fa fa-fw">
+</i><span class="selectable" id="e15"> POST
+</span>
+							</li>
+
+						</ul>
+
+					</li>
+					<li>
+<i class="fa fa-caret-down fa-fw" onclick="expand_or_collapse(this)">
+</i><span class="selectable" id="e16"> ressources
+</span>						<ul>
+							<li>
+<i class="fa fa-fw">
+</i><span class="selectable" id="e17"> POST
+</span>
+							</li>
+
+						</ul>
+
+					</li>
+					<li>
+<i class="fa fa-caret-down fa-fw" onclick="expand_or_collapse(this)">
+</i><span class="selectable" id="e18"> steps
+</span>						<ul>
+							<li>
+<i class="fa fa-fw">
+</i><span class="selectable" id="e19"> POST
+</span>
+							</li>
+
+						</ul>
+
+					</li>
+
+				</ul>
+
+			</li>
+
+		</ul>
+
+	</li>
+
+</ul>
+          </div>
+        </div>
+                 
+        
+<div class="detail-column" id="d0" style="display:none; width: 65%">
+	<div class="detail">
+		<div class="mock-list">
+			<b>Service SOAP : </b> <a href="../services/modifyLoanInstructionPersonInCharge.html">modifyLoanInstructionPersonInCharge</a>
+		</div>
+		<div class="mock-list">
+			<b>Code retour succes : </b>200 - OK
+		</div>
+		<div class="mock-list">
+			<b>Uri : </b>http://soprabanking.com/amplitude/loaninstructions/v1/{loanInstructionIdentifier}
+		</div>
+		<div class="mock-list">
+			<b>Description : </b>The verb PUT applied to URI /loaninstructions/v1/{loaninstructionId} allows to change the file administrator.
+		</div>
+		<br>
+
+		</br>
+		<div class="mock-list">
+			<b>Identifiants : </b>			<table class="table_param">
+				<tr>
+				<td> 0
+				</td>				<td title="modifyLoanInstructionPersonInChargeRequest.loanInstructionIdentifier"> <a href="../types/loanInstructionDetailIdentifier.html">loanInstructionIdentifier</a><br>Identifiant du dossier IDC
+				</td>
+				</tr>
+
+			</table>
+
+		</div>
+		<br>
+
+		</br>
+		<div class="mock-list">
+			<b>Codes Erreur : </b>			<table>
+				<tr>
+				<td> 400
+				</td>				<td> Bad Request
+				</td>
+				</tr>
+
+			</table>
+
+		</div>
+
+	</div>
+
+</div>
+<div class="detail-column" id="d1" style="display:none; width: 65%">
+	<div class="detail">
+		<div class="mock-list">
+			<b>Service SOAP : </b> <a href="../services/createLoanInstruction.html">createLoanInstruction</a>
+		</div>
+		<div class="mock-list">
+			<b>Code retour succes : </b>201 - Created
+		</div>
+		<div class="mock-list">
+			<b>Uri : </b>http://soprabanking.com/amplitude/loaninstructions/v1/
+		</div>
+		<div class="mock-list">
+			<b>Description : </b>The service createLoanInstruction allows creating a loan instruction file with the essential information. The loan instruction file identifier created is returned by the service. It is possible then to complete the loan instruction file with others services.
+		</div>
+		<br>
+
+		</br>
+		<div class="mock-list">
+			<b>Codes Erreur : </b>			<table>
+				<tr>
+				<td> 400
+				</td>				<td> Bad Request
+				</td>
+				</tr>
+
+			</table>
+
+		</div>
+
+	</div>
+
+</div>
+<div class="detail-column" id="d2" style="display:none; width: 65%">
+	<div class="detail">
+		<div class="mock-list">
+			<b>Service SOAP : </b> <a href="../services/getLoanInstructionsList.html">getLoanInstructionsList</a>
+		</div>
+		<div class="mock-list">
+			<b>Code retour succes : </b>200 - OK
+		</div>
+		<div class="mock-list">
+			<b>Uri : </b>http://soprabanking.com/amplitude/loaninstructions/v1/
+		</div>
+		<div class="mock-list">
+			<b>Description : </b>The verb GET applied to URI /loaninstructions/v1/ return a list of the loan instruction files corresponding to the search criterion as file identifier, customer, business relation type, file type, creation or modification dates, current step or situation.
+		</div>
+		<br>
+
+		</br>
+		<div class="mock-list">
+			<b>Parametres : </b>			<table class="table_param">
+				<tr>
+				<td>
+				</td>				<td title="getLoanInstructionsListRequest.customer.additionalInformation.complementaryInformation.value.alphanumeric.comparisonOperator"> <a href="../types/comparisonOperator.html">X-SBS-additionalInformationAlphanumericComparisonOperator</a><br>Opérateur de comparaison.
+				</td>				<td> Header
+				</td>
+				</tr>
+				<tr>
+				<td>
+				</td>				<td title="getLoanInstructionsListRequest.customer.additionalInformation.complementaryInformation.value.alphanumeric.value"> <a href="../types/string.html">X-SBS-additionalInformationAlphanumericValue</a><br>Valeur de la désignation.
+				</td>				<td> Header
+				</td>
+				</tr>
+				<tr>
+				<td>
+				</td>				<td title="getLoanInstructionsListRequest.customer.additionalInformation.complementaryInformation.value.date.date1"> <a href="../types/date.html">X-SBS-additionalInformationDate1</a><br>1ère date.
+				</td>				<td> Header
+				</td>
+				</tr>
+				<tr>
+				<td>
+				</td>				<td title="getLoanInstructionsListRequest.customer.additionalInformation.complementaryInformation.value.date.date2"> <a href="../types/date.html">X-SBS-additionalInformationDate2</a><br>2ème date.
+				</td>				<td> Header
+				</td>
+				</tr>
+				<tr>
+				<td>
+				</td>				<td title="getLoanInstructionsListRequest.customer.additionalInformation.complementaryInformation.value.date.comparator"> <a href="../types/comparator.html">X-SBS-additionalInformationDateComparator</a><br>Opérateur de comparaison.
+				</td>				<td> Header
+				</td>
+				</tr>
+				<tr>
+				<td>
+				</td>				<td title="getLoanInstructionsListRequest.customer.additionalInformation.designation"> <a href="../types/charMax30.html">X-SBS-additionalInformationDesignation</a><br>Désignation.
+				</td>				<td> Header
+				</td>
+				</tr>
+				<tr>
+				<td>
+				</td>				<td title="getLoanInstructionsListRequest.customer.additionalInformation.complementaryInformation.identifier"> <a href="../types/charMax10.html">X-SBS-additionalInformationIdentifier</a><br>Identifiant de la donnée complémentaire.
+				</td>				<td> Header
+				</td>
+				</tr>
+				<tr>
+				<td>
+				</td>				<td title="getLoanInstructionsListRequest.customer.additionalInformation.complementaryInformation.value.amountOrRate.comparator"> <a href="../types/comparator.html">X-SBS-additionalInformationamountOrRateComparator</a><br>Opérateur de comparaison.
+				</td>				<td> Header
+				</td>
+				</tr>
+				<tr>
+				<td>
+				</td>				<td title="getLoanInstructionsListRequest.customer.additionalInformation.complementaryInformation.value.amountOrRate.decimal1"> <a href="../types/decimal32_16.html">X-SBS-additionalInformationamountOrRateDecimal1</a><br>1ère décimale.
+				</td>				<td> Header
+				</td>
+				</tr>
+				<tr>
+				<td>
+				</td>				<td title="getLoanInstructionsListRequest.customer.additionalInformation.complementaryInformation.value.amountOrRate.decimal2"> <a href="../types/decimal32_16.html">X-SBS-additionalInformationamountOrRateDecimal2</a><br>2ème décimale.
+				</td>				<td> Header
+				</td>
+				</tr>
+				<tr>
+				<td>
+				</td>				<td title="getLoanInstructionsListRequest.businessRelationType"> <a href="../types/charMax10.html">X-SBS-businessRelationType </a><br>Type de relation d'affaires.
+				</td>				<td> Header
+				</td>
+				</tr>
+				<tr>
+				<td>
+				</td>				<td title="getLoanInstructionsListRequest.creationDate.date1"> <a href="../types/date.html">X-SBS-creationDate1</a><br>1ère date.
+				</td>				<td> Header
+				</td>
+				</tr>
+				<tr>
+				<td>
+				</td>				<td title="getLoanInstructionsListRequest.creationDate.date2"> <a href="../types/date.html">X-SBS-creationDate2</a><br>2ème date.
+				</td>				<td> Header
+				</td>
+				</tr>
+				<tr>
+				<td>
+				</td>				<td title="getLoanInstructionsListRequest.creationDate.comparator"> <a href="../types/comparator.html">X-SBS-creationDateComparator</a><br>Opérateur de comparaison.
+				</td>				<td> Header
+				</td>
+				</tr>
+				<tr>
+				<td>
+				</td>				<td title="getLoanInstructionsListRequest.customer.customer.displayedName"> <a href="../types/charMax67.html">X-SBS-customerDisplayedName</a><br>Nom de restitution du client.
+				</td>				<td> Header
+				</td>
+				</tr>
+				<tr>
+				<td>
+				</td>				<td title="getLoanInstructionsListRequest.customer.externalReference"> <a href="../types/charMax25.html">X-SBS-customerExternalReference</a><br>Référence externe.
+				</td>				<td> Header
+				</td>
+				</tr>
+				<tr>
+				<td>
+				</td>				<td title="getLoanInstructionsListRequest.customer.nationalIdentifier"> <a href="../types/charMax20.html">X-SBS-customerNationalIdentifier</a><br>Identifiant national.
+				</td>				<td> Header
+				</td>
+				</tr>
+				<tr>
+				<td>
+				</td>				<td title="getLoanInstructionsListRequest.customer.customer.customerNumber"> <a href="../types/charMax15.html">X-SBS-customerNumber</a><br>Code du client.
+				</td>				<td> Header
+				</td>
+				</tr>
+				<tr>
+				<td>
+				</td>				<td title="getLoanInstructionsListRequest.customer.customerOfficer.code"> <a href="../types/charMax3.html">X-SBS-customerOfficerCode</a><br>Code gestionnaire.
+				</td>				<td> Header
+				</td>
+				</tr>
+				<tr>
+				<td>
+				</td>				<td title="getLoanInstructionsListRequest.customer.customerOfficer.name"> <a href="../types/charMax30.html">X-SBS-customerOfficerName</a><br>Nom du gestionnaire.
+				</td>				<td> Header
+				</td>
+				</tr>
+				<tr>
+				<td>
+				</td>				<td title="getLoanInstructionsListRequest.customer.activeProfile.code"> <a href="../types/charMax3.html">X-SBS-customerProfileCode</a><br>Code profil.
+				</td>				<td> Header
+				</td>
+				</tr>
+				<tr>
+				<td>
+				</td>				<td title="getLoanInstructionsListRequest.customer.activeProfile.designation"> <a href="../types/charMax30.html">X-SBS-customerProfileDesignation</a><br>Désignation du profil.
+				</td>				<td> Header
+				</td>
+				</tr>
+				<tr>
+				<td>
+				</td>				<td title="getLoanInstructionsListRequest.customer.customerType"> <a href="../types/customerType.html">X-SBS-customerType</a><br>Type de client.
+				</td>				<td> Header
+				</td>
+				</tr>
+				<tr>
+				<td>
+				</td>				<td title="getLoanInstructionsListRequest.fileResponsibleUser.userCode"> <a href="../types/charMax10.html">X-SBS-fileResponsibleUserCode</a><br>Code utilisateur.
+				</td>				<td> Header
+				</td>
+				</tr>
+				<tr>
+				<td>
+				</td>				<td title="getLoanInstructionsListRequest.instructionType.code"> <a href="../types/char3.html">X-SBS-instructionTypeCode</a><br>Code type du dossier.
+				</td>				<td> Header
+				</td>
+				</tr>
+				<tr>
+				<td>
+				</td>				<td title="getLoanInstructionsListRequest.instructionType.label"> <a href="../types/charMax50.html">X-SBS-instructionTypeLabel</a><br>Intitulé du type de dossier.
+				</td>				<td> Header
+				</td>
+				</tr>
+				<tr>
+				<td>
+				</td>				<td title="getLoanInstructionsListRequest.modificationDate.date1"> <a href="../types/date.html">X-SBS-modificationDate1</a><br>1ère date.
+				</td>				<td> Header
+				</td>
+				</tr>
+				<tr>
+				<td>
+				</td>				<td title="getLoanInstructionsListRequest.modificationDate.date2"> <a href="../types/date.html">X-SBS-modificationDate2</a><br>2ème date.
+				</td>				<td> Header
+				</td>
+				</tr>
+				<tr>
+				<td>
+				</td>				<td title="getLoanInstructionsListRequest.modificationDate.comparator"> <a href="../types/comparator.html">X-SBS-modificationDateComparator</a><br>Opérateur de comparaison.
+				</td>				<td> Header
+				</td>
+				</tr>
+				<tr>
+				<td>
+				</td>				<td title="getLoanInstructionsListRequest.currentSituation.code"> <a href="../types/loanInstructionSituationCode.html">X-SBS-situationCode</a><br>Code situation.
+				</td>				<td> Header
+				</td>
+				</tr>
+				<tr>
+				<td>
+				</td>				<td title="getLoanInstructionsListRequest.currentSituation.situationDate"> <a href="../types/date.html">X-SBS-situationDate</a><br>Date de mise à jour de la situation.
+				</td>				<td> Header
+				</td>
+				</tr>
+				<tr>
+				<td>
+				</td>				<td title="getLoanInstructionsListRequest.currentSituation.label"> <a href="../types/charMax50.html">X-SBS-situationLabel</a><br>Libellé de la situation.
+				</td>				<td> Header
+				</td>
+				</tr>
+				<tr>
+				<td>
+				</td>				<td title="getLoanInstructionsListRequest.currentSituation.situationUser.userCode"> <a href="../types/charMax10.html">X-SBS-situationUserCode</a><br>Code utilisateur.
+				</td>				<td> Header
+				</td>
+				</tr>
+				<tr>
+				<td>
+				</td>				<td title="getLoanInstructionsListRequest.stepInProgress.code"> <a href="../types/loanInstructionStepCode.html">X-SBS-stepCode</a><br>Code étape.
+				</td>				<td> Header
+				</td>
+				</tr>
+				<tr>
+				<td>
+				</td>				<td title="getLoanInstructionsListRequest.stepInProgress.label"> <a href="../types/charMax50.html">X-SBS-stepLabel</a><br>Libellé de l'étape.
+				</td>				<td> Header
+				</td>
+				</tr>
+				<tr>
+				<td>
+				</td>				<td title="getLoanInstructionsListRequest.stepInProgress.maximumProcessingDate"> <a href="../types/date.html">X-SBS-stepMaximumProcessingdate</a><br>Date maximum pour traiter l'étape.
+				</td>				<td> Header
+				</td>
+				</tr>
+
+			</table>
+
+		</div>
+		<br>
+
+		</br>
+		<div class="mock-list">
+			<b>Codes Erreur : </b>			<table>
+				<tr>
+				<td> 400
+				</td>				<td> Bad Request
+				</td>
+				</tr>
+
+			</table>
+
+		</div>
+
+	</div>
+
+</div>
+<div class="detail-column" id="d3" style="display:none; width: 65%">
+	<div class="detail">
+		<div class="mock-list">
+			<b>Description : </b>The sub-resource additionaldata enable to process additional data for the object of a loan instruction file.
+		</div>
+
+	</div>
+
+</div>
+<div class="detail-column" id="d4" style="display:none; width: 65%">
+	<div class="detail">
+		<div class="mock-list">
+			<b>Service SOAP : </b> <a href="../services/createLoanInstructionObjectAdditionalData.html">createLoanInstructionObjectAdditionalData</a>
+		</div>
+		<div class="mock-list">
+			<b>Code retour succes : </b>201 - Created
+		</div>
+		<div class="mock-list">
+			<b>Uri : </b>http://soprabanking.com/amplitude/loaninstructions/v1/{loanInstructionIdentifier}/additionaldata
+		</div>
+		<div class="mock-list">
+			<b>Description : </b>The verb POST applied to URI /loaninstructions/v1/{loaninstructionId}/additionaldata allows creating an additional data for a loan instruction file.
+Additional data should be created one by one through this service.
+Additional data nature should be authorized for the file type.
+The data format should be compatible with this one defined for the additional data nature.
+The currency is to precise if a reference currency has been setup for the additional data nature. The currency should be authorized for the file type.
+		</div>
+		<br>
+
+		</br>
+		<div class="mock-list">
+			<b>Identifiants : </b>			<table class="table_param">
+				<tr>
+				<td> 0
+				</td>				<td title="createLoanInstructionObjectAdditionalDataRequest.loanInstructionIdentifier"> <a href="../types/loanInstructionDetailIdentifier.html">loanInstructionIdentifier</a><br>Identifiant d'un dossier d'instruction de crédit.
+				</td>
+				</tr>
+
+			</table>
+
+		</div>
+		<br>
+
+		</br>
+		<div class="mock-list">
+			<b>Codes Erreur : </b>			<table>
+				<tr>
+				<td> 400
+				</td>				<td> Bad Request
+				</td>
+				</tr>
+
+			</table>
+
+		</div>
+
+	</div>
+
+</div>
+<div class="detail-column" id="d5" style="display:none; width: 65%">
+	<div class="detail">
+		<div class="mock-list">
+			<b>Description : </b>The service getLoanInstructionProjectGoodsForSaleList allows to  return the detail of the step to be processed for a funding request.
+		</div>
+
+	</div>
+
+</div>
+<div class="detail-column" id="d6" style="display:none; width: 65%">
+	<div class="detail">
+		<div class="mock-list">
+			<b>Service SOAP : </b> <a href="../services/getLoanInstructionProjectGoodsForSaleList.html">getLoanInstructionProjectGoodsForSaleList</a>
+		</div>
+		<div class="mock-list">
+			<b>Code retour succes : </b>200 - OK
+		</div>
+		<div class="mock-list">
+			<b>Uri : </b>http://soprabanking.com/amplitude/loaninstructions/v1/{loanInstructionIdentifier}/goodsforsale
+		</div>
+		<div class="mock-list">
+			<b>Description : </b>The verb GET applied to URI /loaninstructions/v1/{loaninstructionId}/ goodsforsale return the detail of the step to be processed for a funding request.
+		</div>
+		<br>
+
+		</br>
+		<div class="mock-list">
+			<b>Identifiants : </b>			<table class="table_param">
+				<tr>
+				<td> 0
+				</td>				<td title="getLoanInstructionProjectGoodsForSaleListRequest.loanInstructionIdentifier"> <a href="../types/loanInstructionDetailIdentifier.html">loanInstructionIdentifier</a><br>Identifiant d¿un dossier d¿instruction de crédit 
+				</td>
+				</tr>
+
+			</table>
+
+		</div>
+		<br>
+
+		</br>
+		<div class="mock-list">
+			<b>Codes Erreur : </b>			<table>
+				<tr>
+				<td> 400
+				</td>				<td> Bad Request
+				</td>
+				</tr>
+
+			</table>
+
+		</div>
+
+	</div>
+
+</div>
+<div class="detail-column" id="d7" style="display:none; width: 65%">
+	<div class="detail">
+		<div class="mock-list">
+			<b>Description : </b>The service createLoanInstructionLinkingToAmortizableLoan allows completing a loan instruction file.
+It enable to attach an amortizable loan file to the financing of a loan instruction file.
+The loan instruction file and amortizable loan file identifiers are required.
+It is possible to indicate if the loan file is part of a bridge loan.
+		</div>
+
+	</div>
+
+</div>
+<div class="detail-column" id="d8" style="display:none; width: 65%">
+	<div class="detail">
+		<div class="mock-list">
+			<b>Service SOAP : </b> <a href="../services/createLoanInstructionLinkingToAmortizableLoan.html">createLoanInstructionLinkingToAmortizableLoan</a>
+		</div>
+		<div class="mock-list">
+			<b>Code retour succes : </b>201 - Created
+		</div>
+		<div class="mock-list">
+			<b>Uri : </b>http://soprabanking.com/amplitude/loaninstructions/v1/{loanInstructionIdentifier}/linkingtoamortizableloans
+		</div>
+		<div class="mock-list">
+			<b>Description : </b>The service createLoanInstructionLinkingToAmortizableLoan allows completing a loan instruction file.
+It enable to attach an amortizable loan file to the financing of a loan instruction file.
+The loan instruction file and amortizable loan file identifiers are required.
+It is possible to indicate if the loan file is part of a bridge loan.
+		</div>
+		<br>
+
+		</br>
+		<div class="mock-list">
+			<b>Identifiants : </b>			<table class="table_param">
+				<tr>
+				<td> 0
+				</td>				<td title="createLoanInstructionLinkingToAmortizableLoanRequest.loanInstructionIdentifier"> <a href="../types/loanInstructionDetailIdentifier.html">loanInstructionIdentifier</a><br>Identifiant d¿un dossier d¿instruction de crédit
+				</td>
+				</tr>
+
+			</table>
+
+		</div>
+		<br>
+
+		</br>
+		<div class="mock-list">
+			<b>Codes Erreur : </b>			<table>
+				<tr>
+				<td> 400
+				</td>				<td> Bad Request
+				</td>
+				</tr>
+
+			</table>
+
+		</div>
+
+	</div>
+
+</div>
+<div class="detail-column" id="d9" style="display:none; width: 65%">
+	<div class="detail">
+		<div class="mock-list">
+			<b>Description : </b>The service createLoanInstructionObjectProjectDescription allows completing a loan instruction file.
+It enable to attach a project description to the object of a loan instruction file.
+The loan instruction file identifier is required, also characteristics of the good / expense.
+According to the good / expense nature concerned, different types of information should be required as good characteristics for a construction good nature, or mark and model for a consummation good nature.
+The previous project descriptions before launching the service are conserved on the object: new project descriptions are added to the object.
+		</div>
+
+	</div>
+
+</div>
+<div class="detail-column" id="d10" style="display:none; width: 65%">
+	<div class="detail">
+		<div class="mock-list">
+			<b>Service SOAP : </b> <a href="../services/createLoanInstructionObjectProjectDescription.html">createLoanInstructionObjectProjectDescription</a>
+		</div>
+		<div class="mock-list">
+			<b>Code retour succes : </b>201 - Created
+		</div>
+		<div class="mock-list">
+			<b>Uri : </b>http://soprabanking.com/amplitude/loaninstructions/v1//{loanInstructionIdentifier}/objects
+		</div>
+		<div class="mock-list">
+			<b>Description : </b>The service createLoanInstructionObjectProjectDescription allows completing a loan instruction file.
+It enable to attach a project description to the object of a loan instruction file.
+The loan instruction file identifier is required, also characteristics of the good / expense.
+According to the good / expense nature concerned, different types of information should be required as good characteristics for a construction good nature, or mark and model for a consummation good nature.
+The previous project descriptions before launching the service are conserved on the object: new project descriptions are added to the object.
+		</div>
+		<br>
+
+		</br>
+		<div class="mock-list">
+			<b>Identifiants : </b>			<table class="table_param">
+				<tr>
+				<td> 0
+				</td>				<td title="createLoanInstructionObjectProjectDescriptionRequest.loanInstructionIdentifier"> <a href="../types/loanInstructionDetailIdentifier.html">loanInstructionIdentifier</a><br>Identifiant d¿un dossier d¿instruction de crédit
+				</td>
+				</tr>
+
+			</table>
+
+		</div>
+		<br>
+
+		</br>
+		<div class="mock-list">
+			<b>Codes Erreur : </b>			<table>
+				<tr>
+				<td> 400
+				</td>				<td> Bad Request
+				</td>
+				</tr>
+
+			</table>
+
+		</div>
+
+	</div>
+
+</div>
+<div class="detail-column" id="d11" style="display:none; width: 65%">
+	<div class="detail">
+		<div class="mock-list">
+			<b>Description : </b>Te service getLoanInstructionPersonsInChargeList allows to return the list of potential persons in charge for a loan instruction.
+		</div>
+
+	</div>
+
+</div>
+<div class="detail-column" id="d12" style="display:none; width: 65%">
+	<div class="detail">
+		<div class="mock-list">
+			<b>Service SOAP : </b> <a href="../services/getLoanInstructionPersonsInChargeList.html">getLoanInstructionPersonsInChargeList</a>
+		</div>
+		<div class="mock-list">
+			<b>Code retour succes : </b>200 - OK
+		</div>
+		<div class="mock-list">
+			<b>Uri : </b>http://soprabanking.com/amplitude/loaninstructions/v1/{loanInstructionIdentifier}/possiblepersonsincharge
+		</div>
+		<div class="mock-list">
+			<b>Description : </b>The verb GET applied to URI /loaninstruction/v1/{loaninstructionId}/possiblepersonsincharge returns the list of potential persons in charge for a loan instruction.
+		</div>
+		<br>
+
+		</br>
+		<div class="mock-list">
+			<b>Identifiants : </b>			<table class="table_param">
+				<tr>
+				<td> 0
+				</td>				<td title="getLoanInstructionPersonsInChargeListRequest.loanInstructionIdentifier"> <a href="../types/loanInstructionDetailIdentifier.html">loanInstructionIdentifier</a><br>Identifiant d¿un dossier d¿instruction de crédit 
+				</td>
+				</tr>
+
+			</table>
+
+		</div>
+		<br>
+
+		</br>
+		<div class="mock-list">
+			<b>Codes Erreur : </b>			<table>
+				<tr>
+				<td> 400
+				</td>				<td> Bad Request
+				</td>
+				</tr>
+
+			</table>
+
+		</div>
+
+	</div>
+
+</div>
+<div class="detail-column" id="d13" style="display:none; width: 65%">
+	<div class="detail">
+		<div class="mock-list">
+			<b>Description : </b>The service  getLoanInstructionRequestedDocumentsList allows to return the list of required documents for a loan instruction file
+		</div>
+
+	</div>
+
+</div>
+<div class="detail-column" id="d14" style="display:none; width: 65%">
+	<div class="detail">
+		<div class="mock-list">
+			<b>Service SOAP : </b> <a href="../services/getLoanInstructionRequestedDocumentsList.html">getLoanInstructionRequestedDocumentsList</a>
+		</div>
+		<div class="mock-list">
+			<b>Code retour succes : </b>200 - OK
+		</div>
+		<div class="mock-list">
+			<b>Uri : </b>http://soprabanking.com/amplitude/loaninstructions/v1/{loanInstructionIdentifier}/requesteddocuments
+		</div>
+		<div class="mock-list">
+			<b>Description : </b>The verb GET applied to URI /loaninstructions/v1/{loaninstructionId}/ requesteddocuments returns the list of required documents for a loan instruction file.
+		</div>
+		<br>
+
+		</br>
+		<div class="mock-list">
+			<b>Identifiants : </b>			<table class="table_param">
+				<tr>
+				<td> 0
+				</td>				<td title="getLoanInstructionRequestedDocumentsListRequest.loanInstructionIdentifier"> <a href="../types/loanInstructionDetailIdentifier.html">loanInstructionIdentifier</a><br>Identifiant d¿un dossier d'instruction de crédit 
+				</td>
+				</tr>
+
+			</table>
+
+		</div>
+		<br>
+
+		</br>
+		<div class="mock-list">
+			<b>Codes Erreur : </b>			<table>
+				<tr>
+				<td> 400
+				</td>				<td> Bad Request
+				</td>
+				</tr>
+
+			</table>
+
+		</div>
+
+	</div>
+
+</div>
+<div class="detail-column" id="d15" style="display:none; width: 65%">
+	<div class="detail">
+		<div class="mock-list">
+			<b>Service SOAP : </b> <a href="../services/createLoanInstructionRequestedDocument.html">createLoanInstructionRequestedDocument</a>
+		</div>
+		<div class="mock-list">
+			<b>Code retour succes : </b>200 - OK
+		</div>
+		<div class="mock-list">
+			<b>Uri : </b>http://soprabanking.com/amplitude/loaninstructions/v1/{loanInstructionIdentifier}/requesteddocuments
+		</div>
+		<div class="mock-list">
+			<b>Description : </b>The verb POST applied to URI /loaninstructions/v1/{loaninstructionId}/requesteddocuments allows creating a requested document for a loan instruction file.
+The nature of the requested document should be authorized for the IDC module.
+		</div>
+		<br>
+
+		</br>
+		<div class="mock-list">
+			<b>Identifiants : </b>			<table class="table_param">
+				<tr>
+				<td> 0
+				</td>				<td title="createLoanInstructionRequestedDocumentRequest.loanInstructionIdentifier"> <a href="../types/loanInstructionDetailIdentifier.html">loanInstructionIdentifier</a><br>Identifiant d¿un dossier d¿instruction de crédit 
+				</td>
+				</tr>
+
+			</table>
+
+		</div>
+		<br>
+
+		</br>
+		<div class="mock-list">
+			<b>Codes Erreur : </b>			<table>
+				<tr>
+				<td> 400
+				</td>				<td> Bad Request
+				</td>
+				</tr>
+
+			</table>
+
+		</div>
+
+	</div>
+
+</div>
+<div class="detail-column" id="d16" style="display:none; width: 65%">
+	<div class="detail">
+		<div class="mock-list">
+			<b>Description : </b>The sub-resource resources enable to process resources for a loan instruction file.
+		</div>
+
+	</div>
+
+</div>
+<div class="detail-column" id="d17" style="display:none; width: 65%">
+	<div class="detail">
+		<div class="mock-list">
+			<b>Service SOAP : </b> <a href="../services/createLoanInstructionProjectResource.html">createLoanInstructionProjectResource</a>
+		</div>
+		<div class="mock-list">
+			<b>Code retour succes : </b>201 - Created
+		</div>
+		<div class="mock-list">
+			<b>Uri : </b>http://soprabanking.com/amplitude/loaninstructions/v1/{loanInstructionIdentifier}/ressources
+		</div>
+		<div class="mock-list">
+			<b>Description : </b>The verb POST applied to URI /loaninstructions/v1/{loaninstructionId}/resources allows creating a new resource for a loan instruction file. 
+		</div>
+		<br>
+
+		</br>
+		<div class="mock-list">
+			<b>Identifiants : </b>			<table class="table_param">
+				<tr>
+				<td> 0
+				</td>				<td title="createLoanInstructionProjectResourceRequest.loanInstructionIdentifier"> <a href="../types/loanInstructionDetailIdentifier.html">loanInstructionIdentifier</a><br>Identifiant d¿un dossier d¿instruction de crédit 
+				</td>
+				</tr>
+
+			</table>
+
+		</div>
+		<br>
+
+		</br>
+		<div class="mock-list">
+			<b>Codes Erreur : </b>			<table>
+				<tr>
+				<td> 400
+				</td>				<td> Bad Request
+				</td>
+				</tr>
+
+			</table>
+
+		</div>
+
+	</div>
+
+</div>
+<div class="detail-column" id="d18" style="display:none; width: 65%">
+	<div class="detail">
+		<div class="mock-list">
+			<b>Description : </b>The sub-resource steps enable to process the steps of a loan instruction file.
+		</div>
+
+	</div>
+
+</div>
+<div class="detail-column" id="d19" style="display:none; width: 65%">
+	<div class="detail">
+		<div class="mock-list">
+			<b>Service SOAP : </b> <a href="../services/createLoanInstructionStepToProcess.html">createLoanInstructionStepToProcess</a>
+		</div>
+		<div class="mock-list">
+			<b>Code retour succes : </b>201 - Created
+		</div>
+		<div class="mock-list">
+			<b>Uri : </b>http://soprabanking.com/amplitude/loaninstructions/v1/{loanInstructionIdentifier}/steps
+		</div>
+		<div class="mock-list">
+			<b>Description : </b>The verb POST applied to URI /loaninstructions/v1/{loaninstructionId}/steps allows to take a decision on the current step of a loan instruction file.
+The decision should be consistent with the parameterization of the current step for the file. The user should have one of the expected roles for processing the mandatory or automatic level.
+A list of reserves can be sent if the decision concerns the last step level and if the action of agreement under reserve has been activated for the step. The reserves should be relevant for the file type.
+The rejection reason is to send only if it is activated on the step.
+Concerning the returned information:
+- The new step is returned only if a change was done
+- The new situation is returned only if a change was done
+- Actions before decision result is returned only if actions before decision were parameterized on the type
+- Actions after decision result is returned only if actions after decision were parameterized on the type.
+		</div>
+		<br>
+
+		</br>
+		<div class="mock-list">
+			<b>Identifiants : </b>			<table class="table_param">
+				<tr>
+				<td> 0
+				</td>				<td title="createLoanInstructionStepToProcessRequest.loanInstructionDetailIdentifier"> <a href="../types/loanInstructionDetailIdentifier.html">loanInstructionDetailIdentifier</a><br>Identifiant du dossier IDC.
+				</td>
+				</tr>
+
+			</table>
+
+		</div>
+		<br>
+
+		</br>
+		<div class="mock-list">
+			<b>Codes Erreur : </b>			<table>
+				<tr>
+				<td> 400
+				</td>				<td> Bad Request
+				</td>
+				</tr>
+
+			</table>
+
+		</div>
+
+	</div>
+
+</div>
+     </div> 
+  </div>
+  </div>
+
+  
+  <script src="../resources/jquery.js"></script>
+  <script src="../resources/doc.js"></script>
+</body>
+</html>

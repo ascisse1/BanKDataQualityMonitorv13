@@ -1,0 +1,124 @@
+package com.adakalgroup.dataqualitybackend.model;
+
+import com.adakalgroup.dataqualitybackend.model.enums.TicketPriority;
+import com.adakalgroup.dataqualitybackend.model.enums.TicketStatus;
+import jakarta.persistence.*;
+import lombok.AllArgsConstructor;
+import lombok.Builder;
+import lombok.Data;
+import lombok.NoArgsConstructor;
+import org.hibernate.annotations.Filter;
+import org.springframework.data.annotation.CreatedDate;
+import org.springframework.data.annotation.LastModifiedDate;
+import org.springframework.data.jpa.domain.support.AuditingEntityListener;
+
+import java.time.LocalDateTime;
+import java.util.ArrayList;
+import java.util.List;
+
+@Data
+@Builder
+@NoArgsConstructor
+@AllArgsConstructor
+@Entity
+@Filter(name = "structureFilter", condition = "structure_code IN (:codes)")
+@Table(schema = "public",name = "tickets")
+@EntityListeners(AuditingEntityListener.class)
+public class Ticket {
+
+    @Id
+    @GeneratedValue(strategy = GenerationType.IDENTITY)
+    private Long id;
+
+    @Column(name = "ticket_number", unique = true, nullable = false, length = 50)
+    private String ticketNumber;
+
+    @Column(name = "cli", nullable = false, length = 15)
+    private String cli;
+
+    @Column(name = "client_name", length = 200)
+    private String clientName;
+
+    @Column(name = "client_type", length = 1)
+    private String clientType;
+
+    @Column(name = "structure_code", nullable = false, length = 5)
+    private String structureCode;
+
+    @Enumerated(EnumType.STRING)
+    @Column(nullable = false)
+    @Builder.Default
+    private TicketStatus status = TicketStatus.DETECTED;
+
+    @Enumerated(EnumType.STRING)
+    @Column(nullable = false)
+    @Builder.Default
+    private TicketPriority priority = TicketPriority.MEDIUM;
+
+    @ManyToOne(fetch = FetchType.LAZY)
+    @JoinColumn(name = "assigned_to")
+    private User assignedTo;
+
+    @ManyToOne(fetch = FetchType.LAZY)
+    @JoinColumn(name = "assigned_by")
+    private User assignedBy;
+
+    @Column(name = "assigned_at")
+    private LocalDateTime assignedAt;
+
+    @ManyToOne(fetch = FetchType.LAZY)
+    @JoinColumn(name = "validated_by")
+    private User validatedBy;
+
+    @Column(name = "validated_at")
+    private LocalDateTime validatedAt;
+
+    @ManyToOne(fetch = FetchType.LAZY)
+    @JoinColumn(name = "closed_by")
+    private User closedBy;
+
+    @Column(name = "closed_at")
+    private LocalDateTime closedAt;
+
+    @Column(name = "sla_deadline")
+    private LocalDateTime slaDeadline;
+
+    @Column(name = "sla_breached")
+    @Builder.Default
+    private Boolean slaBreached = false;
+
+    @Column(name = "process_instance_id", length = 64)
+    private String processInstanceId;
+
+    @Column(name = "total_incidents")
+    @Builder.Default
+    private Integer totalIncidents = 0;
+
+    @Column(name = "resolved_incidents")
+    @Builder.Default
+    private Integer resolvedIncidents = 0;
+
+    @CreatedDate
+    @Column(name = "created_at", nullable = false, updatable = false)
+    private LocalDateTime createdAt;
+
+    @LastModifiedDate
+    @Column(name = "updated_at")
+    private LocalDateTime updatedAt;
+
+    @OneToMany(mappedBy = "ticket", cascade = CascadeType.ALL, orphanRemoval = true)
+    @Builder.Default
+    private List<TicketIncident> incidents = new ArrayList<>();
+
+    @OneToMany(mappedBy = "ticket", cascade = CascadeType.ALL, orphanRemoval = true)
+    @Builder.Default
+    private List<TicketComment> comments = new ArrayList<>();
+
+    @OneToMany(mappedBy = "ticket", cascade = CascadeType.ALL, orphanRemoval = true)
+    @Builder.Default
+    private List<TicketDocument> documents = new ArrayList<>();
+
+    @OneToMany(mappedBy = "ticket", cascade = CascadeType.ALL, orphanRemoval = true)
+    @Builder.Default
+    private List<TicketHistory> history = new ArrayList<>();
+}

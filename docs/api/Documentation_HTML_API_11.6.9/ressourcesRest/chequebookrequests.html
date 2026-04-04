@@ -1,0 +1,442 @@
+<!DOCTYPE html>
+<html>
+<head>
+	<link rel="stylesheet" href="../resources/styleDocu.css" />
+    <link rel="stylesheet" href="../resources/font-awesome/css/font-awesome.min.css" />
+	<title>Documentation Xsd</title>
+	<meta charset="UTF-8" />
+</head>
+
+<body>
+  <div class="document">
+	<div class="header">		
+	</div>
+
+    <div class="tabs">
+        <div class="tabs-wrapper-selected" onclick="window.open('../liste-ressources.html', '_self');">
+            <div class="tabs-left-content" >Liste des ressources</div>
+        </div>
+        <div class="tabs-wrapper" onclick="window.open('../liste-services.html', '_self');">
+            <div class="tabs-left-content">Liste des services</div>
+        </div>
+        <div class="tabs-wrapper" onclick="window.open('../liste-types.html', '_self');">
+            <div class="tabs-right-content">Liste des types</div>
+        </div>
+    </div>
+
+	<div class="contenu">
+      <div class="breadcrumb"> 
+        <ul class="breadcrumb">
+           <li> <a href="../index.html"> Accueil </a></li>
+           <li> > </li>
+           <li> <a href="../liste-ressources.html"> Liste des ressources </a></li>
+           <li> > </li>
+           <li> chequebookrequests </li>
+        </ul>                    
+      </div>                    
+      
+      <div class="summary">
+        <div class="mock-list"> Nom ressource REST : chequebookrequests </div>
+        <div class="mock-list"> Programme Amplitude : guwrchequebookrequests </div>
+        <div class="mock-list"> Email : support@soprabanking.com </div>        
+        <br/>
+            <div class="mock-list"> Cheque book requests</div>
+      </div>
+      
+      <div class="column-content" style="width:93%">
+        <div class="detail-column" style="width: 35%">
+          <div class="tree"> 
+<ul style="padding:0">
+	<li>
+<i class="fa fa-caret-down fa-fw" onclick="expand_or_collapse(this)">
+</i>		chequebookrequests		<ul>
+			<li>
+<i class="fa fa-caret-down fa-fw" onclick="expand_or_collapse(this)">
+</i>				v1				<ul>
+					<li>
+<i class="fa fa-fw">
+</i><span class="selectable" id="e0"> GET
+</span>
+					</li>
+					<li>
+<i class="fa fa-fw">
+</i><span class="selectable" id="e1"> GETLIST
+</span>
+					</li>
+					<li>
+<i class="fa fa-fw">
+</i><span class="selectable" id="e2"> POST
+</span>
+					</li>
+
+				</ul>
+
+			</li>
+
+		</ul>
+
+	</li>
+
+</ul>
+          </div>
+        </div>
+                 
+        
+<div class="detail-column" id="d0" style="display:none; width: 65%">
+	<div class="detail">
+		<div class="mock-list">
+			<b>Service SOAP : </b> <a href="../services/getChequeBookRequestList.html">getChequeBookRequestList</a>
+		</div>
+		<div class="mock-list">
+			<b>Code retour succes : </b>200 - OK
+		</div>
+		<div class="mock-list">
+			<b>Uri : </b>http://soprabanking.com/amplitude/chequebookrequests/v1/{chequeBookRequestId}
+		</div>
+		<div class="mock-list">
+			<b>Description : </b>The service getChequeBookRequestList allows returning a list of cheque book requests matching the search criteria received.
+
+The search is based on the optional criteria below:
+- the branch (code and/or designation),
+- the request number,
+- the account number (internal and/or IBAN and/or external format),
+- the cheque book dispatch mode,
+- the request date (or a date range),
+- the customisation date (or a date range),
+- the delivery date (or a date range),
+- the destruction date (or a date range),
+- the last modification date (or a date range),
+- the request situation,
+- the request status,
+- the cheque book delivery branch (code and/or designation),
+- the total number of cheque books ordered by branch and by request number.
+
+For each cheque book request returned, all data used in the search criteria will be indicated.
+		</div>
+		<br>
+
+		</br>
+		<div class="mock-list">
+			<b>Identifiants : </b>			<table class="table_param">
+				<tr>
+				<td> 0
+				</td>				<td title="getChequeBookRequestListRequest.branch.code"> <a href="../types/char5.html">code</a><br>Code de l'agence.
+				</td>
+				</tr>
+				<tr>
+				<td> 1
+				</td>				<td title="getChequeBookRequestListRequest.requestNumber"> <a href="../types/eventNumber.html">requestNumber</a><br>Numéro de demande.
+				</td>
+				</tr>
+
+			</table>
+
+		</div>
+		<br>
+
+		</br>
+		<div class="mock-list">
+			<b>Codes Erreur : </b>			<table>
+				<tr>
+				<td> 400
+				</td>				<td> Bad Request
+				</td>
+				</tr>
+
+			</table>
+
+		</div>
+
+	</div>
+
+</div>
+<div class="detail-column" id="d1" style="display:none; width: 65%">
+	<div class="detail">
+		<div class="mock-list">
+			<b>Service SOAP : </b> <a href="../services/getChequeBookRequestList.html">getChequeBookRequestList</a>
+		</div>
+		<div class="mock-list">
+			<b>Code retour succes : </b>200 - OK
+		</div>
+		<div class="mock-list">
+			<b>Uri : </b>http://soprabanking.com/amplitude/chequebookrequests/v1/
+		</div>
+		<div class="mock-list">
+			<b>Description : </b>The service getChequeBookRequestList allows returning a list of cheque book requests matching the search criteria received.
+
+The search is based on the optional criteria below:
+- the branch (code and/or designation),
+- the request number,
+- the account number (internal and/or IBAN and/or external format),
+- the cheque book dispatch mode,
+- the request date (or a date range),
+- the customisation date (or a date range),
+- the delivery date (or a date range),
+- the destruction date (or a date range),
+- the last modification date (or a date range),
+- the request situation,
+- the request status,
+- the cheque book delivery branch (code and/or designation),
+- the total number of cheque books ordered by branch and by request number.
+
+For each cheque book request returned, all data used in the search criteria will be indicated.
+		</div>
+		<br>
+
+		</br>
+		<div class="mock-list">
+			<b>Parametres : </b>			<table class="table_param">
+				<tr>
+				<td>
+				</td>				<td title="getChequeBookRequestListRequest.account.internalFormatAccountOurBranch.branch.code"> <a href="../types/char5.html">X-SBS-accountBranchCode</a><br>Code de l'agence.
+				</td>				<td> Header
+				</td>
+				</tr>
+				<tr>
+				<td>
+				</td>				<td title="getChequeBookRequestListRequest.account.internalFormatAccountOurBranch.currency.alphaCode"> <a href="../types/char3.html">X-SBS-accountCurrencyAlphaCode</a><br>Code devise alphanumérique.
+				</td>				<td> Header
+				</td>
+				</tr>
+				<tr>
+				<td>
+				</td>				<td title="getChequeBookRequestListRequest.account.internalFormatAccountOurBranch.currency.numericCode"> <a href="../types/char3.html">X-SBS-accountCurrencyNumericCode</a><br>Code devise numérique.
+				</td>				<td> Header
+				</td>
+				</tr>
+				<tr>
+				<td>
+				</td>				<td title="getChequeBookRequestListRequest.account.externalFormatAccount.value"> <a href="../types/charMax34.html">X-SBS-accountExternalFormat</a><br>Valeur de l'identifiant externe du compte.
+				</td>				<td> Header
+				</td>
+				</tr>
+				<tr>
+				<td>
+				</td>				<td title="getChequeBookRequestListRequest.account.ibanFormatAccount.value"> <a href="../types/charMax34.html">X-SBS-accountIbanFormat</a><br>Valeur de l'IBAN.
+				</td>				<td> Header
+				</td>
+				</tr>
+				<tr>
+				<td>
+				</td>				<td title="getChequeBookRequestListRequest.account.internalFormatAccountOurBranch.account"> <a href="../types/charMax11.html">X-SBS-accountNumber</a><br>Numéro du compte.
+				</td>				<td> Header
+				</td>
+				</tr>
+				<tr>
+				<td>
+				</td>				<td title="getChequeBookRequestListRequest.account.internalFormatAccountOurBranch.suffix"> <a href="../types/charMax2.html">X-SBS-accountSuffix</a><br>Suffixe du compte.
+				</td>				<td> Header
+				</td>
+				</tr>
+				<tr>
+				<td>
+				</td>				<td title="getChequeBookRequestListRequest.branch.code"> <a href="../types/char5.html">X-SBS-branchCode</a><br>Code de l'agence.
+				</td>				<td> Header
+				</td>
+				</tr>
+				<tr>
+				<td>
+				</td>				<td title="getChequeBookRequestListRequest.customisationDate.date1"> <a href="../types/date.html">X-SBS-customisationDate1</a><br>1ère date.
+				</td>				<td> Header
+				</td>
+				</tr>
+				<tr>
+				<td>
+				</td>				<td title="getChequeBookRequestListRequest.customisationDate.date2"> <a href="../types/date.html">X-SBS-customisationDate2</a><br>2ème date.
+				</td>				<td> Header
+				</td>
+				</tr>
+				<tr>
+				<td>
+				</td>				<td title="getChequeBookRequestListRequest.customisationDate.comparator"> <a href="../types/comparator.html">X-SBS-customisationDateComparator</a><br>Opérateur de comparaison.
+				</td>				<td> Header
+				</td>
+				</tr>
+				<tr>
+				<td>
+				</td>				<td title="getChequeBookRequestListRequest.deliveryDate.date1"> <a href="../types/date.html">X-SBS-deliveryDate1</a><br>1ère date.
+				</td>				<td> Header
+				</td>
+				</tr>
+				<tr>
+				<td>
+				</td>				<td title="getChequeBookRequestListRequest.deliveryDate.date2"> <a href="../types/date.html">X-SBS-deliveryDate2</a><br>2ème date.
+				</td>				<td> Header
+				</td>
+				</tr>
+				<tr>
+				<td>
+				</td>				<td title="getChequeBookRequestListRequest.deliveryDate.comparator"> <a href="../types/comparator.html">X-SBS-deliveryDateComparator</a><br>Opérateur de comparaison.
+				</td>				<td> Header
+				</td>
+				</tr>
+				<tr>
+				<td>
+				</td>				<td title="getChequeBookRequestListRequest.deliveryMethod"> <a href="../types/chequeBookDeliveryMethod.html">X-SBS-deliveryMethod</a><br>Mode d'expédition du chéquier.
+				</td>				<td> Header
+				</td>
+				</tr>
+				<tr>
+				<td>
+				</td>				<td title="getChequeBookRequestListRequest.destructionDate.date1"> <a href="../types/date.html">X-SBS-destructionDate1</a><br>1ère date.
+				</td>				<td> Header
+				</td>
+				</tr>
+				<tr>
+				<td>
+				</td>				<td title="getChequeBookRequestListRequest.destructionDate.date2"> <a href="../types/date.html">X-SBS-destructionDate2</a><br>2ème date.
+				</td>				<td> Header
+				</td>
+				</tr>
+				<tr>
+				<td>
+				</td>				<td title="getChequeBookRequestListRequest.destructionDate.comparator"> <a href="../types/comparator.html">X-SBS-destructionDateComparator</a><br>Opérateur de comparaison.
+				</td>				<td> Header
+				</td>
+				</tr>
+				<tr>
+				<td>
+				</td>				<td title="getChequeBookRequestListRequest.lastModificationDate.date1"> <a href="../types/date.html">X-SBS-lastModificationDate1</a><br>1ère date.
+				</td>				<td> Header
+				</td>
+				</tr>
+				<tr>
+				<td>
+				</td>				<td title="getChequeBookRequestListRequest.lastModificationDate.date2"> <a href="../types/date.html">X-SBS-lastModificationDate2</a><br>2ème date.
+				</td>				<td> Header
+				</td>
+				</tr>
+				<tr>
+				<td>
+				</td>				<td title="getChequeBookRequestListRequest.lastModificationDate.comparator"> <a href="../types/comparator.html">X-SBS-lastModificationDateComparator</a><br>Opérateur de comparaison.
+				</td>				<td> Header
+				</td>
+				</tr>
+				<tr>
+				<td>
+				</td>				<td title="getChequeBookRequestListRequest.remittanceBranch.code"> <a href="../types/char5.html">X-SBS-remittanceBranchCode</a><br>Code de l'agence.
+				</td>				<td> Header
+				</td>
+				</tr>
+				<tr>
+				<td>
+				</td>				<td title="getChequeBookRequestListRequest.remittanceBranch.designation"> <a href="../types/charMax30.html">X-SBS-remittanceBranchDesignation</a><br>Désignation de l'agence.
+				</td>				<td> Header
+				</td>
+				</tr>
+				<tr>
+				<td>
+				</td>				<td title="getChequeBookRequestListRequest.requestDate.date1"> <a href="../types/date.html">X-SBS-requestDate1</a><br>1ère date.
+				</td>				<td> Header
+				</td>
+				</tr>
+				<tr>
+				<td>
+				</td>				<td title="getChequeBookRequestListRequest.requestDate.date2"> <a href="../types/date.html">X-SBS-requestDate2</a><br>2ème date.
+				</td>				<td> Header
+				</td>
+				</tr>
+				<tr>
+				<td>
+				</td>				<td title="getChequeBookRequestListRequest.requestDate.comparator"> <a href="../types/comparator.html">X-SBS-requestDateComparator</a><br>Opérateur de comparaison.
+				</td>				<td> Header
+				</td>
+				</tr>
+				<tr>
+				<td>
+				</td>				<td title="getChequeBookRequestListRequest.requestNumber"> <a href="../types/eventNumber.html">X-SBS-requestNumber</a><br>Numéro de demande.
+				</td>				<td> Header
+				</td>
+				</tr>
+				<tr>
+				<td>
+				</td>				<td title="getChequeBookRequestListRequest.requestSituation"> <a href="../types/chequeBookRequestSituation.html">X-SBS-requestSituation</a><br>Situation de la demande.
+				</td>				<td> Header
+				</td>
+				</tr>
+				<tr>
+				<td>
+				</td>				<td title="getChequeBookRequestListRequest.requestStatus"> <a href="../types/chequeBookRequestStatus.html">X-SBS-requestStatus</a><br>Etat de la demande.
+				</td>				<td> Header
+				</td>
+				</tr>
+				<tr>
+				<td>
+				</td>				<td title="getChequeBookRequestListRequest.totalRequestedChequeBooksNumber"> <a href="../types/positiveInteger.html">X-SBS-totalRequestedChequeBooksNumber</a><br>Nombre total de chéquiers commandés par agence et numéro de demande.
+				</td>				<td> Header
+				</td>
+				</tr>
+
+			</table>
+
+		</div>
+		<br>
+
+		</br>
+		<div class="mock-list">
+			<b>Codes Erreur : </b>			<table>
+				<tr>
+				<td> 400
+				</td>				<td> Bad Request
+				</td>
+				</tr>
+
+			</table>
+
+		</div>
+
+	</div>
+
+</div>
+<div class="detail-column" id="d2" style="display:none; width: 65%">
+	<div class="detail">
+		<div class="mock-list">
+			<b>Service SOAP : </b> <a href="../services/createChequeBookRequest.html">createChequeBookRequest</a>
+		</div>
+		<div class="mock-list">
+			<b>Code retour succes : </b>201 - Created
+		</div>
+		<div class="mock-list">
+			<b>Uri : </b>http://soprabanking.com/amplitude/chequebookrequests/v1/
+		</div>
+		<div class="mock-list">
+			<b>Description : </b>The service createChequeBookRequest allows creating a cheque book order.
+
+The order characteristics are required: branch, account, origin, dispatch mode, dispatch place, one or several types of cheque book (with for each type : number of cheque books, attributes and title).
+
+The service returns:
+- the order number,
+- the order date,
+- the order value date,
+- the order situation,
+- the order status,
+- the fees amount,
+- the disapproval list (code and designation).
+		</div>
+		<br>
+
+		</br>
+		<div class="mock-list">
+			<b>Codes Erreur : </b>			<table>
+				<tr>
+				<td> 400
+				</td>				<td> Bad Request
+				</td>
+				</tr>
+
+			</table>
+
+		</div>
+
+	</div>
+
+</div>
+     </div> 
+  </div>
+  </div>
+
+  
+  <script src="../resources/jquery.js"></script>
+  <script src="../resources/doc.js"></script>
+</body>
+</html>

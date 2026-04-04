@@ -1,0 +1,287 @@
+<!DOCTYPE html>
+<html>
+<head>
+	<link rel="stylesheet" href="../resources/styleDocu.css" />
+    <link rel="stylesheet" href="../resources/font-awesome/css/font-awesome.min.css" />
+	<title>Documentation Xsd</title>
+	<meta charset="UTF-8" />
+</head>
+
+<body>
+  <div class="document">
+	<div class="header">		
+	</div>
+
+    <div class="tabs">
+        <div class="tabs-wrapper-selected" onclick="window.open('../liste-ressources.html', '_self');">
+            <div class="tabs-left-content" >Liste des ressources</div>
+        </div>
+        <div class="tabs-wrapper" onclick="window.open('../liste-services.html', '_self');">
+            <div class="tabs-left-content">Liste des services</div>
+        </div>
+        <div class="tabs-wrapper" onclick="window.open('../liste-types.html', '_self');">
+            <div class="tabs-right-content">Liste des types</div>
+        </div>
+    </div>
+
+	<div class="contenu">
+      <div class="breadcrumb"> 
+        <ul class="breadcrumb">
+           <li> <a href="../index.html"> Accueil </a></li>
+           <li> > </li>
+           <li> <a href="../liste-ressources.html"> Liste des ressources </a></li>
+           <li> > </li>
+           <li> codsimulations </li>
+        </ul>                    
+      </div>                    
+      
+      <div class="summary">
+        <div class="mock-list"> Nom ressource REST : codsimulations </div>
+        <div class="mock-list"> Programme Amplitude : bcwrcodsimulations </div>
+        <div class="mock-list"> Email : support@soprabanking.com </div>        
+        <br/>
+            <div class="mock-list"> Simulations of certificates of deposit</div>
+      </div>
+      
+      <div class="column-content" style="width:93%">
+        <div class="detail-column" style="width: 35%">
+          <div class="tree"> 
+<ul style="padding:0">
+	<li>
+<i class="fa fa-caret-down fa-fw" onclick="expand_or_collapse(this)">
+</i>		codsimulations		<ul>
+			<li>
+<i class="fa fa-caret-down fa-fw" onclick="expand_or_collapse(this)">
+</i>				v1				<ul>
+					<li>
+<i class="fa fa-fw">
+</i><span class="selectable" id="e0"> GETLIST
+</span>
+					</li>
+
+				</ul>
+
+			</li>
+
+		</ul>
+
+	</li>
+
+</ul>
+          </div>
+        </div>
+                 
+        
+<div class="detail-column" id="d0" style="display:none; width: 65%">
+	<div class="detail">
+		<div class="mock-list">
+			<b>Service SOAP : </b> <a href="../services/getCoDSimulationDetail.html">getCoDSimulationDetail</a>
+		</div>
+		<div class="mock-list">
+			<b>Code retour succes : </b>200 - OK
+		</div>
+		<div class="mock-list">
+			<b>Uri : </b>http://soprabanking.com/amplitude/codsimulations/v1/
+		</div>
+		<div class="mock-list">
+			<b>Description : </b>The service getCoDSimulationDetail allows simulating the calculation of interest for a certificate of deposit either corresponding to a unique identifier received or matching the detailed CD information received.
+
+For the selected or simulated CD, the following information is returned:
+- the simulation of interest for all the CD duration,
+- the simulation of interest on maturity date,
+- the simulation of interest in case of breaking,
+- the simulation of interest for the next period,
+- the simulation of interest advance.
+		</div>
+		<br>
+
+		</br>
+		<div class="mock-list">
+			<b>Parametres : </b>			<table class="table_param">
+				<tr>
+				<td>
+				</td>				<td title="getCoDSimulationDetailRequest.simulationCoD.amount"> <a href="../types/decimal19_4.html">X-SBS-amount</a><br>Montant.
+				</td>				<td> Header
+				</td>
+				</tr>
+				<tr>
+				<td> <i class="fa fa-key fa-fw"> </i>
+				</td>				<td title="getCoDSimulationDetailRequest.simulationCoD.branchCode"> <a href="../types/branchCode.html">X-SBS-branchCode</a><br>Code agence.
+				</td>				<td> Header
+				</td>
+				</tr>
+				<tr>
+				<td>
+				</td>				<td title="getCoDSimulationDetailRequest.simulationCoD.capitalizedOfInterest"> <a href="../types/boolean.html">X-SBS-capitalizedOfInterest</a><br>BDC capitalisé.
+				</td>				<td> Header
+				</td>
+				</tr>
+				<tr>
+				<td> <i class="fa fa-key fa-fw"> </i>
+				</td>				<td title="getCoDSimulationDetailRequest.simulationCoD.codType"> <a href="../types/char3.html">X-SBS-codType</a><br>Type de BDC.
+				</td>				<td> Header
+				</td>
+				</tr>
+				<tr>
+				<td>
+				</td>				<td title="getCoDSimulationDetailRequest.simulationCoD.creationDate"> <a href="../types/date.html">X-SBS-creationDate</a><br>Date de mise en place.
+				</td>				<td> Header
+				</td>
+				</tr>
+				<tr>
+				<td>
+				</td>				<td title="getCoDSimulationDetailRequest.simulationCoD.creditedAccount.account"> <a href="../types/charMax11.html">X-SBS-creditedAccountAccount</a><br>Numéro du compte.
+				</td>				<td> Header
+				</td>
+				</tr>
+				<tr>
+				<td>
+				</td>				<td title="getCoDSimulationDetailRequest.simulationCoD.creditedAccount.branch"> <a href="../types/char5.html">X-SBS-creditedAccountBranch</a><br>Agence du compte.
+				</td>				<td> Header
+				</td>
+				</tr>
+				<tr>
+				<td>
+				</td>				<td title="getCoDSimulationDetailRequest.simulationCoD.creditedAccount.currency"> <a href="../types/currencyCode.html">X-SBS-creditedAccountCurrency</a><br>Devise du compte.
+				</td>				<td> Header
+				</td>
+				</tr>
+				<tr>
+				<td>
+				</td>				<td title="getCoDSimulationDetailRequest.simulationCoD.creditedAccount.suffix"> <a href="../types/charMax2.html">X-SBS-creditedAccountSuffix</a><br>Suffixe du compte.
+				</td>				<td> Header
+				</td>
+				</tr>
+				<tr>
+				<td> <i class="fa fa-key fa-fw"> </i>
+				</td>				<td title="getCoDSimulationDetailRequest.simulationCoD.currencyCode"> <a href="../types/currencyCode.html">X-SBS-currencyCode</a><br>Code devise.
+				</td>				<td> Header
+				</td>
+				</tr>
+				<tr>
+				<td>
+				</td>				<td title="getCoDSimulationDetailRequest.simulationCoD.debitedAccount.account"> <a href="../types/charMax11.html">X-SBS-debitedAccountAccount</a><br>Numéro du compte.
+				</td>				<td> Header
+				</td>
+				</tr>
+				<tr>
+				<td>
+				</td>				<td title="getCoDSimulationDetailRequest.simulationCoD.debitedAccount.branch"> <a href="../types/char5.html">X-SBS-debitedAccountBranch</a><br>Agence du compte.
+				</td>				<td> Header
+				</td>
+				</tr>
+				<tr>
+				<td>
+				</td>				<td title="getCoDSimulationDetailRequest.simulationCoD.debitedAccount.currency"> <a href="../types/currencyCode.html">X-SBS-debitedAccountCurrency</a><br>Devise du compte.
+				</td>				<td> Header
+				</td>
+				</tr>
+				<tr>
+				<td>
+				</td>				<td title="getCoDSimulationDetailRequest.simulationCoD.debitedAccount.suffix"> <a href="../types/charMax2.html">X-SBS-debitedAccountSuffix</a><br>Suffixe du compte.
+				</td>				<td> Header
+				</td>
+				</tr>
+				<tr>
+				<td>
+				</td>				<td title="getCoDSimulationDetailRequest.simulationCoD.deductionAtSource"> <a href="../types/boolean.html">X-SBS-deductionAtSource</a><br>Prélèvements libératoires.
+				</td>				<td> Header
+				</td>
+				</tr>
+				<tr>
+				<td>
+				</td>				<td title="getCoDSimulationDetailRequest.simulationCoD.depositAccount.account"> <a href="../types/charMax11.html">X-SBS-depositAccountAccount</a><br>Numéro du compte.
+				</td>				<td> Header
+				</td>
+				</tr>
+				<tr>
+				<td>
+				</td>				<td title="getCoDSimulationDetailRequest.simulationCoD.depositAccount.branch"> <a href="../types/char5.html">X-SBS-depositAccountBranch</a><br>Agence du compte.
+				</td>				<td> Header
+				</td>
+				</tr>
+				<tr>
+				<td>
+				</td>				<td title="getCoDSimulationDetailRequest.simulationCoD.depositAccount.currency"> <a href="../types/currencyCode.html">X-SBS-depositAccountCurrency</a><br>Devise du compte.
+				</td>				<td> Header
+				</td>
+				</tr>
+				<tr>
+				<td>
+				</td>				<td title="getCoDSimulationDetailRequest.simulationCoD.depositAccount.suffix"> <a href="../types/charMax2.html">X-SBS-depositAccountSuffix</a><br>Suffixe du compte.
+				</td>				<td> Header
+				</td>
+				</tr>
+				<tr>
+				<td>
+				</td>				<td title="getCoDSimulationDetailRequest.simulationCoD.frequency"> <a href="../types/coDFrequency.html">X-SBS-frequency</a><br>Périodicité.
+				</td>				<td> Header
+				</td>
+				</tr>
+				<tr>
+				<td>
+				</td>				<td title="getCoDSimulationDetailRequest.simulationCoD.indexed"> <a href="../types/boolean.html">X-SBS-indexed</a><br>BDC indexé.
+				</td>				<td> Header
+				</td>
+				</tr>
+				<tr>
+				<td>
+				</td>				<td title="getCoDSimulationDetailRequest.simulationCoD.interestRate"> <a href="../types/decimal10_7.html">X-SBS-interestRate</a><br>Taux d¿intérêt.
+				</td>				<td> Header
+				</td>
+				</tr>
+				<tr>
+				<td>
+				</td>				<td title="getCoDSimulationDetailRequest.simulationCoD.maturityDate"> <a href="../types/date.html">X-SBS-maturityDate</a><br>Date d¿échéance.
+				</td>				<td> Header
+				</td>
+				</tr>
+				<tr>
+				<td>
+				</td>				<td title="getCoDSimulationDetailRequest.simulationCoD.realDays"> <a href="../types/coDRealDays.html">X-SBS-realDays</a><br>Jours réels.
+				</td>				<td> Header
+				</td>
+				</tr>
+				<tr>
+				<td>
+				</td>				<td title="getCoDSimulationDetailRequest.simulationCoD.valueDate"> <a href="../types/date.html">X-SBS-valueDate</a><br>Date de valeur.
+				</td>				<td> Header
+				</td>
+				</tr>
+				<tr>
+				<td>
+				</td>				<td title="getCoDSimulationDetailRequest.simulationCoD.upFrontInterest"> <a href="../types/boolean.html">X-SBS-upFrontInterest</a><br>Intérêts précomptés.
+				</td>				<td> Header
+				</td>
+				</tr>
+
+			</table>
+
+		</div>
+		<br>
+
+		</br>
+		<div class="mock-list">
+			<b>Codes Erreur : </b>			<table>
+				<tr>
+				<td> 400
+				</td>				<td> Bad Request
+				</td>
+				</tr>
+
+			</table>
+
+		</div>
+
+	</div>
+
+</div>
+     </div> 
+  </div>
+  </div>
+
+  
+  <script src="../resources/jquery.js"></script>
+  <script src="../resources/doc.js"></script>
+</body>
+</html>

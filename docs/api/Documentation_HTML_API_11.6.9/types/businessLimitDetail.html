@@ -1,0 +1,248 @@
+<!DOCTYPE html >
+<html>
+<head>
+	<link rel="stylesheet" href="../resources/styleDocu.css" />
+  <link rel="stylesheet" href="../resources/font-awesome/css/font-awesome.min.css" />
+	<title>Documentation Xsd</title>
+	<meta charset="UTF-8" />
+</head>
+
+<body>
+  <div class="document">
+	<div class="header">
+		
+	</div>
+
+  <div class="tabs">
+    <div class="tabs-wrapper" onclick="window.open('../liste-ressources.html', '_self');">
+      <div class="tabs-left-content">
+        Liste des ressources
+      </div>
+    </div>
+    <div class="tabs-wrapper" onclick="window.open('../liste-services.html', '_self');">
+      <div class="tabs-left-content" >
+        Liste des services  
+      </div>
+    </div>
+    <div class="tabs-wrapper-selected" onclick="window.open('../liste-types.html', '_self');">
+      <div class="tabs-right-content">
+        Liste des types
+      </div>
+    </div>
+  </div>
+
+	
+
+	<div class="contenu">
+      <div class="breadcrumb"> 
+        <ul class="breadcrumb">
+           <li> <a href="../index.html"> Accueil </a></li>
+           <li> > </li>
+           <li> <a href="../liste-types.html"> Liste des types </a></li>
+           <li> > </li>
+           <li> businessLimitDetail </li>
+        </ul>                    
+      </div>                    
+      
+     
+      <div class="summary">
+			<div class="mock-list">
+				<b>Nom : </b>businessLimitDetail
+			</div>
+			<div class="mock-list">
+				<b> Description : </b>Plafonds d¿une carte affaire.
+			</div>
+        
+        <div> <p>Le type &quot;businessLimitDetail&quot; est consid&eacute;r&eacute; uniquement dans le cas o&ugrave; le param&egrave;tre <strong>SERBIE</strong> est positionn&eacute; en nomenclature <strong>098</strong>.</p>
+</div>
+        <div class="mock-list"> Choix : Non</div>
+        
+      </div>
+                        
+      <div class="column-content">
+        <div class="detail-column">
+          <div class="tree"> 
+<ul>
+	<li>
+<i class="fa fa-caret-down fa-fw" onclick="expand_or_collapse(this)">
+</i>		businessLimitDetail		<ul style="display:block">
+			<li>
+<i class="fa fa-fw">
+</i><i class="fa fa-key fa-fw">
+</i><span class="selectable" id="e0"> defaultAmount : decimal19_4
+</span>
+			</li>
+			<li>
+<i class="fa fa-fw">
+</i><span class="selectable" id="e1"> exceptionalAmount : decimal19_4
+</span>
+			</li>
+			<li>
+<i class="fa fa-fw">
+</i><span class="selectable" id="e2"> startDate : date
+</span>
+			</li>
+			<li>
+<i class="fa fa-fw">
+</i><span class="selectable" id="e3"> endDate : date
+</span>
+			</li>
+
+		</ul>
+
+	</li>
+
+</ul>
+          </div>
+          
+          <div class="detail">
+				<p align="left">
+					Légende :<br />
+				</p>
+            <ul>
+               <li align="left">
+                  <i class="fa fa-key fa-fw">
+                  </i>
+                  = Elément obligatoire en saisie.
+               </li>
+               <li align="left">
+                  <span style="font-weight:bold"> [M]
+                  </span>
+                  = Elément multiple (0 à n occurrences).
+               </li>
+               <li align="left">
+                  <span style="font-weight:bold"> [C]
+                  </span>
+                  = Elément composé d'un choix à effectuer. Un seul choix autorisé.
+               </li>
+            </ul>
+            <p align="left">
+               Remarque : Un même élément peut regrouper plusieurs caractéristiques
+            </p>          
+          </div>
+          
+        </div>
+<div class="detail-column" id="d0" style="display:none">
+	<div class="detail">
+			<div class="mock-list">
+				<b>Nom : </b>defaultAmount
+			</div>
+			<div class="mock-list">
+				<b>Description : </b>Montant par défaut du plafond.
+			</div>
+			<div class="mock-list">
+				<b>Commentaire : </b><p>Ce montant doit &ecirc;tre exprim&eacute; dans la devise du compte principal de la carte.</p>
+
+<p>Le montant par d&eacute;faut du plafond doit &ecirc;tre sup&eacute;rieur &agrave; 0.</p>
+
+<p>Dans le cas d&rsquo;un plafond compte, si la donn&eacute;e compl&eacute;mentaire positionn&eacute;e dans le <strong>Montant 8</strong> du param&egrave;tre <strong>MON_PLASIS</strong> dans la nomenclature <strong>098</strong> indique que le plafond n&rsquo;est pas modifiable, alors la valeur saisie sera ignor&eacute;e.</p>
+
+			</div>
+
+	</div>
+	<div class="detail">
+			<div class="mock-list">
+				<b>Nom : </b> <a href="../types/decimal19_4.html">decimal19_4</a>
+			</div>
+			<div class="mock-list">
+				<b> Description : </b>Type décimal à 19 chiffres dont 4 décimales.
+			</div>
+			<div class="mock-list">
+				<b>Format : </b>decimal
+			</div>
+			<div class="mock-list">
+				<b>Nombre total de chiffres : </b>19
+			</div>
+
+	</div>
+
+</div>
+<div class="detail-column" id="d1" style="display:none">
+	<div class="detail">
+			<div class="mock-list">
+				<b>Nom : </b>exceptionalAmount
+			</div>
+			<div class="mock-list">
+				<b>Description : </b>Montant exceptionnel du plafond.
+			</div>
+			<div class="mock-list">
+				<b>Commentaire : </b><p>Ce montant doit &ecirc;tre exprim&eacute; dans la devise du compte principal de la carte.</p>
+
+<p>Le montant exceptionnel du plafond doit &ecirc;tre sup&eacute;rieur &agrave; 0.</p>
+
+<p>Dans le cas d&rsquo;un plafond compte, si la donn&eacute;e compl&eacute;mentaire positionn&eacute;e dans le <strong>Montant 8</strong> du param&egrave;tre <strong>MON_PLASIS</strong> dans la nomenclature <strong>098</strong> indique que le plafond n&rsquo;est pas modifiable, alors la valeur saisie sera ignor&eacute;e.</p>
+
+<p>Si un plafond exceptionnel existe d&eacute;j&agrave; pour le compte ou la carte et que cette balise n&rsquo;est pas renseign&eacute;e, alors le plafond exceptionnel sera supprim&eacute;.</p>
+
+			</div>
+
+	</div>
+	<div class="detail">
+			<div class="mock-list">
+				<b>Nom : </b> <a href="../types/decimal19_4.html">decimal19_4</a>
+			</div>
+			<div class="mock-list">
+				<b> Description : </b>Type décimal à 19 chiffres dont 4 décimales.
+			</div>
+			<div class="mock-list">
+				<b>Format : </b>decimal
+			</div>
+			<div class="mock-list">
+				<b>Nombre total de chiffres : </b>19
+			</div>
+
+	</div>
+
+</div>
+<div class="detail-column" id="d2" style="display:none">
+	<div class="detail">
+			<div class="mock-list">
+				<b>Nom : </b>startDate
+			</div>
+			<div class="mock-list">
+				<b>Description : </b>Date de début du plafond exceptionnel.
+			</div>
+			<div class="mock-list">
+				<b>Commentaire : </b><p>Si elle est renseign&eacute;e, la date de d&eacute;but du plafond exceptionnel doit &ecirc;tre inf&eacute;rieure ou &eacute;gale &agrave; la date de fin du plafond exceptionnel, si cette derni&egrave;re est &eacute;galement renseign&eacute;e.</p>
+
+			</div>
+
+	</div>
+	<div class="detail">
+			<div class="mock-list">
+				<b>Nom : </b> <a href="../types/date.html">date</a>
+			</div>
+
+	</div>
+
+</div>
+<div class="detail-column" id="d3" style="display:none">
+	<div class="detail">
+			<div class="mock-list">
+				<b>Nom : </b>endDate
+			</div>
+			<div class="mock-list">
+				<b>Description : </b>Date de fin du plafond exceptionnel.
+			</div>
+			<div class="mock-list">
+				<b>Commentaire : </b><p>Si elle est renseign&eacute;e, la date de fin du plafond exceptionnel doit &ecirc;tre sup&eacute;rieure ou &eacute;gale &agrave; la date comptable, et sup&eacute;rieure ou &eacute;gale &agrave; la date de d&eacute;but du plafond exceptionnel, si cette derni&egrave;re est &eacute;galement renseign&eacute;e.</p>
+
+			</div>
+
+	</div>
+	<div class="detail">
+			<div class="mock-list">
+				<b>Nom : </b> <a href="../types/date.html">date</a>
+			</div>
+
+	</div>
+
+</div>
+      </div> 
+  </div>
+
+  
+  <script src="../resources/jquery.js"></script>
+  <script src="../resources/doc.js"></script>
+</body>
+</html>

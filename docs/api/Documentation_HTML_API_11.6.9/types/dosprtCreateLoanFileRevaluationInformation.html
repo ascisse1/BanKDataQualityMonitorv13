@@ -1,0 +1,377 @@
+<!DOCTYPE html >
+<html>
+<head>
+	<link rel="stylesheet" href="../resources/styleDocu.css" />
+  <link rel="stylesheet" href="../resources/font-awesome/css/font-awesome.min.css" />
+	<title>Documentation Xsd</title>
+	<meta charset="UTF-8" />
+</head>
+
+<body>
+  <div class="document">
+	<div class="header">
+		
+	</div>
+
+  <div class="tabs">
+    <div class="tabs-wrapper" onclick="window.open('../liste-ressources.html', '_self');">
+      <div class="tabs-left-content">
+        Liste des ressources
+      </div>
+    </div>
+    <div class="tabs-wrapper" onclick="window.open('../liste-services.html', '_self');">
+      <div class="tabs-left-content" >
+        Liste des services  
+      </div>
+    </div>
+    <div class="tabs-wrapper-selected" onclick="window.open('../liste-types.html', '_self');">
+      <div class="tabs-right-content">
+        Liste des types
+      </div>
+    </div>
+  </div>
+
+	
+
+	<div class="contenu">
+      <div class="breadcrumb"> 
+        <ul class="breadcrumb">
+           <li> <a href="../index.html"> Accueil </a></li>
+           <li> > </li>
+           <li> <a href="../liste-types.html"> Liste des types </a></li>
+           <li> > </li>
+           <li> dosprtCreateLoanFileRevaluationInformation </li>
+        </ul>                    
+      </div>                    
+      
+     
+      <div class="summary">
+			<div class="mock-list">
+				<b>Nom : </b>dosprtCreateLoanFileRevaluationInformation
+			</div>
+			<div class="mock-list">
+				<b> Description : </b>Informations sur la réévaluation d¿un dossier de crédit.
+			</div>
+        
+        <div> </div>
+        <div class="mock-list"> Choix : Non</div>
+        
+      </div>
+                        
+      <div class="column-content">
+        <div class="detail-column">
+          <div class="tree"> 
+<ul>
+	<li>
+<i class="fa fa-caret-down fa-fw" onclick="expand_or_collapse(this)">
+</i>		dosprtCreateLoanFileRevaluationInformation		<ul style="display:block">
+			<li>
+<i class="fa fa-fw">
+</i><i class="fa fa-key fa-fw">
+</i><span class="selectable" id="e0"> revaluationCurrency : currencyCode
+</span>
+			</li>
+			<li>
+<i class="fa fa-caret-down fa-fw" onclick="expand_or_collapse(this)">
+</i><span style="font-weight:bold"> [C]
+</span><span class="selectable" id="e1"> rateInformation : dosprtCreateLoanFileRevaluationRateInformation
+</span>				<ul style="display:block">
+					<li>
+<i class="fa fa-caret-down fa-fw" onclick="expand_or_collapse(this)">
+</i><span class="selectable" id="e2"> individualsLoansInformation : dosprtCreateLoanFileIndividualsRevaluationInformation
+</span>						<ul style="display:block">
+							<li>
+<i class="fa fa-fw">
+</i><i class="fa fa-key fa-fw">
+</i><span class="selectable" id="e3"> minimumRateVariation : dosprtMinimumRateVariation
+</span>
+							</li>
+
+						</ul>
+
+					</li>
+					<li>
+<i class="fa fa-caret-down fa-fw" onclick="expand_or_collapse(this)">
+</i><span class="selectable" id="e4"> companiesLoansInformation : dosprtCreateLoanFileCompaniesRevaluationInformation
+</span>						<ul style="display:block">
+							<li>
+<i class="fa fa-fw">
+</i><span class="selectable" id="e5"> rateTypeToBeApplieOnCapital : char3
+</span>
+							</li>
+							<li>
+<i class="fa fa-fw">
+</i><span class="selectable" id="e6"> previousRateMargin : decimal9_6
+</span>
+							</li>
+
+						</ul>
+
+					</li>
+
+				</ul>
+
+			</li>
+
+		</ul>
+
+	</li>
+
+</ul>
+          </div>
+          
+          <div class="detail">
+				<p align="left">
+					Légende :<br />
+				</p>
+            <ul>
+               <li align="left">
+                  <i class="fa fa-key fa-fw">
+                  </i>
+                  = Elément obligatoire en saisie.
+               </li>
+               <li align="left">
+                  <span style="font-weight:bold"> [M]
+                  </span>
+                  = Elément multiple (0 à n occurrences).
+               </li>
+               <li align="left">
+                  <span style="font-weight:bold"> [C]
+                  </span>
+                  = Elément composé d'un choix à effectuer. Un seul choix autorisé.
+               </li>
+            </ul>
+            <p align="left">
+               Remarque : Un même élément peut regrouper plusieurs caractéristiques
+            </p>          
+          </div>
+          
+        </div>
+<div class="detail-column" id="d0" style="display:none">
+	<div class="detail">
+			<div class="mock-list">
+				<b>Nom : </b>revaluationCurrency
+			</div>
+			<div class="mock-list">
+				<b>Description : </b>Devise de réévaluation.
+			</div>
+			<div class="mock-list">
+				<b>Commentaire : </b><p>Si la devise du dossier est diff&eacute;rente de la devise nationale, alors la devise de r&eacute;&eacute;valuation doit &ecirc;tre &eacute;gale &agrave; la devise du dossier.</p>
+
+<p>Si le dossier est soumis &agrave; r&eacute;&eacute;valuation et que la balise loanFileRevaluationInformation n&rsquo;est pas renseign&eacute;e, alors la devise de r&eacute;&eacute;valuation est affect&eacute;e par d&eacute;faut &agrave; la devise du dossier.</p>
+
+<p>Si la devise du dossier est &eacute;gale &agrave; la devise nationale, alors la devise de r&eacute;&eacute;valuation doit &ecirc;tre diff&eacute;rente de la devise du dossier.</p>
+
+			</div>
+
+	</div>
+	<div class="detail">
+			<div class="mock-list">
+				<b>Nom : </b> <a href="../types/currencyCode.html">currencyCode</a>
+			</div>
+			<div class="mock-list">
+				<b> Description : </b>Code devise.
+			</div>
+			<div class="mock-list">
+				<b>Format : </b>string
+			</div>
+			<div class="mock-list">
+				<b>Longueur fixe : </b>3
+			</div>
+
+	</div>
+
+</div>
+<div class="detail-column" id="d1" style="display:none">
+	<div class="detail">
+			<div class="mock-list">
+				<b>Nom : </b>rateInformation
+			</div>
+			<div class="mock-list">
+				<b>Description : </b>Informations sur les taux à appliquer.
+			</div>
+
+	</div>
+	<div class="detail">
+			<div class="mock-list">
+				<b>Nom : </b> <a href="../types/dosprtCreateLoanFileRevaluationRateInformation.html">dosprtCreateLoanFileRevaluationRateInformation</a>
+			</div>
+			<div class="mock-list">
+				<b> Description : </b>Informations sur les taux à appliquer lors de la réévaluation d¿un dossier de crédit.
+			</div>
+
+	</div>
+
+</div>
+<div class="detail-column" id="d2" style="display:none">
+	<div class="detail">
+			<div class="mock-list">
+				<b>Nom : </b>individualsLoansInformation
+			</div>
+			<div class="mock-list">
+				<b>Description : </b>Informations pour les crédits aux particuliers.
+			</div>
+
+	</div>
+	<div class="detail">
+			<div class="mock-list">
+				<b>Nom : </b> <a href="../types/dosprtCreateLoanFileIndividualsRevaluationInformation.html">dosprtCreateLoanFileIndividualsRevaluationInformation</a>
+			</div>
+			<div class="mock-list">
+				<b> Description : </b>Informations sur la réévaluation des crédits aux particuliers.
+			</div>
+
+	</div>
+
+</div>
+<div class="detail-column" id="d3" style="display:none">
+	<div class="detail">
+			<div class="mock-list">
+				<b>Nom : </b>minimumRateVariation
+			</div>
+			<div class="mock-list">
+				<b>Description : </b>Fluctuation du taux en fonction de laquelle se fait la réévaluation en fin de mois.
+			</div>
+
+	</div>
+	<div class="detail">
+			<div class="mock-list">
+				<b>Nom : </b> <a href="../types/dosprtMinimumRateVariation.html">dosprtMinimumRateVariation</a>
+			</div>
+			<div class="mock-list">
+				<b> Description : </b>Valeur de la fluctuation du taux en fonction de laquelle se fait la réévaluation en fin de mois.
+			</div>
+			<div class="mock-list">
+				<b>Format : </b>string
+			</div>
+			<div class="mock-list">
+				<b>Valeurs possibles : </b>					<table class="table_enum" class="table_enum" class="table_enum">
+						<tr>
+						<td> 0
+						</td>						<td class="td_right"> Auncune variation
+						</td>
+						</tr>
+						<tr>
+						<td> 5
+						</td>						<td class="td_right"> Plus de 5% de variation
+						</td>
+						</tr>
+						<tr>
+						<td> 3
+						</td>						<td class="td_right"> Plus de 3% de variation
+						</td>
+						</tr>
+
+					</table>
+
+			</div>
+
+	</div>
+
+</div>
+<div class="detail-column" id="d4" style="display:none">
+	<div class="detail">
+			<div class="mock-list">
+				<b>Nom : </b>companiesLoansInformation
+			</div>
+			<div class="mock-list">
+				<b>Description : </b>Informations pour les crédits aux sociétés.
+			</div>
+
+	</div>
+	<div class="detail">
+			<div class="mock-list">
+				<b>Nom : </b> <a href="../types/dosprtCreateLoanFileCompaniesRevaluationInformation.html">dosprtCreateLoanFileCompaniesRevaluationInformation</a>
+			</div>
+			<div class="mock-list">
+				<b> Description : </b>Informations sur la réévaluation des crédits aux sociétés.
+			</div>
+
+	</div>
+
+</div>
+<div class="detail-column" id="d5" style="display:none">
+	<div class="detail">
+			<div class="mock-list">
+				<b>Nom : </b>rateTypeToBeApplieOnCapital
+			</div>
+			<div class="mock-list">
+				<b>Description : </b>Type de taux à appliquer sur le capital lors de l'appel d'échéance.
+			</div>
+			<div class="mock-list">
+				<b>Commentaire : </b><p>Liste des valeurs possibles&nbsp;:</p>
+
+<ul>
+	<li><strong>M00 </strong>= Cours moyen</li>
+	<li><strong>A00 </strong>= Cours achat</li>
+	<li><strong>V00 </strong>= Cours vente</li>
+	<li>Cl&eacute; existant en nomenclature<strong> 128</strong></li>
+</ul>
+
+<p>Valeur par d&eacute;faut&nbsp;:<strong> typetaux</strong></p>
+
+			</div>
+
+	</div>
+	<div class="detail">
+			<div class="mock-list">
+				<b>Nom : </b> <a href="../types/char3.html">char3</a>
+			</div>
+			<div class="mock-list">
+				<b> Description : </b>Type avec un nombre de caractères égal à 3.
+			</div>
+			<div class="mock-list">
+				<b>Format : </b>string
+			</div>
+			<div class="mock-list">
+				<b>Longueur fixe : </b>3
+			</div>
+
+	</div>
+
+</div>
+<div class="detail-column" id="d6" style="display:none">
+	<div class="detail">
+			<div class="mock-list">
+				<b>Nom : </b>previousRateMargin
+			</div>
+			<div class="mock-list">
+				<b>Description : </b>Marge à appliquer sur le taux précédent.
+			</div>
+			<div class="mock-list">
+				<b>Commentaire : </b><p>Valeur par d&eacute;faut&nbsp;:<strong> marge_txcap</strong></p>
+
+<p>Si la valeur par d&eacute;faut n&rsquo;est pas param&eacute;tr&eacute;e alors les conditions <strong>MREttt</strong> (<strong>ttt</strong> correspond au code du type de pr&ecirc;t) ou <strong>MREPRT</strong> sont recherch&eacute;es afin de d&eacute;terminer la marge par d&eacute;faut ainsi que les bornes minimale et maximale.</p>
+
+<p>Si la valeur par d&eacute;faut est param&eacute;tr&eacute;e, les bornes minimale et maximale sont chacunes initialis&eacute;es &agrave;&nbsp; 100.</p>
+
+<p>La valeur de la marge renseign&eacute;e doit &ecirc;tre comprise dans ces bornes.</p>
+
+			</div>
+
+	</div>
+	<div class="detail">
+			<div class="mock-list">
+				<b>Nom : </b> <a href="../types/decimal9_6.html">decimal9_6</a>
+			</div>
+			<div class="mock-list">
+				<b> Description : </b>Type décimal à 9 chiffres dont 6 décimales.
+			</div>
+			<div class="mock-list">
+				<b>Format : </b>decimal
+			</div>
+			<div class="mock-list">
+				<b>Nombre total de chiffres : </b>9
+			</div>
+
+	</div>
+
+</div>
+      </div> 
+  </div>
+
+  
+  <script src="../resources/jquery.js"></script>
+  <script src="../resources/doc.js"></script>
+</body>
+</html>

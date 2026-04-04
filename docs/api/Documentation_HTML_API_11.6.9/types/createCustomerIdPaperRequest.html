@@ -1,0 +1,367 @@
+<!DOCTYPE html >
+<html>
+<head>
+	<link rel="stylesheet" href="../resources/styleDocu.css" />
+  <link rel="stylesheet" href="../resources/font-awesome/css/font-awesome.min.css" />
+	<title>Documentation Xsd</title>
+	<meta charset="UTF-8" />
+</head>
+
+<body>
+  <div class="document">
+	<div class="header">
+		
+	</div>
+
+  <div class="tabs">
+    <div class="tabs-wrapper" onclick="window.open('../liste-ressources.html', '_self');">
+      <div class="tabs-left-content">
+        Liste des ressources
+      </div>
+    </div>
+    <div class="tabs-wrapper" onclick="window.open('../liste-services.html', '_self');">
+      <div class="tabs-left-content" >
+        Liste des services  
+      </div>
+    </div>
+    <div class="tabs-wrapper-selected" onclick="window.open('../liste-types.html', '_self');">
+      <div class="tabs-right-content">
+        Liste des types
+      </div>
+    </div>
+  </div>
+
+	
+
+	<div class="contenu">
+      <div class="breadcrumb"> 
+        <ul class="breadcrumb">
+           <li> <a href="../index.html"> Accueil </a></li>
+           <li> > </li>
+           <li> <a href="../liste-types.html"> Liste des types </a></li>
+           <li> > </li>
+           <li> createCustomerIdPaperRequest </li>
+        </ul>                    
+      </div>                    
+      
+     
+      <div class="summary">
+			<div class="mock-list">
+				<b>Nom : </b>createCustomerIdPaperRequest
+			</div>
+			<div class="mock-list">
+				<b> Description : </b>Requête de création d'une pièce d'identité.
+			</div>
+        
+        <div> <p>Si le contr&ocirc;le de liste noire est demand&eacute; dans le <strong>Taux 2</strong> (&eacute;gal &agrave; <strong>1</strong>) dans le param&egrave;tre<strong> BLACKLISTE</strong> en nomenclature <strong>098</strong>, alors le num&eacute;ro de pi&egrave;ce d&#39;identit&eacute;, le type de pi&egrave;ce d&#39;identit&eacute; et la date de naissance du client sont recherch&eacute;s dans le fichier de blacklist (dont la r&eacute;f&eacute;rence est param&eacute;tr&eacute;e dans le <strong>Montant 4</strong> du param&egrave;tre<strong> BLACKLISTE</strong> en nomenclature <strong>098</strong>, ou dans le cas d&#39;un contr&ocirc;le dans la liste noire nationale uniquement, dans le <strong>Libell&eacute; 5</strong> du param&egrave;tre<strong> BLACKLNAT</strong> en nomenclature <strong>098</strong>).</p>
+
+<p>Si un enregistrement du fichier de la blacklist est trouv&eacute; pour l&#39;une des donn&eacute;es contr&ocirc;l&eacute;es, alors les informations seront trac&eacute;es dans la table des historiques de la blacklist.</p>
+
+<p>Une opposition client est &eacute;galement cr&eacute;&eacute;e, avec le code opposition param&eacute;tr&eacute; dans le <strong>Montant 5</strong> du param&egrave;tre<strong> BLACKLISTE</strong> en nomenclature <strong>098</strong>, ou param&eacute;tr&eacute; dans le <strong>Montant 5 </strong>du param&egrave;tre<strong> BLACKLNAT</strong> en nomenclature <strong>098</strong> si le contr&ocirc;le est pr&eacute;vu sur la liste noire nationale, ce dernier &eacute;tant pr&eacute;cis&eacute; dans le <strong>Taux&nbsp;5</strong> (&eacute;gal &agrave; <strong>1</strong>) du param&egrave;tre<strong> BLACKLISTE</strong> en nomenclature <strong>098</strong>.</p>
+</div>
+        <div class="mock-list"> Choix : Non</div>
+        
+      </div>
+                        
+      <div class="column-content">
+        <div class="detail-column">
+          <div class="tree"> 
+<ul>
+	<li>
+<i class="fa fa-caret-down fa-fw" onclick="expand_or_collapse(this)">
+</i>		createCustomerIdPaperRequest		<ul style="display:block">
+			<li>
+<i class="fa fa-fw">
+</i><span class="selectable" id="e0"> customerCode : customerCode
+</span>
+			</li>
+			<li>
+<i class="fa fa-fw">
+</i><span class="selectable" id="e1"> idPaperType : idPaperTypeCode
+</span>
+			</li>
+			<li>
+<i class="fa fa-fw">
+</i><span class="selectable" id="e2"> idPaperNumber : charMax20
+</span>
+			</li>
+			<li>
+<i class="fa fa-fw">
+</i><span class="selectable" id="e3"> deliveryDate : date
+</span>
+			</li>
+			<li>
+<i class="fa fa-fw">
+</i><span class="selectable" id="e4"> deliveryPlace : charMax30
+</span>
+			</li>
+			<li>
+<i class="fa fa-fw">
+</i><span class="selectable" id="e5"> organisationWhichDeliver : charMax30
+</span>
+			</li>
+			<li>
+<i class="fa fa-fw">
+</i><span class="selectable" id="e6"> validityDateOfIdPaper : date
+</span>
+			</li>
+
+		</ul>
+
+	</li>
+
+</ul>
+          </div>
+          
+          <div class="detail">
+				<p align="left">
+					Légende :<br />
+				</p>
+            <ul>
+               <li align="left">
+                  <i class="fa fa-key fa-fw">
+                  </i>
+                  = Elément obligatoire en saisie.
+               </li>
+               <li align="left">
+                  <span style="font-weight:bold"> [M]
+                  </span>
+                  = Elément multiple (0 à n occurrences).
+               </li>
+               <li align="left">
+                  <span style="font-weight:bold"> [C]
+                  </span>
+                  = Elément composé d'un choix à effectuer. Un seul choix autorisé.
+               </li>
+            </ul>
+            <p align="left">
+               Remarque : Un même élément peut regrouper plusieurs caractéristiques
+            </p>          
+          </div>
+          
+        </div>
+<div class="detail-column" id="d0" style="display:none">
+	<div class="detail">
+			<div class="mock-list">
+				<b>Nom : </b>customerCode
+			</div>
+			<div class="mock-list">
+				<b>Description : </b>Code du client.
+			</div>
+			<div class="mock-list">
+				<b>Commentaire : </b><p>Le code client n&#39;est pas obligatoire si le service de cr&eacute;ation d&rsquo;une pi&egrave;ce d&rsquo;identit&eacute; d&rsquo;un client est appel&eacute; par le service <strong>createCustomer</strong>, et est obligatoire dans tous les autres cas.</p>
+
+<p>S&rsquo;il est renseign&eacute;, il doit correspondre &agrave; un client existant dans la table des clients et doit &ecirc;tre de type Particulier (<strong>1</strong>).</p>
+
+<p>Si le contr&ocirc;le sur le contentieux est demand&eacute; dans le <strong>Montant 1</strong> (&eacute;gal &agrave; <strong>1</strong>) du param&egrave;tre <strong>AWMH</strong> dans la nomenclature <strong>098 </strong>ou si le param&egrave;tre <strong>AWMH</strong> n&rsquo;existe pas dans la nomenclature <strong>098</strong>, alors le client ne doit pas &ecirc;tre pr&eacute;sent dans la table des clients en contentieux.</p>
+
+<p>Le client doit poss&eacute;der une pi&egrave;ce d&rsquo;identit&eacute; principale rattach&eacute;e &agrave; sa fiche pour pouvoir en d&eacute;finir une secondaire.</p>
+
+			</div>
+
+	</div>
+	<div class="detail">
+			<div class="mock-list">
+				<b>Nom : </b> <a href="../types/customerCode.html">customerCode</a>
+			</div>
+			<div class="mock-list">
+				<b> Description : </b>Code client.
+			</div>
+			<div class="mock-list">
+				<b>Format : </b>string
+			</div>
+			<div class="mock-list">
+				<b>Longueur mini-maxi : </b>1 - 15
+			</div>
+
+	</div>
+
+</div>
+<div class="detail-column" id="d1" style="display:none">
+	<div class="detail">
+			<div class="mock-list">
+				<b>Nom : </b>idPaperType
+			</div>
+			<div class="mock-list">
+				<b>Description : </b>Type de pièce d'identité.
+			</div>
+			<div class="mock-list">
+				<b>Commentaire : </b><p>Si le type de pi&egrave;ce d&#39;identit&eacute; est renseign&eacute;, alors le libell&eacute; du type de pi&egrave;ce d&rsquo;identit&eacute; est aliment&eacute; avec le <strong>Libell&eacute; 1</strong> du type de pi&egrave;ce d&rsquo;identit&eacute; dans la nomenclature <strong>078</strong>.</p>
+
+<p>Il ne doit pas exister plus d&rsquo;une pi&egrave;ce d&rsquo;identit&eacute; par type pour le client.</p>
+
+<p>Valeur par d&eacute;faut pour le libell&eacute;&nbsp;: <strong>atid</strong></p>
+
+			</div>
+
+	</div>
+	<div class="detail">
+			<div class="mock-list">
+				<b>Nom : </b> <a href="../types/idPaperTypeCode.html">idPaperTypeCode</a>
+			</div>
+			<div class="mock-list">
+				<b> Description : </b>Code du type de pièce d'identité.
+			</div>
+			<div class="mock-list">
+				<b>Format : </b>string
+			</div>
+			<div class="mock-list">
+				<b>Longueur mini-maxi : </b>1 - 5
+			</div>
+
+	</div>
+
+</div>
+<div class="detail-column" id="d2" style="display:none">
+	<div class="detail">
+			<div class="mock-list">
+				<b>Nom : </b>idPaperNumber
+			</div>
+			<div class="mock-list">
+				<b>Description : </b>Numéro de pièce d'identité.
+			</div>
+			<div class="mock-list">
+				<b>Commentaire : </b><p>Valeur par d&eacute;faut&nbsp;: <strong>anid</strong></p>
+
+			</div>
+
+	</div>
+	<div class="detail">
+			<div class="mock-list">
+				<b>Nom : </b> <a href="../types/charMax20.html">charMax20</a>
+			</div>
+			<div class="mock-list">
+				<b> Description : </b>Chaîne composée d'au plus 20 caractères.
+			</div>
+			<div class="mock-list">
+				<b>Format : </b>string
+			</div>
+			<div class="mock-list">
+				<b>Longueur mini-maxi : </b>1 - 20
+			</div>
+
+	</div>
+
+</div>
+<div class="detail-column" id="d3" style="display:none">
+	<div class="detail">
+			<div class="mock-list">
+				<b>Nom : </b>deliveryDate
+			</div>
+			<div class="mock-list">
+				<b>Description : </b>Date de délivrance.
+			</div>
+			<div class="mock-list">
+				<b>Commentaire : </b><p>La date de d&eacute;livrance ne peut &ecirc;tre renseign&eacute;e que si le lieu de d&eacute;livrance est renseign&eacute;.</p>
+
+<p>Si la date de d&eacute;livrance est renseign&eacute;e, elle doit &ecirc;tre post&eacute;rieure ou &eacute;gale &agrave; la date de naissance du client, et ant&eacute;rieure ou &eacute;gale &agrave; la date comptable.</p>
+
+<p>Valeur par d&eacute;faut&nbsp;: <strong>ddel</strong></p>
+
+			</div>
+
+	</div>
+	<div class="detail">
+			<div class="mock-list">
+				<b>Nom : </b> <a href="../types/date.html">date</a>
+			</div>
+
+	</div>
+
+</div>
+<div class="detail-column" id="d4" style="display:none">
+	<div class="detail">
+			<div class="mock-list">
+				<b>Nom : </b>deliveryPlace
+			</div>
+			<div class="mock-list">
+				<b>Description : </b>Lieu de délivrance.
+			</div>
+			<div class="mock-list">
+				<b>Commentaire : </b><p>Valeur par d&eacute;faut&nbsp;: <strong>alid</strong></p>
+
+			</div>
+
+	</div>
+	<div class="detail">
+			<div class="mock-list">
+				<b>Nom : </b> <a href="../types/charMax30.html">charMax30</a>
+			</div>
+			<div class="mock-list">
+				<b> Description : </b>Chaîne composée d'au plus 30 caractères.
+			</div>
+			<div class="mock-list">
+				<b>Format : </b>string
+			</div>
+			<div class="mock-list">
+				<b>Longueur mini-maxi : </b>1 - 30
+			</div>
+
+	</div>
+
+</div>
+<div class="detail-column" id="d5" style="display:none">
+	<div class="detail">
+			<div class="mock-list">
+				<b>Nom : </b>organisationWhichDeliver
+			</div>
+			<div class="mock-list">
+				<b>Description : </b>Organisme ayant délivré la pièce d'identité.
+			</div>
+			<div class="mock-list">
+				<b>Commentaire : </b><p>L&rsquo;organisme ayant d&eacute;livr&eacute; la pi&egrave;ce d&rsquo;identit&eacute; ne peut &ecirc;tre renseign&eacute; que si le lieu de d&eacute;livrance est renseign&eacute;.</p>
+
+<p>Valeur par d&eacute;faut&nbsp;: <strong>aoid</strong></p>
+
+			</div>
+
+	</div>
+	<div class="detail">
+			<div class="mock-list">
+				<b>Nom : </b> <a href="../types/charMax30.html">charMax30</a>
+			</div>
+			<div class="mock-list">
+				<b> Description : </b>Chaîne composée d'au plus 30 caractères.
+			</div>
+			<div class="mock-list">
+				<b>Format : </b>string
+			</div>
+			<div class="mock-list">
+				<b>Longueur mini-maxi : </b>1 - 30
+			</div>
+
+	</div>
+
+</div>
+<div class="detail-column" id="d6" style="display:none">
+	<div class="detail">
+			<div class="mock-list">
+				<b>Nom : </b>validityDateOfIdPaper
+			</div>
+			<div class="mock-list">
+				<b>Description : </b>Date de validité de la pièce d'identité
+			</div>
+			<div class="mock-list">
+				<b>Commentaire : </b><p>Si les dates de d&eacute;livrance et de validit&eacute; de la pi&egrave;ce d&rsquo;identit&eacute; sont renseign&eacute;es, alors la date de validit&eacute; doit &ecirc;tre post&eacute;rieure ou &eacute;gale &agrave; la date de d&eacute;livrance.</p>
+
+<p>Valeur par d&eacute;faut&nbsp;: <strong>dval</strong></p>
+
+			</div>
+
+	</div>
+	<div class="detail">
+			<div class="mock-list">
+				<b>Nom : </b> <a href="../types/date.html">date</a>
+			</div>
+
+	</div>
+
+</div>
+      </div> 
+  </div>
+
+  
+  <script src="../resources/jquery.js"></script>
+  <script src="../resources/doc.js"></script>
+</body>
+</html>

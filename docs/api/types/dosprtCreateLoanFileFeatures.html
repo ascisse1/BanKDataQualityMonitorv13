@@ -1,0 +1,547 @@
+<!DOCTYPE html >
+<html>
+<head>
+	<link rel="stylesheet" href="../resources/styleDocu.css" />
+  <link rel="stylesheet" href="../resources/font-awesome/css/font-awesome.min.css" />
+	<title>Documentation Xsd</title>
+	<meta charset="UTF-8" />
+</head>
+
+<body>
+  <div class="document">
+	<div class="header">
+		
+	</div>
+
+  <div class="tabs">
+    <div class="tabs-wrapper" onclick="window.open('../liste-ressources.html', '_self');">
+      <div class="tabs-left-content">
+        Liste des ressources
+      </div>
+    </div>
+    <div class="tabs-wrapper" onclick="window.open('../liste-services.html', '_self');">
+      <div class="tabs-left-content" >
+        Liste des services  
+      </div>
+    </div>
+    <div class="tabs-wrapper-selected" onclick="window.open('../liste-types.html', '_self');">
+      <div class="tabs-right-content">
+        Liste des types
+      </div>
+    </div>
+  </div>
+
+	
+
+	<div class="contenu">
+      <div class="breadcrumb"> 
+        <ul class="breadcrumb">
+           <li> <a href="../index.html"> Accueil </a></li>
+           <li> > </li>
+           <li> <a href="../liste-types.html"> Liste des types </a></li>
+           <li> > </li>
+           <li> dosprtCreateLoanFileFeatures </li>
+        </ul>                    
+      </div>                    
+      
+     
+      <div class="summary">
+			<div class="mock-list">
+				<b>Nom : </b>dosprtCreateLoanFileFeatures
+			</div>
+			<div class="mock-list">
+				<b> Description : </b>Caractéristiques du dossier de crédit.
+			</div>
+        
+        <div> </div>
+        <div class="mock-list"> Choix : Non</div>
+        
+      </div>
+                        
+      <div class="column-content">
+        <div class="detail-column">
+          <div class="tree"> 
+<ul>
+	<li>
+<i class="fa fa-caret-down fa-fw" onclick="expand_or_collapse(this)">
+</i>		dosprtCreateLoanFileFeatures		<ul style="display:block">
+			<li>
+<i class="fa fa-fw">
+</i><span class="selectable" id="e0"> jointBorrowersNumber : integer
+</span>
+			</li>
+			<li>
+<i class="fa fa-fw">
+</i><span class="selectable" id="e1"> letterOfGuaranteeNumber : integer
+</span>
+			</li>
+			<li>
+<i class="fa fa-fw">
+</i><span class="selectable" id="e2"> financingSource : dosprtFinancingSourceCode
+</span>
+			</li>
+			<li>
+<i class="fa fa-fw">
+</i><span class="selectable" id="e3"> correspondentMargin : decimal9_6
+</span>
+			</li>
+			<li>
+<i class="fa fa-fw">
+</i><span class="selectable" id="e4"> personalInvestmentAmount : decimal19_4
+</span>
+			</li>
+			<li>
+<i class="fa fa-fw">
+</i><span class="selectable" id="e5"> renegotiatedFile : boolean
+</span>
+			</li>
+			<li>
+<i class="fa fa-caret-down fa-fw" onclick="expand_or_collapse(this)">
+</i><span class="selectable" id="e6"> originalFiles : dosprtOriginalFiles
+</span>				<ul style="display:block">
+					<li>
+<i class="fa fa-caret-down fa-fw" onclick="expand_or_collapse(this)">
+</i><i class="fa fa-key fa-fw">
+</i><span style="font-weight:bold"> [M]
+</span><span class="selectable" id="e7"> originalFile : amortizableLoanDetailIdentifier
+</span>						<ul style="display:block">
+							<li>
+<i class="fa fa-fw">
+</i><i class="fa fa-key fa-fw">
+</i><span class="selectable" id="e8"> branchCode : char5
+</span>
+							</li>
+							<li>
+<i class="fa fa-fw">
+</i><i class="fa fa-key fa-fw">
+</i><span class="selectable" id="e9"> fileNumber : char6
+</span>
+							</li>
+							<li>
+<i class="fa fa-fw">
+</i><i class="fa fa-key fa-fw">
+</i><span class="selectable" id="e10"> orderNumber : char3
+</span>
+							</li>
+							<li>
+<i class="fa fa-fw">
+</i><i class="fa fa-key fa-fw">
+</i><span class="selectable" id="e11"> amendmentNumber : decimal2_0
+</span>
+							</li>
+
+						</ul>
+
+					</li>
+
+				</ul>
+
+			</li>
+
+		</ul>
+
+	</li>
+
+</ul>
+          </div>
+          
+          <div class="detail">
+				<p align="left">
+					Légende :<br />
+				</p>
+            <ul>
+               <li align="left">
+                  <i class="fa fa-key fa-fw">
+                  </i>
+                  = Elément obligatoire en saisie.
+               </li>
+               <li align="left">
+                  <span style="font-weight:bold"> [M]
+                  </span>
+                  = Elément multiple (0 à n occurrences).
+               </li>
+               <li align="left">
+                  <span style="font-weight:bold"> [C]
+                  </span>
+                  = Elément composé d'un choix à effectuer. Un seul choix autorisé.
+               </li>
+            </ul>
+            <p align="left">
+               Remarque : Un même élément peut regrouper plusieurs caractéristiques
+            </p>          
+          </div>
+          
+        </div>
+<div class="detail-column" id="d0" style="display:none">
+	<div class="detail">
+			<div class="mock-list">
+				<b>Nom : </b>jointBorrowersNumber
+			</div>
+			<div class="mock-list">
+				<b>Description : </b>Nombre de co emprunteurs.
+			</div>
+			<div class="mock-list">
+				<b>Commentaire : </b><p>Si le nombre de co¿emprunteurs n&rsquo;est pas renseign&eacute;, alors il est plac&eacute; &agrave; 1, sinon il doit &ecirc;tre sup&eacute;rieur &agrave; 0.</p>
+
+<p>De plus, si le code client n&rsquo;est pas renseign&eacute; dans l&rsquo;&eacute;l&eacute;ment &quot;customerCode&quot; du type &quot;dosprtCreateLoanFile&quot; d&eacute;fini dans ce document, alors le nombre de co¿emprunteurs ne doit pas &ecirc;tre sup&eacute;rieur &agrave; 1.</p>
+
+			</div>
+
+	</div>
+	<div class="detail">
+			<div class="mock-list">
+				<b>Nom : </b> <a href="../types/integer.html">integer</a>
+			</div>
+
+	</div>
+
+</div>
+<div class="detail-column" id="d1" style="display:none">
+	<div class="detail">
+			<div class="mock-list">
+				<b>Nom : </b>letterOfGuaranteeNumber
+			</div>
+			<div class="mock-list">
+				<b>Description : </b>Nombre de cautions.
+			</div>
+			<div class="mock-list">
+				<b>Commentaire : </b><p>Vaut par d&eacute;faut 0.</p>
+
+<p>Le nombre de cautions ne peut pas &ecirc;tre sup&eacute;rieur &agrave; 0 si le code client n&rsquo;est pas renseign&eacute;.</p>
+
+			</div>
+
+	</div>
+	<div class="detail">
+			<div class="mock-list">
+				<b>Nom : </b> <a href="../types/integer.html">integer</a>
+			</div>
+
+	</div>
+
+</div>
+<div class="detail-column" id="d2" style="display:none">
+	<div class="detail">
+			<div class="mock-list">
+				<b>Nom : </b>financingSource
+			</div>
+			<div class="mock-list">
+				<b>Description : </b>Source de financement.
+			</div>
+			<div class="mock-list">
+				<b>Commentaire : </b><p>Si une source de financement factice est param&eacute;tr&eacute;e dans le <strong>Libell&eacute; 2</strong> du param&egrave;tre <strong>CDTPAR5</strong> en nomenclature <strong>098</strong>, la source de financement re&ccedil;ue sera ignor&eacute;e.</p>
+
+<p>La source est obligatoire si au moins une &eacute;tape de mise en place du dossier est &agrave; comptabiliser (comptabilit&eacute; &eacute;tude, comptabilit&eacute; banque, comptabilit&eacute; client ou comptabilit&eacute; &agrave; la validation finale).</p>
+
+<p>La source de financement doit exister en nomenclature <strong>123</strong>.&nbsp;</p>
+
+<p>Si une &eacute;tape de mise en place est &agrave; comptabilisation &eacute;tude, le compte param&eacute;tr&eacute; dans le <strong>Libell&eacute; 5</strong> pour la source de financement en&nbsp; nomenclature <strong>123</strong> doit exister.</p>
+
+<p>Si une &eacute;tape de mise en place est &agrave; comptabilisation banque, client ou validation finale et n&rsquo;est pas &agrave; comptabilisation &eacute;tude, le compte param&eacute;tr&eacute; dans le <strong>Libell&eacute; 4</strong> pour la source de financement en&nbsp; nomenclature <strong>123</strong> doit exister. Dans ce cas &eacute;galement, si une source factice est param&eacute;tr&eacute;e,&nbsp; les 2 comptes param&eacute;tr&eacute;s dans les <strong>Libell&eacute; 4</strong> et <strong>Libell&eacute; 5</strong> &nbsp;pour la source de financement en nomenclature <strong>123</strong> doivent &ecirc;tre identiques.</p>
+
+<p>Dans ces cas et si le code client du dossier est renseign&eacute;, alors un &eacute;v&eacute;nement <strong>CRSOUR</strong> est ajout&eacute; &agrave; la table des &eacute;v&eacute;nements.</p>
+
+<p>Lors de la modification d&rsquo;un dossier, si le dossier est &agrave; comptabiliser et si le code client du dossier est renseign&eacute; alors qu&#39;il ne l&#39;&eacute;tait pas pr&eacute;c&eacute;demment (ou si la source de financement est diff&eacute;rente de celle d&eacute;j&agrave; associ&eacute;e au pr&ecirc;t dans le cas d&rsquo;une modification) alors un &eacute;v&eacute;nement <strong>CRSOUR</strong> est ajout&eacute; &agrave; la table des &eacute;v&eacute;nements</p>
+
+<p>Valeur par d&eacute;faut&nbsp;: <strong>source </strong>pour le type de pr&ecirc;t.</p>
+
+			</div>
+
+	</div>
+	<div class="detail">
+			<div class="mock-list">
+				<b>Nom : </b> <a href="../types/dosprtFinancingSourceCode.html">dosprtFinancingSourceCode</a>
+			</div>
+			<div class="mock-list">
+				<b> Description : </b>Code de la source de financement d'un crédit.
+			</div>
+			<div class="mock-list">
+				<b>Format : </b>string
+			</div>
+			<div class="mock-list">
+				<b>Longueur fixe : </b>4
+			</div>
+
+	</div>
+
+</div>
+<div class="detail-column" id="d3" style="display:none">
+	<div class="detail">
+			<div class="mock-list">
+				<b>Nom : </b>correspondentMargin
+			</div>
+			<div class="mock-list">
+				<b>Description : </b>Marge du correspondant.
+			</div>
+			<div class="mock-list">
+				<b>Commentaire : </b><p>La marge du correspondant ne doit &ecirc;tre renseign&eacute;e que si la source de financement est renseign&eacute;e et que le <strong>Montant 2</strong> est &eacute;gal &agrave; <strong>1 </strong>pour la source de financement en nomenclature <strong>123</strong>.</p>
+
+<p>Si la marge du correspondant n&rsquo;est pas renseign&eacute;e, elle sera affect&eacute;e avec la valeur par d&eacute;faut param&eacute;tr&eacute;e dans la condition <strong>MCssss </strong>(<strong>ssss</strong> = source de financement).</p>
+
+<p>Elle doit &ecirc;tre comprise entre les valeurs minimum et maximum param&eacute;tr&eacute;es dans la condition <strong>MCssss </strong>(<strong>ssss</strong> = source de financement) ou entre <strong>-999,999999</strong> et <strong>+999,999999</strong> si la condition n&rsquo;est pas&nbsp; param&eacute;tr&eacute;e.</p>
+
+<p>Elle doit &ecirc;tre diff&eacute;rente de <strong>0</strong>.</p>
+
+			</div>
+
+	</div>
+	<div class="detail">
+			<div class="mock-list">
+				<b>Nom : </b> <a href="../types/decimal9_6.html">decimal9_6</a>
+			</div>
+			<div class="mock-list">
+				<b> Description : </b>Type décimal à 9 chiffres dont 6 décimales.
+			</div>
+			<div class="mock-list">
+				<b>Format : </b>decimal
+			</div>
+			<div class="mock-list">
+				<b>Nombre total de chiffres : </b>9
+			</div>
+
+	</div>
+
+</div>
+<div class="detail-column" id="d4" style="display:none">
+	<div class="detail">
+			<div class="mock-list">
+				<b>Nom : </b>personalInvestmentAmount
+			</div>
+			<div class="mock-list">
+				<b>Description : </b>Montant de l'apport personnel.
+			</div>
+			<div class="mock-list">
+				<b>Commentaire : </b><p>Le montant d&#39;apport ne doit pas &ecirc;tre renseign&eacute; si le client ne l&#39;est pas dans l&rsquo;&eacute;l&eacute;ment &quot;customerCode&quot; du type &quot;dosprtCreateLoanFile&quot; d&eacute;fini dans ce document.</p>
+
+<p>De plus, il ne doit pas &ecirc;tre renseign&eacute; si le mode de d&eacute;blocage param&eacute;tr&eacute; pour le type de dossier est diff&eacute;rent de <strong>A</strong> ou <strong>F</strong>.</p>
+
+			</div>
+
+	</div>
+	<div class="detail">
+			<div class="mock-list">
+				<b>Nom : </b> <a href="../types/decimal19_4.html">decimal19_4</a>
+			</div>
+			<div class="mock-list">
+				<b> Description : </b>Type décimal à 19 chiffres dont 4 décimales.
+			</div>
+			<div class="mock-list">
+				<b>Format : </b>decimal
+			</div>
+			<div class="mock-list">
+				<b>Nombre total de chiffres : </b>19
+			</div>
+
+	</div>
+
+</div>
+<div class="detail-column" id="d5" style="display:none">
+	<div class="detail">
+			<div class="mock-list">
+				<b>Nom : </b>renegotiatedFile
+			</div>
+			<div class="mock-list">
+				<b>Description : </b>Dossier renégocié.
+			</div>
+			<div class="mock-list">
+				<b>Commentaire : </b><p>Si cette donn&eacute;e est &agrave; <strong>TRUE</strong>, les contr&ocirc;les suivants sont effectu&eacute;s&nbsp;:</p>
+
+<ul>
+	<li>Le <strong>Libell&eacute;&nbsp;4</strong> du param&egrave;tre <strong>CDTPAR3</strong> en nomenclature <strong>098</strong> doit &ecirc;tre renseign&eacute;.</li>
+	<li>De plus, la valeur de ce libell&eacute; ne doit pas &ecirc;tre diff&eacute;rente du code qualit&eacute; client.</li>
+</ul>
+
+			</div>
+
+	</div>
+	<div class="detail">
+			<div class="mock-list">
+				<b>Nom : </b> <a href="../types/boolean.html">boolean</a>
+			</div>
+
+	</div>
+
+</div>
+<div class="detail-column" id="d6" style="display:none">
+	<div class="detail">
+			<div class="mock-list">
+				<b>Nom : </b>originalFiles
+			</div>
+			<div class="mock-list">
+				<b>Description : </b>Dossier d'origine dans le cas d'un dossier renégocié.
+			</div>
+			<div class="mock-list">
+				<b>Commentaire : </b><p>Les informations concernant le dossier d&rsquo;origine ne peuvent &ecirc;tre renseign&eacute;es que si le dossier est signal&eacute; ren&eacute;goci&eacute; (<strong>TRUE</strong>).</p>
+
+			</div>
+
+	</div>
+	<div class="detail">
+			<div class="mock-list">
+				<b>Nom : </b> <a href="../types/dosprtOriginalFiles.html">dosprtOriginalFiles</a>
+			</div>
+			<div class="mock-list">
+				<b> Description : </b>Gestions des dossiers d'origine dans le cas d'un dossier renégocié.
+			</div>
+
+	</div>
+
+</div>
+<div class="detail-column" id="d7" style="display:none">
+	<div class="detail">
+			<div class="mock-list">
+				<b>Nom : </b>originalFile
+			</div>
+			<div class="mock-list">
+				<b>Description : </b>Identifiant d¿un crédit amortissable.
+			</div>
+			<div class="mock-list">
+				<b>Limite du nombre d'occurences mini-maxi : </b>1 aucune
+			</div>
+			<div class="mock-list">
+				<b>Commentaire : </b><p>L&rsquo;identifiant du dossier doit exister dans la table des cr&eacute;dits amortissables.</p>
+
+<p>Si le <strong>Taux 5</strong> du param&egrave;tre <strong>CDTPAR6</strong> en nomenclature <strong>098</strong> est &eacute;gal &agrave; <strong>1</strong>, alors le dossier de cr&eacute;dit amortissable d&rsquo;origine doit &ecirc;tre en attente de tomb&eacute;e, en attente de mise en place apr&egrave;s une tomb&eacute;e, &eacute;chu ou d&eacute;chu de son terme.</p>
+
+<p>Si le <strong>Taux 5</strong> du param&egrave;tre <strong>CDTPAR6</strong> en nomenclature <strong>098</strong> est diff&eacute;rent de <strong>1</strong>, alors le dossier de cr&eacute;dit amortissable d&rsquo;origine doit &ecirc;tre &eacute;chu ou d&eacute;chu de son terme.</p>
+
+<p>Un identifiant de cr&eacute;dit amortissable ne peut &ecirc;tre mentionn&eacute; qu&rsquo;une seule fois dans la liste des dossiers d&rsquo;origine.</p>
+
+			</div>
+
+	</div>
+	<div class="detail">
+			<div class="mock-list">
+				<b>Nom : </b> <a href="../types/amortizableLoanDetailIdentifier.html">amortizableLoanDetailIdentifier</a>
+			</div>
+			<div class="mock-list">
+				<b> Description : </b>Identifiant d'un crédit amortissable.
+			</div>
+
+	</div>
+
+</div>
+<div class="detail-column" id="d8" style="display:none">
+	<div class="detail">
+			<div class="mock-list">
+				<b>Nom : </b>branchCode
+			</div>
+			<div class="mock-list">
+				<b>Description : </b>Code agence.
+			</div>
+			<div class="mock-list">
+				<b>Commentaire : </b><p>Le code agence doit exister en nomenclature <strong>001</strong>.</p>
+
+			</div>
+
+	</div>
+	<div class="detail">
+			<div class="mock-list">
+				<b>Nom : </b> <a href="../types/char5.html">char5</a>
+			</div>
+			<div class="mock-list">
+				<b> Description : </b>Type avec un nombre de caractères égal à 5.
+			</div>
+			<div class="mock-list">
+				<b>Format : </b>string
+			</div>
+			<div class="mock-list">
+				<b>Longueur fixe : </b>5
+			</div>
+
+	</div>
+
+</div>
+<div class="detail-column" id="d9" style="display:none">
+	<div class="detail">
+			<div class="mock-list">
+				<b>Nom : </b>fileNumber
+			</div>
+			<div class="mock-list">
+				<b>Description : </b>Numéro de dossier.
+			</div>
+
+	</div>
+	<div class="detail">
+			<div class="mock-list">
+				<b>Nom : </b> <a href="../types/char6.html">char6</a>
+			</div>
+			<div class="mock-list">
+				<b> Description : </b>Type avec un nombre de caractères égal à 6.
+			</div>
+			<div class="mock-list">
+				<b>Format : </b>string
+			</div>
+			<div class="mock-list">
+				<b>Longueur fixe : </b>6
+			</div>
+
+	</div>
+
+</div>
+<div class="detail-column" id="d10" style="display:none">
+	<div class="detail">
+			<div class="mock-list">
+				<b>Nom : </b>orderNumber
+			</div>
+			<div class="mock-list">
+				<b>Description : </b>Numéro d'ordre.
+			</div>
+			<div class="mock-list">
+				<b>Commentaire : </b><p>Le num&eacute;ro d&rsquo;ordre doit &ecirc;tre renseign&eacute; &agrave; <strong>3 espaces</strong> dans le cas d&rsquo;un dossier initial (avant ren&eacute;gociation).</p>
+
+			</div>
+
+	</div>
+	<div class="detail">
+			<div class="mock-list">
+				<b>Nom : </b> <a href="../types/char3.html">char3</a>
+			</div>
+			<div class="mock-list">
+				<b> Description : </b>Type avec un nombre de caractères égal à 3.
+			</div>
+			<div class="mock-list">
+				<b>Format : </b>string
+			</div>
+			<div class="mock-list">
+				<b>Longueur fixe : </b>3
+			</div>
+
+	</div>
+
+</div>
+<div class="detail-column" id="d11" style="display:none">
+	<div class="detail">
+			<div class="mock-list">
+				<b>Nom : </b>amendmentNumber
+			</div>
+			<div class="mock-list">
+				<b>Description : </b>Numéro d'avenant.
+			</div>
+
+	</div>
+	<div class="detail">
+			<div class="mock-list">
+				<b>Nom : </b> <a href="../types/decimal2_0.html">decimal2_0</a>
+			</div>
+			<div class="mock-list">
+				<b> Description : </b>Type décimal à 2 chiffres dont 0 décimales.
+			</div>
+			<div class="mock-list">
+				<b>Format : </b>decimal
+			</div>
+			<div class="mock-list">
+				<b>Nombre total de chiffres : </b>2
+			</div>
+
+	</div>
+
+</div>
+      </div> 
+  </div>
+
+  
+  <script src="../resources/jquery.js"></script>
+  <script src="../resources/doc.js"></script>
+</body>
+</html>
