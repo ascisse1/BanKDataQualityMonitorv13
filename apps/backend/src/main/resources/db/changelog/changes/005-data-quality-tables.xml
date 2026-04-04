@@ -10,7 +10,7 @@
          Based on schema from bank_data_quality_full.sql
          ===================================================== -->
 
-    <changeSet id="005-01-create-anomalies" author="bsic">
+    <changeSet id="005-01-create-anomalies" author="adakalgroup">
         <comment>Create anomalies table</comment>
         <createTable tableName="anomalies">
             <column name="id" type="BIGINT" autoIncrement="true">
@@ -68,7 +68,7 @@
         </createIndex>
     </changeSet>
 
-    <changeSet id="005-02-create-fatca-clients" author="bsic">
+    <changeSet id="005-02-create-fatca-clients" author="adakalgroup">
         <comment>Create FATCA clients table</comment>
         <createTable tableName="fatca_clients">
             <column name="id" type="BIGINT" autoIncrement="true">
@@ -152,7 +152,7 @@
         </createIndex>
     </changeSet>
 
-    <changeSet id="005-03-create-validation-rules" author="bsic">
+    <changeSet id="005-03-create-validation-rules" author="adakalgroup">
         <comment>Create validation rules table</comment>
         <createTable tableName="validation_rules">
             <column name="id" type="BIGINT" autoIncrement="true">
@@ -194,7 +194,7 @@
         </createIndex>
     </changeSet>
 
-    <changeSet id="005-04-create-data-load-history" author="bsic">
+    <changeSet id="005-04-create-data-load-history" author="adakalgroup">
         <comment>Create data load history table</comment>
         <createTable tableName="data_load_history">
             <column name="id" type="BIGINT" autoIncrement="true">
@@ -242,7 +242,7 @@
         </createIndex>
     </changeSet>
 
-    <changeSet id="005-05-create-correction-stats" author="bsic">
+    <changeSet id="005-05-create-correction-stats" author="adakalgroup">
         <comment>Create correction stats table</comment>
         <createTable tableName="correction_stats">
             <column name="id" type="BIGINT" autoIncrement="true">

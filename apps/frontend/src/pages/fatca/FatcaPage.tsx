@@ -1,19 +1,19 @@
 import React, { useState, useEffect, useCallback } from 'react';
 import { Flag, User, Building, Filter, Download, RefreshCw, FileSpreadsheet, Loader2, FileCode, Send, Scan } from 'lucide-react';
-import Card from '../../components/ui/Card';
-import Button from '../../components/ui/Button';
-import Input from '../../components/ui/Input';
-import { useToast } from '../../components/ui/Toaster';
-import LoadingSpinner from '../../components/ui/LoadingSpinner';
-import { Tabs, TabList, Tab, TabPanel } from '../../components/ui/Tabs';
+import Card from '@/components/ui/Card';
+import Button from '@/components/ui/Button';
+import Input from '@/components/ui/Input';
+import { useToast } from '@/components/ui/Toaster';
+import LoadingSpinner from '@/components/ui/LoadingSpinner';
+import { Tabs, TabList, Tab, TabPanel } from '@/components/ui/Tabs';
 import FatcaStats from './components/FatcaStats';
 import FatcaFilters from './components/FatcaFilters';
 import FatcaTable from './components/FatcaTable';
 import CorporateFatcaTable from './components/CorporateFatcaTable';
 import { jsPDF } from 'jspdf';
 import 'jspdf-autotable';
-import { db } from '../../services/db';
-import { log } from '../../services/log';
+import { db } from '@/services/db';
+import { log } from '@/services/log';
 
 
 const FatcaPage: React.FC = () => {
@@ -195,7 +195,7 @@ const FatcaPage: React.FC = () => {
       }
 
       // Generate XML content from real data
-      const xmlContent = generateFatcaXML(activeTab, clients);
+      const xmlContent = generateFatcaXML(activeTab as 'individual' | 'corporate', clients);
 
       // Create download link
       const blob = new Blob([xmlContent], { type: 'application/xml;charset=utf-8;' });
@@ -291,9 +291,9 @@ const FatcaPage: React.FC = () => {
       ? generateIndividualAccounts(clients)
       : generateCorporateAccounts(clients);
 
-    const fiCountry = fatcaConfigData?.reportingCountry || 'BJ';
-    const fiName = fatcaConfigData?.fiName || 'BSIC Bénin';
-    const fiAddress = fatcaConfigData?.fiAddress || 'Avenue Jean-Paul II, Cotonou, Bénin';
+    const fiCountry = fatcaConfigData?.reportingCountry || 'XX';
+    const fiName = fatcaConfigData?.fiName || 'Your Bank Name';
+    const fiAddress = fatcaConfigData?.fiAddress || '';
     const filerCategory = fatcaConfigData?.filerCategory || 'FATCA601';
 
     return `<?xml version="1.0" encoding="UTF-8"?>
@@ -328,8 +328,9 @@ const FatcaPage: React.FC = () => {
   // Generate individual account XML from real client data
   const generateIndividualAccounts = (clients: any[]) => {
     const reportingYear = new Date().getFullYear() - 1;
+    const docPrefix = (fatcaConfigData?.fiName || 'BANK').split(/\s+/)[0].toUpperCase();
     return clients.map((client, index) => {
-      const docRefId = `BSIC.${reportingYear}.IND.${String(index + 1).padStart(5, '0')}`;
+      const docRefId = `${docPrefix}.${reportingYear}.IND.${String(index + 1).padStart(5, '0')}`;
       // Split name: assume "LASTNAME FIRSTNAME" format
       const nameParts = (client.nom || '').trim().split(/\s+/);
       const lastName = nameParts[0] || '';
@@ -361,8 +362,9 @@ const FatcaPage: React.FC = () => {
   // Generate corporate account XML from real client data
   const generateCorporateAccounts = (clients: any[]) => {
     const reportingYear = new Date().getFullYear() - 1;
+    const docPrefix = (fatcaConfigData?.fiName || 'BANK').split(/\s+/)[0].toUpperCase();
     return clients.map((client, index) => {
-      const docRefId = `BSIC.${reportingYear}.CORP.${String(index + 1).padStart(5, '0')}`;
+      const docRefId = `${docPrefix}.${reportingYear}.CORP.${String(index + 1).padStart(5, '0')}`;
 
       return `<AccountReport>
         <DocSpec>

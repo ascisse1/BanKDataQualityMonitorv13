@@ -2,14 +2,14 @@ import React, { useMemo } from 'react';
 import { createPortal } from 'react-dom';
 import { useState, useEffect } from 'react';
 import { AlertTriangle, Eye, ChevronDown, ChevronUp, RefreshCw, User, Building, Edit, Users, FileWarning } from 'lucide-react';
-import Button from '../../../components/ui/Button';
-import Pagination from '../../../components/ui/Pagination';
+import Button from '@/components/ui/Button';
+import Pagination from '@/components/ui/Pagination';
 import AnomalyCorrection from './AnomalyCorrection';
-import { db } from '../../../services/db';
-import { useToast } from '../../../components/ui/Toaster';
-import { useAuth } from '../../../context/AuthContext';
-import { log } from '../../../services/log';
-import { useDebounce } from '../../../hooks/useDebounce';
+import { db } from '@/services/db';
+import { useToast } from '@/components/ui/Toaster';
+import { useAuth } from '@/context/AuthContext';
+import { log } from '@/services/log';
+import { useDebounce } from '@/hooks/useDebounce';
 
 interface Anomaly {
   cli: string;
@@ -80,7 +80,7 @@ const AnomaliesTable: React.FC<AnomaliesTableProps> = ({
   const { user } = useAuth();
 
   const isAgencyUser = user?.role === 'AGENCY_USER';
-  const userStructureCode = user?.structureCode;
+  const userStructureCode = user?.structureCodes?.[0];
   const debouncedSearch = useDebounce(searchTerm, 300);
 
   // Group anomalies by client

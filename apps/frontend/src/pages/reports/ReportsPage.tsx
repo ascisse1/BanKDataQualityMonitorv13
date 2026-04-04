@@ -1,18 +1,28 @@
 import { useState, useEffect } from 'react';
 import { Download, FileBarChart2, RefreshCw, FileSpreadsheet, Loader2 } from 'lucide-react';
-import Button from '../../components/ui/Button';
-import Card from '../../components/ui/Card';
-import { useToast } from '../../components/ui/Toaster';
-import { db } from '../../services/db';
+import Button from '@/components/ui/Button';
+import Card from '@/components/ui/Card';
+import { useToast } from '@/components/ui/Toaster';
+import { db } from '@/services/db';
 import { jsPDF } from 'jspdf';
 import 'jspdf-autotable';
 import * as XLSX from 'xlsx';
-import { log } from '../../services/log';
+import { log } from '@/services/log';
 
 const ReportsPage = () => {
   const [isLoading, setIsLoading] = useState(true);
   const [isExporting, setIsExporting] = useState(false);
-  const [reports, setReports] = useState([]);
+  const [reports, setReports] = useState<Array<{
+    id: number;
+    title: string;
+    date: string;
+    type: string;
+    data: {
+      individualAnomalies: number;
+      corporateAnomalies: number;
+      branchAnomalies: number;
+    };
+  }>>([]);
   const { addToast } = useToast();
 
   useEffect(() => {
@@ -35,8 +45,8 @@ const ReportsPage = () => {
           date: new Date().toISOString(),
           type: 'weekly',
           data: {
-            individualAnomalies: individualAnomalies.length,
-            corporateAnomalies: corporateAnomalies.length,
+            individualAnomalies: individualAnomalies.data?.length || 0,
+            corporateAnomalies: corporateAnomalies.data?.length || 0,
             branchAnomalies: branchAnomalies.length
           }
         }
@@ -105,7 +115,7 @@ const ReportsPage = () => {
       const workbook = XLSX.utils.book_new();
 
       // 1. Feuille de synthèse avec les indicateurs
-      const dashboardData = [
+      const dashboardData: (string | number)[][] = [
         ['Tableau de Bord - Qualité des Données', '', '', ''],
         ['Date de génération', new Date().toLocaleDateString('fr-FR'), '', ''],
         ['', '', '', ''],

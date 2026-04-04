@@ -15,8 +15,8 @@ import {
   RuleCondition,
 } from '../../schemas/ruleSchema';
 import { RuleBuilder } from '../RuleBuilder';
-import Button from '../../../../components/ui/Button';
-import Input from '../../../../components/ui/Input';
+import Button from '@/components/ui/Button';
+import Input from '@/components/ui/Input';
 
 interface RuleEditorProps {
   rule?: ValidationRule | null;
@@ -42,7 +42,7 @@ export const RuleEditor: React.FC<RuleEditorProps> = ({
     setValue,
     formState: { errors, isDirty, isValid, isSubmitting },
   } = useForm<RuleFormData>({
-    resolver: zodResolver(ruleFormSchema),
+    resolver: zodResolver(ruleFormSchema) as any,
     mode: 'onChange',
     defaultValues: rule
       ? {
@@ -50,7 +50,7 @@ export const RuleEditor: React.FC<RuleEditorProps> = ({
           description: rule.description || '',
           field: rule.field,
           fieldLabel: rule.fieldLabel || '',
-          clientType: rule.clientType || '',
+          clientType: (rule.clientType || '') as any,
           ruleType: rule.ruleType,
           ruleDefinition: rule.ruleDefinition || [],
           errorMessage: rule.errorMessage,
@@ -64,7 +64,7 @@ export const RuleEditor: React.FC<RuleEditorProps> = ({
           description: '',
           field: '',
           fieldLabel: '',
-          clientType: '',
+          clientType: null,
           ruleType: 'required',
           ruleDefinition: [],
           errorMessage: '',

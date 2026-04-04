@@ -1,8 +1,8 @@
 import React from 'react';
 import { Settings } from 'lucide-react';
-import Card from '../../components/ui/Card';
-import { ValidationRulesManager } from '../../features/rules/components/ValidationRulesManager';
-import { ErrorBoundary } from '../../features/rules/components/ErrorBoundary';
+import Card from '@/components/ui/Card';
+import { ValidationRulesManager } from '@/features/rules/components/ValidationRulesManager';
+import { ErrorBoundary } from '@/features/rules/components/ErrorBoundary';
 import ExportRulesButton from './components/ExportRulesButton';
 
 const RulesPage: React.FC = () => {

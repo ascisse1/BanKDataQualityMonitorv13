@@ -1,7 +1,7 @@
 import React, { useState, useEffect } from 'react';
 import { Bug } from 'lucide-react';
 import TracerPanel from './TracerPanel';
-import { log } from '../../services/log';
+import { log } from '@/services/log';
 
 interface TracerButtonProps {
   className?: string;

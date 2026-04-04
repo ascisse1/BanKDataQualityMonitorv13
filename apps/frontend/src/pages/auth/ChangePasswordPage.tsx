@@ -1,13 +1,13 @@
 import { useState } from 'react';
 import { useNavigate } from 'react-router-dom';
-import { useAuth } from '../../context/AuthContext';
+import { useAuth } from '@/context/AuthContext';
 import { useForm } from 'react-hook-form';
 import { Lock, Save, ArrowLeft } from 'lucide-react';
-import Card from '../../components/ui/Card';
-import Input from '../../components/ui/Input';
-import Button from '../../components/ui/Button';
-import { useToast } from '../../components/ui/Toaster';
-import { log } from '../../services/log';
+import Card from '@/components/ui/Card';
+import Input from '@/components/ui/Input';
+import Button from '@/components/ui/Button';
+import { useToast } from '@/components/ui/Toaster';
+import { log } from '@/services/log';
 
 interface ChangePasswordFormData {
   currentPassword: string;
@@ -37,9 +37,9 @@ const ChangePasswordPage = () => {
       setIsLoading(true);
       const response = await fetch(`/api/users/${user.id}/change-password`, {
         method: 'POST',
+        credentials: 'include',
         headers: {
           'Content-Type': 'application/json',
-          'Authorization': `Bearer ${user.token}`
         },
         body: JSON.stringify({
           currentPassword: data.currentPassword,

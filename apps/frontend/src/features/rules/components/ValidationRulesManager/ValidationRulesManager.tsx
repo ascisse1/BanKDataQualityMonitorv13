@@ -15,11 +15,12 @@ import { RuleEditor } from '../RuleEditor';
 import { BulkActionsBar } from '../BulkActionsBar';
 import { CommandPalette, useRuleCommands } from '../CommandPalette';
 import { ErrorBoundary } from '../ErrorBoundary';
-import Button from '../../../../components/ui/Button';
-import Input from '../../../../components/ui/Input';
-import Card from '../../../../components/ui/Card';
-import { useDebounce } from '../../../../hooks/useDebounce';
-import { useAuth } from '../../../../context/AuthContext';
+import Button from '@/components/ui/Button';
+import Input from '@/components/ui/Input';
+import Card from '@/components/ui/Card';
+import { useDebounce } from '@/hooks/useDebounce';
+import { useAuth } from '@/context/AuthContext';
+import { useConfirmDialog } from '@/components/ui/ConfirmDialog';
 
 interface ValidationRulesManagerProps {
   onSwitchTab?: (tab: string) => void;
@@ -30,6 +31,7 @@ export const ValidationRulesManager: React.FC<ValidationRulesManagerProps> = ({
 }) => {
   const { hasRole } = useAuth();
   const isAdmin = hasRole('ADMIN');
+  const { confirm, ConfirmDialogPortal } = useConfirmDialog();
 
   // State
   const [selectedClientType, setSelectedClientType] = useState<'1' | '2' | '3' | 'all'>('all');
@@ -86,12 +88,12 @@ export const ValidationRulesManager: React.FC<ValidationRulesManagerProps> = ({
   }, []);
 
   const handleDeleteRule = useCallback(
-    (ruleId: string) => {
-      if (confirm('Êtes-vous sûr de vouloir supprimer cette règle ?')) {
-        deleteMutation.mutate(ruleId);
-      }
+    async (ruleId: string) => {
+      const confirmed = await confirm('Êtes-vous sûr de vouloir supprimer cette règle ?');
+      if (!confirmed) return;
+      deleteMutation.mutate(ruleId);
     },
-    [deleteMutation]
+    [deleteMutation, confirm]
   );
 
   const handleToggleRule = useCallback(
@@ -147,12 +149,12 @@ export const ValidationRulesManager: React.FC<ValidationRulesManagerProps> = ({
     setSelectedIds([]);
   }, [selectedIds, bulkToggle]);
 
-  const handleBulkDelete = useCallback(() => {
-    if (confirm(`Êtes-vous sûr de vouloir supprimer ${selectedIds.length} règle(s) ?`)) {
-      bulkDelete.mutate(selectedIds);
-      setSelectedIds([]);
-    }
-  }, [selectedIds, bulkDelete]);
+  const handleBulkDelete = useCallback(async () => {
+    const confirmed = await confirm(`Êtes-vous sûr de vouloir supprimer ${selectedIds.length} règle(s) ?`);
+    if (!confirmed) return;
+    bulkDelete.mutate(selectedIds);
+    setSelectedIds([]);
+  }, [selectedIds, bulkDelete, confirm]);
 
   const handleFocusSearch = useCallback(() => {
     searchInputRef.current?.focus();
@@ -199,6 +201,7 @@ export const ValidationRulesManager: React.FC<ValidationRulesManagerProps> = ({
   return (
     <ErrorBoundary>
       <div className="space-y-6">
+        <ConfirmDialogPortal />
         {/* Command Palette */}
         <CommandPalette commands={commands} />
 

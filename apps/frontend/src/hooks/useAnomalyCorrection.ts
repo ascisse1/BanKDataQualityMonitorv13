@@ -61,7 +61,7 @@ export const useAnomalyCorrection = () => {
         fieldLabel: anomalyData.fieldLabel,
         oldValue: anomalyData.oldValue,
         newValue: anomalyData.newValue,
-        structureCode: user.structureCode || 'HQ',
+        structureCode: user.structureCodes?.[0] || 'HQ',
         notes: anomalyData.notes,
         action,
         priority: 'MEDIUM',
@@ -73,7 +73,7 @@ export const useAnomalyCorrection = () => {
       log.info('user', `Anomaly ${anomalyData.status} for client ${anomalyData.cli}`, {
         field: anomalyData.field,
         by: user.username,
-        agency: user.structureCode || 'N/A',
+        agency: user.structureCodes?.[0] || 'N/A',
         ticketNumber: response.ticketNumber,
       });
 

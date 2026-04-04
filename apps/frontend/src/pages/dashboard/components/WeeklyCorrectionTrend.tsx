@@ -1,10 +1,17 @@
 import { useState, useEffect } from 'react';
 import Chart from 'react-apexcharts';
 import { ApexOptions } from 'apexcharts';
-import { useToast } from '../../../components/ui/Toaster';
+import { apiService } from '@/services/apiService';
+import { useToast } from '@/components/ui/Toaster';
 import { AlertTriangle, RefreshCw } from 'lucide-react';
-import Button from '../../../components/ui/Button';
-import { log } from '../../../services/log';
+import Button from '@/components/ui/Button';
+import { log } from '@/services/log';
+
+interface ApiResponse<T> {
+  success: boolean;
+  data: T;
+  message: string | null;
+}
 
 interface WeeklyCorrectionTrendProps {
   isLoading?: boolean;
@@ -122,9 +129,15 @@ const WeeklyCorrectionTrend = ({ isLoading = false }: WeeklyCorrectionTrendProps
       setLoading(true);
       setError(null);
 
-      // TODO: Replace with real API call
-      setStats([]);
-      updateChartWithData([]);
+      const response = await apiService.get<ApiResponse<WeeklyCorrectionStat[]>>('/stats/weekly-correction-trend');
+
+      if (response.success && response.data) {
+        setStats(response.data);
+        updateChartWithData(response.data);
+      } else {
+        setStats([]);
+        updateChartWithData([]);
+      }
 
     } catch (error) {
       log.error('api', 'Error fetching weekly correction stats', { error });

@@ -1,11 +1,11 @@
 import React, { useState, useEffect, useMemo, useCallback, useRef } from 'react';
 import { AlertTriangle, Loader2 } from 'lucide-react';
-import Pagination from '../../../components/ui/Pagination';
-import { db } from '../../../services/db';
-import { useToast } from '../../../components/ui/Toaster';
-import { useDebounce } from '../../../hooks/useDebounce';
+import Pagination from '@/components/ui/Pagination';
+import { db } from '@/services/db';
+import { useToast } from '@/components/ui/Toaster';
+import { useDebounce } from '@/hooks/useDebounce';
 import { useVirtualizer } from '@tanstack/react-virtual';
-import { log } from '../../../services/log';
+import { log } from '@/services/log';
 
 interface OptimizedAnomaliesTableProps {
   isLoading?: boolean;

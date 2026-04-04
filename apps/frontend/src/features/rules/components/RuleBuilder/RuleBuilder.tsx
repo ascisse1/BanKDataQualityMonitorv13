@@ -6,7 +6,7 @@ import {
   CONDITION_TYPE_LABELS,
   CONDITION_TYPES_BY_CATEGORY,
 } from '../../schemas/ruleSchema';
-import Button from '../../../../components/ui/Button';
+import Button from '@/components/ui/Button';
 
 interface RuleBuilderProps {
   conditions: RuleCondition[];

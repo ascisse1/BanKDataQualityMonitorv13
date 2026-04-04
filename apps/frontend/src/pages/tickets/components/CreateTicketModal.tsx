@@ -1,8 +1,8 @@
 import React, { useState } from 'react';
 import { X, AlertCircle } from 'lucide-react';
-import Button from '../../../components/ui/Button';
-import Input from '../../../components/ui/Input';
-import { workflowService } from '../../../services/workflowService';
+import Button from '@/components/ui/Button';
+import Input from '@/components/ui/Input';
+import { workflowService } from '@/services/workflowService';
 
 interface CreateTicketModalProps {
   isOpen: boolean;

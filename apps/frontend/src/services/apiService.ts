@@ -1,100 +1,40 @@
+import apiClient from '../lib/apiClient';
 import { log } from './log';
 
-// API Base URL - should be configured in .env
-const API_BASE_URL = import.meta.env.VITE_API_BASE_URL || '/api';
-
 /**
- * Extracts CSRF token from cookie (set by Spring Security).
- */
-function getCsrfTokenFromCookie(): string | null {
-  const cookies = document.cookie.split(';');
-  for (const cookie of cookies) {
-    const [name, value] = cookie.trim().split('=');
-    if (name === 'XSRF-TOKEN') {
-      return decodeURIComponent(value);
-    }
-  }
-  return null;
-}
-
-/**
- * Generic API request function with session-based authentication.
+ * Generic API request function built on the shared apiClient (Axios).
  *
  * BFF Security Model:
  * - Uses HttpOnly session cookies for authentication
- * - Includes CSRF token for state-changing requests
- * - No Bearer tokens exposed to JavaScript (XSS-safe)
+ * - CSRF token is handled by apiClient interceptors
+ * - 401/403 responses are handled by apiClient interceptors
  */
 export const apiRequest = async <T>(
   endpoint: string,
   method: 'GET' | 'POST' | 'PUT' | 'DELETE' | 'PATCH' = 'GET',
   data?: unknown,
-
   customHeaders?: Record<string, string>
 ): Promise<T> => {
   try {
     log.info('network', `API ${method} request to ${endpoint}`);
 
-    const headers: Record<string, string> = {
-      'Content-Type': 'application/json',
-      'Accept': 'application/json',
-      ...customHeaders
-    };
-
-    // Add CSRF token for state-changing requests
-    if (method !== 'GET') {
-      const csrfToken = getCsrfTokenFromCookie();
-      if (csrfToken) {
-        headers['X-XSRF-TOKEN'] = csrfToken;
-      }
-    }
-
-    const config: RequestInit = {
+    const response = await apiClient.request<T>({
+      url: `/api${endpoint}`,
       method,
-      headers,
-      credentials: 'include', // Include session cookies
-      body: data ? JSON.stringify(data) : undefined
-    };
+      data: method !== 'GET' ? data : undefined,
+      headers: customHeaders,
+    });
 
-    const response = await fetch(`${API_BASE_URL}${endpoint}`, config);
-
-    // Handle 401 Unauthorized - redirect to login
-    if (response.status === 401) {
-      log.warning('security', 'Session expired, redirecting to login');
-      window.location.href = '/login';
-      throw new Error('Authentication required');
-    }
-
-    // Handle 403 Forbidden - insufficient permissions
-    if (response.status === 403) {
-      log.warning('security', 'Access denied', { endpoint });
-      throw new Error('Access denied: insufficient permissions');
-    }
-
-    if (!response.ok) {
-      const errorText = await response.text();
-      throw new Error(`API Error (${response.status}): ${errorText}`);
-    }
-
-    // Handle empty response
-    const contentType = response.headers.get('content-type');
-    if (!contentType || !contentType.includes('application/json')) {
-      return {} as T;
-    }
-
-    const result = await response.json();
     log.info('network', `API ${method} request to ${endpoint} successful`);
-    return result as T;
+    return response.data;
   } catch (error) {
     log.error('network', `API ${method} request to ${endpoint} failed`, { error });
-    log.error('api', `API request failed: ${endpoint}`, { error });
     throw error;
   }
 };
 
 // Customer API services
 export const customerService = {
-  // Get customer list with filtering options
   getCustomerList: async (filters?: {
     searchTerm?: string;
     structureCode?: string;
@@ -113,12 +53,10 @@ export const customerService = {
     return apiRequest<unknown>(endpoint);
   },
 
-  // Get customer detail
   getCustomerDetail: async (customerId: string) => {
     return apiRequest<unknown>(`/getCustomerDetail?cli=${customerId}`);
   },
 
-  // Modify customer to fix anomalies
   modifyCustomer: async (customerId: string, data: unknown) => {
     return apiRequest<unknown>('/modifyCustomer', 'POST', {
       cli: customerId,
@@ -129,7 +67,6 @@ export const customerService = {
 
 // Anomaly detection and correction services
 export const anomalyService = {
-  // Get list of anomalies
   getAnomalies: async (filters?: {
     clientType?: string;
     structureCode?: string;
@@ -146,11 +83,10 @@ export const anomalyService = {
     return apiRequest<unknown>(endpoint);
   },
 
-  // Get anomalies for a specific customer
   getCustomerAnomalies: async (customerId: string) => {
     return apiRequest<unknown>(`/anomalies/customer?cli=${customerId}`);
   },
-  // Fix an anomaly
+
   fixAnomaly: async (anomalyData: {
     cli: string;
     field: string;
@@ -164,29 +100,22 @@ export const anomalyService = {
 
 // Account API services
 export const accountService = {
-  // Get account list for a customer
   getAccountList: async (customerId: string) => {
     return apiRequest<unknown>(`/getAccountList?cli=${customerId}`);
   },
 
-  // Get account details
   getAccountDetail: async (accountId: string) => {
     return apiRequest<unknown>(`/getAccountDetail?account=${accountId}`);
   }
 };
 
-// Generic API service with CRUD operations for Spring Boot backend
+// Generic API service with CRUD operations
 export const apiService = {
   get: <T>(endpoint: string) => apiRequest<T>(endpoint, 'GET'),
-
   post: <T>(endpoint: string, data?: unknown) => apiRequest<T>(endpoint, 'POST', data),
-
   put: <T>(endpoint: string, data?: unknown) => apiRequest<T>(endpoint, 'PUT', data),
-
   delete: <T>(endpoint: string) => apiRequest<T>(endpoint, 'DELETE'),
-
-  patch: <T>(endpoint: string, data?: unknown) =>
-    apiRequest<T>(endpoint, 'PATCH', data),
+  patch: <T>(endpoint: string, data?: unknown) => apiRequest<T>(endpoint, 'PATCH', data),
 };
 
 export default {

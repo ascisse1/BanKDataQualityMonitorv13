@@ -1,6 +1,6 @@
 import { Eye, RefreshCw, CheckCircle, AlertCircle, Ban } from 'lucide-react';
-import { ReconciliationTask, reconciliationService } from '../../../services/reconciliationService';
-import Button from '../../../components/ui/Button';
+import { ReconciliationTask, reconciliationService } from '@/services/reconciliationService';
+import Button from '@/components/ui/Button';
 
 interface ReconciliationTableProps {
   tasks: ReconciliationTask[];

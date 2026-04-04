@@ -2,10 +2,10 @@ import React, { useState, useEffect } from 'react';
 import { Download, CheckCircle, XCircle, Loader, Trash2, HardDrive, AlertCircle } from 'lucide-react';
 import Button from './Button';
 import Card from './Card';
-import axios from 'axios';
-import { log } from '../../services/log';
-
-const API_URL = import.meta.env.VITE_API_URL || 'http://localhost:3001';
+import { useConfirmDialog } from './ConfirmDialog';
+import apiClient from '@/lib/apiClient';
+import { log } from '@/services/log';
+import { useNotification } from '@/context/NotificationContext';
 
 interface DriverStatus {
   name: string;
@@ -23,6 +23,8 @@ interface DriversStatus {
 }
 
 const JdbcDriverManager: React.FC = () => {
+  const { showError } = useNotification();
+  const { confirm, ConfirmDialogPortal } = useConfirmDialog();
   const [drivers, setDrivers] = useState<DriversStatus>({});
   const [loading, setLoading] = useState(true);
   const [downloading, setDownloading] = useState<string | null>(null);
@@ -35,7 +37,7 @@ const JdbcDriverManager: React.FC = () => {
   const loadDriversStatus = async () => {
     try {
       setLoading(true);
-      const response = await axios.get(`${API_URL}/api/corebanking/drivers`);
+      const response = await apiClient.get('/api/corebanking/drivers');
       setDrivers(response.data);
     } catch (error) {
       log.error('api', 'Failed to load drivers status', { error });
@@ -49,11 +51,9 @@ const JdbcDriverManager: React.FC = () => {
       setDownloading(dbType);
       setDownloadProgress({ ...downloadProgress, [dbType]: 0 });
 
-      const response = await fetch(`${API_URL}/api/corebanking/drivers/${dbType}/download`, {
+      const response = await fetch(`/api/corebanking/drivers/${dbType}/download`, {
         method: 'POST',
-        headers: {
-          'Authorization': `Bearer ${localStorage.getItem('token')}`
-        }
+        credentials: 'include',
       });
 
       const reader = response.body?.getReader();
@@ -85,7 +85,7 @@ const JdbcDriverManager: React.FC = () => {
       }
     } catch (error) {
       log.error('api', 'Failed to download driver', { error });
-      alert('Échec du téléchargement du driver');
+      showError('Échec du téléchargement du driver');
     } finally {
       setDownloading(null);
       setDownloadProgress({ ...downloadProgress, [dbType]: 0 });
@@ -93,14 +93,15 @@ const JdbcDriverManager: React.FC = () => {
   };
 
   const handleDeleteDriver = async (dbType: string) => {
-    if (!confirm('Êtes-vous sûr de vouloir supprimer ce driver ?')) return;
+    const confirmed = await confirm('Êtes-vous sûr de vouloir supprimer ce driver ?');
+    if (!confirmed) return;
 
     try {
-      await axios.delete(`${API_URL}/api/corebanking/drivers/${dbType}`);
+      await apiClient.delete(`/api/corebanking/drivers/${dbType}`);
       await loadDriversStatus();
     } catch (error) {
       log.error('api', 'Failed to delete driver', { error });
-      alert('Échec de la suppression du driver');
+      showError('Échec de la suppression du driver');
     }
   };
 
@@ -134,6 +135,8 @@ const JdbcDriverManager: React.FC = () => {
   }
 
   return (
+    <>
+    <ConfirmDialogPortal />
     <Card>
       <div className="p-6">
         <div className="flex items-center gap-3 mb-6">
@@ -213,7 +216,7 @@ const JdbcDriverManager: React.FC = () => {
                     <Button
                       variant="primary"
                       size="sm"
-                      icon={Download}
+                      leftIcon={<Download className="w-4 h-4" />}
                       onClick={() => handleDownloadDriver(dbType)}
                       disabled={downloading !== null}
                     >
@@ -223,7 +226,7 @@ const JdbcDriverManager: React.FC = () => {
                     <Button
                       variant="danger"
                       size="sm"
-                      icon={Trash2}
+                      leftIcon={<Trash2 className="w-4 h-4" />}
                       onClick={() => handleDeleteDriver(dbType)}
                       disabled={downloading !== null}
                     >
@@ -237,6 +240,7 @@ const JdbcDriverManager: React.FC = () => {
         </div>
       </div>
     </Card>
+    </>
   );
 };
 

@@ -5,7 +5,7 @@ import Button from './Button';
 import Input from './Input';
 import { useToast } from './Toaster';
 
-import { db } from '../../services/db';
+import { db } from '@/services/db';
 
 interface DatabaseConfigPanelProps {
   onConfigChange?: (changed: boolean) => void;

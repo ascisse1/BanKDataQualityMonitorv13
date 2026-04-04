@@ -1,14 +1,18 @@
 import React, { useState, useEffect } from 'react';
 import { Database, Plus, Edit2, Trash2, TestTube, Check, X, Eye, EyeOff, Save, RefreshCw } from 'lucide-react';
-import { coreBankingConfigService, CoreBankingConfig, ConnectionTestResult } from '../../services/coreBankingConfigService';
-import Button from '../../components/ui/Button';
-import Card from '../../components/ui/Card';
-import Input from '../../components/ui/Input';
-import LoadingSpinner from '../../components/ui/LoadingSpinner';
-import JdbcDriverManager from '../../components/ui/JdbcDriverManager';
-import { log } from '../../services/log';
+import { coreBankingConfigService, CoreBankingConfig, ConnectionTestResult } from '@/services/coreBankingConfigService';
+import Button from '@/components/ui/Button';
+import Card from '@/components/ui/Card';
+import Input from '@/components/ui/Input';
+import LoadingSpinner from '@/components/ui/LoadingSpinner';
+import JdbcDriverManager from '@/components/ui/JdbcDriverManager';
+import { log } from '@/services/log';
+import { useNotification } from '@/context/NotificationContext';
+import { useConfirmDialog } from '@/components/ui/ConfirmDialog';
 
 const CoreBankingConfigPage: React.FC = () => {
+  const { showError } = useNotification();
+  const { confirm, ConfirmDialogPortal } = useConfirmDialog();
   const [configs, setConfigs] = useState<CoreBankingConfig[]>([]);
   const [loading, setLoading] = useState(true);
   const [showForm, setShowForm] = useState(false);
@@ -83,7 +87,7 @@ const CoreBankingConfigPage: React.FC = () => {
       resetForm();
     } catch (error) {
       log.error('database', 'Failed to save config', { error });
-      alert('Échec de l\'enregistrement de la configuration');
+      showError('Échec de l\'enregistrement de la configuration');
     }
   };
 
@@ -94,14 +98,15 @@ const CoreBankingConfigPage: React.FC = () => {
   };
 
   const handleDelete = async (id: string) => {
-    if (!confirm('Êtes-vous sûr de vouloir supprimer cette configuration ?')) return;
+    const confirmed = await confirm('Êtes-vous sûr de vouloir supprimer cette configuration ?');
+    if (!confirmed) return;
 
     try {
       await coreBankingConfigService.deleteConfig(id);
       await loadConfigs();
     } catch (error) {
       log.error('database', 'Failed to delete config', { error });
-      alert('Échec de la suppression de la configuration');
+      showError('Échec de la suppression de la configuration');
     }
   };
 
@@ -112,10 +117,11 @@ const CoreBankingConfigPage: React.FC = () => {
       const result = await coreBankingConfigService.testConnection(config);
       setTestResults({ ...testResults, [config.id!]: result });
       await loadConfigs();
-    } catch (error: any) {
+    } catch (error) {
+      const errorMessage = error instanceof Error ? error.message : 'Unknown error';
       setTestResults({
         ...testResults,
-        [config.id!]: { success: false, message: 'Erreur', error: error.message }
+        [config.id!]: { success: false, message: 'Erreur', error: errorMessage }
       });
     } finally {
       setTesting(null);
@@ -131,10 +137,11 @@ const CoreBankingConfigPage: React.FC = () => {
       } as CoreBankingConfig;
       const result = await coreBankingConfigService.testConnection(testConfig);
       setTestResults({ ...testResults, 'test-form': result });
-    } catch (error: any) {
+    } catch (error) {
+      const errorMessage = error instanceof Error ? error.message : 'Unknown error';
       setTestResults({
         ...testResults,
-        'test-form': { success: false, message: 'Erreur', error: error.message }
+        'test-form': { success: false, message: 'Erreur', error: errorMessage }
       });
     } finally {
       setTestingForm(false);
@@ -147,7 +154,7 @@ const CoreBankingConfigPage: React.FC = () => {
       await loadConfigs();
     } catch (error) {
       log.error('database', 'Failed to set default config', { error });
-      alert('Échec de la définition de la configuration par défaut');
+      showError('Échec de la définition de la configuration par défaut');
     }
   };
 
@@ -179,6 +186,7 @@ const CoreBankingConfigPage: React.FC = () => {
 
   return (
     <div className="space-y-6">
+      <ConfirmDialogPortal />
       <div className="flex items-center justify-between">
         <div className="flex items-center gap-3">
           <Database className="w-8 h-8 text-blue-600" />
@@ -189,7 +197,7 @@ const CoreBankingConfigPage: React.FC = () => {
         </div>
         <Button
           variant="primary"
-          icon={Plus}
+          leftIcon={<Plus className="h-4 w-4" />}
           onClick={() => setShowForm(true)}
         >
           Nouvelle configuration
@@ -397,14 +405,14 @@ const CoreBankingConfigPage: React.FC = () => {
                 <Button
                   type="button"
                   variant="secondary"
-                  icon={TestTube}
+                  leftIcon={<TestTube className="h-4 w-4" />}
                   onClick={handleTestFormConnection}
                   disabled={testingForm || !formData.jdbcUrl}
                 >
                   {testingForm ? 'Test en cours...' : 'Tester la connexion'}
                 </Button>
                 <div className="flex-1"></div>
-                <Button type="submit" variant="primary" icon={Save}>
+                <Button type="submit" variant="primary" leftIcon={<Save className="h-4 w-4" />}>
                   Enregistrer
                 </Button>
                 <Button type="button" variant="secondary" onClick={resetForm}>
@@ -464,7 +472,7 @@ const CoreBankingConfigPage: React.FC = () => {
                     <Button
                       variant="secondary"
                       size="sm"
-                      icon={TestTube}
+                      leftIcon={<TestTube className="h-4 w-4" />}
                       onClick={() => handleTestConnection(config)}
                       disabled={testing === config.id}
                     >
@@ -473,7 +481,7 @@ const CoreBankingConfigPage: React.FC = () => {
                     <Button
                       variant="secondary"
                       size="sm"
-                      icon={Edit2}
+                      leftIcon={<Edit2 className="h-4 w-4" />}
                       onClick={() => handleEdit(config)}
                     >
                       Modifier
@@ -490,7 +498,7 @@ const CoreBankingConfigPage: React.FC = () => {
                     <Button
                       variant="danger"
                       size="sm"
-                      icon={Trash2}
+                      leftIcon={<Trash2 className="h-4 w-4" />}
                       onClick={() => handleDelete(config.id!)}
                     >
                       Supprimer
@@ -511,7 +519,7 @@ const CoreBankingConfigPage: React.FC = () => {
             <p className="text-gray-600 mb-6">
               Créez votre première configuration de connexion CoreBanking
             </p>
-            <Button variant="primary" icon={Plus} onClick={() => setShowForm(true)}>
+            <Button variant="primary" leftIcon={<Plus className="h-4 w-4" />} onClick={() => setShowForm(true)}>
               Créer une configuration
             </Button>
           </div>

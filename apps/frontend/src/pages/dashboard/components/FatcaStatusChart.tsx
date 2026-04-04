@@ -1,8 +1,8 @@
 import { useState, useEffect } from 'react';
 import Chart from 'react-apexcharts';
 import { ApexOptions } from 'apexcharts';
-import { db } from '../../../services/db';
-import { log } from '../../../services/log';
+import { db } from '@/services/db';
+import { log } from '@/services/log';
 
 interface FatcaStatusChartProps {
   isLoading?: boolean;
@@ -16,7 +16,7 @@ const FatcaStatusChart = ({ isLoading = false }: FatcaStatusChartProps) => {
     series: [0, 0, 0, 0],
     options: {
       chart: {
-        type: 'donut',
+        type: 'donut' as const,
         fontFamily: 'Inter, system-ui, sans-serif',
       },
       labels: ['À documenter', 'Compte déclarable', 'Non déclarable', 'Récalcitrant'],
@@ -44,7 +44,7 @@ const FatcaStatusChart = ({ isLoading = false }: FatcaStatusChartProps) => {
                 fontWeight: 600,
                 label: 'Total',
                 formatter: (w) => {
-                  return `${w.globals.seriesTotals.reduce((a, b) => a + b, 0)}`;
+                  return `${w.globals.seriesTotals.reduce((a: number, b: number) => a + b, 0)}`;
                 },
               },
             },
@@ -55,11 +55,11 @@ const FatcaStatusChart = ({ isLoading = false }: FatcaStatusChartProps) => {
         enabled: false,
       },
       legend: {
-        position: 'bottom',
+        position: 'bottom' as const,
         horizontalAlign: 'center',
         fontSize: '13px',
         markers: {
-          radius: 12,
+          size: 6,
         },
       },
       stroke: {

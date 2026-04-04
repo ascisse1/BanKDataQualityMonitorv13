@@ -13,13 +13,17 @@
     <sql>
       drop schema if exists workflow cascade;
       create schema if not exists workflow;
+      create schema if not exists cbs;
     </sql>
   </changeSet>
+
+
+
     <!-- =====================================================
          1. USERS TABLE
          ===================================================== -->
 
-    <changeSet id="pg-001-01-create-users" author="bsic">
+    <changeSet id="pg-001-01-create-users" author="adakalgroup">
         <createTable tableName="users">
             <column name="id" type="INT" autoIncrement="true">
                 <constraints primaryKey="true" nullable="false"/>
@@ -62,300 +66,17 @@
     </changeSet>
 
     <!-- =====================================================
-         2. MAIN BANKING TABLES
+         2. CBS MIRROR TABLES
+         Schema 'cbs' is managed by DynamicCbsQueryService at runtime.
+         Tables are created dynamically from cbs_tables/cbs_fields metadata.
+         No static table definitions needed here.
          ===================================================== -->
-
-    <changeSet id="pg-001-02-create-bkage" author="bsic">
-        <createTable tableName="bkage">
-            <column name="age" type="CHAR(5)">
-                <constraints primaryKey="true" nullable="false"/>
-            </column>
-            <column name="lib" type="VARCHAR(30)"/>
-            <column name="id_structure" type="BIGINT"/>
-            <column name="created_at" type="TIMESTAMP" defaultValueComputed="CURRENT_TIMESTAMP"/>
-            <column name="updated_at" type="TIMESTAMP" defaultValueComputed="CURRENT_TIMESTAMP"/>
-        </createTable>
-    </changeSet>
-
-    <changeSet id="pg-001-03-create-bkcli" author="bsic">
-        <createTable tableName="bkcli">
-            <column name="cli" type="CHAR(15)">
-                <constraints primaryKey="true" nullable="false"/>
-            </column>
-            <column name="nom" type="CHAR(36)"/>
-            <column name="tcli" type="CHAR(1)"/>
-            <column name="lib" type="CHAR(2)"/>
-            <column name="pre" type="CHAR(30)"/>
-            <column name="sext" type="CHAR(1)"/>
-            <column name="njf" type="CHAR(36)"/>
-            <column name="dna" type="DATE"/>
-            <column name="viln" type="CHAR(30)"/>
-            <column name="depn" type="CHAR(30)"/>
-            <column name="payn" type="CHAR(3)"/>
-            <column name="locn" type="CHAR(6)"/>
-            <column name="tid" type="CHAR(5)"/>
-            <column name="nid" type="CHAR(20)"/>
-            <column name="did" type="DATE"/>
-            <column name="lid" type="CHAR(30)"/>
-            <column name="oid" type="CHAR(30)"/>
-            <column name="vid" type="DATE"/>
-            <column name="sit" type="CHAR(1)"/>
-            <column name="reg" type="CHAR(1)"/>
-            <column name="capj" type="CHAR(1)"/>
-            <column name="dcapj" type="DATE"/>
-            <column name="sitj" type="CHAR(3)"/>
-            <column name="dsitj" type="DATE"/>
-            <column name="tconj" type="CHAR(1)"/>
-            <column name="conj" type="CHAR(15)"/>
-            <column name="nbenf" type="SMALLINT"/>
-            <column name="clifam" type="CHAR(15)"/>
-            <column name="rso" type="CHAR(65)"/>
-            <column name="sig" type="CHAR(20)"/>
-            <column name="datc" type="DATE"/>
-            <column name="fju" type="CHAR(2)"/>
-            <column name="nrc" type="CHAR(20)"/>
-            <column name="vrc" type="DATE"/>
-            <column name="nchc" type="CHAR(3)"/>
-            <column name="npa" type="CHAR(20)"/>
-            <column name="vpa" type="DATE"/>
-            <column name="nidn" type="CHAR(20)"/>
-            <column name="nis" type="CHAR(20)"/>
-            <column name="nidf" type="CHAR(20)"/>
-            <column name="grp" type="CHAR(6)"/>
-            <column name="sgrp" type="CHAR(6)"/>
-            <column name="met" type="CHAR(6)"/>
-            <column name="smet" type="CHAR(6)"/>
-            <column name="cmc1" type="CHAR(36)"/>
-            <column name="cmc2" type="CHAR(36)"/>
-            <column name="age" type="CHAR(5)"/>
-            <column name="ges" type="CHAR(3)"/>
-            <column name="qua" type="CHAR(2)"/>
-            <column name="tax" type="CHAR(1)"/>
-            <column name="catl" type="CHAR(1)"/>
-            <column name="seg" type="CHAR(3)"/>
-            <column name="nst" type="CHAR(20)"/>
-            <column name="clipar" type="CHAR(15)"/>
-            <column name="chl1" type="CHAR(10)"/>
-            <column name="chl2" type="CHAR(10)"/>
-            <column name="chl3" type="CHAR(10)"/>
-            <column name="lter" type="CHAR(1)"/>
-            <column name="lterc" type="CHAR(1)"/>
-            <column name="resd" type="CHAR(3)"/>
-            <column name="catn" type="CHAR(6)"/>
-            <column name="sec" type="CHAR(5)"/>
-            <column name="lienbq" type="CHAR(3)"/>
-            <column name="aclas" type="CHAR(1)"/>
-            <column name="maclas" type="DECIMAL(19,4)"/>
-            <column name="emtit" type="CHAR(1)"/>
-            <column name="nicr" type="CHAR(20)"/>
-            <column name="ced" type="CHAR(1)"/>
-            <column name="clcr" type="CHAR(1)"/>
-            <column name="nmer" type="CHAR(36)"/>
-            <column name="lang" type="CHAR(3)"/>
-            <column name="nat" type="CHAR(3)"/>
-            <column name="res" type="CHAR(3)"/>
-            <column name="ichq" type="CHAR(1)"/>
-            <column name="dichq" type="DATE"/>
-            <column name="icb" type="CHAR(1)"/>
-            <column name="dicb" type="DATE"/>
-            <column name="epu" type="CHAR(1)"/>
-            <column name="utic" type="CHAR(10)"/>
-            <column name="uti" type="CHAR(10)"/>
-            <column name="dou" type="DATE"/>
-            <column name="dmo" type="DATE"/>
-            <column name="ord" type="DECIMAL(4,0)"/>
-            <column name="catr" type="CHAR(1)"/>
-            <column name="midname" type="CHAR(30)"/>
-            <column name="nomrest" type="CHAR(67)"/>
-            <column name="drc" type="DATE"/>
-            <column name="lrc" type="CHAR(30)"/>
-            <column name="rso2" type="CHAR(65)"/>
-            <column name="regn" type="CHAR(50)"/>
-            <column name="rrc" type="CHAR(1)"/>
-            <column name="dvrrc" type="DATE"/>
-            <column name="uti_vrrc" type="CHAR(10)"/>
-            <column name="created_at" type="TIMESTAMP" defaultValueComputed="CURRENT_TIMESTAMP"/>
-            <column name="updated_at" type="TIMESTAMP" defaultValueComputed="CURRENT_TIMESTAMP"/>
-        </createTable>
-        <createIndex tableName="bkcli" indexName="idx_bkcli_tcli">
-            <column name="tcli"/>
-        </createIndex>
-        <createIndex tableName="bkcli" indexName="idx_bkcli_age">
-            <column name="age"/>
-        </createIndex>
-        <createIndex tableName="bkcli" indexName="idx_bkcli_nat">
-            <column name="nat"/>
-        </createIndex>
-        <createIndex tableName="bkcli" indexName="idx_bkcli_payn">
-            <column name="payn"/>
-        </createIndex>
-        <createIndex tableName="bkcli" indexName="idx_bkcli_ges">
-            <column name="ges"/>
-        </createIndex>
-        <createIndex tableName="bkcli" indexName="idx_bkcli_seg">
-            <column name="seg"/>
-        </createIndex>
-        <createIndex tableName="bkcli" indexName="idx_bkcli_grp">
-            <column name="grp"/>
-        </createIndex>
-        <createIndex tableName="bkcli" indexName="idx_bkcli_met">
-            <column name="met"/>
-        </createIndex>
-        <createIndex tableName="bkcli" indexName="idx_bkcli_res">
-            <column name="res"/>
-        </createIndex>
-    </changeSet>
-
-    <changeSet id="pg-001-04-create-bkcom" author="bsic">
-        <createTable tableName="bkcom">
-            <column name="cli" type="CHAR(15)">
-                <constraints nullable="false"/>
-            </column>
-            <column name="cha" type="CHAR(6)">
-                <constraints nullable="false"/>
-            </column>
-            <column name="dev" type="CHAR(3)">
-                <constraints nullable="false"/>
-            </column>
-            <column name="age" type="CHAR(5)">
-                <constraints nullable="false"/>
-            </column>
-            <column name="ncp" type="CHAR(11)">
-                <constraints nullable="false"/>
-            </column>
-            <column name="cfe" type="CHAR(1)"/>
-        </createTable>
-        <addPrimaryKey tableName="bkcom" columnNames="cli,cha,dev,age,ncp" constraintName="pk_bkcom"/>
-        <addForeignKeyConstraint baseTableName="bkcom" baseColumnNames="cli"
-                                 referencedTableName="bkcli" referencedColumnNames="cli"
-                                 constraintName="bkcom_ibfk_1"/>
-        <createIndex tableName="bkcom" indexName="idx_bkcom_cli">
-            <column name="cli"/>
-        </createIndex>
-        <createIndex tableName="bkcom" indexName="idx_bkcom_cha">
-            <column name="cha"/>
-        </createIndex>
-    </changeSet>
-
-    <changeSet id="pg-001-05-create-bkadcli" author="bsic">
-        <createTable tableName="bkadcli">
-            <column name="cli" type="CHAR(15)">
-                <constraints nullable="false"/>
-            </column>
-            <column name="typ" type="CHAR(2)">
-                <constraints nullable="false"/>
-            </column>
-            <column name="adr1" type="VARCHAR(100)"/>
-            <column name="adr2" type="VARCHAR(100)"/>
-            <column name="adr3" type="VARCHAR(100)"/>
-            <column name="ville" type="VARCHAR(50)"/>
-            <column name="cpay" type="CHAR(3)"/>
-        </createTable>
-        <addPrimaryKey tableName="bkadcli" columnNames="cli,typ" constraintName="pk_bkadcli"/>
-        <addForeignKeyConstraint baseTableName="bkadcli" baseColumnNames="cli"
-                                 referencedTableName="bkcli" referencedColumnNames="cli"
-                                 constraintName="bkadcli_ibfk_1"/>
-        <createIndex tableName="bkadcli" indexName="idx_bkadcli_cli">
-            <column name="cli"/>
-        </createIndex>
-        <createIndex tableName="bkadcli" indexName="idx_bkadcli_cpay">
-            <column name="cpay"/>
-        </createIndex>
-    </changeSet>
-
-    <changeSet id="pg-001-06-create-bktelcli" author="bsic">
-        <createTable tableName="bktelcli">
-            <column name="cli" type="CHAR(15)">
-                <constraints nullable="false"/>
-            </column>
-            <column name="typ" type="CHAR(3)">
-                <constraints nullable="false"/>
-            </column>
-            <column name="num" type="VARCHAR(30)"/>
-        </createTable>
-        <addPrimaryKey tableName="bktelcli" columnNames="cli,typ" constraintName="pk_bktelcli"/>
-        <addForeignKeyConstraint baseTableName="bktelcli" baseColumnNames="cli"
-                                 referencedTableName="bkcli" referencedColumnNames="cli"
-                                 constraintName="bktelcli_ibfk_1"/>
-        <createIndex tableName="bktelcli" indexName="idx_bktelcli_cli">
-            <column name="cli"/>
-        </createIndex>
-        <createIndex tableName="bktelcli" indexName="idx_bktelcli_num">
-            <column name="num"/>
-        </createIndex>
-    </changeSet>
-
-    <changeSet id="pg-001-07-create-bkemacli" author="bsic">
-        <createTable tableName="bkemacli">
-            <column name="cli" type="CHAR(15)">
-                <constraints nullable="false"/>
-            </column>
-            <column name="email" type="VARCHAR(100)">
-                <constraints nullable="false"/>
-            </column>
-        </createTable>
-        <addPrimaryKey tableName="bkemacli" columnNames="cli,email" constraintName="pk_bkemacli"/>
-        <addForeignKeyConstraint baseTableName="bkemacli" baseColumnNames="cli"
-                                 referencedTableName="bkcli" referencedColumnNames="cli"
-                                 constraintName="bkemacli_ibfk_1"/>
-        <createIndex tableName="bkemacli" indexName="idx_bkemacli_cli">
-            <column name="cli"/>
-        </createIndex>
-    </changeSet>
-
-    <changeSet id="pg-001-08-create-bkcoj" author="bsic">
-        <createTable tableName="bkcoj">
-            <column name="clip" type="CHAR(15)">
-                <constraints nullable="false"/>
-            </column>
-            <column name="ord" type="INT">
-                <constraints nullable="false"/>
-            </column>
-            <column name="cli" type="CHAR(15)"/>
-            <column name="nom" type="VARCHAR(100)"/>
-            <column name="pre" type="VARCHAR(100)"/>
-        </createTable>
-        <addPrimaryKey tableName="bkcoj" columnNames="clip,ord" constraintName="pk_bkcoj"/>
-        <addForeignKeyConstraint baseTableName="bkcoj" baseColumnNames="clip"
-                                 referencedTableName="bkcli" referencedColumnNames="cli"
-                                 constraintName="bkcoj_ibfk_1"/>
-        <createIndex tableName="bkcoj" indexName="idx_bkcoj_clip">
-            <column name="clip"/>
-        </createIndex>
-        <createIndex tableName="bkcoj" indexName="idx_bkcoj_cli">
-            <column name="cli"/>
-        </createIndex>
-    </changeSet>
-
-    <changeSet id="pg-001-09-create-bkpscm" author="bsic">
-        <createTable tableName="bkpscm">
-            <column name="cli" type="CHAR(15)">
-                <constraints nullable="false"/>
-            </column>
-            <column name="ord" type="INT">
-                <constraints nullable="false"/>
-            </column>
-            <column name="clim" type="CHAR(15)"/>
-            <column name="nom" type="VARCHAR(100)"/>
-            <column name="pre" type="VARCHAR(100)"/>
-        </createTable>
-        <addPrimaryKey tableName="bkpscm" columnNames="cli,ord" constraintName="pk_bkpscm"/>
-        <addForeignKeyConstraint baseTableName="bkpscm" baseColumnNames="cli"
-                                 referencedTableName="bkcli" referencedColumnNames="cli"
-                                 constraintName="bkpscm_ibfk_1"/>
-        <createIndex tableName="bkpscm" indexName="idx_bkpscm_cli">
-            <column name="cli"/>
-        </createIndex>
-        <createIndex tableName="bkpscm" indexName="idx_bkpscm_clim">
-            <column name="clim"/>
-        </createIndex>
-    </changeSet>
 
     <!-- =====================================================
          3. USER AUDIT LOG
          ===================================================== -->
 
-    <changeSet id="pg-001-10-create-user-audit-log" author="bsic">
+    <changeSet id="pg-001-10-create-user-audit-log" author="adakalgroup">
         <createTable tableName="user_audit_log">
             <column name="id" type="INT" autoIncrement="true">
                 <constraints primaryKey="true" nullable="false"/>
@@ -386,7 +107,7 @@
          4. AGENCY CORRECTION STATS
          ===================================================== -->
 
-    <changeSet id="pg-001-11-create-agency-correction-stats" author="bsic">
+    <changeSet id="pg-001-11-create-agency-correction-stats" author="adakalgroup">
         <createTable tableName="agency_correction_stats">
             <column name="structure_code" type="CHAR(5)">
                 <constraints primaryKey="true" nullable="false"/>
@@ -411,7 +132,7 @@
          5. ANOMALY HISTORY
          ===================================================== -->
 
-    <changeSet id="pg-001-12-create-anomaly-history" author="bsic">
+    <changeSet id="pg-001-12-create-anomaly-history" author="adakalgroup">
         <createTable tableName="anomaly_history">
             <column name="id" type="INT" autoIncrement="true">
                 <constraints primaryKey="true" nullable="false"/>
@@ -452,7 +173,7 @@
          6. FATCA AUDIT LOG
          ===================================================== -->
 
-    <changeSet id="pg-001-13-create-fatca-audit-log" author="bsic">
+    <changeSet id="pg-001-13-create-fatca-audit-log" author="adakalgroup">
         <createTable tableName="fatca_audit_log">
             <column name="id" type="INT" autoIncrement="true">
                 <constraints primaryKey="true" nullable="false"/>
@@ -481,7 +202,7 @@
          7. TICKET SYSTEM (from 002)
          ===================================================== -->
 
-    <changeSet id="pg-001-14-create-tickets" author="bsic">
+    <changeSet id="pg-001-14-create-tickets" author="adakalgroup">
         <createTable tableName="tickets">
             <column name="id" type="BIGINT" autoIncrement="true">
                 <constraints primaryKey="true" nullable="false"/>
@@ -534,7 +255,7 @@
                                  constraintName="FKb5og2vu5sundwphri47gb6qcd"/>
     </changeSet>
 
-    <changeSet id="pg-001-15-create-ticket-incidents" author="bsic">
+    <changeSet id="pg-001-15-create-ticket-incidents" author="adakalgroup">
         <createTable tableName="ticket_incidents">
             <column name="id" type="BIGINT" autoIncrement="true">
                 <constraints primaryKey="true" nullable="false"/>
@@ -570,7 +291,7 @@
                                  constraintName="FKe4pown0wlaj02039c9lvsbejw"/>
     </changeSet>
 
-    <changeSet id="pg-001-16-create-ticket-comments" author="bsic">
+    <changeSet id="pg-001-16-create-ticket-comments" author="adakalgroup">
         <createTable tableName="ticket_comments">
             <column name="id" type="BIGINT" autoIncrement="true">
                 <constraints primaryKey="true" nullable="false"/>
@@ -598,7 +319,7 @@
                                  constraintName="FKqstmdduoeqr1bm2lj8r5tmhl2"/>
     </changeSet>
 
-    <changeSet id="pg-001-17-create-ticket-documents" author="bsic">
+    <changeSet id="pg-001-17-create-ticket-documents" author="adakalgroup">
         <createTable tableName="ticket_documents">
             <column name="id" type="BIGINT" autoIncrement="true">
                 <constraints primaryKey="true" nullable="false"/>
@@ -630,7 +351,7 @@
                                  constraintName="FK5vahcw98gtjdhm4l2xlaon12b"/>
     </changeSet>
 
-    <changeSet id="pg-001-18-create-ticket-history" author="bsic">
+    <changeSet id="pg-001-18-create-ticket-history" author="adakalgroup">
         <createTable tableName="ticket_history">
             <column name="id" type="BIGINT" autoIncrement="true">
                 <constraints primaryKey="true" nullable="false"/>
@@ -665,7 +386,7 @@
          8. KPIs (from 004)
          ===================================================== -->
 
-    <changeSet id="pg-001-19-create-kpis" author="bsic">
+    <changeSet id="pg-001-19-create-kpis" author="adakalgroup">
         <createTable tableName="kpis">
             <column name="id" type="BIGINT" autoIncrement="true">
                 <constraints primaryKey="true" nullable="false"/>
@@ -695,7 +416,7 @@
          9. DATA QUALITY TABLES (from 005)
          ===================================================== -->
 
-    <changeSet id="pg-001-20-create-anomalies" author="bsic">
+    <changeSet id="pg-001-20-create-anomalies" author="adakalgroup">
         <createTable tableName="anomalies">
             <column name="id" type="BIGINT" autoIncrement="true">
                 <constraints primaryKey="true" nullable="false"/>
@@ -752,7 +473,7 @@
         </createIndex>
     </changeSet>
 
-    <changeSet id="pg-001-21-create-fatca-clients" author="bsic">
+    <changeSet id="pg-001-21-create-fatca-clients" author="adakalgroup">
         <createTable tableName="fatca_clients">
             <column name="id" type="BIGINT" autoIncrement="true">
                 <constraints primaryKey="true" nullable="false"/>
@@ -846,7 +567,7 @@
         </createIndex>
     </changeSet>
 
-    <changeSet id="pg-001-22-create-validation-rules" author="bsic">
+    <changeSet id="pg-001-22-create-validation-rules" author="adakalgroup">
         <createTable tableName="validation_rules">
             <column name="id" type="BIGINT" autoIncrement="true">
                 <constraints primaryKey="true" nullable="false"/>
@@ -885,7 +606,7 @@
         </createIndex>
     </changeSet>
 
-    <changeSet id="pg-001-23-create-data-load-history" author="bsic">
+    <changeSet id="pg-001-23-create-data-load-history" author="adakalgroup">
         <createTable tableName="data_load_history">
             <column name="id" type="BIGINT" autoIncrement="true">
                 <constraints primaryKey="true" nullable="false"/>
@@ -932,7 +653,7 @@
         </createIndex>
     </changeSet>
 
-    <changeSet id="pg-001-24-create-correction-stats" author="bsic">
+    <changeSet id="pg-001-24-create-correction-stats" author="adakalgroup">
         <createTable tableName="correction_stats">
             <column name="id" type="BIGINT" autoIncrement="true">
                 <constraints primaryKey="true" nullable="false"/>
@@ -969,7 +690,7 @@
          10. RECONCILIATION TABLES (from 011, 014)
          ===================================================== -->
 
-    <changeSet id="pg-001-25-create-reconciliation-tasks" author="bsic">
+    <changeSet id="pg-001-25-create-reconciliation-tasks" author="adakalgroup">
         <createTable tableName="reconciliation_tasks">
             <column name="id" type="BIGINT" autoIncrement="true">
                 <constraints primaryKey="true" nullable="false"/>
@@ -1009,7 +730,7 @@
         </createIndex>
     </changeSet>
 
-    <changeSet id="pg-001-26-create-corrections" author="bsic">
+    <changeSet id="pg-001-26-create-corrections" author="adakalgroup">
         <createTable tableName="corrections">
             <column name="id" type="BIGINT" autoIncrement="true">
                 <constraints primaryKey="true" nullable="false"/>
@@ -1037,7 +758,7 @@
             constraintName="uk_corrections_ticket_field"/>
     </changeSet>
 
-    <changeSet id="pg-001-27-create-reconciliation-attempts" author="bsic">
+    <changeSet id="pg-001-27-create-reconciliation-attempts" author="adakalgroup">
         <createTable tableName="reconciliation_attempts">
             <column name="id" type="BIGINT" autoIncrement="true">
                 <constraints primaryKey="true" nullable="false"/>
@@ -1068,7 +789,7 @@
          11. TENANCY TABLES (from 012, 013)
          ===================================================== -->
 
-    <changeSet id="pg-001-28-create-structure" author="bsic">
+    <changeSet id="pg-001-28-create-structure" author="adakalgroup">
         <createTable tableName="structure">
             <column name="id" type="BIGINT" autoIncrement="true">
                 <constraints primaryKey="true" nullable="false"/>
@@ -1101,7 +822,7 @@
         </createIndex>
     </changeSet>
 
-    <changeSet id="pg-001-29-create-app-profile" author="bsic">
+    <changeSet id="pg-001-29-create-app-profile" author="adakalgroup">
         <createTable tableName="app_profile">
             <column name="id" type="BIGINT" autoIncrement="true">
                 <constraints primaryKey="true" nullable="false"/>
@@ -1124,7 +845,7 @@
         </createTable>
     </changeSet>
 
-    <changeSet id="pg-001-30-create-user-profile" author="bsic">
+    <changeSet id="pg-001-30-create-user-profile" author="adakalgroup">
         <createTable tableName="user_profile">
             <column name="id" type="BIGINT" autoIncrement="true">
                 <constraints primaryKey="true" nullable="false"/>
@@ -1172,19 +893,13 @@
         </createIndex>
     </changeSet>
 
-    <!-- Add FK from bkage to structure -->
-    <changeSet id="pg-001-31-bkage-structure-fk" author="bsic">
-        <addForeignKeyConstraint
-            baseTableName="bkage" baseColumnNames="id_structure"
-            referencedTableName="structure" referencedColumnNames="id"
-            constraintName="fk_bkage_structure"/>
-    </changeSet>
+
 
     <!-- =====================================================
          12. CBS DATA DICTIONARY TABLES (from 015)
          ===================================================== -->
 
-    <changeSet id="pg-001-32-create-cbs-tables" author="bsic">
+    <changeSet id="pg-001-32-create-cbs-tables" author="adakalgroup">
         <createTable tableName="cbs_tables">
             <column name="id" type="BIGINT" autoIncrement="true">
                 <constraints primaryKey="true" nullable="false"/>
@@ -1210,7 +925,7 @@
         </createTable>
     </changeSet>
 
-    <changeSet id="pg-001-33-create-cbs-fields" author="bsic">
+    <changeSet id="pg-001-33-create-cbs-fields" author="adakalgroup">
         <createTable tableName="cbs_fields">
             <column name="id" type="BIGINT" autoIncrement="true">
                 <constraints primaryKey="true" nullable="false"/>
@@ -1263,7 +978,7 @@
         </createIndex>
     </changeSet>
 
-    <changeSet id="pg-001-34-create-nomenclature-types" author="bsic">
+    <changeSet id="pg-001-34-create-nomenclature-types" author="adakalgroup">
         <createTable tableName="nomenclature_types">
             <column name="id" type="BIGINT" autoIncrement="true">
                 <constraints primaryKey="true" nullable="false"/>
@@ -1289,7 +1004,7 @@
         </createTable>
     </changeSet>
 
-    <changeSet id="pg-001-35-create-nomenclature-entries" author="bsic">
+    <changeSet id="pg-001-35-create-nomenclature-entries" author="adakalgroup">
         <createTable tableName="nomenclature_entries">
             <column name="id" type="BIGINT" autoIncrement="true">
                 <constraints primaryKey="true" nullable="false"/>
@@ -1351,27 +1066,17 @@
          13. SEED STRUCTURE AND PROFILES (from 012)
          ===================================================== -->
 
-    <changeSet id="pg-001-36-seed-structure-from-agencies" author="bsic">
-        <sql>
-            INSERT INTO structure (code, name, type, status, created_at, updated_at)
-            SELECT age, lib, 'AGENCY', 'ACTIVE', NOW(), NOW()
-            FROM bkage
-        </sql>
-    </changeSet>
+    <!-- Structure seeding from agencies is now handled at runtime by
+         DataSyncService.syncStructuresFromTable() after the first CBS sync.
+         No static seed needed — cbs.bkage is created dynamically. -->
 
-    <changeSet id="pg-001-37-seed-default-app-profile" author="bsic">
+    <changeSet id="pg-001-37-seed-default-app-profile" author="adakalgroup">
         <insert tableName="app_profile">
             <column name="code" value="DEFAULT"/>
             <column name="name" value="Default"/>
             <column name="description" value="Default application profile"/>
             <column name="status" value="ACTIVE"/>
         </insert>
-    </changeSet>
-
-    <changeSet id="pg-001-38-link-bkage-structure" author="bsic">
-        <sql>
-            UPDATE bkage SET id_structure = s.id FROM structure s WHERE s.code = bkage.age
-        </sql>
     </changeSet>
 
 </databaseChangeLog>

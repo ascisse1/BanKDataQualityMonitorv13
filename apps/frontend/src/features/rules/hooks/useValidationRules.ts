@@ -1,7 +1,7 @@
 import { useQuery, useMutation, useQueryClient } from '@tanstack/react-query';
 import { rulesApi } from '../api/rulesApi';
 import { ValidationRule, CreateRuleInput, UpdateRuleInput } from '../schemas/ruleSchema';
-import { useToast } from '../../../components/ui/Toaster';
+import { useToast } from '@/components/ui/Toaster';
 
 // Query keys
 export const ruleKeys = {

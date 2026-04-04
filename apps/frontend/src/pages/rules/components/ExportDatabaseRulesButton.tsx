@@ -1,8 +1,8 @@
 import React, { useState } from 'react';
 import { Download, FileText, Database, FileJson } from 'lucide-react';
-import Button from '../../../components/ui/Button';
-import { useToast } from '../../../components/ui/Toaster';
-import { log } from '../../../services/log';
+import Button from '@/components/ui/Button';
+import { useToast } from '@/components/ui/Toaster';
+import { log } from '@/services/log';
 
 
 interface DatabaseRule {

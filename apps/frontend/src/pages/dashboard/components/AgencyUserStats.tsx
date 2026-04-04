@@ -1,8 +1,15 @@
 import { useState, useEffect } from 'react';
 import { Users, RefreshCw, Building, AlertTriangle } from 'lucide-react';
-import { useToast } from '../../../components/ui/Toaster';
-import Button from '../../../components/ui/Button';
-import { log } from '../../../services/log';
+import { apiService } from '@/services/apiService';
+import { useToast } from '@/components/ui/Toaster';
+import Button from '@/components/ui/Button';
+import { log } from '@/services/log';
+
+interface ApiResponse<T> {
+  success: boolean;
+  data: T;
+  message: string | null;
+}
 
 interface AgencyUserStatsProps {
   isLoading?: boolean;
@@ -32,8 +39,13 @@ const AgencyUserStats = ({ isLoading = false }: AgencyUserStatsProps) => {
       setLoading(true);
       setError(null);
 
-      // TODO: Replace with real API call
-      setStats([]);
+      const response = await apiService.get<ApiResponse<AgencyUserStat[]>>('/stats/user-stats-by-agency');
+
+      if (response.success && response.data) {
+        setStats(response.data);
+      } else {
+        setStats([]);
+      }
 
     } catch (error) {
       log.error('api', 'Error fetching agency user stats', { error });

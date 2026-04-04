@@ -1,11 +1,11 @@
-import { type HTMLAttributes } from 'react';
 import { motion } from 'framer-motion';
 
-interface SkeletonProps extends HTMLAttributes<HTMLDivElement> {
+interface SkeletonProps {
   variant?: 'text' | 'circular' | 'rectangular' | 'rounded';
   width?: string | number;
   height?: string | number;
   animation?: 'pulse' | 'wave' | 'none';
+  className?: string;
 }
 
 const Skeleton = ({
@@ -14,7 +14,6 @@ const Skeleton = ({
   height,
   animation = 'wave',
   className = '',
-  ...props
 }: SkeletonProps) => {
   // Variant styles
   const variantStyles = {
@@ -60,7 +59,6 @@ const Skeleton = ({
           ? { duration: 1.5, repeat: Infinity, ease: 'easeInOut' }
           : {}
       }
-      {...props}
     >
       {/* Wave animation overlay */}
       {animation === 'wave' && (

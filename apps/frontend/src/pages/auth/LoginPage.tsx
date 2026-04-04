@@ -1,8 +1,9 @@
 import { useEffect } from 'react';
 import { useNavigate } from 'react-router-dom';
-import { useAuth } from '../../context/AuthContext';
+import { useAuth } from '@/context/AuthContext';
 import { LogIn, Shield } from 'lucide-react';
-import Button from '../../components/ui/Button';
+import Button from '@/components/ui/Button';
+import { branding } from '@/config/branding';
 
 /**
  * Login page that redirects to Keycloak for authentication.
@@ -28,10 +29,10 @@ const LoginPage = () => {
       <div className="sm:mx-auto sm:w-full sm:max-w-md">
         <div className="text-center">
           <div className="flex justify-center">
-            <img src="/logo-bsic-2.png" alt="BSIC Bank" className="h-16 w-auto" />
+            <img src={branding.logoUrl} alt={branding.bankName} className="h-16 w-auto" />
           </div>
           <h2 className="mt-4 text-3xl font-bold text-gray-900">
-            BSIC Bank
+            {branding.bankName}
           </h2>
           <p className="mt-2 text-sm text-gray-600">
             Moniteur de Qualité des Données Clients
@@ -48,7 +49,7 @@ const LoginPage = () => {
               </div>
               <h3 className="text-lg font-medium text-gray-900">Connexion</h3>
               <p className="text-gray-500 text-sm mt-1">
-                Cliquez ci-dessous pour vous connecter avec votre compte BSIC
+                Cliquez ci-dessous pour vous connecter avec votre compte
               </p>
             </div>
 
@@ -66,7 +67,7 @@ const LoginPage = () => {
                 Authentification securisee via Keycloak SSO
               </p>
               <p className="text-xs text-gray-400 mt-1">
-                Single Sign-On pour tous les services BSIC
+                Single Sign-On pour tous les services
 
               </p>
             </div>

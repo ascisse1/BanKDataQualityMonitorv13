@@ -1,5 +1,5 @@
 groups:
-  - name: bsic-application-alerts
+  - name: bdqm-application-alerts
     rules:
       # ===========================================
       # Service Availability Alerts
@@ -10,7 +10,7 @@ groups:
         labels:
           severity: critical
         annotations:
-          summary: "BSIC Backend Service is down"
+          summary: "BDQM Backend Service is down"
           description: "The Spring Boot backend has been down for more than 1 minute."
 
       - alert: HighErrorRate
@@ -163,7 +163,7 @@ groups:
       # ===========================================
       - alert: HighAnomalyCreationRate
         expr: |
-          rate(bsic_anomalies_created_total[5m]) > 100
+          rate(bdqm_anomalies_created_total[5m]) > 100
         for: 5m
         labels:
           severity: warning
@@ -173,7 +173,7 @@ groups:
 
       - alert: TicketValidationBacklog
         expr: |
-          bsic_tickets_pending_validation > 50
+          bdqm_tickets_pending_validation > 50
         for: 15m
         labels:
           severity: warning
@@ -183,7 +183,7 @@ groups:
 
       - alert: RpaJobFailures
         expr: |
-          rate(bsic_rpa_jobs_failed_total[1h]) > 5
+          rate(bdqm_rpa_jobs_failed_total[1h]) > 5
         for: 5m
         labels:
           severity: warning
@@ -193,7 +193,7 @@ groups:
 
       - alert: DataSyncFailure
         expr: |
-          bsic_data_sync_last_success_timestamp < (time() - 7200)
+          bdqm_data_sync_last_success_timestamp < (time() - 7200)
         for: 5m
         labels:
           severity: critical

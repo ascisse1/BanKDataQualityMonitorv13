@@ -1,13 +1,13 @@
 import React, { useState, useEffect } from 'react';
 import { CheckCircle, XCircle, Clock, AlertTriangle, FileText, User, Building2, Calendar, RefreshCw, ChevronDown, ChevronUp } from 'lucide-react';
-import Card from '../../components/ui/Card';
-import Button from '../../components/ui/Button';
-import { validationService } from '../../services/validationService';
-import type { TicketIncidentDto } from '../../services/validationService';
-import type { TicketDto } from '../../services/ticketService';
-import { useAuth } from '../../context/AuthContext';
-import { useToast } from '../../components/ui/Toaster';
-import { log } from '../../services/log';
+import Card from '@/components/ui/Card';
+import Button from '@/components/ui/Button';
+import { validationService } from '@/services/validationService';
+import type { TicketIncidentDto } from '@/services/validationService';
+import type { TicketDto } from '@/services/ticketService';
+import { useAuth } from '@/context/AuthContext';
+import { useToast } from '@/components/ui/Toaster';
+import { log } from '@/services/log';
 
 const PRIORITY_COLORS: Record<string, string> = {
   CRITICAL: 'text-red-600 bg-red-100',

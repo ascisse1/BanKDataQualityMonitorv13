@@ -1,13 +1,13 @@
 import React, { useState, useEffect, useMemo } from 'react';
 import { AlertTriangle, Eye, ChevronDown, ChevronUp, RefreshCw, Building, CheckSquare, XSquare, Clock, Save } from 'lucide-react';
-import Button from '../../../components/ui/Button';
-import Pagination from '../../../components/ui/Pagination';
-import { db } from '../../../services/db';
-import { useToast } from '../../../components/ui/Toaster';
-import { useAuth } from '../../../context/AuthContext';
-import Input from '../../../components/ui/Input';
-import { useDebounce } from '../../../hooks/useDebounce';
-import { log } from '../../../services/log';
+import Button from '@/components/ui/Button';
+import Pagination from '@/components/ui/Pagination';
+import { db } from '@/services/db';
+import { useToast } from '@/components/ui/Toaster';
+import { useAuth } from '@/context/AuthContext';
+import Input from '@/components/ui/Input';
+import { useDebounce } from '@/hooks/useDebounce';
+import { log } from '@/services/log';
 
 interface CorporateFatcaClient {
   id?: number;
@@ -163,9 +163,9 @@ const CorporateFatcaTable: React.FC<CorporateFatcaTableProps> = ({
       // Call API to update client status
       const response = await fetch(`/api/fatca/corporate/${editingClient.cli}`, {
         method: 'PUT',
+        credentials: 'include',
         headers: {
           'Content-Type': 'application/json',
-          'Authorization': `Bearer ${user?.token}`
         },
         body: JSON.stringify({
           fatcaStatus: editingClient.fatcaStatus,
@@ -239,7 +239,7 @@ const CorporateFatcaTable: React.FC<CorporateFatcaTableProps> = ({
     }
   };
 
-  const formatDate = (dateString: string | null) => {
+  const formatDate = (dateString: string | null | undefined) => {
     if (!dateString) return '-';
     
     try {

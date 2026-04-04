@@ -121,7 +121,7 @@ export const NotificationDisplay: React.FC = () => {
   if (filteredNotifications.length === 0) return null;
 
   return (
-    <div className="fixed top-4 right-4 z-50 flex flex-col items-end space-y-2">
+    <div role="region" aria-label="Notifications" aria-live="polite" className="fixed top-4 right-4 z-50 flex flex-col items-end space-y-2">
       {filteredNotifications.map((notification) => (
         <div
           key={notification.id}
@@ -147,7 +147,8 @@ export const NotificationDisplay: React.FC = () => {
           </div>
           <button
             onClick={() => hideNotification(notification.id)}
-            className="flex-shrink-0 text-gray-400 hover:text-gray-500 focus:outline-none"
+            aria-label="Fermer la notification"
+            className="flex-shrink-0 text-gray-400 hover:text-gray-500 focus:outline-none focus-visible:ring-2 focus-visible:ring-primary-500 rounded"
           >
             <X className="h-4 w-4" />
           </button>

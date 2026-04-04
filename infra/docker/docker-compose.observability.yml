@@ -1,6 +1,6 @@
 version: '3.8'
 
-# BSIC Data Quality Monitor - Full Observability Stack
+# BDQM Data Quality Monitor - Full Observability Stack
 # Includes: Redis, Prometheus, Grafana, Loki, Promtail, Tempo
 
 services:
@@ -9,7 +9,7 @@ services:
   # ===========================================
   redis:
     image: redis:7-alpine
-    container_name: bsic-redis
+    container_name: bdqm-redis
     ports:
       - "6379:6379"
     volumes:
@@ -17,7 +17,7 @@ services:
     command: redis-server --appendonly yes
     restart: unless-stopped
     networks:
-      - bsic-network
+      - bdqm-network
     healthcheck:
       test: ["CMD", "redis-cli", "ping"]
       interval: 10s
@@ -29,7 +29,7 @@ services:
   # ===========================================
   prometheus:
     image: prom/prometheus:v2.48.0
-    container_name: bsic-prometheus
+    container_name: bdqm-prometheus
     ports:
       - "9090:9090"
     volumes:
@@ -45,7 +45,7 @@ services:
       - '--enable-feature=exemplar-storage'
     restart: unless-stopped
     networks:
-      - bsic-network
+      - bdqm-network
     healthcheck:
       test: ["CMD", "wget", "-q", "--spider", "http://localhost:9090/-/healthy"]
       interval: 10s
@@ -57,7 +57,7 @@ services:
   # ===========================================
   loki:
     image: grafana/loki:2.9.2
-    container_name: bsic-loki
+    container_name: bdqm-loki
     ports:
       - "3100:3100"
     volumes:
@@ -66,7 +66,7 @@ services:
     command: -config.file=/etc/loki/local-config.yaml
     restart: unless-stopped
     networks:
-      - bsic-network
+      - bdqm-network
     healthcheck:
       test: ["CMD", "wget", "-q", "--spider", "http://localhost:3100/ready"]
       interval: 10s
@@ -78,7 +78,7 @@ services:
   # ===========================================
   promtail:
     image: grafana/promtail:2.9.2
-    container_name: bsic-promtail
+    container_name: bdqm-promtail
     volumes:
       - ../../../monitoring/promtail/promtail-config.yml:/etc/promtail/config.yml:ro
       - ../../../logs:/var/log/bsic:ro
@@ -86,7 +86,7 @@ services:
     command: -config.file=/etc/promtail/config.yml
     restart: unless-stopped
     networks:
-      - bsic-network
+      - bdqm-network
     depends_on:
       - loki
 
@@ -95,7 +95,7 @@ services:
   # ===========================================
   tempo:
     image: grafana/tempo:2.3.1
-    container_name: bsic-tempo
+    container_name: bdqm-tempo
     ports:
       - "3200:3200"   # Tempo HTTP
       - "4317:4317"   # OTLP gRPC
@@ -108,7 +108,7 @@ services:
     command: ["-config.file=/etc/tempo/config.yaml"]
     restart: unless-stopped
     networks:
-      - bsic-network
+      - bdqm-network
     healthcheck:
       test: ["CMD", "wget", "-q", "--spider", "http://localhost:3200/ready"]
       interval: 10s
@@ -120,7 +120,7 @@ services:
   # ===========================================
   grafana:
     image: grafana/grafana:10.2.2
-    container_name: bsic-grafana
+    container_name: bdqm-grafana
     ports:
       - "3000:3000"
     volumes:
@@ -135,7 +135,7 @@ services:
       - GF_AUTH_ANONYMOUS_ENABLED=false
     restart: unless-stopped
     networks:
-      - bsic-network
+      - bdqm-network
     depends_on:
       - prometheus
       - loki
@@ -161,9 +161,10 @@ volumes:
   grafana-data:
     driver: local
 
+
 # ===========================================
 # Networks
 # ===========================================
 networks:
-  bsic-network:
+  bdqm-network:
     driver: bridge

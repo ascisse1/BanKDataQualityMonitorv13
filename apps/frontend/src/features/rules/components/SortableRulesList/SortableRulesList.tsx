@@ -28,7 +28,7 @@ import {
   ChevronRight,
 } from 'lucide-react';
 import { ValidationRule, SEVERITY_LABELS, CLIENT_TYPE_LABELS } from '../../schemas/ruleSchema';
-import Button from '../../../../components/ui/Button';
+import Button from '@/components/ui/Button';
 
 interface SortableRulesListProps {
   rules: ValidationRule[];

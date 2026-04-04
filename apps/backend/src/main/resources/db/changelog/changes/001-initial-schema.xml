@@ -14,7 +14,7 @@
          1. USERS TABLE (must be created first for FK references)
          ===================================================== -->
 
-    <changeSet id="001-01-create-users" author="bsic">
+    <changeSet id="001-01-create-users" author="adakalgroup">
         <comment>Create users table</comment>
         <createTable tableName="users">
             <column name="id" type="INT" autoIncrement="true">
@@ -62,7 +62,7 @@
          2. MAIN BANKING TABLES
          ===================================================== -->
 
-    <changeSet id="001-02-create-bkage" author="bsic">
+    <changeSet id="001-02-create-bkage" author="adakalgroup">
         <comment>Create agencies table (bkage) from CBS structure</comment>
         <createTable tableName="bkage">
             <column name="age" type="CHAR(5)">
@@ -74,7 +74,7 @@
         </createTable>
     </changeSet>
 
-    <changeSet id="001-03-create-bkcli" author="bsic">
+    <changeSet id="001-03-create-bkcli" author="adakalgroup">
         <comment>Create main clients table (bkcli) - Full CBS Informix structure</comment>
         <createTable tableName="bkcli">
             <!-- Primary Key -->
@@ -222,7 +222,7 @@
         </createIndex>
     </changeSet>
 
-    <changeSet id="001-04-create-bkcom" author="bsic">
+    <changeSet id="001-04-create-bkcom" author="adakalgroup">
         <comment>Create accounts table (bkcom)</comment>
         <createTable tableName="bkcom">
             <column name="cli" type="CHAR(15)">
@@ -254,7 +254,7 @@
         </createIndex>
     </changeSet>
 
-    <changeSet id="001-05-create-bkadcli" author="bsic">
+    <changeSet id="001-05-create-bkadcli" author="adakalgroup">
         <comment>Create client addresses table (bkadcli)</comment>
         <createTable tableName="bkadcli">
             <column name="cli" type="CHAR(15)">
@@ -281,7 +281,7 @@
         </createIndex>
     </changeSet>
 
-    <changeSet id="001-06-create-bktelcli" author="bsic">
+    <changeSet id="001-06-create-bktelcli" author="adakalgroup">
         <comment>Create client phones table (bktelcli)</comment>
         <createTable tableName="bktelcli">
             <column name="cli" type="CHAR(15)">
@@ -304,7 +304,7 @@
         </createIndex>
     </changeSet>
 
-    <changeSet id="001-07-create-bkemacli" author="bsic">
+    <changeSet id="001-07-create-bkemacli" author="adakalgroup">
         <comment>Create client emails table (bkemacli)</comment>
         <createTable tableName="bkemacli">
             <column name="cli" type="CHAR(15)">
@@ -323,7 +323,7 @@
         </createIndex>
     </changeSet>
 
-    <changeSet id="001-08-create-bkcoj" author="bsic">
+    <changeSet id="001-08-create-bkcoj" author="adakalgroup">
         <comment>Create joint account holders table (bkcoj)</comment>
         <createTable tableName="bkcoj">
             <column name="clip" type="CHAR(15)">
@@ -348,7 +348,7 @@
         </createIndex>
     </changeSet>
 
-    <changeSet id="001-09-create-bkpscm" author="bsic">
+    <changeSet id="001-09-create-bkpscm" author="adakalgroup">
         <comment>Create proxy holders table (bkpscm)</comment>
         <createTable tableName="bkpscm">
             <column name="cli" type="CHAR(15)">
@@ -379,7 +379,7 @@
          4. USER AUDIT LOG
          ===================================================== -->
 
-    <changeSet id="001-11-create-user-audit-log" author="bsic">
+    <changeSet id="001-11-create-user-audit-log" author="adakalgroup">
         <comment>Create user audit log table</comment>
         <createTable tableName="user_audit_log">
             <column name="id" type="INT" autoIncrement="true">
@@ -411,7 +411,7 @@
          5. AGENCY CORRECTION STATS
          ===================================================== -->
 
-    <changeSet id="001-12-create-agency-correction-stats" author="bsic">
+    <changeSet id="001-12-create-agency-correction-stats" author="adakalgroup">
         <comment>Create agency correction stats table</comment>
         <createTable tableName="agency_correction_stats">
             <column name="structure_code" type="CHAR(5)">
@@ -437,7 +437,7 @@
          6. ANOMALY HISTORY
          ===================================================== -->
 
-    <changeSet id="001-13-create-anomaly-history" author="bsic">
+    <changeSet id="001-13-create-anomaly-history" author="adakalgroup">
         <comment>Create anomaly history table</comment>
         <createTable tableName="anomaly_history">
             <column name="id" type="INT" autoIncrement="true">
@@ -479,7 +479,7 @@
          7. FATCA TABLES
          ===================================================== -->
 
-    <changeSet id="001-14-create-fatca-audit-log" author="bsic">
+    <changeSet id="001-14-create-fatca-audit-log" author="adakalgroup">
         <comment>Create FATCA audit log table</comment>
         <createTable tableName="fatca_audit_log">
             <column name="id" type="INT" autoIncrement="true">

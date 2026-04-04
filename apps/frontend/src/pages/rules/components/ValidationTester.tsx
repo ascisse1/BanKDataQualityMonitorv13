@@ -1,10 +1,10 @@
 import React, { useState } from 'react';
 import { Play, AlertTriangle, CheckCircle, FileText } from 'lucide-react';
-import Card from '../../../components/ui/Card';
-import Button from '../../../components/ui/Button';
-import Input from '../../../components/ui/Input';
-import { ClientRecord, ValidationResult } from '../../../types/ValidationRules';
-import { validationRulesService } from '../../../services/validationRules';
+import Card from '@/components/ui/Card';
+import Button from '@/components/ui/Button';
+import Input from '@/components/ui/Input';
+import { ClientRecord, ValidationResult } from '@/types/ValidationRules';
+import { validationRulesService } from '@/services/validationRules';
 
 const ValidationTester: React.FC = () => {
   const [testRecord, setTestRecord] = useState<Partial<ClientRecord>>({
@@ -334,9 +334,9 @@ const ValidationTester: React.FC = () => {
                                 }`}>
                                   {error.severity}
                                 </span>
-                                {error.value && (
+                                {error.value != null && (
                                   <span className="text-xs text-gray-500">
-                                    Valeur: "{error.value}"
+                                    Valeur: "{String(error.value)}"
                                   </span>
                                 )}
                               </div>
@@ -366,9 +366,9 @@ const ValidationTester: React.FC = () => {
                               <p className="text-sm text-warning-700 mt-1">
                                 {warning.message}
                               </p>
-                              {warning.value && (
+                              {warning.value != null && (
                                 <span className="text-xs text-gray-500 mt-1 block">
-                                  Valeur: "{warning.value}"
+                                  Valeur: "{String(warning.value)}"
                                 </span>
                               )}
                             </div>

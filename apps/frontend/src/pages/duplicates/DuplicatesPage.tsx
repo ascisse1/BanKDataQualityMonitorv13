@@ -1,11 +1,11 @@
 import { useState, useEffect } from 'react';
 import { Users, AlertTriangle, CheckCircle, XCircle, GitMerge, RefreshCw, Play } from 'lucide-react';
-import Card from '../../components/ui/Card';
-import Button from '../../components/ui/Button';
-import { duplicateDetectionService, DuplicateCandidate } from '../../services/duplicateDetectionService';
-import { useAuth } from '../../context/AuthContext';
-import { useToast } from '../../components/ui/Toaster';
-import { log } from '../../services/log';
+import Card from '@/components/ui/Card';
+import Button from '@/components/ui/Button';
+import { duplicateDetectionService, DuplicateCandidate } from '@/services/duplicateDetectionService';
+import { useAuth } from '@/context/AuthContext';
+import { useToast } from '@/components/ui/Toaster';
+import { log } from '@/services/log';
 
 const DuplicatesPage: React.FC = () => {
   const { user } = useAuth();

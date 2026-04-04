@@ -1,8 +1,8 @@
 import { useState, useEffect } from 'react';
 import { Calendar, Database, RefreshCw, AlertTriangle, CheckCircle, XCircle } from 'lucide-react';
-import { useToast } from '../../../components/ui/Toaster';
-import Button from '../../../components/ui/Button';
-import { log } from '../../../services/log';
+import { useToast } from '@/components/ui/Toaster';
+import Button from '@/components/ui/Button';
+import { log } from '@/services/log';
 
 interface DataLoadHistoryProps {
   isLoading?: boolean;
