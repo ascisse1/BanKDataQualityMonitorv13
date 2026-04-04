@@ -69,26 +69,10 @@ public class InformixRepository {
     }
 
     /**
-     * Count total records in a CBS table.
-     */
-    public long getRecordCount(String tableName) {
-        return dynamicCbsQueryService.countCbsRecords(tableName);
-    }
-
-    /**
      * Update a record in CBS. Dictionary-driven column validation.
      */
     public boolean updateRecord(String tableName, String pkColumn, String pkValue, Map<String, Object> updates) {
         return dynamicCbsQueryService.updateCbsRecord(tableName, pkColumn, pkValue, updates);
-    }
-
-    public Map<String, Object> executeCustomQuery(String sql, Object... params) {
-        try {
-            return informixJdbcTemplate.queryForMap(sql, params);
-        } catch (Exception e) {
-            log.error("Error executing custom query: {}", e.getMessage());
-            throw new RuntimeException("Query execution failed", e);
-        }
     }
 
     public List<Map<String, Object>> executeCustomQueryList(String sql, Object... params) {

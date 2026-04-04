@@ -398,6 +398,11 @@ public class DynamicCbsQueryService {
                 .map(f -> f.getName())
                 .collect(Collectors.joining(", "));
 
+        if("bkcli".equals(tableName)) {
+            return String.format("SELECT SKIP %d FIRST %d %s FROM %s ORDER BY %s Limit 10000",
+                offset, limit, columns, tableName,
+                fields.get(0).getName()); // Order by first column (usually PK)
+        }
         // Informix pagination uses SKIP/FIRST syntax
         return String.format("SELECT SKIP %d FIRST %d %s FROM %s ORDER BY %s",
                 offset, limit, columns, tableName,
