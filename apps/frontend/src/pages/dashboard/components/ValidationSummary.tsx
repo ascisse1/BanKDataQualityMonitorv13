@@ -1,9 +1,9 @@
 import { useState, useEffect } from 'react';
 import { AlertTriangle, CheckCircle, AlertCircle, RefreshCw } from 'lucide-react';
-import { apiService } from '../../../services/apiService';
-import { useToast } from '../../../components/ui/Toaster';
-import Button from '../../../components/ui/Button';
-import { log } from '../../../services/log';
+import { apiService } from '@/services/apiService';
+import { useToast } from '@/components/ui/Toaster';
+import Button from '@/components/ui/Button';
+import { log } from '@/services/log';
 
 interface ValidationMetric {
   category: string;

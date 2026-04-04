@@ -29,6 +29,9 @@ export {
   staggerChildVariants,
 } from './PageTransition';
 
+// Dialogs
+export { default as ConfirmDialog, useConfirmDialog } from './ConfirmDialog';
+
 // Re-export existing components
 export { default as LoadingSpinner } from './LoadingSpinner';
 export { default as LoadingOverlay } from './LoadingOverlay';

@@ -1,13 +1,14 @@
 import React, { useState, useCallback, useEffect } from 'react';
 import { createPortal } from 'react-dom';
 import { Plus, Edit, Trash2, Save, X, AlertTriangle, AlertCircle, CheckCircle, RefreshCw, Loader2 } from 'lucide-react';
-import Card from '../../../components/ui/Card';
-import Button from '../../../components/ui/Button';
-import Input from '../../../components/ui/Input';
-import { ValidationRule, RuleCondition, NaturalRuleType, RULE_TYPE_LABELS, FIELD_LABELS } from '../../../types/ValidationRules';
-import { validationRulesService } from '../../../services/validationRules';
-import { useToast } from '../../../components/ui/Toaster';
-import { log } from '../../../services/log';
+import Card from '@/components/ui/Card';
+import Button from '@/components/ui/Button';
+import Input from '@/components/ui/Input';
+import { ValidationRule, RuleCondition, NaturalRuleType, RULE_TYPE_LABELS, FIELD_LABELS } from '@/types/ValidationRules';
+import { validationRulesService } from '@/services/validationRules';
+import { useToast } from '@/components/ui/Toaster';
+import { useConfirmDialog } from '@/components/ui/ConfirmDialog';
+import { log } from '@/services/log';
 
 const ValidationRulesManager: React.FC = () => {
   const [rules, setRules] = useState<ValidationRule[]>([]);
@@ -18,6 +19,7 @@ const ValidationRulesManager: React.FC = () => {
   const [isLoading, setIsLoading] = useState(true);
   const [error, setError] = useState<string | null>(null);
   const { addToast } = useToast();
+  const { confirm, ConfirmDialogPortal } = useConfirmDialog();
 
   const loadRules = useCallback(async () => {
     setIsLoading(true);
@@ -74,18 +76,18 @@ const ValidationRulesManager: React.FC = () => {
   };
 
   const handleDeleteRule = async (ruleId: string) => {
-    if (confirm('Êtes-vous sûr de vouloir supprimer cette règle ?')) {
-      try {
-        const success = await validationRulesService.deleteRuleOnBackend(ruleId);
-        if (success) {
-          setRules(prev => prev.filter(r => r.id !== ruleId));
-          addToast('Règle supprimée avec succès', 'success');
-        } else {
-          addToast('Erreur lors de la suppression de la règle', 'error');
-        }
-      } catch (err) {
+    const confirmed = await confirm('Êtes-vous sûr de vouloir supprimer cette règle ?');
+    if (!confirmed) return;
+    try {
+      const success = await validationRulesService.deleteRuleOnBackend(ruleId);
+      if (success) {
+        setRules(prev => prev.filter(r => r.id !== ruleId));
+        addToast('Règle supprimée avec succès', 'success');
+      } else {
         addToast('Erreur lors de la suppression de la règle', 'error');
       }
+    } catch (err) {
+      addToast('Erreur lors de la suppression de la règle', 'error');
     }
   };
 
@@ -144,6 +146,7 @@ const ValidationRulesManager: React.FC = () => {
 
   return (
     <div className="space-y-6">
+      <ConfirmDialogPortal />
       <div className="flex flex-col sm:flex-row sm:items-center sm:justify-between">
         <div>
           <h2 className="text-xl font-semibold text-gray-900">Gestion des Règles de Validation</h2>

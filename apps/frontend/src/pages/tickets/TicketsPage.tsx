@@ -1,14 +1,14 @@
 import React, { useState, useEffect } from 'react';
 import { Search, Plus, RefreshCw, CheckCircle, Clock, AlertCircle, AlertTriangle, User, Ticket, ChevronDown, ChevronUp, FileWarning, Loader2 } from 'lucide-react';
-import Card from '../../components/ui/Card';
-import Button from '../../components/ui/Button';
-import Input from '../../components/ui/Input';
-import Pagination from '../../components/ui/Pagination';
-import { ticketService } from '../../services/ticketService';
-import type { TicketDto, TicketAnomalyDto } from '../../services/ticketService';
-import { useAuth } from '../../context/AuthContext';
+import Card from '@/components/ui/Card';
+import Button from '@/components/ui/Button';
+import Input from '@/components/ui/Input';
+import Pagination from '@/components/ui/Pagination';
+import { ticketService } from '@/services/ticketService';
+import type { TicketDto, TicketAnomalyDto } from '@/services/ticketService';
+import { useAuth } from '@/context/AuthContext';
 import { CreateTicketModal } from './components/CreateTicketModal';
-import { log } from '../../services/log';
+import { log } from '@/services/log';
 
 const STATUS_LABELS: Record<string, string> = {
   DETECTED: 'Détecté',
@@ -108,8 +108,8 @@ export const TicketsPage: React.FC = () => {
       setError(null);
 
       let result;
-      if (isAgencyUser && user?.structureCode) {
-        result = await ticketService.getTicketsByAgency(user.structureCode, currentPage - 1, itemsPerPage);
+      if (isAgencyUser && user?.structureCodes?.[0]) {
+        result = await ticketService.getTicketsByAgency(user.structureCodes[0], currentPage - 1, itemsPerPage);
       } else {
         result = await ticketService.getTickets(currentPage - 1, itemsPerPage);
       }

@@ -1,4 +1,5 @@
-import React, { useEffect, useRef, useCallback } from 'react';
+import React, { useState, useEffect, useRef, useCallback } from 'react';
+import { createPortal } from 'react-dom';
 import { AlertTriangle, Info, XCircle } from 'lucide-react';
 import Button from './Button';
 
@@ -142,3 +143,90 @@ const ConfirmDialog: React.FC<ConfirmDialogProps> = ({
 };
 
 export default ConfirmDialog;
+
+// ── useConfirmDialog hook ──────────────────────────────────────────
+
+interface ConfirmOptions {
+  title?: string;
+  message?: string;
+  confirmLabel?: string;
+  cancelLabel?: string;
+  variant?: 'danger' | 'warning' | 'info';
+}
+
+interface ConfirmDialogState extends ConfirmOptions {
+  open: boolean;
+  resolve: ((value: boolean) => void) | null;
+}
+
+/**
+ * Hook that returns an imperative `confirm(message)` function (returns Promise<boolean>)
+ * and a `ConfirmDialogPortal` component that must be rendered in the component tree.
+ *
+ * Usage:
+ * ```tsx
+ * const { confirm, ConfirmDialogPortal } = useConfirmDialog();
+ * // ...
+ * const ok = await confirm('Are you sure?');
+ * // ...
+ * return <>{/* ... *\/}<ConfirmDialogPortal /></>;
+ * ```
+ */
+export function useConfirmDialog() {
+  const [state, setState] = useState<ConfirmDialogState>({
+    open: false,
+    resolve: null,
+  });
+
+  const confirm = useCallback(
+    (messageOrOptions: string | ConfirmOptions): Promise<boolean> => {
+      const opts: ConfirmOptions =
+        typeof messageOrOptions === 'string'
+          ? { message: messageOrOptions }
+          : messageOrOptions;
+
+      return new Promise<boolean>((resolve) => {
+        setState({
+          open: true,
+          resolve,
+          title: opts.title ?? 'Confirmation',
+          message: opts.message,
+          confirmLabel: opts.confirmLabel,
+          cancelLabel: opts.cancelLabel,
+          variant: opts.variant ?? 'warning',
+        });
+      });
+    },
+    []
+  );
+
+  const handleConfirm = useCallback(() => {
+    state.resolve?.(true);
+    setState((prev) => ({ ...prev, open: false, resolve: null }));
+  }, [state.resolve]);
+
+  const handleCancel = useCallback(() => {
+    state.resolve?.(false);
+    setState((prev) => ({ ...prev, open: false, resolve: null }));
+  }, [state.resolve]);
+
+  const ConfirmDialogPortal: React.FC = useCallback(
+    () =>
+      createPortal(
+        <ConfirmDialog
+          open={state.open}
+          onConfirm={handleConfirm}
+          onCancel={handleCancel}
+          title={state.title ?? 'Confirmation'}
+          description={state.message}
+          confirmLabel={state.confirmLabel}
+          cancelLabel={state.cancelLabel}
+          variant={state.variant}
+        />,
+        document.body
+      ),
+    [state.open, state.title, state.message, state.confirmLabel, state.cancelLabel, state.variant, handleConfirm, handleCancel]
+  );
+
+  return { confirm, ConfirmDialogPortal };
+}

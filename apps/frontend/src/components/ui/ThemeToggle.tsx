@@ -1,6 +1,6 @@
 import { motion } from 'framer-motion';
 import { Sun, Moon, Monitor } from 'lucide-react';
-import { useTheme } from '../../context/ThemeContext';
+import { useTheme } from '@/context/ThemeContext';
 
 interface ThemeToggleProps {
   variant?: 'switch' | 'button' | 'dropdown';

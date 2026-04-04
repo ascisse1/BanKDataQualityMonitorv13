@@ -1,17 +1,17 @@
 import {useEffect, useState} from 'react';
 import {ArrowDownWideNarrow, Download, FileSpreadsheet, Filter, History, Loader2, RefreshCw} from 'lucide-react';
-import Button from '../../components/ui/Button';
-import Card from '../../components/ui/Card';
-import Input from '../../components/ui/Input';
+import Button from '@/components/ui/Button';
+import Card from '@/components/ui/Card';
+import Input from '@/components/ui/Input';
 import AnomaliesTable from './components/AnomaliesTable';
 import AnomaliesFilters from './components/AnomaliesFilters';
 import AnomalyHistoryTable from './components/AnomalyHistoryTable';
-import {useToast} from '../../components/ui/Toaster';
-import {db} from '../../services/db';
+import {useToast} from '@/components/ui/Toaster';
+import {db} from '@/services/db';
 import {jsPDF} from 'jspdf';
 import 'jspdf-autotable';
-import {useAuth} from '../../context/AuthContext';
-import { log } from '../../services/log';
+import {useAuth} from '@/context/AuthContext';
+import { log } from '@/services/log';
 
 interface ExportProgress {
     current: number;
@@ -43,7 +43,7 @@ const AnomaliesPage: React.FC = () => {
     const {user} = useAuth();
     // Check if user is an agency user
     const isAgencyUser = user?.role === 'AGENCY_USER';
-    const userStructureCode = user?.structureCode;
+    const userStructureCode = user?.structureCodes?.[0];
 
     useEffect(() => {
         fetchAgencies();
@@ -393,7 +393,7 @@ const AnomaliesPage: React.FC = () => {
                 headers.join(','),
                 ...data.map(row =>
                     headers.map(header => {
-                        const value = row[header] || '';
+                        const value = (row as Record<string, any>)[header] || '';
                         // Échapper les guillemets et entourer de guillemets si nécessaire
                         if (typeof value === 'string' && (value.includes(',') || value.includes('"') || value.includes('\n'))) {
                             return `"${value.replace(/"/g, '""')}"`;
@@ -498,7 +498,7 @@ const AnomaliesPage: React.FC = () => {
             // Note si les données sont tronquées
             if (data.length > 1000) {
                 doc.setFontSize(10);
-                doc.text(`Note: Seuls les 1000 premiers enregistrements sont affichés (${data.length} total)`, 20, doc.lastAutoTable.finalY + 10);
+                doc.text(`Note: Seuls les 1000 premiers enregistrements sont affichés (${data.length} total)`, 20, (doc as any).lastAutoTable?.finalY + 10);
             }
 
             // Sauvegarder le fichier
@@ -540,7 +540,7 @@ const AnomaliesPage: React.FC = () => {
                 headers.join(','),
                 ...data.map(row =>
                     headers.map(header => {
-                        const value = row[header] || '';
+                        const value = (row as Record<string, any>)[header] || '';
                         // Échapper les guillemets et entourer de guillemets si nécessaire
                         if (typeof value === 'string' && (value.includes(',') || value.includes('"') || value.includes('\n'))) {
                             return `"${value.replace(/"/g, '""')}"`;

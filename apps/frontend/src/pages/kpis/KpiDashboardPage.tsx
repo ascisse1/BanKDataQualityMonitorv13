@@ -1,11 +1,11 @@
 import React, { useState, useEffect } from 'react';
 import { TrendingUp, TrendingDown, Target, Clock, CheckCircle, XCircle, RefreshCw } from 'lucide-react';
-import Card from '../../components/ui/Card';
-import Button from '../../components/ui/Button';
-import { kpiService, type DashboardMetrics, type Kpi } from '../../services/kpiService';
-import { apiService } from '../../services/apiService';
-import { useAuth } from '../../context/AuthContext';
-import { log } from '../../services/log';
+import Card from '@/components/ui/Card';
+import Button from '@/components/ui/Button';
+import { kpiService, type DashboardMetrics, type Kpi } from '@/services/kpiService';
+import { apiService } from '@/services/apiService';
+import { useAuth } from '@/context/AuthContext';
+import { log } from '@/services/log';
 
 interface Agency {
   id: number;

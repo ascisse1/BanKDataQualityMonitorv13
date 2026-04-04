@@ -10,7 +10,7 @@
          Based on schema from bank_data_quality_full.sql
          ===================================================== -->
 
-    <changeSet id="002-01-create-tickets" author="bsic">
+    <changeSet id="002-01-create-tickets" author="adakalgroup">
         <comment>Create main tickets table</comment>
         <createTable tableName="tickets">
             <column name="id" type="BIGINT" autoIncrement="true">
@@ -63,7 +63,7 @@
                                  constraintName="FKb5og2vu5sundwphri47gb6qcd"/>
     </changeSet>
 
-    <changeSet id="002-02-create-ticket-incidents" author="bsic">
+    <changeSet id="002-02-create-ticket-incidents" author="adakalgroup">
         <comment>Create ticket incidents table</comment>
         <createTable tableName="ticket_incidents">
             <column name="id" type="BIGINT" autoIncrement="true">
@@ -100,7 +100,7 @@
                                  constraintName="FKe4pown0wlaj02039c9lvsbejw"/>
     </changeSet>
 
-    <changeSet id="002-03-create-ticket-comments" author="bsic">
+    <changeSet id="002-03-create-ticket-comments" author="adakalgroup">
         <comment>Create ticket comments table</comment>
         <createTable tableName="ticket_comments">
             <column name="id" type="BIGINT" autoIncrement="true">
@@ -129,7 +129,7 @@
                                  constraintName="FKqstmdduoeqr1bm2lj8r5tmhl2"/>
     </changeSet>
 
-    <changeSet id="002-04-create-ticket-documents" author="bsic">
+    <changeSet id="002-04-create-ticket-documents" author="adakalgroup">
         <comment>Create ticket documents table</comment>
         <createTable tableName="ticket_documents">
             <column name="id" type="BIGINT" autoIncrement="true">
@@ -162,7 +162,7 @@
                                  constraintName="FK5vahcw98gtjdhm4l2xlaon12b"/>
     </changeSet>
 
-    <changeSet id="002-05-create-ticket-history" author="bsic">
+    <changeSet id="002-05-create-ticket-history" author="adakalgroup">
         <comment>Create ticket history table</comment>
         <createTable tableName="ticket_history">
             <column name="id" type="BIGINT" autoIncrement="true">

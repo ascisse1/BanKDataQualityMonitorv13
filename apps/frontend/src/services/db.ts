@@ -617,7 +617,7 @@ class DatabaseService {
       return await this.fetchApi<any>('/fatca/config');
     } catch (error) {
       log.error('database', 'Failed to get FATCA config', { error });
-      return { giin: 'XXXXXX.XXXXX.XX.XXX', reportingCountry: 'BJ', fiName: 'BSIC Bénin', fiAddress: '', filerCategory: 'FATCA601', screeningEnabled: true };
+      return { giin: 'XXXXXX.XXXXX.XX.XXX', reportingCountry: 'XX', fiName: '', fiAddress: '', filerCategory: 'FATCA601', screeningEnabled: true };
     }
   }
 

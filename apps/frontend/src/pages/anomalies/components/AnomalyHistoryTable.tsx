@@ -1,10 +1,10 @@
 import { useState, useEffect } from 'react';
 import { History, RefreshCw, AlertTriangle, CheckCircle, XCircle, Clock, User, Calendar } from 'lucide-react';
-import Button from '../../../components/ui/Button';
-import Pagination from '../../../components/ui/Pagination';
-import { useToast } from '../../../components/ui/Toaster';
-import { useAuth } from '../../../context/AuthContext';
-import { log } from '../../../services/log';
+import Button from '@/components/ui/Button';
+import Pagination from '@/components/ui/Pagination';
+import { useToast } from '@/components/ui/Toaster';
+import { useAuth } from '@/context/AuthContext';
+import { log } from '@/services/log';
 
 interface AnomalyHistoryProps {
   isLoading?: boolean;
@@ -39,7 +39,7 @@ const AnomalyHistoryTable = ({ isLoading = false, cli, field }: AnomalyHistoryPr
 
   // Vérifier si l'utilisateur est un utilisateur d'agence
   const isAgencyUser = user?.role === 'AGENCY_USER';
-  const userStructureCode = user?.structureCode;
+  const userStructureCode = user?.structureCodes?.[0];
 
   useEffect(() => {
     fetchHistory();
@@ -49,27 +49,25 @@ const AnomalyHistoryTable = ({ isLoading = false, cli, field }: AnomalyHistoryPr
     try {
       setLoading(true);
       setError(null);
-      
+
       // Construire l'URL avec les paramètres
       let url = `/api/anomaly-history?page=${currentPage}&limit=${itemsPerPage}`;
-      
+
       if (cli) {
         url += `&cli=${cli}`;
       }
-      
+
       if (field) {
         url += `&field=${field}`;
       }
-      
+
       // Si l'utilisateur est un utilisateur d'agence, filtrer par son agence
       if (isAgencyUser && userStructureCode) {
         url += `&structureCode=${userStructureCode}`;
       }
-      
+
       const response = await fetch(url, {
-        headers: {
-          'Authorization': `Bearer ${user?.token}`
-        }
+        credentials: 'include',
       });
       
       if (!response.ok) {

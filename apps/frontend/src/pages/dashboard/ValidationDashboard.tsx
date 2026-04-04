@@ -1,7 +1,7 @@
 import { useState, useEffect } from 'react';
 import { BarChart2, AlertTriangle, CheckCircle, XCircle } from 'lucide-react';
-import Card from '../../components/ui/Card';
-import { useToast } from '../../components/ui/Toaster';
+import Card from '@/components/ui/Card';
+import { useToast } from '@/components/ui/Toaster';
 
 interface ValidationMetric {
   field: string;

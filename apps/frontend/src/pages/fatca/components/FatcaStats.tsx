@@ -1,10 +1,10 @@
 import { useState, useEffect } from 'react';
 import { AlertTriangle, CheckSquare, XSquare, Clock, RefreshCw } from 'lucide-react';
-import Card from '../../../components/ui/Card';
-import Button from '../../../components/ui/Button';
-import { db } from '../../../services/db';
-import { useToast } from '../../../components/ui/Toaster';
-import { log } from '../../../services/log';
+import Card from '@/components/ui/Card';
+import Button from '@/components/ui/Button';
+import { db } from '@/services/db';
+import { useToast } from '@/components/ui/Toaster';
+import { log } from '@/services/log';
 
 interface FatcaStatsProps {
   isLoading?: boolean;

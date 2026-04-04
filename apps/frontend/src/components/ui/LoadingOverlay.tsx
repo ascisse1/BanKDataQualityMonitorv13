@@ -1,5 +1,5 @@
 import React from 'react';
-import { useNotification } from '../../context/NotificationContext';
+import { useNotification } from '@/context/NotificationContext';
 
 interface LoadingOverlayProps {
   message?: string;

@@ -6,7 +6,7 @@ import Keycloak from 'keycloak-js';
  */
 const keycloakConfig = {
   url: import.meta.env.VITE_KEYCLOAK_URL || 'http://localhost:8180',
-  realm: import.meta.env.VITE_KEYCLOAK_REALM || 'bsic-bank',
+  realm: import.meta.env.VITE_KEYCLOAK_REALM || 'bdqm',
   clientId: import.meta.env.VITE_KEYCLOAK_CLIENT_ID || 'bdqm-frontend',
 };
 

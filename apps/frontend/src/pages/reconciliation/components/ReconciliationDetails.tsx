@@ -1,6 +1,6 @@
 import { X, CheckCircle, XCircle, AlertCircle, RefreshCw } from 'lucide-react';
-import { ReconciliationTask, reconciliationService } from '../../../services/reconciliationService';
-import Button from '../../../components/ui/Button';
+import { ReconciliationTask, reconciliationService } from '@/services/reconciliationService';
+import Button from '@/components/ui/Button';
 
 interface ReconciliationDetailsProps {
   task: ReconciliationTask;

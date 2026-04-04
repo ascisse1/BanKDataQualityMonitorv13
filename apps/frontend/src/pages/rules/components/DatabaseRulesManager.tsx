@@ -1,10 +1,11 @@
 import React, { useState, useEffect } from 'react';
 import { Database, Plus, Edit, Trash2, Save, X, AlertTriangle, CheckCircle, Table } from 'lucide-react';
-import Card from '../../../components/ui/Card';
-import Button from '../../../components/ui/Button';
-import Input from '../../../components/ui/Input';
-import { useToast } from '../../../components/ui/Toaster';
-import { useAuth } from '../../../context/AuthContext';
+import Card from '@/components/ui/Card';
+import Button from '@/components/ui/Button';
+import Input from '@/components/ui/Input';
+import { useToast } from '@/components/ui/Toaster';
+import { useConfirmDialog } from '@/components/ui/ConfirmDialog';
+import { useAuth } from '@/context/AuthContext';
 
 interface DatabaseRule {
   id: string;
@@ -26,6 +27,7 @@ interface DatabaseRulesManagerProps {
 const DatabaseRulesManager: React.FC<DatabaseRulesManagerProps> = ({ onRulesUpdate }) => {
   const { hasRole } = useAuth();
   const isAdmin = hasRole('ADMIN');
+  const { confirm, ConfirmDialogPortal } = useConfirmDialog();
   const [rules, setRules] = useState<DatabaseRule[]>([]);
   const [selectedTable, setSelectedTable] = useState<string>('all');
   const [editingRule, setEditingRule] = useState<DatabaseRule | null>(null);
@@ -191,11 +193,11 @@ const DatabaseRulesManager: React.FC<DatabaseRulesManagerProps> = ({ onRulesUpda
     addToast('Règle mise à jour avec succès', 'success');
   };
 
-  const handleDeleteRule = (ruleId: string) => {
-    if (confirm('Êtes-vous sûr de vouloir supprimer cette règle ?')) {
-      setRules(prev => prev.filter(rule => rule.id !== ruleId));
-      addToast('Règle supprimée avec succès', 'success');
-    }
+  const handleDeleteRule = async (ruleId: string) => {
+    const confirmed = await confirm('Êtes-vous sûr de vouloir supprimer cette règle ?');
+    if (!confirmed) return;
+    setRules(prev => prev.filter(rule => rule.id !== ruleId));
+    addToast('Règle supprimée avec succès', 'success');
   };
 
   const handleSaveRule = (rule: DatabaseRule) => {
@@ -231,6 +233,7 @@ const DatabaseRulesManager: React.FC<DatabaseRulesManagerProps> = ({ onRulesUpda
 
   return (
     <div className="space-y-6">
+      <ConfirmDialogPortal />
       <div className="flex flex-col sm:flex-row sm:items-center sm:justify-between">
         <div>
           <h2 className="text-xl font-semibold text-gray-900">Règles de Contrôle Base de Données</h2>

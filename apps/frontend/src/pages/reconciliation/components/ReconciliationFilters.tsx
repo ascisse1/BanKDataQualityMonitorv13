@@ -1,6 +1,6 @@
 import { Filter, X } from 'lucide-react';
-import Button from '../../../components/ui/Button';
-import Input from '../../../components/ui/Input';
+import Button from '@/components/ui/Button';
+import Input from '@/components/ui/Input';
 
 interface ReconciliationFiltersProps {
   filters: {

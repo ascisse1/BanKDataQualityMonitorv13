@@ -1,8 +1,8 @@
 import { useState, useEffect } from 'react';
 import Chart from 'react-apexcharts';
 import { ApexOptions } from 'apexcharts';
-import { apiService } from '../../../services/apiService';
-import { log } from '../../../services/log';
+import { apiService } from '@/services/apiService';
+import { log } from '@/services/log';
 
 interface TrendData {
   date: string;

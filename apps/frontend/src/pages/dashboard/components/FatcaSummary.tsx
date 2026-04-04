@@ -1,14 +1,14 @@
 import React, { useState, useEffect } from 'react';
 import { Flag, Users, MapPin, Phone, AlertCircle } from 'lucide-react';
-import Card from '../../../components/ui/Card';
-import Button from '../../../components/ui/Button';
+import Card from '@/components/ui/Card';
+import Button from '@/components/ui/Button';
 import { useNavigate } from 'react-router-dom';
 import Chart from 'react-apexcharts';
 import { ApexOptions } from 'apexcharts';
 import FatcaTrendChart from './FatcaTrendChart';
 import FatcaStatusChart from './FatcaStatusChart';
-import { db } from '../../../services/db';
-import { log } from '../../../services/log';
+import { db } from '@/services/db';
+import { log } from '@/services/log';
 
 interface FatcaSummaryProps {
   isLoading?: boolean;
@@ -40,7 +40,7 @@ const FatcaSummary: React.FC<FatcaSummaryProps> = ({
     series: [0, 0],
     options: {
       chart: {
-        type: 'donut',
+        type: 'donut' as const,
         fontFamily: 'Inter, system-ui, sans-serif',
       },
       labels: ['Clients FATCA', 'Autres clients'],
@@ -68,7 +68,7 @@ const FatcaSummary: React.FC<FatcaSummaryProps> = ({
                 fontWeight: 600,
                 label: 'Total',
                 formatter: (w) => {
-                  return `${w.globals.seriesTotals.reduce((a, b) => a + b, 0).toLocaleString('fr-FR')}`;
+                  return `${w.globals.seriesTotals.reduce((a: number, b: number) => a + b, 0).toLocaleString('fr-FR')}`;
                 },
               },
             },
@@ -79,11 +79,11 @@ const FatcaSummary: React.FC<FatcaSummaryProps> = ({
         enabled: false,
       },
       legend: {
-        position: 'bottom',
+        position: 'bottom' as const,
         horizontalAlign: 'center',
         fontSize: '13px',
         markers: {
-          radius: 12,
+          size: 6,
         },
       },
       stroke: {

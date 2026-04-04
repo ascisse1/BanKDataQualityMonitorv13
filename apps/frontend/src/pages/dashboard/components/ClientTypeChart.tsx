@@ -1,8 +1,8 @@
 import { useState, useEffect } from 'react';
 import Chart from 'react-apexcharts';
 import { ApexOptions } from 'apexcharts';
-import { apiService } from '../../../services/apiService';
-import { log } from '../../../services/log';
+import { apiService } from '@/services/apiService';
+import { log } from '@/services/log';
 
 interface CountsByType {
   INDIVIDUAL: number;
@@ -29,7 +29,7 @@ const ClientTypeChart = ({ isLoading: externalLoading = false }: ClientTypeChart
     series: [0, 0, 0],
     options: {
       chart: {
-        type: 'donut',
+        type: 'donut' as const,
         fontFamily: 'Inter, system-ui, sans-serif',
       },
       labels: ['Particuliers', 'Entreprises', 'Institutionnels'],
@@ -68,11 +68,11 @@ const ClientTypeChart = ({ isLoading: externalLoading = false }: ClientTypeChart
         enabled: false,
       },
       legend: {
-        position: 'bottom',
+        position: 'bottom' as const,
         horizontalAlign: 'center',
         fontSize: '13px',
         markers: {
-          radius: 12,
+          size: 6,
         },
       },
       stroke: {

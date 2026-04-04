@@ -1,8 +1,14 @@
 import { defineConfig } from 'vite';
 import react from '@vitejs/plugin-react';
+import path from 'path';
 
 export default defineConfig({
   plugins: [react()],
+  resolve: {
+    alias: {
+      '@': path.resolve(__dirname, './src'),
+    },
+  },
   define: {
     global: 'globalThis',
   },
@@ -52,7 +58,7 @@ export default defineConfig({
           'tanstack-vendor': ['@tanstack/react-table', '@tanstack/react-query', '@tanstack/react-virtual'],
           'chart-vendor': ['apexcharts', 'react-apexcharts'],
           'ui-vendor': ['lucide-react'],
-          'form-vendor': ['react-hook-form', 'zustand'],
+          'form-vendor': ['react-hook-form'],
           'export-vendor': ['jspdf', 'jspdf-autotable', 'xlsx']
         },
         entryFileNames: `assets/[name].[hash].js`,

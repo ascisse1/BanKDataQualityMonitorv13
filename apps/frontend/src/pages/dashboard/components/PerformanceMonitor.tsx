@@ -1,7 +1,7 @@
 import { useState, useEffect } from 'react';
 import { Activity, Database, Clock, Zap } from 'lucide-react';
-import Card from '../../../components/ui/Card';
-import { db } from '../../../services/db';
+import Card from '@/components/ui/Card';
+import { db } from '@/services/db';
 
 const PerformanceMonitor = () => {
   const [stats, setStats] = useState({

@@ -1,6 +1,6 @@
 import { useState } from 'react';
-import Button from '../../../components/ui/Button';
-import Input from '../../../components/ui/Input';
+import Button from '@/components/ui/Button';
+import Input from '@/components/ui/Input';
 import { Calendar, CheckSquare, XSquare, AlertTriangle, Clock } from 'lucide-react';
 
 interface FatcaFiltersProps {

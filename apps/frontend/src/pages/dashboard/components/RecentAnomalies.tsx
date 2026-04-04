@@ -1,7 +1,7 @@
 import { useState, useEffect } from 'react';
 import { AlertTriangle } from 'lucide-react';
-import { apiService } from '../../../services/apiService';
-import { log } from '../../../services/log';
+import { apiService } from '@/services/apiService';
+import { log } from '@/services/log';
 
 interface BackendAnomaly {
   id: number;

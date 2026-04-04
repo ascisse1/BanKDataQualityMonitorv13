@@ -1,5 +1,5 @@
 import React, { useState, useEffect, useRef } from 'react';
-import { log } from '../../services/log';
+import { log } from '@/services/log';
 import { X, Download, RefreshCw, Bug, AlertTriangle, Info, CheckCircle } from 'lucide-react';
 import Button from './Button';
 

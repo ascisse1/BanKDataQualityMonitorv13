@@ -1,8 +1,9 @@
 import { useState, useEffect } from 'react';
 import { NavLink, useLocation } from 'react-router-dom';
-import { useAuth } from '../../context/AuthContext';
-import { useTheme } from '../../context/ThemeContext';
+import { useAuth } from '@/context/AuthContext';
+import { useTheme } from '@/context/ThemeContext';
 import { useCommandPalette } from '../ui/CommandPalette';
+import { branding } from '@/config/branding';
 import ThemeToggle from '../ui/ThemeToggle';
 import {
   BarChart3,
@@ -130,6 +131,7 @@ const Sidebar = ({ isMobile, isOpen, onClose }: SidebarProps) => {
         to={item.path}
         onClick={isMobile ? onClose : undefined}
         className="relative block"
+        aria-current={isActive ? 'page' : undefined}
       >
         <div
           className={`
@@ -180,6 +182,7 @@ const Sidebar = ({ isMobile, isOpen, onClose }: SidebarProps) => {
         <div
           className="fixed inset-0 bg-black/50 z-40 lg:hidden transition-opacity duration-200"
           onClick={onClose}
+          aria-hidden="true"
         />
       )}
 
@@ -203,7 +206,7 @@ const Sidebar = ({ isMobile, isOpen, onClose }: SidebarProps) => {
             {!isCollapsed && (
               <div className="overflow-hidden">
                 <h1 className="text-lg font-bold text-slate-900 dark:text-white whitespace-nowrap">
-                  BSIC Bank
+                  {branding.bankName}
                 </h1>
                 <p className="text-xs text-slate-500 dark:text-slate-400 whitespace-nowrap">
                   Data Quality Monitor
@@ -215,6 +218,7 @@ const Sidebar = ({ isMobile, isOpen, onClose }: SidebarProps) => {
           {isMobile ? (
             <button
               type="button"
+              aria-label="Fermer le menu"
               className="p-2 rounded-lg text-slate-500 hover:bg-slate-100 dark:hover:bg-surface-700"
               onClick={onClose}
             >
@@ -223,6 +227,7 @@ const Sidebar = ({ isMobile, isOpen, onClose }: SidebarProps) => {
           ) : (
             <button
               type="button"
+              aria-label={isCollapsed ? 'Déplier le menu' : 'Replier le menu'}
               className="p-1.5 rounded-lg text-slate-400 hover:text-slate-600 hover:bg-slate-100 dark:hover:bg-surface-700 dark:hover:text-slate-300"
               onClick={() => setIsCollapsed(!isCollapsed)}
             >
@@ -252,7 +257,7 @@ const Sidebar = ({ isMobile, isOpen, onClose }: SidebarProps) => {
         )}
 
         {/* Navigation */}
-        <nav className="flex-1 overflow-y-auto px-3 py-4 space-y-6 scrollbar-thin">
+        <nav aria-label="Navigation principale" className="flex-1 overflow-y-auto px-3 py-4 space-y-6 scrollbar-thin">
           {navigationGroups.map((group) => (
             <div key={group.title}>
               {!isCollapsed && (

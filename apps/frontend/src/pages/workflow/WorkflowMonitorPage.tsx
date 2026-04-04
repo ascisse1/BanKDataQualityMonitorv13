@@ -1,6 +1,6 @@
 import React from 'react';
 import { Activity } from 'lucide-react';
-import Card from '../../components/ui/Card';
+import Card from '@/components/ui/Card';
 
 export const WorkflowMonitorPage: React.FC = () => {
   return (

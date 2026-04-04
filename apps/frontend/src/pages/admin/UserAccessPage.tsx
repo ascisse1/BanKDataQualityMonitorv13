@@ -3,12 +3,13 @@ import {
   Building2, Users, Shield, Plus, Edit, Trash2, Search, X, Save,
   Calendar, UserPlus, ChevronDown, Check, AlertCircle, RefreshCw
 } from 'lucide-react';
-import Card from '../../components/ui/Card';
-import Button from '../../components/ui/Button';
-import Input from '../../components/ui/Input';
-import { useToast } from '../../components/ui/Toaster';
-import apiClient from '../../lib/apiClient';
-import { log } from '../../services/log';
+import Card from '@/components/ui/Card';
+import Button from '@/components/ui/Button';
+import Input from '@/components/ui/Input';
+import { useToast } from '@/components/ui/Toaster';
+import { useConfirmDialog } from '@/components/ui/ConfirmDialog';
+import apiClient from '@/lib/apiClient';
+import { log } from '@/services/log';
 
 // ── Types ───────────────────────────────────────────────────────
 
@@ -279,13 +280,14 @@ interface AssignmentsTabProps {
   editing: UserProfile | null;
   setEditing: (v: UserProfile | null) => void;
   onReload: () => void;
-  addToast: (msg: string, type: string) => void;
+  addToast: (msg: string, type?: 'info' | 'success' | 'warning' | 'error') => void;
 }
 
 const AssignmentsTab = ({
   assignments, structures, profiles, users, searchQuery, setSearchQuery,
   showModal, setShowModal, editing, setEditing, onReload, addToast
 }: AssignmentsTabProps) => {
+  const { confirm, ConfirmDialogPortal } = useConfirmDialog();
   const [formUserId, setFormUserId] = useState<number | ''>('');
   const [formStructureId, setFormStructureId] = useState<number | ''>('');
   const [formProfileId, setFormProfileId] = useState<number | ''>('');
@@ -348,15 +350,20 @@ const AssignmentsTab = ({
       setShowModal(false);
       resetForm();
       onReload();
-    } catch (err: any) {
-      addToast(err.response?.data?.message || 'Erreur lors de la sauvegarde', 'error');
+    } catch (err) {
+      const message = err instanceof Error ? err.message : 'Erreur lors de la sauvegarde';
+      const axiosMessage = typeof err === 'object' && err !== null && 'response' in err
+        ? (err as { response?: { data?: { message?: string } } }).response?.data?.message
+        : undefined;
+      addToast(axiosMessage || message, 'error');
     } finally {
       setSaving(false);
     }
   };
 
   const handleDeactivate = async (id: number) => {
-    if (!confirm('Desactiver cette affectation ?')) return;
+    const confirmed = await confirm('Desactiver cette affectation ?');
+    if (!confirmed) return;
     try {
       await apiClient.delete(`/api/admin/tenancy/user-profiles/${id}`);
       addToast('Affectation desactivee', 'success');
@@ -376,6 +383,8 @@ const AssignmentsTab = ({
   });
 
   return (
+    <>
+    <ConfirmDialogPortal />
     <div className="space-y-4">
       {/* Toolbar */}
       <div className="flex items-center gap-3 flex-wrap">
@@ -590,6 +599,7 @@ const AssignmentsTab = ({
         </div>
       )}
     </div>
+    </>
   );
 };
 
@@ -604,7 +614,7 @@ interface StructuresTabProps {
   editing: Structure | null;
   setEditing: (v: Structure | null) => void;
   onReload: () => void;
-  addToast: (msg: string, type: string) => void;
+  addToast: (msg: string, type?: 'info' | 'success' | 'warning' | 'error') => void;
 }
 
 const StructuresTab = ({
@@ -660,8 +670,12 @@ const StructuresTab = ({
       setShowModal(false);
       resetForm();
       onReload();
-    } catch (err: any) {
-      addToast(err.response?.data?.message || 'Erreur', 'error');
+    } catch (err) {
+      const message = err instanceof Error ? err.message : 'Erreur';
+      const axiosMessage = typeof err === 'object' && err !== null && 'response' in err
+        ? (err as { response?: { data?: { message?: string } } }).response?.data?.message
+        : undefined;
+      addToast(axiosMessage || message, 'error');
     } finally {
       setSaving(false);
     }
@@ -825,7 +839,7 @@ interface ProfilesTabProps {
   editing: AppProfile | null;
   setEditing: (v: AppProfile | null) => void;
   onReload: () => void;
-  addToast: (msg: string, type: string) => void;
+  addToast: (msg: string, type?: 'info' | 'success' | 'warning' | 'error') => void;
 }
 
 const ProfilesTab = ({
@@ -901,8 +915,12 @@ const ProfilesTab = ({
       setShowModal(false);
       resetForm();
       onReload();
-    } catch (err: any) {
-      addToast(err.response?.data?.message || 'Erreur', 'error');
+    } catch (err) {
+      const message = err instanceof Error ? err.message : 'Erreur';
+      const axiosMessage = typeof err === 'object' && err !== null && 'response' in err
+        ? (err as { response?: { data?: { message?: string } } }).response?.data?.message
+        : undefined;
+      addToast(axiosMessage || message, 'error');
     } finally {
       setSaving(false);
     }

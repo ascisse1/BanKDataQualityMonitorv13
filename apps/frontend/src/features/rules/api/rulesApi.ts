@@ -1,6 +1,6 @@
 import { ValidationRule, CreateRuleInput, UpdateRuleInput } from '../schemas/ruleSchema';
-import { log } from '../../../services/log';
-import apiClient from '../../../lib/apiClient';
+import { log } from '@/services/log';
+import apiClient from '@/lib/apiClient';
 
 // Backend DTO interface
 interface ValidationRuleDto {

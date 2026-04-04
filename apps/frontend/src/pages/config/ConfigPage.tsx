@@ -1,11 +1,11 @@
 import React, { useState, useEffect } from 'react';
-import Card from '../../components/ui/Card';
-import Button from '../../components/ui/Button';
+import Card from '@/components/ui/Card';
+import Button from '@/components/ui/Button';
 import { Database, RefreshCw, CheckCircle, AlertTriangle, Settings, Server, Shield, Save, Globe, Upload, FileCode } from 'lucide-react';
-import { useToast } from '../../components/ui/Toaster';
-import { useAuth } from '../../context/AuthContext';
-import DatabaseConfigPanel from '../../components/ui/DatabaseConfigPanel';
-import Input from '../../components/ui/Input';
+import { useToast } from '@/components/ui/Toaster';
+import { useAuth } from '@/context/AuthContext';
+import DatabaseConfigPanel from '@/components/ui/DatabaseConfigPanel';
+import Input from '@/components/ui/Input';
 
 function ConfigPage() {
   const [dbStatus, setDbStatus] = useState<{
@@ -42,6 +42,7 @@ function ConfigPage() {
     password: '',
     privateKeyPath: '',
     remoteDir: '/fatca/reports/',
+    returnDir: '/REPORTINGS',
     enabled: false
   });
   const [isTestingSftp, setIsTestingSftp] = useState(false);
@@ -455,9 +456,9 @@ function ConfigPage() {
                   <div className="grid grid-cols-1 md:grid-cols-2 gap-4">
                     <Input
                       label="Nom d'utilisateur BCEAO"
-                      value="bsic_fatca"
+                      value="fatca_user"
                       onChange={(e) => setSftpConfig({ ...sftpConfig, username: e.target.value })}
-                      placeholder="bsic_fatca"
+                      placeholder="fatca_user"
                       helperText="Nom d'utilisateur SFTP"
                     />
                     <Input

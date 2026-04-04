@@ -1,9 +1,9 @@
 import { useState } from 'react';
 import { Play, Save, FileCode, AlertTriangle, Download } from 'lucide-react';
-import Card from '../../../components/ui/Card';
-import Button from '../../../components/ui/Button';
-import { db } from '../../../services/db';
-import { useToast } from '../../../components/ui/Toaster';
+import Card from '@/components/ui/Card';
+import Button from '@/components/ui/Button';
+import { db } from '@/services/db';
+import { useToast } from '@/components/ui/Toaster';
 import ExportSQLQueriesButton from './ExportSQLQueriesButton';
 
 const DEFAULT_QUERIES = {
@@ -97,7 +97,7 @@ const SQLRulesEditor = () => {
       setQueryResult(null);
 
       const result = await db.executeQuery(queryContent);
-      setQueryResult(result);
+      setQueryResult(result as any[] | null);
       addToast('Requête exécutée avec succès', 'success');
     } catch (error) {
       addToast(

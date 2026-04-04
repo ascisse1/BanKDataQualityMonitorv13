@@ -1,8 +1,8 @@
 import React, { useState, useEffect } from 'react';
 import { CheckCircle, XCircle, Clock, Save, Ticket, AlertCircle, Users } from 'lucide-react';
-import Button from '../../../components/ui/Button';
-import Input from '../../../components/ui/Input';
-import { useAnomalyCorrection } from '../../../hooks/useAnomalyCorrection';
+import Button from '@/components/ui/Button';
+import Input from '@/components/ui/Input';
+import { useAnomalyCorrection } from '@/hooks/useAnomalyCorrection';
 
 interface AnomalieCorrectionProps {
   anomaly: {

@@ -1,7 +1,15 @@
 spring:
+  ai:
+    ollama:
+      base-url: http://localhost:11434
+      chat:
+        model: mistral
+        options:
+          temperature: 0.3
+
   datasource:
     primary:
-      jdbc-url: jdbc:postgresql://localhost:5432/bdqm
+      jdbc-url: jdbc:postgresql://localhost:5432/bdqm?currentSchema=public
       username: bdqm
       password: bdqm
 
@@ -28,7 +36,8 @@ spring:
     show-sql: false
   liquibase:
     enabled: true
-    drop-first: false
+    drop-first: true
+    default-schema: public
     contexts: dev
 
 app:
@@ -37,14 +46,23 @@ app:
     expiration: 86400000
   features:
     informix-integration: true
+  amplitude-api:
+    enabled: false
+    base-url: http://localhost:8080/amplitude
+    api-key: dev-token
+    fallback-jdbc: true
+    user-code: BDQM
+    channel-code: QUALITE
+  faro:
+    enabled: true
   scheduling:
     cbs-sync-cron: "*/59 * * * * ?"      # Every 60 seconds (dev only)
   client:
-    name: bsic-bank
+    name: bdqm
     fullName: "Agence de Gestion du Fonds d'Accès Universel"
   keycloak:
     server-url: http://localhost:9083
-    realm: bsic-bank
+    realm: bdqm
     client-id: admin-cli
     client-secret: 6c1d4552-e109-4127-afa3-124d55b4e952
     migration:
@@ -57,7 +75,7 @@ app:
 
 logging:
   level:
-    com.bsic: DEBUG
+    com.adakalgroup: DEBUG
     org.springframework.security: INFO
     org.springframework.security.oauth2: INFO
     org.springframework.web: INFO

@@ -1,6 +1,6 @@
 import React from 'react';
 import { X, CheckSquare, XSquare, Trash2, Download, MoreHorizontal } from 'lucide-react';
-import Button from '../../../../components/ui/Button';
+import Button from '@/components/ui/Button';
 import { motion, AnimatePresence } from 'framer-motion';
 
 interface BulkActionsBarProps {

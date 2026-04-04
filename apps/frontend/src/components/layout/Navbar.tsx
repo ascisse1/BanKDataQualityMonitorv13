@@ -1,8 +1,9 @@
-import { useAuth } from '../../context/AuthContext';
+import { useAuth } from '@/context/AuthContext';
 import { Menu, Bell, LogOut, Database, Key, Bug } from 'lucide-react';
 import { useState, useRef, useEffect, useCallback } from 'react';
-import { useToast } from '../../components/ui/Toaster';
+import { useToast } from '@/components/ui/Toaster';
 import { useNavigate } from 'react-router-dom';
+import { branding } from '@/config/branding';
 import ConfirmDialog from '../ui/ConfirmDialog';
 
 interface NavbarProps {
@@ -222,8 +223,8 @@ const Navbar = ({ onMenuClick }: NavbarProps) => {
               </div>
 
               <div className="hidden lg:flex items-center space-x-2 ml-4">
-                <img src="/logo-bsic-2.png" alt="BSIC Bank" className="h-8 w-auto" />
-                <p className="text-sm font-semibold text-gray-700 dark:text-gray-200">BSIC Bank</p>
+                <img src={branding.logoUrl} alt={branding.bankName} className="h-8 w-auto" />
+                <p className="text-sm font-semibold text-gray-700 dark:text-gray-200">{branding.bankName}</p>
               </div>
             </div>
           </div>

@@ -1,9 +1,9 @@
 import { useState, useEffect } from 'react';
 import { ArrowDownWideNarrow, RefreshCw, AlertCircle } from 'lucide-react';
-import { db } from '../../../services/db';
-import { useToast } from '../../../components/ui/Toaster';
-import { useAuth } from '../../../context/AuthContext';
-import { log } from '../../../services/log';
+import { db } from '@/services/db';
+import { useToast } from '@/components/ui/Toaster';
+import { useAuth } from '@/context/AuthContext';
+import { log } from '@/services/log';
 
 interface BranchAnomaliesTableProps {
   isLoading?: boolean;

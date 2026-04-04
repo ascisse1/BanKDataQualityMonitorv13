@@ -1,14 +1,14 @@
 import React, { useState, useEffect, useMemo } from 'react';
 import { AlertTriangle, Eye, ChevronDown, ChevronUp, RefreshCw, User, CheckSquare, XSquare, Clock, Save, Flag } from 'lucide-react';
-import Button from '../../../components/ui/Button';
-import Pagination from '../../../components/ui/Pagination';
-import { db } from '../../../services/db';
-import { useToast } from '../../../components/ui/Toaster';
-import { useAuth } from '../../../context/AuthContext';
-import Input from '../../../components/ui/Input';
-import { useDebounce } from '../../../hooks/useDebounce';
-import apiClient from '../../../lib/apiClient';
-import { log } from '../../../services/log';
+import Button from '@/components/ui/Button';
+import Pagination from '@/components/ui/Pagination';
+import { db } from '@/services/db';
+import { useToast } from '@/components/ui/Toaster';
+import { useAuth } from '@/context/AuthContext';
+import Input from '@/components/ui/Input';
+import { useDebounce } from '@/hooks/useDebounce';
+import apiClient from '@/lib/apiClient';
+import { log } from '@/services/log';
 
 /** Renders a US indicator badge with icon + text (accessible, not color-only) */
 const UsIndicator: React.FC<{ value: string | null; isUs: boolean }> = ({ value, isUs }) => {
@@ -195,9 +195,12 @@ const FatcaTable: React.FC<FatcaTableProps> = ({
         // Reset editing state
         setEditingClient(null);
       }
-    } catch (error: any) {
+    } catch (error) {
       log.error('api', 'Error updating FATCA status', { error });
-      const message = error?.response?.data?.error || 'Erreur lors de la mise à jour du statut FATCA';
+      const axiosError = typeof error === 'object' && error !== null && 'response' in error
+        ? (error as { response?: { data?: { error?: string } } }).response?.data?.error
+        : undefined;
+      const message = axiosError || (error instanceof Error ? error.message : 'Erreur lors de la mise à jour du statut FATCA');
       addToast(message, 'error');
     } finally {
       setLoading(false);

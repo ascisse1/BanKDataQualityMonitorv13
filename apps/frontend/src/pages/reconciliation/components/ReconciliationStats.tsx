@@ -1,6 +1,6 @@
 import { CheckCircle, Clock, XCircle, TrendingUp, Ban } from 'lucide-react';
-import { ReconciliationStats } from '../../../services/reconciliationService';
-import Card from '../../../components/ui/Card';
+import { ReconciliationStats } from '@/services/reconciliationService';
+import Card from '@/components/ui/Card';
 
 interface ReconciliationStatsProps {
   stats: ReconciliationStats | null;

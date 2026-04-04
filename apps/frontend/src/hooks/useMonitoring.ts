@@ -1,6 +1,7 @@
 import { useEffect, useCallback } from 'react';
 import { useLocation } from 'react-router-dom';
 import { monitoring } from '../services/monitoring';
+import { log } from '../services/log';
 
 interface UserInfo {
   id?: string;
@@ -55,19 +56,19 @@ export function useMonitoring() {
     monitoring.captureException(error, context);
   }, []);
 
-  // Log methods
-  const log = {
-    debug: (category: Parameters<typeof monitoring.debug>[0], message: string, details?: Record<string, unknown>) => {
-      monitoring.debug(category, message, details);
+  // Log methods (delegates to the unified log service)
+  const logMethods = {
+    debug: (category: Parameters<typeof log.debug>[0], message: string, details?: Record<string, unknown>) => {
+      log.debug(category, message, details);
     },
-    info: (category: Parameters<typeof monitoring.info>[0], message: string, details?: Record<string, unknown>) => {
-      monitoring.info(category, message, details);
+    info: (category: Parameters<typeof log.info>[0], message: string, details?: Record<string, unknown>) => {
+      log.info(category, message, details);
     },
-    warning: (category: Parameters<typeof monitoring.warning>[0], message: string, details?: Record<string, unknown>) => {
-      monitoring.warning(category, message, details);
+    warning: (category: Parameters<typeof log.warning>[0], message: string, details?: Record<string, unknown>) => {
+      log.warning(category, message, details);
     },
-    error: (category: Parameters<typeof monitoring.error>[0], message: string, details?: Record<string, unknown>) => {
-      monitoring.error(category, message, details);
+    error: (category: Parameters<typeof log.error>[0], message: string, details?: Record<string, unknown>) => {
+      log.error(category, message, details);
     }
   };
 
@@ -78,7 +79,7 @@ export function useMonitoring() {
     trackAction,
     captureError,
     captureException,
-    log,
+    log: logMethods,
     sessionId: monitoring.getSessionId(),
     errorCount: monitoring.getErrorCount()
   };

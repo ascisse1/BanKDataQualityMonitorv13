@@ -3,9 +3,9 @@ import { jsPDF } from 'jspdf';
 import 'jspdf-autotable';
 import Chart from 'react-apexcharts';
 import { FileBarChart2, Download, RefreshCw } from 'lucide-react';
-import Card from '../../../components/ui/Card';
-import Button from '../../../components/ui/Button';
-import { useToast } from '../../../components/ui/Toaster';
+import Card from '@/components/ui/Card';
+import Button from '@/components/ui/Button';
+import { useToast } from '@/components/ui/Toaster';
 
 interface ValidationMetrics {
   errorDistribution: {
@@ -82,7 +82,7 @@ const ValidationReport = () => {
       
       // Error Distribution Table
       doc.autoTable({
-        startY: doc.lastAutoTable.finalY + 10,
+        startY: (doc as any).lastAutoTable?.finalY + 10,
         head: [['Field', 'Error Count', 'Percentage']],
         body: metrics?.errorDistribution.map(d => [
           d.field,
@@ -100,18 +100,18 @@ const ValidationReport = () => {
 
   const chartOptions = {
     chart: {
-      type: 'line',
+      type: 'line' as const,
       height: 350,
       toolbar: {
         show: false
       }
     },
     stroke: {
-      curve: 'smooth',
+      curve: 'smooth' as const,
       width: 3
     },
     xaxis: {
-      type: 'datetime'
+      type: 'datetime' as const
     },
     yaxis: {
       title: {

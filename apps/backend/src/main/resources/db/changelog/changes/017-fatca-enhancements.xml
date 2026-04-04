@@ -6,7 +6,7 @@
         http://www.liquibase.org/xml/ns/dbchangelog/dbchangelog-latest.xsd">
 
     <!-- Add W-9/W-8 document tracking date fields to fatca_clients -->
-    <changeSet id="017-01" author="bsic">
+    <changeSet id="017-01" author="adakalgroup">
         <addColumn tableName="fatca_clients">
             <column name="w9_received_date" type="DATE">
                 <constraints nullable="true"/>
@@ -30,7 +30,7 @@
     </changeSet>
 
     <!-- Add indicia tracking fields for automated screening -->
-    <changeSet id="017-02" author="bsic">
+    <changeSet id="017-02" author="adakalgroup">
         <addColumn tableName="fatca_clients">
             <column name="indicia_types" type="VARCHAR(255)">
                 <constraints nullable="true"/>

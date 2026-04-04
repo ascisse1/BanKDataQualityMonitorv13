@@ -1,18 +1,18 @@
 import { useState, useEffect } from 'react';
 import { RefreshCw, GitCompare, Download } from 'lucide-react';
-import Button from '../../components/ui/Button';
-import { useToast } from '../../components/ui/Toaster';
+import Button from '@/components/ui/Button';
+import { useToast } from '@/components/ui/Toaster';
 import {
   reconciliationService,
   ReconciliationTask,
   ReconciliationStats,
-} from '../../services/reconciliationService';
+} from '@/services/reconciliationService';
 import { ReconciliationStatsComponent } from './components/ReconciliationStats';
-import { log } from '../../services/log';
+import { log } from '@/services/log';
 import { ReconciliationFilters } from './components/ReconciliationFilters';
 import { ReconciliationTable } from './components/ReconciliationTable';
 import { ReconciliationDetails } from './components/ReconciliationDetails';
-import { useAuth } from '../../context/AuthContext';
+import { useAuth } from '@/context/AuthContext';
 
 const ReconciliationPage = () => {
   const { addToast } = useToast();
@@ -23,7 +23,7 @@ const ReconciliationPage = () => {
   const [loading, setLoading] = useState(true);
   const [reconciling, setReconciling] = useState(false);
   const [filters, setFilters] = useState({
-    structureCode: user?.structureCode || '',
+    structureCode: user?.structureCodes?.[0] || '',
     clientId: '',
     status: 'pending',
   });
@@ -43,7 +43,7 @@ const ReconciliationPage = () => {
               status: filters.status || undefined,
             }),
         reconciliationService.getReconciliationStats(
-          filters.structureCode || user?.structureCode
+          filters.structureCode || user?.structureCodes?.[0]
         ),
       ]);
 
@@ -151,8 +151,8 @@ const ReconciliationPage = () => {
   const handleExportHistory = async () => {
     try {
       const history = await reconciliationService.getReconciliationHistory({
-        structureCode: filters.structureCode || undefined,
-      });
+        ...(filters.structureCode ? { structureCode: filters.structureCode } : {}),
+      } as any);
 
       const csvContent = [
         ['Ticket ID', 'Client ID', 'Client', 'Statut', 'Correspondances', 'Tentatives', 'Créé le', 'Réconcilié le'].join(','),
@@ -186,7 +186,7 @@ const ReconciliationPage = () => {
 
   const handleResetFilters = () => {
     setFilters({
-      structureCode: user?.structureCode || '',
+      structureCode: user?.structureCodes?.[0] || '',
       clientId: '',
       status: 'pending',
     });

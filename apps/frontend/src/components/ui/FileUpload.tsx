@@ -2,7 +2,7 @@ import React, { useCallback, useState } from 'react';
 import { Upload, AlertTriangle, CheckCircle, X } from 'lucide-react';
 import Papa from 'papaparse';
 import * as XLSX from 'xlsx';
-import { log } from '../../services/log';
+import { log } from '@/services/log';
 import Button from './Button';
 
 interface FileUploadProps {

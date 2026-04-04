@@ -1,10 +1,10 @@
 import React, { useState, useEffect } from 'react';
 import { BarChart, PieChart, TrendingUp, Calendar, Filter, Download, RefreshCw, FileSpreadsheet, Loader2, Building } from 'lucide-react';
-import Card from '../../components/ui/Card';
-import Button from '../../components/ui/Button';
-import Input from '../../components/ui/Input';
-import { useToast } from '../../components/ui/Toaster';
-import { log } from '../../services/log';
+import Card from '@/components/ui/Card';
+import Button from '@/components/ui/Button';
+import Input from '@/components/ui/Input';
+import { useToast } from '@/components/ui/Toaster';
+import { log } from '@/services/log';
 
 import Chart from 'react-apexcharts';
 import { ApexOptions } from 'apexcharts';
@@ -207,7 +207,7 @@ const GlobalTrackingPage: React.FC = () => {
         const avgTauxFiabilisation = filteredData.reduce((sum, item) => sum + item.indicators.tauxFiabilisation, 0) / filteredData.length;
         
         doc.setFontSize(12);
-        doc.text('Résumé Global', 20, doc.autoTable.previous.finalY + 15);
+        doc.text('Résumé Global', 20, (doc as any).lastAutoTable?.finalY + 15);
         
         const summaryData = [
           ['Total Flux', totalFlux.toString()],
@@ -222,7 +222,7 @@ const GlobalTrackingPage: React.FC = () => {
         
         (doc as any).autoTable({
           body: summaryData,
-          startY: doc.autoTable.previous.finalY + 20,
+          startY: (doc as any).lastAutoTable?.finalY + 20,
           theme: 'grid',
           styles: { fontSize: 10 },
           columnStyles: {

@@ -9,12 +9,23 @@ server:
   forward-headers-strategy: framework
 spring:
   application:
-    name: bsic-data-quality-backend
+    name: bdqm-backend
   docker:
     compose:
       enabled: false
       lifecycle-management: start-only
       file: ../../infra/docker/services.yml
+
+  ai:
+    ollama:
+      base-url: ${OLLAMA_BASE_URL:http://localhost:11434}
+      init:
+        pull-model-strategy: when_missing
+      chat:
+        model: ${OLLAMA_MODEL:mistral}
+        options:
+          temperature: ${OLLAMA_TEMPERATURE:0.3}
+          num-predict: ${OLLAMA_MAX_TOKENS:1024}
 
   datasource:
     primary:
@@ -51,7 +62,6 @@ spring:
     database-change-log-lock-table: DATABASECHANGELOGLOCK
 
   jpa:
-    database-platform: org.hibernate.dialect.PostgreSQLDialect
     hibernate:
       ddl-auto: none
     show-sql: false
@@ -83,7 +93,7 @@ spring:
       client:
         provider:
           keycloak:
-            issuer-uri: ${KEYCLOAK_ISSUER_URI:http://localhost:9083/realms/bsic-bank}
+            issuer-uri: ${KEYCLOAK_ISSUER_URI:http://localhost:9083/realms/bdqm}
             user-name-attribute: preferred_username
         registration:
           keycloak:
@@ -118,7 +128,8 @@ management:
       percentiles-histogram:
         http.server.requests: true
   tracing:
-    enabled: ${TRACING_ENABLED:false}
+    export:
+      enabled: ${TRACING_ENABLED:false}
     sampling:
       probability: 1.0
   otlp:
@@ -132,7 +143,7 @@ management:
 logging:
   level:
     root: INFO
-    com.bsic: INFO
+    com.adakalgroup: INFO
     org.springframework.security: WARN
     org.springframework.web: WARN
     org.hibernate.SQL: WARN
@@ -148,7 +159,7 @@ logging:
       max-history: 30
 
 keycloak:
-  realm: ${KEYCLOAK_REALM:bsic-bank}
+  realm: ${KEYCLOAK_REALM:bdqm}
   auth-server-url: ${KEYCLOAK_AUTH_SERVER_URL:http://localhost:9083}
   resource: ${KEYCLOAK_CLIENT_ID:admin-cli}
   agency-code-claim: agency_code
@@ -158,7 +169,7 @@ keycloak:
 
 app:
   jwt:
-    secret: ${JWT_SECRET:bsic-data-quality-secret-key-change-in-production-minimum-256-bits}
+    secret: ${JWT_SECRET:bdqm-data-quality-secret-key-change-in-production-minimum-256-bits}
     expiration: 86400000
   cors:
     allowed-origins: ${CORS_ORIGINS:http://localhost:5173,http://localhost:5174,http://localhost:3000,http://localhost:9083}
@@ -174,16 +185,15 @@ app:
   scheduling:
     kpi-calculation-cron: "0 0 1 * * ?"
     sla-check-cron: "0 */15 * * * ?"
-    bkcli-sync-cron: "0 0 2 * * ?"      # Daily at 2:00 AM
-    agency-sync-cron: "0 30 2 * * ?"    # Daily at 2:30 AM
+    cbs-sync-cron: "0 0 2 * * ?"          # Daily at 2:00 AM (all enabled CBS tables)
     reconciliation-cron: "${RECONCILIATION_CRON:0 0 3 * * ?}"  # Daily at 3:00 AM
     reconciliation-max-tasks: ${RECONCILIATION_MAX_TASKS:100}
     fatca-screening-cron: "${FATCA_SCREENING_CRON:0 30 3 * * ?}"  # Daily at 3:30 AM
   fatca:
     giin: ${FATCA_GIIN:XXXXXX.XXXXX.XX.XXX}
-    reporting-country: ${FATCA_COUNTRY:BJ}
-    fi-name: ${FATCA_FI_NAME:BSIC Bénin}
-    fi-address: ${FATCA_FI_ADDRESS:Avenue Jean-Paul II, Cotonou, Bénin}
+    reporting-country: ${FATCA_COUNTRY:XX}
+    fi-name: ${FATCA_FI_NAME:Your Bank Name}
+    fi-address: ${FATCA_FI_ADDRESS:Your Bank Address}
     filer-category: ${FATCA_FILER_CATEGORY:FATCA601}
     screening-enabled: ${FATCA_SCREENING_ENABLED:true}
   features:
@@ -191,3 +201,14 @@ app:
     kpi-tracking: ${FEATURE_KPI:true}
     informix-integration: ${FEATURE_INFORMIX:false}
     batch-reconciliation: ${FEATURE_BATCH_RECONCILIATION:false}
+  amplitude-api:
+    enabled: ${CBS_API_ENABLED:false}
+    base-url: ${CBS_API_URL:http://localhost:8080/amplitude}
+    api-key: ${CBS_API_KEY:}
+    timeout: ${CBS_API_TIMEOUT:30000}
+    version: ${CBS_API_VERSION:v1}
+    fallback-jdbc: ${CBS_API_FALLBACK_JDBC:true}
+    user-code: ${CBS_API_USER_CODE:BDQM}
+    channel-code: ${CBS_API_CHANNEL_CODE:QUALITE}
+  faro:
+    enabled: ${FARO_ENABLED:false}
