@@ -1,16 +1,26 @@
 package com.adakalgroup.bdqm.config;
 
 import org.springframework.ai.chat.client.ChatClient;
+import org.springframework.ai.model.ollama.autoconfigure.OllamaApiAutoConfiguration;
+import org.springframework.ai.model.ollama.autoconfigure.OllamaChatAutoConfiguration;
+import org.springframework.ai.model.ollama.autoconfigure.OllamaEmbeddingAutoConfiguration;
 import org.springframework.ai.support.ToolCallbacks;
 import org.springframework.boot.autoconfigure.condition.ConditionalOnProperty;
 import org.springframework.context.annotation.Bean;
 import org.springframework.context.annotation.Configuration;
+import org.springframework.context.annotation.Import;
 
 /**
  * Faro AI configuration — builds the ChatClient with system prompt and tools.
+ * Imports Ollama auto-configurations only when Faro is enabled.
  */
 @Configuration
 @ConditionalOnProperty(name = "app.faro.enabled", havingValue = "true")
+@Import({
+    OllamaApiAutoConfiguration.class,
+    OllamaChatAutoConfiguration.class,
+    OllamaEmbeddingAutoConfiguration.class
+})
 public class FaroConfig {
 
     @Bean

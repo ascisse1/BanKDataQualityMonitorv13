@@ -16,13 +16,13 @@ public class KeycloakMigrationListener implements ApplicationListener<ContextRef
 
     private final KeycloakMigrationService keycloakMigrationService;
 
-    @Value("${application.keycloak.migration.enabled:true}")
+    @Value("${app.keycloak.migration.enabled:true}")
     private boolean migrationEnabled;
 
-    @Value("${application.keycloak.migration.async:true}")
+    @Value("${app.keycloak.migration.async:true}")
     private boolean asyncMigration;
 
-    @Value("${application.keycloak.migration.delay:5000}")
+    @Value("${app.keycloak.migration.delay:5000}")
     private long migrationDelay;
 
     private boolean migrationExecuted = false;

@@ -28,7 +28,7 @@ public class StructureFilterContext {
     private final UserProfileRepository userProfileRepository;
     private final UserRepository userRepository;
 
-    private List<String> structureCodes;
+    private List<String> structureCodes = List.of();
     private boolean resolved = false;
 
     /**

@@ -33,13 +33,12 @@ spring:
       username: ${DB_USER:bdqm}
       password: ${DB_PASSWORD:bdqm}
       driver-class-name: org.postgresql.Driver
-      hikari:
-        maximum-pool-size: 20
-        minimum-idle: 5
-        connection-timeout: 30000
-        idle-timeout: 600000
-        max-lifetime: 1800000
-        pool-name: PostgreSQLPool
+      maximum-pool-size: 20
+      minimum-idle: 5
+      connection-timeout: 30000
+      idle-timeout: 600000
+      max-lifetime: 1800000
+      pool-name: PostgreSQLPool
 
     informix:
       jdbc-url: jdbc:informix-sqli://${INFORMIX_HOST:10.3.0.66}:${INFORMIX_PORT:1526}/${INFORMIX_DATABASE:bdmsa}:INFORMIXSERVER=${INFORMIX_SERVER:ol_bdmsa};DELIMIDENT=Y;DB_LOCALE=en_US.utf8;CLIENT_LOCALE=en_US.utf8
@@ -58,8 +57,7 @@ spring:
   liquibase:
     enabled: true
     change-log: classpath:db/changelog/db.changelog-master-pg.xml
-    database-change-log-table: DATABASECHANGELOG
-    database-change-log-lock-table: DATABASECHANGELOGLOCK
+    default-schema: public
 
   jpa:
     hibernate:
@@ -93,7 +91,7 @@ spring:
       client:
         provider:
           keycloak:
-            issuer-uri: ${KEYCLOAK_ISSUER_URI:http://localhost:9083/realms/bdqm}
+            issuer-uri: ${KEYCLOAK_ISSUER_URI:http://localhost:9083/realms/bsic-bank}
             user-name-attribute: preferred_username
         registration:
           keycloak:
@@ -111,10 +109,9 @@ spring:
       password: ${REDIS_PASSWORD:}
 
 flowable:
-  database-schema-update: true
   async-executor-activate: true
-  process-definition-location-prefix: classpath*:processes/
   database-schema: workflow
+  database-schema-update: true
 management:
   endpoints:
     web:
@@ -168,6 +165,11 @@ keycloak:
   admin-client-secret: ${KEYCLOAK_ADMIN_CLIENT_SECRET:6c1d4552-e109-4127-afa3-124d55b4e952}
 
 app:
+  keycloak:
+    server-url: ${KEYCLOAK_AUTH_SERVER_URL:http://localhost:9083}
+    realm: ${KEYCLOAK_REALM:bdqm}
+    client-id: ${KEYCLOAK_ADMIN_CLIENT_ID:admin-cli}
+    client-secret: ${KEYCLOAK_ADMIN_CLIENT_SECRET:6c1d4552-e109-4127-afa3-124d55b4e952}
   jwt:
     secret: ${JWT_SECRET:bdqm-data-quality-secret-key-change-in-production-minimum-256-bits}
     expiration: 86400000

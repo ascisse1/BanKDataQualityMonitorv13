@@ -36,7 +36,7 @@ spring:
     show-sql: false
   liquibase:
     enabled: true
-    drop-first: true
+    drop-first: false
     default-schema: public
     contexts: dev
 
@@ -54,15 +54,15 @@ app:
     user-code: BDQM
     channel-code: QUALITE
   faro:
-    enabled: true
+    enabled: false
   scheduling:
     cbs-sync-cron: "*/59 * * * * ?"      # Every 60 seconds (dev only)
   client:
-    name: bdqm
+    name: bsic-bank
     fullName: "Agence de Gestion du Fonds d'Accès Universel"
   keycloak:
     server-url: http://localhost:9083
-    realm: bdqm
+    realm: bsic-bank
     client-id: admin-cli
     client-secret: 6c1d4552-e109-4127-afa3-124d55b4e952
     migration:
