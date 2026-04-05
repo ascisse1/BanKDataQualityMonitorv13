@@ -379,20 +379,8 @@ CREATE INDEX idx_bkemacli_email ON bkemacli (email);
 
 CREATE TABLE bkage
 (
-    age  CHAR(5) NOT NULL,  -- Code agence
-    lib  VARCHAR(30),       -- Libellé de l'agence
-    adr1 VARCHAR(40),       -- Adresse ligne 1
-    adr2 VARCHAR(40),       -- Adresse ligne 2
-    vil  VARCHAR(30),       -- Ville
-    pays CHAR(3),           -- Code pays
-    tel  VARCHAR(20),       -- Téléphone
-    fax  VARCHAR(20),       -- Fax
-    resp VARCHAR(30),       -- Responsable agence
-    reg  CHAR(5),           -- Code région
-    zon  CHAR(3),           -- Code zone
-    eta  CHAR(1),           -- Etat (O=Ouvert, F=Fermé)
-    dou  DATE,              -- Date ouverture
-    dfe  DATE,              -- Date fermeture
+    age CHAR(5) NOT NULL, -- Code agence
+    lib VARCHAR(30),      -- Libellé de l'agence
     PRIMARY KEY (age) CONSTRAINT pk_bkage
 );
 
