@@ -2,7 +2,7 @@ package com.adakalgroup.bdqm.service;
 
 import com.adakalgroup.bdqm.config.metrics.BusinessMetricsConfig;
 import com.adakalgroup.bdqm.model.CbsTable;
-import com.adakalgroup.bdqm.model.Structure;
+
 import com.adakalgroup.bdqm.repository.CbsTableRepository;
 import com.adakalgroup.bdqm.repository.StructureRepository;
 import lombok.extern.slf4j.Slf4j;
@@ -152,14 +152,6 @@ public class DataSyncService {
                 log.info("Table '{}': validation NOT enabled, skipping", tableName);
             }
 
-            // Auto-create Structure entities from agency-like tables
-            // Identified by having a structureField configured in the dictionary
-            if (tableConfig.getStructureField() != null
-                    && tableConfig.getPkField() != null
-                    && tableConfig.getLabelField() != null) {
-                log.info("Table '{}': syncing structures...", tableName);
-                syncStructuresFromTable(tableName, tableConfig.getPkField(), tableConfig.getLabelField());
-            }
         } catch (Exception e) {
             log.warn("Could not run post-sync hooks for '{}': {}", tableName, e.getMessage());
         }
@@ -200,42 +192,6 @@ public class DataSyncService {
             }
         } catch (Exception e) {
             log.error("Post-sync validation failed for '{}': {}", tableName, e.getMessage(), e);
-        }
-    }
-
-    /**
-     * Auto-create Structure entities from a CBS table that represents organizational units.
-     * Dictionary-driven: uses pkField as structure code and labelField as structure name.
-     */
-    private void syncStructuresFromTable(String tableName, String pkField, String labelField) {
-        log.info("Syncing structures from table '{}'...", tableName);
-        try {
-            List<Map<String, Object>> records = dynamicCbsQueryService.fetchFromCbs(tableName, 0, 10000);
-
-            int created = 0;
-            for (Map<String, Object> row : records) {
-                String code = getString(row, pkField);
-                String label = getString(row, labelField);
-                if (code == null || code.isBlank()) continue;
-
-                boolean exists = structureRepository.findByCode(code).isPresent();
-                if (!exists) {
-                    Structure s = Structure.builder()
-                        .code(code)
-                        .name(label != null ? label : code)
-                        .type("AGENCY")
-                        .status("ACTIVE")
-                        .build();
-                    structureRepository.save(s);
-                    created++;
-                }
-            }
-
-            if (created > 0) {
-                log.info("Created {} new structures from table '{}'", created, tableName);
-            }
-        } catch (Exception e) {
-            log.error("Structure sync from table '{}' failed: {}", tableName, e.getMessage(), e);
         }
     }
 
