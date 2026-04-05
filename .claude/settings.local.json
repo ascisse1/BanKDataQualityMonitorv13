@@ -130,7 +130,8 @@
       "Bash(mvn dependency:copy -Dartifact=org.springframework.ai:spring-ai-starter-model-ollama:2.0.0-M3 -DoutputDirectory=./target/deps -q)",
       "Bash(mvn dependency:copy -Dartifact=org.springframework.ai:spring-ai-autoconfigure-model-ollama:2.0.0-M3 -DoutputDirectory=./target/deps -q)",
       "Bash(javap -cp ./target/deps/spring-ai-autoconfigure-model-ollama-2.0.0-M3.jar -p org.springframework.ai.model.ollama.autoconfigure.OllamaChatAutoConfiguration)",
-      "Bash(mvn clean:*)"
+      "Bash(mvn clean:*)",
+      "Bash(sed:*)"
     ]
   }
 }

@@ -1,9 +1,9 @@
 {
   "dashboard": {
     "id": null,
-    "uid": "bsic-app-overview",
-    "title": "BSIC Data Quality Monitor - Overview",
-    "tags": ["bsic", "spring-boot", "data-quality"],
+    "uid": "bdqm-app-overview",
+    "title": "BDQM Data Quality Monitor - Overview",
+    "tags": ["bdqm", "spring-boot", "data-quality"],
     "timezone": "browser",
     "schemaVersion": 16,
     "version": 1,
@@ -48,7 +48,7 @@
         "gridPos": {"h": 4, "w": 6, "x": 6, "y": 0},
         "targets": [
           {
-            "expr": "bsic_anomalies_pending",
+            "expr": "bdqm_anomalies_pending",
             "legendFormat": "Pending"
           }
         ],
@@ -76,7 +76,7 @@
         "gridPos": {"h": 4, "w": 6, "x": 12, "y": 0},
         "targets": [
           {
-            "expr": "bsic_tickets_pending_validation",
+            "expr": "bdqm_tickets_pending_validation",
             "legendFormat": "Awaiting Validation"
           }
         ],
@@ -104,7 +104,7 @@
         "gridPos": {"h": 4, "w": 6, "x": 18, "y": 0},
         "targets": [
           {
-            "expr": "bsic_rpa_jobs_active",
+            "expr": "bdqm_rpa_jobs_active",
             "legendFormat": "Active Jobs"
           }
         ],
@@ -170,11 +170,11 @@
         "gridPos": {"h": 8, "w": 8, "x": 0, "y": 12},
         "targets": [
           {
-            "expr": "rate(bsic_anomalies_created_total[5m]) * 60",
+            "expr": "rate(bdqm_anomalies_created_total[5m]) * 60",
             "legendFormat": "Created/min"
           },
           {
-            "expr": "rate(bsic_anomalies_resolved_total[5m]) * 60",
+            "expr": "rate(bdqm_anomalies_resolved_total[5m]) * 60",
             "legendFormat": "Resolved/min"
           }
         ],
@@ -191,15 +191,15 @@
         "gridPos": {"h": 8, "w": 8, "x": 8, "y": 12},
         "targets": [
           {
-            "expr": "rate(bsic_tickets_created_total[5m]) * 60",
+            "expr": "rate(bdqm_tickets_created_total[5m]) * 60",
             "legendFormat": "Created/min"
           },
           {
-            "expr": "rate(bsic_tickets_validated_total[5m]) * 60",
+            "expr": "rate(bdqm_tickets_validated_total[5m]) * 60",
             "legendFormat": "Validated/min"
           },
           {
-            "expr": "rate(bsic_tickets_rejected_total[5m]) * 60",
+            "expr": "rate(bdqm_tickets_rejected_total[5m]) * 60",
             "legendFormat": "Rejected/min"
           }
         ],
@@ -216,11 +216,11 @@
         "gridPos": {"h": 8, "w": 8, "x": 16, "y": 12},
         "targets": [
           {
-            "expr": "rate(bsic_rpa_jobs_completed_total[5m]) * 60",
+            "expr": "rate(bdqm_rpa_jobs_completed_total[5m]) * 60",
             "legendFormat": "Completed/min"
           },
           {
-            "expr": "rate(bsic_rpa_jobs_failed_total[5m]) * 60",
+            "expr": "rate(bdqm_rpa_jobs_failed_total[5m]) * 60",
             "legendFormat": "Failed/min"
           }
         ],
@@ -323,7 +323,7 @@
         "gridPos": {"h": 4, "w": 8, "x": 0, "y": 36},
         "targets": [
           {
-            "expr": "time() - bsic_data_sync_last_success_timestamp",
+            "expr": "time() - bdqm_data_sync_last_success_timestamp",
             "legendFormat": "Since Last Sync"
           }
         ],
@@ -351,7 +351,7 @@
         "gridPos": {"h": 4, "w": 8, "x": 8, "y": 36},
         "targets": [
           {
-            "expr": "increase(bsic_cbs_reconciliation_total[1h])",
+            "expr": "increase(bdqm_cbs_reconciliation_total[1h])",
             "legendFormat": "Last Hour"
           }
         ],
@@ -367,7 +367,7 @@
         "gridPos": {"h": 4, "w": 8, "x": 16, "y": 36},
         "targets": [
           {
-            "expr": "increase(bsic_validation_rules_triggered_total[1h])",
+            "expr": "increase(bdqm_validation_rules_triggered_total[1h])",
             "legendFormat": "Last Hour"
           }
         ],
