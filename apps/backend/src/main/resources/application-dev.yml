@@ -59,11 +59,11 @@ app:
   scheduling:
     cbs-sync-cron: "*/59 * * * * ?"      # Every 60 seconds (dev only)
   client:
-    name: bsic-bank
+    name: bdqm
     fullName: "Agence de Gestion du Fonds d'Accès Universel"
   keycloak:
     server-url: http://localhost:9083
-    realm: bsic-bank
+    realm: bdqm
     client-id: admin-cli
     client-secret: 6c1d4552-e109-4127-afa3-124d55b4e952
     migration:
@@ -86,4 +86,3 @@ logging:
 
 server:
   port: 8086
-

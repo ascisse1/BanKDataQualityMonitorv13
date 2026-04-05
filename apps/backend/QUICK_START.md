@@ -111,7 +111,7 @@ spring.datasource.informix.jdbc-url: ...;DB_LOCALE=en_US.utf8;CLIENT_LOCALE=en_U
 
 ```
 backend-java/
-├── src/main/java/com/adakalgroup/dataqualitybackend/
+├── src/main/java/com/adakalgroup/bdqm/
 │   ├── config/
 │   │   └── DataSourceConfig.java          # Configuration multi-datasource
 │   ├── controller/
