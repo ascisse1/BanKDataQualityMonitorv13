@@ -4,7 +4,7 @@ import com.adakalgroup.bdqm.config.metrics.BusinessMetricsConfig;
 import com.adakalgroup.bdqm.model.CbsTable;
 
 import com.adakalgroup.bdqm.repository.CbsTableRepository;
-import com.adakalgroup.bdqm.repository.StructureRepository;
+
 import lombok.extern.slf4j.Slf4j;
 import org.springframework.beans.factory.annotation.Value;
 import org.springframework.boot.autoconfigure.condition.ConditionalOnProperty;
@@ -29,7 +29,6 @@ public class DataSyncService {
     private final DynamicCbsQueryService dynamicCbsQueryService;
     private final CbsTableRepository cbsTableRepository;
     private final CbsDataDictionaryService dataDictionaryService;
-    private final StructureRepository structureRepository;
     private final CbsValidationService cbsValidationService;
     private final BusinessMetricsConfig metricsConfig;
 
@@ -41,13 +40,11 @@ public class DataSyncService {
     public DataSyncService(DynamicCbsQueryService dynamicCbsQueryService,
                            CbsTableRepository cbsTableRepository,
                            CbsDataDictionaryService dataDictionaryService,
-                           StructureRepository structureRepository,
                            CbsValidationService cbsValidationService,
                            BusinessMetricsConfig metricsConfig) {
         this.dynamicCbsQueryService = dynamicCbsQueryService;
         this.cbsTableRepository = cbsTableRepository;
         this.dataDictionaryService = dataDictionaryService;
-        this.structureRepository = structureRepository;
         this.cbsValidationService = cbsValidationService;
         this.metricsConfig = metricsConfig;
     }
@@ -134,7 +131,6 @@ public class DataSyncService {
     /**
      * Post-sync hooks for tables.
      * - Any table with validationEnabled=true: run validation + auto-resolve anomalies
-     * - Agency table (structureField configured): auto-create Structure entities
      */
     private void runPostSyncHooks(String tableName, SyncResult result) {
         log.info("runPostSyncHooks START for table '{}'", tableName);
