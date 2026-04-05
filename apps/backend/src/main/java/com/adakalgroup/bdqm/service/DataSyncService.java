@@ -35,8 +35,8 @@ public class DataSyncService {
 
     private static final int BATCH_SIZE = 1000;
 
-    @Value("${app.validation.max-records:0}")
-    private int validationMaxRecords;
+    @Value("${app.max-records:0}")
+    private int maxRecords;
 
     public DataSyncService(DynamicCbsQueryService dynamicCbsQueryService,
                            CbsTableRepository cbsTableRepository,
@@ -103,10 +103,11 @@ public class DataSyncService {
             dynamicCbsQueryService.ensureMirrorSchema(tableName);
 
             long totalCount = dynamicCbsQueryService.countCbsRecords(tableName);
-            log.info("Table '{}': {} records to sync", tableName, totalCount);
-            if("bkcli".equals(tableName)) {
-                totalCount = 10000;
+            if (maxRecords > 0) {
+                totalCount = Math.min(totalCount, maxRecords);
             }
+            log.info("Table '{}': {} records to sync", tableName, totalCount);
+
             while (offset < totalCount) {
                 List<Map<String, Object>> batch = dynamicCbsQueryService.fetchFromCbs(tableName, offset, BATCH_SIZE);
                 if (batch.isEmpty()) break;
@@ -161,9 +162,9 @@ public class DataSyncService {
         try {
             List<Map<String, Object>> allRecords = new ArrayList<>();
             int offset = 0;
-            boolean hasLimit = validationMaxRecords > 0;
-            while (!hasLimit || allRecords.size() < validationMaxRecords) {
-                int remaining = validationMaxRecords - allRecords.size();
+            boolean hasLimit = maxRecords > 0;
+            while (!hasLimit || allRecords.size() < maxRecords) {
+                int remaining = maxRecords - allRecords.size();
                 int fetchSize = hasLimit ? Math.min(BATCH_SIZE, remaining) : BATCH_SIZE;
                 List<Map<String, Object>> batch = dynamicCbsQueryService.fetchFromCbs(tableName, offset, fetchSize);
                 if (batch.isEmpty()) break;
