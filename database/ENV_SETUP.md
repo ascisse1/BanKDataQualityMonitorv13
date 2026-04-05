@@ -55,14 +55,14 @@ version: '3.8'
 services:
   informix-cbs:
     image: ibmcom/informix-developer-database:latest
-    container_name: bsic-informix-cbs
+    container_name: bdqm-informix-cbs
     hostname: informix-cbs
     environment:
       - LICENSE=accept
       - SIZE=small
       - DBNAME=amplitude
-      - INFORMIX_USER=bsic
-      - INFORMIX_PASSWORD=bsic2024
+      - INFORMIX_USER=bdqm
+      - INFORMIX_PASSWORD=bdqm2024
     ports:
       - "9088:9088"    # Informix DRDA
       - "9089:9089"    # Informix SQLI
@@ -106,8 +106,8 @@ spring:
   datasource:
     informix:
       url: jdbc:informix-sqli://localhost:9088/amplitude:INFORMIXSERVER=informix
-      username: bsic
-      password: bsic2024
+      username: bdqm
+      password: bdqm2024
       driver-class-name: com.informix.jdbc.IfxDriver
 
 # backend-java/src/main/resources/application-demo.yml
@@ -115,7 +115,7 @@ spring:
   datasource:
     informix:
       url: jdbc:informix-sqli://demo-server:9088/amplitude:INFORMIXSERVER=informix
-      username: bsic_demo
+      username: bdqm_demo
       password: ${INFORMIX_DEMO_PASSWORD}
 ```
 
@@ -143,11 +143,11 @@ python generate_amplitude_data.py --clients 100000 --output demo
 docker-compose -f docker/docker-compose.informix.yml up -d
 
 # 2. Wait for container to be ready (first time takes ~2 min)
-docker logs -f bsic-informix-cbs
+docker logs -f bdqm-informix-cbs
 
 # 3. Load schema and dev data
-docker exec -it bsic-informix-cbs dbaccess amplitude /opt/ibm/scripts/amplitude_ddl_informix.sql
-docker exec -it bsic-informix-cbs dbaccess amplitude /opt/ibm/scripts/amplitude_seed_data_dev.sql
+docker exec -it bdqm-informix-cbs dbaccess amplitude /opt/ibm/scripts/amplitude_ddl_informix.sql
+docker exec -it bdqm-informix-cbs dbaccess amplitude /opt/ibm/scripts/amplitude_seed_data_dev.sql
 
 # 4. Start Spring Boot with dev profile
 cd backend-java
@@ -161,7 +161,7 @@ mvn spring-boot:run -Dspring-boot.run.profiles=dev
 docker-compose -f docker/docker-compose.informix.yml --env-file .env.demo up -d
 
 # 2. Load full demo data (100K)
-docker exec -it bsic-informix-cbs dbaccess amplitude /opt/ibm/scripts/amplitude_seed_data_100k_informix.sql
+docker exec -it bdqm-informix-cbs dbaccess amplitude /opt/ibm/scripts/amplitude_seed_data_100k_informix.sql
 
 # 3. Start with demo profile
 mvn spring-boot:run -Dspring-boot.run.profiles=demo
@@ -180,7 +180,7 @@ mvn spring-boot:run -Dspring-boot.run.profiles=demo
 echo "Resetting DEV environment..."
 
 # Clear existing data
-docker exec -it bsic-informix-cbs dbaccess amplitude -e "
+docker exec -it bdqm-informix-cbs dbaccess amplitude -e "
 DELETE FROM bkemacli;
 DELETE FROM bkcntcli;
 DELETE FROM bkprfcli;
@@ -193,7 +193,7 @@ DELETE FROM bkcli;
 python database/generate_amplitude_data.py --clients 1000 --output amplitude_seed_data_dev.sql
 
 # Load new data
-docker exec -it bsic-informix-cbs dbaccess amplitude /opt/ibm/scripts/amplitude_seed_data_dev.sql
+docker exec -it bdqm-informix-cbs dbaccess amplitude /opt/ibm/scripts/amplitude_seed_data_dev.sql
 
 echo "DEV environment reset complete!"
 ```
@@ -209,7 +209,7 @@ echo "DEV environment reset complete!"
 public class TestInformixConnection {
     public static void main(String[] args) {
         String url = "jdbc:informix-sqli://localhost:9088/amplitude:INFORMIXSERVER=informix";
-        try (Connection conn = DriverManager.getConnection(url, "bsic", "bsic2024")) {
+        try (Connection conn = DriverManager.getConnection(url, "bdqm", "bdqm2024")) {
             Statement stmt = conn.createStatement();
             ResultSet rs = stmt.executeQuery("SELECT COUNT(*) FROM bkcli");
             if (rs.next()) {
@@ -226,7 +226,7 @@ public class TestInformixConnection {
 
 ```bash
 # Connect to Informix container
-docker exec -it bsic-informix-cbs bash
+docker exec -it bdqm-informix-cbs bash
 
 # Run SQL
 dbaccess amplitude -e "SELECT COUNT(*) FROM bkcli"
@@ -242,17 +242,17 @@ dbaccess amplitude -e "SELECT COUNT(*) FROM bkcom"
 INFORMIX_HOST=localhost
 INFORMIX_PORT=9088
 INFORMIX_DATABASE=amplitude
-INFORMIX_USER=bsic
-INFORMIX_PASSWORD=bsic2024
+INFORMIX_USER=bdqm
+INFORMIX_PASSWORD=bdqm2024
 DATA_VOLUME=dev
 ```
 
 ### .env.demo
 ```env
-INFORMIX_HOST=demo-server.bsic.ml
+INFORMIX_HOST=demo-server.example.com
 INFORMIX_PORT=9088
 INFORMIX_DATABASE=amplitude
-INFORMIX_USER=bsic_demo
+INFORMIX_USER=bdqm_demo
 INFORMIX_PASSWORD=${SECURE_PASSWORD}
 DATA_VOLUME=demo
 ```
@@ -282,7 +282,7 @@ DATA_VOLUME=demo
 ### Container won't start
 ```bash
 # Check logs
-docker logs bsic-informix-cbs
+docker logs bdqm-informix-cbs
 
 # Ensure enough memory
 docker stats
@@ -291,10 +291,10 @@ docker stats
 ### Connection refused
 ```bash
 # Verify port mapping
-docker port bsic-informix-cbs
+docker port bdqm-informix-cbs
 
 # Check if Informix is running inside container
-docker exec -it bsic-informix-cbs onstat -
+docker exec -it bdqm-informix-cbs onstat -
 ```
 
 ### Data load too slow

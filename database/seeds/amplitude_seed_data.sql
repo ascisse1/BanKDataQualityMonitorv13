@@ -1,6 +1,6 @@
 -- ============================================================================
 -- AMPLITUDE CBS - Realistic Seed Data
--- BSIC Bank - Ivory Coast (Cote d'Ivoire)
+-- Sample Bank - Ivory Coast (Cote d'Ivoire)
 -- ============================================================================
 
 SET FOREIGN_KEY_CHECKS = 0;
@@ -145,7 +145,7 @@ INSERT INTO bkadcli (cli, typ, lang, adr1, adr2, ville, dep, reg, cpos, cpay, em
 
 INSERT INTO bkprfcli (cli, prf, emp, demb, trev, demp) VALUES
 ('CLI000000000001', 'CAD', 'ORANGE CI', '2015-04-01', '05', 'Abidjan'),
-('CLI000000000002', 'EMP', 'BSIC BANK', '2018-09-15', '04', 'Abidjan'),
+('CLI000000000002', 'EMP', 'SAMPLE BANK', '2018-09-15', '04', 'Abidjan'),
 ('CLI000000000003', 'COM', 'INDEPENDANT', '2010-01-10', '06', 'Bouake'),
 ('CLI000000000004', 'ETU', NULL, NULL, '01', NULL),
 ('CLI000000000005', 'ING', 'CIE', '2012-03-20', '07', 'Yamoussoukro'),
@@ -222,7 +222,7 @@ INSERT INTO bkemacli (cli, typ, email, atrf) VALUES
 
 -- Emails professionnels particuliers
 ('CLI000000000001', 'PRO', 'akouassi@orange.ci', 'N'),
-('CLI000000000002', 'PRO', 'mkonan@bsic.ci', 'N'),
+('CLI000000000002', 'PRO', 'mkonan@example.com', 'N'),
 ('CLI000000000005', 'PRO', 'jyao@cie.ci', 'N'),
 ('CLI000000000008', 'PRO', 'mouattara@menet-fp.gouv.ci', 'N'),
 ('CLI000000000009', 'PRO', 'atoure@chucocody.ci', 'N'),

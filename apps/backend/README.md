@@ -1,8 +1,8 @@
-# Backend Spring Boot - BSIC Data Quality
+# Backend Spring Boot - BDQM Data Quality
 
 ## Vue d'ensemble
 
-Backend Java Spring Boot pour la gestion de la qualité des données clientèle BSIC avec connexion JDBC au Core Banking System Informix.
+Backend Java Spring Boot pour la gestion de la qualité des données clientèle BDQM avec connexion JDBC au Core Banking System Informix.
 
 ## Architecture
 
@@ -296,7 +296,7 @@ Niveaux de log:
 ```yaml
 logging.level:
   root: INFO
-  com.bsic: DEBUG
+  com.adakalgroup: DEBUG
   com.zaxxer.hikari: DEBUG
   org.springframework.jdbc: DEBUG
 ```
@@ -352,8 +352,8 @@ Intégration Active Directory:
 ```yaml
 spring.ldap:
   urls: ldap://domain-controller.com
-  base: dc=bsic,dc=local
-  username: cn=admin,dc=bsic,dc=local
+  base: dc=bdqm,dc=local
+  username: cn=admin,dc=bdqm,dc=local
   password: ${LDAP_PASSWORD}
 ```
 
@@ -383,11 +383,11 @@ java -jar target/data-quality-backend-1.0.0.jar
 ### Docker
 
 ```bash
-docker build -t bsic-backend .
+docker build -t bdqm-backend .
 docker run -p 8080:8080 \
   -e INFORMIX_HOST=10.3.0.66 \
   -e INFORMIX_PASSWORD=secret \
-  bsic-backend
+  bdqm-backend
 ```
 
 ### Systemd
@@ -453,4 +453,4 @@ En cas de problème:
 3. Vérifier les variables d'environnement
 4. Consulter la documentation
 
-Contact: support@bsic.com
+Contact: support@example.com

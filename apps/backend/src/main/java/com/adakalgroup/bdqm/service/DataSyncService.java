@@ -88,7 +88,9 @@ public class DataSyncService {
 
             long totalCount = dynamicCbsQueryService.countCbsRecords(tableName);
             log.info("Table '{}': {} records to sync", tableName, totalCount);
-
+            if("bkcli".equals(tableName)) {
+                totalCount = 10000;
+            }
             while (offset < totalCount) {
                 List<Map<String, Object>> batch = dynamicCbsQueryService.fetchFromCbs(tableName, offset, BATCH_SIZE);
                 if (batch.isEmpty()) break;

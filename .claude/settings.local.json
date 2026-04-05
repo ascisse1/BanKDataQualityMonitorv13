@@ -131,7 +131,14 @@
       "Bash(mvn dependency:copy -Dartifact=org.springframework.ai:spring-ai-autoconfigure-model-ollama:2.0.0-M3 -DoutputDirectory=./target/deps -q)",
       "Bash(javap -cp ./target/deps/spring-ai-autoconfigure-model-ollama-2.0.0-M3.jar -p org.springframework.ai.model.ollama.autoconfigure.OllamaChatAutoConfiguration)",
       "Bash(mvn clean:*)",
-      "Bash(sed:*)"
+      "Bash(sed:*)",
+      "Bash(sed -i 's/bsic-bank/bdqm/g; s/bsic_bank/bdqm/g; s/BSIC/BDQM/g' infra/docker/realm-config/bsic-bank.json)",
+      "Bash(mv infra/docker/realm-config/bsic-bank.json infra/docker/realm-config/bdqm.json)",
+      "Bash(sed -i 's|com/bsic/dataqualitybackend|com/adakalgroup/dataqualitybackend|g; s/com\\\\.bsic/com.adakalgroup/g' apps/backend/QUICK_START.md)",
+      "Bash(sed -i 's/dc=bsic/dc=bdqm/g; s/bsic-backend/bdqm-backend/g; s/support@bsic\\\\.com/support@example.com/g' apps/backend/README.md)",
+      "Bash(sed -i 's/BSIC - Data Quality Monitor/Data Quality Monitor/g' apps/backend/src/main/resources/static/index.html)",
+      "Bash(sed -i 's/username: bsic$/username: bdqm/g; s/password: bsic2024/password: bdqm2024/g; s/username: bsic_demo/username: bdqm_demo/g; s/\"bsic\", \"bsic2024\"/\"bdqm\", \"bdqm2024\"/g' database/ENV_SETUP.md)",
+      "Bash(sed -i 's|/var/log/bsic|/var/log/bdqm|g' infra/docker/docker-compose.observability.yml)"
     ]
   }
 }

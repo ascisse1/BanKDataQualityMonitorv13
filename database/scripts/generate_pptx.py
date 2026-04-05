@@ -188,7 +188,7 @@ add_text_box(slide, Inches(0.8), Inches(4.0), Inches(5), Inches(0.5),
              "Differenciateurs Cles", font_size=20, color=ACCENT_TEAL, bold=True)
 
 diffs = [
-    ("Integration Core Banking Directe", "Connexion directe a Informix/BSIC via JDBC — aucun middleware requis"),
+    ("Integration Core Banking Directe", "Connexion directe a Informix/CBS via JDBC — aucun middleware requis"),
     ("Architecture Multi-Agences", "Vues par agence avec supervision du siege — scalable de 1 a 500+ agences"),
     ("Pipeline d'Automatisation Complet", "De la detection a la reconciliation — de bout en bout sans re-saisie manuelle"),
     ("Pret pour la Reglementation", "Filtrage FATCA + validation 4-yeux + piste d'audit complete"),
@@ -435,7 +435,7 @@ add_text_box(slide, Inches(1.1), Inches(1.9), Inches(5), Inches(0.4),
              "Architecture Systeme", font_size=18, color=ORANGE, bold=True)
 
 systems = [
-    ("Core Banking Informix (BSIC)", "Connexion JDBC directe — clients, comptes, adresses, contacts", ORANGE),
+    ("Core Banking Informix (BDQM)", "Connexion JDBC directe — clients, comptes, adresses, contacts", ORANGE),
     ("Base de Donnees PostgreSQL", "Donnees qualite, anomalies, tickets, FATCA, journaux d'audit", ACCENT_BLUE),
     ("Keycloak SSO", "Authentification OAuth2 — connexion unique entreprise", ACCENT_TEAL),
     ("Flowable BPMN", "Moteur d'automatisation de workflows standard", RGBColor(0x6C, 0x5C, 0xE7)),
@@ -719,7 +719,7 @@ add_text_box(slide, Inches(1.1), Inches(0.5), Inches(10), Inches(0.6),
 selling_points = [
     ("Conformite Reglementaire", "Filtrage FATCA + validation 4-yeux + piste d'audit complete — toujours pret pour l'inspection. Respectez les exigences IRS et reglementaires locales sans effort manuel.", GOLD),
     ("Automatisation de Bout en Bout", "De la detection a la reconciliation — pipeline entierement automatise. L'integration RPA elimine la re-saisie manuelle entre les systemes.", ACCENT_BLUE),
-    ("Integration Core Banking Directe", "Connexion directe a Informix/BSIC via JDBC — pas de middleware, zero silo de donnees. Les corrections alimentent directement le systeme source.", ORANGE),
+    ("Integration Core Banking Directe", "Connexion directe a Informix/CBS via JDBC — pas de middleware, zero silo de donnees. Les corrections alimentent directement le systeme source.", ORANGE),
     ("Scalabilite Multi-Agences", "Responsabilite au niveau agence avec visibilite du siege. Meme plateforme pour 1 ou 500+ agences, zero configuration par agence.", ACCENT_TEAL),
     ("ROI Mesurable", "Tableaux de bord KPI qui prouvent l'amelioration de la qualite des donnees. Suivez les taux de correction, la performance des agences et les metriques de conformite.", RGBColor(0x6C, 0x5C, 0xE7)),
 ]

@@ -1,6 +1,6 @@
 -- ============================================================================
 -- AMPLITUDE CBS - Large Scale Seed Data for INFORMIX
--- BSIC Bank - Mali
+-- Sample Bank - Mali
 -- Generated: 2026-01-10 02:25:42
 -- Total Records: 1000 clients, 1530 accounts
 -- ============================================================================
@@ -3599,7 +3599,7 @@ INSERT INTO bkprfcli (cli, prf, emp, demb, trev, demp) VALUES ('CLI000000000042'
 INSERT INTO bkprfcli (cli, prf, emp, demb, trev, demp) VALUES ('CLI000000000043', 'MED', 'CHU POINT G', '2011-04-24', '05', 'Kangaba');
 INSERT INTO bkprfcli (cli, prf, emp, demb, trev, demp) VALUES ('CLI000000000044', 'EMP', 'CHU POINT G', '2012-12-13', '02', 'Banamba');
 INSERT INTO bkprfcli (cli, prf, emp, demb, trev, demp) VALUES ('CLI000000000045', 'AGR', 'CHU GABRIEL TOURE', '2008-04-18', '03', 'Nioro du Sahel');
-INSERT INTO bkprfcli (cli, prf, emp, demb, trev, demp) VALUES ('CLI000000000046', 'SEC', 'BSIC MALI', '2005-01-02', '02', 'Nioro du Sahel');
+INSERT INTO bkprfcli (cli, prf, emp, demb, trev, demp) VALUES ('CLI000000000046', 'SEC', 'SAMPLE BANK', '2005-01-02', '02', 'Nioro du Sahel');
 INSERT INTO bkprfcli (cli, prf, emp, demb, trev, demp) VALUES ('CLI000000000047', 'ART', 'ECOBANK MALI', '2007-03-29', '03', 'Bougouni');
 INSERT INTO bkprfcli (cli, prf, emp, demb, trev, demp) VALUES ('CLI000000000048', 'LIB', 'BRAMALI', '2022-04-16', '02', 'Bamako');
 INSERT INTO bkprfcli (cli, prf, emp, demb, trev, demp) VALUES ('CLI000000000049', 'GEN', 'TRESOR PUBLIC', '2005-02-16', '10', 'Kati');
@@ -3635,7 +3635,7 @@ INSERT INTO bkprfcli (cli, prf, emp, demb, trev, demp) VALUES ('CLI000000000078'
 INSERT INTO bkprfcli (cli, prf, emp, demb, trev, demp) VALUES ('CLI000000000079', 'CPT', 'COMATEX', '2006-09-14', '08', 'Mopti');
 INSERT INTO bkprfcli (cli, prf, emp, demb, trev, demp) VALUES ('CLI000000000080', 'CHF', 'SOMAGEP', '2007-05-19', '04', 'Dioila');
 INSERT INTO bkprfcli (cli, prf, emp, demb, trev, demp) VALUES ('CLI000000000081', 'TEC', 'VIVO ENERGY MALI', '2014-06-26', '02', 'Bandiagara');
-INSERT INTO bkprfcli (cli, prf, emp, demb, trev, demp) VALUES ('CLI000000000082', 'SEC', 'BSIC MALI', '2018-10-17', '07', 'Kenieba');
+INSERT INTO bkprfcli (cli, prf, emp, demb, trev, demp) VALUES ('CLI000000000082', 'SEC', 'SAMPLE BANK', '2018-10-17', '07', 'Kenieba');
 INSERT INTO bkprfcli (cli, prf, emp, demb, trev, demp) VALUES ('CLI000000000083', 'CHF', 'TELECEL MALI', '2017-01-19', '06', 'Kati');
 INSERT INTO bkprfcli (cli, prf, emp, demb, trev, demp) VALUES ('CLI000000000084', 'MED', 'TOGUNA AGRO', '2011-07-03', '06', 'Segou');
 INSERT INTO bkprfcli (cli, prf, emp, demb, trev, demp) VALUES ('CLI000000000085', 'LIB', 'ORANGE MALI', '2015-11-17', '01', 'Kenieba');
@@ -3654,7 +3654,7 @@ INSERT INTO bkprfcli (cli, prf, emp, demb, trev, demp) VALUES ('CLI000000000097'
 INSERT INTO bkprfcli (cli, prf, emp, demb, trev, demp) VALUES ('CLI000000000098', 'ART', 'TOGUNA AGRO', '2013-09-30', '10', 'Niono');
 INSERT INTO bkprfcli (cli, prf, emp, demb, trev, demp) VALUES ('CLI000000000099', 'TEC', 'ORANGE MALI', '2007-09-01', '04', 'Bandiagara');
 INSERT INTO bkprfcli (cli, prf, emp, demb, trev, demp) VALUES ('CLI000000000100', 'MED', 'AZAR SA', '2013-02-27', '09', 'Koutiala');
-INSERT INTO bkprfcli (cli, prf, emp, demb, trev, demp) VALUES ('CLI000000000101', 'MED', 'BSIC MALI', '2023-07-30', '04', 'Koutiala');
+INSERT INTO bkprfcli (cli, prf, emp, demb, trev, demp) VALUES ('CLI000000000101', 'MED', 'SAMPLE BANK', '2023-07-30', '04', 'Koutiala');
 INSERT INTO bkprfcli (cli, prf, emp, demb, trev, demp) VALUES ('CLI000000000102', 'AVT', 'CHU GABRIEL TOURE', '2013-01-19', '05', 'Kenieba');
 INSERT INTO bkprfcli (cli, prf, emp, demb, trev, demp) VALUES ('CLI000000000103', 'CHF', 'AZAR SA', '2008-03-16', '01', 'Nioro du Sahel');
 INSERT INTO bkprfcli (cli, prf, emp, demb, trev, demp) VALUES ('CLI000000000104', 'ENS', 'TRESOR PUBLIC', '2011-03-30', '05', 'Koutiala');
@@ -3669,7 +3669,7 @@ INSERT INTO bkprfcli (cli, prf, emp, demb, trev, demp) VALUES ('CLI000000000112'
 INSERT INTO bkprfcli (cli, prf, emp, demb, trev, demp) VALUES ('CLI000000000113', 'ART', 'BIM SA', '2006-07-29', '06', 'Yelimane');
 INSERT INTO bkprfcli (cli, prf, emp, demb, trev, demp) VALUES ('CLI000000000114', 'COM', 'BMS SA', '2021-04-10', '10', 'Segou');
 INSERT INTO bkprfcli (cli, prf, emp, demb, trev, demp) VALUES ('CLI000000000115', 'LIB', 'MALITEL', '2005-07-21', '03', 'Bougouni');
-INSERT INTO bkprfcli (cli, prf, emp, demb, trev, demp) VALUES ('CLI000000000116', 'LIB', 'BSIC MALI', '2014-06-09', '03', 'Bougouni');
+INSERT INTO bkprfcli (cli, prf, emp, demb, trev, demp) VALUES ('CLI000000000116', 'LIB', 'SAMPLE BANK', '2014-06-09', '03', 'Bougouni');
 INSERT INTO bkprfcli (cli, prf, emp, demb, trev, demp) VALUES ('CLI000000000117', 'LIB', 'TRESOR PUBLIC', '2005-01-18', '07', 'Yelimane');
 INSERT INTO bkprfcli (cli, prf, emp, demb, trev, demp) VALUES ('CLI000000000118', 'ING', 'BIM SA', '2021-09-20', '01', 'Kidal');
 INSERT INTO bkprfcli (cli, prf, emp, demb, trev, demp) VALUES ('CLI000000000119', 'AGR', 'CMDT', '2006-03-23', '03', 'Djenne');
@@ -3688,7 +3688,7 @@ INSERT INTO bkprfcli (cli, prf, emp, demb, trev, demp) VALUES ('CLI000000000131'
 INSERT INTO bkprfcli (cli, prf, emp, demb, trev, demp) VALUES ('CLI000000000132', 'SEC', 'HUICOMA', '2021-07-29', '02', 'Bandiagara');
 INSERT INTO bkprfcli (cli, prf, emp, demb, trev, demp) VALUES ('CLI000000000133', 'INF', 'OFFICE DU NIGER', '2011-04-12', '06', 'Kolokani');
 INSERT INTO bkprfcli (cli, prf, emp, demb, trev, demp) VALUES ('CLI000000000134', 'CPT', 'SOTRAMA', '2022-07-10', '05', 'Yelimane');
-INSERT INTO bkprfcli (cli, prf, emp, demb, trev, demp) VALUES ('CLI000000000135', 'CHF', 'BSIC MALI', '2009-07-07', '04', 'Koutiala');
+INSERT INTO bkprfcli (cli, prf, emp, demb, trev, demp) VALUES ('CLI000000000135', 'CHF', 'SAMPLE BANK', '2009-07-07', '04', 'Koutiala');
 INSERT INTO bkprfcli (cli, prf, emp, demb, trev, demp) VALUES ('CLI000000000136', 'CPT', 'CMDT', '2021-06-02', '05', 'Banamba');
 INSERT INTO bkprfcli (cli, prf, emp, demb, trev, demp) VALUES ('CLI000000000137', 'MED', 'BMS SA', '2021-12-25', '10', 'Kolokani');
 INSERT INTO bkprfcli (cli, prf, emp, demb, trev, demp) VALUES ('CLI000000000138', 'DIR', 'COMATEX', '2018-09-01', '06', 'Kidal');
@@ -3733,7 +3733,7 @@ INSERT INTO bkprfcli (cli, prf, emp, demb, trev, demp) VALUES ('CLI000000000176'
 INSERT INTO bkprfcli (cli, prf, emp, demb, trev, demp) VALUES ('CLI000000000177', 'ING', 'VIVO ENERGY MALI', '2022-06-02', '07', 'San');
 INSERT INTO bkprfcli (cli, prf, emp, demb, trev, demp) VALUES ('CLI000000000178', 'AGR', 'SOTRAMA', '2021-09-22', '08', 'San');
 INSERT INTO bkprfcli (cli, prf, emp, demb, trev, demp) VALUES ('CLI000000000179', 'AGR', 'ORANGE MALI', '2006-12-03', '01', 'Koutiala');
-INSERT INTO bkprfcli (cli, prf, emp, demb, trev, demp) VALUES ('CLI000000000180', 'INF', 'BSIC MALI', '2023-10-09', '01', 'Kolokani');
+INSERT INTO bkprfcli (cli, prf, emp, demb, trev, demp) VALUES ('CLI000000000180', 'INF', 'SAMPLE BANK', '2023-10-09', '01', 'Kolokani');
 INSERT INTO bkprfcli (cli, prf, emp, demb, trev, demp) VALUES ('CLI000000000181', 'CPT', 'TELECEL MALI', '2012-04-07', '02', 'Bandiagara');
 INSERT INTO bkprfcli (cli, prf, emp, demb, trev, demp) VALUES ('CLI000000000182', 'GEN', 'INDEPENDANT', '2021-10-31', '02', 'San');
 INSERT INTO bkprfcli (cli, prf, emp, demb, trev, demp) VALUES ('CLI000000000183', 'ART', 'BMS SA', '2009-12-18', '09', 'Kenieba');
@@ -3775,7 +3775,7 @@ INSERT INTO bkprfcli (cli, prf, emp, demb, trev, demp) VALUES ('CLI000000000218'
 INSERT INTO bkprfcli (cli, prf, emp, demb, trev, demp) VALUES ('CLI000000000219', 'DIR', 'ORANGE MALI', '2008-07-03', '08', 'Gao');
 INSERT INTO bkprfcli (cli, prf, emp, demb, trev, demp) VALUES ('CLI000000000220', 'AVT', 'SOTELMA', '2014-06-22', '09', 'Bandiagara');
 INSERT INTO bkprfcli (cli, prf, emp, demb, trev, demp) VALUES ('CLI000000000221', 'BAN', 'VIVO ENERGY MALI', '2008-05-03', '06', 'Gao');
-INSERT INTO bkprfcli (cli, prf, emp, demb, trev, demp) VALUES ('CLI000000000222', 'TEC', 'BSIC MALI', '2008-10-07', '08', 'Bamako');
+INSERT INTO bkprfcli (cli, prf, emp, demb, trev, demp) VALUES ('CLI000000000222', 'TEC', 'SAMPLE BANK', '2008-10-07', '08', 'Bamako');
 INSERT INTO bkprfcli (cli, prf, emp, demb, trev, demp) VALUES ('CLI000000000223', 'ETU', NULL, NULL, '02', NULL);
 INSERT INTO bkprfcli (cli, prf, emp, demb, trev, demp) VALUES ('CLI000000000224', 'GEN', 'ORABANK MALI', '2015-01-11', '04', 'Kangaba');
 INSERT INTO bkprfcli (cli, prf, emp, demb, trev, demp) VALUES ('CLI000000000225', 'EMP', 'TELECEL MALI', '2020-04-17', '01', 'Sikasso');
@@ -3787,7 +3787,7 @@ INSERT INTO bkprfcli (cli, prf, emp, demb, trev, demp) VALUES ('CLI000000000230'
 INSERT INTO bkprfcli (cli, prf, emp, demb, trev, demp) VALUES ('CLI000000000231', 'ENS', 'AZAR SA', '2015-06-04', '10', 'Tombouctou');
 INSERT INTO bkprfcli (cli, prf, emp, demb, trev, demp) VALUES ('CLI000000000232', 'AVT', 'CHU GABRIEL TOURE', '2019-12-04', '10', 'Koutiala');
 INSERT INTO bkprfcli (cli, prf, emp, demb, trev, demp) VALUES ('CLI000000000233', 'TEC', 'ECOBANK MALI', '2017-06-01', '02', 'Bougouni');
-INSERT INTO bkprfcli (cli, prf, emp, demb, trev, demp) VALUES ('CLI000000000234', 'ART', 'BSIC MALI', '2011-05-31', '09', 'Kidal');
+INSERT INTO bkprfcli (cli, prf, emp, demb, trev, demp) VALUES ('CLI000000000234', 'ART', 'SAMPLE BANK', '2011-05-31', '09', 'Kidal');
 INSERT INTO bkprfcli (cli, prf, emp, demb, trev, demp) VALUES ('CLI000000000235', 'INF', 'TOGUNA AGRO', '2009-08-30', '08', 'Tombouctou');
 INSERT INTO bkprfcli (cli, prf, emp, demb, trev, demp) VALUES ('CLI000000000236', 'CPT', 'SOMAGEP', '2015-01-19', '09', 'Djenne');
 INSERT INTO bkprfcli (cli, prf, emp, demb, trev, demp) VALUES ('CLI000000000237', 'AGR', 'CHU GABRIEL TOURE', '2012-05-30', '03', 'Koutiala');
@@ -3806,7 +3806,7 @@ INSERT INTO bkprfcli (cli, prf, emp, demb, trev, demp) VALUES ('CLI000000000249'
 INSERT INTO bkprfcli (cli, prf, emp, demb, trev, demp) VALUES ('CLI000000000250', 'TEC', 'CHU POINT G', '2006-04-06', '01', 'Kayes');
 INSERT INTO bkprfcli (cli, prf, emp, demb, trev, demp) VALUES ('CLI000000000251', 'BAN', 'BMS SA', '2021-11-08', '02', 'Niono');
 INSERT INTO bkprfcli (cli, prf, emp, demb, trev, demp) VALUES ('CLI000000000252', 'AGR', 'EDM SA', '2010-07-30', '08', 'Segou');
-INSERT INTO bkprfcli (cli, prf, emp, demb, trev, demp) VALUES ('CLI000000000253', 'DIR', 'BSIC MALI', '2014-07-15', '10', 'Kayes');
+INSERT INTO bkprfcli (cli, prf, emp, demb, trev, demp) VALUES ('CLI000000000253', 'DIR', 'SAMPLE BANK', '2014-07-15', '10', 'Kayes');
 INSERT INTO bkprfcli (cli, prf, emp, demb, trev, demp) VALUES ('CLI000000000254', 'CHF', 'SOTELMA', '2016-11-18', '01', 'Bandiagara');
 INSERT INTO bkprfcli (cli, prf, emp, demb, trev, demp) VALUES ('CLI000000000255', 'COM', 'PMU MALI', '2014-03-03', '02', 'San');
 INSERT INTO bkprfcli (cli, prf, emp, demb, trev, demp) VALUES ('CLI000000000256', 'INF', 'TELECEL MALI', '2021-09-16', '10', 'Bandiagara');
@@ -3828,9 +3828,9 @@ INSERT INTO bkprfcli (cli, prf, emp, demb, trev, demp) VALUES ('CLI000000000271'
 INSERT INTO bkprfcli (cli, prf, emp, demb, trev, demp) VALUES ('CLI000000000272', 'COM', 'BDM SA', '2023-04-28', '07', 'Bamako');
 INSERT INTO bkprfcli (cli, prf, emp, demb, trev, demp) VALUES ('CLI000000000273', 'CHF', 'CHU GABRIEL TOURE', '2012-11-16', '01', 'Koulikoro');
 INSERT INTO bkprfcli (cli, prf, emp, demb, trev, demp) VALUES ('CLI000000000274', 'TEC', 'CFAO MOTORS MALI', '2021-09-04', '06', 'Kenieba');
-INSERT INTO bkprfcli (cli, prf, emp, demb, trev, demp) VALUES ('CLI000000000275', 'SEC', 'BSIC MALI', '2018-06-08', '07', 'Koulikoro');
+INSERT INTO bkprfcli (cli, prf, emp, demb, trev, demp) VALUES ('CLI000000000275', 'SEC', 'SAMPLE BANK', '2018-06-08', '07', 'Koulikoro');
 INSERT INTO bkprfcli (cli, prf, emp, demb, trev, demp) VALUES ('CLI000000000276', 'CPT', 'BDM SA', '2015-11-16', '07', 'Tombouctou');
-INSERT INTO bkprfcli (cli, prf, emp, demb, trev, demp) VALUES ('CLI000000000277', 'CPT', 'BSIC MALI', '2021-12-05', '01', 'Koutiala');
+INSERT INTO bkprfcli (cli, prf, emp, demb, trev, demp) VALUES ('CLI000000000277', 'CPT', 'SAMPLE BANK', '2021-12-05', '01', 'Koutiala');
 INSERT INTO bkprfcli (cli, prf, emp, demb, trev, demp) VALUES ('CLI000000000278', 'COM', 'EDM SA', '2016-12-20', '08', 'Segou');
 INSERT INTO bkprfcli (cli, prf, emp, demb, trev, demp) VALUES ('CLI000000000279', 'RET', NULL, NULL, '04', NULL);
 INSERT INTO bkprfcli (cli, prf, emp, demb, trev, demp) VALUES ('CLI000000000280', 'EMP', 'COMATEX', '2022-01-21', '01', 'San');
@@ -3902,7 +3902,7 @@ INSERT INTO bkprfcli (cli, prf, emp, demb, trev, demp) VALUES ('CLI000000000345'
 INSERT INTO bkprfcli (cli, prf, emp, demb, trev, demp) VALUES ('CLI000000000346', 'TEC', 'ORABANK MALI', '2016-04-16', '10', 'Banamba');
 INSERT INTO bkprfcli (cli, prf, emp, demb, trev, demp) VALUES ('CLI000000000347', 'MED', 'KATI CIVILS', '2017-05-01', '09', 'Kolokani');
 INSERT INTO bkprfcli (cli, prf, emp, demb, trev, demp) VALUES ('CLI000000000348', 'RET', NULL, NULL, '05', NULL);
-INSERT INTO bkprfcli (cli, prf, emp, demb, trev, demp) VALUES ('CLI000000000349', 'ENS', 'BSIC MALI', '2017-06-27', '01', 'Gao');
+INSERT INTO bkprfcli (cli, prf, emp, demb, trev, demp) VALUES ('CLI000000000349', 'ENS', 'SAMPLE BANK', '2017-06-27', '01', 'Gao');
 INSERT INTO bkprfcli (cli, prf, emp, demb, trev, demp) VALUES ('CLI000000000350', 'LIB', 'KATI CIVILS', '2009-10-17', '01', 'Dioila');
 INSERT INTO bkprfcli (cli, prf, emp, demb, trev, demp) VALUES ('CLI000000000351', 'EMP', 'SOMAGEP', '2009-04-07', '01', 'Niono');
 INSERT INTO bkprfcli (cli, prf, emp, demb, trev, demp) VALUES ('CLI000000000352', 'DIR', 'EDUCATION NATIONALE', '2015-02-18', '03', 'Sikasso');
@@ -3913,7 +3913,7 @@ INSERT INTO bkprfcli (cli, prf, emp, demb, trev, demp) VALUES ('CLI000000000356'
 INSERT INTO bkprfcli (cli, prf, emp, demb, trev, demp) VALUES ('CLI000000000357', 'CPT', 'TOTAL MALI', '2023-06-15', '06', 'Kati');
 INSERT INTO bkprfcli (cli, prf, emp, demb, trev, demp) VALUES ('CLI000000000358', 'LIB', 'SOTELMA', '2014-08-22', '01', 'Yanfolila');
 INSERT INTO bkprfcli (cli, prf, emp, demb, trev, demp) VALUES ('CLI000000000359', 'ENS', 'SOTRAMA', '2006-07-06', '02', 'Gao');
-INSERT INTO bkprfcli (cli, prf, emp, demb, trev, demp) VALUES ('CLI000000000360', 'LIB', 'BSIC MALI', '2007-07-23', '05', 'Sikasso');
+INSERT INTO bkprfcli (cli, prf, emp, demb, trev, demp) VALUES ('CLI000000000360', 'LIB', 'SAMPLE BANK', '2007-07-23', '05', 'Sikasso');
 INSERT INTO bkprfcli (cli, prf, emp, demb, trev, demp) VALUES ('CLI000000000361', 'ING', 'MALITEL', '2020-11-30', '01', 'Koulikoro');
 INSERT INTO bkprfcli (cli, prf, emp, demb, trev, demp) VALUES ('CLI000000000362', 'DIR', 'TRESOR PUBLIC', '2008-11-24', '03', 'Djenne');
 INSERT INTO bkprfcli (cli, prf, emp, demb, trev, demp) VALUES ('CLI000000000363', 'INF', 'PMU MALI', '2011-03-07', '01', 'Niono');
@@ -4033,8 +4033,8 @@ INSERT INTO bkprfcli (cli, prf, emp, demb, trev, demp) VALUES ('CLI000000000476'
 INSERT INTO bkprfcli (cli, prf, emp, demb, trev, demp) VALUES ('CLI000000000477', 'MED', 'ORABANK MALI', '2007-05-17', '09', 'Tombouctou');
 INSERT INTO bkprfcli (cli, prf, emp, demb, trev, demp) VALUES ('CLI000000000478', 'INF', 'VIVO ENERGY MALI', '2021-12-19', '05', 'Tombouctou');
 INSERT INTO bkprfcli (cli, prf, emp, demb, trev, demp) VALUES ('CLI000000000479', 'RET', NULL, NULL, '10', NULL);
-INSERT INTO bkprfcli (cli, prf, emp, demb, trev, demp) VALUES ('CLI000000000480', 'ING', 'BSIC MALI', '2007-10-25', '08', 'Nioro du Sahel');
-INSERT INTO bkprfcli (cli, prf, emp, demb, trev, demp) VALUES ('CLI000000000481', 'CPT', 'BSIC MALI', '2016-02-16', '08', 'Djenne');
+INSERT INTO bkprfcli (cli, prf, emp, demb, trev, demp) VALUES ('CLI000000000480', 'ING', 'SAMPLE BANK', '2007-10-25', '08', 'Nioro du Sahel');
+INSERT INTO bkprfcli (cli, prf, emp, demb, trev, demp) VALUES ('CLI000000000481', 'CPT', 'SAMPLE BANK', '2016-02-16', '08', 'Djenne');
 INSERT INTO bkprfcli (cli, prf, emp, demb, trev, demp) VALUES ('CLI000000000482', 'COM', 'MALITEL', '2009-08-10', '05', 'Niono');
 INSERT INTO bkprfcli (cli, prf, emp, demb, trev, demp) VALUES ('CLI000000000483', 'MED', 'CHU GABRIEL TOURE', '2008-05-29', '10', 'Kidal');
 INSERT INTO bkprfcli (cli, prf, emp, demb, trev, demp) VALUES ('CLI000000000484', 'MED', 'SOMAGEP', '2011-02-15', '08', 'Dioila');
@@ -4045,9 +4045,9 @@ INSERT INTO bkprfcli (cli, prf, emp, demb, trev, demp) VALUES ('CLI000000000488'
 INSERT INTO bkprfcli (cli, prf, emp, demb, trev, demp) VALUES ('CLI000000000489', 'INF', 'BMS SA', '2023-05-01', '07', 'Bafoulabe');
 INSERT INTO bkprfcli (cli, prf, emp, demb, trev, demp) VALUES ('CLI000000000490', 'GEN', 'BRAMALI', '2009-01-20', '04', 'Djenne');
 INSERT INTO bkprfcli (cli, prf, emp, demb, trev, demp) VALUES ('CLI000000000491', 'INF', 'CHU GABRIEL TOURE', '2020-01-12', '03', 'Bafoulabe');
-INSERT INTO bkprfcli (cli, prf, emp, demb, trev, demp) VALUES ('CLI000000000492', 'CAD', 'BSIC MALI', '2022-10-02', '04', 'Nioro du Sahel');
+INSERT INTO bkprfcli (cli, prf, emp, demb, trev, demp) VALUES ('CLI000000000492', 'CAD', 'SAMPLE BANK', '2022-10-02', '04', 'Nioro du Sahel');
 INSERT INTO bkprfcli (cli, prf, emp, demb, trev, demp) VALUES ('CLI000000000493', 'INF', 'ECOBANK MALI', '2007-09-02', '10', 'San');
-INSERT INTO bkprfcli (cli, prf, emp, demb, trev, demp) VALUES ('CLI000000000494', 'SEC', 'BSIC MALI', '2021-03-25', '03', 'Dioila');
+INSERT INTO bkprfcli (cli, prf, emp, demb, trev, demp) VALUES ('CLI000000000494', 'SEC', 'SAMPLE BANK', '2021-03-25', '03', 'Dioila');
 INSERT INTO bkprfcli (cli, prf, emp, demb, trev, demp) VALUES ('CLI000000000495', 'ING', 'HUICOMA', '2018-11-05', '10', 'Koulikoro');
 INSERT INTO bkprfcli (cli, prf, emp, demb, trev, demp) VALUES ('CLI000000000496', 'DIR', 'ORANGE MALI', '2008-04-27', '10', 'Kolokani');
 INSERT INTO bkprfcli (cli, prf, emp, demb, trev, demp) VALUES ('CLI000000000497', 'LIB', 'CHU GABRIEL TOURE', '2013-07-16', '01', 'Kayes');
@@ -4057,7 +4057,7 @@ INSERT INTO bkprfcli (cli, prf, emp, demb, trev, demp) VALUES ('CLI000000000500'
 INSERT INTO bkprfcli (cli, prf, emp, demb, trev, demp) VALUES ('CLI000000000501', 'COM', 'CHU POINT G', '2017-06-19', '05', 'Nioro du Sahel');
 INSERT INTO bkprfcli (cli, prf, emp, demb, trev, demp) VALUES ('CLI000000000502', 'EMP', 'TRESOR PUBLIC', '2014-10-30', '03', 'Niono');
 INSERT INTO bkprfcli (cli, prf, emp, demb, trev, demp) VALUES ('CLI000000000503', 'INF', 'CHU POINT G', '2010-10-29', '07', 'Yelimane');
-INSERT INTO bkprfcli (cli, prf, emp, demb, trev, demp) VALUES ('CLI000000000504', 'ING', 'BSIC MALI', '2018-08-05', '05', 'Kidal');
+INSERT INTO bkprfcli (cli, prf, emp, demb, trev, demp) VALUES ('CLI000000000504', 'ING', 'SAMPLE BANK', '2018-08-05', '05', 'Kidal');
 INSERT INTO bkprfcli (cli, prf, emp, demb, trev, demp) VALUES ('CLI000000000505', 'ENS', 'BRAMALI', '2008-03-30', '02', 'Kayes');
 INSERT INTO bkprfcli (cli, prf, emp, demb, trev, demp) VALUES ('CLI000000000506', 'TEC', 'SOMAGEP', '2011-02-09', '10', 'Kati');
 INSERT INTO bkprfcli (cli, prf, emp, demb, trev, demp) VALUES ('CLI000000000507', 'SEC', 'GRANDS MOULINS DU MALI', '2013-10-06', '02', 'Yanfolila');
@@ -4068,7 +4068,7 @@ INSERT INTO bkprfcli (cli, prf, emp, demb, trev, demp) VALUES ('CLI000000000511'
 INSERT INTO bkprfcli (cli, prf, emp, demb, trev, demp) VALUES ('CLI000000000512', 'GEN', 'GRANDS MOULINS DU MALI', '2013-04-12', '05', 'Kidal');
 INSERT INTO bkprfcli (cli, prf, emp, demb, trev, demp) VALUES ('CLI000000000513', 'AVT', 'TOGUNA AGRO', '2015-01-07', '02', 'Koulikoro');
 INSERT INTO bkprfcli (cli, prf, emp, demb, trev, demp) VALUES ('CLI000000000514', 'GEN', 'ORANGE MALI', '2010-06-19', '10', 'Kenieba');
-INSERT INTO bkprfcli (cli, prf, emp, demb, trev, demp) VALUES ('CLI000000000515', 'TEC', 'BSIC MALI', '2007-10-28', '07', 'Sikasso');
+INSERT INTO bkprfcli (cli, prf, emp, demb, trev, demp) VALUES ('CLI000000000515', 'TEC', 'SAMPLE BANK', '2007-10-28', '07', 'Sikasso');
 INSERT INTO bkprfcli (cli, prf, emp, demb, trev, demp) VALUES ('CLI000000000516', 'EMP', 'AIR MALI', '2009-03-11', '07', 'Kidal');
 INSERT INTO bkprfcli (cli, prf, emp, demb, trev, demp) VALUES ('CLI000000000517', 'CHF', 'SOMAPIL', '2023-08-27', '03', 'Sikasso');
 INSERT INTO bkprfcli (cli, prf, emp, demb, trev, demp) VALUES ('CLI000000000518', 'MED', 'OFFICE DU NIGER', '2009-02-05', '10', 'Kidal');
@@ -4077,10 +4077,10 @@ INSERT INTO bkprfcli (cli, prf, emp, demb, trev, demp) VALUES ('CLI000000000520'
 INSERT INTO bkprfcli (cli, prf, emp, demb, trev, demp) VALUES ('CLI000000000521', 'CAD', 'INDEPENDANT', '2012-09-15', '09', 'Nioro du Sahel');
 INSERT INTO bkprfcli (cli, prf, emp, demb, trev, demp) VALUES ('CLI000000000522', 'ETU', NULL, NULL, '08', NULL);
 INSERT INTO bkprfcli (cli, prf, emp, demb, trev, demp) VALUES ('CLI000000000523', 'ENS', 'SOMAPIL', '2022-03-03', '01', 'Sikasso');
-INSERT INTO bkprfcli (cli, prf, emp, demb, trev, demp) VALUES ('CLI000000000524', 'CAD', 'BSIC MALI', '2020-01-08', '02', 'Yelimane');
+INSERT INTO bkprfcli (cli, prf, emp, demb, trev, demp) VALUES ('CLI000000000524', 'CAD', 'SAMPLE BANK', '2020-01-08', '02', 'Yelimane');
 INSERT INTO bkprfcli (cli, prf, emp, demb, trev, demp) VALUES ('CLI000000000525', 'GEN', 'BDM SA', '2022-07-18', '08', 'Yanfolila');
 INSERT INTO bkprfcli (cli, prf, emp, demb, trev, demp) VALUES ('CLI000000000526', 'RET', NULL, NULL, '09', NULL);
-INSERT INTO bkprfcli (cli, prf, emp, demb, trev, demp) VALUES ('CLI000000000527', 'CHF', 'BSIC MALI', '2022-05-24', '04', 'Koutiala');
+INSERT INTO bkprfcli (cli, prf, emp, demb, trev, demp) VALUES ('CLI000000000527', 'CHF', 'SAMPLE BANK', '2022-05-24', '04', 'Koutiala');
 INSERT INTO bkprfcli (cli, prf, emp, demb, trev, demp) VALUES ('CLI000000000528', 'RET', NULL, NULL, '04', NULL);
 INSERT INTO bkprfcli (cli, prf, emp, demb, trev, demp) VALUES ('CLI000000000529', 'CHF', 'BMS SA', '2017-02-11', '02', 'Gao');
 INSERT INTO bkprfcli (cli, prf, emp, demb, trev, demp) VALUES ('CLI000000000530', 'TEC', 'TELECEL MALI', '2021-01-16', '04', 'Mopti');
@@ -4133,7 +4133,7 @@ INSERT INTO bkprfcli (cli, prf, emp, demb, trev, demp) VALUES ('CLI000000000576'
 INSERT INTO bkprfcli (cli, prf, emp, demb, trev, demp) VALUES ('CLI000000000577', 'COM', 'TOTAL MALI', '2017-05-25', '09', 'Gao');
 INSERT INTO bkprfcli (cli, prf, emp, demb, trev, demp) VALUES ('CLI000000000578', 'TEC', 'GRANDS MOULINS DU MALI', '2012-03-18', '02', 'Dioila');
 INSERT INTO bkprfcli (cli, prf, emp, demb, trev, demp) VALUES ('CLI000000000579', 'ING', 'ORANGE MALI', '2021-02-22', '01', 'Kenieba');
-INSERT INTO bkprfcli (cli, prf, emp, demb, trev, demp) VALUES ('CLI000000000580', 'INF', 'BSIC MALI', '2017-07-17', '01', 'Mopti');
+INSERT INTO bkprfcli (cli, prf, emp, demb, trev, demp) VALUES ('CLI000000000580', 'INF', 'SAMPLE BANK', '2017-07-17', '01', 'Mopti');
 INSERT INTO bkprfcli (cli, prf, emp, demb, trev, demp) VALUES ('CLI000000000581', 'ART', 'SOTELMA', '2012-01-07', '04', 'Kidal');
 INSERT INTO bkprfcli (cli, prf, emp, demb, trev, demp) VALUES ('CLI000000000582', 'AVT', 'BDM SA', '2017-09-15', '05', 'Nioro du Sahel');
 INSERT INTO bkprfcli (cli, prf, emp, demb, trev, demp) VALUES ('CLI000000000583', 'TEC', 'AZAR SA', '2007-09-30', '02', 'Koutiala');
@@ -4164,7 +4164,7 @@ INSERT INTO bkprfcli (cli, prf, emp, demb, trev, demp) VALUES ('CLI000000000607'
 INSERT INTO bkprfcli (cli, prf, emp, demb, trev, demp) VALUES ('CLI000000000608', 'LIB', 'COMATEX', '2020-04-12', '09', 'Segou');
 INSERT INTO bkprfcli (cli, prf, emp, demb, trev, demp) VALUES ('CLI000000000609', 'TEC', 'ORABANK MALI', '2018-12-20', '08', 'Kayes');
 INSERT INTO bkprfcli (cli, prf, emp, demb, trev, demp) VALUES ('CLI000000000610', 'ING', 'SOTRAMA', '2019-09-29', '08', 'Yelimane');
-INSERT INTO bkprfcli (cli, prf, emp, demb, trev, demp) VALUES ('CLI000000000611', 'ING', 'BSIC MALI', '2017-02-28', '05', 'Kayes');
+INSERT INTO bkprfcli (cli, prf, emp, demb, trev, demp) VALUES ('CLI000000000611', 'ING', 'SAMPLE BANK', '2017-02-28', '05', 'Kayes');
 INSERT INTO bkprfcli (cli, prf, emp, demb, trev, demp) VALUES ('CLI000000000612', 'TEC', 'VIVO ENERGY MALI', '2008-05-05', '10', 'Bamako');
 INSERT INTO bkprfcli (cli, prf, emp, demb, trev, demp) VALUES ('CLI000000000613', 'SEC', 'BIM SA', '2005-04-24', '08', 'Koutiala');
 INSERT INTO bkprfcli (cli, prf, emp, demb, trev, demp) VALUES ('CLI000000000614', 'SEC', 'TOGUNA AGRO', '2019-09-29', '09', 'Dioila');
@@ -4238,7 +4238,7 @@ INSERT INTO bkprfcli (cli, prf, emp, demb, trev, demp) VALUES ('CLI000000000681'
 INSERT INTO bkprfcli (cli, prf, emp, demb, trev, demp) VALUES ('CLI000000000682', 'DIR', 'KATI CIVILS', '2010-03-29', '10', 'San');
 INSERT INTO bkprfcli (cli, prf, emp, demb, trev, demp) VALUES ('CLI000000000683', 'CPT', 'TRESOR PUBLIC', '2014-05-17', '04', 'Bafoulabe');
 INSERT INTO bkprfcli (cli, prf, emp, demb, trev, demp) VALUES ('CLI000000000684', 'EMP', 'HUICOMA', '2010-01-04', '09', 'Dioila');
-INSERT INTO bkprfcli (cli, prf, emp, demb, trev, demp) VALUES ('CLI000000000685', 'MED', 'BSIC MALI', '2018-12-24', '09', 'Tombouctou');
+INSERT INTO bkprfcli (cli, prf, emp, demb, trev, demp) VALUES ('CLI000000000685', 'MED', 'SAMPLE BANK', '2018-12-24', '09', 'Tombouctou');
 INSERT INTO bkprfcli (cli, prf, emp, demb, trev, demp) VALUES ('CLI000000000686', 'BAN', 'TOGUNA AGRO', '2023-07-05', '04', 'Kidal');
 INSERT INTO bkprfcli (cli, prf, emp, demb, trev, demp) VALUES ('CLI000000000687', 'DIR', 'ECOBANK MALI', '2020-02-24', '02', 'Kenieba');
 INSERT INTO bkprfcli (cli, prf, emp, demb, trev, demp) VALUES ('CLI000000000688', 'LIB', 'ORANGE MALI', '2022-07-19', '02', 'Kidal');
@@ -4334,7 +4334,7 @@ INSERT INTO bkprfcli (cli, prf, emp, demb, trev, demp) VALUES ('CLI000000000777'
 INSERT INTO bkprfcli (cli, prf, emp, demb, trev, demp) VALUES ('CLI000000000778', 'COM', 'CFAO MOTORS MALI', '2008-05-14', '01', 'Bamako');
 INSERT INTO bkprfcli (cli, prf, emp, demb, trev, demp) VALUES ('CLI000000000779', 'AGR', 'CHU POINT G', '2007-02-19', '09', 'San');
 INSERT INTO bkprfcli (cli, prf, emp, demb, trev, demp) VALUES ('CLI000000000780', 'CAD', 'TOGUNA AGRO', '2009-04-26', '05', 'Gao');
-INSERT INTO bkprfcli (cli, prf, emp, demb, trev, demp) VALUES ('CLI000000000781', 'CHF', 'BSIC MALI', '2008-12-08', '03', 'Yanfolila');
+INSERT INTO bkprfcli (cli, prf, emp, demb, trev, demp) VALUES ('CLI000000000781', 'CHF', 'SAMPLE BANK', '2008-12-08', '03', 'Yanfolila');
 INSERT INTO bkprfcli (cli, prf, emp, demb, trev, demp) VALUES ('CLI000000000782', 'DIR', 'SOTELMA', '2014-03-05', '06', 'Kati');
 INSERT INTO bkprfcli (cli, prf, emp, demb, trev, demp) VALUES ('CLI000000000783', 'CHF', 'MALITEL', '2019-11-03', '01', 'Bafoulabe');
 INSERT INTO bkprfcli (cli, prf, emp, demb, trev, demp) VALUES ('CLI000000000784', 'TEC', 'EDM SA', '2021-03-20', '10', 'Dioila');
@@ -4347,7 +4347,7 @@ INSERT INTO bkprfcli (cli, prf, emp, demb, trev, demp) VALUES ('CLI000000000790'
 INSERT INTO bkprfcli (cli, prf, emp, demb, trev, demp) VALUES ('CLI000000000791', 'CHF', 'BRAMALI', '2006-08-17', '07', 'Niono');
 INSERT INTO bkprfcli (cli, prf, emp, demb, trev, demp) VALUES ('CLI000000000792', 'ETU', NULL, NULL, '10', NULL);
 INSERT INTO bkprfcli (cli, prf, emp, demb, trev, demp) VALUES ('CLI000000000793', 'CAD', 'VIVO ENERGY MALI', '2006-02-09', '09', 'Kati');
-INSERT INTO bkprfcli (cli, prf, emp, demb, trev, demp) VALUES ('CLI000000000794', 'EMP', 'BSIC MALI', '2012-08-13', '08', 'Kayes');
+INSERT INTO bkprfcli (cli, prf, emp, demb, trev, demp) VALUES ('CLI000000000794', 'EMP', 'SAMPLE BANK', '2012-08-13', '08', 'Kayes');
 INSERT INTO bkprfcli (cli, prf, emp, demb, trev, demp) VALUES ('CLI000000000795', 'LIB', 'CHU GABRIEL TOURE', '2019-03-19', '05', 'Tombouctou');
 INSERT INTO bkprfcli (cli, prf, emp, demb, trev, demp) VALUES ('CLI000000000796', 'LIB', 'SOTELMA', '2013-10-02', '06', 'Kenieba');
 INSERT INTO bkprfcli (cli, prf, emp, demb, trev, demp) VALUES ('CLI000000000797', 'RET', NULL, NULL, '09', NULL);
@@ -5632,7 +5632,7 @@ INSERT INTO bkemacli (cli, typ, email, atrf) VALUES ('CLI000000000180', 'PRO', '
 INSERT INTO bkemacli (cli, typ, email, atrf) VALUES ('CLI000000000181', 'PER', 'bore791@outlook.com', 'N');
 INSERT INTO bkemacli (cli, typ, email, atrf) VALUES ('CLI000000000181', 'PRO', 'bbore@cfaomotorsmali.ci', 'N');
 INSERT INTO bkemacli (cli, typ, email, atrf) VALUES ('CLI000000000182', 'PER', 'doumbia455@yahoo.fr', 'N');
-INSERT INTO bkemacli (cli, typ, email, atrf) VALUES ('CLI000000000182', 'PRO', 'ddoumbia@bsicmali.ci', 'N');
+INSERT INTO bkemacli (cli, typ, email, atrf) VALUES ('CLI000000000182', 'PRO', 'ddoumbia@example.com', 'N');
 INSERT INTO bkemacli (cli, typ, email, atrf) VALUES ('CLI000000000183', 'PER', 'kone70@outlook.com', 'N');
 INSERT INTO bkemacli (cli, typ, email, atrf) VALUES ('CLI000000000183', 'PRO', 'kkone@edmsa.ci', 'N');
 INSERT INTO bkemacli (cli, typ, email, atrf) VALUES ('CLI000000000184', 'PER', 'fall70@hotmail.com', 'N');
@@ -5664,7 +5664,7 @@ INSERT INTO bkemacli (cli, typ, email, atrf) VALUES ('CLI000000000200', 'PER', '
 INSERT INTO bkemacli (cli, typ, email, atrf) VALUES ('CLI000000000200', 'PRO', 'ccamara@bimsa.ci', 'N');
 INSERT INTO bkemacli (cli, typ, email, atrf) VALUES ('CLI000000000201', 'PER', 'koulibaly999@yahoo.fr', 'N');
 INSERT INTO bkemacli (cli, typ, email, atrf) VALUES ('CLI000000000202', 'PER', 'keïta985@gmail.com', 'N');
-INSERT INTO bkemacli (cli, typ, email, atrf) VALUES ('CLI000000000202', 'PRO', 'kkeïta@bsicmali.ci', 'N');
+INSERT INTO bkemacli (cli, typ, email, atrf) VALUES ('CLI000000000202', 'PRO', 'kkeïta@example.com', 'N');
 INSERT INTO bkemacli (cli, typ, email, atrf) VALUES ('CLI000000000203', 'PER', 'marico812@yahoo.fr', 'N');
 INSERT INTO bkemacli (cli, typ, email, atrf) VALUES ('CLI000000000203', 'PRO', 'mmarico@azarsa.ci', 'N');
 INSERT INTO bkemacli (cli, typ, email, atrf) VALUES ('CLI000000000204', 'PER', 'maiga176@outlook.com', 'N');
@@ -5920,7 +5920,7 @@ INSERT INTO bkemacli (cli, typ, email, atrf) VALUES ('CLI000000000378', 'PER', '
 INSERT INTO bkemacli (cli, typ, email, atrf) VALUES ('CLI000000000379', 'PER', 'diallo625@yahoo.fr', 'N');
 INSERT INTO bkemacli (cli, typ, email, atrf) VALUES ('CLI000000000379', 'PRO', 'ddiallo@bdmsa.ci', 'N');
 INSERT INTO bkemacli (cli, typ, email, atrf) VALUES ('CLI000000000380', 'PER', 'sangare849@yahoo.fr', 'N');
-INSERT INTO bkemacli (cli, typ, email, atrf) VALUES ('CLI000000000380', 'PRO', 'ssangare@bsicmali.ci', 'N');
+INSERT INTO bkemacli (cli, typ, email, atrf) VALUES ('CLI000000000380', 'PRO', 'ssangare@example.com', 'N');
 INSERT INTO bkemacli (cli, typ, email, atrf) VALUES ('CLI000000000381', 'PER', 'dagnoko562@hotmail.com', 'N');
 INSERT INTO bkemacli (cli, typ, email, atrf) VALUES ('CLI000000000382', 'PER', 'diabate930@hotmail.com', 'N');
 INSERT INTO bkemacli (cli, typ, email, atrf) VALUES ('CLI000000000382', 'PRO', 'ddiabate@sotrama.ci', 'N');
@@ -6190,7 +6190,7 @@ INSERT INTO bkemacli (cli, typ, email, atrf) VALUES ('CLI000000000564', 'PRO', '
 INSERT INTO bkemacli (cli, typ, email, atrf) VALUES ('CLI000000000565', 'PER', 'cissouma926@yahoo.fr', 'N');
 INSERT INTO bkemacli (cli, typ, email, atrf) VALUES ('CLI000000000565', 'PRO', 'ccissouma@grandsmoulinsdumali.ci', 'N');
 INSERT INTO bkemacli (cli, typ, email, atrf) VALUES ('CLI000000000566', 'PER', 'kansaye830@hotmail.com', 'N');
-INSERT INTO bkemacli (cli, typ, email, atrf) VALUES ('CLI000000000566', 'PRO', 'kkansaye@bsicmali.ci', 'N');
+INSERT INTO bkemacli (cli, typ, email, atrf) VALUES ('CLI000000000566', 'PRO', 'kkansaye@example.com', 'N');
 INSERT INTO bkemacli (cli, typ, email, atrf) VALUES ('CLI000000000567', 'PER', 'bore932@hotmail.com', 'N');
 INSERT INTO bkemacli (cli, typ, email, atrf) VALUES ('CLI000000000567', 'PRO', 'bbore@airmali.ci', 'N');
 INSERT INTO bkemacli (cli, typ, email, atrf) VALUES ('CLI000000000568', 'PER', 'sow618@hotmail.com', 'N');
@@ -6282,7 +6282,7 @@ INSERT INTO bkemacli (cli, typ, email, atrf) VALUES ('CLI000000000627', 'PER', '
 INSERT INTO bkemacli (cli, typ, email, atrf) VALUES ('CLI000000000628', 'PER', 'tangara364@yahoo.fr', 'N');
 INSERT INTO bkemacli (cli, typ, email, atrf) VALUES ('CLI000000000628', 'PRO', 'ttangara@vivoenergymali.ci', 'N');
 INSERT INTO bkemacli (cli, typ, email, atrf) VALUES ('CLI000000000629', 'PER', 'niangado185@outlook.com', 'N');
-INSERT INTO bkemacli (cli, typ, email, atrf) VALUES ('CLI000000000629', 'PRO', 'nniangado@bsicmali.ci', 'N');
+INSERT INTO bkemacli (cli, typ, email, atrf) VALUES ('CLI000000000629', 'PRO', 'nniangado@example.com', 'N');
 INSERT INTO bkemacli (cli, typ, email, atrf) VALUES ('CLI000000000630', 'PER', 'niangado718@outlook.com', 'N');
 INSERT INTO bkemacli (cli, typ, email, atrf) VALUES ('CLI000000000631', 'PER', 'guiro772@outlook.com', 'N');
 INSERT INTO bkemacli (cli, typ, email, atrf) VALUES ('CLI000000000632', 'PER', 'traore97@gmail.com', 'N');
@@ -6375,7 +6375,7 @@ INSERT INTO bkemacli (cli, typ, email, atrf) VALUES ('CLI000000000689', 'PRO', '
 INSERT INTO bkemacli (cli, typ, email, atrf) VALUES ('CLI000000000690', 'PER', 'guindo879@gmail.com', 'N');
 INSERT INTO bkemacli (cli, typ, email, atrf) VALUES ('CLI000000000690', 'PRO', 'gguindo@bdmsa.ci', 'N');
 INSERT INTO bkemacli (cli, typ, email, atrf) VALUES ('CLI000000000691', 'PER', 'tandia957@outlook.com', 'N');
-INSERT INTO bkemacli (cli, typ, email, atrf) VALUES ('CLI000000000691', 'PRO', 'ttandia@bsicmali.ci', 'N');
+INSERT INTO bkemacli (cli, typ, email, atrf) VALUES ('CLI000000000691', 'PRO', 'ttandia@example.com', 'N');
 INSERT INTO bkemacli (cli, typ, email, atrf) VALUES ('CLI000000000692', 'PER', 'sanogo984@yahoo.fr', 'N');
 INSERT INTO bkemacli (cli, typ, email, atrf) VALUES ('CLI000000000692', 'PRO', 'ssanogo@bramali.ci', 'N');
 INSERT INTO bkemacli (cli, typ, email, atrf) VALUES ('CLI000000000693', 'PER', 'tangara968@gmail.com', 'N');

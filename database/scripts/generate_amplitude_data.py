@@ -1,7 +1,7 @@
 #!/usr/bin/env python3
 """
 AMPLITUDE CBS - Large Scale Seed Data Generator for Informix
-Generates realistic banking data for BSIC Mali
+Generates realistic banking data for Sample Bank
 
 Usage:
     python generate_amplitude_data.py                    # Default: 100K clients
@@ -144,7 +144,7 @@ PROFESSIONS = [
 ]
 
 EMPLOYEURS = [
-    "ORANGE MALI", "MALITEL", "TELECEL MALI", "BSIC MALI", "BDM SA", "BMS SA", "ECOBANK MALI",
+    "ORANGE MALI", "MALITEL", "TELECEL MALI", "SAMPLE BANK", "BDM SA", "BMS SA", "ECOBANK MALI",
     "EDM SA", "SOMAGEP", "SOTRAMA", "AIR MALI", "AZAR SA", "CFAO MOTORS MALI",
     "TOTAL MALI", "VIVO ENERGY MALI", "BRAMALI", "GRANDS MOULINS DU MALI",
     "COMATEX", "HUICOMA", "CMDT", "OFFICE DU NIGER", "SOTELMA",
@@ -583,7 +583,7 @@ def main():
     with open(output_path, "w", encoding="utf-8") as f:
         f.write("-- ============================================================================\n")
         f.write("-- AMPLITUDE CBS - Large Scale Seed Data for INFORMIX\n")
-        f.write("-- BSIC Bank - Mali\n")
+        f.write("-- Sample Bank - Mali\n")
         f.write(f"-- Generated: {datetime.now().strftime('%Y-%m-%d %H:%M:%S')}\n")
         f.write(f"-- Total Records: {len(all_clients)} clients, {len(accounts)} accounts\n")
         f.write("-- ============================================================================\n")

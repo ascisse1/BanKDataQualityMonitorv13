@@ -111,7 +111,7 @@ spring.datasource.informix.jdbc-url: ...;DB_LOCALE=en_US.utf8;CLIENT_LOCALE=en_U
 
 ```
 backend-java/
-├── src/main/java/com/bsic/dataqualitybackend/
+├── src/main/java/com/adakalgroup/dataqualitybackend/
 │   ├── config/
 │   │   └── DataSourceConfig.java          # Configuration multi-datasource
 │   ├── controller/
@@ -158,5 +158,5 @@ tail -f logs/application.log
 
 Ou activer le mode DEBUG:
 ```bash
-java -jar target/data-quality-backend-1.0.0.jar --logging.level.com.bsic=DEBUG
+java -jar target/data-quality-backend-1.0.0.jar --logging.level.com.adakalgroup=DEBUG
 ```

@@ -1,6 +1,6 @@
 -- ============================================================================
 -- AMPLITUDE CBS - Complete DDL Script for INFORMIX
--- BSIC Bank - Core Banking System Database Schema
+-- Sample Bank - Core Banking System Database Schema
 -- ============================================================================
 -- NOTE: Foreign key constraints are in a separate file (amplitude_fk_informix.sql)
 --       to allow bulk data loading without constraint violations.

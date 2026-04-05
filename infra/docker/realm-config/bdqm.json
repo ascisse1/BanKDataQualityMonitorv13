@@ -1,8 +1,8 @@
 {
-  "id": "bsic-bank",
-  "realm": "bsic-bank",
+  "id": "bdqm",
+  "realm": "bdqm",
   "displayName": "Bsic-Bank",
-  "displayNameHtml": "<div class=\"kc-logo-text\"><span>bsic-bank</span></div>",
+  "displayNameHtml": "<div class=\"kc-logo-text\"><span>bdqm</span></div>",
   "notBefore": 0,
   "defaultSignatureAlgorithm": "RS256",
   "revokeRefreshToken": false,
@@ -49,7 +49,7 @@
     "realm": [
       {
         "name": "ROLE_ADMIN",
-        "description": "bsic-bank administrator role",
+        "description": "bdqm administrator role",
         "composite": false,
         "clientRole": false,
         "attributes": {}
@@ -63,13 +63,13 @@
       },
       {
         "name": "ROLE_USER",
-        "description": "bsic-bank user role",
+        "description": "bdqm user role",
         "composite": false,
         "clientRole": false,
         "attributes": {}
       },
       {
-        "name": "default-roles-bsic-bank",
+        "name": "default-roles-bdqm",
         "description": "${role_default-roles}",
         "composite": true,
         "composites": {
@@ -259,7 +259,7 @@
           "attributes": {}
         }
       ],
-      "bsic-bank-control-center": [],
+      "bdqm-control-center": [],
       "security-admin-console": [],
       "web_app": [],
       "admin-cli": [],
@@ -362,7 +362,7 @@
     }
   ],
   "defaultRole": {
-    "name": "default-roles-bsic-bank",
+    "name": "default-roles-bdqm",
     "description": "${role_default-roles}",
     "composite": true,
     "clientRole": false
@@ -410,7 +410,7 @@
       "serviceAccountClientId": "internal",
       "disableableCredentialTypes": [],
       "requiredActions": [],
-      "realmRoles": ["default-roles-bsic-bank"],
+      "realmRoles": ["default-roles-bdqm"],
       "notBefore": 0,
       "groups": []
     }
@@ -434,13 +434,13 @@
       "clientId": "account",
       "name": "${client_account}",
       "rootUrl": "${authBaseUrl}",
-      "baseUrl": "/realms/bsic-bank/account/",
+      "baseUrl": "/realms/bdqm/account/",
       "surrogateAuthRequired": false,
       "enabled": true,
       "alwaysDisplayInConsole": false,
       "clientAuthenticatorType": "client-secret",
       "secret": "700193e2-23e4-40b4-be0a-f6eb0e28704d",
-      "redirectUris": ["/realms/bsic-bank/account/*"],
+      "redirectUris": ["/realms/bdqm/account/*"],
       "webOrigins": [],
       "notBefore": 0,
       "bearerOnly": false,
@@ -465,13 +465,13 @@
       "clientId": "account-console",
       "name": "${client_account-console}",
       "rootUrl": "${authBaseUrl}",
-      "baseUrl": "/realms/bsic-bank/account/",
+      "baseUrl": "/realms/bdqm/account/",
       "surrogateAuthRequired": false,
       "enabled": true,
       "alwaysDisplayInConsole": false,
       "clientAuthenticatorType": "client-secret",
       "secret": "95c47dee-9d5d-44f3-a261-7f83c7aa36bb",
-      "redirectUris": ["/realms/bsic-bank/account/*"],
+      "redirectUris": ["/realms/bdqm/account/*"],
       "webOrigins": [],
       "notBefore": 0,
       "bearerOnly": false,
@@ -562,14 +562,14 @@
       "optionalClientScopes": ["address", "phone", "offline_access", "microprofile-jwt"]
     },
     {
-      "clientId": "bsic-bank-control-center",
+      "clientId": "bdqm-control-center",
       "rootUrl": "http://localhost:7419",
       "adminUrl": "http://localhost:7419",
       "surrogateAuthRequired": false,
       "enabled": true,
       "alwaysDisplayInConsole": false,
       "clientAuthenticatorType": "client-secret",
-      "secret": "bsic-bank-control-center",
+      "secret": "bdqm-control-center",
       "redirectUris": ["dev.localhost.ionic:*", "http://127.0.0.1:*", "http://localhost:*", "https://127.0.0.1:*", "https://localhost:*"],
       "webOrigins": ["*"],
       "notBefore": 0,
@@ -601,7 +601,7 @@
       "authenticationFlowBindingOverrides": {},
       "fullScopeAllowed": true,
       "nodeReRegistrationTimeout": -1,
-      "defaultClientScopes": ["web-origins", "acr", "bsic-bank", "roles", "profile", "email"],
+      "defaultClientScopes": ["web-origins", "acr", "bdqm", "roles", "profile", "email"],
       "optionalClientScopes": ["address", "phone", "offline_access", "microprofile-jwt"]
     },
     {
@@ -637,13 +637,13 @@
       "clientId": "security-admin-console",
       "name": "${client_security-admin-console}",
       "rootUrl": "${authAdminUrl}",
-      "baseUrl": "/admin/bsic-bank/console/",
+      "baseUrl": "/admin/bdqm/console/",
       "surrogateAuthRequired": false,
       "enabled": true,
       "alwaysDisplayInConsole": false,
       "clientAuthenticatorType": "client-secret",
       "secret": "a33c4dcc-1c3e-4df3-be42-3034044e4ac9",
-      "redirectUris": ["/admin/bsic-bank/console/*"],
+      "redirectUris": ["/admin/bdqm/console/*"],
       "webOrigins": ["+"],
       "notBefore": 0,
       "bearerOnly": false,
@@ -698,8 +698,8 @@
         "https://localhost:*",
         "https://oauth.pstmn.io/v1/callback",
         "https://*.adakalgroup.com",
-        "http://bsic-bank.adakalgroup.com*",
-        "https://bsic-bank.adakalgroup.com*"
+        "http://bdqm.adakalgroup.com*",
+        "https://bdqm.adakalgroup.com*"
       ],
       "webOrigins": ["*"],
       "notBefore": 0,
@@ -731,7 +731,7 @@
       "authenticationFlowBindingOverrides": {},
       "fullScopeAllowed": true,
       "nodeReRegistrationTimeout": -1,
-      "defaultClientScopes": ["web-origins", "acr", "bsic-bank", "roles", "profile", "email"],
+      "defaultClientScopes": ["web-origins", "acr", "bdqm", "roles", "profile", "email"],
       "optionalClientScopes": ["address", "phone", "offline_access", "microprofile-jwt"]
     }
   ],
@@ -806,8 +806,8 @@
       ]
     },
     {
-      "name": "bsic-bank",
-      "description": "bsic-bank specific claims",
+      "name": "bdqm",
+      "description": "bdqm specific claims",
       "protocol": "openid-connect",
       "attributes": {
         "include.in.token.scope": "false",

@@ -2,7 +2,7 @@
 
 ## Overview
 
-Realistic banking seed data for BSIC Mali using Amplitude CBS schema.
+Realistic banking seed data for Sample Bank using Amplitude CBS schema.
 
 ---
 
@@ -324,7 +324,7 @@ ENV_CONFIGS = {
 NOMS_MALIENS = ["TRAORE", "DIALLO", "COULIBALY", ...]
 
 # Line ~100: Employers
-EMPLOYEURS = ["ORANGE MALI", "MALITEL", "BSIC MALI", ...]
+EMPLOYEURS = ["ORANGE MALI", "MALITEL", "SAMPLE BANK", ...]
 
 # Line ~52: Malian cities
 VILLES = [

@@ -1,6 +1,6 @@
 -- ============================================================================
 -- AMPLITUDE CBS - Realistic Seed Data for INFORMIX
--- BSIC Bank - Cote d'Ivoire
+-- Sample Bank - Cote d'Ivoire
 -- ============================================================================
 
 -- Clear existing data (in reverse dependency order)
@@ -313,7 +313,7 @@ INSERT INTO bkadcli (cli, typ, lang, adr1, adr2, ville, dep, reg, cpos, cpay, em
 -- ============================================================================
 
 INSERT INTO bkprfcli (cli, prf, emp, demb, trev, demp) VALUES ('CLI000000000001', 'CAD', 'ORANGE CI', '2015-04-01', '05', 'Abidjan');
-INSERT INTO bkprfcli (cli, prf, emp, demb, trev, demp) VALUES ('CLI000000000002', 'EMP', 'BSIC BANK', '2018-09-15', '04', 'Abidjan');
+INSERT INTO bkprfcli (cli, prf, emp, demb, trev, demp) VALUES ('CLI000000000002', 'EMP', 'SAMPLE BANK', '2018-09-15', '04', 'Abidjan');
 INSERT INTO bkprfcli (cli, prf, emp, demb, trev, demp) VALUES ('CLI000000000003', 'COM', 'INDEPENDANT', '2010-01-10', '06', 'Bouake');
 INSERT INTO bkprfcli (cli, prf, emp, demb, trev, demp) VALUES ('CLI000000000004', 'ETU', NULL, NULL, '01', NULL);
 INSERT INTO bkprfcli (cli, prf, emp, demb, trev, demp) VALUES ('CLI000000000005', 'ING', 'CIE', '2012-03-20', '07', 'Yamoussoukro');
@@ -388,7 +388,7 @@ INSERT INTO bkemacli (cli, typ, email, atrf) VALUES ('CLI000000000010', 'PER', '
 
 -- Emails professionnels particuliers
 INSERT INTO bkemacli (cli, typ, email, atrf) VALUES ('CLI000000000001', 'PRO', 'akouassi@orange.ci', 'N');
-INSERT INTO bkemacli (cli, typ, email, atrf) VALUES ('CLI000000000002', 'PRO', 'mkonan@bsic.ci', 'N');
+INSERT INTO bkemacli (cli, typ, email, atrf) VALUES ('CLI000000000002', 'PRO', 'mkonan@example.com', 'N');
 INSERT INTO bkemacli (cli, typ, email, atrf) VALUES ('CLI000000000005', 'PRO', 'jyao@cie.ci', 'N');
 INSERT INTO bkemacli (cli, typ, email, atrf) VALUES ('CLI000000000008', 'PRO', 'mouattara@menet-fp.gouv.ci', 'N');
 INSERT INTO bkemacli (cli, typ, email, atrf) VALUES ('CLI000000000009', 'PRO', 'atoure@chucocody.ci', 'N');
