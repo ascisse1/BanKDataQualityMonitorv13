@@ -112,7 +112,7 @@ public class DataSyncService {
                 List<Map<String, Object>> batch = dynamicCbsQueryService.fetchFromCbs(tableName, offset, BATCH_SIZE);
                 if (batch.isEmpty()) break;
 
-                log.debug("Table '{}': processing batch offset={}, size={}", tableName, offset, batch.size());
+                log.info("Table '{}': processing batch offset={}, size={}", tableName, offset, batch.size());
 
                 int batchUpserted = dynamicCbsQueryService.upsertToMirror(tableName, batch);
                 upserted += batchUpserted;
@@ -137,19 +137,19 @@ public class DataSyncService {
      * - Agency table (structureField configured): auto-create Structure entities
      */
     private void runPostSyncHooks(String tableName, SyncResult result) {
-        log.debug("runPostSyncHooks START for table '{}'", tableName);
+        log.info("runPostSyncHooks START for table '{}'", tableName);
         try {
             var tableConfig = dataDictionaryService.getTableByName(tableName);
-            log.debug("Table '{}' config: validationEnabled={}, structureField={}, pkField={}, labelField={}",
+            log.info("Table '{}' config: validationEnabled={}, structureField={}, pkField={}, labelField={}",
                     tableName, tableConfig.getValidationEnabled(), tableConfig.getStructureField(),
                     tableConfig.getPkField(), tableConfig.getLabelField());
 
             // Dictionary-driven validation for any table with validationEnabled=true
             if (Boolean.TRUE.equals(tableConfig.getValidationEnabled())) {
-                log.debug("Table '{}': validation enabled, running validation...", tableName);
+                log.info("Table '{}': validation enabled, running validation...", tableName);
                 runValidation(tableName);
             } else {
-                log.debug("Table '{}': validation NOT enabled, skipping", tableName);
+                log.info("Table '{}': validation NOT enabled, skipping", tableName);
             }
 
             // Auto-create Structure entities from agency-like tables
@@ -157,18 +157,18 @@ public class DataSyncService {
             if (tableConfig.getStructureField() != null
                     && tableConfig.getPkField() != null
                     && tableConfig.getLabelField() != null) {
-                log.debug("Table '{}': syncing structures...", tableName);
+                log.info("Table '{}': syncing structures...", tableName);
                 syncStructuresFromTable(tableName, tableConfig.getPkField(), tableConfig.getLabelField());
             }
         } catch (Exception e) {
             log.warn("Could not run post-sync hooks for '{}': {}", tableName, e.getMessage());
         }
-        log.debug("runPostSyncHooks END for table '{}'", tableName);
+        log.info("runPostSyncHooks END for table '{}'", tableName);
     }
 
     private void runValidation(String tableName) {
         log.info("Running post-sync validation for table '{}'...", tableName);
-        log.debug("Validation config: maxRecords={}", maxRecords);
+        log.info("Validation config: maxRecords={}", maxRecords);
         try {
             List<Map<String, Object>> allRecords = new ArrayList<>();
             int offset = 0;
@@ -176,12 +176,15 @@ public class DataSyncService {
             while (!hasLimit || allRecords.size() < maxRecords) {
                 int remaining = maxRecords - allRecords.size();
                 int fetchSize = hasLimit ? Math.min(BATCH_SIZE, remaining) : BATCH_SIZE;
+                log.info("Validation fetch for '{}': offset={}, fetchSize={}, collected={}", tableName, offset, fetchSize, allRecords.size());
                 List<Map<String, Object>> batch = dynamicCbsQueryService.fetchFromCbs(tableName, offset, fetchSize);
+                log.info("Validation fetch for '{}': got {} records in batch", tableName, batch.size());
                 if (batch.isEmpty()) break;
                 allRecords.addAll(batch);
                 offset += batch.size();
                 if (batch.size() < fetchSize) break;
             }
+            log.info("Validation for '{}': total {} records fetched for validation", tableName, allRecords.size());
 
             if (!allRecords.isEmpty()) {
                 CbsValidationService.ValidationResult validationResult =

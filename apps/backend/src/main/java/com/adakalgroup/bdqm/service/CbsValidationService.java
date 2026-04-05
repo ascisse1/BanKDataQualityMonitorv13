@@ -50,7 +50,7 @@ public class CbsValidationService {
         String typeField = tableConfig.getTypeField() != null ? tableConfig.getTypeField().toLowerCase() : null;
         String structureField = tableConfig.getStructureField() != null ? tableConfig.getStructureField().toLowerCase() : null;
 
-        log.debug("Table '{}' config: pkField={}, typeField={}, structureField={}", tableName, pkField, typeField, structureField);
+        log.info("Table '{}' config: pkField={}, typeField={}, structureField={}", tableName, pkField, typeField, structureField);
 
         if (pkField == null || pkField.isBlank()) {
             log.warn("Table '{}' has no pkField configured, skipping validation", tableName);
@@ -59,13 +59,13 @@ public class CbsValidationService {
 
         // Load field labels from dictionary
         Map<String, String> fieldLabels = loadFieldLabels(tableName);
-        log.debug("Table '{}': loaded {} field labels", tableName, fieldLabels.size());
+        log.info("Table '{}': loaded {} field labels", tableName, fieldLabels.size());
 
         // Load active rules for this table
         List<ValidationRule> allActiveRules = validationRuleRepository
                 .findByActiveAndTableNameOrderByPriorityDesc(true, tableName);
         log.info("Loaded {} active validation rules for table '{}'", allActiveRules.size(), tableName);
-        allActiveRules.forEach(r -> log.debug("  Rule: name={}, field={}, type={}, definition={}",
+        allActiveRules.forEach(r -> log.info("  Rule: name={}, field={}, type={}, definition={}",
                 r.getRuleName(), r.getFieldName(), r.getRuleType(), r.getRuleDefinition()));
 
         int totalAnomalies = 0;
@@ -79,7 +79,7 @@ public class CbsValidationService {
             try {
                 String pk = getString(record, pkField);
                 if (pk == null) {
-                    log.debug("Record skipped: pkField '{}' is null. Record keys: {}", pkField, record.keySet());
+                    log.info("Record skipped: pkField '{}' is null. Record keys: {}", pkField, record.keySet());
                     continue;
                 }
 
@@ -88,7 +88,7 @@ public class CbsValidationService {
                 if (typeField != null && !typeField.isBlank()) {
                     clientType = getClientType(getString(record, typeField));
                 }
-                log.debug("Record pk={}: clientType={}, typeField={}, typeValue={}",
+                log.info("Record pk={}: clientType={}, typeField={}, typeValue={}",
                         pk, clientType, typeField, getString(record, typeField));
 
                 // Resolve structure name (if table has a structure field)
@@ -100,21 +100,21 @@ public class CbsValidationService {
 
                 // Get applicable rules (filtered by client type if applicable)
                 List<ValidationRule> applicableRules = getApplicableRules(allActiveRules, clientType);
-                log.debug("Record pk={}: {} applicable rules out of {}", pk, applicableRules.size(), allActiveRules.size());
+                log.info("Record pk={}: {} applicable rules out of {}", pk, applicableRules.size(), allActiveRules.size());
 
                 for (ValidationRule rule : applicableRules) {
                     try {
                         ValidationFailure failure = validateRecordAgainstRule(record, rule, fieldLabels);
 
                         if (failure != null) {
-                            log.debug("Record pk={}: FAILED rule '{}' on field '{}' — value='{}', expected='{}'",
+                            log.info("Record pk={}: FAILED rule '{}' on field '{}' — value='{}', expected='{}'",
                                     pk, rule.getRuleName(), failure.fieldName(), failure.currentValue(), failure.expectedValue());
                             failedFields.add(rule.getFieldName());
 
                             boolean exists = anomalyRepository.existsOpenAnomalyForClientAndField(
                                     pk, rule.getFieldName());
                             if (exists) {
-                                log.debug("Record pk={}: anomaly already exists for field '{}', skipping", pk, rule.getFieldName());
+                                log.info("Record pk={}: anomaly already exists for field '{}', skipping", pk, rule.getFieldName());
                                 skippedDuplicates++;
                                 continue;
                             }
@@ -123,9 +123,9 @@ public class CbsValidationService {
                                     pk, record, tableConfig, rule, failure, clientType, structureName);
                             anomalyRepository.save(anomaly);
                             totalAnomalies++;
-                            log.debug("Record pk={}: anomaly CREATED for field '{}'", pk, rule.getFieldName());
+                            log.info("Record pk={}: anomaly CREATED for field '{}'", pk, rule.getFieldName());
                         } else {
-                            log.debug("Record pk={}: PASSED rule '{}' on field '{}'", pk, rule.getRuleName(), rule.getFieldName());
+                            log.info("Record pk={}: PASSED rule '{}' on field '{}'", pk, rule.getRuleName(), rule.getFieldName());
                         }
                     } catch (Exception e) {
                         log.error("Error validating rule {} for record {}: {}",
@@ -144,7 +144,7 @@ public class CbsValidationService {
                         openAnomaly.setDataSource("CBS_AUTO_RESOLVED");
                         anomalyRepository.save(openAnomaly);
                         autoResolved++;
-                        log.debug("Auto-resolved anomaly for record {}, field {}", pk, openAnomaly.getFieldName());
+                        log.info("Auto-resolved anomaly for record {}, field {}", pk, openAnomaly.getFieldName());
                     }
                 }
 
@@ -166,25 +166,25 @@ public class CbsValidationService {
                                                         ValidationRule rule,
                                                         Map<String, String> fieldLabels) {
         if (!rule.hasValidRuleDefinition()) {
-            log.debug("Rule '{}': no valid definition, skipping", rule.getRuleName());
+            log.info("Rule '{}': no valid definition, skipping", rule.getRuleName());
             return null;
         }
 
         String fieldName = rule.getFieldName().toLowerCase();
         Object fieldValue = record.get(fieldName);
         String stringValue = fieldValue != null ? fieldValue.toString().trim() : null;
-        log.debug("Rule '{}': field='{}', value='{}'", rule.getRuleName(), fieldName, stringValue);
+        log.info("Rule '{}': field='{}', value='{}'", rule.getRuleName(), fieldName, stringValue);
 
         List<RuleCondition> conditions = rule.parseRuleConditions();
         if (conditions.isEmpty()) {
-            log.debug("Rule '{}': no conditions parsed from definition, skipping", rule.getRuleName());
+            log.info("Rule '{}': no conditions parsed from definition, skipping", rule.getRuleName());
             return null;
         }
-        log.debug("Rule '{}': {} conditions to evaluate", rule.getRuleName(), conditions.size());
+        log.info("Rule '{}': {} conditions to evaluate", rule.getRuleName(), conditions.size());
 
         NaturalLanguageRuleParser.ValidationResult result =
                 naturalLanguageRuleParser.validateAll(fieldValue, conditions);
-        log.debug("Rule '{}': valid={}, message={}", rule.getRuleName(), result.isValid(), result.message());
+        log.info("Rule '{}': valid={}, message={}", rule.getRuleName(), result.isValid(), result.message());
 
         if (!result.isValid()) {
             String fieldLabel = rule.getFieldLabel() != null ?
