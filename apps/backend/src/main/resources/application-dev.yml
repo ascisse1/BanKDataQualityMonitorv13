@@ -3,7 +3,7 @@ spring:
     ollama:
       base-url: http://localhost:11434
       chat:
-        model: mistral
+        model: llama3.1
         options:
           temperature: 0.3
 
@@ -36,7 +36,7 @@ spring:
     show-sql: false
   liquibase:
     enabled: true
-    drop-first: false
+    drop-first: true
     default-schema: public
     contexts: dev
 
@@ -44,6 +44,8 @@ app:
   jwt:
     secret: bank_data_quality_secret_key_2024_change_in_production
     expiration: 86400000
+  validation:
+    max-records: 2000
   features:
     informix-integration: true
   amplitude-api:

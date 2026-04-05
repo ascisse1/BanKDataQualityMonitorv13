@@ -12,6 +12,7 @@ import {
   AlertCircle,
   Trash2,
 } from 'lucide-react';
+import Markdown from 'react-markdown';
 import aiService, { type ChatMessage, type FaroStatus } from '@/services/aiService';
 
 interface DisplayMessage {
@@ -21,27 +22,61 @@ interface DisplayMessage {
   timestamp: Date;
   durationMs?: number;
   model?: string;
+  isStreaming?: boolean;
 }
 
 const SUGGESTIONS = [
-  'Quels sont les champs les plus critiques pour la conformite KYC ?',
-  'Comment reduire les anomalies sur le champ TELEPHONE ?',
-  'Explique les regles de validation FATCA',
+  'Combien de clients sont en anomalie actuellement ?',
+  'Quel est le taux de correction global ?',
+  'Quelle agence a le plus d anomalies ?',
   'Quelles sont les bonnes pratiques de saisie client ?',
 ];
 
+const STORAGE_KEY = 'faro-chat-history';
+
+function loadSavedMessages(): { messages: DisplayMessage[]; history: ChatMessage[] } {
+  try {
+    const saved = sessionStorage.getItem(STORAGE_KEY);
+    if (saved) {
+      const { messages, history } = JSON.parse(saved);
+      return {
+        messages: messages.map((m: DisplayMessage) => ({ ...m, timestamp: new Date(m.timestamp) })),
+        history,
+      };
+    }
+  } catch { /* ignore */ }
+  return { messages: [], history: [] };
+}
+
+function saveMessages(messages: DisplayMessage[], history: ChatMessage[]) {
+  try {
+    sessionStorage.setItem(STORAGE_KEY, JSON.stringify({ messages, history }));
+  } catch { /* ignore */ }
+}
+
 export default function AiChatWidget() {
+  const saved = useRef(loadSavedMessages());
   const [isOpen, setIsOpen] = useState(false);
   const [isExpanded, setIsExpanded] = useState(false);
-  const [messages, setMessages] = useState<DisplayMessage[]>([]);
-  const [chatHistory, setChatHistory] = useState<ChatMessage[]>([]);
+  const [messages, setMessages] = useState<DisplayMessage[]>(saved.current.messages);
+  const [chatHistory, setChatHistory] = useState<ChatMessage[]>(saved.current.history);
   const [input, setInput] = useState('');
   const [isLoading, setIsLoading] = useState(false);
   const [faroStatus, setFaroStatus] = useState<FaroStatus | null>(null);
   const [hasError, setHasError] = useState(false);
+  const [streamingContent, setStreamingContent] = useState('');
   const messagesEndRef = useRef<HTMLDivElement>(null);
   const inputRef = useRef<HTMLTextAreaElement>(null);
   const pollRef = useRef<ReturnType<typeof setInterval> | null>(null);
+  const abortRef = useRef<(() => void) | null>(null);
+
+  // Persist messages to sessionStorage
+  useEffect(() => {
+    const nonStreamingMsgs = messages.filter(m => !m.isStreaming);
+    if (nonStreamingMsgs.length > 0 || chatHistory.length > 0) {
+      saveMessages(nonStreamingMsgs, chatHistory);
+    }
+  }, [messages, chatHistory]);
 
   // Check AI service status — poll every 5s while not ready
   useEffect(() => {
@@ -51,7 +86,6 @@ export default function AiChatWidget() {
       aiService.getStatus()
         .then((res) => {
           setFaroStatus(res.data.status);
-          // Stop polling once ready
           if (res.data.status === 'ready' && pollRef.current) {
             clearInterval(pollRef.current);
             pollRef.current = null;
@@ -62,7 +96,6 @@ export default function AiChatWidget() {
 
     checkStatus();
 
-    // Poll if not yet ready
     if (faroStatus !== 'ready') {
       pollRef.current = setInterval(checkStatus, 5000);
     }
@@ -78,7 +111,7 @@ export default function AiChatWidget() {
   // Auto-scroll to bottom
   useEffect(() => {
     messagesEndRef.current?.scrollIntoView({ behavior: 'smooth' });
-  }, [messages]);
+  }, [messages, streamingContent]);
 
   // Focus input when opening
   useEffect(() => {
@@ -107,21 +140,63 @@ export default function AiChatWidget() {
     setHasError(false);
     addMessage('user', messageText);
 
-    const newHistory: ChatMessage[] = [...chatHistory, { role: 'user', content: messageText }];
-
     setIsLoading(true);
-    try {
-      const response = await aiService.chat(messageText, chatHistory);
-      const { answer, model, durationMs } = response.data;
+    setStreamingContent('');
 
-      addMessage('assistant', answer, { model, durationMs });
-      setChatHistory([...newHistory, { role: 'assistant', content: answer }]);
-    } catch {
-      setHasError(true);
-      addMessage('system', "Impossible de contacter Faro. Verifiez que le service Ollama est demarre.");
-    } finally {
-      setIsLoading(false);
-    }
+    const streamingMsgId = crypto.randomUUID();
+    let fullContent = '';
+
+    // Add a streaming placeholder message
+    setMessages(prev => [...prev, {
+      id: streamingMsgId,
+      role: 'assistant',
+      content: '',
+      timestamp: new Date(),
+      isStreaming: true,
+    }]);
+
+    const startTime = Date.now();
+
+    const abort = aiService.streamChat(
+      messageText,
+      chatHistory,
+      // onToken
+      (token) => {
+        fullContent += token;
+        setStreamingContent(fullContent);
+        setMessages(prev => prev.map(m =>
+          m.id === streamingMsgId ? { ...m, content: fullContent } : m
+        ));
+      },
+      // onDone
+      () => {
+        const duration = Date.now() - startTime;
+        setMessages(prev => prev.map(m =>
+          m.id === streamingMsgId
+            ? { ...m, content: fullContent, isStreaming: false, durationMs: duration, model: 'mistral' }
+            : m
+        ));
+        setChatHistory(prev => [
+          ...prev,
+          { role: 'user', content: messageText },
+          { role: 'assistant', content: fullContent },
+        ]);
+        setStreamingContent('');
+        setIsLoading(false);
+        abortRef.current = null;
+      },
+      // onError
+      (error) => {
+        setMessages(prev => prev.filter(m => m.id !== streamingMsgId));
+        setHasError(true);
+        addMessage('system', error);
+        setStreamingContent('');
+        setIsLoading(false);
+        abortRef.current = null;
+      },
+    );
+
+    abortRef.current = abort;
   }, [input, isLoading, chatHistory, addMessage]);
 
   const handleKeyDown = (e: KeyboardEvent<HTMLTextAreaElement>) => {
@@ -131,10 +206,21 @@ export default function AiChatWidget() {
     }
   };
 
+  const stopStreaming = () => {
+    if (abortRef.current) {
+      abortRef.current();
+      abortRef.current = null;
+      setIsLoading(false);
+    }
+  };
+
   const clearChat = () => {
+    stopStreaming();
     setMessages([]);
     setChatHistory([]);
+    setStreamingContent('');
     setHasError(false);
+    sessionStorage.removeItem(STORAGE_KEY);
   };
 
   const panelWidth = isExpanded ? 'w-[600px]' : 'w-[400px]';
@@ -155,6 +241,9 @@ export default function AiChatWidget() {
         >
           <Sparkles className="w-5 h-5" />
           <span className="text-sm font-medium hidden sm:inline">Faro</span>
+          {messages.length > 0 && (
+            <span className="absolute -top-1 -right-1 w-3 h-3 bg-green-400 rounded-full border-2 border-white" />
+          )}
         </button>
       )}
 
@@ -229,7 +318,7 @@ export default function AiChatWidget() {
                 </h4>
                 <p className="text-xs text-slate-500 dark:text-slate-400 mb-4">
                   {faroStatus === 'downloading'
-                    ? 'Faro telecharge le modele Mistral 7B... Cela peut prendre quelques minutes lors du premier demarrage.'
+                    ? 'Faro telecharge le modele Mistral 7B... Cela peut prendre quelques minutes.'
                     : faroStatus === 'offline'
                       ? 'Faro est hors ligne. Demarrez le service Ollama pour activer l\'assistant.'
                       : 'Je suis Faro, votre guide pour la qualite des donnees. Posez-moi vos questions sur les anomalies, les regles de validation...'
@@ -290,8 +379,20 @@ export default function AiChatWidget() {
                         : 'bg-red-50 dark:bg-red-900/20 text-red-600 dark:text-red-400 rounded-bl-sm'
                     }`}
                 >
-                  <div className="whitespace-pre-wrap break-words">{msg.content}</div>
-                  {msg.role === 'assistant' && msg.durationMs && (
+                  {msg.role === 'assistant' ? (
+                    <div className="prose prose-sm dark:prose-invert max-w-none
+                                    prose-p:my-1 prose-ul:my-1 prose-ol:my-1 prose-li:my-0.5
+                                    prose-headings:my-2 prose-headings:text-sm
+                                    prose-code:text-xs prose-code:bg-slate-200 dark:prose-code:bg-slate-700 prose-code:px-1 prose-code:rounded">
+                      <Markdown>{msg.content || (msg.isStreaming ? '...' : '')}</Markdown>
+                      {msg.isStreaming && (
+                        <span className="inline-block w-2 h-4 bg-primary-500 animate-pulse ml-0.5" />
+                      )}
+                    </div>
+                  ) : (
+                    <div className="whitespace-pre-wrap break-words">{msg.content}</div>
+                  )}
+                  {msg.role === 'assistant' && !msg.isStreaming && msg.durationMs && (
                     <div className="mt-1 text-[10px] text-slate-400 dark:text-slate-500">
                       {msg.model} - {(msg.durationMs / 1000).toFixed(1)}s
                     </div>
@@ -306,22 +407,6 @@ export default function AiChatWidget() {
                 )}
               </div>
             ))}
-
-            {/* Loading indicator */}
-            {isLoading && (
-              <div className="flex gap-2 justify-start">
-                <div className="flex-shrink-0 w-7 h-7 rounded-full bg-primary-100 dark:bg-primary-900/30
-                                flex items-center justify-center mt-0.5">
-                  <Bot className="w-4 h-4 text-primary-600 dark:text-primary-400" />
-                </div>
-                <div className="bg-slate-100 dark:bg-slate-800 rounded-xl px-4 py-3 rounded-bl-sm">
-                  <div className="flex items-center gap-2 text-sm text-slate-500 dark:text-slate-400">
-                    <Loader2 className="w-4 h-4 animate-spin" />
-                    Faro reflechit...
-                  </div>
-                </div>
-              </div>
-            )}
 
             <div ref={messagesEndRef} />
           </div>
@@ -367,21 +452,31 @@ export default function AiChatWidget() {
                   target.style.height = Math.min(target.scrollHeight, 96) + 'px';
                 }}
               />
-              <button
-                onClick={() => sendMessage()}
-                disabled={!input.trim() || isLoading || faroStatus !== 'ready'}
-                className="flex-shrink-0 p-2.5 rounded-xl
-                           bg-primary-600 hover:bg-primary-700
-                           disabled:bg-slate-300 dark:disabled:bg-slate-700
-                           text-white disabled:text-slate-500
-                           transition-colors duration-150"
-                aria-label="Envoyer"
-              >
-                {isLoading
-                  ? <Loader2 className="w-4 h-4 animate-spin" />
-                  : <Send className="w-4 h-4" />
-                }
-              </button>
+              {isLoading ? (
+                <button
+                  onClick={stopStreaming}
+                  className="flex-shrink-0 p-2.5 rounded-xl
+                             bg-red-500 hover:bg-red-600
+                             text-white transition-colors duration-150"
+                  aria-label="Arreter"
+                  title="Arreter la generation"
+                >
+                  <X className="w-4 h-4" />
+                </button>
+              ) : (
+                <button
+                  onClick={() => sendMessage()}
+                  disabled={!input.trim() || faroStatus !== 'ready'}
+                  className="flex-shrink-0 p-2.5 rounded-xl
+                             bg-primary-600 hover:bg-primary-700
+                             disabled:bg-slate-300 dark:disabled:bg-slate-700
+                             text-white disabled:text-slate-500
+                             transition-colors duration-150"
+                  aria-label="Envoyer"
+                >
+                  <Send className="w-4 h-4" />
+                </button>
+              )}
             </div>
             <p className="text-[10px] text-slate-400 dark:text-slate-500 mt-1.5 text-center">
               Shift+Entree pour un retour a la ligne

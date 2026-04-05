@@ -5,8 +5,8 @@ import com.adakalgroup.bdqm.model.CbsTable;
 import com.adakalgroup.bdqm.model.Structure;
 import com.adakalgroup.bdqm.repository.CbsTableRepository;
 import com.adakalgroup.bdqm.repository.StructureRepository;
-import lombok.RequiredArgsConstructor;
 import lombok.extern.slf4j.Slf4j;
+import org.springframework.beans.factory.annotation.Value;
 import org.springframework.boot.autoconfigure.condition.ConditionalOnProperty;
 import org.springframework.stereotype.Service;
 import org.springframework.transaction.annotation.Transactional;
@@ -23,7 +23,6 @@ import java.util.Map;
  */
 @Service
 @Slf4j
-@RequiredArgsConstructor
 @ConditionalOnProperty(name = "app.features.informix-integration", havingValue = "true", matchIfMissing = false)
 public class DataSyncService {
 
@@ -35,6 +34,23 @@ public class DataSyncService {
     private final BusinessMetricsConfig metricsConfig;
 
     private static final int BATCH_SIZE = 1000;
+
+    @Value("${app.validation.max-records:0}")
+    private int validationMaxRecords;
+
+    public DataSyncService(DynamicCbsQueryService dynamicCbsQueryService,
+                           CbsTableRepository cbsTableRepository,
+                           CbsDataDictionaryService dataDictionaryService,
+                           StructureRepository structureRepository,
+                           CbsValidationService cbsValidationService,
+                           BusinessMetricsConfig metricsConfig) {
+        this.dynamicCbsQueryService = dynamicCbsQueryService;
+        this.cbsTableRepository = cbsTableRepository;
+        this.dataDictionaryService = dataDictionaryService;
+        this.structureRepository = structureRepository;
+        this.cbsValidationService = cbsValidationService;
+        this.metricsConfig = metricsConfig;
+    }
 
     /**
      * Sync ALL enabled CBS tables from Informix to PostgreSQL mirror.
@@ -145,12 +161,15 @@ public class DataSyncService {
         try {
             List<Map<String, Object>> allRecords = new ArrayList<>();
             int offset = 0;
-            while (true) {
-                List<Map<String, Object>> batch = dynamicCbsQueryService.fetchFromCbs(tableName, offset, BATCH_SIZE);
+            boolean hasLimit = validationMaxRecords > 0;
+            while (!hasLimit || allRecords.size() < validationMaxRecords) {
+                int remaining = validationMaxRecords - allRecords.size();
+                int fetchSize = hasLimit ? Math.min(BATCH_SIZE, remaining) : BATCH_SIZE;
+                List<Map<String, Object>> batch = dynamicCbsQueryService.fetchFromCbs(tableName, offset, fetchSize);
                 if (batch.isEmpty()) break;
                 allRecords.addAll(batch);
-                offset += BATCH_SIZE;
-                if (batch.size() < BATCH_SIZE) break;
+                offset += batch.size();
+                if (batch.size() < fetchSize) break;
             }
 
             if (!allRecords.isEmpty()) {

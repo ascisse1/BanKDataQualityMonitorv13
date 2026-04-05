@@ -399,7 +399,7 @@ public class DynamicCbsQueryService {
                 .collect(Collectors.joining(", "));
 
         // Informix pagination uses SKIP/FIRST syntax
-        return String.format("SELECT SKIP %d FIRST %d %s FROM %s ORDER BY %s",
+        return String.format("SELECT SKIP %d FIRST %d %s FROM %s ORDER BY %s ",
                 offset, limit, columns, tableName,
                 fields.get(0).getName()); // Order by first column (usually PK)
     }

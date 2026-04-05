@@ -1,9 +1,9 @@
 name: bdqm
 
-# BDQM Data Quality Monitor - Faro AI (Ollama + Mistral 7B)
+# BDQM Data Quality Monitor - Faro AI (Ollama + Llama 3.1 8B)
 # Usage:
 #   docker compose -f docker-compose.faro.yml up -d
-#   Then wait ~2min for Mistral 7B to download on first start.
+#   Then wait ~2min for Llama 3.1 to download on first start.
 
 services:
   # ===========================================
@@ -35,7 +35,7 @@ services:
       - NVIDIA_VISIBLE_DEVICES=all
 
   # ===========================================
-  # Auto-pull Mistral 7B on first start
+  # Auto-pull Llama 3.1 8B on first start
   # ===========================================
   ollama-init:
     image: ollama/ollama:latest
@@ -43,7 +43,7 @@ services:
     depends_on:
       ollama:
         condition: service_healthy
-    entrypoint: ["sh", "-c", "ollama pull mistral && echo 'Faro (Mistral 7B) ready!'"]
+    entrypoint: ["sh", "-c", "ollama pull llama3.1 && echo 'Faro (Llama 3.1 8B) ready!'"]
     environment:
       - OLLAMA_HOST=http://ollama:11434
     networks:

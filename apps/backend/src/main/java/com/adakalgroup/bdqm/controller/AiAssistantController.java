@@ -10,8 +10,10 @@ import lombok.Data;
 import lombok.RequiredArgsConstructor;
 import lombok.extern.slf4j.Slf4j;
 import org.springframework.boot.autoconfigure.condition.ConditionalOnProperty;
+import org.springframework.http.MediaType;
 import org.springframework.http.ResponseEntity;
 import org.springframework.web.bind.annotation.*;
+import reactor.core.publisher.Flux;
 
 import java.util.List;
 import java.util.Map;
@@ -92,6 +94,21 @@ public class AiAssistantController {
                 request.getMessage()
         );
         return ResponseEntity.ok(ApiResponse.success(response));
+    }
+
+    /**
+     * Streaming chat — tokens sent as SSE events.
+     * POST /api/ai/stream
+     */
+    @PostMapping(value = "/stream", produces = MediaType.TEXT_EVENT_STREAM_VALUE)
+    public Flux<String> streamChat(@RequestBody ChatRequest request) {
+        log.info("Faro stream chat with {} history messages", request.getHistory().size());
+        return aiAssistantService.streamChat(
+                request.getHistory().stream()
+                        .map(m -> new ChatMsg(m.getRole(), m.getContent()))
+                        .toList(),
+                request.getMessage()
+        );
     }
 
     @Data

@@ -22,7 +22,7 @@ spring:
       init:
         pull-model-strategy: when_missing
       chat:
-        model: ${OLLAMA_MODEL:mistral}
+        model: ${OLLAMA_MODEL:llama3.1}
         options:
           temperature: ${OLLAMA_TEMPERATURE:0.3}
           num-predict: ${OLLAMA_MAX_TOKENS:1024}
@@ -198,6 +198,8 @@ app:
     fi-address: ${FATCA_FI_ADDRESS:Your Bank Address}
     filer-category: ${FATCA_FILER_CATEGORY:FATCA601}
     screening-enabled: ${FATCA_SCREENING_ENABLED:true}
+  validation:
+    max-records: ${VALIDATION_MAX_RECORDS:0}
   features:
     workflow-automation: ${FEATURE_WORKFLOW:true}
     kpi-tracking: ${FEATURE_KPI:true}

@@ -1,5 +1,6 @@
 package com.adakalgroup.bdqm.service;
 
+import com.adakalgroup.bdqm.config.FaroConfig;
 import com.adakalgroup.bdqm.dto.AnomalyDto;
 import com.adakalgroup.bdqm.dto.ai.AiRequest;
 import com.adakalgroup.bdqm.dto.ai.AiResponse;
@@ -8,15 +9,19 @@ import org.springframework.ai.chat.client.ChatClient;
 import org.springframework.ai.chat.messages.AssistantMessage;
 import org.springframework.ai.chat.messages.Message;
 import org.springframework.ai.chat.messages.UserMessage;
+import org.springframework.ai.chat.messages.SystemMessage;
 import org.springframework.ai.chat.model.ChatResponse;
 import org.springframework.ai.chat.prompt.Prompt;
 import org.springframework.boot.autoconfigure.condition.ConditionalOnProperty;
 import org.springframework.stereotype.Service;
 import org.springframework.web.client.RestTemplate;
 
+import reactor.core.publisher.Flux;
+
 import java.util.ArrayList;
 import java.util.List;
 import java.util.Map;
+import java.util.concurrent.Semaphore;
 import java.util.stream.Collectors;
 
 /**
@@ -29,13 +34,17 @@ import java.util.stream.Collectors;
 public class AiAssistantService {
 
     private final ChatClient faroChat;
+    private final FaroDataContextService dataContextService;
     private final RestTemplate restTemplate;
     private final String ollamaBaseUrl;
+    private final Semaphore llmSemaphore = new Semaphore(2); // max 2 concurrent LLM calls
 
     public AiAssistantService(ChatClient faroChat,
+                              FaroDataContextService dataContextService,
                               RestTemplate restTemplate,
                               @org.springframework.beans.factory.annotation.Value("${spring.ai.ollama.base-url:http://localhost:11434}") String ollamaBaseUrl) {
         this.faroChat = faroChat;
+        this.dataContextService = dataContextService;
         this.restTemplate = restTemplate;
         this.ollamaBaseUrl = ollamaBaseUrl;
         log.info("Faro AI Service initialized with Spring AI (Ollama at {})", ollamaBaseUrl);
@@ -173,12 +182,13 @@ public class AiAssistantService {
     }
 
     /**
-     * Chat with conversation history — Spring AI handles function calling automatically.
+     * Chat with conversation history — data context injected into system prompt.
      */
     public AiResponse chat(List<ChatMsg> history, String newMessage) {
         long start = System.currentTimeMillis();
 
         List<Message> messages = new ArrayList<>();
+        messages.add(new SystemMessage(buildSystemPromptWithData()));
         for (ChatMsg msg : history) {
             if ("user".equals(msg.role())) {
                 messages.add(new UserMessage(msg.content()));
@@ -207,6 +217,32 @@ public class AiAssistantService {
         }
     }
 
+    /**
+     * Stream chat response token by token via SSE.
+     */
+    public Flux<String> streamChat(List<ChatMsg> history, String newMessage) {
+        List<Message> messages = new ArrayList<>();
+        messages.add(new SystemMessage(buildSystemPromptWithData()));
+        for (ChatMsg msg : history) {
+            if ("user".equals(msg.role())) {
+                messages.add(new UserMessage(msg.content()));
+            } else {
+                messages.add(new AssistantMessage(msg.content()));
+            }
+        }
+        messages.add(new UserMessage(newMessage));
+
+        if (!llmSemaphore.tryAcquire()) {
+            return Flux.just("[Faro est occupe, veuillez reessayer dans quelques secondes]");
+        }
+
+        return faroChat.prompt(new Prompt(messages))
+                .stream()
+                .content()
+                .doOnTerminate(llmSemaphore::release)
+                .doOnError(e -> log.error("Faro stream error: {}", e.getMessage()));
+    }
+
     // --- Status checks ---
 
     public boolean isAvailable() {
@@ -229,7 +265,7 @@ public class AiAssistantService {
             var models = (List<Map<String, Object>>) response.get("models");
             return models.stream().anyMatch(m -> {
                 String name = (String) m.get("name");
-                return name != null && (name.startsWith("mistral") || name.contains("mistral"));
+                return name != null && (name.contains("llama3") || name.contains("mistral"));
             });
         } catch (Exception e) {
             return false;
@@ -238,10 +274,18 @@ public class AiAssistantService {
 
     // --- Private helpers ---
 
+    private String buildSystemPromptWithData() {
+        return FaroConfig.SYSTEM_PROMPT + "\n--- DONNEES ACTUELLES ---\n" + dataContextService.getDataContext();
+    }
+
     private AiResponse callFaro(String userPrompt) {
         long start = System.currentTimeMillis();
+        if (!llmSemaphore.tryAcquire()) {
+            return AiResponse.of("Faro est occupe, veuillez reessayer dans quelques secondes.", "none", 0);
+        }
         try {
             String answer = faroChat.prompt()
+                    .system(buildSystemPromptWithData())
                     .user(userPrompt)
                     .call()
                     .content();
@@ -254,6 +298,8 @@ public class AiAssistantService {
             long duration = System.currentTimeMillis() - start;
             log.error("Faro call failed: {}", e.getMessage(), e);
             return AiResponse.of("Erreur de communication avec Faro: " + e.getMessage(), "none", duration);
+        } finally {
+            llmSemaphore.release();
         }
     }
 
