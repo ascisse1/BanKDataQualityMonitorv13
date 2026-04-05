@@ -4,6 +4,13 @@ import { log } from './log';
 // Types
 export type CorrectionAction = 'FIX' | 'REVIEW' | 'REJECT';
 export type TicketPriority = 'CRITICAL' | 'HIGH' | 'MEDIUM' | 'LOW';
+export type RejectionReason =
+  | 'FALSE_POSITIVE'
+  | 'DUPLICATE'
+  | 'OUT_OF_SCOPE'
+  | 'INSUFFICIENT_INFO'
+  | 'DATA_SOURCE_ERROR'
+  | 'OTHER';
 
 export interface CorrectionRequest {
   cli: string;
@@ -15,6 +22,7 @@ export interface CorrectionRequest {
   notes?: string;
   action: CorrectionAction;
   priority?: TicketPriority;
+  rejectionReason?: RejectionReason;
 }
 
 export interface CorrectionResponse {

@@ -68,6 +68,18 @@ public class CorrectionService {
         log.info("Submitting correction for client {} field {} by user {}",
                 request.getCli(), request.getFieldName(), currentUserName);
 
+        // Validate rejection requirements
+        if (request.getAction() == CorrectionRequest.CorrectionAction.REJECT) {
+            if (request.getNotes() == null || request.getNotes().isBlank()) {
+                throw new IllegalArgumentException(
+                        "Une justification est obligatoire pour rejeter une anomalie");
+            }
+            if (request.getRejectionReason() == null) {
+                throw new IllegalArgumentException(
+                        "Un motif de rejet est obligatoire pour rejeter une anomalie");
+            }
+        }
+
         var currentUser = userService.getUserByUsername(currentUserName)
                 .orElseThrow(() -> new IllegalArgumentException("User not found: " + currentUserName));
 
@@ -114,6 +126,12 @@ public class CorrectionService {
         if (request.getAction() == CorrectionRequest.CorrectionAction.FIX && request.getNewValue() != null) {
             updateAnomalyWithCorrection(request.getCli(), request.getFieldName(),
                     request.getNewValue(), currentUser.getUsername());
+        }
+
+        // Update the Anomaly record for rejection (mark as in progress pending 4-Eyes)
+        if (request.getAction() == CorrectionRequest.CorrectionAction.REJECT) {
+            updateAnomalyWithRejection(request.getCli(), request.getFieldName(),
+                    request.getRejectionReason(), request.getNotes(), currentUser.getUsername());
         }
 
         return buildCorrectionResponse(ticket, incident, ticket.getProcessInstanceId(), isNewTicket);
@@ -165,25 +183,39 @@ public class CorrectionService {
 
             // Update all incidents to validated
             Ticket finalTicket = ticket;
-            ticketIncidentRepository.findByTicket(ticket).forEach(incident -> {
+            boolean hasCorrections = false;
+            List<TicketIncident> incidents = ticketIncidentRepository.findByTicket(ticket);
+            for (TicketIncident incident : incidents) {
                 incident.setStatus("validated");
+                incident.setResolved(true);
+                incident.setResolvedAt(LocalDateTime.now());
                 ticketIncidentRepository.save(incident);
 
-                // Update anomaly status to CORRECTED
+                boolean isRejection = "REJECTION".equals(incident.getIncidentType());
+                if (!isRejection) {
+                    hasCorrections = true;
+                }
+
+                // Update anomaly status based on incident type
                 List<Anomaly> anomalies = anomalyRepository.findOpenAnomalyByClientAndField(
                         finalTicket.getCli(), incident.getFieldName());
                 for (Anomaly anomaly : anomalies) {
-                    anomaly.setStatus(AnomalyStatus.CORRECTED);
+                    anomaly.setStatus(isRejection ? AnomalyStatus.REJECTED : AnomalyStatus.CORRECTED);
                     anomaly.setValidatedBy(validatorUsername);
                     anomaly.setValidatedAt(LocalDateTime.now());
                     anomalyRepository.save(anomaly);
                 }
-            });
+            }
 
             ticketRepository.save(ticket);
 
-            // Apply corrections to CBS — route to API or JDBC based on configuration
-            String cbsMessage = applyCbsUpdate(ticket, ticketId);
+            // Only apply CBS update for correction tickets, not pure rejections
+            String cbsMessage;
+            if (hasCorrections) {
+                cbsMessage = applyCbsUpdate(ticket, ticketId);
+            } else {
+                cbsMessage = "Rejet validé avec succès";
+            }
 
             return CorrectionResponse.builder()
                     .ticketId(ticket.getId())
@@ -327,10 +359,27 @@ public class CorrectionService {
                 break;
 
             case REJECT:
-                incident.setStatus("rejected");
-                incident.setResolved(true);
-                incident.setResolvedAt(LocalDateTime.now());
-                ticket.setResolvedIncidents(ticket.getResolvedIncidents() + 1);
+                // Rejection now requires 4-Eyes validation
+                incident.setIncidentType("REJECTION");
+                incident.setStatus("pending_rejection");
+                ticket.setAssignedTo(user);
+                ticket.setAssignedAt(LocalDateTime.now());
+                ticket.setStatus(TicketStatus.PENDING_VALIDATION);
+                log.info("Rejection submitted for ticket {} — moved to 4-Eyes validation",
+                        ticket.getTicketNumber());
+
+                try {
+                    workflowService.completeCorrectionTask(
+                            ticket.getId(),
+                            user.getUsername(),
+                            incident.getFieldName(),
+                            incident.getOldValue(),
+                            null,
+                            incident.getNotes()
+                    );
+                } catch (Exception e) {
+                    log.warn("Could not complete workflow task: {}", e.getMessage());
+                }
                 break;
         }
 
@@ -354,8 +403,9 @@ public class CorrectionService {
             if (inc.getResolved() != null && inc.getResolved()) {
                 continue;
             }
-            // If any other incident is not yet corrected, return false
-            if (!"corrected".equals(inc.getStatus()) && !"pending_validation".equals(inc.getStatus())) {
+            // If any other incident is not yet corrected or pending rejection, return false
+            if (!"corrected".equals(inc.getStatus()) && !"pending_validation".equals(inc.getStatus())
+                    && !"pending_rejection".equals(inc.getStatus())) {
                 return false;
             }
         }
@@ -394,6 +444,24 @@ public class CorrectionService {
             log.info("Updated anomaly {} with correction value: {}", anomaly.getId(), newValue);
         } else {
             log.warn("No open anomaly found for client {} field {} to update with correction",
+                    clientNumber, fieldName);
+        }
+    }
+
+    private void updateAnomalyWithRejection(String clientNumber, String fieldName,
+                                             CorrectionRequest.RejectionReason rejectionReason,
+                                             String notes, String rejectedBy) {
+        List<Anomaly> anomalies = anomalyRepository.findOpenAnomalyByClientAndField(clientNumber, fieldName);
+
+        if (!anomalies.isEmpty()) {
+            Anomaly anomaly = anomalies.get(0);
+            anomaly.setCorrectedBy(rejectedBy);
+            anomaly.setCorrectedAt(LocalDateTime.now());
+            anomaly.setStatus(AnomalyStatus.IN_PROGRESS);
+            anomalyRepository.save(anomaly);
+            log.info("Updated anomaly {} with rejection reason: {} - {}", anomaly.getId(), rejectionReason, notes);
+        } else {
+            log.warn("No open anomaly found for client {} field {} to update with rejection",
                     clientNumber, fieldName);
         }
     }
@@ -468,7 +536,9 @@ public class CorrectionService {
     private CorrectionResponse buildCorrectionResponse(Ticket ticket, TicketIncident incident,
                                                         String processInstanceId, boolean isNewTicket) {
         String message;
-        if (ticket.getStatus() == TicketStatus.PENDING_VALIDATION) {
+        if (ticket.getStatus() == TicketStatus.PENDING_VALIDATION && "REJECTION".equals(incident.getIncidentType())) {
+            message = "Rejet soumis. En attente de validation superviseur (4 Eyes). Ticket: " + ticket.getTicketNumber();
+        } else if (ticket.getStatus() == TicketStatus.PENDING_VALIDATION) {
             message = "Toutes les corrections soumises. En attente de validation superviseur (4 Eyes). Ticket: " + ticket.getTicketNumber();
         } else if (isNewTicket) {
             message = "Correction soumise. Ticket créé: " + ticket.getTicketNumber() + ". D'autres champs restent à corriger.";

@@ -2,7 +2,7 @@ import { useState } from 'react';
 import { useToast } from '../components/ui/Toaster';
 import { useAuth } from '../context/AuthContext';
 import { log } from '../services/log';
-import { correctionService, CorrectionAction, CorrectionResponse } from '../services/correctionService';
+import { correctionService, CorrectionAction, CorrectionResponse, RejectionReason } from '../services/correctionService';
 
 interface AnomalyData {
   cli: string;
@@ -12,6 +12,7 @@ interface AnomalyData {
   newValue: string | null;
   status: 'fixed' | 'in_review' | 'rejected';
   notes?: string;
+  rejectionReason?: RejectionReason;
 }
 
 interface CorrectionResult {
@@ -65,6 +66,7 @@ export const useAnomalyCorrection = () => {
         notes: anomalyData.notes,
         action,
         priority: 'MEDIUM',
+        rejectionReason: anomalyData.rejectionReason,
       });
 
       setLastCorrection(response);

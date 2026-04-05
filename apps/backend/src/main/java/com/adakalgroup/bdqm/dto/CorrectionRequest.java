@@ -36,9 +36,20 @@ public class CorrectionRequest {
 
     private TicketPriority priority;
 
+    private RejectionReason rejectionReason;
+
     public enum CorrectionAction {
         FIX,        // Submit correction for validation
         REVIEW,     // Mark for review (no correction yet)
         REJECT      // Reject the anomaly as invalid
+    }
+
+    public enum RejectionReason {
+        FALSE_POSITIVE,
+        DUPLICATE,
+        OUT_OF_SCOPE,
+        INSUFFICIENT_INFO,
+        DATA_SOURCE_ERROR,
+        OTHER
     }
 }

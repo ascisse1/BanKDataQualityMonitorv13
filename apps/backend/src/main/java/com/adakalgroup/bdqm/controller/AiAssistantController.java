@@ -6,6 +6,7 @@ import com.adakalgroup.bdqm.dto.ai.AiRequest;
 import com.adakalgroup.bdqm.dto.ai.AiResponse;
 import com.adakalgroup.bdqm.service.AiAssistantService;
 import com.adakalgroup.bdqm.service.AiAssistantService.ChatMsg;
+import com.adakalgroup.bdqm.service.FaroDataContextService;
 import lombok.Data;
 import lombok.RequiredArgsConstructor;
 import lombok.extern.slf4j.Slf4j;
@@ -26,6 +27,7 @@ import java.util.Map;
 public class AiAssistantController {
 
     private final AiAssistantService aiAssistantService;
+    private final FaroDataContextService dataContextService;
 
     @GetMapping("/status")
     public ResponseEntity<ApiResponse<Map<String, Object>>> getStatus() {
@@ -109,6 +111,17 @@ public class AiAssistantController {
                         .toList(),
                 request.getMessage()
         );
+    }
+
+    /**
+     * Debug endpoint — shows exactly what data context Faro sees.
+     * GET /api/ai/debug/context
+     */
+    @GetMapping("/debug/context")
+    public ResponseEntity<ApiResponse<String>> debugContext() {
+        dataContextService.invalidate(); // Force fresh data
+        String context = dataContextService.getDataContext();
+        return ResponseEntity.ok(ApiResponse.success(context));
     }
 
     @Data

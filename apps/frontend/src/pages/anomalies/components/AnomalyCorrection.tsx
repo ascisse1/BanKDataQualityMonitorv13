@@ -3,6 +3,16 @@ import { CheckCircle, XCircle, Clock, Save, Ticket, AlertCircle, Users } from 'l
 import Button from '@/components/ui/Button';
 import Input from '@/components/ui/Input';
 import { useAnomalyCorrection } from '@/hooks/useAnomalyCorrection';
+import type { RejectionReason } from '@/services/correctionService';
+
+const REJECTION_REASONS: { value: RejectionReason; label: string }[] = [
+  { value: 'FALSE_POSITIVE', label: 'Faux positif - la donnée est correcte' },
+  { value: 'DUPLICATE', label: 'Doublon - anomalie déjà traitée' },
+  { value: 'OUT_OF_SCOPE', label: 'Hors périmètre - ne relève pas de cette agence' },
+  { value: 'INSUFFICIENT_INFO', label: 'Information insuffisante pour traiter' },
+  { value: 'DATA_SOURCE_ERROR', label: 'Erreur de la source de données' },
+  { value: 'OTHER', label: 'Autre motif' },
+];
 
 interface AnomalieCorrectionProps {
   anomaly: {
@@ -21,6 +31,8 @@ const AnomalyCorrection: React.FC<AnomalieCorrectionProps> = ({
 }) => {
   const [newValue, setNewValue] = useState<string>(anomaly.currentValue || '');
   const [notes, setNotes] = useState<string>('');
+  const [isRejectMode, setIsRejectMode] = useState(false);
+  const [rejectionReason, setRejectionReason] = useState<RejectionReason | ''>('');
   const [submissionResult, setSubmissionResult] = useState<{
     ticketNumber?: string;
     requiresValidation?: boolean;
@@ -33,6 +45,8 @@ const AnomalyCorrection: React.FC<AnomalieCorrectionProps> = ({
   useEffect(() => {
     setNewValue(anomaly.currentValue || '');
     setNotes('');
+    setIsRejectMode(false);
+    setRejectionReason('');
     setSubmissionResult(null);
   }, [anomaly.cli, anomaly.fieldCode]);
 
@@ -80,6 +94,8 @@ const AnomalyCorrection: React.FC<AnomalieCorrectionProps> = ({
   };
 
   const handleRejectAnomaly = async () => {
+    if (!rejectionReason || !notes.trim()) return;
+
     const result = await fixAnomaly({
       cli: anomaly.cli,
       field: anomaly.fieldCode,
@@ -87,13 +103,14 @@ const AnomalyCorrection: React.FC<AnomalieCorrectionProps> = ({
       oldValue: anomaly.currentValue,
       newValue: null,
       status: 'rejected',
-      notes: notes || undefined,
+      notes: notes,
+      rejectionReason: rejectionReason,
     });
 
     if (result.success) {
       setSubmissionResult({
         ticketNumber: result.ticketNumber,
-        requiresValidation: false,
+        requiresValidation: true,
         message: result.message,
       });
       onCorrectionComplete();
@@ -181,51 +198,117 @@ const AnomalyCorrection: React.FC<AnomalieCorrectionProps> = ({
         </div>
       </div>
 
-      <div>
-        <label className="block text-sm font-medium text-gray-700 mb-1">
-          Notes (optionnel)
-        </label>
-        <textarea
-          value={notes}
-          onChange={(e) => setNotes(e.target.value)}
-          placeholder="Ajoutez des notes sur cette correction (justification, source des données, etc.)"
-          className="w-full px-3 py-2 border border-gray-300 rounded-lg focus:ring-2 focus:ring-primary-500 focus:border-primary-500 text-sm"
-          rows={2}
-        />
-      </div>
+      {isRejectMode ? (
+        <div className="space-y-3">
+          <div>
+            <label className="block text-sm font-medium text-gray-700 mb-1">
+              Motif de rejet <span className="text-red-500">*</span>
+            </label>
+            <select
+              value={rejectionReason}
+              onChange={(e) => setRejectionReason(e.target.value as RejectionReason)}
+              className="w-full px-3 py-2 border border-gray-300 rounded-lg focus:ring-2 focus:ring-primary-500 focus:border-primary-500 text-sm"
+            >
+              <option value="">-- Sélectionner un motif --</option>
+              {REJECTION_REASONS.map((r) => (
+                <option key={r.value} value={r.value}>{r.label}</option>
+              ))}
+            </select>
+          </div>
+
+          <div>
+            <label className="block text-sm font-medium text-gray-700 mb-1">
+              Justification du rejet <span className="text-red-500">*</span>
+            </label>
+            <textarea
+              value={notes}
+              onChange={(e) => setNotes(e.target.value)}
+              placeholder="Expliquez la raison du rejet de cette anomalie..."
+              className="w-full px-3 py-2 border border-gray-300 rounded-lg focus:ring-2 focus:ring-primary-500 focus:border-primary-500 text-sm"
+              rows={3}
+            />
+          </div>
+
+          <div className="flex items-start gap-2 p-3 bg-amber-50 rounded-lg border border-amber-100">
+            <AlertCircle className="h-5 w-5 text-amber-500 flex-shrink-0 mt-0.5" />
+            <p className="text-sm text-amber-700">
+              Ce rejet devra être validé par un superviseur (workflow 4 Yeux).
+            </p>
+          </div>
+        </div>
+      ) : (
+        <div>
+          <label className="block text-sm font-medium text-gray-700 mb-1">
+            Notes (optionnel)
+          </label>
+          <textarea
+            value={notes}
+            onChange={(e) => setNotes(e.target.value)}
+            placeholder="Ajoutez des notes sur cette correction (justification, source des données, etc.)"
+            className="w-full px-3 py-2 border border-gray-300 rounded-lg focus:ring-2 focus:ring-primary-500 focus:border-primary-500 text-sm"
+            rows={2}
+          />
+        </div>
+      )}
 
       <div className="flex flex-wrap gap-2 justify-end border-t border-gray-100 pt-4">
-        <Button
-          variant="outline"
-          size="sm"
-          leftIcon={<XCircle className="h-4 w-4" />}
-          onClick={handleRejectAnomaly}
-          disabled={isProcessing}
-          className="text-error-600 hover:text-error-700 hover:border-error-300"
-        >
-          Rejeter l'anomalie
-        </Button>
+        {isRejectMode ? (
+          <>
+            <Button
+              variant="outline"
+              size="sm"
+              onClick={() => { setIsRejectMode(false); setRejectionReason(''); setNotes(''); }}
+              disabled={isProcessing}
+            >
+              Annuler
+            </Button>
+            <Button
+              variant="outline"
+              size="sm"
+              leftIcon={<XCircle className="h-4 w-4" />}
+              onClick={handleRejectAnomaly}
+              disabled={isProcessing || !rejectionReason || !notes.trim()}
+              isLoading={isProcessing}
+              className="text-error-600 hover:text-error-700 hover:border-error-300"
+            >
+              Confirmer le rejet
+            </Button>
+          </>
+        ) : (
+          <>
+            <Button
+              variant="outline"
+              size="sm"
+              leftIcon={<XCircle className="h-4 w-4" />}
+              onClick={() => setIsRejectMode(true)}
+              disabled={isProcessing}
+              className="text-error-600 hover:text-error-700 hover:border-error-300"
+            >
+              Rejeter l'anomalie
+            </Button>
 
-        <Button
-          variant="outline"
-          size="sm"
-          leftIcon={<Clock className="h-4 w-4" />}
-          onClick={handleReviewAnomaly}
-          disabled={isProcessing}
-        >
-          Mettre en revue
-        </Button>
+            <Button
+              variant="outline"
+              size="sm"
+              leftIcon={<Clock className="h-4 w-4" />}
+              onClick={handleReviewAnomaly}
+              disabled={isProcessing}
+            >
+              Mettre en revue
+            </Button>
 
-        <Button
-          variant="primary"
-          size="sm"
-          leftIcon={<Save className="h-4 w-4" />}
-          onClick={handleFixAnomaly}
-          disabled={isProcessing || !newValue}
-          isLoading={isProcessing}
-        >
-          Soumettre la correction
-        </Button>
+            <Button
+              variant="primary"
+              size="sm"
+              leftIcon={<Save className="h-4 w-4" />}
+              onClick={handleFixAnomaly}
+              disabled={isProcessing || !newValue}
+              isLoading={isProcessing}
+            >
+              Soumettre la correction
+            </Button>
+          </>
+        )}
       </div>
     </div>
   );

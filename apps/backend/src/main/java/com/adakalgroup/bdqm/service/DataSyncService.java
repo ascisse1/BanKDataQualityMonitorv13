@@ -137,12 +137,19 @@ public class DataSyncService {
      * - Agency table (structureField configured): auto-create Structure entities
      */
     private void runPostSyncHooks(String tableName, SyncResult result) {
+        log.debug("runPostSyncHooks START for table '{}'", tableName);
         try {
             var tableConfig = dataDictionaryService.getTableByName(tableName);
+            log.debug("Table '{}' config: validationEnabled={}, structureField={}, pkField={}, labelField={}",
+                    tableName, tableConfig.getValidationEnabled(), tableConfig.getStructureField(),
+                    tableConfig.getPkField(), tableConfig.getLabelField());
 
             // Dictionary-driven validation for any table with validationEnabled=true
             if (Boolean.TRUE.equals(tableConfig.getValidationEnabled())) {
+                log.debug("Table '{}': validation enabled, running validation...", tableName);
                 runValidation(tableName);
+            } else {
+                log.debug("Table '{}': validation NOT enabled, skipping", tableName);
             }
 
             // Auto-create Structure entities from agency-like tables
@@ -150,15 +157,18 @@ public class DataSyncService {
             if (tableConfig.getStructureField() != null
                     && tableConfig.getPkField() != null
                     && tableConfig.getLabelField() != null) {
+                log.debug("Table '{}': syncing structures...", tableName);
                 syncStructuresFromTable(tableName, tableConfig.getPkField(), tableConfig.getLabelField());
             }
         } catch (Exception e) {
             log.warn("Could not run post-sync hooks for '{}': {}", tableName, e.getMessage());
         }
+        log.debug("runPostSyncHooks END for table '{}'", tableName);
     }
 
     private void runValidation(String tableName) {
         log.info("Running post-sync validation for table '{}'...", tableName);
+        log.debug("Validation config: maxRecords={}", maxRecords);
         try {
             List<Map<String, Object>> allRecords = new ArrayList<>();
             int offset = 0;
