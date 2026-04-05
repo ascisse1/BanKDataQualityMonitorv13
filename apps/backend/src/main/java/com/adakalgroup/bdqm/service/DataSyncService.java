@@ -182,6 +182,8 @@ public class DataSyncService {
                         validationResult.autoResolved(),
                         validationResult.duplicatesSkipped(),
                         validationResult.errors());
+            } else  {
+                log.error("no records found to validate for '{} ", tableName);
             }
         } catch (Exception e) {
             log.error("Post-sync validation failed for '{}': {}", tableName, e.getMessage(), e);
