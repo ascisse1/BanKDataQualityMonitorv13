@@ -6,6 +6,7 @@ import com.adakalgroup.bdqm.model.enums.ClientType;
 import org.springframework.data.domain.Page;
 import org.springframework.data.domain.Pageable;
 import org.springframework.data.jpa.repository.JpaRepository;
+import org.springframework.data.jpa.repository.Modifying;
 import org.springframework.data.jpa.repository.Query;
 import org.springframework.data.repository.query.Param;
 import org.springframework.stereotype.Repository;
@@ -180,4 +181,16 @@ public interface AnomalyRepository extends JpaRepository<Anomaly, Long> {
            "ORDER BY a.createdAt DESC")
     List<Anomaly> findOpenAnomalyByClientAndField(@Param("clientNumber") String clientNumber,
                                                    @Param("fieldName") String fieldName);
+
+    /**
+     * Purge old resolved anomalies (CORRECTED, CLOSED, VALIDATED) older than a given date.
+     */
+    @Modifying
+    @Query("DELETE FROM Anomaly a WHERE a.status IN (com.adakalgroup.bdqm.model.enums.AnomalyStatus.CORRECTED, " +
+           "com.adakalgroup.bdqm.model.enums.AnomalyStatus.CLOSED, " +
+           "com.adakalgroup.bdqm.model.enums.AnomalyStatus.VALIDATED) " +
+           "AND a.updatedAt < :before")
+    int purgeResolvedBefore(@Param("before") LocalDateTime before);
+
+    long countByStatusIn(List<AnomalyStatus> statuses);
 }

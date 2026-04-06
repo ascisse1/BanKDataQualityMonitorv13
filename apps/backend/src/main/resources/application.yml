@@ -191,6 +191,9 @@ app:
     reconciliation-cron: "${RECONCILIATION_CRON:0 0 3 * * ?}"  # Daily at 3:00 AM
     reconciliation-max-tasks: ${RECONCILIATION_MAX_TASKS:100}
     fatca-screening-cron: "${FATCA_SCREENING_CRON:0 30 3 * * ?}"  # Daily at 3:30 AM
+    archival-cron: "${ARCHIVAL_CRON:0 0 4 * * ?}"               # Daily at 4:00 AM
+  archival:
+    retention-days: ${ARCHIVAL_RETENTION_DAYS:90}
   fatca:
     giin: ${FATCA_GIIN:XXXXXX.XXXXX.XX.XXX}
     reporting-country: ${FATCA_COUNTRY:XX}

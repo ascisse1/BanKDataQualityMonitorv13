@@ -170,39 +170,34 @@ public class DataSyncService {
             }
             log.info("Table '{}': {} records to process", tableName, totalCount);
 
-            // Streaming: each batch in its own transaction
+            // Streaming: fetch + upsert + validate all inside one transaction per batch
             final boolean isCdc = cdcMode;
+            final String cdcFieldFinal = cdcField;
+            final LocalDateTime lastSyncAtFinal = lastSyncAt;
             while (offset < totalCount) {
                 long batchStart = System.currentTimeMillis();
-
-                List<Map<String, Object>> batch = cdcMode
-                        ? dynamicCbsQueryService.fetchFromCbsSince(tableName, cdcField, lastSyncAt, offset, BATCH_SIZE)
-                        : dynamicCbsQueryService.fetchFromCbs(tableName, offset, BATCH_SIZE);
-                if (batch.isEmpty()) break;
-
-                log.info("Table '{}': batch offset={}, size={}", tableName, offset, batch.size());
-
-                // Transaction per batch with retry
-                final List<Map<String, Object>> batchRef = batch;
+                final int currentOffset = offset;
                 final boolean doValidate = validationEnabled;
-                BatchResult br = executeBatchWithRetry(tableName, batchRef, doValidate);
+
+                BatchResult br = executeBatchWithRetry(tableName, currentOffset, cdcFieldFinal, lastSyncAtFinal, isCdc, doValidate);
 
                 long batchDuration = System.currentTimeMillis() - batchStart;
-                metricsConfig.recordSyncBatch(tableName, batch.size(), batchDuration, isCdc);
 
-                if (br != null) {
+                if (br != null && br.fetched > 0) {
+                    metricsConfig.recordSyncBatch(tableName, br.fetched, batchDuration, isCdc);
                     upserted += br.upserted;
                     validated += br.validated;
                     anomaliesCreated += br.anomalies;
                     errors += br.errors;
+
+                    syncProgressService.emitBatchProgress(tableName, offset, br.fetched, totalCount,
+                            br.upserted, br.anomalies, batchDuration);
+
+                    offset += BATCH_SIZE;
+                    if (br.fetched < BATCH_SIZE) break;
+                } else {
+                    break;
                 }
-
-                // SSE: emit batch progress
-                syncProgressService.emitBatchProgress(tableName, offset, batch.size(), totalCount,
-                        br != null ? br.upserted : 0, br != null ? br.anomalies : 0, batchDuration);
-
-                offset += BATCH_SIZE;
-                if (batch.size() < BATCH_SIZE) break;
             }
 
             // Update last_sync_at for CDC (own transaction)
@@ -232,15 +227,27 @@ public class DataSyncService {
         }
     }
 
-    private BatchResult executeBatchWithRetry(String tableName, List<Map<String, Object>> batch, boolean validate) {
+    private BatchResult executeBatchWithRetry(String tableName, int offset,
+                                               String cdcField, LocalDateTime lastSyncAt,
+                                               boolean cdc, boolean validate) {
         for (int attempt = 1; attempt <= batchRetry; attempt++) {
             try {
                 return transactionTemplate.execute(status -> {
+                    // Fetch inside transaction (Hibernate session available for lazy loading)
+                    List<Map<String, Object>> batch = cdc
+                            ? dynamicCbsQueryService.fetchFromCbsSince(tableName, cdcField, lastSyncAt, offset, BATCH_SIZE)
+                            : dynamicCbsQueryService.fetchFromCbs(tableName, offset, BATCH_SIZE);
+
+                    if (batch.isEmpty()) {
+                        return new BatchResult(0, 0, 0, 0, 0);
+                    }
+
+                    log.info("Table '{}': batch offset={}, size={}", tableName, offset, batch.size());
+
                     int batchUpserted = dynamicCbsQueryService.upsertToMirror(tableName, batch);
 
                     int batchValidated = 0;
                     int batchAnomalies = 0;
-                    int batchAutoResolved = 0;
                     int batchErrors = 0;
                     if (validate) {
                         long valStart = System.currentTimeMillis();
@@ -248,27 +255,26 @@ public class DataSyncService {
                                 cbsValidationService.validateRecords(tableName, batch);
                         batchValidated = vr.recordsValidated();
                         batchAnomalies = vr.anomaliesCreated();
-                        batchAutoResolved = vr.autoResolved();
                         batchErrors = vr.errors();
-                        metricsConfig.recordValidationBatch(tableName, batchAnomalies, batchAutoResolved,
+                        metricsConfig.recordValidationBatch(tableName, batchAnomalies, vr.autoResolved(),
                                 System.currentTimeMillis() - valStart);
                         log.info("Table '{}': batch validated — anomalies={}, autoResolved={}, skipped={}",
                                 tableName, vr.anomaliesCreated(), vr.autoResolved(), vr.duplicatesSkipped());
                     }
-                    return new BatchResult(batchUpserted, batchValidated, batchAnomalies, batchErrors);
+                    return new BatchResult(batch.size(), batchUpserted, batchValidated, batchAnomalies, batchErrors);
                 });
             } catch (Exception e) {
                 log.warn("Table '{}': batch failed (attempt {}/{}): {}", tableName, attempt, batchRetry, e.getMessage());
                 if (attempt == batchRetry) {
                     log.error("Table '{}': batch failed after {} retries, skipping", tableName, batchRetry);
-                    return new BatchResult(0, 0, 0, batch.size());
+                    return new BatchResult(BATCH_SIZE, 0, 0, 0, BATCH_SIZE);
                 }
             }
         }
-        return new BatchResult(0, 0, 0, batch.size());
+        return new BatchResult(BATCH_SIZE, 0, 0, 0, BATCH_SIZE);
     }
 
-    private record BatchResult(int upserted, int validated, int anomalies, int errors) {}
+    private record BatchResult(int fetched, int upserted, int validated, int anomalies, int errors) {}
 
     // ===== Helpers =====
 

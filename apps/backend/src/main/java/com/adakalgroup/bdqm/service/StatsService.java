@@ -32,6 +32,7 @@ public class StatsService {
 
     private final AnomalyRepository anomalyRepository;
     private final TicketRepository ticketRepository;
+    private final com.adakalgroup.bdqm.repository.FatcaClientRepository fatcaClientRepository;
     private final DSLContext primaryDsl;
 
     @org.springframework.cache.annotation.Cacheable(value = "statistics", key = "'dashboard-stats'")
@@ -45,9 +46,15 @@ public class StatsService {
 
         long totalAnomalies = anomalyRepository.count();
         long correctedAnomalies = anomalyRepository.countByStatus(AnomalyStatus.CORRECTED);
+        log.info("Dashboard stats: totalAnomalies={}, corrected={}", totalAnomalies, correctedAnomalies);
 
-        long fatcaCount = anomalyRepository.countByClientTypeAndStatus(ClientType.INDIVIDUAL, AnomalyStatus.PENDING)
-                + anomalyRepository.countByClientTypeAndStatus(ClientType.INDIVIDUAL, AnomalyStatus.IN_PROGRESS);
+        long fatcaCount;
+        try {
+            fatcaCount = fatcaClientRepository.count();
+        } catch (Exception e) {
+            log.warn("Error counting FATCA clients: {}", e.getMessage());
+            fatcaCount = 0;
+        }
 
         long pendingTickets = ticketRepository.countByStatus(TicketStatus.DETECTED) +
                               ticketRepository.countByStatus(TicketStatus.ASSIGNED) +
@@ -202,14 +209,18 @@ public class StatsService {
      */
     private long countClients(String tcli) {
         try {
+            long count;
             if (tcli == null) {
-                return primaryDsl.fetchCount(DSL.table("cbs.bkcli"));
+                count = primaryDsl.fetchCount(DSL.table("cbs.bkcli"));
+            } else {
+                count = primaryDsl.fetchCount(
+                        DSL.table("cbs.bkcli"),
+                        DSL.field("tcli").eq(tcli));
             }
-            return primaryDsl.fetchCount(
-                    DSL.table("cbs.bkcli"),
-                    DSL.field("tcli").eq(tcli));
+            log.info("countClients(tcli={}): {}", tcli, count);
+            return count;
         } catch (Exception e) {
-            log.warn("Error counting clients (tcli={}): {}", tcli, e.getMessage());
+            log.error("Error counting clients (tcli={}): {}", tcli, e.getMessage(), e);
             return 0;
         }
     }

@@ -33,6 +33,7 @@ public class FatcaController {
     private final FatcaScreeningService fatcaScreeningService;
     private final FatcaConfig fatcaConfig;
     private final StructureSecurityService structureSecurityService;
+    private final com.adakalgroup.bdqm.repository.FatcaClientRepository fatcaClientRepository;
 
     @GetMapping("/clients")
     @PreAuthorize("hasAnyRole('ADMIN', 'AUDITOR')")
@@ -143,6 +144,18 @@ public class FatcaController {
 
         Page<FatcaAuditLog> audit = fatcaAuditService.getAuditHistory(cli, page, size);
         return ResponseEntity.ok(ApiResponse.success(audit));
+    }
+
+    @GetMapping("/trend")
+    @PreAuthorize("hasAnyRole('ADMIN', 'AUDITOR')")
+    public ResponseEntity<ApiResponse<List<Map<String, Object>>>> getFatcaTrend(
+            @RequestParam(defaultValue = "12") int months) {
+        var since = java.time.LocalDateTime.now().minusMonths(months);
+        List<Object[]> raw = fatcaClientRepository.countByMonthSince(since);
+        List<Map<String, Object>> result = raw.stream()
+            .map(r -> Map.<String, Object>of("month", r[0].toString(), "count", ((Number) r[1]).longValue()))
+            .toList();
+        return ResponseEntity.ok(ApiResponse.success(result));
     }
 
     @PostMapping("/screen")

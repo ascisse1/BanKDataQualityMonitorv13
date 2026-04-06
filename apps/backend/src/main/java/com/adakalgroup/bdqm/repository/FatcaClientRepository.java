@@ -61,4 +61,11 @@ public interface FatcaClientRepository extends JpaRepository<FatcaClient, Long> 
            "GROUP BY f.structureCode, f.structureName " +
            "ORDER BY total DESC")
     List<Object[]> getStatsByAgency();
+
+    @Query("SELECT FUNCTION('to_char', f.createdAt, 'YYYY-MM') as month, COUNT(f) as count " +
+           "FROM FatcaClient f " +
+           "WHERE f.createdAt >= :since " +
+           "GROUP BY FUNCTION('to_char', f.createdAt, 'YYYY-MM') " +
+           "ORDER BY month")
+    List<Object[]> countByMonthSince(@Param("since") java.time.LocalDateTime since);
 }

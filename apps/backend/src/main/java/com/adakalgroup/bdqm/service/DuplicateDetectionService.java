@@ -28,23 +28,20 @@ public class DuplicateDetectionService {
     private static final int DEFAULT_BATCH_SIZE = 1000;
 
     private static final Map<String, Double> INDIVIDUAL_WEIGHTS = Map.of(
-            "nom", 0.20,
-            "pre", 0.10,
+            "nom", 0.25,
+            "pre", 0.15,
             "nid", 0.25,
             "dna", 0.15,
             "nmer", 0.10,
-            "tel", 0.10,
-            "ema", 0.05,
-            "adr", 0.05
+            "nat", 0.10
     );
 
     private static final Map<String, Double> CORPORATE_WEIGHTS = Map.of(
-            "nom", 0.20,
-            "rso", 0.15,
+            "nom", 0.25,
+            "rso", 0.25,
             "nrc", 0.30,
-            "tel", 0.15,
             "fju", 0.10,
-            "ema", 0.10
+            "nidf", 0.10
     );
 
     private final DuplicateMatchRepository repository;
@@ -219,10 +216,9 @@ public class DuplicateDetectionService {
                     .select(
                             DSL.field("cli"), DSL.field("nom"), DSL.field("pre"),
                             DSL.field("nmer"), DSL.field("dna"), DSL.field("nid"),
-                            DSL.field("tel"), DSL.field("ema"), DSL.field("adr"),
                             DSL.field("sext"), DSL.field("nat"), DSL.field("age"),
                             DSL.field("nrc"), DSL.field("rso"), DSL.field("fju"),
-                            DSL.field("datc"), DSL.field("tcli")
+                            DSL.field("nidf"), DSL.field("datc"), DSL.field("tcli")
                     )
                     .from(DSL.table(CBS_TABLE))
                     .where(DSL.field("tcli").eq(tcliCode))
@@ -240,10 +236,9 @@ public class DuplicateDetectionService {
                     .select(
                             DSL.field("cli"), DSL.field("nom"), DSL.field("pre"),
                             DSL.field("nmer"), DSL.field("dna"), DSL.field("nid"),
-                            DSL.field("tel"), DSL.field("ema"), DSL.field("adr"),
                             DSL.field("sext"), DSL.field("nat"), DSL.field("age"),
                             DSL.field("nrc"), DSL.field("rso"), DSL.field("fju"),
-                            DSL.field("datc"), DSL.field("tcli")
+                            DSL.field("nidf"), DSL.field("datc"), DSL.field("tcli")
                     )
                     .from(DSL.table(CBS_TABLE))
                     .where(DSL.field("cli").eq(clientId))
@@ -284,11 +279,6 @@ public class DuplicateDetectionService {
         String nid = getString(client, "nid").trim();
         if (!nid.isEmpty()) {
             keys.add("nid:" + nid);
-        }
-
-        String tel = getString(client, "tel").replaceAll("[^0-9]", "");
-        if (tel.length() >= 6) {
-            keys.add("tel:" + tel);
         }
 
         if ("individual".equals(clientType)) {
@@ -417,13 +407,6 @@ public class DuplicateDetectionService {
             }
         }
 
-        // Same phone for different clients
-        String tel1 = getString(c1, "tel").replaceAll("[^0-9]", "");
-        String tel2 = getString(c2, "tel").replaceAll("[^0-9]", "");
-        if (!tel1.isEmpty() && tel1.equals(tel2)) {
-            patterns.add("Numero de telephone partage entre clients differents");
-        }
-
         // Same person at different agencies
         String age1 = getString(c1, "age").trim();
         String age2 = getString(c2, "age").trim();
@@ -538,9 +521,6 @@ public class DuplicateDetectionService {
                 .pre(getString(data, "pre"))
                 .nid(getString(data, "nid"))
                 .dna(getString(data, "dna"))
-                .tel(getString(data, "tel"))
-                .email(getString(data, "ema"))
-                .adr(getString(data, "adr"))
                 .nomMere(getString(data, "nmer"))
                 .rccm(getString(data, "nrc"))
                 .raisonSociale(getString(data, "rso"))

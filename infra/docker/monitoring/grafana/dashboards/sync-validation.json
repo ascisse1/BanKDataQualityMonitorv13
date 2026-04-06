@@ -1,0 +1,311 @@
+{
+  "id": null,
+  "uid": "bdqm-sync-validation",
+  "title": "BDQM - Sync & Validation",
+  "tags": ["bdqm", "sync", "validation", "cbs"],
+  "timezone": "browser",
+  "schemaVersion": 16,
+  "version": 1,
+  "refresh": "10s",
+  "time": {"from": "now-1h", "to": "now"},
+  "templating": {
+    "list": [
+      {
+        "name": "datasource",
+        "type": "datasource",
+        "query": "prometheus",
+        "current": {"text": "Prometheus", "value": "Prometheus"}
+      }
+    ]
+  },
+  "panels": [
+
+    {
+      "id": 1,
+      "title": "Sync Success",
+      "type": "stat",
+      "datasource": {"type": "prometheus", "uid": "${datasource}"},
+      "gridPos": {"h": 4, "w": 4, "x": 0, "y": 0},
+      "targets": [
+        {"expr": "bdqm_data_sync_success_total", "legendFormat": "Success"}
+      ],
+      "options": {"colorMode": "background", "graphMode": "none"},
+      "fieldConfig": {
+        "defaults": {
+          "thresholds": {"mode": "absolute", "steps": [{"color": "green", "value": null}]}
+        }
+      }
+    },
+    {
+      "id": 2,
+      "title": "Sync Failures",
+      "type": "stat",
+      "datasource": {"type": "prometheus", "uid": "${datasource}"},
+      "gridPos": {"h": 4, "w": 4, "x": 4, "y": 0},
+      "targets": [
+        {"expr": "bdqm_data_sync_failure_total", "legendFormat": "Failures"}
+      ],
+      "options": {"colorMode": "background", "graphMode": "none"},
+      "fieldConfig": {
+        "defaults": {
+          "thresholds": {"mode": "absolute", "steps": [
+            {"color": "green", "value": null},
+            {"color": "red", "value": 1}
+          ]}
+        }
+      }
+    },
+    {
+      "id": 3,
+      "title": "Last Sync Age",
+      "type": "stat",
+      "datasource": {"type": "prometheus", "uid": "${datasource}"},
+      "gridPos": {"h": 4, "w": 4, "x": 8, "y": 0},
+      "targets": [
+        {"expr": "time() - bdqm_data_sync_last_success_timestamp", "legendFormat": "Seconds ago"}
+      ],
+      "options": {"colorMode": "background", "graphMode": "none"},
+      "fieldConfig": {
+        "defaults": {
+          "unit": "s",
+          "thresholds": {"mode": "absolute", "steps": [
+            {"color": "green", "value": null},
+            {"color": "yellow", "value": 300},
+            {"color": "red", "value": 3600}
+          ]}
+        }
+      }
+    },
+    {
+      "id": 4,
+      "title": "Pending Anomalies",
+      "type": "stat",
+      "datasource": {"type": "prometheus", "uid": "${datasource}"},
+      "gridPos": {"h": 4, "w": 4, "x": 12, "y": 0},
+      "targets": [
+        {"expr": "bdqm_anomalies_pending", "legendFormat": "Pending"}
+      ],
+      "options": {"colorMode": "background", "graphMode": "none"},
+      "fieldConfig": {
+        "defaults": {
+          "thresholds": {"mode": "absolute", "steps": [
+            {"color": "green", "value": null},
+            {"color": "yellow", "value": 100},
+            {"color": "red", "value": 500}
+          ]}
+        }
+      }
+    },
+    {
+      "id": 5,
+      "title": "Anomalies Created (1h)",
+      "type": "stat",
+      "datasource": {"type": "prometheus", "uid": "${datasource}"},
+      "gridPos": {"h": 4, "w": 4, "x": 16, "y": 0},
+      "targets": [
+        {"expr": "increase(bdqm_anomalies_created_total[1h])", "legendFormat": "Last 1h"}
+      ],
+      "options": {"colorMode": "background", "graphMode": "area"},
+      "fieldConfig": {
+        "defaults": {
+          "decimals": 0,
+          "thresholds": {"mode": "absolute", "steps": [
+            {"color": "green", "value": null},
+            {"color": "yellow", "value": 50},
+            {"color": "red", "value": 200}
+          ]}
+        }
+      }
+    },
+    {
+      "id": 6,
+      "title": "Anomalies Resolved (1h)",
+      "type": "stat",
+      "datasource": {"type": "prometheus", "uid": "${datasource}"},
+      "gridPos": {"h": 4, "w": 4, "x": 20, "y": 0},
+      "targets": [
+        {"expr": "increase(bdqm_anomalies_resolved_total[1h])", "legendFormat": "Last 1h"}
+      ],
+      "options": {"colorMode": "background", "graphMode": "area"},
+      "fieldConfig": {
+        "defaults": {
+          "decimals": 0,
+          "thresholds": {"mode": "absolute", "steps": [{"color": "blue", "value": null}]}
+        }
+      }
+    },
+
+    {
+      "id": 10,
+      "title": "Records Synced per Table (rate/min)",
+      "type": "timeseries",
+      "datasource": {"type": "prometheus", "uid": "${datasource}"},
+      "gridPos": {"h": 8, "w": 12, "x": 0, "y": 4},
+      "targets": [
+        {"expr": "rate(bdqm_sync_records_total[5m]) * 60", "legendFormat": "{{table}}"}
+      ],
+      "fieldConfig": {
+        "defaults": {"unit": "rec/min", "custom": {"fillOpacity": 20, "lineWidth": 2}}
+      },
+      "options": {"tooltip": {"mode": "multi"}}
+    },
+    {
+      "id": 11,
+      "title": "Sync Batch Duration",
+      "type": "timeseries",
+      "datasource": {"type": "prometheus", "uid": "${datasource}"},
+      "gridPos": {"h": 8, "w": 12, "x": 12, "y": 4},
+      "targets": [
+        {"expr": "histogram_quantile(0.95, rate(bdqm_sync_batch_duration_seconds_bucket[5m]))", "legendFormat": "{{table}} p95"},
+        {"expr": "histogram_quantile(0.50, rate(bdqm_sync_batch_duration_seconds_bucket[5m]))", "legendFormat": "{{table}} p50"}
+      ],
+      "fieldConfig": {
+        "defaults": {"unit": "s", "custom": {"fillOpacity": 10, "lineWidth": 2}}
+      },
+      "options": {"tooltip": {"mode": "multi"}}
+    },
+
+    {
+      "id": 20,
+      "title": "Validation: Anomalies Created vs Resolved",
+      "type": "timeseries",
+      "datasource": {"type": "prometheus", "uid": "${datasource}"},
+      "gridPos": {"h": 8, "w": 12, "x": 0, "y": 12},
+      "targets": [
+        {"expr": "increase(bdqm_validation_anomalies_created_total[5m])", "legendFormat": "{{table}} created"},
+        {"expr": "increase(bdqm_validation_auto_resolved_total[5m])", "legendFormat": "{{table}} resolved"}
+      ],
+      "fieldConfig": {
+        "defaults": {"custom": {"fillOpacity": 30, "lineWidth": 2, "stacking": {"mode": "normal"}}}
+      },
+      "options": {"tooltip": {"mode": "multi"}}
+    },
+    {
+      "id": 21,
+      "title": "Validation Batch Duration",
+      "type": "timeseries",
+      "datasource": {"type": "prometheus", "uid": "${datasource}"},
+      "gridPos": {"h": 8, "w": 12, "x": 12, "y": 12},
+      "targets": [
+        {"expr": "histogram_quantile(0.95, rate(bdqm_validation_batch_duration_seconds_bucket[5m]))", "legendFormat": "{{table}} p95"}
+      ],
+      "fieldConfig": {
+        "defaults": {"unit": "s", "custom": {"fillOpacity": 10, "lineWidth": 2}}
+      },
+      "options": {"tooltip": {"mode": "multi"}}
+    },
+
+    {
+      "id": 30,
+      "title": "Table Sync Duration",
+      "type": "timeseries",
+      "datasource": {"type": "prometheus", "uid": "${datasource}"},
+      "gridPos": {"h": 8, "w": 12, "x": 0, "y": 20},
+      "targets": [
+        {"expr": "histogram_quantile(0.95, rate(bdqm_sync_table_duration_seconds_bucket[5m]))", "legendFormat": "{{table}} (CDC={{cdc}})"}
+      ],
+      "fieldConfig": {
+        "defaults": {"unit": "s", "custom": {"fillOpacity": 10, "lineWidth": 2}}
+      },
+      "options": {"tooltip": {"mode": "multi"}}
+    },
+    {
+      "id": 31,
+      "title": "Records/Second",
+      "type": "gauge",
+      "datasource": {"type": "prometheus", "uid": "${datasource}"},
+      "gridPos": {"h": 8, "w": 12, "x": 12, "y": 20},
+      "targets": [
+        {"expr": "bdqm_sync_records_per_second", "legendFormat": "{{table}}"}
+      ],
+      "fieldConfig": {
+        "defaults": {
+          "unit": "rec/s",
+          "min": 0,
+          "max": 5000,
+          "thresholds": {"mode": "absolute", "steps": [
+            {"color": "red", "value": null},
+            {"color": "yellow", "value": 100},
+            {"color": "green", "value": 500}
+          ]}
+        }
+      }
+    },
+
+    {
+      "id": 40,
+      "title": "CDC vs Full Sync",
+      "type": "piechart",
+      "datasource": {"type": "prometheus", "uid": "${datasource}"},
+      "gridPos": {"h": 8, "w": 8, "x": 0, "y": 28},
+      "targets": [
+        {"expr": "sum(bdqm_sync_records_total{cdc=\"true\"})", "legendFormat": "CDC (incremental)"},
+        {"expr": "sum(bdqm_sync_records_total{cdc=\"false\"})", "legendFormat": "Full sync"}
+      ],
+      "options": {"pieType": "donut", "tooltip": {"mode": "single"}}
+    },
+    {
+      "id": 41,
+      "title": "Tickets: Created / Validated / Rejected",
+      "type": "timeseries",
+      "datasource": {"type": "prometheus", "uid": "${datasource}"},
+      "gridPos": {"h": 8, "w": 8, "x": 8, "y": 28},
+      "targets": [
+        {"expr": "increase(bdqm_tickets_created_total[1h])", "legendFormat": "Created"},
+        {"expr": "increase(bdqm_tickets_validated_total[1h])", "legendFormat": "Validated"},
+        {"expr": "increase(bdqm_tickets_rejected_total[1h])", "legendFormat": "Rejected"}
+      ],
+      "fieldConfig": {
+        "defaults": {"custom": {"fillOpacity": 20, "lineWidth": 2}}
+      }
+    },
+    {
+      "id": 42,
+      "title": "Pending Tickets",
+      "type": "stat",
+      "datasource": {"type": "prometheus", "uid": "${datasource}"},
+      "gridPos": {"h": 8, "w": 8, "x": 16, "y": 28},
+      "targets": [
+        {"expr": "bdqm_tickets_pending_validation", "legendFormat": "Pending"}
+      ],
+      "options": {"colorMode": "background", "graphMode": "area"},
+      "fieldConfig": {
+        "defaults": {
+          "thresholds": {"mode": "absolute", "steps": [
+            {"color": "green", "value": null},
+            {"color": "yellow", "value": 10},
+            {"color": "red", "value": 50}
+          ]}
+        }
+      }
+    },
+
+    {
+      "id": 50,
+      "title": "CBS Query Duration",
+      "type": "timeseries",
+      "datasource": {"type": "prometheus", "uid": "${datasource}"},
+      "gridPos": {"h": 8, "w": 12, "x": 0, "y": 36},
+      "targets": [
+        {"expr": "histogram_quantile(0.95, rate(bdqm_cbs_query_duration_seconds_bucket[5m]))", "legendFormat": "CBS query p95"},
+        {"expr": "histogram_quantile(0.50, rate(bdqm_cbs_query_duration_seconds_bucket[5m]))", "legendFormat": "CBS query p50"}
+      ],
+      "fieldConfig": {
+        "defaults": {"unit": "s", "custom": {"fillOpacity": 10, "lineWidth": 2}}
+      }
+    },
+    {
+      "id": 51,
+      "title": "CBS Reconciliation Operations",
+      "type": "timeseries",
+      "datasource": {"type": "prometheus", "uid": "${datasource}"},
+      "gridPos": {"h": 8, "w": 12, "x": 12, "y": 36},
+      "targets": [
+        {"expr": "increase(bdqm_cbs_reconciliation_total[1h])", "legendFormat": "Reconciliations"}
+      ],
+      "fieldConfig": {
+        "defaults": {"custom": {"fillOpacity": 20, "lineWidth": 2}}
+      }
+    }
+  ]
+}

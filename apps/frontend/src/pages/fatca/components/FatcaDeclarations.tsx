@@ -1,5 +1,5 @@
-import React, { useState, useEffect } from 'react';
-import { FileText, Download, CheckCircle, XCircle, FileSignature, Send, Plus, Clock, Eye, AlertTriangle, RefreshCw } from 'lucide-react';
+import React, { useState, useEffect, useMemo } from 'react';
+import { FileText, Download, CheckCircle, XCircle, FileSignature, Send, Plus, Clock, Eye, AlertTriangle, RefreshCw, Copy, Check } from 'lucide-react';
 import Button from '@/components/ui/Button';
 import Input from '@/components/ui/Input';
 import { db } from '@/services/db';
@@ -45,6 +45,163 @@ const TYPE_LABELS: Record<DeclarationType, string> = {
   VOID: 'Annulation',
 };
 
+/** Syntax-highlighted XML viewer with line numbers, copy, and collapsible structure */
+const XmlViewer: React.FC<{
+  xml: string;
+  decl: FatcaDeclaration;
+  formatDate: (d: string | null) => string;
+  onCopy: () => void;
+}> = ({ xml, decl, formatDate, onCopy }) => {
+  const [copied, setCopied] = useState(false);
+  const [expanded, setExpanded] = useState(true);
+
+  const handleCopy = () => {
+    navigator.clipboard.writeText(xml);
+    setCopied(true);
+    onCopy();
+    setTimeout(() => setCopied(false), 2000);
+  };
+
+  // Format and syntax-highlight XML
+  const formattedLines = useMemo(() => {
+    // Pretty-print: add indentation
+    let indent = 0;
+    const raw = xml.replace(/></g, '>\n<');
+    return raw.split('\n').map(line => {
+      const trimmed = line.trim();
+      if (!trimmed) return null;
+
+      // Decrease indent for closing tags
+      if (trimmed.startsWith('</')) indent = Math.max(0, indent - 1);
+
+      const indented = '  '.repeat(indent) + trimmed;
+
+      // Increase indent for opening tags (not self-closing, not closing)
+      if (trimmed.startsWith('<') && !trimmed.startsWith('</') && !trimmed.startsWith('<?') && !trimmed.endsWith('/>') && !trimmed.includes('</')) {
+        indent++;
+      }
+
+      return indented;
+    }).filter(Boolean) as string[];
+  }, [xml]);
+
+  const highlightLine = (line: string) => {
+    // XML declaration
+    if (line.trim().startsWith('<?')) {
+      return <span className="text-gray-500">{line}</span>;
+    }
+
+    // Highlight XML structure
+    return line.split(/(<[^>]+>)/).map((part, i) => {
+      if (part.startsWith('</')) {
+        // Closing tag
+        const tag = part.match(/<\/([^\s>]+)/)?.[1] || '';
+        return <span key={i}><span className="text-gray-500">{'</'}</span><span className="text-red-400">{tag}</span><span className="text-gray-500">{'>'}</span></span>;
+      }
+      if (part.startsWith('<')) {
+        // Opening tag with attributes
+        const match = part.match(/^<([^\s/>]+)(.*?)(\/?>)$/s);
+        if (match) {
+          const [, tag, attrs, close] = match;
+          // Highlight attributes
+          const highlightedAttrs = attrs.replace(/(\w+)="([^"]*)"/g, (_, name, val) =>
+            `<ATTR>${name}</ATTR>="<VAL>${val}</VAL>"`
+          );
+          return (
+            <span key={i}>
+              <span className="text-gray-500">{'<'}</span>
+              <span className="text-red-400">{tag}</span>
+              {highlightedAttrs.split(/(<ATTR>|<\/ATTR>|<VAL>|<\/VAL>)/).map((seg, j) => {
+                if (seg === '<ATTR>' || seg === '</ATTR>' || seg === '<VAL>' || seg === '</VAL>') return null;
+                // Crude but works: alternate between attr name and value
+                if (attrs.includes(seg + '="')) return <span key={j} className="text-yellow-300"> {seg}</span>;
+                if (seg.startsWith('=')) return <span key={j} className="text-gray-500">{seg}</span>;
+                return <span key={j} className="text-green-300">{seg}</span>;
+              })}
+              <span className="text-gray-500">{close}</span>
+            </span>
+          );
+        }
+        return <span key={i} className="text-red-400">{part}</span>;
+      }
+      // Text content
+      if (part.trim()) {
+        return <span key={i} className="text-emerald-300">{part}</span>;
+      }
+      return <span key={i}>{part}</span>;
+    });
+  };
+
+  const visibleLines = expanded ? formattedLines : formattedLines.slice(0, 20);
+  const accountCount = (xml.match(/<AccountReport>/g) || []).length;
+
+  return (
+    <div className="space-y-3">
+      {/* Header bar */}
+      <div className="flex items-center justify-between">
+        <div className="flex items-center gap-3">
+          <p className="text-sm font-medium text-gray-900">Apercu XML FATCA</p>
+          <span className="text-xs px-2 py-0.5 rounded bg-gray-200 text-gray-600">{decl.messageRefId}</span>
+          <span className="text-xs px-2 py-0.5 rounded bg-blue-100 text-blue-700">{accountCount} comptes</span>
+          <span className="text-xs px-2 py-0.5 rounded bg-gray-200 text-gray-600">{formattedLines.length} lignes</span>
+        </div>
+        <div className="flex items-center gap-2">
+          <div className="flex gap-2 text-xs text-gray-500">
+            {decl.validatedBy && <span className="px-2 py-0.5 rounded bg-blue-50 text-blue-600">Valide: {decl.validatedBy} ({formatDate(decl.validatedAt)})</span>}
+            {decl.signedBy && <span className="px-2 py-0.5 rounded bg-purple-50 text-purple-600">Signe: {decl.signedBy} ({formatDate(decl.signedAt)})</span>}
+            {decl.submittedAt && <span className="px-2 py-0.5 rounded bg-green-50 text-green-600">Soumis: {formatDate(decl.submittedAt)}</span>}
+          </div>
+          <button onClick={handleCopy} className="inline-flex items-center gap-1 px-2 py-1 text-xs rounded bg-gray-700 text-gray-300 hover:bg-gray-600 transition-colors"
+            title="Copier le XML">
+            {copied ? <><Check className="h-3 w-3 text-green-400" />Copie!</> : <><Copy className="h-3 w-3" />Copier</>}
+          </button>
+        </div>
+      </div>
+
+      {/* XML content with line numbers */}
+      <div className="relative rounded-lg overflow-hidden border border-gray-700">
+        <div className="bg-gray-800 px-3 py-1.5 flex items-center justify-between border-b border-gray-700">
+          <div className="flex items-center gap-2">
+            <div className="flex gap-1">
+              <div className="w-2.5 h-2.5 rounded-full bg-red-500" />
+              <div className="w-2.5 h-2.5 rounded-full bg-yellow-500" />
+              <div className="w-2.5 h-2.5 rounded-full bg-green-500" />
+            </div>
+            <span className="text-xs text-gray-400 font-mono">FATCA_{decl.reportingYear}_{decl.declarationType}.xml</span>
+          </div>
+          <span className="text-xs text-gray-500">{TYPE_LABELS[decl.declarationType]} - {decl.reportingYear}</span>
+        </div>
+
+        <div className="overflow-auto max-h-[500px] bg-gray-900">
+          <table className="w-full">
+            <tbody>
+              {visibleLines.map((line, i) => (
+                <tr key={i} className="hover:bg-gray-800/50 group">
+                  <td className="px-3 py-0 text-right select-none w-10 text-xs text-gray-600 font-mono border-r border-gray-800 group-hover:text-gray-400">
+                    {i + 1}
+                  </td>
+                  <td className="px-3 py-0 text-xs font-mono whitespace-pre">
+                    {highlightLine(line)}
+                  </td>
+                </tr>
+              ))}
+            </tbody>
+          </table>
+        </div>
+
+        {formattedLines.length > 20 && (
+          <div className="bg-gray-800 px-3 py-2 border-t border-gray-700 text-center">
+            <button onClick={() => setExpanded(!expanded)}
+              className="text-xs text-blue-400 hover:text-blue-300 transition-colors">
+              {expanded ? `Reduire (${formattedLines.length} lignes)` : `Afficher tout (${formattedLines.length} lignes)`}
+            </button>
+          </div>
+        )}
+      </div>
+    </div>
+  );
+};
+
 const FatcaDeclarations: React.FC = () => {
   const [declarations, setDeclarations] = useState<FatcaDeclaration[]>([]);
   const [loading, setLoading] = useState(true);
@@ -74,6 +231,7 @@ const FatcaDeclarations: React.FC = () => {
   const fetchDeclarations = async () => {
     try {
       setLoading(true);
+      await db.clearCache();
       const result = await db.getFatcaDeclarations(0, 50);
       const page = result?.content || result?.data || result || [];
       setDeclarations(Array.isArray(page) ? page : []);
@@ -346,19 +504,7 @@ const FatcaDeclarations: React.FC = () => {
                     {detailId === decl.id && detailXml && (
                       <tr className="bg-gray-50">
                         <td colSpan={8} className="px-4 py-4">
-                          <div className="space-y-3">
-                            <div className="flex items-center justify-between">
-                              <p className="text-sm font-medium text-gray-900">Aperçu XML — {decl.messageRefId}</p>
-                              <div className="flex gap-2 text-xs text-gray-500">
-                                {decl.validatedBy && <span>Validé par {decl.validatedBy} le {formatDate(decl.validatedAt)}</span>}
-                                {decl.signedBy && <span>| Signé par {decl.signedBy} le {formatDate(decl.signedAt)}</span>}
-                                {decl.submittedAt && <span>| Soumis le {formatDate(decl.submittedAt)}</span>}
-                              </div>
-                            </div>
-                            <pre className="bg-gray-900 text-green-400 text-xs p-4 rounded-lg overflow-auto max-h-96 font-mono">
-                              {detailXml}
-                            </pre>
-                          </div>
+                          <XmlViewer xml={detailXml} decl={decl} formatDate={formatDate} onCopy={() => addToast('XML copie dans le presse-papiers', 'success')} />
                         </td>
                       </tr>
                     )}

@@ -2,6 +2,7 @@ import { useState, useEffect } from 'react';
 import { Calendar, Database, RefreshCw, AlertTriangle, CheckCircle, XCircle } from 'lucide-react';
 import { useToast } from '@/components/ui/Toaster';
 import Button from '@/components/ui/Button';
+import { apiService } from '@/services/apiService';
 import { log } from '@/services/log';
 
 interface DataLoadHistoryProps {
@@ -36,19 +37,13 @@ const DataLoadHistoryTable = ({ isLoading = false }: DataLoadHistoryProps) => {
       setLoading(true);
       setError(null);
       
-      const response = await fetch('/api/data-load-history');
-      
-      if (!response.ok) {
-        throw new Error(`HTTP error! status: ${response.status}`);
+      const response = await apiService.get<{ success: boolean; data: any[] }>('/stats/data-load-history');
+
+      if (response.success && Array.isArray(response.data)) {
+        setHistory(response.data);
+      } else {
+        setHistory([]);
       }
-      
-      const data = await response.json();
-      
-      if (!Array.isArray(data)) {
-        throw new Error('Invalid response format');
-      }
-      
-      setHistory(data);
     } catch (error) {
       log.error('api', 'Error fetching data load history', { error });
       setError('Erreur lors du chargement de l\'historique');

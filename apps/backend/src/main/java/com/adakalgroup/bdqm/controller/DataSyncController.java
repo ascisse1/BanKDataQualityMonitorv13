@@ -9,6 +9,7 @@ import org.springframework.boot.autoconfigure.condition.ConditionalOnProperty;
 import org.springframework.http.MediaType;
 import org.springframework.http.ResponseEntity;
 import org.springframework.security.access.prepost.PreAuthorize;
+import org.springframework.security.core.Authentication;
 import org.springframework.web.bind.annotation.*;
 import org.springframework.web.servlet.mvc.method.annotation.SseEmitter;
 
@@ -36,8 +37,9 @@ public class DataSyncController {
      * Tables are determined by cbs_tables where sync_enabled=true.
      */
     @PostMapping("/all")
-    public ResponseEntity<Map<String, Object>> syncAll() {
-        log.info("Manual full CBS sync requested via API");
+    public ResponseEntity<Map<String, Object>> syncAll(Authentication auth) {
+        String user = auth != null ? auth.getName() : "unknown";
+        log.info("Manual full CBS sync requested by user '{}'", user);
         try {
             List<DataSyncService.SyncResult> results = dataSyncScheduler.triggerSyncAll();
             List<Map<String, Object>> tableResults = results.stream()
@@ -60,8 +62,9 @@ public class DataSyncController {
      * Sync a specific CBS table by name (e.g., bkcli, bkage, bkcom...).
      */
     @PostMapping("/table/{tableName}")
-    public ResponseEntity<Map<String, Object>> syncTable(@PathVariable String tableName) {
-        log.info("Manual sync requested for table '{}' via API", tableName);
+    public ResponseEntity<Map<String, Object>> syncTable(@PathVariable String tableName, Authentication auth) {
+        String user = auth != null ? auth.getName() : "unknown";
+        log.info("Manual sync requested for table '{}' by user '{}'", tableName, user);
         try {
             DataSyncService.SyncResult result = dataSyncScheduler.triggerSyncTable(tableName);
             return ResponseEntity.ok(buildResponse(result));

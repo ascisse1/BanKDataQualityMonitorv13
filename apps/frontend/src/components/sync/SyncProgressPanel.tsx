@@ -1,33 +1,68 @@
-import React, { useEffect } from 'react';
-import { Activity, CheckCircle, AlertCircle, Radio, Database } from 'lucide-react';
+import React, { useEffect, useState } from 'react';
+import { Activity, CheckCircle, AlertCircle, AlertTriangle, Radio, Database, Play, RefreshCw } from 'lucide-react';
 import { useSyncProgress, SyncTableCompleteEvent } from '@/hooks/useSyncProgress';
 import Card from '@/components/ui/Card';
+import apiClient from '@/lib/apiClient';
+
+const ERROR_THRESHOLD = 50;
 
 const SyncProgressPanel: React.FC = () => {
   const {
     connected, running, currentTable, progress,
     lastBatch, lastComplete, tables,
-    connect, disconnect,
+    connect, disconnect, reset,
   } = useSyncProgress();
+
+  const [triggering, setTriggering] = useState(false);
 
   useEffect(() => {
     connect();
     return () => disconnect();
   }, [connect, disconnect]);
 
+  const triggerSync = async () => {
+    setTriggering(true);
+    reset();
+    try {
+      await apiClient.post('/api/sync/all');
+    } catch {
+      // errors will show via SSE
+    } finally {
+      setTriggering(false);
+    }
+  };
+
   const completedTables = Object.values(tables);
+  const totalErrors = completedTables.reduce((sum, t) => sum + t.errors, 0);
+  const totalAnomalies = completedTables.reduce((sum, t) => sum + t.anomalies, 0);
 
   return (
     <Card>
       <div className="flex items-center justify-between mb-4">
         <h3 className="text-lg font-semibold flex items-center gap-2">
           <Database className="w-5 h-5" />
-          Sync CBS
+          Synchronisation CBS
         </h3>
-        <span className={`flex items-center gap-1 text-sm ${connected ? 'text-green-600' : 'text-gray-400'}`}>
-          <Radio className="w-3 h-3" />
-          {connected ? 'Connecte' : 'Deconnecte'}
-        </span>
+        <div className="flex items-center gap-3">
+          <span className={`flex items-center gap-1 text-sm ${connected ? 'text-green-600' : 'text-gray-400'}`}>
+            <Radio className="w-3 h-3" />
+            {connected ? 'Connecte' : 'Deconnecte'}
+          </span>
+          <button
+            onClick={triggerSync}
+            disabled={running || triggering || !connected}
+            className="flex items-center gap-1.5 px-3 py-1.5 text-sm font-medium rounded-md
+                       bg-primary-600 text-white hover:bg-primary-700
+                       disabled:opacity-50 disabled:cursor-not-allowed transition-colors"
+          >
+            {running || triggering ? (
+              <RefreshCw className="w-4 h-4 animate-spin" />
+            ) : (
+              <Play className="w-4 h-4" />
+            )}
+            {running ? 'En cours...' : triggering ? 'Lancement...' : 'Lancer Sync'}
+          </button>
+        </div>
       </div>
 
       {/* Progress bar */}
@@ -56,11 +91,20 @@ const SyncProgressPanel: React.FC = () => {
         </div>
       )}
 
+      {/* Alerting: error threshold */}
+      {!running && totalErrors > ERROR_THRESHOLD && (
+        <div className="mb-4 p-3 bg-red-50 border border-red-200 rounded-lg flex items-center gap-2 text-sm text-red-700">
+          <AlertTriangle className="w-4 h-4" />
+          {totalErrors} erreurs detectees lors du dernier sync. Verifiez les logs.
+        </div>
+      )}
+
       {/* Last sync complete */}
       {!running && lastComplete && (
         <div className="mb-4 p-3 bg-green-50 rounded-lg flex items-center gap-2 text-sm text-green-700">
           <CheckCircle className="w-4 h-4" />
           Sync termine: {lastComplete.tablesProcessed} table(s) en {(lastComplete.durationMs / 1000).toFixed(1)}s
+          {totalAnomalies > 0 && <span className="ml-2 text-amber-600">| {totalAnomalies} anomalies</span>}
         </div>
       )}
 

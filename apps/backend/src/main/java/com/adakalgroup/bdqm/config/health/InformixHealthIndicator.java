@@ -1,5 +1,6 @@
 package com.adakalgroup.bdqm.config.health;
 
+import com.adakalgroup.bdqm.config.metrics.BusinessMetricsConfig;
 import com.zaxxer.hikari.HikariDataSource;
 import lombok.extern.slf4j.Slf4j;
 import org.springframework.beans.factory.annotation.Qualifier;
@@ -22,9 +23,12 @@ import java.sql.Statement;
 public class InformixHealthIndicator implements HealthIndicator {
 
     private final HikariDataSource informixDataSource;
+    private final BusinessMetricsConfig metricsConfig;
 
-    public InformixHealthIndicator(@Qualifier("informixDataSource") HikariDataSource informixDataSource) {
+    public InformixHealthIndicator(@Qualifier("informixDataSource") HikariDataSource informixDataSource,
+                                    BusinessMetricsConfig metricsConfig) {
         this.informixDataSource = informixDataSource;
+        this.metricsConfig = metricsConfig;
     }
 
     @Override
@@ -58,6 +62,7 @@ public class InformixHealthIndicator implements HealthIndicator {
                         .withDetail("totalConnections", informixDataSource.getHikariPoolMXBean().getTotalConnections())
                         .withDetail("threadsAwaitingConnection", informixDataSource.getHikariPoolMXBean().getThreadsAwaitingConnection())
                         .withDetail("responseTimeMs", responseTime)
+                        .withDetail("lastSyncAgeSeconds", getLastSyncAgeSeconds())
                         .build();
             } else {
                 return Health.down()
@@ -73,5 +78,11 @@ public class InformixHealthIndicator implements HealthIndicator {
                     .withDetail("pool", informixDataSource.getPoolName())
                     .build();
         }
+    }
+
+    private long getLastSyncAgeSeconds() {
+        long lastSync = metricsConfig.getLastSyncTimestamp().get();
+        if (lastSync == 0) return -1;
+        return (System.currentTimeMillis() / 1000) - lastSync;
     }
 }

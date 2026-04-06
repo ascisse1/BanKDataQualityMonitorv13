@@ -141,7 +141,7 @@ const AgencyCorrectionChart = ({ isLoading = false }: AgencyCorrectionChartProps
       setLoading(true);
       setError(null);
 
-      const response = await apiService.get<ApiResponse<AgencyCorrectionStat[]>>('/stats/corrections-by-agency');
+      const response = await apiService.get<ApiResponse<AgencyCorrectionStat[]>>('/stats/agency-correction-stats');
 
       if (response.success && response.data) {
         setStats(response.data);

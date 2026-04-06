@@ -129,7 +129,7 @@ const WeeklyCorrectionTrend = ({ isLoading = false }: WeeklyCorrectionTrendProps
       setLoading(true);
       setError(null);
 
-      const response = await apiService.get<ApiResponse<WeeklyCorrectionStat[]>>('/stats/weekly-correction-trend');
+      const response = await apiService.get<ApiResponse<WeeklyCorrectionStat[]>>('/stats/correction-stats/weekly');
 
       if (response.success && response.data) {
         setStats(response.data);
