@@ -55,7 +55,7 @@ const FatcaStats = ({ isLoading = false, clientType = 'all' }: FatcaStatsProps) 
   if (!stats) return null;
 
   const cards = [
-    { label: 'Total Clients FATCA', value: stats.totalClients, icon: <Users className="h-5 w-5 text-primary-600" />, bg: 'bg-primary-100', color: 'text-primary-600' },
+    { label: 'Total Clients suspects FATCA', value: stats.totalClients, icon: <Users className="h-5 w-5 text-primary-600" />, bg: 'bg-primary-100', color: 'text-primary-600' },
     { label: 'A verifier', value: stats.pendingReview, icon: <Clock className="h-5 w-5 text-warning-600" />, bg: 'bg-warning-100', color: 'text-warning-600' },
     { label: 'Conformes', value: stats.compliantClients, icon: <CheckSquare className="h-5 w-5 text-success-600" />, bg: 'bg-success-100', color: 'text-success-600' },
     { label: 'Non conformes', value: stats.nonCompliantClients, icon: <XSquare className="h-5 w-5 text-error-600" />, bg: 'bg-error-100', color: 'text-error-600' },

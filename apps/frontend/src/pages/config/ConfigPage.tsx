@@ -1,10 +1,9 @@
 import React, { useState, useEffect } from 'react';
 import Card from '@/components/ui/Card';
 import Button from '@/components/ui/Button';
-import { Database, RefreshCw, CheckCircle, AlertTriangle, Settings, Server, Shield, Save, Globe, Upload, FileCode } from 'lucide-react';
+import { Database, RefreshCw, CheckCircle, AlertTriangle, Settings, Shield, Save, Globe, Upload, FileCode } from 'lucide-react';
 import { useToast } from '@/components/ui/Toaster';
 import { useAuth } from '@/context/AuthContext';
-import DatabaseConfigPanel from '@/components/ui/DatabaseConfigPanel';
 import SyncProgressPanel from '@/components/sync/SyncProgressPanel';
 import Input from '@/components/ui/Input';
 
@@ -34,7 +33,7 @@ function ConfigPage() {
     data?: any,
     error?: any
   } | null>(null);
-  
+
   // SFTP Configuration state
   const [sftpConfig, setSftpConfig] = useState({
     host: 'sftp.banque-centrale.ml',
@@ -56,8 +55,6 @@ function ConfigPage() {
 
   // Vérifier si l'utilisateur est un administrateur
   const isAdmin = user?.role === 'ADMIN';
-  
-  const [dbConfigChanged, setDbConfigChanged] = useState(false);
 
   const testApiConnection = async () => {
     if (!isAdmin) {
@@ -212,51 +209,7 @@ function ConfigPage() {
       </div>
 
       {activeTab === 'database' && (
-        <div className="space-y-6">
-          {/* Sync Progress */}
-          <SyncProgressPanel />
-
-          <div className="grid grid-cols-1 md:grid-cols-2 gap-6">
-          {/* Database Connection */}
-          <DatabaseConfigPanel onConfigChange={setDbConfigChanged} />
-
-          {/* Server Information */}
-          <Card className="overflow-hidden">
-            <div className="p-6">
-              <h2 className="text-xl font-semibold mb-4 flex items-center">
-                <Server className="mr-2 h-5 w-5 text-primary-600" />
-                Informations Serveur
-              </h2>
-
-              <div className="space-y-4">
-                <div className="grid grid-cols-2 gap-4">
-                  <div className="bg-gray-50 p-3 rounded-md">
-                    <p className="text-sm text-gray-500">Environnement</p>
-                    <p className="font-medium">{import.meta.env.MODE || 'development'}</p>
-                  </div>
-                  <div className="bg-gray-50 p-3 rounded-md">
-                    <p className="text-sm text-gray-500">Version Node.js</p>
-                    <p className="font-medium">N/A (Client-side)</p>
-                  </div>
-                  <div className="bg-gray-50 p-3 rounded-md">
-                    <p className="text-sm text-gray-500">Port API</p>
-                    <p className="font-medium">3001</p>
-                  </div>
-                  <div className="bg-gray-50 p-3 rounded-md">
-                    <p className="text-sm text-gray-500">Port Frontend</p>
-                    <p className="font-medium">5174</p>
-                  </div>
-                </div>
-
-                <div className="bg-gray-50 p-3 rounded-md">
-                  <p className="text-sm text-gray-500">Stratégie de base de données</p>
-                  <p className="font-medium">Backend API (PostgreSQL/Informix)</p>
-                </div>
-              </div>
-            </div>
-          </Card>
-        </div>
-        </div>
+        <SyncProgressPanel />
       )}
 
       {activeTab === 'api' && (
@@ -492,7 +445,7 @@ function ConfigPage() {
                     placeholder="/CONTRACTS"
                     helperText="Répertoire de dépôt des fichiers FATCA"
                   />
-                  
+
                   <Input
                     label="Répertoire de retour"
                     value="/REPORTINGS"
@@ -554,56 +507,6 @@ function ConfigPage() {
           </div>
         </Card>
       )}
-
-      {/* Security Settings */}
-      <Card className="overflow-hidden">
-        <div className="p-6">
-          <h2 className="text-xl font-semibold mb-4 flex items-center">
-            <Shield className="mr-2 h-5 w-5 text-primary-600" />
-            Paramètres de Sécurité
-          </h2>
-
-          <div className="space-y-4">
-            <div className="grid grid-cols-1 md:grid-cols-3 gap-4">
-              <div className="bg-gray-50 p-3 rounded-md">
-                <p className="text-sm text-gray-500">Authentification</p>
-                <p className="font-medium">JWT (JSON Web Tokens)</p>
-              </div>
-              <div className="bg-gray-50 p-3 rounded-md">
-                <p className="text-sm text-gray-500">Durée de validité des tokens</p>
-                <p className="font-medium">24 heures</p>
-              </div>
-              <div className="bg-gray-50 p-3 rounded-md">
-                <p className="text-sm text-gray-500">Mode de connexion</p>
-                <p className="font-medium">Production (base de données)</p>
-              </div>
-              <div className="bg-gray-50 p-3 rounded-md">
-                <p className="text-sm text-gray-500">Hachage des mots de passe</p>
-                <p className="font-medium">bcrypt (10 rounds)</p>
-              </div>
-            </div>
-
-            <div className="bg-gray-50 p-3 rounded-md">
-              <p className="text-sm text-gray-500">Contrôle d'accès</p>
-              <p className="font-medium">Basé sur les rôles (RBAC)</p>
-              <div className="mt-2 grid grid-cols-2 md:grid-cols-4 gap-2">
-                <div className="bg-primary-100 text-primary-800 px-2 py-1 rounded text-xs font-medium">
-                  Administrateur
-                </div>
-                <div className="bg-warning-100 text-warning-800 px-2 py-1 rounded text-xs font-medium">
-                  Auditeur
-                </div>
-                <div className="bg-success-100 text-success-800 px-2 py-1 rounded text-xs font-medium">
-                  Utilisateur Agence
-                </div>
-                <div className="bg-gray-100 text-gray-800 px-2 py-1 rounded text-xs font-medium">
-                  Utilisateur
-                </div>
-              </div>
-            </div>
-          </div>
-        </div>
-      </Card>
     </div>
   );
 }

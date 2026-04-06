@@ -4,7 +4,7 @@ WORKDIR /app
 COPY apps/frontend/package.json apps/frontend/package-lock.json ./
 RUN npm ci
 COPY apps/frontend/ .
-RUN npm run build
+RUN npx vite build --outDir dist --emptyOutDir
 
 # --- Stage 2: Build backend with frontend embedded ---
 FROM maven:3.9-eclipse-temurin-17-alpine AS backend
