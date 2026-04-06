@@ -88,7 +88,7 @@ public class SecurityConfig {
                         ).permitAll()
                         // Spring / infrastructure endpoints
                         .requestMatchers(
-                                "/actuator/health/**",
+                                "/actuator/**",
                                 "/swagger-ui/**",
                                 "/v3/api-docs/**"
                         ).permitAll()

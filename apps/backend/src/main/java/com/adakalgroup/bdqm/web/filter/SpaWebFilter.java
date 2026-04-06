@@ -22,6 +22,7 @@ public class SpaWebFilter extends OncePerRequestFilter {
 
         // Only forward GET requests (not API calls, not static assets, not auth endpoints)
         if (!path.startsWith("/api") &&
+            !path.startsWith("/actuator") &&
             !path.startsWith("/oauth2") &&
             !path.startsWith("/login/oauth2") &&
             !path.startsWith("/logout") &&

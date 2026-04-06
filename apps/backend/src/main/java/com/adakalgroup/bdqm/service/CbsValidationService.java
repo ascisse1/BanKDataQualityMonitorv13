@@ -31,6 +31,7 @@ public class CbsValidationService {
     private final NaturalLanguageRuleParser naturalLanguageRuleParser;
     private final CbsDataDictionaryService dataDictionaryService;
     private final NomenclatureService nomenclatureService;
+    private final com.adakalgroup.bdqm.config.metrics.BusinessMetricsConfig metricsConfig;
 
     /**
      * Validate records from any CBS table and create/auto-resolve anomalies.
@@ -178,10 +179,12 @@ public class CbsValidationService {
         // Batch save: one flush for new anomalies, one for resolved
         if (!anomaliesToCreate.isEmpty()) {
             anomalyRepository.saveAll(anomaliesToCreate);
+            anomaliesToCreate.forEach(a -> metricsConfig.recordAnomalyCreated());
             log.info("Table '{}': batch saved {} new anomalies", tableName, anomaliesToCreate.size());
         }
         if (!anomaliesToResolve.isEmpty()) {
             anomalyRepository.saveAll(anomaliesToResolve);
+            anomaliesToResolve.forEach(a -> metricsConfig.recordAnomalyResolved());
             log.info("Table '{}': batch saved {} auto-resolved anomalies", tableName, anomaliesToResolve.size());
         }
 

@@ -51,8 +51,8 @@ jobs:
           java-version: ${{ env.JAVA_VERSION }}
           cache: 'maven'
 
-      - run: ./mvnw clean package -DskipTests
-      - run: ./mvnw test
+      - run: mvn clean package -DskipTests
+      - run: mvn test
 
       - uses: actions/upload-artifact@v4
         with:
