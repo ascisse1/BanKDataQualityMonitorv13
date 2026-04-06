@@ -60,7 +60,7 @@ public class FatcaAuditService {
 
     public void logDeclarationEvent(String messageRefId, String action, String performedBy, String notes) {
         FatcaAuditLog auditLog = FatcaAuditLog.builder()
-            .cli(messageRefId)
+            .messageRefId(messageRefId)
             .action(action)
             .performedBy(performedBy)
             .notes(notes)

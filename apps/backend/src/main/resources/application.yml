@@ -201,6 +201,7 @@ app:
   max-records: ${APP_MAX_RECORDS:0}
   sync:
     parallelism: ${SYNC_PARALLELISM:1}
+    batch-retry: ${SYNC_BATCH_RETRY:2}
   features:
     workflow-automation: ${FEATURE_WORKFLOW:true}
     kpi-tracking: ${FEATURE_KPI:true}

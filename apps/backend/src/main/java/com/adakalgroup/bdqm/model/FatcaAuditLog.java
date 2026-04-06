@@ -24,8 +24,11 @@ public class FatcaAuditLog {
     @GeneratedValue(strategy = GenerationType.IDENTITY)
     private Integer id;
 
-    @Column(name = "cli", length = 15, nullable = false)
+    @Column(name = "cli", length = 15)
     private String cli;
+
+    @Column(name = "message_ref_id", length = 255)
+    private String messageRefId;
 
     @Column(name = "action", length = 50, nullable = false)
     private String action;

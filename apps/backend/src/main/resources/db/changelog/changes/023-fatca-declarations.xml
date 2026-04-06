@@ -61,4 +61,12 @@
         </createIndex>
     </changeSet>
 
+    <changeSet id="023-02-add-fatca-audit-message-ref" author="adakalgroup">
+        <comment>Add message_ref_id column and make cli nullable for declaration audit events</comment>
+        <addColumn tableName="fatca_audit_log">
+            <column name="message_ref_id" type="varchar(255)"/>
+        </addColumn>
+        <dropNotNullConstraint tableName="fatca_audit_log" columnName="cli" columnDataType="char(15)"/>
+    </changeSet>
+
 </databaseChangeLog>

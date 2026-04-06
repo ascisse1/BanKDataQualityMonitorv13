@@ -30,14 +30,16 @@ interface ClientStats {
 }
 
 interface FatcaStats {
-  total: number;
-  individual: number;
-  corporate: number;
-  toVerify: number;
-  confirmed: number;
-  excluded: number;
-  pending: number;
-  currentMonth: number;
+  totalClients: number;
+  compliantClients: number;
+  nonCompliantClients: number;
+  pendingReview: number;
+  underInvestigation: number;
+  usPersons: number;
+  reportingRequired: number;
+  complianceRate: number;
+  clientsByStatus: Record<string, number>;
+  clientsByRiskLevel: Record<string, number>;
 }
 
 interface FatcaIndicators {
@@ -511,30 +513,28 @@ class DatabaseService {
     try {
       log.info('database', 'Getting FATCA statistics', { clientType });
 
-      const data = await this.fetchApi<FatcaStats>('/fatca/stats', {}, { clientType });
+      const data = await this.fetchApi<FatcaStats>('/fatca/stats');
       log.info('database', 'FATCA statistics retrieved successfully', data);
       return {
-        total: data?.total || 0,
-        individual: data?.individual || 0,
-        corporate: data?.corporate || 0,
-        toVerify: data?.toVerify || 0,
-        confirmed: data?.confirmed || 0,
-        excluded: data?.excluded || 0,
-        pending: data?.pending || 0,
-        currentMonth: data?.currentMonth || 0
+        totalClients: data?.totalClients || 0,
+        compliantClients: data?.compliantClients || 0,
+        nonCompliantClients: data?.nonCompliantClients || 0,
+        pendingReview: data?.pendingReview || 0,
+        underInvestigation: data?.underInvestigation || 0,
+        usPersons: data?.usPersons || 0,
+        reportingRequired: data?.reportingRequired || 0,
+        complianceRate: data?.complianceRate || 0,
+        clientsByStatus: data?.clientsByStatus || {},
+        clientsByRiskLevel: data?.clientsByRiskLevel || {},
       };
     } catch (error) {
-      log.error('database', 'Failed to get FATCA statistics', { error, clientType });
+      log.error('database', 'Failed to get FATCA statistics', { error });
       log.error('api', 'Failed to get FATCA statistics', { error });
       return {
-        total: 0,
-        individual: 0,
-        corporate: 0,
-        toVerify: 0,
-        confirmed: 0,
-        excluded: 0,
-        pending: 0,
-        currentMonth: 0
+        totalClients: 0, compliantClients: 0, nonCompliantClients: 0,
+        pendingReview: 0, underInvestigation: 0, usPersons: 0,
+        reportingRequired: 0, complianceRate: 0,
+        clientsByStatus: {}, clientsByRiskLevel: {},
       };
     }
   }

@@ -5,6 +5,7 @@ import { Database, RefreshCw, CheckCircle, AlertTriangle, Settings, Server, Shie
 import { useToast } from '@/components/ui/Toaster';
 import { useAuth } from '@/context/AuthContext';
 import DatabaseConfigPanel from '@/components/ui/DatabaseConfigPanel';
+import SyncProgressPanel from '@/components/sync/SyncProgressPanel';
 import Input from '@/components/ui/Input';
 
 function ConfigPage() {
@@ -211,7 +212,11 @@ function ConfigPage() {
       </div>
 
       {activeTab === 'database' && (
-        <div className="grid grid-cols-1 md:grid-cols-2 gap-6">
+        <div className="space-y-6">
+          {/* Sync Progress */}
+          <SyncProgressPanel />
+
+          <div className="grid grid-cols-1 md:grid-cols-2 gap-6">
           {/* Database Connection */}
           <DatabaseConfigPanel onConfigChange={setDbConfigChanged} />
 
@@ -250,6 +255,7 @@ function ConfigPage() {
               </div>
             </div>
           </Card>
+        </div>
         </div>
       )}
 

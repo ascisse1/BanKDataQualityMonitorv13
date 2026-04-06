@@ -140,14 +140,18 @@ public class DataSyncService {
         int offset = 0;
 
         try {
-            dynamicCbsQueryService.ensureMirrorSchema(tableName);
+            // Schema + config reads need a transaction (lazy-loaded JPA fields)
+            transactionTemplate.executeWithoutResult(status ->
+                    dynamicCbsQueryService.ensureMirrorSchema(tableName));
 
-            var tableConfig = dataDictionaryService.getTableByName(tableName);
+            var tableConfig = transactionTemplate.execute(status ->
+                    dataDictionaryService.getTableByName(tableName));
             boolean validationEnabled = Boolean.TRUE.equals(tableConfig.getValidationEnabled());
             log.info("Table '{}': validationEnabled={}", tableName, validationEnabled);
 
             // CDC
-            CbsTable tableEntity = cbsTableRepository.findByTableName(tableName).orElse(null);
+            CbsTable tableEntity = transactionTemplate.execute(status ->
+                    cbsTableRepository.findByTableName(tableName).orElse(null));
             String cdcField = tableEntity != null ? tableEntity.getCdcField() : null;
             LocalDateTime lastSyncAt = tableEntity != null ? tableEntity.getLastSyncAt() : null;
 
@@ -178,31 +182,10 @@ public class DataSyncService {
 
                 log.info("Table '{}': batch offset={}, size={}", tableName, offset, batch.size());
 
-                // Transaction per batch: upsert + validate in one atomic unit
+                // Transaction per batch with retry
                 final List<Map<String, Object>> batchRef = batch;
                 final boolean doValidate = validationEnabled;
-                BatchResult br = transactionTemplate.execute(status -> {
-                    int batchUpserted = dynamicCbsQueryService.upsertToMirror(tableName, batchRef);
-
-                    int batchValidated = 0;
-                    int batchAnomalies = 0;
-                    int batchAutoResolved = 0;
-                    int batchErrors = 0;
-                    if (doValidate) {
-                        long valStart = System.currentTimeMillis();
-                        CbsValidationService.ValidationResult vr =
-                                cbsValidationService.validateRecords(tableName, batchRef);
-                        batchValidated = vr.recordsValidated();
-                        batchAnomalies = vr.anomaliesCreated();
-                        batchAutoResolved = vr.autoResolved();
-                        batchErrors = vr.errors();
-                        metricsConfig.recordValidationBatch(tableName, batchAnomalies, batchAutoResolved,
-                                System.currentTimeMillis() - valStart);
-                        log.info("Table '{}': batch validated — anomalies={}, autoResolved={}, skipped={}",
-                                tableName, vr.anomaliesCreated(), vr.autoResolved(), vr.duplicatesSkipped());
-                    }
-                    return new BatchResult(batchUpserted, batchValidated, batchAnomalies, batchErrors);
-                });
+                BatchResult br = executeBatchWithRetry(tableName, batchRef, doValidate);
 
                 long batchDuration = System.currentTimeMillis() - batchStart;
                 metricsConfig.recordSyncBatch(tableName, batch.size(), batchDuration, isCdc);
@@ -247,6 +230,42 @@ public class DataSyncService {
             metricsConfig.recordDataSyncFailure();
             throw new RuntimeException("Sync failed for table " + tableName, e);
         }
+    }
+
+    private BatchResult executeBatchWithRetry(String tableName, List<Map<String, Object>> batch, boolean validate) {
+        for (int attempt = 1; attempt <= batchRetry; attempt++) {
+            try {
+                return transactionTemplate.execute(status -> {
+                    int batchUpserted = dynamicCbsQueryService.upsertToMirror(tableName, batch);
+
+                    int batchValidated = 0;
+                    int batchAnomalies = 0;
+                    int batchAutoResolved = 0;
+                    int batchErrors = 0;
+                    if (validate) {
+                        long valStart = System.currentTimeMillis();
+                        CbsValidationService.ValidationResult vr =
+                                cbsValidationService.validateRecords(tableName, batch);
+                        batchValidated = vr.recordsValidated();
+                        batchAnomalies = vr.anomaliesCreated();
+                        batchAutoResolved = vr.autoResolved();
+                        batchErrors = vr.errors();
+                        metricsConfig.recordValidationBatch(tableName, batchAnomalies, batchAutoResolved,
+                                System.currentTimeMillis() - valStart);
+                        log.info("Table '{}': batch validated — anomalies={}, autoResolved={}, skipped={}",
+                                tableName, vr.anomaliesCreated(), vr.autoResolved(), vr.duplicatesSkipped());
+                    }
+                    return new BatchResult(batchUpserted, batchValidated, batchAnomalies, batchErrors);
+                });
+            } catch (Exception e) {
+                log.warn("Table '{}': batch failed (attempt {}/{}): {}", tableName, attempt, batchRetry, e.getMessage());
+                if (attempt == batchRetry) {
+                    log.error("Table '{}': batch failed after {} retries, skipping", tableName, batchRetry);
+                    return new BatchResult(0, 0, 0, batch.size());
+                }
+            }
+        }
+        return new BatchResult(0, 0, 0, batch.size());
     }
 
     private record BatchResult(int upserted, int validated, int anomalies, int errors) {}

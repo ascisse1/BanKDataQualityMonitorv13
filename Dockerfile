@@ -7,15 +7,14 @@ COPY apps/frontend/ .
 RUN npm run build
 
 # --- Stage 2: Build backend with frontend embedded ---
-FROM eclipse-temurin:17-jdk-alpine AS backend
+FROM maven:3.9-eclipse-temurin-17-alpine AS backend
 WORKDIR /app
-COPY apps/backend/.mvn/ .mvn/
-COPY apps/backend/mvnw apps/backend/pom.xml ./
-RUN chmod +x mvnw && ./mvnw dependency:go-offline -B
+COPY apps/backend/pom.xml ./
+RUN mvn dependency:go-offline -B
 COPY apps/backend/src/ src/
 # Copy frontend build into Spring Boot static resources
 COPY --from=frontend /app/dist/ src/main/resources/static/
-RUN ./mvnw clean package -DskipTests -B
+RUN mvn clean package -DskipTests -B
 
 # --- Stage 3: Runtime ---
 FROM eclipse-temurin:17-jre-alpine
