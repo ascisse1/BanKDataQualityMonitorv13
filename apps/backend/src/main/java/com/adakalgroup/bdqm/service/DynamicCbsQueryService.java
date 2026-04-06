@@ -200,6 +200,22 @@ public class DynamicCbsQueryService {
         }
     }
 
+    // ===== CBS Table Name Resolution =====
+
+    /**
+     * Returns the schema-qualified CBS table name for Informix queries.
+     * If schema_name is configured (e.g., "bank"), returns "bank:bkcli".
+     * Otherwise returns just the table name.
+     */
+    private String cbsTableRef(String tableName) {
+        CbsTableDto table = dictionaryService.getTableByName(tableName);
+        String schema = table.getSchemaName();
+        if (schema != null && !schema.isBlank()) {
+            return schema + ":" + tableName;
+        }
+        return tableName;
+    }
+
     // ===== CBS Read Operations =====
 
     /**
@@ -223,7 +239,7 @@ public class DynamicCbsQueryService {
         }
 
         // Informix uses SKIP/FIRST for pagination
-        String sql = buildInformixPaginatedSelect(tableName, selectFields, offset, limit);
+        String sql = buildInformixPaginatedSelect(cbsTableRef(tableName), selectFields, offset, limit);
 
         try {
             org.jooq.Result<org.jooq.Record> result = informixDsl.fetch(sql);
@@ -251,8 +267,9 @@ public class DynamicCbsQueryService {
         }
 
         String columns = selectFields.stream().map(Field::getName).collect(Collectors.joining(", "));
+        String cbsRef = cbsTableRef(tableName);
         String sql = String.format("SELECT SKIP %d FIRST %d %s FROM %s WHERE %s >= '%s' ORDER BY %s ",
-                offset, limit, columns, tableName, cdcField,
+                offset, limit, columns, cbsRef, cdcField,
                 since.toLocalDate().toString(),
                 selectFields.get(0).getName());
 
@@ -273,8 +290,9 @@ public class DynamicCbsQueryService {
             return countCbsRecords(tableName);
         }
 
+        String cbsRef = cbsTableRef(tableName);
         String sql = String.format("SELECT COUNT(*) FROM %s WHERE %s >= '%s'",
-                tableName, cdcField, since.toLocalDate().toString());
+                cbsRef, cdcField, since.toLocalDate().toString());
         try {
             return informixDsl.fetchOne(sql).into(Long.class);
         } catch (Exception e) {
@@ -296,7 +314,7 @@ public class DynamicCbsQueryService {
 
         try {
             org.jooq.Record record = informixDsl.select(selectFields)
-                    .from(DSL.table(DSL.unquotedName(tableName)))
+                    .from(DSL.table(DSL.unquotedName(cbsTableRef(tableName))))
                     .where(where)
                     .fetchOne();
 
@@ -324,7 +342,7 @@ public class DynamicCbsQueryService {
 
         try {
             org.jooq.Record record = informixDsl.select(fields)
-                    .from(DSL.table(DSL.unquotedName(tableName)))
+                    .from(DSL.table(DSL.unquotedName(cbsTableRef(tableName))))
                     .where(DSL.field(DSL.unquotedName(pkColumn)).eq(pkValue))
                     .fetchOne();
 
@@ -339,7 +357,7 @@ public class DynamicCbsQueryService {
      * Count total records in a CBS table.
      */
     public long countCbsRecords(String tableName) {
-        return informixDsl.fetchCount(DSL.table(DSL.unquotedName(tableName)));
+        return informixDsl.fetchCount(DSL.table(DSL.unquotedName(cbsTableRef(tableName))));
     }
 
     // ===== PostgreSQL Mirror Write Operations =====
@@ -421,7 +439,7 @@ public class DynamicCbsQueryService {
 
         // Build UPDATE SET ... WHERE using parameterized SQL
         List<Object> params = new ArrayList<>();
-        StringBuilder sql = new StringBuilder("UPDATE ").append(tableName).append(" SET ");
+        StringBuilder sql = new StringBuilder("UPDATE ").append(cbsTableRef(tableName)).append(" SET ");
 
         boolean first = true;
         for (Map.Entry<String, Object> entry : updates.entrySet()) {

@@ -179,12 +179,12 @@ public class CbsValidationService {
         // Batch save: one flush for new anomalies, one for resolved
         if (!anomaliesToCreate.isEmpty()) {
             anomalyRepository.saveAll(anomaliesToCreate);
-            anomaliesToCreate.forEach(a -> metricsConfig.recordAnomalyCreated());
+            metricsConfig.getAnomaliesCreatedCounter().increment(anomaliesToCreate.size());
             log.info("Table '{}': batch saved {} new anomalies", tableName, anomaliesToCreate.size());
         }
         if (!anomaliesToResolve.isEmpty()) {
             anomalyRepository.saveAll(anomaliesToResolve);
-            anomaliesToResolve.forEach(a -> metricsConfig.recordAnomalyResolved());
+            metricsConfig.getAnomaliesResolvedCounter().increment(anomaliesToResolve.size());
             log.info("Table '{}': batch saved {} auto-resolved anomalies", tableName, anomaliesToResolve.size());
         }
 
