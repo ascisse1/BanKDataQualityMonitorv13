@@ -211,7 +211,7 @@ public class DynamicCbsQueryService {
         CbsTableDto table = dictionaryService.getTableByName(tableName);
         String schema = table.getSchemaName();
         if (schema != null && !schema.isBlank()) {
-            return schema + ":" + tableName;
+            return schema + "." + tableName;
         }
         return tableName;
     }
