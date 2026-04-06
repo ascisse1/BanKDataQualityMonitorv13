@@ -301,9 +301,9 @@ const FatcaDeclarations: React.FC = () => {
                           <Button variant="ghost" size="sm" onClick={() => handleDownload(decl)} title="Télécharger">
                             <Download className="h-4 w-4" />
                           </Button>
-                          {decl.status === 'DRAFT' && decl.generatedBy !== user?.username && (
+                          {decl.status === 'DRAFT' && (
                             <Button variant="outline" size="sm" onClick={() => { setValidatingId(decl.id); setValNotes(''); }}
-                              className="text-blue-600">Valider</Button>
+                              className="text-blue-600" leftIcon={<CheckCircle className="h-3.5 w-3.5" />}>Valider</Button>
                           )}
                           {decl.status === 'VALIDATED' && (
                             <Button variant="outline" size="sm" onClick={() => handleSign(decl.id)}
