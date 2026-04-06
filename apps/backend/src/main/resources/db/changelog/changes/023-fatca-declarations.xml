@@ -1,0 +1,64 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<databaseChangeLog
+    xmlns="http://www.liquibase.org/xml/ns/dbchangelog"
+    xmlns:xsi="http://www.w3.org/2001/XMLSchema-instance"
+    xsi:schemaLocation="http://www.liquibase.org/xml/ns/dbchangelog
+        http://www.liquibase.org/xml/ns/dbchangelog/dbchangelog-latest.xsd">
+
+    <changeSet id="023-01-create-fatca-declarations" author="adakalgroup">
+        <comment>Create fatca_declarations table for IRS FATCA Form 8966 declaration lifecycle</comment>
+
+        <createTable tableName="fatca_declarations">
+            <column name="id" type="bigint" autoIncrement="true">
+                <constraints primaryKey="true" nullable="false"/>
+            </column>
+            <column name="reporting_year" type="int">
+                <constraints nullable="false"/>
+            </column>
+            <column name="declaration_type" type="varchar(20)">
+                <constraints nullable="false"/>
+            </column>
+            <column name="status" type="varchar(30)" defaultValue="DRAFT">
+                <constraints nullable="false"/>
+            </column>
+            <column name="xml_content" type="text"/>
+            <column name="xml_hash" type="varchar(64)"/>
+            <column name="generated_by" type="varchar(100)">
+                <constraints nullable="false"/>
+            </column>
+            <column name="generated_at" type="timestamp">
+                <constraints nullable="false"/>
+            </column>
+            <column name="validated_by" type="varchar(100)"/>
+            <column name="validated_at" type="timestamp"/>
+            <column name="validation_notes" type="text"/>
+            <column name="signed_by" type="varchar(100)"/>
+            <column name="signed_at" type="timestamp"/>
+            <column name="submitted_at" type="timestamp"/>
+            <column name="ack_received_at" type="timestamp"/>
+            <column name="message_ref_id" type="varchar(200)">
+                <constraints nullable="false" unique="true"/>
+            </column>
+            <column name="corrected_message_ref_id" type="varchar(200)"/>
+            <column name="total_accounts" type="int" defaultValueNumeric="0">
+                <constraints nullable="false"/>
+            </column>
+            <column name="notes" type="text"/>
+            <column name="created_at" type="timestamp" defaultValueComputed="now()">
+                <constraints nullable="false"/>
+            </column>
+            <column name="updated_at" type="timestamp" defaultValueComputed="now()"/>
+        </createTable>
+
+        <createIndex tableName="fatca_declarations" indexName="idx_fatca_decl_year">
+            <column name="reporting_year"/>
+        </createIndex>
+        <createIndex tableName="fatca_declarations" indexName="idx_fatca_decl_status">
+            <column name="status"/>
+        </createIndex>
+        <createIndex tableName="fatca_declarations" indexName="idx_fatca_decl_msg_ref">
+            <column name="message_ref_id"/>
+        </createIndex>
+    </changeSet>
+
+</databaseChangeLog>

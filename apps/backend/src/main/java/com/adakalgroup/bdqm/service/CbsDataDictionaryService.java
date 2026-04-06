@@ -286,6 +286,8 @@ public class CbsDataDictionaryService {
                 .labelFieldCorporate(entity.getLabelFieldCorporate())
                 .structureField(entity.getStructureField())
                 .typeField(entity.getTypeField())
+                .cdcField(entity.getCdcField())
+                .lastSyncAt(entity.getLastSyncAt())
                 .active(entity.getActive())
                 .fieldCount(fieldCount)
                 .createdAt(entity.getCreatedAt())

@@ -1,0 +1,39 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<databaseChangeLog
+    xmlns="http://www.liquibase.org/xml/ns/dbchangelog"
+    xmlns:xsi="http://www.w3.org/2001/XMLSchema-instance"
+    xsi:schemaLocation="http://www.liquibase.org/xml/ns/dbchangelog
+        http://www.liquibase.org/xml/ns/dbchangelog/dbchangelog-latest.xsd">
+
+    <changeSet id="021-01-drop-fatca-legacy-columns" author="adakalgroup">
+        <comment>Drop legacy columns from fatca_clients that conflict with JPA entity mapping.
+            The entity uses client_number instead of cli, client_name instead of nom, etc.</comment>
+
+        <dropIndex tableName="fatca_clients" indexName="idx_fatca_clients_cli"/>
+        <dropIndex tableName="fatca_clients" indexName="idx_fatca_clients_pays_naissance"/>
+        <dropIndex tableName="fatca_clients" indexName="idx_fatca_clients_nationalite"/>
+        <dropIndex tableName="fatca_clients" indexName="idx_fatca_clients_pays_adresse"/>
+
+        <dropColumn tableName="fatca_clients" columnName="cli"/>
+        <dropColumn tableName="fatca_clients" columnName="nom"/>
+        <dropColumn tableName="fatca_clients" columnName="date_entree_relation"/>
+        <dropColumn tableName="fatca_clients" columnName="status_client"/>
+        <dropColumn tableName="fatca_clients" columnName="pays_naissance"/>
+        <dropColumn tableName="fatca_clients" columnName="nationalite"/>
+        <dropColumn tableName="fatca_clients" columnName="adresse"/>
+        <dropColumn tableName="fatca_clients" columnName="pays_adresse"/>
+        <dropColumn tableName="fatca_clients" columnName="telephone"/>
+        <dropColumn tableName="fatca_clients" columnName="relation_client"/>
+        <dropColumn tableName="fatca_clients" columnName="type_relation"/>
+        <dropColumn tableName="fatca_clients" columnName="fatca_date"/>
+        <dropColumn tableName="fatca_clients" columnName="fatca_uti"/>
+    </changeSet>
+
+    <changeSet id="021-02-add-fatca-nationality" author="adakalgroup">
+        <comment>Add nationality column to fatca_clients for FATCA US indicia screening</comment>
+        <addColumn tableName="fatca_clients">
+            <column name="nationality" type="varchar(255)"/>
+        </addColumn>
+    </changeSet>
+
+</databaseChangeLog>

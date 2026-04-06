@@ -70,6 +70,12 @@ public class CbsTable {
     @Column(name = "type_field", length = 30)
     private String typeField;
 
+    @Column(name = "cdc_field", length = 30)
+    private String cdcField;
+
+    @Column(name = "last_sync_at")
+    private LocalDateTime lastSyncAt;
+
     @Column(name = "active")
     @Builder.Default
     private Boolean active = true;

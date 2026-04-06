@@ -1,0 +1,17 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<databaseChangeLog
+    xmlns="http://www.liquibase.org/xml/ns/dbchangelog"
+    xmlns:xsi="http://www.w3.org/2001/XMLSchema-instance"
+    xsi:schemaLocation="http://www.liquibase.org/xml/ns/dbchangelog
+        http://www.liquibase.org/xml/ns/dbchangelog/dbchangelog-latest.xsd">
+
+    <!-- Composite index for bulk anomaly lookups during validation -->
+    <changeSet id="024-01-anomaly-composite-index" author="adakalgroup">
+        <createIndex tableName="anomalies" indexName="idx_anomaly_client_field_status">
+            <column name="client_number"/>
+            <column name="field_name"/>
+            <column name="status"/>
+        </createIndex>
+    </changeSet>
+
+</databaseChangeLog>

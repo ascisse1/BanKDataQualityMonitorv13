@@ -76,6 +76,9 @@ public class FatcaClient {
     @Column(name = "birth_country")
     private String birthCountry;
 
+    @Column(name = "nationality")
+    private String nationality;
+
     @Column(name = "us_address")
     @Builder.Default
     private Boolean usAddress = false;

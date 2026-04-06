@@ -75,6 +75,34 @@ public class CbsValidationService {
 
         Map<String, String> structureNames = new HashMap<>();
 
+        // Batch collections for bulk save
+        List<Anomaly> anomaliesToCreate = new ArrayList<>();
+        List<Anomaly> anomaliesToResolve = new ArrayList<>();
+
+        // Bulk load all open anomalies for this batch (eliminates N+1 queries)
+        Set<String> allPks = new HashSet<>();
+        for (Map<String, Object> record : records) {
+            String pk = getString(record, pkField);
+            if (pk != null) allPks.add(pk);
+        }
+        log.info("Table '{}': bulk loading open anomalies for {} records", tableName, allPks.size());
+
+        Map<String, Set<String>> existingAnomalyMap = new HashMap<>();
+        Map<String, List<Anomaly>> openAnomalyMap = new HashMap<>();
+
+        if (!allPks.isEmpty()) {
+            List<Anomaly> allOpenAnomalies = anomalyRepository.findOpenAnomaliesByClientNumbers(allPks);
+            for (Anomaly a : allOpenAnomalies) {
+                existingAnomalyMap
+                        .computeIfAbsent(a.getClientNumber(), k -> new HashSet<>())
+                        .add(a.getFieldName());
+                openAnomalyMap
+                        .computeIfAbsent(a.getClientNumber(), k -> new ArrayList<>())
+                        .add(a);
+            }
+            log.info("Table '{}': loaded {} existing open anomalies in bulk", tableName, allOpenAnomalies.size());
+        }
+
         for (Map<String, Object> record : records) {
             try {
                 String pk = getString(record, pkField);
@@ -83,7 +111,6 @@ public class CbsValidationService {
                     continue;
                 }
 
-                // Resolve client type (if table has a type field)
                 ClientType clientType = null;
                 if (typeField != null && !typeField.isBlank()) {
                     clientType = getClientType(getString(record, typeField));
@@ -91,16 +118,14 @@ public class CbsValidationService {
                 log.info("Record pk={}: clientType={}, typeField={}, typeValue={}",
                         pk, clientType, typeField, getString(record, typeField));
 
-                // Resolve structure name (if table has a structure field)
                 String structureCode = structureField != null ? getString(record, structureField) : null;
                 String structureName = getStructureName(structureCode, structureNames);
 
-                // Track which fields still fail
                 Set<String> failedFields = new HashSet<>();
-
-                // Get applicable rules (filtered by client type if applicable)
                 List<ValidationRule> applicableRules = getApplicableRules(allActiveRules, clientType);
                 log.info("Record pk={}: {} applicable rules out of {}", pk, applicableRules.size(), allActiveRules.size());
+
+                Set<String> existingFields = existingAnomalyMap.getOrDefault(pk, Collections.emptySet());
 
                 for (ValidationRule rule : applicableRules) {
                     try {
@@ -111,9 +136,7 @@ public class CbsValidationService {
                                     pk, rule.getRuleName(), failure.fieldName(), failure.currentValue(), failure.expectedValue());
                             failedFields.add(rule.getFieldName());
 
-                            boolean exists = anomalyRepository.existsOpenAnomalyForClientAndField(
-                                    pk, rule.getFieldName());
-                            if (exists) {
+                            if (existingFields.contains(rule.getFieldName())) {
                                 log.info("Record pk={}: anomaly already exists for field '{}', skipping", pk, rule.getFieldName());
                                 skippedDuplicates++;
                                 continue;
@@ -121,7 +144,7 @@ public class CbsValidationService {
 
                             Anomaly anomaly = createAnomaly(
                                     pk, record, tableConfig, rule, failure, clientType, structureName);
-                            anomalyRepository.save(anomaly);
+                            anomaliesToCreate.add(anomaly);
                             totalAnomalies++;
                             log.info("Record pk={}: anomaly CREATED for field '{}'", pk, rule.getFieldName());
                         } else {
@@ -134,15 +157,13 @@ public class CbsValidationService {
                     }
                 }
 
-                // Auto-resolve: close open anomalies for fields that now PASS
-                List<Anomaly> openAnomalies = anomalyRepository.findByClientNumberAndStatusIn(
-                        pk, List.of(AnomalyStatus.PENDING, AnomalyStatus.IN_PROGRESS));
-
+                // Auto-resolve: mark open anomalies for fields that now PASS
+                List<Anomaly> openAnomalies = openAnomalyMap.getOrDefault(pk, Collections.emptyList());
                 for (Anomaly openAnomaly : openAnomalies) {
                     if (!failedFields.contains(openAnomaly.getFieldName())) {
                         openAnomaly.setStatus(AnomalyStatus.CORRECTED);
                         openAnomaly.setDataSource("CBS_AUTO_RESOLVED");
-                        anomalyRepository.save(openAnomaly);
+                        anomaliesToResolve.add(openAnomaly);
                         autoResolved++;
                         log.info("Auto-resolved anomaly for record {}, field {}", pk, openAnomaly.getFieldName());
                     }
@@ -152,6 +173,16 @@ public class CbsValidationService {
                 log.error("Error validating record from '{}': {}", tableName, e.getMessage());
                 errors++;
             }
+        }
+
+        // Batch save: one flush for new anomalies, one for resolved
+        if (!anomaliesToCreate.isEmpty()) {
+            anomalyRepository.saveAll(anomaliesToCreate);
+            log.info("Table '{}': batch saved {} new anomalies", tableName, anomaliesToCreate.size());
+        }
+        if (!anomaliesToResolve.isEmpty()) {
+            anomalyRepository.saveAll(anomaliesToResolve);
+            log.info("Table '{}': batch saved {} auto-resolved anomalies", tableName, anomaliesToResolve.size());
         }
 
         log.info("Validation for '{}': created={}, auto-resolved={}, skipped={}, errors={}",

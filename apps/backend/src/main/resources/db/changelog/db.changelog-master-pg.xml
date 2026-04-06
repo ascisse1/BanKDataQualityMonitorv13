@@ -19,5 +19,16 @@
     <!-- Amplitude API: add api_field_path to cbs_fields for CBS API update with historisation -->
     <include file="db/changelog/changes/020-api-field-path.xml"/>
 
+    <!-- FATCA: drop legacy columns that conflict with JPA entity mapping -->
+    <include file="db/changelog/changes/021-fatca-drop-legacy-columns.xml"/>
+
+    <!-- CDC: incremental sync support with cdc_field and last_sync_at -->
+    <include file="db/changelog/changes/022-cdc-sync.xml"/>
+
+    <!-- FATCA IRS declarations lifecycle -->
+    <include file="db/changelog/changes/023-fatca-declarations.xml"/>
+
+    <!-- Performance: composite index for bulk anomaly lookups -->
+    <include file="db/changelog/changes/024-anomaly-perf-index.xml"/>
 
 </databaseChangeLog>

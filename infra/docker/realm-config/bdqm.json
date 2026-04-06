@@ -48,8 +48,22 @@
   "roles": {
     "realm": [
       {
-        "name": "ROLE_ADMIN",
+        "name": "BDQM:ROLE_ADMIN",
         "description": "bdqm administrator role",
+        "composite": false,
+        "clientRole": false,
+        "attributes": {}
+      },
+      {
+        "name": "BDQM:ROLE_AUDITOR",
+        "description": "bdqm auditor role",
+        "composite": false,
+        "clientRole": false,
+        "attributes": {}
+      },
+      {
+        "name": "BDQM:ROLE_AGENCY_USER",
+        "description": "bdqm agency user role",
         "composite": false,
         "clientRole": false,
         "attributes": {}
@@ -62,7 +76,7 @@
         "attributes": {}
       },
       {
-        "name": "ROLE_USER",
+        "name": "BDQM:ROLE_USER",
         "description": "bdqm user role",
         "composite": false,
         "clientRole": false,
@@ -348,7 +362,7 @@
       "name": "Admins",
       "path": "/Admins",
       "attributes": {},
-      "realmRoles": ["ROLE_ADMIN"],
+      "realmRoles": ["BDQM:ROLE_ADMIN"],
       "clientRoles": {},
       "subGroups": []
     },
@@ -356,7 +370,7 @@
       "name": "Users",
       "path": "/Users",
       "attributes": {},
-      "realmRoles": ["ROLE_USER"],
+      "realmRoles": ["BDQM:ROLE_USER"],
       "clientRoles": {},
       "subGroups": []
     }
@@ -2091,7 +2105,7 @@
       ],
       "disableableCredentialTypes": [],
       "requiredActions": [],
-      "realmRoles": ["offline_access", "uma_authorization"],
+      "realmRoles": ["offline_access", "uma_authorization", "BDQM:ROLE_ADMIN", "BDQM:ROLE_AUDITOR"],
       "clientRoles": {
         "account": ["view-profile", "manage-account"]
       },
@@ -2117,7 +2131,7 @@
       ],
       "disableableCredentialTypes": [],
       "requiredActions": [],
-      "realmRoles": ["offline_access", "uma_authorization"],
+      "realmRoles": ["offline_access", "uma_authorization", "BDQM:ROLE_USER", "BDQM:ROLE_AGENCY_USER"],
       "clientRoles": {
         "account": ["view-profile", "manage-account"]
       },

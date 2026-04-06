@@ -199,6 +199,8 @@ app:
     filer-category: ${FATCA_FILER_CATEGORY:FATCA601}
     screening-enabled: ${FATCA_SCREENING_ENABLED:true}
   max-records: ${APP_MAX_RECORDS:0}
+  sync:
+    parallelism: ${SYNC_PARALLELISM:1}
   features:
     workflow-automation: ${FEATURE_WORKFLOW:true}
     kpi-tracking: ${FEATURE_KPI:true}

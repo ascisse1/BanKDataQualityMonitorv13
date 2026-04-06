@@ -237,6 +237,53 @@ public class DynamicCbsQueryService {
     }
 
     /**
+     * Fetch records changed since a given date (CDC mode).
+     * Falls back to full fetch if cdcField is null.
+     */
+    public List<Map<String, Object>> fetchFromCbsSince(String tableName, String cdcField, LocalDateTime since, int offset, int limit) {
+        if (cdcField == null || since == null) {
+            return fetchFromCbs(tableName, offset, limit);
+        }
+
+        List<Field<?>> selectFields = buildSelectFields(tableName);
+        if (selectFields.isEmpty()) {
+            return Collections.emptyList();
+        }
+
+        String columns = selectFields.stream().map(Field::getName).collect(Collectors.joining(", "));
+        String sql = String.format("SELECT SKIP %d FIRST %d %s FROM %s WHERE %s >= '%s' ORDER BY %s ",
+                offset, limit, columns, tableName, cdcField,
+                since.toLocalDate().toString(),
+                selectFields.get(0).getName());
+
+        try {
+            org.jooq.Result<org.jooq.Record> result = informixDsl.fetch(sql);
+            return result.stream().map(this::recordToMap).collect(Collectors.toList());
+        } catch (Exception e) {
+            log.error("Error fetching CDC from CBS {}: {}", tableName, e.getMessage());
+            throw new RuntimeException("Failed to fetch CDC from CBS table " + tableName, e);
+        }
+    }
+
+    /**
+     * Count records changed since a given date.
+     */
+    public long countCbsRecordsSince(String tableName, String cdcField, LocalDateTime since) {
+        if (cdcField == null || since == null) {
+            return countCbsRecords(tableName);
+        }
+
+        String sql = String.format("SELECT COUNT(*) FROM %s WHERE %s >= '%s'",
+                tableName, cdcField, since.toLocalDate().toString());
+        try {
+            return informixDsl.fetchOne(sql).into(Long.class);
+        } catch (Exception e) {
+            log.error("Error counting CDC records for {}: {}", tableName, e.getMessage());
+            return countCbsRecords(tableName);
+        }
+    }
+
+    /**
      * Fetch a single record by primary key from CBS.
      */
     public Map<String, Object> fetchByPk(String tableName, Map<String, Object> pkValues) {

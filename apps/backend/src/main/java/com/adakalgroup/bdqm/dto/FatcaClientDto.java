@@ -29,6 +29,7 @@ public class FatcaClientDto {
     private Boolean w8FormReceived;
     private String birthPlace;
     private String birthCountry;
+    private String nationality;
     private Boolean usAddress;
     private Boolean usPhone;
     private String riskLevel;

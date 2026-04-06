@@ -58,6 +58,17 @@ public class FatcaAuditService {
         log.debug("FATCA audit: {} for client {} by {}", action, cli, performedBy);
     }
 
+    public void logDeclarationEvent(String messageRefId, String action, String performedBy, String notes) {
+        FatcaAuditLog auditLog = FatcaAuditLog.builder()
+            .cli(messageRefId)
+            .action(action)
+            .performedBy(performedBy)
+            .notes(notes)
+            .build();
+        auditLogRepository.save(auditLog);
+        log.debug("FATCA declaration audit: {} for {} by {}", action, messageRefId, performedBy);
+    }
+
     public Page<FatcaAuditLog> getAuditHistory(String cli, int page, int size) {
         Pageable pageable = PageRequest.of(page, size, Sort.by("createdAt").descending());
         return auditLogRepository.findByCli(cli, pageable);

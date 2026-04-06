@@ -9,12 +9,15 @@ import lombok.extern.slf4j.Slf4j;
 import org.springframework.beans.factory.annotation.Value;
 import org.springframework.boot.autoconfigure.condition.ConditionalOnProperty;
 import org.springframework.stereotype.Service;
-import org.springframework.transaction.annotation.Transactional;
+import org.springframework.transaction.support.TransactionTemplate;
 
 import java.time.LocalDateTime;
 import java.util.ArrayList;
 import java.util.List;
 import java.util.Map;
+import java.util.concurrent.CompletableFuture;
+import java.util.concurrent.ExecutorService;
+import java.util.concurrent.Executors;
 
 /**
  * Dictionary-driven data sync service.
@@ -31,22 +34,34 @@ public class DataSyncService {
     private final CbsDataDictionaryService dataDictionaryService;
     private final CbsValidationService cbsValidationService;
     private final BusinessMetricsConfig metricsConfig;
+    private final TransactionTemplate transactionTemplate;
+    private final SyncProgressService syncProgressService;
 
     private static final int BATCH_SIZE = 1000;
 
     @Value("${app.max-records:0}")
     private int maxRecords;
 
+    @Value("${app.sync.parallelism:1}")
+    private int parallelism;
+
+    @Value("${app.sync.batch-retry:2}")
+    private int batchRetry;
+
     public DataSyncService(DynamicCbsQueryService dynamicCbsQueryService,
                            CbsTableRepository cbsTableRepository,
                            CbsDataDictionaryService dataDictionaryService,
                            CbsValidationService cbsValidationService,
-                           BusinessMetricsConfig metricsConfig) {
+                           BusinessMetricsConfig metricsConfig,
+                           TransactionTemplate transactionTemplate,
+                           SyncProgressService syncProgressService) {
         this.dynamicCbsQueryService = dynamicCbsQueryService;
         this.cbsTableRepository = cbsTableRepository;
         this.dataDictionaryService = dataDictionaryService;
         this.cbsValidationService = cbsValidationService;
         this.metricsConfig = metricsConfig;
+        this.transactionTemplate = transactionTemplate;
+        this.syncProgressService = syncProgressService;
     }
 
     /**
@@ -55,71 +70,177 @@ public class DataSyncService {
      *
      * @return list of SyncResult, one per table
      */
-    @Transactional
     public List<SyncResult> syncAll() {
         List<CbsTable> tables = cbsTableRepository.findBySyncEnabledTrueAndActiveTrueOrderBySyncOrderAsc();
-        log.info("Starting dictionary-driven sync for {} enabled tables", tables.size());
+        log.info("Starting dictionary-driven sync for {} enabled tables (parallelism={})", tables.size(), parallelism);
 
-        List<SyncResult> results = new ArrayList<>();
-
-        for (CbsTable table : tables) {
-            try {
-                SyncResult result = syncTable(table.getTableName());
-                results.add(result);
-
-                // Post-sync hooks per table
-                runPostSyncHooks(table.getTableName(), result);
-
-            } catch (Exception e) {
-                log.error("Sync failed for table {}: {}", table.getTableName(), e.getMessage(), e);
-                results.add(new SyncResult(table.getTableName(), 0, 0,
-                        1, LocalDateTime.now(), LocalDateTime.now()));
-            }
+        long syncStart = System.currentTimeMillis();
+        List<SyncResult> results;
+        if (parallelism <= 1) {
+            results = syncAllSequential(tables);
+        } else {
+            results = syncAllParallel(tables);
         }
 
-        log.info("Full sync completed: {} tables processed", results.size());
+        long totalDuration = System.currentTimeMillis() - syncStart;
+        syncProgressService.emitSyncComplete(results.size(), totalDuration);
         metricsConfig.recordDataSyncSuccess();
         return results;
     }
 
+    private List<SyncResult> syncAllSequential(List<CbsTable> tables) {
+        List<SyncResult> results = new ArrayList<>();
+        for (CbsTable table : tables) {
+            results.add(syncTableSafe(table.getTableName()));
+        }
+        log.info("Full sync completed: {} tables processed (sequential)", results.size());
+        return results;
+    }
+
+    private List<SyncResult> syncAllParallel(List<CbsTable> tables) {
+        ExecutorService executor = Executors.newFixedThreadPool(Math.min(parallelism, tables.size()));
+        try {
+            List<CompletableFuture<SyncResult>> futures = tables.stream()
+                    .map(table -> CompletableFuture.supplyAsync(
+                            () -> syncTableSafe(table.getTableName()), executor))
+                    .toList();
+
+            List<SyncResult> results = futures.stream()
+                    .map(CompletableFuture::join)
+                    .toList();
+
+            log.info("Full sync completed: {} tables processed (parallel, threads={})", results.size(), parallelism);
+            return results;
+        } finally {
+            executor.shutdown();
+        }
+    }
+
+    private SyncResult syncTableSafe(String tableName) {
+        try {
+            return syncTable(tableName);
+        } catch (Exception e) {
+            log.error("Sync failed for table {}: {}", tableName, e.getMessage(), e);
+            return new SyncResult(tableName, 0, 0, 0, 0, LocalDateTime.now(), LocalDateTime.now());
+        }
+    }
+
     /**
-     * Sync a single CBS table by name.
-     * Dictionary-driven: columns determined by cbs_fields metadata.
+     * Sync a single CBS table: fetch batch → upsert mirror → validate batch → next.
+     * Each batch runs in its own transaction — failure is isolated, no full rollback.
      */
-    @Transactional
     public SyncResult syncTable(String tableName) {
         log.info("Starting sync for table '{}' from Informix to PostgreSQL...", tableName);
         LocalDateTime startTime = LocalDateTime.now();
 
         int upserted = 0;
+        int validated = 0;
+        int anomaliesCreated = 0;
         int errors = 0;
         int offset = 0;
 
         try {
-            // Ensure mirror table schema matches dictionary
             dynamicCbsQueryService.ensureMirrorSchema(tableName);
 
-            long totalCount = dynamicCbsQueryService.countCbsRecords(tableName);
+            var tableConfig = dataDictionaryService.getTableByName(tableName);
+            boolean validationEnabled = Boolean.TRUE.equals(tableConfig.getValidationEnabled());
+            log.info("Table '{}': validationEnabled={}", tableName, validationEnabled);
+
+            // CDC
+            CbsTable tableEntity = cbsTableRepository.findByTableName(tableName).orElse(null);
+            String cdcField = tableEntity != null ? tableEntity.getCdcField() : null;
+            LocalDateTime lastSyncAt = tableEntity != null ? tableEntity.getLastSyncAt() : null;
+
+            boolean cdcMode = cdcField != null && lastSyncAt != null;
+            if (cdcMode) {
+                log.info("Table '{}': CDC mode (field={}, since={})", tableName, cdcField, lastSyncAt);
+            } else if (cdcField != null) {
+                log.info("Table '{}': CDC field '{}' configured but no lastSyncAt, full sync", tableName, cdcField);
+            }
+
+            long totalCount = cdcMode
+                    ? dynamicCbsQueryService.countCbsRecordsSince(tableName, cdcField, lastSyncAt)
+                    : dynamicCbsQueryService.countCbsRecords(tableName);
             if (maxRecords > 0) {
                 totalCount = Math.min(totalCount, maxRecords);
             }
-            log.info("Table '{}': {} records to sync", tableName, totalCount);
+            log.info("Table '{}': {} records to process", tableName, totalCount);
 
+            // Streaming: each batch in its own transaction
+            final boolean isCdc = cdcMode;
             while (offset < totalCount) {
-                List<Map<String, Object>> batch = dynamicCbsQueryService.fetchFromCbs(tableName, offset, BATCH_SIZE);
+                long batchStart = System.currentTimeMillis();
+
+                List<Map<String, Object>> batch = cdcMode
+                        ? dynamicCbsQueryService.fetchFromCbsSince(tableName, cdcField, lastSyncAt, offset, BATCH_SIZE)
+                        : dynamicCbsQueryService.fetchFromCbs(tableName, offset, BATCH_SIZE);
                 if (batch.isEmpty()) break;
 
-                log.info("Table '{}': processing batch offset={}, size={}", tableName, offset, batch.size());
+                log.info("Table '{}': batch offset={}, size={}", tableName, offset, batch.size());
 
-                int batchUpserted = dynamicCbsQueryService.upsertToMirror(tableName, batch);
-                upserted += batchUpserted;
+                // Transaction per batch: upsert + validate in one atomic unit
+                final List<Map<String, Object>> batchRef = batch;
+                final boolean doValidate = validationEnabled;
+                BatchResult br = transactionTemplate.execute(status -> {
+                    int batchUpserted = dynamicCbsQueryService.upsertToMirror(tableName, batchRef);
+
+                    int batchValidated = 0;
+                    int batchAnomalies = 0;
+                    int batchAutoResolved = 0;
+                    int batchErrors = 0;
+                    if (doValidate) {
+                        long valStart = System.currentTimeMillis();
+                        CbsValidationService.ValidationResult vr =
+                                cbsValidationService.validateRecords(tableName, batchRef);
+                        batchValidated = vr.recordsValidated();
+                        batchAnomalies = vr.anomaliesCreated();
+                        batchAutoResolved = vr.autoResolved();
+                        batchErrors = vr.errors();
+                        metricsConfig.recordValidationBatch(tableName, batchAnomalies, batchAutoResolved,
+                                System.currentTimeMillis() - valStart);
+                        log.info("Table '{}': batch validated — anomalies={}, autoResolved={}, skipped={}",
+                                tableName, vr.anomaliesCreated(), vr.autoResolved(), vr.duplicatesSkipped());
+                    }
+                    return new BatchResult(batchUpserted, batchValidated, batchAnomalies, batchErrors);
+                });
+
+                long batchDuration = System.currentTimeMillis() - batchStart;
+                metricsConfig.recordSyncBatch(tableName, batch.size(), batchDuration, isCdc);
+
+                if (br != null) {
+                    upserted += br.upserted;
+                    validated += br.validated;
+                    anomaliesCreated += br.anomalies;
+                    errors += br.errors;
+                }
+
+                // SSE: emit batch progress
+                syncProgressService.emitBatchProgress(tableName, offset, batch.size(), totalCount,
+                        br != null ? br.upserted : 0, br != null ? br.anomalies : 0, batchDuration);
 
                 offset += BATCH_SIZE;
                 if (batch.size() < BATCH_SIZE) break;
             }
 
-            log.info("Sync completed for '{}'. Upserted: {}, Errors: {}", tableName, upserted, errors);
-            return new SyncResult(tableName, upserted, 0, errors, startTime, LocalDateTime.now());
+            // Update last_sync_at for CDC (own transaction)
+            if (tableEntity != null && cdcField != null) {
+                transactionTemplate.executeWithoutResult(status -> {
+                    tableEntity.setLastSyncAt(startTime);
+                    cbsTableRepository.save(tableEntity);
+                });
+                log.info("Table '{}': updated lastSyncAt to {}", tableName, startTime);
+            }
+
+            long totalDuration = System.currentTimeMillis() - startTime.atZone(java.time.ZoneId.systemDefault()).toInstant().toEpochMilli();
+            metricsConfig.recordSyncTableComplete(tableName, upserted, totalDuration, isCdc);
+
+            log.info("Sync completed for '{}': upserted={}, validated={}, anomalies={}, errors={}, CDC={}, duration={}ms",
+                    tableName, upserted, validated, anomaliesCreated, errors, isCdc, totalDuration);
+
+            // SSE: emit table complete
+            syncProgressService.emitTableComplete(tableName, upserted, anomaliesCreated, errors, totalDuration, isCdc);
+
+            return new SyncResult(tableName, upserted, validated, anomaliesCreated, errors, startTime, LocalDateTime.now());
 
         } catch (Exception e) {
             log.error("Failed to sync table '{}': {}", tableName, e.getMessage(), e);
@@ -128,68 +249,7 @@ public class DataSyncService {
         }
     }
 
-    /**
-     * Post-sync hooks for tables.
-     * - Any table with validationEnabled=true: run validation + auto-resolve anomalies
-     */
-    private void runPostSyncHooks(String tableName, SyncResult result) {
-        log.info("runPostSyncHooks START for table '{}'", tableName);
-        try {
-            var tableConfig = dataDictionaryService.getTableByName(tableName);
-            log.info("Table '{}' config: validationEnabled={}, structureField={}, pkField={}, labelField={}",
-                    tableName, tableConfig.getValidationEnabled(), tableConfig.getStructureField(),
-                    tableConfig.getPkField(), tableConfig.getLabelField());
-
-            // Dictionary-driven validation for any table with validationEnabled=true
-            if (Boolean.TRUE.equals(tableConfig.getValidationEnabled())) {
-                log.info("Table '{}': validation enabled, running validation...", tableName);
-                runValidation(tableName);
-            } else {
-                log.info("Table '{}': validation NOT enabled, skipping", tableName);
-            }
-
-        } catch (Exception e) {
-            log.warn("Could not run post-sync hooks for '{}': {}", tableName, e.getMessage());
-        }
-        log.info("runPostSyncHooks END for table '{}'", tableName);
-    }
-
-    private void runValidation(String tableName) {
-        log.info("Running post-sync validation for table '{}'...", tableName);
-        log.info("Validation config: maxRecords={}", maxRecords);
-        try {
-            List<Map<String, Object>> allRecords = new ArrayList<>();
-            int offset = 0;
-            boolean hasLimit = maxRecords > 0;
-            while (!hasLimit || allRecords.size() < maxRecords) {
-                int remaining = maxRecords - allRecords.size();
-                int fetchSize = hasLimit ? Math.min(BATCH_SIZE, remaining) : BATCH_SIZE;
-                log.info("Validation fetch for '{}': offset={}, fetchSize={}, collected={}", tableName, offset, fetchSize, allRecords.size());
-                List<Map<String, Object>> batch = dynamicCbsQueryService.fetchFromCbs(tableName, offset, fetchSize);
-                log.info("Validation fetch for '{}': got {} records in batch", tableName, batch.size());
-                if (batch.isEmpty()) break;
-                allRecords.addAll(batch);
-                offset += batch.size();
-                if (batch.size() < fetchSize) break;
-            }
-            log.info("Validation for '{}': total {} records fetched for validation", tableName, allRecords.size());
-
-            if (!allRecords.isEmpty()) {
-                CbsValidationService.ValidationResult validationResult =
-                        cbsValidationService.validateRecords(tableName, allRecords);
-                log.info("Validation for '{}': anomalies={}, auto-resolved={}, skipped={}, errors={}",
-                        tableName,
-                        validationResult.anomaliesCreated(),
-                        validationResult.autoResolved(),
-                        validationResult.duplicatesSkipped(),
-                        validationResult.errors());
-            } else  {
-                log.error("no records found to validate for '{} ", tableName);
-            }
-        } catch (Exception e) {
-            log.error("Post-sync validation failed for '{}': {}", tableName, e.getMessage(), e);
-        }
-    }
+    private record BatchResult(int upserted, int validated, int anomalies, int errors) {}
 
     // ===== Helpers =====
 
@@ -201,14 +261,11 @@ public class DataSyncService {
     }
 
     public record SyncResult(
-            String entity, int inserted, int updated, int errors,
+            String entity, int upserted, int validated, int anomaliesCreated, int errors,
             LocalDateTime startTime, LocalDateTime endTime
     ) {
         public long durationSeconds() {
             return java.time.Duration.between(startTime, endTime).getSeconds();
-        }
-        public int totalProcessed() {
-            return inserted + updated + errors;
         }
     }
 }

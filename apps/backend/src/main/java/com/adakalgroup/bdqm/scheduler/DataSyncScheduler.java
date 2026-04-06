@@ -47,8 +47,8 @@ public class DataSyncScheduler {
             List<DataSyncService.SyncResult> results = dataSyncService.syncAll();
 
             for (DataSyncService.SyncResult r : results) {
-                log.info("  Table '{}': upserted={}, errors={}, duration={}s",
-                        r.entity(), r.inserted(), r.errors(), r.durationSeconds());
+                log.info("  Table '{}': upserted={}, validated={}, anomalies={}, errors={}, duration={}s",
+                        r.entity(), r.upserted(), r.validated(), r.anomaliesCreated(), r.errors(), r.durationSeconds());
             }
 
             log.info("=== CBS sync completed: {} tables synced ===", results.size());

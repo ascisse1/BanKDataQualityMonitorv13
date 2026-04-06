@@ -39,6 +39,8 @@ public interface FatcaClientRepository extends JpaRepository<FatcaClient, Long> 
 
     long countByReportingRequired(Boolean reportingRequired);
 
+    List<FatcaClient> findByReportingRequired(Boolean reportingRequired);
+
     @Query("SELECT f.fatcaStatus as status, COUNT(f) as count " +
            "FROM FatcaClient f " +
            "GROUP BY f.fatcaStatus")

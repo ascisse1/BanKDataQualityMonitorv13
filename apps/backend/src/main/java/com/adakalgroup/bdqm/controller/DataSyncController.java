@@ -2,12 +2,15 @@ package com.adakalgroup.bdqm.controller;
 
 import com.adakalgroup.bdqm.scheduler.DataSyncScheduler;
 import com.adakalgroup.bdqm.service.DataSyncService;
+import com.adakalgroup.bdqm.service.SyncProgressService;
 import lombok.RequiredArgsConstructor;
 import lombok.extern.slf4j.Slf4j;
 import org.springframework.boot.autoconfigure.condition.ConditionalOnProperty;
+import org.springframework.http.MediaType;
 import org.springframework.http.ResponseEntity;
 import org.springframework.security.access.prepost.PreAuthorize;
 import org.springframework.web.bind.annotation.*;
+import org.springframework.web.servlet.mvc.method.annotation.SseEmitter;
 
 import java.util.List;
 import java.util.Map;
@@ -26,6 +29,7 @@ import java.util.stream.Collectors;
 public class DataSyncController {
 
     private final DataSyncScheduler dataSyncScheduler;
+    private final SyncProgressService syncProgressService;
 
     /**
      * Sync ALL enabled CBS tables (dictionary-driven).
@@ -68,13 +72,23 @@ public class DataSyncController {
         }
     }
 
+    /**
+     * SSE endpoint for real-time sync progress.
+     * Frontend subscribes: const es = new EventSource('/api/sync/progress');
+     */
+    @GetMapping(value = "/progress", produces = MediaType.TEXT_EVENT_STREAM_VALUE)
+    public SseEmitter streamProgress() {
+        return syncProgressService.subscribe();
+    }
+
     private Map<String, Object> buildResponse(DataSyncService.SyncResult result) {
         return Map.of(
                 "success", true,
                 "table", result.entity(),
-                "upserted", result.inserted(),
+                "upserted", result.upserted(),
+                "validated", result.validated(),
+                "anomaliesCreated", result.anomaliesCreated(),
                 "errors", result.errors(),
-                "totalProcessed", result.totalProcessed(),
                 "durationSeconds", result.durationSeconds(),
                 "startTime", result.startTime().toString(),
                 "endTime", result.endTime().toString()

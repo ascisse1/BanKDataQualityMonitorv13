@@ -24,21 +24,40 @@ const UsIndicator: React.FC<{ value: string | null; isUs: boolean }> = ({ value,
 
 interface FatcaClient {
   id?: number;
-  cli: string;
-  nom: string;
-  date_entree_relation: string;
-  status_client: string;
-  pays_naissance: string;
-  nationalite: string;
-  adresse: string;
-  pays_adresse: string;
-  telephone: string;
-  relation_client: string;
-  type_relation: string;
-  fatca_status: string;
-  fatca_date: string | null;
-  fatca_uti: string | null;
+  clientNumber: string;
+  clientName: string;
+  clientType: string;
+  structureCode: string;
+  structureName: string;
+  fatcaStatus: string;
+  taxResidenceCountry: string;
+  usPerson: boolean;
+  usTin: string | null;
+  birthPlace: string | null;
+  birthCountry: string | null;
+  nationality: string | null;
+  usAddress: boolean;
+  usPhone: boolean;
+  riskLevel: string | null;
+  lastReviewDate: string | null;
+  nextReviewDate: string | null;
+  indiciaTypes: string | null;
+  indiciaCount: number;
+  reportingRequired: boolean;
+  w9FormReceived: boolean;
+  w8FormReceived: boolean;
+  w9ReceivedDate: string | null;
+  w8ReceivedDate: string | null;
+  w9ExpiryDate: string | null;
+  w8ExpiryDate: string | null;
+  declarationDate: string | null;
+  documentStatus: string | null;
+  documentNotes: string | null;
+  lastScreeningDate: string | null;
+  detectionSource: string | null;
   notes: string | null;
+  createdAt: string | null;
+  updatedAt: string | null;
 }
 
 interface FatcaTableProps {
@@ -94,9 +113,8 @@ const FatcaTable: React.FC<FatcaTableProps> = ({
         const clientsMap = new Map();
         result.data.forEach(client => {
           // Only add if not already in the map or replace with better data
-          if (!clientsMap.has(client.cli) || 
-              (clientsMap.has(client.cli) && !clientsMap.get(client.cli).telephone && client.telephone)) {
-            clientsMap.set(client.cli, client);
+          if (!clientsMap.has(client.clientNumber)) {
+            clientsMap.set(client.clientNumber, client);
           }
         });
         
@@ -132,12 +150,13 @@ const FatcaTable: React.FC<FatcaTableProps> = ({
     if (!debouncedSearch || !debouncedSearch.trim()) return clients;
     const query = debouncedSearch.toLowerCase().trim();
     return clients.filter(client =>
-      client.cli?.toLowerCase().includes(query) ||
-      client.nom?.toLowerCase().includes(query) ||
-      client.pays_naissance?.toLowerCase().includes(query) ||
-      client.nationalite?.toLowerCase().includes(query) ||
-      client.pays_adresse?.toLowerCase().includes(query) ||
-      client.telephone?.toLowerCase().includes(query)
+      client.clientNumber?.toLowerCase().includes(query) ||
+      client.clientName?.toLowerCase().includes(query) ||
+      client.birthCountry?.toLowerCase().includes(query) ||
+      client.nationality?.toLowerCase().includes(query) ||
+      client.taxResidenceCountry?.toLowerCase().includes(query) ||
+      client.structureCode?.toLowerCase().includes(query) ||
+      client.usTin?.toLowerCase().includes(query)
     );
   }, [clients, debouncedSearch]);
 
@@ -151,7 +170,7 @@ const FatcaTable: React.FC<FatcaTableProps> = ({
 
   const handleEditClient = (client: FatcaClient) => {
     setEditingClient({...client});
-    setExpandedRow(client.cli);
+    setExpandedRow(client.clientNumber);
   };
 
   const handleCancelEdit = () => {
@@ -165,8 +184,8 @@ const FatcaTable: React.FC<FatcaTableProps> = ({
       setLoading(true);
       
       // Call API to update client status (uses session cookies + CSRF automatically)
-      const response = await apiClient.put(`/api/fatca/clients/${editingClient.cli}`, {
-        fatcaStatus: editingClient.fatca_status,
+      const response = await apiClient.put(`/api/fatca/${editingClient.id}`, {
+        fatcaStatus: editingClient.fatcaStatus,
         notes: editingClient.notes,
         username: user?.username
       });
@@ -177,12 +196,11 @@ const FatcaTable: React.FC<FatcaTableProps> = ({
         // Update local state
         setClients(prevClients => 
           prevClients.map(client => 
-            client.cli === editingClient.cli 
+            client.clientNumber === editingClient.clientNumber 
               ? {
                   ...client,
-                  fatca_status: editingClient.fatca_status,
-                  fatca_date: new Date().toISOString().split('T')[0],
-                  fatca_uti: user?.username || 'system',
+                  fatcaStatus: editingClient.fatcaStatus,
+                  lastReviewDate: new Date().toISOString().split('T')[0],
                   notes: editingClient.notes
                 }
               : client
@@ -209,28 +227,43 @@ const FatcaTable: React.FC<FatcaTableProps> = ({
 
   const getStatusColor = (status: string) => {
     switch (status) {
-      case 'À vérifier':
+      case 'PENDING_REVIEW':
         return 'bg-warning-100 text-warning-800';
-      case 'Confirmé':
+      case 'COMPLIANT':
         return 'bg-success-100 text-success-800';
-      case 'Exclu':
+      case 'NON_COMPLIANT':
         return 'bg-error-100 text-error-800';
-      case 'En attente':
+      case 'UNDER_INVESTIGATION':
+        return 'bg-blue-100 text-blue-800';
+      case 'EXEMPT':
         return 'bg-gray-100 text-gray-800';
       default:
         return 'bg-gray-100 text-gray-800';
     }
   };
 
+  const getStatusLabel = (status: string) => {
+    switch (status) {
+      case 'PENDING_REVIEW': return 'À vérifier';
+      case 'COMPLIANT': return 'Conforme';
+      case 'NON_COMPLIANT': return 'Non conforme';
+      case 'UNDER_INVESTIGATION': return 'En investigation';
+      case 'EXEMPT': return 'Exempté';
+      default: return status;
+    }
+  };
+
   const getStatusIcon = (status: string) => {
     switch (status) {
-      case 'À vérifier':
+      case 'PENDING_REVIEW':
         return <AlertTriangle className="h-4 w-4 text-warning-500 mr-1" />;
-      case 'Confirmé':
+      case 'COMPLIANT':
         return <CheckSquare className="h-4 w-4 text-success-500 mr-1" />;
-      case 'Exclu':
+      case 'NON_COMPLIANT':
         return <XSquare className="h-4 w-4 text-error-500 mr-1" />;
-      case 'En attente':
+      case 'UNDER_INVESTIGATION':
+        return <Clock className="h-4 w-4 text-blue-500 mr-1" />;
+      case 'EXEMPT':
         return <Clock className="h-4 w-4 text-gray-500 mr-1" />;
       default:
         return null;
@@ -339,39 +372,24 @@ const FatcaTable: React.FC<FatcaTableProps> = ({
         <table className="min-w-full divide-y divide-gray-200">
           <thead className="bg-gray-50">
             <tr>
-              <th scope="col" className="px-3 py-3 text-left text-xs font-medium text-gray-500 uppercase tracking-wider">
-                Client
-              </th>
-              <th scope="col" className="px-3 py-3 text-left text-xs font-medium text-gray-500 uppercase tracking-wider">
-                Date Entrée
-              </th>
-              <th scope="col" className="px-3 py-3 text-left text-xs font-medium text-gray-500 uppercase tracking-wider">
-                Pays Naissance
-              </th>
-              <th scope="col" className="px-3 py-3 text-left text-xs font-medium text-gray-500 uppercase tracking-wider">
-                Nationalité
-              </th>
-              <th scope="col" className="px-3 py-3 text-left text-xs font-medium text-gray-500 uppercase tracking-wider">
-                Pays Adresse
-              </th>
-              <th scope="col" className="px-3 py-3 text-left text-xs font-medium text-gray-500 uppercase tracking-wider">
-                Téléphone
-              </th>
-              <th scope="col" className="px-3 py-3 text-left text-xs font-medium text-gray-500 uppercase tracking-wider">
-                Statut FATCA
-              </th>
-              <th scope="col" className="px-3 py-3 text-left text-xs font-medium text-gray-500 uppercase tracking-wider">
-                Date FATCA
-              </th>
-              <th scope="col" className="px-3 py-3 text-right text-xs font-medium text-gray-500 uppercase tracking-wider">
-                Actions
-              </th>
+              <th scope="col" className="px-2 py-3 text-left text-xs font-medium text-gray-500 uppercase tracking-wider">Client</th>
+              <th scope="col" className="px-2 py-3 text-left text-xs font-medium text-gray-500 uppercase tracking-wider">Pays Naissance</th>
+              <th scope="col" className="px-2 py-3 text-left text-xs font-medium text-gray-500 uppercase tracking-wider">Lieu Naissance</th>
+              <th scope="col" className="px-2 py-3 text-left text-xs font-medium text-gray-500 uppercase tracking-wider">Nationalité</th>
+              <th scope="col" className="px-2 py-3 text-left text-xs font-medium text-gray-500 uppercase tracking-wider">Résidence Fiscale</th>
+              <th scope="col" className="px-2 py-3 text-left text-xs font-medium text-gray-500 uppercase tracking-wider">Adresse US</th>
+              <th scope="col" className="px-2 py-3 text-left text-xs font-medium text-gray-500 uppercase tracking-wider">Tél. US</th>
+              <th scope="col" className="px-2 py-3 text-left text-xs font-medium text-gray-500 uppercase tracking-wider">US Person</th>
+              <th scope="col" className="px-2 py-3 text-left text-xs font-medium text-gray-500 uppercase tracking-wider">Indices</th>
+              <th scope="col" className="px-2 py-3 text-left text-xs font-medium text-gray-500 uppercase tracking-wider">Risque</th>
+              <th scope="col" className="px-2 py-3 text-left text-xs font-medium text-gray-500 uppercase tracking-wider">Statut</th>
+              <th scope="col" className="px-2 py-3 text-right text-xs font-medium text-gray-500 uppercase tracking-wider">Actions</th>
             </tr>
           </thead>
           <tbody className="bg-white divide-y divide-gray-200">
             {displayClients.length === 0 ? (
               <tr>
-                <td colSpan={9} className="px-3 py-8 text-center text-gray-500">
+                <td colSpan={12} className="px-3 py-8 text-center text-gray-500">
                   <div className="flex flex-col items-center justify-center">
                     <AlertTriangle className="h-8 w-8 text-gray-400 mb-2" />
                     <p className="text-lg font-medium">
@@ -402,89 +420,77 @@ const FatcaTable: React.FC<FatcaTableProps> = ({
               </tr>
             ) : (
               displayClients.map((client) => (
-                <React.Fragment key={`${client.cli}-${client.telephone}`}>
-                  <tr className={`hover:bg-gray-50 ${expandedRow === client.cli ? 'bg-gray-50' : ''}`}>
-                    <td className="px-3 py-4 whitespace-nowrap">
+                <React.Fragment key={client.clientNumber}>
+                  <tr className={`hover:bg-gray-50 ${expandedRow === client.clientNumber ? 'bg-gray-50' : ''}`}>
+                    <td className="px-2 py-3 whitespace-nowrap">
                       <div className="flex items-center">
                         <div className="flex-shrink-0 h-8 w-8 rounded-full bg-gray-100 flex items-center justify-center">
                           <User className="h-4 w-4 text-gray-500" />
                         </div>
-                        <div className="ml-3">
-                          <div className="text-sm font-medium text-gray-900">{client.cli}</div>
-                          <div className="text-xs text-gray-500">
-                            {client.nom}
-                          </div>
-                          <div className="text-xs text-gray-500">
-                            {client.status_client}
-                          </div>
+                        <div className="ml-2">
+                          <div className="text-sm font-medium text-gray-900">{client.clientNumber}</div>
+                          <div className="text-xs text-gray-500 truncate max-w-[150px]">{client.clientName}</div>
+                          <div className="text-xs text-gray-400">{client.clientType}</div>
                         </div>
                       </div>
                     </td>
-                    <td className="px-3 py-4 whitespace-nowrap">
-                      <div className="text-sm text-gray-900">{formatDate(client.date_entree_relation)}</div>
+                    <td className="px-2 py-3 whitespace-nowrap">
+                      <UsIndicator value={client.birthCountry} isUs={['US', 'USA', 'ETU', '400'].includes(client.birthCountry?.toUpperCase() || '')} />
                     </td>
-                    <td className="px-3 py-4 whitespace-nowrap">
-                      <div className="text-sm text-gray-900">
-                        <UsIndicator value={client.pays_naissance} isUs={client.pays_naissance === 'US'} />
-                      </div>
+                    <td className="px-2 py-3 whitespace-nowrap text-sm text-gray-900">
+                      {client.birthPlace || '-'}
                     </td>
-                    <td className="px-3 py-4 whitespace-nowrap">
-                      <div className="text-sm text-gray-900">
-                        <UsIndicator value={client.nationalite} isUs={client.nationalite === 'US'} />
-                      </div>
+                    <td className="px-2 py-3 whitespace-nowrap">
+                      <UsIndicator value={client.nationality} isUs={['US', 'USA', 'ETU', '400'].includes(client.nationality?.toUpperCase() || '')} />
                     </td>
-                    <td className="px-3 py-4 whitespace-nowrap">
-                      <div className="text-sm text-gray-900">
-                        <UsIndicator value={client.pays_adresse} isUs={client.pays_adresse === 'US'} />
-                      </div>
+                    <td className="px-2 py-3 whitespace-nowrap">
+                      <UsIndicator value={client.taxResidenceCountry} isUs={['US', 'USA', 'ETU', '400'].includes(client.taxResidenceCountry?.toUpperCase() || '')} />
                     </td>
-                    <td className="px-3 py-4 whitespace-nowrap">
-                      <div className="text-sm text-gray-900">
-                        <UsIndicator value={client.telephone} isUs={!!client.telephone && client.telephone.startsWith('+1')} />
-                      </div>
+                    <td className="px-2 py-3 whitespace-nowrap text-sm">
+                      {client.usAddress ? <span className="inline-flex items-center gap-1 px-1.5 py-0.5 rounded bg-warning-100 text-warning-700 font-medium"><Flag className="h-3 w-3" />Oui</span> : <span className="text-gray-400">Non</span>}
                     </td>
-                    <td className="px-3 py-4 whitespace-nowrap">
-                      <span
-                        className={`px-2 inline-flex text-xs leading-5 font-semibold rounded-full items-center ${getStatusColor(
-                          client.fatca_status
-                        )}`}
-                      >
-                        {getStatusIcon(client.fatca_status)}
-                        {client.fatca_status}
+                    <td className="px-2 py-3 whitespace-nowrap text-sm">
+                      {client.usPhone ? <span className="inline-flex items-center gap-1 px-1.5 py-0.5 rounded bg-warning-100 text-warning-700 font-medium"><Flag className="h-3 w-3" />Oui</span> : <span className="text-gray-400">Non</span>}
+                    </td>
+                    <td className="px-2 py-3 whitespace-nowrap text-sm">
+                      {client.usPerson ? <span className="inline-flex items-center gap-1 px-1.5 py-0.5 rounded bg-error-100 text-error-700 font-medium"><Flag className="h-3 w-3" />Oui</span> : <span className="text-gray-400">Non</span>}
+                    </td>
+                    <td className="px-2 py-3 whitespace-nowrap text-sm">
+                      <span className="font-medium text-gray-900">{client.indiciaCount || 0}</span>
+                      {client.indiciaTypes && (
+                        <div className="text-xs text-gray-500 truncate max-w-[120px]" title={client.indiciaTypes}>
+                          {client.indiciaTypes.split(',').map(t => t.replace('_', ' ')).join(', ')}
+                        </div>
+                      )}
+                    </td>
+                    <td className="px-2 py-3 whitespace-nowrap text-sm">
+                      <span className={`px-1.5 py-0.5 rounded text-xs font-medium ${
+                        client.riskLevel === 'CRITICAL' ? 'bg-error-100 text-error-800' :
+                        client.riskLevel === 'HIGH' ? 'bg-warning-100 text-warning-800' :
+                        client.riskLevel === 'MEDIUM' ? 'bg-blue-100 text-blue-800' :
+                        'bg-gray-100 text-gray-800'
+                      }`}>{client.riskLevel || '-'}</span>
+                    </td>
+                    <td className="px-2 py-3 whitespace-nowrap">
+                      <span className={`px-2 inline-flex text-xs leading-5 font-semibold rounded-full items-center ${getStatusColor(client.fatcaStatus)}`}>
+                        {getStatusIcon(client.fatcaStatus)}
+                        {getStatusLabel(client.fatcaStatus)}
                       </span>
                     </td>
-                    <td className="px-3 py-4 whitespace-nowrap text-sm text-gray-500">
-                      {formatDate(client.fatca_date)}
-                    </td>
-                    <td className="px-3 py-4 whitespace-nowrap text-right text-sm font-medium">
-                      <div className="flex items-center justify-end space-x-2">
-                        <Button
-                          variant="ghost"
-                          size="sm"
-                          leftIcon={<Eye className="h-4 w-4" />}
-                          onClick={() => toggleExpandRow(client.cli)}
-                        >
-                          Voir
-                        </Button>
-                        <button
-                          type="button"
-                          className="text-gray-500 hover:text-gray-700"
-                          onClick={() => toggleExpandRow(client.cli)}
-                        >
-                          {expandedRow === client.cli ? (
-                            <ChevronUp className="h-5 w-5" />
-                          ) : (
-                            <ChevronDown className="h-5 w-5" />
-                          )}
+                    <td className="px-2 py-3 whitespace-nowrap text-right text-sm font-medium">
+                      <div className="flex items-center justify-end space-x-1">
+                        <Button variant="ghost" size="sm" leftIcon={<Eye className="h-4 w-4" />} onClick={() => toggleExpandRow(client.clientNumber)}>Voir</Button>
+                        <button type="button" className="text-gray-500 hover:text-gray-700" onClick={() => toggleExpandRow(client.clientNumber)}>
+                          {expandedRow === client.clientNumber ? <ChevronUp className="h-5 w-5" /> : <ChevronDown className="h-5 w-5" />}
                         </button>
                       </div>
                     </td>
                   </tr>
-                  {expandedRow === client.cli && (
+                  {expandedRow === client.clientNumber && (
                     <tr className="bg-gray-50">
-                      <td colSpan={9} className="px-3 py-4">
+                      <td colSpan={12} className="px-3 py-4">
                         <div className="border-l-4 border-primary-500 pl-4 py-2">
-                          {editingClient && editingClient.cli === client.cli ? (
+                          {editingClient && editingClient.clientNumber === client.clientNumber ? (
                             <div className="space-y-4">
                               <div>
                                 <span className="font-medium text-gray-900">Modifier le statut FATCA</span>
@@ -497,13 +503,14 @@ const FatcaTable: React.FC<FatcaTableProps> = ({
                                   </label>
                                   <select
                                     className="w-full rounded-md border-gray-300 shadow-sm focus:border-primary-500 focus:ring-primary-500"
-                                    value={editingClient.fatca_status}
-                                    onChange={(e) => setEditingClient({...editingClient, fatca_status: e.target.value})}
+                                    value={editingClient.fatcaStatus}
+                                    onChange={(e) => setEditingClient({...editingClient, fatcaStatus: e.target.value})}
                                   >
-                                    <option value="À vérifier">À vérifier</option>
-                                    <option value="Confirmé">Confirmé</option>
-                                    <option value="Exclu">Exclu</option>
-                                    <option value="En attente">En attente</option>
+                                    <option value="PENDING_REVIEW">À vérifier</option>
+                                    <option value="COMPLIANT">Conforme</option>
+                                    <option value="NON_COMPLIANT">Non conforme</option>
+                                    <option value="UNDER_INVESTIGATION">En investigation</option>
+                                    <option value="EXEMPT">Exempté</option>
                                   </select>
                                 </div>
                                 
@@ -537,93 +544,52 @@ const FatcaTable: React.FC<FatcaTableProps> = ({
                             </div>
                           ) : (
                             <div className="space-y-3">
-                              <div className="grid grid-cols-1 md:grid-cols-2 gap-4">
+                              <div className="grid grid-cols-1 md:grid-cols-3 gap-4">
                                 <div>
-                                  <h3 className="text-sm font-medium text-gray-900">Informations client</h3>
+                                  <h3 className="text-sm font-medium text-gray-900">Identification</h3>
                                   <div className="mt-2 space-y-2">
-                                    <div className="flex justify-between">
-                                      <span className="text-sm text-gray-500">Code client:</span>
-                                      <span className="text-sm font-medium">{client.cli}</span>
-                                    </div>
-                                    <div className="flex justify-between">
-                                      <span className="text-sm text-gray-500">Nom complet:</span>
-                                      <span className="text-sm font-medium">{client.nom || '-'}</span>
-                                    </div>
-                                    <div className="flex justify-between">
-                                      <span className="text-sm text-gray-500">Date entrée relation:</span>
-                                      <span className="text-sm font-medium">{formatDate(client.date_entree_relation)}</span>
-                                    </div>
-                                    <div className="flex justify-between">
-                                      <span className="text-sm text-gray-500">Statut client:</span>
-                                      <span className="text-sm font-medium">{client.status_client}</span>
-                                    </div>
-                                    <div className="flex justify-between items-center">
-                                      <span className="text-sm text-gray-500">Pays de naissance:</span>
-                                      <span className="text-sm font-medium">
-                                        <UsIndicator value={client.pays_naissance} isUs={client.pays_naissance === 'US'} />
-                                      </span>
-                                    </div>
-                                    <div className="flex justify-between items-center">
-                                      <span className="text-sm text-gray-500">Nationalité:</span>
-                                      <span className="text-sm font-medium">
-                                        <UsIndicator value={client.nationalite} isUs={client.nationalite === 'US'} />
-                                      </span>
-                                    </div>
+                                    <div className="flex justify-between"><span className="text-sm text-gray-500">Code client:</span><span className="text-sm font-medium">{client.clientNumber}</span></div>
+                                    <div className="flex justify-between"><span className="text-sm text-gray-500">Nom:</span><span className="text-sm font-medium">{client.clientName || '-'}</span></div>
+                                    <div className="flex justify-between"><span className="text-sm text-gray-500">Type:</span><span className="text-sm font-medium">{client.clientType}</span></div>
+                                    <div className="flex justify-between"><span className="text-sm text-gray-500">Agence:</span><span className="text-sm font-medium">{client.structureName || client.structureCode}</span></div>
+                                    <div className="flex justify-between"><span className="text-sm text-gray-500">Créé le:</span><span className="text-sm font-medium">{formatDate(client.createdAt)}</span></div>
                                   </div>
                                 </div>
-                                
+
                                 <div>
-                                  <h3 className="text-sm font-medium text-gray-900">Coordonnées</h3>
+                                  <h3 className="text-sm font-medium text-gray-900">Indices US (critères FATCA)</h3>
                                   <div className="mt-2 space-y-2">
-                                    <div className="flex justify-between">
-                                      <span className="text-sm text-gray-500">Adresse:</span>
-                                      <span className="text-sm font-medium">{client.adresse}</span>
-                                    </div>
-                                    <div className="flex justify-between items-center">
-                                      <span className="text-sm text-gray-500">Pays d'adresse:</span>
-                                      <span className="text-sm font-medium">
-                                        <UsIndicator value={client.pays_adresse} isUs={client.pays_adresse === 'US'} />
-                                      </span>
-                                    </div>
-                                    <div className="flex justify-between items-center">
-                                      <span className="text-sm text-gray-500">Téléphone:</span>
-                                      <span className="text-sm font-medium">
-                                        <UsIndicator value={client.telephone} isUs={!!client.telephone && client.telephone.startsWith('+1')} />
-                                      </span>
-                                    </div>
-                                    <div className="flex justify-between">
-                                      <span className="text-sm text-gray-500">Relation client:</span>
-                                      <span className="text-sm font-medium">{client.relation_client || '-'}</span>
-                                    </div>
-                                    <div className="flex justify-between">
-                                      <span className="text-sm text-gray-500">Type relation:</span>
-                                      <span className="text-sm font-medium">{client.type_relation || '-'}</span>
-                                    </div>
+                                    <div className="flex justify-between items-center"><span className="text-sm text-gray-500">Pays de naissance:</span><UsIndicator value={client.birthCountry} isUs={['US','USA','ETU','400'].includes(client.birthCountry?.toUpperCase() || '')} /></div>
+                                    <div className="flex justify-between"><span className="text-sm text-gray-500">Lieu de naissance:</span><span className="text-sm font-medium">{client.birthPlace || '-'}</span></div>
+                                    <div className="flex justify-between items-center"><span className="text-sm text-gray-500">Nationalité:</span><UsIndicator value={client.nationality} isUs={['US','USA','ETU','400'].includes(client.nationality?.toUpperCase() || '')} /></div>
+                                    <div className="flex justify-between items-center"><span className="text-sm text-gray-500">Résidence fiscale:</span><UsIndicator value={client.taxResidenceCountry} isUs={['US','USA','ETU','400'].includes(client.taxResidenceCountry?.toUpperCase() || '')} /></div>
+                                    <div className="flex justify-between"><span className="text-sm text-gray-500">Adresse US:</span><span className="text-sm font-medium">{client.usAddress ? 'Oui' : 'Non'}</span></div>
+                                    <div className="flex justify-between"><span className="text-sm text-gray-500">Téléphone US:</span><span className="text-sm font-medium">{client.usPhone ? 'Oui' : 'Non'}</span></div>
+                                    <div className="flex justify-between"><span className="text-sm text-gray-500">US Person:</span><span className="text-sm font-medium">{client.usPerson ? 'Oui' : 'Non'}</span></div>
+                                    <div className="flex justify-between"><span className="text-sm text-gray-500">TIN (US):</span><span className="text-sm font-medium">{client.usTin || '-'}</span></div>
+                                    <div className="flex justify-between"><span className="text-sm text-gray-500">Types d'indices:</span><span className="text-sm font-medium">{client.indiciaTypes || '-'}</span></div>
+                                    <div className="flex justify-between"><span className="text-sm text-gray-500">Nombre d'indices:</span><span className="text-sm font-medium">{client.indiciaCount || 0}</span></div>
                                   </div>
                                 </div>
-                              </div>
-                              
-                              <div className="border-t border-gray-200 pt-3">
-                                <h3 className="text-sm font-medium text-gray-900">Statut FATCA</h3>
-                                <div className="mt-2 space-y-2">
-                                  <div className="flex justify-between">
-                                    <span className="text-sm text-gray-500">Statut actuel:</span>
-                                    <span className={`px-2 inline-flex text-xs leading-5 font-semibold rounded-full items-center ${getStatusColor(client.fatca_status)}`}>
-                                      {getStatusIcon(client.fatca_status)}
-                                      {client.fatca_status}
-                                    </span>
-                                  </div>
-                                  <div className="flex justify-between">
-                                    <span className="text-sm text-gray-500">Date de mise à jour:</span>
-                                    <span className="text-sm font-medium">{formatDate(client.fatca_date) || '-'}</span>
-                                  </div>
-                                  <div className="flex justify-between">
-                                    <span className="text-sm text-gray-500">Mis à jour par:</span>
-                                    <span className="text-sm font-medium">{client.fatca_uti || '-'}</span>
-                                  </div>
-                                  <div className="flex justify-between">
-                                    <span className="text-sm text-gray-500">Notes:</span>
-                                    <span className="text-sm font-medium">{client.notes || '-'}</span>
+
+                                <div>
+                                  <h3 className="text-sm font-medium text-gray-900">Statut & Conformité</h3>
+                                  <div className="mt-2 space-y-2">
+                                    <div className="flex justify-between items-center">
+                                      <span className="text-sm text-gray-500">Statut FATCA:</span>
+                                      <span className={`px-2 inline-flex text-xs leading-5 font-semibold rounded-full items-center ${getStatusColor(client.fatcaStatus)}`}>
+                                        {getStatusIcon(client.fatcaStatus)}{getStatusLabel(client.fatcaStatus)}
+                                      </span>
+                                    </div>
+                                    <div className="flex justify-between"><span className="text-sm text-gray-500">Niveau de risque:</span><span className="text-sm font-medium">{client.riskLevel || '-'}</span></div>
+                                    <div className="flex justify-between"><span className="text-sm text-gray-500">Déclaration requise:</span><span className="text-sm font-medium">{client.reportingRequired ? 'Oui' : 'Non'}</span></div>
+                                    <div className="flex justify-between"><span className="text-sm text-gray-500">W9 reçu:</span><span className="text-sm font-medium">{client.w9FormReceived ? formatDate(client.w9ReceivedDate) || 'Oui' : 'Non'}</span></div>
+                                    <div className="flex justify-between"><span className="text-sm text-gray-500">W8 reçu:</span><span className="text-sm font-medium">{client.w8FormReceived ? formatDate(client.w8ReceivedDate) || 'Oui' : 'Non'}</span></div>
+                                    <div className="flex justify-between"><span className="text-sm text-gray-500">Dernier screening:</span><span className="text-sm font-medium">{formatDate(client.lastScreeningDate)}</span></div>
+                                    <div className="flex justify-between"><span className="text-sm text-gray-500">Source détection:</span><span className="text-sm font-medium">{client.detectionSource || '-'}</span></div>
+                                    <div className="flex justify-between"><span className="text-sm text-gray-500">Dernière revue:</span><span className="text-sm font-medium">{formatDate(client.lastReviewDate)}</span></div>
+                                    <div className="flex justify-between"><span className="text-sm text-gray-500">Prochaine revue:</span><span className="text-sm font-medium">{formatDate(client.nextReviewDate)}</span></div>
+                                    <div className="flex justify-between"><span className="text-sm text-gray-500">Notes:</span><span className="text-sm font-medium">{client.notes || '-'}</span></div>
                                   </div>
                                 </div>
                               </div>

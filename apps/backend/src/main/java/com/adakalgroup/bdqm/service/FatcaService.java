@@ -171,6 +171,7 @@ public class FatcaService {
             .w8FormReceived(fatcaClient.getW8FormReceived())
             .birthPlace(fatcaClient.getBirthPlace())
             .birthCountry(fatcaClient.getBirthCountry())
+            .nationality(fatcaClient.getNationality())
             .usAddress(fatcaClient.getUsAddress())
             .usPhone(fatcaClient.getUsPhone())
             .riskLevel(fatcaClient.getRiskLevel())

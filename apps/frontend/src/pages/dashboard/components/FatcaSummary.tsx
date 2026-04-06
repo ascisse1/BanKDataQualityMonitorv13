@@ -187,16 +187,12 @@ const FatcaSummary: React.FC<FatcaSummaryProps> = ({
         let phoneCount = 0;
         let proxyCount = 0;
         
-        clients.forEach(client => {
-          if (client.nationalite === 'US') nationalityCount++;
-          if (client.pays_naissance === 'US') birthplaceCount++;
-          if (client.pays_adresse === 'US') addressCount++;
-          if (client.telephone && (
-            client.telephone.startsWith('+1') || 
-            client.telephone.startsWith('001') || 
-            client.telephone.startsWith('+01')
-          )) phoneCount++;
-          if (client.type_relation === 'Mandataire') proxyCount++;
+        clients.forEach((client: any) => {
+          const isUs = (v: string | null) => v && ['US', 'USA', 'ETU', '400'].includes(v.toUpperCase());
+          if (isUs(client.nationality)) nationalityCount++;
+          if (isUs(client.birthCountry)) birthplaceCount++;
+          if (client.usAddress) addressCount++;
+          if (client.usPhone) phoneCount++;
         });
         
         // If we don't have enough real data, supplement with estimates

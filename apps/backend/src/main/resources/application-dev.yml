@@ -36,15 +36,22 @@ spring:
     show-sql: false
   liquibase:
     enabled: true
-    drop-first: true
+    drop-first: false
     default-schema: public
     contexts: dev
 
+  devtools:
+    restart:
+      enabled: true
+    livereload:
+      enabled: true
 app:
   jwt:
     secret: bank_data_quality_secret_key_2024_change_in_production
     expiration: 86400000
   max-records: 2000
+  sync:
+    parallelism: 3
   features:
     informix-integration: true
   amplitude-api:
@@ -58,6 +65,7 @@ app:
     enabled: true
   scheduling:
     cbs-sync-cron: "*/59 * * * * ?"      # Every 60 seconds (dev only)
+    fatca-screening-cron: "0 */1 * * * ?"  # Every minute (dev only)
   client:
     name: bdqm
     fullName: "Agence de Gestion du Fonds d'Accès Universel"

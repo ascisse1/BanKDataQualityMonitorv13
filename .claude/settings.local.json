@@ -140,7 +140,13 @@
       "Bash(sed -i 's/username: bsic$/username: bdqm/g; s/password: bsic2024/password: bdqm2024/g; s/username: bsic_demo/username: bdqm_demo/g; s/\"bsic\", \"bsic2024\"/\"bdqm\", \"bdqm2024\"/g' database/ENV_SETUP.md)",
       "Bash(sed -i 's|/var/log/bsic|/var/log/bdqm|g' infra/docker/docker-compose.observability.yml)",
       "Bash(head -1 \"E:/Repos/Autres/adakal-group/BanKDataQualityMonitorv13/apps/backend/src/test/java/com/adakalgroup/bdqm/controller/\"*.java)",
-      "Bash(head -1 \"E:/Repos/Autres/adakal-group/BanKDataQualityMonitorv13/apps/backend/src/test/java/com/adakalgroup/bdqm/service/\"*.java)"
+      "Bash(head -1 \"E:/Repos/Autres/adakal-group/BanKDataQualityMonitorv13/apps/backend/src/test/java/com/adakalgroup/bdqm/service/\"*.java)",
+      "Bash(curl -s http://localhost:8086/api/me)",
+      "Bash(docker compose:*)",
+      "Bash(docker restart:*)",
+      "Bash(curl -s -X POST http://localhost:9083/realms/master/protocol/openid-connect/token -H 'Content-Type: application/x-www-form-urlencoded' -d username=admin -d password=admin -d grant_type=password -d client_id=admin-cli)",
+      "Bash(python -c \"import sys,json; [print\\(f'  {r[\\\\\"name\\\\\"]}'\\) for r in json.load\\(sys.stdin\\)]\")",
+      "Bash(PGPASSWORD=bdqm psql -h localhost -U bdqm -d bdqm -c \"\\\\d fatca_clients\")"
     ]
   }
 }

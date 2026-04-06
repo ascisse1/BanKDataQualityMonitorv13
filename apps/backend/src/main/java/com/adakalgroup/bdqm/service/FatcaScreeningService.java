@@ -8,7 +8,10 @@ import com.adakalgroup.bdqm.repository.FatcaClientRepository;
 import lombok.RequiredArgsConstructor;
 import lombok.extern.slf4j.Slf4j;
 import org.springframework.beans.factory.annotation.Autowired;
+import org.springframework.beans.factory.annotation.Value;
+import org.springframework.context.annotation.Lazy;
 import org.springframework.stereotype.Service;
+import org.springframework.transaction.annotation.Propagation;
 import org.springframework.transaction.annotation.Transactional;
 
 import java.time.LocalDateTime;
@@ -27,12 +30,19 @@ public class FatcaScreeningService {
     private static final int BATCH_SIZE = 1000;
     private static final String CLIENT_TABLE = "bkcli";
 
-    private static final Set<String> US_COUNTRY_CODES = Set.of("US", "USA", "ETU");
+    private static final Set<String> US_COUNTRY_CODES = Set.of("US", "USA", "ETU", "400");
 
     private final FatcaClientRepository fatcaClientRepository;
     private final StructureService structureService;
     private final FatcaAuditService fatcaAuditService;
     private final FatcaConfig fatcaConfig;
+
+    @Autowired
+    @Lazy
+    private FatcaScreeningService self;
+
+    @Value("${app.max-records:0}")
+    private int maxRecords;
 
     @Autowired(required = false)
     private DynamicCbsQueryService dynamicCbsQueryService;
@@ -41,7 +51,7 @@ public class FatcaScreeningService {
      * Screens all clients in the bkcli mirror table for US indicia.
      * Uses DynamicCbsQueryService for dictionary-driven pagination.
      */
-    @Transactional
+    @Transactional(readOnly = true)
     public ScreeningResult screenAllClients() {
         if (!fatcaConfig.isScreeningEnabled()) {
             log.info("FATCA screening is disabled");
@@ -64,8 +74,10 @@ public class FatcaScreeningService {
         Map<String, String> agencyNameMap = loadAgencyNameMap();
 
         int offset = 0;
-        while (true) {
-            List<Map<String, Object>> batch = dynamicCbsQueryService.fetchFromCbs(CLIENT_TABLE, offset, BATCH_SIZE);
+        boolean hasLimit = maxRecords > 0;
+        while (!hasLimit || totalScanned < maxRecords) {
+            int fetchSize = hasLimit ? Math.min(BATCH_SIZE, maxRecords - totalScanned) : BATCH_SIZE;
+            List<Map<String, Object>> batch = dynamicCbsQueryService.fetchFromCbs(CLIENT_TABLE, offset, fetchSize);
             if (batch.isEmpty()) break;
 
             Set<String> batchClientIds = batch.stream()
@@ -78,6 +90,8 @@ public class FatcaScreeningService {
                 : fatcaClientRepository.findByClientNumberIn(batchClientIds).stream()
                     .collect(Collectors.toMap(FatcaClient::getClientNumber, fc -> fc, (a, b) -> a));
 
+
+
             for (Map<String, Object> record : batch) {
                 try {
                     List<IndiciaMatch> matches = screenRecord(record);
@@ -87,11 +101,11 @@ public class FatcaScreeningService {
                     if (!matches.isEmpty() && cli != null) {
                         FatcaClient existing = existingFatcaMap.get(cli);
                         if (existing != null) {
-                            if (updateExistingFatcaClient(existing, record, matches, agencyNameMap)) {
+                            if (self.updateExistingFatcaClient(existing, record, matches, agencyNameMap)) {
                                 updated++;
                             }
                         } else {
-                            createFatcaClient(record, matches, agencyNameMap);
+                            self.createFatcaClient(record, matches, agencyNameMap);
                             newDetections++;
                         }
                     }
@@ -101,8 +115,8 @@ public class FatcaScreeningService {
                 }
             }
 
-            offset += BATCH_SIZE;
-            if (batch.size() < BATCH_SIZE) break;
+            offset += fetchSize;
+            if (batch.size() < fetchSize) break;
         }
 
         long elapsed = System.currentTimeMillis() - startTime;
@@ -170,7 +184,8 @@ public class FatcaScreeningService {
         return false;
     }
 
-    private void createFatcaClient(Map<String, Object> record, List<IndiciaMatch> matches,
+    @Transactional(propagation = Propagation.REQUIRES_NEW)
+    protected void createFatcaClient(Map<String, Object> record, List<IndiciaMatch> matches,
                                     Map<String, String> agencyNameMap) {
         String cli = getString(record, "cli");
         String age = getString(record, "age");
@@ -191,6 +206,7 @@ public class FatcaScreeningService {
             .usPerson(true)
             .birthPlace(getString(record, "viln"))
             .birthCountry(getString(record, "payn"))
+            .nationality(getString(record, "nat"))
             .usAddress(matches.stream().anyMatch(m -> "US_ADDRESS".equals(m.type())))
             .usPhone(matches.stream().anyMatch(m -> "US_PHONE".equals(m.type())))
             .riskLevel(calculateRiskLevel(matches))
@@ -208,7 +224,8 @@ public class FatcaScreeningService {
         }
     }
 
-    private boolean updateExistingFatcaClient(FatcaClient existing, Map<String, Object> record,
+    @Transactional(propagation = Propagation.REQUIRES_NEW)
+    protected boolean updateExistingFatcaClient(FatcaClient existing, Map<String, Object> record,
                                                List<IndiciaMatch> matches, Map<String, String> agencyNameMap) {
         if (existing.getFatcaStatus() == FatcaStatus.COMPLIANT ||
             existing.getFatcaStatus() == FatcaStatus.EXEMPT) {
@@ -228,6 +245,7 @@ public class FatcaScreeningService {
             existing.setRiskLevel(calculateRiskLevel(matches));
             existing.setUsPerson(true);
             existing.setBirthCountry(getString(record, "payn"));
+            existing.setNationality(getString(record, "nat"));
             existing.setBirthPlace(getString(record, "viln"));
             existing.setTaxResidenceCountry(getString(record, "res"));
             existing.setUsAddress(matches.stream().anyMatch(m -> "US_ADDRESS".equals(m.type())));

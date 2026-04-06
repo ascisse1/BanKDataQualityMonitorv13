@@ -851,5 +851,12 @@
         </sql>
     </changeSet>
 
+    <changeSet id="pg-002-54-seed-bkage-fields" author="adakalgroup">
+        <sql>
+            INSERT INTO cbs_fields (cbs_table_id, column_name, display_label, description, java_field_name, query_alias, data_type, max_length, precision_value, scale_value, is_primary_key, is_required, is_updatable, display_order, field_group, active) VALUES
+            ((SELECT id FROM cbs_tables WHERE table_name = 'bkage'), 'age', 'Code agence', 'Code de l''agence', 'age', 'age', 'CHAR', 5, NULL, NULL, true, true, false, 1, 'key', true),
+            ((SELECT id FROM cbs_tables WHERE table_name = 'bkage'), 'lib', 'Libelle', 'Libelle de l''agence', 'lib', 'lib', 'VARCHAR', 30, NULL, NULL, false, true, true, 2, 'label', true);
+        </sql>
+    </changeSet>
 
 </databaseChangeLog>

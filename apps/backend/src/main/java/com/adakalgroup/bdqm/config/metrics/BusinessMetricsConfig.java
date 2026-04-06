@@ -17,6 +17,8 @@ import java.util.concurrent.atomic.AtomicLong;
 @Component
 public class BusinessMetricsConfig {
 
+    private final MeterRegistry registry;
+
     // Counters
     private final Counter anomaliesCreatedCounter;
     private final Counter anomaliesResolvedCounter;
@@ -40,6 +42,7 @@ public class BusinessMetricsConfig {
     private final Timer cbsQueryTimer;
 
     public BusinessMetricsConfig(MeterRegistry registry) {
+        this.registry = registry;
         // =============================================
         // Anomaly Metrics
         // =============================================
@@ -187,5 +190,68 @@ public class BusinessMetricsConfig {
 
     public void setPendingAnomalies(long count) {
         pendingAnomaliesGauge.set(count);
+    }
+
+    // =============================================
+    // Granular Sync Metrics (per-table, per-batch)
+    // =============================================
+
+    public void recordSyncBatch(String tableName, int recordCount, long durationMs, boolean cdc) {
+        Counter.builder("bdqm_sync_records_total")
+                .description("Total records synced")
+                .tag("application", "bdqm")
+                .tag("table", tableName)
+                .tag("cdc", String.valueOf(cdc))
+                .register(registry)
+                .increment(recordCount);
+
+        Timer.builder("bdqm_sync_batch_duration")
+                .description("Duration of sync batch processing")
+                .tag("application", "bdqm")
+                .tag("table", tableName)
+                .register(registry)
+                .record(java.time.Duration.ofMillis(durationMs));
+    }
+
+    public void recordValidationBatch(String tableName, int anomaliesCreated, int autoResolved, long durationMs) {
+        Counter.builder("bdqm_validation_anomalies_created_total")
+                .description("Anomalies created during validation")
+                .tag("application", "bdqm")
+                .tag("table", tableName)
+                .register(registry)
+                .increment(anomaliesCreated);
+
+        Counter.builder("bdqm_validation_auto_resolved_total")
+                .description("Anomalies auto-resolved during validation")
+                .tag("application", "bdqm")
+                .tag("table", tableName)
+                .register(registry)
+                .increment(autoResolved);
+
+        Timer.builder("bdqm_validation_batch_duration")
+                .description("Duration of validation batch processing")
+                .tag("application", "bdqm")
+                .tag("table", tableName)
+                .register(registry)
+                .record(java.time.Duration.ofMillis(durationMs));
+    }
+
+    public void recordSyncTableComplete(String tableName, int totalRecords, long totalDurationMs, boolean cdc) {
+        Timer.builder("bdqm_sync_table_duration")
+                .description("Total duration for syncing a CBS table")
+                .tag("application", "bdqm")
+                .tag("table", tableName)
+                .tag("cdc", String.valueOf(cdc))
+                .register(registry)
+                .record(java.time.Duration.ofMillis(totalDurationMs));
+
+        if (totalDurationMs > 0 && totalRecords > 0) {
+            double recordsPerSec = (totalRecords * 1000.0) / totalDurationMs;
+            Gauge.builder("bdqm_sync_records_per_second", () -> recordsPerSec)
+                    .description("Records processed per second (last sync)")
+                    .tag("application", "bdqm")
+                    .tag("table", tableName)
+                    .register(registry);
+        }
     }
 }

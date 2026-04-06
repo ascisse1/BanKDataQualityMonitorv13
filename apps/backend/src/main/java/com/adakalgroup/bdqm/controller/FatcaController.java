@@ -40,7 +40,8 @@ public class FatcaController {
             @RequestParam(defaultValue = "0") int page,
             @RequestParam(defaultValue = "100") int size) {
 
-        Page<FatcaClientDto> clients = fatcaService.getFatcaClients(page, size);
+        Page<FatcaClientDto> clients = fatcaService.getFatcaClientsByType(
+            ClientType.INDIVIDUAL, page, size);
 
         return ResponseEntity.ok(ApiResponse.success(clients));
     }

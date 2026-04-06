@@ -1,0 +1,27 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<databaseChangeLog
+    xmlns="http://www.liquibase.org/xml/ns/dbchangelog"
+    xmlns:xsi="http://www.w3.org/2001/XMLSchema-instance"
+    xsi:schemaLocation="http://www.liquibase.org/xml/ns/dbchangelog
+        http://www.liquibase.org/xml/ns/dbchangelog/dbchangelog-latest.xsd">
+
+    <!-- Add CDC (Change Data Capture) columns to cbs_tables for incremental sync -->
+    <changeSet id="022-01-add-cdc-columns" author="adakalgroup">
+        <addColumn tableName="cbs_tables">
+            <column name="cdc_field" type="VARCHAR(30)">
+                <constraints nullable="true"/>
+            </column>
+            <column name="last_sync_at" type="TIMESTAMP">
+                <constraints nullable="true"/>
+            </column>
+        </addColumn>
+    </changeSet>
+
+    <!-- Set cdc_field = 'dmo' for bkcli (has dmo column) -->
+    <changeSet id="022-02-set-cdc-bkcli" author="adakalgroup">
+        <sql>
+            UPDATE cbs_tables SET cdc_field = 'dmo' WHERE table_name = 'bkcli';
+        </sql>
+    </changeSet>
+
+</databaseChangeLog>

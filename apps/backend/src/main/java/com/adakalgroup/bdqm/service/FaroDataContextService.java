@@ -4,6 +4,8 @@ import com.adakalgroup.bdqm.dto.BranchAnomalyDto;
 import com.adakalgroup.bdqm.dto.DashboardStatsDto;
 import com.adakalgroup.bdqm.dto.StatsDto;
 import com.adakalgroup.bdqm.dto.ValidationMetricDto;
+import com.adakalgroup.bdqm.model.ValidationRule;
+import com.adakalgroup.bdqm.repository.ValidationRuleRepository;
 import lombok.extern.slf4j.Slf4j;
 import org.springframework.boot.autoconfigure.condition.ConditionalOnProperty;
 import org.springframework.stereotype.Service;
@@ -22,14 +24,17 @@ public class FaroDataContextService {
 
     private final StatsService statsService;
     private final StatisticsService statisticsService;
+    private final ValidationRuleRepository validationRuleRepository;
 
     private volatile String cachedContext;
     private volatile long contextBuiltAt = 0;
     private static final long CONTEXT_TTL_MS = 5 * 60 * 1000; // 5 minutes
 
-    public FaroDataContextService(StatsService statsService, StatisticsService statisticsService) {
+    public FaroDataContextService(StatsService statsService, StatisticsService statisticsService,
+                                  ValidationRuleRepository validationRuleRepository) {
         this.statsService = statsService;
         this.statisticsService = statisticsService;
+        this.validationRuleRepository = validationRuleRepository;
     }
 
     public String getDataContext() {
@@ -114,6 +119,29 @@ public class FaroDataContextService {
                        .append(m.getValid_records()).append(" fiches valides, ")
                        .append("score = ").append(String.format("%.1f", m.getQuality_score())).append("%\n")
                 );
+            }
+
+            // --- REGLES DE VALIDATION ---
+            List<ValidationRule> rules = validationRuleRepository.findByActive(true);
+            if (rules != null && !rules.isEmpty()) {
+                ctx.append("[REGLES DE VALIDATION]\n");
+                ctx.append("Nombre total de regles actives = ").append(rules.size()).append("\n");
+                rules.forEach(r -> {
+                    ctx.append("- ").append(r.getRuleName());
+                    if (r.getFieldLabel() != null) {
+                        ctx.append(" (champ: ").append(r.getFieldLabel()).append(")");
+                    } else {
+                        ctx.append(" (champ: ").append(r.getFieldName()).append(")");
+                    }
+                    if (r.getClientType() != null) {
+                        ctx.append(" [").append(r.getClientType()).append("]");
+                    }
+                    ctx.append(": ").append(r.getDescription() != null ? r.getDescription() : r.getErrorMessage());
+                    if (r.getSeverity() != null) {
+                        ctx.append(" (severite: ").append(r.getSeverity()).append(")");
+                    }
+                    ctx.append("\n");
+                });
             }
 
         } catch (Exception e) {

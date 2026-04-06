@@ -370,6 +370,16 @@ class DatabaseService {
     try {
       log.info('database', `Fetching from API: ${url}`);
 
+      // Extract CSRF token from cookie for state-changing requests
+      const csrfHeaders: Record<string, string> = {};
+      const method = (options.method || 'GET').toUpperCase();
+      if (method !== 'GET' && method !== 'HEAD' && method !== 'OPTIONS') {
+        const csrfMatch = document.cookie.split(';').find(c => c.trim().startsWith('XSRF-TOKEN='));
+        if (csrfMatch) {
+          csrfHeaders['X-XSRF-TOKEN'] = decodeURIComponent(csrfMatch.split('=')[1]);
+        }
+      }
+
       const response = await fetch(url, {
         ...options,
         signal: controller.signal,
@@ -377,6 +387,7 @@ class DatabaseService {
         headers: {
           'Content-Type': 'application/json',
           'Accept': 'application/json',
+          ...csrfHeaders,
           ...options.headers,
         },
       });
@@ -643,6 +654,48 @@ class DatabaseService {
       return { data: [], page, limit, total: 0 };
     }
   }
+
+  // ── FATCA Declarations (IRS) ──────────────────────────────────────
+
+  public async generateFatcaDeclaration(reportingYear: number, declarationType: string, correctedMessageRefId?: string, notes?: string): Promise<any> {
+    const result = await this.fetchApi<any>('/fatca/declarations/generate', {
+      method: 'POST',
+      body: JSON.stringify({ reportingYear, declarationType, correctedMessageRefId, notes }),
+    });
+    return result;
+  }
+
+  public async getFatcaDeclarations(page = 0, size = 20): Promise<any> {
+    return this.fetchApi<any>('/fatca/declarations', {}, { page, size });
+  }
+
+  public async getFatcaDeclaration(id: number): Promise<any> {
+    return this.fetchApi<any>(`/fatca/declarations/${id}`);
+  }
+
+  public async downloadFatcaDeclarationXml(id: number): Promise<Blob> {
+    const url = `/api/fatca/declarations/${id}/download`;
+    const response = await fetch(url, { credentials: 'include' });
+    if (!response.ok) throw new Error(`Download failed: ${response.status}`);
+    return response.blob();
+  }
+
+  public async validateFatcaDeclaration(id: number, approved: boolean, notes?: string): Promise<any> {
+    return this.fetchApi<any>(`/fatca/declarations/${id}/validate`, {
+      method: 'POST',
+      body: JSON.stringify({ approved, notes }),
+    });
+  }
+
+  public async signFatcaDeclaration(id: number): Promise<any> {
+    return this.fetchApi<any>(`/fatca/declarations/${id}/sign`, { method: 'POST' });
+  }
+
+  public async submitFatcaDeclaration(id: number): Promise<any> {
+    return this.fetchApi<any>(`/fatca/declarations/${id}/submit`, { method: 'POST' });
+  }
+
+  // ── Anomalies ───────────────────────────────────────────────────
 
   public async getAllAnomalies(page = 1, limit = this.DEFAULT_LIMIT, forExport = false, params: Record<string, any> = {}): Promise<PaginatedResponse<any>> {
     try {

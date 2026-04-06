@@ -27,6 +27,8 @@ public class CbsTableDto {
     private String labelFieldCorporate;
     private String structureField;
     private String typeField;
+    private String cdcField;
+    private LocalDateTime lastSyncAt;
     private Boolean active;
     private Integer fieldCount;
     private LocalDateTime createdAt;

@@ -25,11 +25,79 @@ interface DisplayMessage {
   isStreaming?: boolean;
 }
 
-const SUGGESTIONS = [
-  'Combien de clients sont en anomalie actuellement ?',
-  'Quel est le taux de correction global ?',
-  'Quelle agence a le plus d anomalies ?',
-  'Quelles sont les bonnes pratiques de saisie client ?',
+interface SuggestionCategory {
+  label: string;
+  icon: string;
+  prompts: string[];
+}
+
+const SUGGESTION_CATEGORIES: SuggestionCategory[] = [
+  {
+    label: 'Clients',
+    icon: '👥',
+    prompts: [
+      'Combien de clients au total dans le systeme ?',
+      'Quelle est la repartition des clients par type (particuliers, entreprises, institutionnels) ?',
+      'Quel est le score qualite global des donnees clients ?',
+    ],
+  },
+  {
+    label: 'Anomalies',
+    icon: '⚠️',
+    prompts: [
+      'Combien d anomalies au total et par statut ?',
+      'Quel est le taux de correction actuel ?',
+      'Quel type de client a le plus d anomalies ?',
+      'Quelles sont les anomalies en attente de correction ?',
+    ],
+  },
+  {
+    label: 'Agences',
+    icon: '🏦',
+    prompts: [
+      'Quelle agence a le plus d anomalies ?',
+      'Donne le classement des agences par nombre d anomalies',
+      'Quelles agences ont le moins de problemes de qualite ?',
+    ],
+  },
+  {
+    label: 'Tickets',
+    icon: '🎫',
+    prompts: [
+      'Combien de tickets ouverts et resolus ?',
+      'Combien de tickets ont plus de 48h ?',
+      'Quel est l etat des tickets par tranche horaire ?',
+    ],
+  },
+  {
+    label: 'Qualite',
+    icon: '📊',
+    prompts: [
+      'Quel est le score qualite par categorie de client ?',
+      'Combien de fiches valides par categorie ?',
+      'Quelle categorie a le score qualite le plus bas ?',
+    ],
+  },
+  {
+    label: 'Regles',
+    icon: '📋',
+    prompts: [
+      'Combien de regles de validation actives ?',
+      'Quelles regles s appliquent aux particuliers ?',
+      'Quelles sont les regles de severite haute ?',
+      'Quelles regles concernent le champ telephone ?',
+    ],
+  },
+  {
+    label: 'Analyse',
+    icon: '🔍',
+    prompts: [
+      'Fais un resume global de la qualite des donnees',
+      'Quels sont les 3 problemes prioritaires a traiter ?',
+      'Compare la qualite entre particuliers et entreprises',
+      'Quelles actions recommandes-tu pour ameliorer la qualite ?',
+    ],
+  },
 ];
 
 const STORAGE_KEY = 'faro-chat-history';
@@ -65,6 +133,7 @@ export default function AiChatWidget() {
   const [faroStatus, setFaroStatus] = useState<FaroStatus | null>(null);
   const [hasError, setHasError] = useState(false);
   const [streamingContent, setStreamingContent] = useState('');
+  const [activeCategory, setActiveCategory] = useState(0);
   const messagesEndRef = useRef<HTMLDivElement>(null);
   const inputRef = useRef<HTMLTextAreaElement>(null);
   const pollRef = useRef<ReturnType<typeof setInterval> | null>(null);
@@ -308,48 +377,76 @@ export default function AiChatWidget() {
           <div className="flex-1 overflow-y-auto px-4 py-3 space-y-3">
             {/* Welcome message */}
             {messages.length === 0 && (
-              <div className="flex flex-col items-center justify-center h-full text-center px-4">
-                <div className="w-12 h-12 rounded-full bg-primary-100 dark:bg-primary-900/30
-                                flex items-center justify-center mb-3">
-                  <Sparkles className="w-6 h-6 text-primary-600 dark:text-primary-400" />
+              <div className="flex flex-col h-full px-2">
+                {/* Header */}
+                <div className="text-center pt-2 pb-3">
+                  <div className="w-10 h-10 rounded-full bg-primary-100 dark:bg-primary-900/30
+                                  flex items-center justify-center mx-auto mb-2">
+                    <Sparkles className="w-5 h-5 text-primary-600 dark:text-primary-400" />
+                  </div>
+                  <h4 className="text-sm font-semibold text-slate-700 dark:text-slate-200">
+                    Faro - Esprit de Clarte
+                  </h4>
+                  <p className="text-[11px] text-slate-500 dark:text-slate-400 mt-1">
+                    {faroStatus === 'downloading'
+                      ? 'Telechargement du modele en cours...'
+                      : faroStatus === 'offline'
+                        ? 'Faro est hors ligne.'
+                        : 'Choisissez une question ou posez la votre'
+                    }
+                  </p>
                 </div>
-                <h4 className="text-sm font-semibold text-slate-700 dark:text-slate-200 mb-1">
-                  Faro - Esprit de Clarte
-                </h4>
-                <p className="text-xs text-slate-500 dark:text-slate-400 mb-4">
-                  {faroStatus === 'downloading'
-                    ? 'Faro telecharge le modele Mistral 7B... Cela peut prendre quelques minutes.'
-                    : faroStatus === 'offline'
-                      ? 'Faro est hors ligne. Demarrez le service Ollama pour activer l\'assistant.'
-                      : 'Je suis Faro, votre guide pour la qualite des donnees. Posez-moi vos questions sur les anomalies, les regles de validation...'
-                  }
-                </p>
+
                 {faroStatus === 'downloading' && (
-                  <div className="w-full mb-4 flex flex-col items-center gap-2">
+                  <div className="flex flex-col items-center gap-2 py-4">
                     <Loader2 className="w-8 h-8 text-primary-500 animate-spin" />
-                    <p className="text-[10px] text-slate-400">Verification automatique toutes les 5 secondes...</p>
+                    <p className="text-[10px] text-slate-400">Verification toutes les 5 secondes...</p>
                   </div>
                 )}
-                <div className="w-full space-y-2">
-                  {SUGGESTIONS.map((s, i) => (
-                    <button
-                      key={i}
-                      onClick={() => sendMessage(s)}
-                      disabled={faroStatus !== 'ready'}
-                      className="w-full text-left text-xs px-3 py-2 rounded-lg
-                                 bg-slate-50 dark:bg-slate-800
-                                 hover:bg-primary-50 dark:hover:bg-primary-900/20
-                                 text-slate-600 dark:text-slate-300
-                                 border border-slate-200 dark:border-slate-700
-                                 hover:border-primary-300 dark:hover:border-primary-600
-                                 transition-colors duration-150
-                                 disabled:opacity-50 disabled:cursor-not-allowed disabled:hover:bg-slate-50 dark:disabled:hover:bg-slate-800"
-                    >
-                      <MessageCircle className="w-3 h-3 inline mr-1.5 text-primary-500" />
-                      {s}
-                    </button>
-                  ))}
-                </div>
+
+                {faroStatus !== 'downloading' && (
+                  <>
+                    {/* Category tabs */}
+                    <div className="flex gap-1 overflow-x-auto pb-2 scrollbar-none">
+                      {SUGGESTION_CATEGORIES.map((cat, i) => (
+                        <button
+                          key={i}
+                          onClick={() => setActiveCategory(i)}
+                          className={`flex-shrink-0 px-2.5 py-1 rounded-full text-[11px] font-medium
+                                     transition-colors duration-150 whitespace-nowrap
+                                     ${activeCategory === i
+                                       ? 'bg-primary-600 text-white'
+                                       : 'bg-slate-100 dark:bg-slate-800 text-slate-600 dark:text-slate-300 hover:bg-slate-200 dark:hover:bg-slate-700'
+                                     }`}
+                        >
+                          {cat.icon} {cat.label}
+                        </button>
+                      ))}
+                    </div>
+
+                    {/* Prompts for active category */}
+                    <div className="flex-1 overflow-y-auto space-y-1.5 mt-2">
+                      {SUGGESTION_CATEGORIES[activeCategory].prompts.map((prompt, i) => (
+                        <button
+                          key={i}
+                          onClick={() => sendMessage(prompt)}
+                          disabled={faroStatus !== 'ready'}
+                          className="w-full text-left text-xs px-3 py-2 rounded-lg
+                                     bg-slate-50 dark:bg-slate-800
+                                     hover:bg-primary-50 dark:hover:bg-primary-900/20
+                                     text-slate-600 dark:text-slate-300
+                                     border border-slate-200 dark:border-slate-700
+                                     hover:border-primary-300 dark:hover:border-primary-600
+                                     transition-colors duration-150
+                                     disabled:opacity-50 disabled:cursor-not-allowed"
+                        >
+                          <MessageCircle className="w-3 h-3 inline mr-1.5 text-primary-500" />
+                          {prompt}
+                        </button>
+                      ))}
+                    </div>
+                  </>
+                )}
               </div>
             )}
 

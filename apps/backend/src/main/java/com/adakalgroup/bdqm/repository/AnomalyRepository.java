@@ -11,6 +11,7 @@ import org.springframework.data.repository.query.Param;
 import org.springframework.stereotype.Repository;
 
 import java.time.LocalDateTime;
+import java.util.Collection;
 import java.util.List;
 
 @Repository
@@ -139,6 +140,15 @@ public interface AnomalyRepository extends JpaRepository<Anomaly, Long> {
     List<Anomaly> findByTicketId(Long ticketId);
 
     List<Anomaly> findByClientNumber(String clientNumber);
+
+    /**
+     * Bulk load all open anomalies for a set of client numbers.
+     * Used to avoid N+1 queries during batch validation.
+     */
+    @Query("SELECT a FROM Anomaly a WHERE a.clientNumber IN :clientNumbers " +
+           "AND a.status NOT IN (com.adakalgroup.bdqm.model.enums.AnomalyStatus.CLOSED, " +
+           "com.adakalgroup.bdqm.model.enums.AnomalyStatus.VALIDATED)")
+    List<Anomaly> findOpenAnomaliesByClientNumbers(@Param("clientNumbers") Collection<String> clientNumbers);
 
     /**
      * Count anomalies grouped by agency and status for tracking.
