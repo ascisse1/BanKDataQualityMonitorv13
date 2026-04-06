@@ -51,7 +51,7 @@ app:
     expiration: 86400000
   max-records: 2000
   sync:
-    parallelism: 3
+    parallelism: 1   # Informix dev instance doesn't support concurrent access
     batch-retry: 2
   features:
     informix-integration: true

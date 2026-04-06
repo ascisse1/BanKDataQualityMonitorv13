@@ -203,9 +203,9 @@ public class DynamicCbsQueryService {
     // ===== CBS Table Name Resolution =====
 
     /**
-     * Returns the schema-qualified CBS table name for Informix queries.
-     * If schema_name is configured (e.g., "bank"), returns "bank:bkcli".
-     * Otherwise returns just the table name.
+     * Returns the CBS table name for Informix queries.
+     * Uses schema_name from cbs_tables if configured (e.g., "informix" → "informix.bkcli").
+     * If not configured, uses bare table name (JDBC URL targets the database).
      */
     private String cbsTableRef(String tableName) {
         CbsTableDto table = dictionaryService.getTableByName(tableName);
