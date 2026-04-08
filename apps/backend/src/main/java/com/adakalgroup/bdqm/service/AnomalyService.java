@@ -43,14 +43,33 @@ public class AnomalyService {
     }
 
     public Page<AnomalyDto> getAnomaliesByClientTypeAndStructure(ClientType clientType, String structureCode, int page, int size) {
-        Pageable pageable = PageRequest.of(page, size, Sort.by("createdAt").descending());
+        return getAnomaliesByClientTypeAndStructure(clientType, structureCode, null, page, size);
+    }
 
-        if (structureCode != null && !structureCode.isBlank()) {
+    public Page<AnomalyDto> getAnomaliesByClientTypeAndStructure(ClientType clientType, String structureCode, String search, int page, int size) {
+        Pageable pageable = PageRequest.of(page, size, Sort.by("createdAt").descending());
+        boolean hasSearch = search != null && !search.isBlank();
+        boolean hasStructure = structureCode != null && !structureCode.isBlank();
+
+        if (hasStructure) {
             structureSecurityService.requireAgencyAccess(structureCode);
+            if (hasSearch) {
+                if (clientType == null) {
+                    return anomalyRepository.searchByStructureCode(structureCode, search, pageable).map(this::mapToDto);
+                }
+                return anomalyRepository.searchByClientTypeAndStructureCode(clientType, structureCode, search, pageable).map(this::mapToDto);
+            }
             if (clientType == null) {
                 return anomalyRepository.findByStructureCode(structureCode, pageable).map(this::mapToDto);
             }
             return anomalyRepository.findByClientTypeAndStructureCode(clientType, structureCode, pageable).map(this::mapToDto);
+        }
+
+        if (hasSearch) {
+            if (clientType == null) {
+                return anomalyRepository.search(search, pageable).map(this::mapToDto);
+            }
+            return anomalyRepository.searchByClientType(clientType, search, pageable).map(this::mapToDto);
         }
 
         if (clientType == null) {

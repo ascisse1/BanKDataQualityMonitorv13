@@ -615,7 +615,7 @@ const AnomaliesTable: React.FC<AnomaliesTableProps> = ({
             itemsPerPage={itemsPerPage}
             onPageChange={handlePageChange}
             isLoading={loading || pageLoading}
-            summaryText={`${groupedClients.length} client${groupedClients.length > 1 ? 's' : ''} avec ${anomalies.length} anomalie${anomalies.length > 1 ? 's' : ''} au total${selectedAgency ? ` pour l'agence ${selectedAgency}` : ''}${isAgencyUser && userStructureCode ? ` pour votre agence ${userStructureCode}` : ''}`}
+            summaryText={`${groupedClients.length} client${groupedClients.length > 1 ? 's' : ''} affiché${groupedClients.length > 1 ? 's' : ''} — ${totalRecords.toLocaleString('fr-FR')} anomalie${totalRecords > 1 ? 's' : ''} au total${selectedAgency ? ` pour l'agence ${selectedAgency}` : ''}${isAgencyUser && userStructureCode ? ` pour votre agence ${userStructureCode}` : ''}`}
           />
         </div>
       )}

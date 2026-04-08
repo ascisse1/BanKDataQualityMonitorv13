@@ -2,6 +2,7 @@ package com.adakalgroup.bdqm.controller;
 
 import com.adakalgroup.bdqm.dto.ApiResponse;
 import com.adakalgroup.bdqm.model.Structure;
+import com.adakalgroup.bdqm.repository.AnomalyRepository;
 import com.adakalgroup.bdqm.security.StructureSecurityService;
 import com.adakalgroup.bdqm.service.StructureService;
 import lombok.RequiredArgsConstructor;
@@ -22,6 +23,7 @@ public class StructureController {
 
     private final StructureService structureService;
     private final StructureSecurityService structureSecurityService;
+    private final AnomalyRepository anomalyRepository;
 
     @GetMapping
     public ResponseEntity<ApiResponse<List<Map<String, String>>>> getAllAgencies() {
@@ -36,6 +38,18 @@ public class StructureController {
         List<String> filter = structureSecurityService.getAgencyFilter();
         List<Structure> agencies = structureService.getAgenciesOrderedByName();
         List<Map<String, String>> result = filterAndMap(agencies, filter);
+
+        // Fallback: if structure table is empty, derive from anomalies
+        if (result.isEmpty()) {
+            log.info("No structures found in structure table, falling back to anomaly-derived structures");
+            result = anomalyRepository.findDistinctStructures().stream()
+                    .filter(row -> filter.isEmpty() || filter.contains((String) row[0]))
+                    .map(row -> Map.of(
+                            "code", row[0] != null ? ((String) row[0]).trim() : "",
+                            "name", row[1] != null ? ((String) row[1]).trim() : (row[0] != null ? ((String) row[0]).trim() : "")))
+                    .collect(Collectors.toList());
+        }
+
         return ResponseEntity.ok(ApiResponse.success(result));
     }
 

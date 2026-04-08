@@ -28,6 +28,23 @@ public interface AnomalyRepository extends JpaRepository<Anomaly, Long> {
 
     Page<Anomaly> findByClientTypeAndStructureCode(ClientType clientType, String structureCode, Pageable pageable);
 
+    // Search by clientNumber or clientName
+    @Query("SELECT a FROM Anomaly a WHERE LOWER(a.clientNumber) LIKE LOWER(CONCAT('%', :search, '%')) OR LOWER(a.clientName) LIKE LOWER(CONCAT('%', :search, '%'))")
+    Page<Anomaly> search(@Param("search") String search, Pageable pageable);
+
+    @Query("SELECT a FROM Anomaly a WHERE a.clientType = :clientType AND (LOWER(a.clientNumber) LIKE LOWER(CONCAT('%', :search, '%')) OR LOWER(a.clientName) LIKE LOWER(CONCAT('%', :search, '%')))")
+    Page<Anomaly> searchByClientType(@Param("clientType") ClientType clientType, @Param("search") String search, Pageable pageable);
+
+    @Query("SELECT a FROM Anomaly a WHERE a.structureCode = :structureCode AND (LOWER(a.clientNumber) LIKE LOWER(CONCAT('%', :search, '%')) OR LOWER(a.clientName) LIKE LOWER(CONCAT('%', :search, '%')))")
+    Page<Anomaly> searchByStructureCode(@Param("structureCode") String structureCode, @Param("search") String search, Pageable pageable);
+
+    @Query("SELECT a FROM Anomaly a WHERE a.clientType = :clientType AND a.structureCode = :structureCode AND (LOWER(a.clientNumber) LIKE LOWER(CONCAT('%', :search, '%')) OR LOWER(a.clientName) LIKE LOWER(CONCAT('%', :search, '%')))")
+    Page<Anomaly> searchByClientTypeAndStructureCode(@Param("clientType") ClientType clientType, @Param("structureCode") String structureCode, @Param("search") String search, Pageable pageable);
+
+    @Query("SELECT DISTINCT a.structureCode, a.structureName FROM Anomaly a " +
+           "WHERE a.structureCode IS NOT NULL ORDER BY a.structureCode")
+    List<Object[]> findDistinctStructures();
+
     long countByClientType(ClientType clientType);
 
     @Query("SELECT COUNT(DISTINCT a.clientNumber) FROM Anomaly a " +

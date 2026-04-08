@@ -27,9 +27,10 @@ public class AnomalyController {
     public ResponseEntity<ApiResponse<Page<AnomalyDto>>> getAllAnomalies(
             @RequestParam(defaultValue = "0") int page,
             @RequestParam(defaultValue = "100") int size,
-            @RequestParam(required = false) String structureCode) {
+            @RequestParam(required = false) String structureCode,
+            @RequestParam(required = false) String search) {
 
-        Page<AnomalyDto> anomalies = anomalyService.getAnomaliesByClientTypeAndStructure(null, structureCode, page, size);
+        Page<AnomalyDto> anomalies = anomalyService.getAnomaliesByClientTypeAndStructure(null, structureCode, search, page, size);
         return ResponseEntity.ok(ApiResponse.success(anomalies));
     }
 
@@ -37,10 +38,11 @@ public class AnomalyController {
     public ResponseEntity<ApiResponse<Page<AnomalyDto>>> getIndividualAnomalies(
             @RequestParam(defaultValue = "0") int page,
             @RequestParam(defaultValue = "100") int size,
-            @RequestParam(required = false) String structureCode) {
+            @RequestParam(required = false) String structureCode,
+            @RequestParam(required = false) String search) {
 
         Page<AnomalyDto> anomalies = anomalyService.getAnomaliesByClientTypeAndStructure(
-            ClientType.INDIVIDUAL, structureCode, page, size);
+            ClientType.INDIVIDUAL, structureCode, search, page, size);
 
         return ResponseEntity.ok(ApiResponse.success(anomalies));
     }
@@ -49,10 +51,11 @@ public class AnomalyController {
     public ResponseEntity<ApiResponse<Page<AnomalyDto>>> getCorporateAnomalies(
             @RequestParam(defaultValue = "0") int page,
             @RequestParam(defaultValue = "100") int size,
-            @RequestParam(required = false) String structureCode) {
+            @RequestParam(required = false) String structureCode,
+            @RequestParam(required = false) String search) {
 
         Page<AnomalyDto> anomalies = anomalyService.getAnomaliesByClientTypeAndStructure(
-            ClientType.CORPORATE, structureCode, page, size);
+            ClientType.CORPORATE, structureCode, search, page, size);
 
         return ResponseEntity.ok(ApiResponse.success(anomalies));
     }
@@ -61,10 +64,11 @@ public class AnomalyController {
     public ResponseEntity<ApiResponse<Page<AnomalyDto>>> getInstitutionalAnomalies(
             @RequestParam(defaultValue = "0") int page,
             @RequestParam(defaultValue = "100") int size,
-            @RequestParam(required = false) String structureCode) {
+            @RequestParam(required = false) String structureCode,
+            @RequestParam(required = false) String search) {
 
         Page<AnomalyDto> anomalies = anomalyService.getAnomaliesByClientTypeAndStructure(
-            ClientType.INSTITUTIONAL, structureCode, page, size);
+            ClientType.INSTITUTIONAL, structureCode, search, page, size);
 
         return ResponseEntity.ok(ApiResponse.success(anomalies));
     }

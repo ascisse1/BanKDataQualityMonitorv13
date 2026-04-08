@@ -323,8 +323,14 @@ public class CbsValidationService {
     private String getStructureName(String structureCode, Map<String, String> cache) {
         if (structureCode == null || structureCode.isBlank()) return "Unknown";
         return cache.computeIfAbsent(structureCode, code -> {
+            // Ensure structure exists in the structure table (own transaction)
+            try {
+                structureService.ensureExists(code, code);
+            } catch (Exception e) {
+                log.debug("Structure ensure skipped for '{}': {}", code, e.getMessage());
+            }
             String label = structureService.getLabel(code);
-            return label != null ? label : "Structure " + code;
+            return label != null ? label : code;
         });
     }
 

@@ -458,7 +458,7 @@ const AnomaliesPage: React.FC = () => {
             doc.setFontSize(16);
             doc.text('Rapport des Anomalies', 20, 20);
 
-            // Agence
+            // Structure
             const effectiveStructureCode = isAgencyUser && userStructureCode ? userStructureCode : selectedAgency;
             if (effectiveStructureCode) {
                 doc.setFontSize(12);
