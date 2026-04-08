@@ -193,4 +193,28 @@ public interface AnomalyRepository extends JpaRepository<Anomaly, Long> {
     int purgeResolvedBefore(@Param("before") LocalDateTime before);
 
     long countByStatusIn(List<AnomalyStatus> statuses);
+
+    /**
+     * Find open anomalies matching a specific field name and error type.
+     * Used to re-evaluate anomalies when a validation rule changes.
+     */
+    @Query("SELECT a FROM Anomaly a " +
+           "WHERE a.fieldName = :fieldName " +
+           "AND a.errorType = :errorType " +
+           "AND a.status NOT IN (com.adakalgroup.bdqm.model.enums.AnomalyStatus.CORRECTED, " +
+           "com.adakalgroup.bdqm.model.enums.AnomalyStatus.CLOSED, " +
+           "com.adakalgroup.bdqm.model.enums.AnomalyStatus.VALIDATED)")
+    List<Anomaly> findOpenAnomaliesByFieldAndErrorType(@Param("fieldName") String fieldName,
+                                                       @Param("errorType") String errorType);
+
+    /**
+     * Find open anomalies matching a specific field name (all error types).
+     * Used when a rule is deleted and we need to find all related open anomalies.
+     */
+    @Query("SELECT a FROM Anomaly a " +
+           "WHERE a.fieldName = :fieldName " +
+           "AND a.status NOT IN (com.adakalgroup.bdqm.model.enums.AnomalyStatus.CORRECTED, " +
+           "com.adakalgroup.bdqm.model.enums.AnomalyStatus.CLOSED, " +
+           "com.adakalgroup.bdqm.model.enums.AnomalyStatus.VALIDATED)")
+    List<Anomaly> findOpenAnomaliesByFieldName(@Param("fieldName") String fieldName);
 }

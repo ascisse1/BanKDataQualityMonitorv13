@@ -69,6 +69,7 @@ public class CbsDataDictionaryService {
                 .labelFieldCorporate(dto.getLabelFieldCorporate())
                 .structureField(dto.getStructureField())
                 .typeField(dto.getTypeField())
+                .dataFilters(dto.getDataFilters())
                 .active(dto.getActive() != null ? dto.getActive() : true)
                 .build();
         CbsTable saved = cbsTableRepository.save(table);
@@ -96,6 +97,7 @@ public class CbsDataDictionaryService {
         table.setLabelFieldCorporate(dto.getLabelFieldCorporate());
         table.setStructureField(dto.getStructureField());
         table.setTypeField(dto.getTypeField());
+        table.setDataFilters(dto.getDataFilters());
         if (dto.getActive() != null) table.setActive(dto.getActive());
 
         CbsTable updated = cbsTableRepository.save(table);
@@ -288,6 +290,7 @@ public class CbsDataDictionaryService {
                 .typeField(entity.getTypeField())
                 .cdcField(entity.getCdcField())
                 .lastSyncAt(entity.getLastSyncAt())
+                .dataFilters(entity.getDataFilters())
                 .active(entity.getActive())
                 .fieldCount(fieldCount)
                 .createdAt(entity.getCreatedAt())

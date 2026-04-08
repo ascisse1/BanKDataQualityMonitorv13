@@ -40,14 +40,17 @@ public class DynamicCbsQueryService {
     private final DSLContext informixDsl;
     private final DSLContext primaryDsl;
     private final CbsDataDictionaryService dictionaryService;
+    private final CbsFilterService cbsFilterService;
 
     public DynamicCbsQueryService(
             @Qualifier("informixDsl") DSLContext informixDsl,
             @Qualifier("primaryDsl") DSLContext primaryDsl,
-            CbsDataDictionaryService dictionaryService) {
+            CbsDataDictionaryService dictionaryService,
+            CbsFilterService cbsFilterService) {
         this.informixDsl = informixDsl;
         this.primaryDsl = primaryDsl;
         this.dictionaryService = dictionaryService;
+        this.cbsFilterService = cbsFilterService;
     }
 
     /**
@@ -230,6 +233,7 @@ public class DynamicCbsQueryService {
 
     /**
      * Fetch a batch of records from CBS (Informix) using dictionary-driven columns.
+     * Applies configurable data_filters as WHERE clauses.
      */
     public List<Map<String, Object>> fetchFromCbs(String tableName, int offset, int limit) {
         List<Field<?>> selectFields = buildSelectFields(tableName);
@@ -238,8 +242,11 @@ public class DynamicCbsQueryService {
             return Collections.emptyList();
         }
 
-        // Informix uses SKIP/FIRST for pagination
-        String sql = buildInformixPaginatedSelect(cbsTableRef(tableName), selectFields, offset, limit);
+        String filterWhere = getFilterWhereClause(tableName);
+        if (!filterWhere.isEmpty() && offset == 0) {
+            log.info("Table '{}': applying data filters: {}", tableName, filterWhere);
+        }
+        String sql = buildInformixPaginatedSelect(cbsTableRef(tableName), selectFields, offset, limit, filterWhere);
 
         try {
             org.jooq.Result<org.jooq.Record> result = informixDsl.fetch(sql);
@@ -255,6 +262,7 @@ public class DynamicCbsQueryService {
     /**
      * Fetch records changed since a given date (CDC mode).
      * Falls back to full fetch if cdcField is null.
+     * Applies configurable data_filters as additional WHERE clauses.
      */
     public List<Map<String, Object>> fetchFromCbsSince(String tableName, String cdcField, LocalDateTime since, int offset, int limit) {
         if (cdcField == null || since == null) {
@@ -268,9 +276,15 @@ public class DynamicCbsQueryService {
 
         String columns = selectFields.stream().map(Field::getName).collect(Collectors.joining(", "));
         String cbsRef = cbsTableRef(tableName);
-        String sql = String.format("SELECT SKIP %d FIRST %d %s FROM %s WHERE %s >= '%s' ORDER BY %s ",
-                offset, limit, columns, cbsRef, cdcField,
-                since.toLocalDate().toString(),
+
+        String whereClause = cdcField + " >= '" + since.toLocalDate().toString() + "'";
+        String filterWhere = getFilterWhereClause(tableName);
+        if (!filterWhere.isEmpty()) {
+            whereClause += " AND " + filterWhere;
+        }
+
+        String sql = String.format("SELECT SKIP %d FIRST %d %s FROM %s WHERE %s ORDER BY %s ",
+                offset, limit, columns, cbsRef, whereClause,
                 selectFields.get(0).getName());
 
         try {
@@ -284,6 +298,7 @@ public class DynamicCbsQueryService {
 
     /**
      * Count records changed since a given date.
+     * Applies configurable data_filters as additional WHERE clauses.
      */
     public long countCbsRecordsSince(String tableName, String cdcField, LocalDateTime since) {
         if (cdcField == null || since == null) {
@@ -291,8 +306,13 @@ public class DynamicCbsQueryService {
         }
 
         String cbsRef = cbsTableRef(tableName);
-        String sql = String.format("SELECT COUNT(*) FROM %s WHERE %s >= '%s'",
-                cbsRef, cdcField, since.toLocalDate().toString());
+        String whereClause = cdcField + " >= '" + since.toLocalDate().toString() + "'";
+        String filterWhere = getFilterWhereClause(tableName);
+        if (!filterWhere.isEmpty()) {
+            whereClause += " AND " + filterWhere;
+        }
+
+        String sql = String.format("SELECT COUNT(*) FROM %s WHERE %s", cbsRef, whereClause);
         try {
             return informixDsl.fetchOne(sql).into(Long.class);
         } catch (Exception e) {
@@ -355,9 +375,16 @@ public class DynamicCbsQueryService {
 
     /**
      * Count total records in a CBS table.
+     * Applies configurable data_filters as WHERE clauses.
      */
     public long countCbsRecords(String tableName) {
-        return informixDsl.fetchCount(DSL.table(DSL.unquotedName(cbsTableRef(tableName))));
+        String cbsRef = cbsTableRef(tableName);
+        String filterWhere = getFilterWhereClause(tableName);
+        if (filterWhere.isEmpty()) {
+            return informixDsl.fetchCount(DSL.table(DSL.unquotedName(cbsRef)));
+        }
+        String sql = String.format("SELECT COUNT(*) FROM %s WHERE %s", cbsRef, filterWhere);
+        return informixDsl.fetchOne(sql).into(Long.class);
     }
 
     // ===== PostgreSQL Mirror Write Operations =====
@@ -458,15 +485,28 @@ public class DynamicCbsQueryService {
 
     // ===== Helpers =====
 
-    private String buildInformixPaginatedSelect(String tableName, List<Field<?>> fields, int offset, int limit) {
+    private String buildInformixPaginatedSelect(String tableName, List<Field<?>> fields, int offset, int limit, String filterWhere) {
         String columns = fields.stream()
                 .map(f -> f.getName())
                 .collect(Collectors.joining(", "));
 
         // Informix pagination uses SKIP/FIRST syntax
-        return String.format("SELECT SKIP %d FIRST %d %s FROM %s ORDER BY %s ",
-                offset, limit, columns, tableName,
-                fields.get(0).getName()); // Order by first column (usually PK)
+        StringBuilder sql = new StringBuilder();
+        sql.append(String.format("SELECT SKIP %d FIRST %d %s FROM %s", offset, limit, columns, tableName));
+        if (filterWhere != null && !filterWhere.isEmpty()) {
+            sql.append(" WHERE ").append(filterWhere);
+        }
+        sql.append(String.format(" ORDER BY %s ", fields.get(0).getName()));
+        return sql.toString();
+    }
+
+    /**
+     * Build a WHERE clause from the table's configured data_filters.
+     * Returns empty string if no filters are configured.
+     */
+    private String getFilterWhereClause(String tableName) {
+        CbsTableDto table = dictionaryService.getTableByName(tableName);
+        return cbsFilterService.buildWhereClause(tableName, table.getDataFilters());
     }
 
     private Condition buildPkCondition(Map<String, Object> pkValues) {

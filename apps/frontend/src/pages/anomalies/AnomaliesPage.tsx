@@ -1,4 +1,4 @@
-import {useEffect, useState} from 'react';
+import {useCallback, useEffect, useState} from 'react';
 import {ArrowDownWideNarrow, Download, FileSpreadsheet, Filter, History, Loader2, RefreshCw} from 'lucide-react';
 import Button from '@/components/ui/Button';
 import Card from '@/components/ui/Card';
@@ -47,7 +47,6 @@ const AnomaliesPage: React.FC = () => {
 
     useEffect(() => {
         fetchAgencies();
-        getAllAnomaliesData();
         fetchTotalAnomaliesCount();
     }, []);
 
@@ -80,7 +79,7 @@ const AnomaliesPage: React.FC = () => {
         }
     };
 
-    const handleAgencyChange = (agency: string | null) => {
+    const handleAgencyChange = useCallback((agency: string | null) => {
         log.debug('ui', 'Agency filter changed', { agency });
         // If user is an agency user, they can only see their own agency
         if (isAgencyUser && userStructureCode) {
@@ -90,7 +89,7 @@ const AnomaliesPage: React.FC = () => {
             }
         }
         setSelectedAgency(agency);
-    };
+    }, [isAgencyUser, userStructureCode, addToast]);
 
     const refreshData = async () => {
         try {

@@ -29,6 +29,7 @@ public class CbsTableDto {
     private String typeField;
     private String cdcField;
     private LocalDateTime lastSyncAt;
+    private String dataFilters;
     private Boolean active;
     private Integer fieldCount;
     private LocalDateTime createdAt;

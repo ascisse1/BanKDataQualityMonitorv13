@@ -1,11 +1,9 @@
-import { useState, useEffect } from 'react';
+import { useState } from 'react';
 import Button from '@/components/ui/Button';
 
 interface AnomaliesFiltersProps {
   isLoading?: boolean;
   onAgencyChange?: (agency: string | null) => void;
-  onClientTypeChange?: (type: any) => void;
-  onStatusChange?: (status: any) => void;
   agencies?: {code_agence: string, lib_agence: string}[];
   selectedAgency?: string | null;
   isAgencyUser?: boolean;
@@ -26,13 +24,6 @@ const AnomaliesFilters = ({
     errorTypes: [] as string[],
     status: [] as string[]
   });
-
-  useEffect(() => {
-    // If user is an agency user, set their agency code as the selected agency
-    if (isAgencyUser && userStructureCode) {
-      onAgencyChange?.(userStructureCode);
-    }
-  }, [isAgencyUser, userStructureCode, onAgencyChange]);
 
   const handleAgencyChange = (event: React.ChangeEvent<HTMLSelectElement>) => {
     const value = event.target.value;
@@ -109,7 +100,7 @@ const AnomaliesFilters = ({
             variant="outline"
             size="sm"
             onClick={resetFilters}
-            disabled={(!selectedAgency && !isAgencyUser) || (isAgencyUser && selectedAgency === userStructureCode)}
+            disabled={!selectedAgency || isAgencyUser}
           >
             Réinitialiser
           </Button>

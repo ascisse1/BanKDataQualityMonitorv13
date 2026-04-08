@@ -5,6 +5,13 @@ const NOM_BASE = '/admin/nomenclatures';
 
 // ===== Types =====
 
+export interface CbsTableFilter {
+  column: string;
+  operator: 'EQUALS' | 'NOT_EQUALS' | 'IN' | 'NOT_IN' | 'IS_NULL' | 'IS_NOT_NULL' | 'GREATER_THAN' | 'LESS_THAN';
+  value?: string;
+  values?: string[];
+}
+
 export interface CbsTable {
   id: number;
   tableName: string;
@@ -15,6 +22,7 @@ export interface CbsTable {
   primaryKeyColumns: string;
   syncEnabled: boolean;
   syncOrder: number;
+  dataFilters: string | null;
   active: boolean;
   fieldCount: number;
   createdAt: string;

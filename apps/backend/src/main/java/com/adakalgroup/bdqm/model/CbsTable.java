@@ -6,7 +6,9 @@ import lombok.Builder;
 import lombok.Data;
 import lombok.NoArgsConstructor;
 import org.hibernate.annotations.CreationTimestamp;
+import org.hibernate.annotations.JdbcTypeCode;
 import org.hibernate.annotations.UpdateTimestamp;
+import org.hibernate.type.SqlTypes;
 
 import java.time.LocalDateTime;
 import java.util.ArrayList;
@@ -75,6 +77,10 @@ public class CbsTable {
 
     @Column(name = "last_sync_at")
     private LocalDateTime lastSyncAt;
+
+    @JdbcTypeCode(SqlTypes.JSON)
+    @Column(name = "data_filters", columnDefinition = "JSONB")
+    private String dataFilters;
 
     @Column(name = "active")
     @Builder.Default
