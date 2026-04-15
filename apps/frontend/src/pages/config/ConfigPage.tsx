@@ -218,7 +218,7 @@ function ConfigPage() {
             <div className="flex items-center justify-between mb-4">
               <h2 className="text-xl font-semibold flex items-center">
                 <Globe className="mr-2 h-5 w-5 text-primary-600" />
-                Configuration de l'API Banque Centrale
+                Configuration de l'API Core banking
               </h2>
               <div className="flex space-x-2">
                 {apiConfig.enabled && (
@@ -253,7 +253,7 @@ function ConfigPage() {
                     checked={apiConfig.enabled}
                     onChange={() => setApiConfig({ ...apiConfig, enabled: !apiConfig.enabled })}
                   />
-                  <span className="ml-2">Activer l'API Banque Centrale</span>
+                  <span className="ml-2">Activer l'API Core banking</span>
                 </label>
               </div>
 
@@ -302,7 +302,7 @@ function ConfigPage() {
                           Endpoints FATCA disponibles
                         </p>
                         <p className="mt-1 text-sm text-blue-700">
-                          L'API Banque Centrale fournit les endpoints suivants pour la gestion FATCA:
+                          L'API Core banking fournit les endpoints suivants pour la gestion FATCA:
                         </p>
                         <div className="mt-2 space-y-1 text-sm text-blue-700">
                           <p>• <code className="bg-blue-100 px-1 rounded">/api/fatca/validate</code> - Validation des déclarations</p>
