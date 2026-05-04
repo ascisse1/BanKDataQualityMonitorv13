@@ -1,4 +1,4 @@
-import React, { useEffect, useState } from 'react';
+import React, { useEffect, useState, useCallback } from 'react';
 import { createPortal } from 'react-dom';
 import { useForm, Controller } from 'react-hook-form';
 import { zodResolver } from '@hookform/resolvers/zod';
@@ -17,6 +17,7 @@ import {
 import { RuleBuilder } from '../RuleBuilder';
 import Button from '@/components/ui/Button';
 import Input from '@/components/ui/Input';
+import { dataDictionaryService, CbsTable, CbsField } from '@/services/dataDictionaryService';
 
 interface RuleEditorProps {
   rule?: ValidationRule | null;
@@ -32,6 +33,10 @@ export const RuleEditor: React.FC<RuleEditorProps> = ({
   isLoading = false,
 }) => {
   const [showAdvanced, setShowAdvanced] = useState(false);
+  const [availableTables, setAvailableTables] = useState<CbsTable[]>([]);
+  const [availableFields, setAvailableFields] = useState<CbsField[]>([]);
+  const [loadingTables, setLoadingTables] = useState(true);
+  const [loadingFields, setLoadingFields] = useState(false);
   const isEditing = !!rule;
 
   const {
@@ -48,6 +53,7 @@ export const RuleEditor: React.FC<RuleEditorProps> = ({
       ? {
           name: rule.name,
           description: rule.description || '',
+          tableName: rule.tableName || 'bkcli',
           field: rule.field,
           fieldLabel: rule.fieldLabel || '',
           clientType: (rule.clientType || '') as any,
@@ -62,6 +68,7 @@ export const RuleEditor: React.FC<RuleEditorProps> = ({
       : {
           name: '',
           description: '',
+          tableName: 'bkcli',
           field: '',
           fieldLabel: '',
           clientType: null,
@@ -75,29 +82,109 @@ export const RuleEditor: React.FC<RuleEditorProps> = ({
   });
 
   const selectedField = watch('field');
-  const selectedFieldOption = FIELD_OPTIONS.find((f) => f.code === selectedField);
+  const selectedTableName = watch('tableName');
+
+  // Find field type from dynamic fields or fallback to FIELD_OPTIONS for bkcli
+  const selectedFieldOption = selectedTableName === 'bkcli'
+    ? FIELD_OPTIONS.find((f) => f.code === selectedField)
+    : null;
+  const dynamicFieldOption = availableFields.find((f) => f.columnName === selectedField);
+
+  // Load tables on mount
+  useEffect(() => {
+    const loadTables = async () => {
+      try {
+        setLoadingTables(true);
+        const response = await dataDictionaryService.getTables();
+        if (response.success && response.data) {
+          // Filter to only active tables
+          const activeTables = response.data.filter(t => t.active);
+          setAvailableTables(activeTables);
+        }
+      } catch (error) {
+        console.error('Failed to load tables:', error);
+      } finally {
+        setLoadingTables(false);
+      }
+    };
+    loadTables();
+  }, []);
+
+  // Load fields when table changes
+  const loadFieldsForTable = useCallback(async (tableName: string) => {
+    if (!tableName) return;
+
+    try {
+      setLoadingFields(true);
+      const response = await dataDictionaryService.getFieldsByName(tableName);
+      if (response.success && response.data) {
+        setAvailableFields(response.data.filter(f => f.active));
+      }
+    } catch (error) {
+      console.error('Failed to load fields for table:', tableName, error);
+      setAvailableFields([]);
+    } finally {
+      setLoadingFields(false);
+    }
+  }, []);
+
+  // Load fields when table changes
+  useEffect(() => {
+    if (selectedTableName) {
+      loadFieldsForTable(selectedTableName);
+    }
+  }, [selectedTableName, loadFieldsForTable]);
+
+  // Handle table change - reset field selection
+  const handleTableChange = (newTableName: string) => {
+    setValue('tableName', newTableName);
+    setValue('field', '');
+    setValue('fieldLabel', '');
+  };
 
   // Update field label when field changes
   useEffect(() => {
-    if (selectedFieldOption && !rule) {
-      setValue('fieldLabel', selectedFieldOption.label);
+    if (!rule) {
+      if (selectedFieldOption) {
+        setValue('fieldLabel', selectedFieldOption.label);
+      } else if (dynamicFieldOption) {
+        setValue('fieldLabel', dynamicFieldOption.displayLabel || dynamicFieldOption.columnName);
+      }
     }
-  }, [selectedFieldOption, setValue, rule]);
+  }, [selectedFieldOption, dynamicFieldOption, setValue, rule]);
 
   const onSubmit = async (data: RuleFormData) => {
     await onSave(data);
   };
 
-  // Field autocomplete component
+  // Check if client type selector should be shown (only for bkcli table)
+  const showClientTypeSelector = selectedTableName === 'bkcli';
+
+  // Field autocomplete component - uses dynamic fields from selected table
   const FieldCombobox = () => {
     const [isOpen, setIsOpen] = useState(false);
     const [search, setSearch] = useState('');
 
-    const filteredFields = FIELD_OPTIONS.filter(
+    // Use dynamic fields from API, fallback to FIELD_OPTIONS for bkcli if no dynamic fields loaded
+    const fieldsToUse = availableFields.length > 0
+      ? availableFields.map(f => ({
+          code: f.columnName,
+          label: f.displayLabel || f.columnName,
+          type: f.dataType?.toLowerCase().includes('date') ? 'date' : 'string'
+        }))
+      : selectedTableName === 'bkcli'
+        ? FIELD_OPTIONS.map(f => ({ code: f.code, label: f.label, type: f.type }))
+        : [];
+
+    const filteredFields = fieldsToUse.filter(
       (field) =>
         field.code.toLowerCase().includes(search.toLowerCase()) ||
         field.label.toLowerCase().includes(search.toLowerCase())
     );
+
+    const displayValue = selectedField
+      ? (fieldsToUse.find(f => f.code === selectedField)?.label || selectedField)
+      : '';
 
     return (
       <div className="relative">
@@ -107,20 +194,24 @@ export const RuleEditor: React.FC<RuleEditorProps> = ({
         <div
           className={`flex items-center border rounded-md cursor-pointer transition-colors ${
             errors.field ? 'border-error-500' : 'border-gray-300 hover:border-gray-400'
-          }`}
-          onClick={() => setIsOpen(!isOpen)}
+          } ${loadingFields ? 'opacity-50' : ''}`}
+          onClick={() => !loadingFields && setIsOpen(!isOpen)}
         >
           <input
             type="text"
-            value={selectedField || ''}
+            value={displayValue}
             readOnly
             className="flex-1 px-3 py-2 bg-transparent cursor-pointer outline-none"
-            placeholder="Sélectionner un champ"
+            placeholder={loadingFields ? 'Chargement...' : 'Sélectionner un champ'}
           />
-          <ChevronDown className="w-4 h-4 mr-2 text-gray-400" />
+          {loadingFields ? (
+            <Loader2 className="w-4 h-4 mr-2 text-gray-400 animate-spin" />
+          ) : (
+            <ChevronDown className="w-4 h-4 mr-2 text-gray-400" />
+          )}
         </div>
 
-        {isOpen && (
+        {isOpen && !loadingFields && (
           <>
             <div className="fixed inset-0 z-10" onClick={() => setIsOpen(false)} />
             <div className="absolute top-full left-0 right-0 mt-1 bg-white border border-gray-200 rounded-lg shadow-lg z-20 max-h-64 overflow-hidden">
@@ -135,26 +226,34 @@ export const RuleEditor: React.FC<RuleEditorProps> = ({
                 />
               </div>
               <div className="max-h-48 overflow-y-auto">
-                {filteredFields.map((field) => (
-                  <button
-                    key={field.code}
-                    type="button"
-                    onClick={() => {
-                      setValue('field', field.code, { shouldValidate: true });
-                      setValue('fieldLabel', field.label);
-                      setIsOpen(false);
-                      setSearch('');
-                    }}
-                    className={`w-full px-3 py-2 text-left text-sm hover:bg-gray-50 flex items-center justify-between ${
-                      selectedField === field.code ? 'bg-primary-50 text-primary-700' : ''
-                    }`}
-                  >
-                    <span>{field.label}</span>
-                    <code className="text-xs text-gray-500 bg-gray-100 px-2 py-0.5 rounded">
-                      {field.code}
-                    </code>
-                  </button>
-                ))}
+                {filteredFields.length === 0 ? (
+                  <div className="px-3 py-4 text-sm text-gray-500 text-center">
+                    {fieldsToUse.length === 0
+                      ? 'Aucun champ disponible pour cette table'
+                      : 'Aucun champ trouvé'}
+                  </div>
+                ) : (
+                  filteredFields.map((field) => (
+                    <button
+                      key={field.code}
+                      type="button"
+                      onClick={() => {
+                        setValue('field', field.code, { shouldValidate: true });
+                        setValue('fieldLabel', field.label);
+                        setIsOpen(false);
+                        setSearch('');
+                      }}
+                      className={`w-full px-3 py-2 text-left text-sm hover:bg-gray-50 flex items-center justify-between ${
+                        selectedField === field.code ? 'bg-primary-50 text-primary-700' : ''
+                      }`}
+                    >
+                      <span>{field.label}</span>
+                      <code className="text-xs text-gray-500 bg-gray-100 px-2 py-0.5 rounded">
+                        {field.code}
+                      </code>
+                    </button>
+                  ))
+                )}
               </div>
             </div>
           </>
@@ -219,22 +318,58 @@ export const RuleEditor: React.FC<RuleEditorProps> = ({
                 )}
               </div>
 
-              {/* Client type */}
+              {/* Table selector */}
               <div>
                 <label className="block text-sm font-medium text-gray-700 mb-1">
-                  Type de client
+                  Table CBS <span className="text-error-500">*</span>
                 </label>
                 <select
-                  {...register('clientType')}
-                  className="w-full px-3 py-2 border border-gray-300 rounded-md focus:ring-2 focus:ring-primary-500 focus:border-primary-500"
+                  value={selectedTableName || 'bkcli'}
+                  onChange={(e) => handleTableChange(e.target.value)}
+                  disabled={loadingTables}
+                  className="w-full px-3 py-2 border border-gray-300 rounded-md focus:ring-2 focus:ring-primary-500 focus:border-primary-500 disabled:opacity-50"
                 >
-                  <option value="">Tous les types</option>
-                  <option value="1">{CLIENT_TYPE_LABELS['1']}</option>
-                  <option value="2">{CLIENT_TYPE_LABELS['2']}</option>
-                  <option value="3">{CLIENT_TYPE_LABELS['3']}</option>
+                  {loadingTables ? (
+                    <option value="">Chargement...</option>
+                  ) : (
+                    <>
+                      {availableTables.map((table) => (
+                        <option key={table.id} value={table.tableName}>
+                          {table.displayName || table.tableName}
+                        </option>
+                      ))}
+                      {/* Fallback option if bkcli not in list */}
+                      {!availableTables.some(t => t.tableName === 'bkcli') && (
+                        <option value="bkcli">Client (bkcli)</option>
+                      )}
+                    </>
+                  )}
                 </select>
               </div>
             </div>
+
+            {/* Client type - only show for bkcli table */}
+            {showClientTypeSelector && (
+              <div className="grid grid-cols-1 md:grid-cols-2 gap-6">
+                <div>
+                  <label className="block text-sm font-medium text-gray-700 mb-1">
+                    Type de client
+                  </label>
+                  <select
+                    {...register('clientType')}
+                    className="w-full px-3 py-2 border border-gray-300 rounded-md focus:ring-2 focus:ring-primary-500 focus:border-primary-500"
+                  >
+                    <option value="">Tous les types</option>
+                    <option value="1">{CLIENT_TYPE_LABELS['1']}</option>
+                    <option value="2">{CLIENT_TYPE_LABELS['2']}</option>
+                    <option value="3">{CLIENT_TYPE_LABELS['3']}</option>
+                  </select>
+                  <p className="mt-1 text-xs text-gray-500">
+                    Applicable uniquement pour la table clients
+                  </p>
+                </div>
+              </div>
+            )}
 
             {/* Description */}
             <div>
@@ -280,13 +415,27 @@ export const RuleEditor: React.FC<RuleEditorProps> = ({
               <Controller
                 name="ruleDefinition"
                 control={control}
-                render={({ field }) => (
-                  <RuleBuilder
-                    conditions={field.value || []}
-                    onChange={field.onChange}
-                    fieldType={selectedFieldOption?.type}
-                  />
-                )}
+                render={({ field }) => {
+                  // Determine field type from dynamic fields or fallback
+                  let fieldType: string | undefined = selectedFieldOption?.type;
+                  if (!fieldType && dynamicFieldOption) {
+                    const dataType = dynamicFieldOption.dataType?.toLowerCase() || '';
+                    if (dataType.includes('date') || dataType.includes('time')) {
+                      fieldType = 'date';
+                    } else if (dataType.includes('int') || dataType.includes('decimal') || dataType.includes('numeric')) {
+                      fieldType = 'number';
+                    } else {
+                      fieldType = 'string';
+                    }
+                  }
+                  return (
+                    <RuleBuilder
+                      conditions={field.value || []}
+                      onChange={field.onChange}
+                      fieldType={fieldType}
+                    />
+                  );
+                }}
               />
             </div>
 

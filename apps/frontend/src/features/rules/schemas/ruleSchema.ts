@@ -69,6 +69,7 @@ export const validationRuleSchema = z.object({
     .max(500, 'La description ne peut pas dépasser 500 caractères')
     .optional()
     .default(''),
+  tableName: z.string().optional().default('bkcli'),
   field: z.string()
     .min(1, 'Le champ est obligatoire'),
   fieldLabel: z.string().optional(),
@@ -103,6 +104,7 @@ export const ruleFormSchema = z.object({
     .max(500, 'La description ne peut pas dépasser 500 caractères')
     .optional()
     .default(''),
+  tableName: z.string().optional().default('bkcli'),
   field: z.string()
     .min(1, 'Le champ est obligatoire'),
   fieldLabel: z.string().optional(),

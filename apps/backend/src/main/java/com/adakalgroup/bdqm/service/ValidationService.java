@@ -75,6 +75,7 @@ public class ValidationService {
         Boolean oldActive = rule.getActive();
         String errorType = rule.getRuleType() != null ? rule.getRuleType().name() : null;
 
+        rule.setTableName(dto.getTableName() != null ? dto.getTableName() : "bkcli");
         rule.setRuleName(dto.getRuleName());
         rule.setDescription(dto.getDescription());
         rule.setRuleType(dto.getRuleType());
@@ -168,6 +169,7 @@ public class ValidationService {
     private ValidationRuleDto mapToDto(ValidationRule rule) {
         return ValidationRuleDto.builder()
             .id(rule.getId())
+            .tableName(rule.getTableName())
             .ruleName(rule.getRuleName())
             .description(rule.getDescription())
             .ruleType(rule.getRuleType())
@@ -309,6 +311,7 @@ public class ValidationService {
 
     private ValidationRule mapToEntity(ValidationRuleDto dto) {
         return ValidationRule.builder()
+            .tableName(dto.getTableName() != null ? dto.getTableName() : "bkcli")
             .ruleName(dto.getRuleName())
             .description(dto.getDescription())
             .ruleType(dto.getRuleType())

@@ -5,6 +5,7 @@ import apiClient from '@/lib/apiClient';
 // Backend DTO interface
 interface ValidationRuleDto {
   id: number;
+  tableName?: string;
   ruleName: string;
   description: string;
   ruleType: string;
@@ -105,6 +106,7 @@ const mapDtoToRule = (dto: ValidationRuleDto): ValidationRule => {
     id: `RULE_${dto.id}`,
     name: dto.ruleName,
     description: dto.description || '',
+    tableName: dto.tableName || 'bkcli',
     field: dto.fieldName,
     fieldLabel: dto.fieldLabel,
     clientType: mapClientType(dto.clientType),
@@ -120,6 +122,7 @@ const mapDtoToRule = (dto: ValidationRuleDto): ValidationRule => {
 
 const mapRuleToDto = (rule: CreateRuleInput | UpdateRuleInput): Partial<ValidationRuleDto> => {
   return {
+    tableName: rule.tableName || 'bkcli',
     ruleName: rule.name,
     description: rule.description || '',
     fieldName: rule.field,
