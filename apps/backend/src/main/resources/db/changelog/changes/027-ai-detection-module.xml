@@ -1,0 +1,256 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<databaseChangeLog
+    xmlns="http://www.liquibase.org/xml/ns/dbchangelog"
+    xmlns:xsi="http://www.w3.org/2001/XMLSchema-instance"
+    xsi:schemaLocation="http://www.liquibase.org/xml/ns/dbchangelog
+        http://www.liquibase.org/xml/ns/dbchangelog/dbchangelog-latest.xsd">
+
+    <!-- AI Detection Module Tables -->
+    <!-- Context: ai-detection - only applied when context includes 'ai-detection' -->
+
+    <!-- Add AI columns to anomalies table (always applied) -->
+    <changeSet id="027-01-anomalies-ai-columns" author="bdqm">
+        <comment>Add AI detection columns to anomalies table</comment>
+
+        <addColumn tableName="anomalies">
+            <column name="ai_risk_score" type="DECIMAL(5,4)">
+                <constraints nullable="true"/>
+            </column>
+            <column name="ai_risk_level" type="VARCHAR(20)">
+                <constraints nullable="true"/>
+            </column>
+            <column name="ai_suggested_value" type="VARCHAR(500)">
+                <constraints nullable="true"/>
+            </column>
+            <column name="ai_suggestion_confidence" type="DECIMAL(5,4)">
+                <constraints nullable="true"/>
+            </column>
+            <column name="ai_suggestion_source" type="VARCHAR(30)">
+                <constraints nullable="true"/>
+            </column>
+        </addColumn>
+
+        <createIndex tableName="anomalies" indexName="idx_anomaly_ai_risk_level">
+            <column name="ai_risk_level"/>
+        </createIndex>
+    </changeSet>
+
+    <!-- AI Risk Scores table -->
+    <changeSet id="027-02-ai-risk-scores" author="bdqm" context="ai-detection">
+        <comment>Create AI risk scores table for caching computed risk scores</comment>
+
+        <createTable tableName="ai_risk_scores">
+            <column name="id" type="BIGSERIAL">
+                <constraints primaryKey="true" nullable="false"/>
+            </column>
+            <column name="client_number" type="VARCHAR(50)">
+                <constraints nullable="false"/>
+            </column>
+            <column name="risk_score" type="DECIMAL(5,4)">
+                <constraints nullable="false"/>
+            </column>
+            <column name="confidence" type="DECIMAL(5,4)"/>
+            <column name="risk_level" type="VARCHAR(20)"/>
+            <column name="risk_factors" type="JSONB"/>
+            <column name="model_version" type="VARCHAR(20)"/>
+            <column name="computed_at" type="TIMESTAMP" defaultValueComputed="NOW()"/>
+            <column name="expires_at" type="TIMESTAMP"/>
+            <column name="created_at" type="TIMESTAMP" defaultValueComputed="NOW()"/>
+        </createTable>
+
+        <addUniqueConstraint
+            tableName="ai_risk_scores"
+            columnNames="client_number, model_version"
+            constraintName="uk_ai_risk_client_model"/>
+
+        <createIndex tableName="ai_risk_scores" indexName="idx_ai_risk_scores_client">
+            <column name="client_number"/>
+        </createIndex>
+        <createIndex tableName="ai_risk_scores" indexName="idx_ai_risk_scores_level">
+            <column name="risk_level"/>
+        </createIndex>
+        <createIndex tableName="ai_risk_scores" indexName="idx_ai_risk_scores_expires">
+            <column name="expires_at"/>
+        </createIndex>
+    </changeSet>
+
+    <!-- AI Suggestions table -->
+    <changeSet id="027-03-ai-suggestions" author="bdqm" context="ai-detection">
+        <comment>Create AI suggestions table for storing ML correction suggestions</comment>
+
+        <createTable tableName="ai_suggestions">
+            <column name="id" type="BIGSERIAL">
+                <constraints primaryKey="true" nullable="false"/>
+            </column>
+            <column name="anomaly_id" type="BIGINT">
+                <constraints nullable="false"
+                    foreignKeyName="fk_ai_suggestions_anomaly"
+                    references="anomalies(id)"
+                    deleteCascade="true"/>
+            </column>
+            <column name="suggested_value" type="VARCHAR(500)"/>
+            <column name="confidence" type="DECIMAL(5,4)"/>
+            <column name="confidence_level" type="VARCHAR(20)"/>
+            <column name="source" type="VARCHAR(30)">
+                <constraints nullable="false"/>
+            </column>
+            <column name="alternatives" type="JSONB"/>
+            <column name="explanation" type="TEXT"/>
+            <column name="model_version" type="VARCHAR(20)"/>
+            <column name="was_accepted" type="BOOLEAN"/>
+            <column name="accepted_at" type="TIMESTAMP"/>
+            <column name="created_at" type="TIMESTAMP" defaultValueComputed="NOW()"/>
+        </createTable>
+
+        <createIndex tableName="ai_suggestions" indexName="idx_ai_suggestions_anomaly">
+            <column name="anomaly_id"/>
+        </createIndex>
+        <createIndex tableName="ai_suggestions" indexName="idx_ai_suggestions_accepted">
+            <column name="was_accepted"/>
+        </createIndex>
+        <createIndex tableName="ai_suggestions" indexName="idx_ai_suggestions_source">
+            <column name="source"/>
+        </createIndex>
+    </changeSet>
+
+    <!-- AI Feedback table -->
+    <changeSet id="027-04-ai-feedback" author="bdqm" context="ai-detection">
+        <comment>Create AI feedback table for model retraining</comment>
+
+        <createTable tableName="ai_feedback">
+            <column name="id" type="BIGSERIAL">
+                <constraints primaryKey="true" nullable="false"/>
+            </column>
+            <column name="suggestion_id" type="BIGINT">
+                <constraints nullable="false"
+                    foreignKeyName="fk_ai_feedback_suggestion"
+                    references="ai_suggestions(id)"
+                    deleteCascade="true"/>
+            </column>
+            <column name="user_id" type="VARCHAR(100)"/>
+            <column name="accepted" type="BOOLEAN">
+                <constraints nullable="false"/>
+            </column>
+            <column name="actual_value" type="VARCHAR(500)"/>
+            <column name="comment" type="TEXT"/>
+            <column name="created_at" type="TIMESTAMP" defaultValueComputed="NOW()"/>
+        </createTable>
+
+        <createIndex tableName="ai_feedback" indexName="idx_ai_feedback_suggestion">
+            <column name="suggestion_id"/>
+        </createIndex>
+        <createIndex tableName="ai_feedback" indexName="idx_ai_feedback_accepted">
+            <column name="accepted"/>
+        </createIndex>
+    </changeSet>
+
+    <!-- AI Clusters table -->
+    <changeSet id="027-05-ai-clusters" author="bdqm" context="ai-detection">
+        <comment>Create AI clusters table for root cause analysis</comment>
+
+        <createTable tableName="ai_clusters">
+            <column name="id" type="BIGSERIAL">
+                <constraints primaryKey="true" nullable="false"/>
+            </column>
+            <column name="cluster_label" type="VARCHAR(100)">
+                <constraints nullable="false"/>
+            </column>
+            <column name="description" type="TEXT"/>
+            <column name="anomaly_count" type="INT" defaultValueNumeric="0">
+                <constraints nullable="false"/>
+            </column>
+            <column name="fields" type="JSONB"/>
+            <column name="error_types" type="JSONB"/>
+            <column name="agencies" type="JSONB"/>
+            <column name="client_types" type="JSONB"/>
+            <column name="root_cause_hypothesis" type="TEXT"/>
+            <column name="trend" type="VARCHAR(20)"/>
+            <column name="first_seen" type="TIMESTAMP"/>
+            <column name="last_seen" type="TIMESTAMP"/>
+            <column name="computed_at" type="TIMESTAMP" defaultValueComputed="NOW()"/>
+            <column name="is_active" type="BOOLEAN" defaultValueBoolean="true"/>
+        </createTable>
+
+        <addUniqueConstraint
+            tableName="ai_clusters"
+            columnNames="cluster_label, computed_at"
+            constraintName="uk_ai_clusters_label_date"/>
+
+        <createIndex tableName="ai_clusters" indexName="idx_ai_clusters_active">
+            <column name="is_active"/>
+        </createIndex>
+        <createIndex tableName="ai_clusters" indexName="idx_ai_clusters_computed">
+            <column name="computed_at" descending="true"/>
+        </createIndex>
+    </changeSet>
+
+    <!-- AI Cluster Members table -->
+    <changeSet id="027-06-ai-cluster-members" author="bdqm" context="ai-detection">
+        <comment>Create AI cluster members table mapping anomalies to clusters</comment>
+
+        <createTable tableName="ai_cluster_members">
+            <column name="cluster_id" type="BIGINT">
+                <constraints nullable="false"
+                    foreignKeyName="fk_ai_cluster_members_cluster"
+                    references="ai_clusters(id)"
+                    deleteCascade="true"/>
+            </column>
+            <column name="anomaly_id" type="BIGINT">
+                <constraints nullable="false"
+                    foreignKeyName="fk_ai_cluster_members_anomaly"
+                    references="anomalies(id)"
+                    deleteCascade="true"/>
+            </column>
+            <column name="similarity_score" type="DECIMAL(5,4)"/>
+            <column name="added_at" type="TIMESTAMP" defaultValueComputed="NOW()"/>
+        </createTable>
+
+        <addPrimaryKey
+            tableName="ai_cluster_members"
+            columnNames="cluster_id, anomaly_id"
+            constraintName="pk_ai_cluster_members"/>
+
+        <createIndex tableName="ai_cluster_members" indexName="idx_ai_cluster_members_anomaly">
+            <column name="anomaly_id"/>
+        </createIndex>
+    </changeSet>
+
+    <!-- AI Models Registry table -->
+    <changeSet id="027-07-ai-models" author="bdqm" context="ai-detection">
+        <comment>Create AI models registry table</comment>
+
+        <createTable tableName="ai_models">
+            <column name="id" type="BIGSERIAL">
+                <constraints primaryKey="true" nullable="false"/>
+            </column>
+            <column name="model_name" type="VARCHAR(100)">
+                <constraints nullable="false"/>
+            </column>
+            <column name="model_type" type="VARCHAR(50)"/>
+            <column name="version" type="VARCHAR(20)">
+                <constraints nullable="false"/>
+            </column>
+            <column name="description" type="TEXT"/>
+            <column name="trained_at" type="TIMESTAMP"/>
+            <column name="metrics" type="JSONB"/>
+            <column name="training_data_size" type="INT"/>
+            <column name="feature_count" type="INT"/>
+            <column name="model_path" type="VARCHAR(255)"/>
+            <column name="is_active" type="BOOLEAN" defaultValueBoolean="false"/>
+            <column name="created_at" type="TIMESTAMP" defaultValueComputed="NOW()"/>
+        </createTable>
+
+        <addUniqueConstraint
+            tableName="ai_models"
+            columnNames="model_name, version"
+            constraintName="uk_ai_models_name_version"/>
+
+        <createIndex tableName="ai_models" indexName="idx_ai_models_active">
+            <column name="is_active"/>
+        </createIndex>
+        <createIndex tableName="ai_models" indexName="idx_ai_models_name">
+            <column name="model_name"/>
+        </createIndex>
+    </changeSet>
+
+</databaseChangeLog>

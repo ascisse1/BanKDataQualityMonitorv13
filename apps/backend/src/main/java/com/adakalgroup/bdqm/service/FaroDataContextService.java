@@ -16,7 +16,13 @@ import java.util.List;
  * Builds a structured data context from live stats for Faro's system prompt.
  * Cached in-memory for 5 minutes.
  * Clear, line-by-line format so the LLM can parse numbers without ambiguity.
+ *
+ * @deprecated Replaced by the unified AI Detection module.
+ *             The AI Detection module does not need explicit data context injection.
+ *             See {@link com.adakalgroup.bdqm.ai.service.OllamaService} for anomaly explanations.
+ *             This class will be removed in a future release.
  */
+@Deprecated(since = "2.0", forRemoval = true)
 @Slf4j
 @Service
 @ConditionalOnProperty(name = "app.faro.enabled", havingValue = "true")

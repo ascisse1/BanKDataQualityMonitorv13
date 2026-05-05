@@ -1,3 +1,13 @@
+/**
+ * @deprecated This component uses the old Faro chat functionality.
+ * Chat has been removed in favor of the unified AI Detection module.
+ * Use the AI Detection components instead:
+ * - RiskBadge: Display AI risk scores on anomalies
+ * - CorrectionSuggestion: Show AI-powered correction suggestions
+ * - AiInsightsWidget: Display AI statistics on the dashboard
+ *
+ * This component will be removed in a future release.
+ */
 import { useState, useRef, useEffect, useCallback, type KeyboardEvent } from 'react';
 import {
   MessageCircle,

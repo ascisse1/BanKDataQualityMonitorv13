@@ -13,7 +13,13 @@ import org.springframework.context.annotation.Import;
 /**
  * Faro AI configuration — builds the ChatClient with system prompt + live data context.
  * Data is injected directly into the prompt (no tool calling needed for Mistral 7B).
+ *
+ * @deprecated Replaced by the unified AI Detection module.
+ *             Use {@code app.features.ai-detection.enabled=true} instead of {@code app.faro.enabled}.
+ *             See {@link com.adakalgroup.bdqm.ai.config.AiDetectionConfig} for the new configuration.
+ *             This class will be removed in a future release.
  */
+@Deprecated(since = "2.0", forRemoval = true)
 @Configuration
 @ConditionalOnProperty(name = "app.faro.enabled", havingValue = "true")
 @Import({

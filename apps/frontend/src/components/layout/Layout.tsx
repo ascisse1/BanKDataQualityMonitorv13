@@ -1,7 +1,8 @@
 import { Outlet } from 'react-router-dom';
 import Sidebar from './Sidebar';
 import Navbar from './Navbar';
-import AiChatWidget from '../ai/AiChatWidget';
+// DEPRECATED: AiChatWidget uses old Faro chat. Chat functionality removed in unified AI Detection module.
+// import AiChatWidget from '../ai/AiChatWidget';
 import { useState } from 'react';
 
 const Layout = () => {
@@ -37,8 +38,11 @@ const Layout = () => {
         </main>
       </div>
 
-      {/* AI Chat Assistant */}
-      <AiChatWidget />
+      {/* DEPRECATED: AI Chat removed. Use AI Detection module components instead.
+          - RiskBadge for anomaly risk scores
+          - CorrectionSuggestion for AI-powered suggestions
+          - AiInsightsWidget for dashboard stats
+      */}
     </div>
   );
 };

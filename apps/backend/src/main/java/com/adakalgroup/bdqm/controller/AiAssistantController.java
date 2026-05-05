@@ -19,6 +19,17 @@ import reactor.core.publisher.Flux;
 import java.util.List;
 import java.util.Map;
 
+/**
+ * Faro AI Assistant REST controller for chat and anomaly analysis.
+ *
+ * @deprecated Replaced by the unified AI Detection module.
+ *             Use {@link com.adakalgroup.bdqm.ai.controller.AiDetectionController} endpoints instead:
+ *             - /api/ai-detection/anomalies/{id}/explanation for anomaly explanations
+ *             - /api/ai-detection/anomalies/{id}/suggestion for correction suggestions
+ *             Chat functionality has been removed in favor of focused anomaly analysis.
+ *             This class will be removed in a future release.
+ */
+@Deprecated(since = "2.0", forRemoval = true)
 @Slf4j
 @RestController
 @RequestMapping("/api/ai")

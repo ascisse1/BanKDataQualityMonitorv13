@@ -219,5 +219,25 @@ app:
     fallback-jdbc: ${CBS_API_FALLBACK_JDBC:true}
     user-code: ${CBS_API_USER_CODE:BDQM}
     channel-code: ${CBS_API_CHANNEL_CODE:QUALITE}
+  # DEPRECATED: Faro has been merged into the unified AI Detection module.
+  # Use 'ai-detection.enabled' instead. This section will be removed in a future release.
+  # If FARO_ENABLED is set, it activates the deprecated Faro components for backwards compatibility.
   faro:
     enabled: ${FARO_ENABLED:false}
+
+  # AI Detection Module Configuration (optional, replaces Faro)
+  ai-detection:
+    enabled: ${FEATURE_AI_DETECTION:false}
+    risk-scoring: ${AI_RISK_SCORING:true}
+    correction-suggestions: ${AI_SUGGESTIONS:true}
+    clustering: ${AI_CLUSTERING:false}
+    auto-apply-threshold: ${AI_AUTO_APPLY_THRESHOLD:0.95}
+
+  ai:
+    service:
+      url: ${AI_SERVICE_URL:http://localhost:8000}
+      timeout-ms: ${AI_SERVICE_TIMEOUT_MS:5000}
+      max-retries: ${AI_SERVICE_MAX_RETRIES:2}
+      fallback-on-error: ${AI_FALLBACK_ON_ERROR:true}
+      max-concurrent-calls: ${AI_MAX_CONCURRENT_CALLS:4}
+      batch-size: ${AI_BATCH_SIZE:100}

@@ -1,10 +1,12 @@
 package com.adakalgroup.bdqm.service;
 
+import com.adakalgroup.bdqm.config.metrics.BusinessMetricsConfig;
 import com.adakalgroup.bdqm.dto.AnomalyDto;
 import com.adakalgroup.bdqm.model.Anomaly;
 import com.adakalgroup.bdqm.model.enums.AnomalyStatus;
 import com.adakalgroup.bdqm.model.enums.ClientType;
 import com.adakalgroup.bdqm.repository.AnomalyRepository;
+import com.adakalgroup.bdqm.security.StructureSecurityService;
 import org.junit.jupiter.api.BeforeEach;
 import org.junit.jupiter.api.Test;
 import org.junit.jupiter.api.extension.ExtendWith;
@@ -29,6 +31,15 @@ class AnomalyServiceTest {
 
     @Mock
     private AnomalyRepository anomalyRepository;
+
+    @Mock
+    private BusinessMetricsConfig metricsConfig;
+
+    @Mock
+    private AnomalyWorkflowService anomalyWorkflowService;
+
+    @Mock
+    private StructureSecurityService structureSecurityService;
 
     @InjectMocks
     private AnomalyService anomalyService;
@@ -102,7 +113,7 @@ class AnomalyServiceTest {
 
         assertThat(result).isNotNull();
         assertThat(result.getContent()).hasSize(1);
-        assertThat(result.getContent().get(0).getClientType()).isEqualTo("INDIVIDUAL");
+        assertThat(result.getContent().get(0).getClientType()).isEqualTo(ClientType.INDIVIDUAL);
         verify(anomalyRepository, times(1)).findByClientType(ClientType.INDIVIDUAL, pageable);
     }
 
@@ -111,23 +122,21 @@ class AnomalyServiceTest {
         when(anomalyRepository.findById(1L)).thenReturn(Optional.of(testAnomaly));
         when(anomalyRepository.save(any(Anomaly.class))).thenReturn(testAnomaly);
 
-        testAnomalyDto.setStatus(AnomalyStatus.valueOf("CORRECTED"));
+        testAnomalyDto.setStatus(AnomalyStatus.CORRECTED);
         AnomalyDto result = anomalyService.updateAnomaly(1L, testAnomalyDto);
 
         assertThat(result).isNotNull();
-        assertThat(result.getStatus()).isEqualTo("CORRECTED");
+        assertThat(result.getStatus()).isEqualTo(AnomalyStatus.CORRECTED);
         verify(anomalyRepository, times(1)).findById(1L);
         verify(anomalyRepository, times(1)).save(any(Anomaly.class));
     }
 
     @Test
     void shouldDeleteAnomaly() {
-        when(anomalyRepository.existsById(1L)).thenReturn(true);
         doNothing().when(anomalyRepository).deleteById(1L);
 
         anomalyService.deleteAnomaly(1L);
 
-        verify(anomalyRepository, times(1)).existsById(1L);
         verify(anomalyRepository, times(1)).deleteById(1L);
     }
 
@@ -156,7 +165,7 @@ class AnomalyServiceTest {
 
         assertThat(result).isNotNull();
         assertThat(result.getContent()).hasSize(1);
-        assertThat(result.getContent().get(0).getStatus()).isEqualTo("PENDING");
+        assertThat(result.getContent().get(0).getStatus()).isEqualTo(AnomalyStatus.PENDING);
         verify(anomalyRepository, times(1)).findByStatus(AnomalyStatus.PENDING, pageable);
     }
 

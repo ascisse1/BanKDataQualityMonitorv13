@@ -18,7 +18,13 @@ import java.util.Map;
 /**
  * Faro AI Tools — Methods the LLM can call to query live data.
  * Spring AI automatically exposes @Tool methods to the model.
+ *
+ * @deprecated Replaced by the unified AI Detection module.
+ *             The AI Detection module uses ML models with Ollama LLM fallback.
+ *             See {@link com.adakalgroup.bdqm.ai.service.AiDetectionService} for the new implementation.
+ *             This class will be removed in a future release.
  */
+@Deprecated(since = "2.0", forRemoval = true)
 @Component
 @RequiredArgsConstructor
 @ConditionalOnProperty(name = "app.faro.enabled", havingValue = "true")

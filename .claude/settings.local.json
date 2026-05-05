@@ -148,7 +148,8 @@
       "Bash(python -c \"import sys,json; [print\\(f'  {r[\\\\\"name\\\\\"]}'\\) for r in json.load\\(sys.stdin\\)]\")",
       "Bash(PGPASSWORD=bdqm psql -h localhost -U bdqm -d bdqm -c \"\\\\d fatca_clients\")",
       "Bash(curl -s http://localhost:8086/api/stats/clients)",
-      "Bash(python -c \"import sys,json; d=json.load\\(sys.stdin\\); print\\(json.dumps\\(d.get\\('data',{}\\), indent=2\\)\\)\")"
+      "Bash(python -c \"import sys,json; d=json.load\\(sys.stdin\\); print\\(json.dumps\\(d.get\\('data',{}\\), indent=2\\)\\)\")",
+      "Bash(mvn test:*)"
     ]
   }
 }

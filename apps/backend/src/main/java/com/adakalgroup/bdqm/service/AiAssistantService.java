@@ -27,7 +27,14 @@ import java.util.stream.Collectors;
 /**
  * Faro AI assistant service powered by Spring AI.
  * Uses ChatClient with function calling — the LLM queries data on demand via tools.
+ *
+ * @deprecated Replaced by the unified AI Detection module.
+ *             Use {@link com.adakalgroup.bdqm.ai.service.AiDetectionService} and
+ *             {@link com.adakalgroup.bdqm.ai.service.OllamaService} instead.
+ *             Chat functionality has been removed in favor of focused anomaly analysis with ML + LLM fallback.
+ *             This class will be removed in a future release.
  */
+@Deprecated(since = "2.0", forRemoval = true)
 @Slf4j
 @Service
 @ConditionalOnProperty(name = "app.faro.enabled", havingValue = "true")

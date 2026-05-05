@@ -1,3 +1,13 @@
+/**
+ * @deprecated This service uses the old Faro API endpoints (/api/ai/*).
+ * Use aiDetectionService instead which connects to the unified AI Detection module (/api/ai-detection/*).
+ * This file will be removed in a future release.
+ *
+ * Migration guide:
+ * - aiService.explainAnomaly() -> aiDetectionService.getExplanation(anomalyId)
+ * - aiService.suggestCorrection() -> aiDetectionService.getSuggestion(anomalyId)
+ * - Chat functionality has been removed in favor of focused anomaly analysis.
+ */
 import { apiService } from './apiService';
 
 export interface AiResponse {

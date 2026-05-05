@@ -1,5 +1,6 @@
 package com.adakalgroup.bdqm.model;
 
+import com.adakalgroup.bdqm.ai.model.RiskLevel;
 import com.adakalgroup.bdqm.model.enums.AnomalyStatus;
 import com.adakalgroup.bdqm.model.enums.ClientType;
 import jakarta.persistence.*;
@@ -11,6 +12,7 @@ import org.hibernate.annotations.CreationTimestamp;
 import org.hibernate.annotations.Filter;
 import org.hibernate.annotations.UpdateTimestamp;
 
+import java.math.BigDecimal;
 import java.time.LocalDateTime;
 
 @Entity
@@ -105,4 +107,37 @@ public class Anomaly {
     @UpdateTimestamp
     @Column(name = "updated_at")
     private LocalDateTime updatedAt;
+
+    // AI Detection Module Fields (optional, nullable)
+
+    /**
+     * AI-computed risk score (0-1).
+     */
+    @Column(name = "ai_risk_score", precision = 5, scale = 4)
+    private BigDecimal aiRiskScore;
+
+    /**
+     * AI risk level classification.
+     */
+    @Enumerated(EnumType.STRING)
+    @Column(name = "ai_risk_level", length = 20)
+    private RiskLevel aiRiskLevel;
+
+    /**
+     * AI-suggested correction value.
+     */
+    @Column(name = "ai_suggested_value", length = 500)
+    private String aiSuggestedValue;
+
+    /**
+     * Confidence score for AI suggestion (0-1).
+     */
+    @Column(name = "ai_suggestion_confidence", precision = 5, scale = 4)
+    private BigDecimal aiSuggestionConfidence;
+
+    /**
+     * Source of AI suggestion (ML_MODEL, LLM_FALLBACK, PATTERN_BASED).
+     */
+    @Column(name = "ai_suggestion_source", length = 30)
+    private String aiSuggestionSource;
 }
